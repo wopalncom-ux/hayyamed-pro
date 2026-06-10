@@ -29,7 +29,7 @@ export default function LicenseCountdownCard({
         <h2 className="text-base font-semibold text-[#111] mb-2">License Renewal</h2>
         <p className="text-sm text-[#64748b]">
           No license expiry date set.{" "}
-          <a href="/onboarding/3" className="text-[#1a56a0] hover:underline">
+          <a href="/dashboard/licenses" className="text-[#1a56a0] hover:underline">
             Update license details →
           </a>
         </p>
