@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { getAnthropicClient } from "@/lib/anthropic";
+import { checkAndLogRateLimit } from "@/lib/rateLimit";
 
 export const runtime = "nodejs";
 
