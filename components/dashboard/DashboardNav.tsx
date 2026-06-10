@@ -1,10 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import NotificationBell from "./NotificationBell";
-import { Languages } from "lucide-react";
 
 const NAV_ITEMS = [
   { href: "/dashboard", label: "Overview" },
@@ -18,14 +17,6 @@ const NAV_ITEMS = [
 
 export default function DashboardNav({ userName }: { userName: string }) {
   const pathname = usePathname();
-  const router = useRouter();
-
-  function toggleRTL() {
-    const html = document.documentElement;
-    const isRTL = html.dir === "rtl";
-    html.dir = isRTL ? "ltr" : "rtl";
-    html.lang = isRTL ? "en" : "ar";
-  }
 
   return (
     <header className="bg-white border-b border-[#e2e8f0]">
@@ -34,13 +25,6 @@ export default function DashboardNav({ userName }: { userName: string }) {
           <span className="text-base font-bold text-[#1a56a0]">Hayya Med PRO</span>
           <div className="flex items-center gap-2">
             <NotificationBell />
-            <button
-              onClick={toggleRTL}
-              title="Toggle Arabic / English"
-              className="p-1.5 rounded-lg text-[#64748b] hover:text-[#111] hover:bg-[#f1f5f9] transition-colors"
-            >
-              <Languages className="w-4 h-4" />
-            </button>
             <span className="text-sm text-[#64748b] ml-1">{userName}</span>
           </div>
         </div>
