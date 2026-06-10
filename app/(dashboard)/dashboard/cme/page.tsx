@@ -7,6 +7,7 @@ import ComplianceGapCard from "@/components/dashboard/ComplianceGapCard";
 import AIRecommendationsCard from "@/components/dashboard/AIRecommendationsCard";
 import ComplianceChatWidget from "@/components/dashboard/ComplianceChatWidget";
 import EmployerTasksSection from "@/components/dashboard/EmployerTasksSection";
+import UpgradeLink from "@/components/dashboard/UpgradeLink";
 import { getUserPlan, isPro } from "@/lib/subscription";
 
 export default async function CmePage() {
@@ -124,9 +125,7 @@ export default async function CmePage() {
                 {isPro(plan) ? (
                   <DownloadReportButton />
                 ) : (
-                  <a href="/pricing" className="text-xs text-[#64748b] hover:text-[#1a56a0] transition-colors">
-                    Upgrade for PDF export ↗
-                  </a>
+                  <UpgradeLink source="cme_wallet" />
                 )}
                 <AddActivityButton walletId={wallet.id} />
               </div>

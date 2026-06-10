@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
+import { track, identifyUser } from "@/lib/analytics";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -18,14 +19,17 @@ export default function LoginPage() {
     setLoading(true);
 
     const supabase = createClient();
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
     if (error) {
+      track("login_failed");
       setError(error.message);
       setLoading(false);
       return;
     }
 
+    if (data.user) identifyUser(data.user.id);
+    track("login_completed");
     router.push("/dashboard");
     router.refresh();
   }

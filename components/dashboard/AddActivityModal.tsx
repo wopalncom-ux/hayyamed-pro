@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { addCmeActivity } from "@/app/(dashboard)/dashboard/cme/actions";
 import { useToast } from "@/components/ui/toast";
+import { track } from "@/lib/analytics";
 
 const CATEGORIES: { value: string; label: string }[] = [
   { value: "conference", label: "Conference / Seminar" },
@@ -124,6 +125,7 @@ export default function AddActivityModal({
         setAiApplied(false);
       }
       setOcrDone(true);
+      track("ai_ocr_used");
     } finally {
       setOcrLoading(false);
     }
@@ -183,6 +185,12 @@ export default function AddActivityModal({
       return;
     }
 
+    track("cme_activity_submitted", {
+      category: selectedCategory || "uncategorised",
+      credits: parseFloat(credits),
+      ai_suggested: aiApplied,
+      has_certificate: !!file,
+    });
     toast("CME activity logged successfully", "success");
     onClose();
   }

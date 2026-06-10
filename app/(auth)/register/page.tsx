@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
+import { track } from "@/lib/analytics";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -13,9 +14,12 @@ export default function RegisterPage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => { track("signup_started"); }, []);
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
+    track("signup_submitted");
 
     if (password !== confirmPassword) {
       setError("Passwords do not match.");

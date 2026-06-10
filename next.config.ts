@@ -13,7 +13,7 @@ const csp = [
   "style-src 'self' 'unsafe-inline'",
   `img-src 'self' data: blob: https://${supabaseHost}`,
   "font-src 'self'",
-  `connect-src 'self' https://${supabaseHost} wss://${supabaseHost} https://cloudflareinsights.com https://static.cloudflareinsights.com`,
+  `connect-src 'self' https://${supabaseHost} wss://${supabaseHost} https://cloudflareinsights.com https://static.cloudflareinsights.com https://eu.i.posthog.com https://eu-assets.i.posthog.com`,
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",

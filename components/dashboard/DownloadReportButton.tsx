@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { track } from "@/lib/analytics";
 
 export default function DownloadReportButton() {
   const [loading, setLoading] = useState(false);
@@ -12,11 +13,13 @@ export default function DownloadReportButton() {
     try {
       const res = await fetch("/api/pdf/cme-report");
       if (res.status === 403) {
+        track("pdf_report_blocked");
         setError("Pro plan required");
         return;
       }
       if (!res.ok) { setError("Failed to generate report"); return; }
 
+      track("pdf_report_downloaded");
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");

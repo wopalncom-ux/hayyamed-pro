@@ -1,4 +1,11 @@
+"use client";
+
+import { useEffect } from "react";
+import { track } from "@/lib/analytics";
+
 export default function VerifyEmailPage() {
+  useEffect(() => { track("signup_completed"); }, []);
+
   return (
     <div className="bg-white rounded-xl shadow-sm border border-[#e2e8f0] p-8 text-center">
       <div className="w-12 h-12 bg-[#e8f0fe] rounded-full flex items-center justify-center mx-auto mb-4">
