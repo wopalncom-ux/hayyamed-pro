@@ -6,6 +6,7 @@ import DownloadReportButton from "@/components/dashboard/DownloadReportButton";
 import ComplianceGapCard from "@/components/dashboard/ComplianceGapCard";
 import AIRecommendationsCard from "@/components/dashboard/AIRecommendationsCard";
 import ComplianceChatWidget from "@/components/dashboard/ComplianceChatWidget";
+import EmployerTasksSection from "@/components/dashboard/EmployerTasksSection";
 import { getUserPlan, isPro } from "@/lib/subscription";
 
 export default async function CmePage() {
@@ -97,6 +98,9 @@ export default async function CmePage() {
               />
             </div>
           </div>
+
+          {/* Tasks assigned by employer */}
+          <EmployerTasksSection professionalId={user.id} />
 
           {/* Compliance gap analysis */}
           <ComplianceGapCard categoryRules={categoryRules} activities={activities} />

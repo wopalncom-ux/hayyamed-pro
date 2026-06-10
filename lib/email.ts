@@ -55,6 +55,67 @@ export async function sendCmeRejectedEmail({
   `));
 }
 
+export async function sendComplianceReminderEmail({
+  to, staffName, senderOrgName, message, creditsCompleted, creditsRequired, daysToExpiry,
+}: {
+  to: string;
+  staffName: string;
+  senderOrgName: string;
+  message: string;
+  creditsCompleted: number | null;
+  creditsRequired: number | null;
+  daysToExpiry: number | null;
+}) {
+  const cmeBlock = creditsCompleted !== null && creditsRequired !== null ? `
+    <div style="background:#f0f7ff;border:1px solid #bfdbfe;border-radius:8px;padding:14px 18px;margin:16px 0">
+      <p style="margin:0;font-size:12px;color:#64748b">Your CPD Progress</p>
+      <p style="margin:6px 0 0;font-size:22px;font-weight:700;color:#1a56a0">${creditsCompleted} <span style="font-size:14px;font-weight:400;color:#64748b">/ ${creditsRequired} credits</span></p>
+      ${daysToExpiry !== null ? `<p style="margin:4px 0 0;font-size:12px;color:${daysToExpiry <= 30 ? "#dc2626" : "#d97706"}">${daysToExpiry <= 0 ? "License EXPIRED" : `${daysToExpiry} days until license renewal`}</p>` : ""}
+    </div>` : "";
+
+  await send(to, `Action Required: CPD Compliance Reminder from ${senderOrgName}`, baseLayout(`
+    <p style="color:#374151;font-size:16px;margin:0 0 8px">Hi ${staffName},</p>
+    <p style="color:#374151;margin:0 0 16px">Your employer <strong>${senderOrgName}</strong> has sent you a compliance reminder:</p>
+    <div style="background:#fff7ed;border-left:4px solid #d97706;padding:14px 18px;border-radius:0 8px 8px 0;margin:0 0 16px">
+      <p style="margin:0;color:#374151;font-size:14px;line-height:1.6">${message}</p>
+    </div>
+    ${cmeBlock}
+    <a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">View My CPD Wallet →</a>
+    <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">This reminder was sent by your employer administrator via Hayya Med Pro.</p>
+  `));
+}
+
+export async function sendTaskAssignedEmail({
+  to, staffName, senderOrgName, taskTitle, category, creditsTarget, dueDate, message,
+}: {
+  to: string;
+  staffName: string;
+  senderOrgName: string;
+  taskTitle: string;
+  category: string | null;
+  creditsTarget: number | null;
+  dueDate: string | null;
+  message: string | null;
+}) {
+  const meta = [
+    category ? `<span style="font-size:12px;color:#374151;background:#e0f2fe;padding:2px 8px;border-radius:4px;text-transform:capitalize">${category.replace("_", " ")}</span>` : "",
+    creditsTarget ? `<span style="font-size:12px;color:#1a56a0;font-weight:600">${creditsTarget} credits target</span>` : "",
+    dueDate ? `<span style="font-size:12px;color:#d97706">Due: ${new Date(dueDate).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}</span>` : "",
+  ].filter(Boolean).join("&nbsp;&nbsp;");
+
+  await send(to, `New CPD Task Assigned by ${senderOrgName}`, baseLayout(`
+    <p style="color:#374151;font-size:16px;margin:0 0 8px">Hi ${staffName},</p>
+    <p style="color:#374151;margin:0 0 16px">Your employer <strong>${senderOrgName}</strong> has assigned you a CPD task:</p>
+    <div style="background:#f0f7ff;border:1px solid #bfdbfe;border-radius:8px;padding:16px 20px;margin:0 0 20px">
+      <p style="margin:0;color:#111;font-weight:600;font-size:15px">${taskTitle}</p>
+      ${meta ? `<div style="margin:10px 0 0;display:flex;gap:12px;flex-wrap:wrap">${meta}</div>` : ""}
+      ${message ? `<p style="margin:12px 0 0;color:#374151;font-size:13px;border-top:1px solid #dbeafe;padding-top:12px">${message}</p>` : ""}
+    </div>
+    <a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">View My CPD Tasks →</a>
+    <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">This task was assigned by your employer administrator via Hayya Med Pro.</p>
+  `));
+}
+
 export async function sendLicenseExpiryEmail({
   to, name, expiryDate, daysLeft,
 }: { to: string; name: string; expiryDate: string; daysLeft: number }) {

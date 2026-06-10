@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import BulkReportButton from "@/components/employer/BulkReportButton";
 import LinkRequestActions from "@/components/employer/LinkRequestActions";
 import AssignDepartmentButton from "@/components/employer/AssignDepartmentButton";
+import AssignTaskButton from "@/components/employer/AssignTaskButton";
+import SendReminderButton from "@/components/employer/SendReminderButton";
 
 type ComplianceStatus = "compliant" | "at_risk" | "non_compliant" | "unknown";
 
@@ -276,6 +278,7 @@ export default async function EmployerDashboardPage() {
                           <th className="text-left px-6 py-2 text-xs font-medium text-[#94a3b8] uppercase tracking-wide">CME Credits</th>
                           <th className="text-left px-6 py-2 text-xs font-medium text-[#94a3b8] uppercase tracking-wide">Status</th>
                           <th className="text-left px-6 py-2 text-xs font-medium text-[#94a3b8] uppercase tracking-wide">License Expiry</th>
+                          <th className="text-left px-6 py-2 text-xs font-medium text-[#94a3b8] uppercase tracking-wide">Actions</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-[#f1f5f9]">
@@ -323,6 +326,17 @@ export default async function EmployerDashboardPage() {
                                 <span className="text-xs text-[#94a3b8]">Private</span>
                               )}
                             </td>
+                            <td className="px-6 py-4">
+                              <div className="flex items-center gap-2">
+                                <AssignTaskButton professionalId={s.professionalId} staffName={s.name} />
+                                <SendReminderButton
+                                  professionalId={s.professionalId}
+                                  staffName={s.name}
+                                  completedCredits={s.completedCredits}
+                                  requiredCredits={s.requiredCredits}
+                                />
+                              </div>
+                            </td>
                           </tr>
                         ))}
                       </tbody>
@@ -355,6 +369,15 @@ export default async function EmployerDashboardPage() {
                           </span>
                         </div>
                         <AssignDepartmentButton linkId={s.linkId} initialDepartment={s.department} />
+                        <div className="flex gap-2 mt-2">
+                          <AssignTaskButton professionalId={s.professionalId} staffName={s.name} />
+                          <SendReminderButton
+                            professionalId={s.professionalId}
+                            staffName={s.name}
+                            completedCredits={s.completedCredits}
+                            requiredCredits={s.requiredCredits}
+                          />
+                        </div>
                       </div>
                     ))}
                   </div>
