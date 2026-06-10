@@ -1,4 +1,4 @@
-const CACHE_NAME = 'hayyamed-pro-v2';
+const CACHE_NAME = 'hayyamed-pro-v3';
 const OFFLINE_URL = '/offline.html';
 
 const STATIC_ASSETS = [
@@ -48,10 +48,12 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(event.request.url);
 
-  // Skip Supabase and external API calls — always network
+  // Skip external calls — always go to network directly
   if (
     url.hostname.includes('supabase.co') ||
     url.hostname.includes('paddle.com') ||
+    url.hostname.includes('cloudflareinsights.com') ||
+    url.hostname.includes('cloudflare.com') ||
     url.pathname.startsWith('/api/')
   ) {
     return;

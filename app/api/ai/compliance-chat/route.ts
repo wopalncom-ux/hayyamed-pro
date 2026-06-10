@@ -128,6 +128,10 @@ GUIDELINES:
 - You may suggest they log missing activities or update uncategorized ones`
     : `You are a CME compliance advisor. This professional hasn't set up their CME wallet yet. Encourage them to complete their profile setup at /onboarding/5 to unlock CME tracking and personalized compliance guidance.`;
 
+  if (!process.env.ANTHROPIC_API_KEY) {
+    return new Response("AI features not configured", { status: 503 });
+  }
+
   const encoder = new TextEncoder();
   const readable = new ReadableStream({
     async start(controller) {

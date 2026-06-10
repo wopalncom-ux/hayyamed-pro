@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
-export default function Step4Employer({ profile, userId }: { profile: Record<string, unknown> | null; userId: string }) {
+export default function Step4Employer({ profile, userId }: { profile: Record<string, unknown> | null; userId: string; authorities?: unknown[] }) {
   const router = useRouter();
   const [search, setSearch] = useState("");
   const [matches, setMatches] = useState<Array<{ id: string; name: string }>>([]);

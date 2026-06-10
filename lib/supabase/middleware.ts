@@ -38,11 +38,17 @@ export async function updateSession(request: NextRequest) {
     "/forgot-password",
     "/reset-password",
     "/verify-email",
+    "/pricing",
+    "/terms",
+    "/privacy",
   ];
 
-  const isPublic = publicPaths.some(
-    (p) => pathname === p || pathname.startsWith(p + "?")
-  );
+  // API routes handle their own auth — never redirect them to /login
+  const isApi = pathname.startsWith("/api/");
+
+  const isPublic =
+    isApi ||
+    publicPaths.some((p) => pathname === p || pathname.startsWith(p + "?"));
 
   if (!user && !isPublic) {
     const url = request.nextUrl.clone();

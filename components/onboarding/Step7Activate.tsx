@@ -3,18 +3,31 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { calcProfileCompletion } from "@/lib/profileCompletion";
 
-export default function Step7Activate({ profile, userId }: { profile: Record<string, unknown> | null; userId: string }) {
+export default function Step7Activate({ profile, userId }: { profile: Record<string, unknown> | null; userId: string; authorities?: unknown[] }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   async function handleActivate() {
     setLoading(true);
     const supabase = createClient();
+
+    const [walletRes, linkRes] = await Promise.all([
+      supabase.from("cme_wallets").select("id").eq("professional_id", userId).maybeSingle(),
+      supabase.from("employer_link_requests").select("id").eq("professional_id", userId).eq("status", "approved").maybeSingle(),
+    ]);
+
+    const pct = calcProfileCompletion(profile ?? {}, {
+      hasCmeWallet: !!walletRes.data,
+      hasEmployerLink: !!linkRes.data,
+    });
+
     await supabase
       .from("professional_profiles")
-      .update({ onboarding_complete: true, onboarding_step: 7, profile_completion_pct: 80 })
+      .update({ onboarding_complete: true, onboarding_step: 7, profile_completion_pct: pct })
       .eq("auth_id", userId);
+
     router.push("/dashboard");
     router.refresh();
   }

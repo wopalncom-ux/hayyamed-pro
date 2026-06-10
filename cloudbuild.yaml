@@ -1,0 +1,55 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'build'
+    args:
+      - 'build'
+      - '-t'
+      - 'me-central1-docker.pkg.dev/project-38d955b0-84e7-44b6-8b5/hayyamed-pro/app:$BUILD_ID'
+      - '-t'
+      - 'me-central1-docker.pkg.dev/project-38d955b0-84e7-44b6-8b5/hayyamed-pro/app:latest'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_SUPABASE_URL=https://ulevibytaxocdvdfmfaq.supabase.co'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVsZXZpYnl0YXhvY2R2ZGZtZmFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3MjA3OTgsImV4cCI6MjA5NjI5Njc5OH0.AmoNuAClh1RBnnWldrzQ773SakdOIGuJYErZGHbek-w'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_APP_URL=https://pro.hayyamed.pro'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_VAPID_PUBLIC_KEY=BOpjviS_Vza82bDb1Gs-BIgs1njuGle2skNDWD9ofUbEYorWTRE760AqDYVp4-Eyn5ZnyWvR6xneWAaWqCWt_Mw'
+      - '--cache-from'
+      - 'me-central1-docker.pkg.dev/project-38d955b0-84e7-44b6-8b5/hayyamed-pro/app:latest'
+      - '.'
+
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'push'
+    waitFor: ['build']
+    args:
+      - 'push'
+      - '--all-tags'
+      - 'me-central1-docker.pkg.dev/project-38d955b0-84e7-44b6-8b5/hayyamed-pro/app'
+
+  # All secrets injected at runtime from Secret Manager — never baked into image
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: 'deploy'
+    waitFor: ['push']
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'hayyamed-pro'
+      - '--image=me-central1-docker.pkg.dev/project-38d955b0-84e7-44b6-8b5/hayyamed-pro/app:$BUILD_ID'
+      - '--region=me-central1'
+      - '--platform=managed'
+      - '--allow-unauthenticated'
+      - '--port=3000'
+      - '--memory=512Mi'
+      - '--min-instances=1'
+      - '--max-instances=10'
+      - '--set-env-vars=VAPID_SUBJECT=mailto:support@hayyamed.pro'
+      - >-
+        --set-secrets=SUPABASE_SERVICE_ROLE_KEY=hayyamed-pro-service-role-key:latest,POSTMARK_API_KEY=hayyamed-pro-postmark-key:latest,ANTHROPIC_API_KEY=hayyamed-pro-anthropic-key:latest,CRON_SECRET=hayyamed-pro-cron-secret:latest,VAPID_PRIVATE_KEY=hayyamed-pro-vapid-private:latest,PADDLE_API_KEY=hayyamed-pro-paddle-key:latest,PADDLE_WEBHOOK_SECRET=hayyamed-pro-paddle-webhook:latest
+
+images:
+  - 'me-central1-docker.pkg.dev/project-38d955b0-84e7-44b6-8b5/hayyamed-pro/app'
+
+options:
+  logging: CLOUD_LOGGING_ONLY

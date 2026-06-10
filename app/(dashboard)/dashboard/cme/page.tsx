@@ -1,6 +1,12 @@
-import { createClient } from "@/lib/supabase/server";
-import { createAdminClient } from "@/lib/supabase/server";
+import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import AddActivityButton from "@/components/dashboard/AddActivityButton";
+import CertificateLink from "@/components/dashboard/CertificateLink";
+import DownloadReportButton from "@/components/dashboard/DownloadReportButton";
+import ComplianceGapCard from "@/components/dashboard/ComplianceGapCard";
+import AIRecommendationsCard from "@/components/dashboard/AIRecommendationsCard";
+import ComplianceChatWidget from "@/components/dashboard/ComplianceChatWidget";
+import { getUserPlan, isPro } from "@/lib/subscription";
 
 export default async function CmePage() {
   const supabase = await createClient();
@@ -8,13 +14,46 @@ export default async function CmePage() {
   if (!user) redirect("/login");
 
   const admin = createAdminClient();
-  const [walletRes, activitiesRes] = await Promise.all([
+  const [walletRes, activitiesRes, plan] = await Promise.all([
     admin.from("cme_wallets").select("*").eq("professional_id", user.id).maybeSingle(),
     admin.from("cme_activities").select("*").eq("professional_id", user.id).order("activity_date", { ascending: false }),
+    getUserPlan(user.id),
   ]);
 
   const wallet = walletRes.data;
   const activities = activitiesRes.data ?? [];
+
+  // Fetch per-category compliance rules for the professional's country
+  let categoryRules: {
+    category_name: string;
+    max_credits_per_cycle: number | null;
+    min_credits_per_cycle: number;
+    accreditation_required: boolean;
+    notes: string | null;
+  }[] = [];
+  if (wallet?.country) {
+    const { data } = await admin
+      .from("compliance_activity_categories")
+      .select("category_name, max_credits_per_cycle, min_credits_per_cycle, accreditation_required, notes")
+      .eq("country_code", wallet.country)
+      .order("category_name");
+    categoryRules = data ?? [];
+  }
+
+  // Compute gaps for AI recommendations
+  const validActivities = activities.filter((a) => a.verification_status !== "rejected");
+  const creditsByCategory: Record<string, number> = {};
+  for (const a of validActivities) {
+    if (a.category) creditsByCategory[a.category] = (creditsByCategory[a.category] ?? 0) + a.credits;
+  }
+  const gaps = categoryRules
+    .filter((r) => r.min_credits_per_cycle > 0)
+    .map((r) => ({
+      category: r.category_name,
+      earned: creditsByCategory[r.category_name] ?? 0,
+      needed: Math.max(0, r.min_credits_per_cycle - (creditsByCategory[r.category_name] ?? 0)),
+    }))
+    .filter((g) => g.needed > 0);
 
   return (
     <div>
@@ -29,8 +68,12 @@ export default async function CmePage() {
           <div className="bg-white rounded-xl border border-[#e2e8f0] p-6 mb-6">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <p className="text-sm text-[#64748b]">Renewal cycle: {wallet.cycle_start_date} → {wallet.cycle_end_date}</p>
-                <p className="text-sm text-[#64748b]">{wallet.profession} • {wallet.specialty ?? "All specialties"} • {wallet.country}</p>
+                <p className="text-sm text-[#64748b]">
+                  Renewal cycle: {wallet.cycle_start_date} → {wallet.cycle_end_date}
+                </p>
+                <p className="text-sm text-[#64748b]">
+                  {wallet.profession} • {wallet.specialty ?? "All specialties"} • {wallet.country}
+                </p>
               </div>
               <span className={`text-xs font-medium px-3 py-1 rounded-full ${
                 wallet.compliance_status === "compliant"
@@ -55,14 +98,36 @@ export default async function CmePage() {
             </div>
           </div>
 
-          {/* Activities table */}
+          {/* Compliance gap analysis */}
+          <ComplianceGapCard categoryRules={categoryRules} activities={activities} />
+
+          {/* AI recommendations */}
+          <AIRecommendationsCard
+            profession={wallet.profession ?? "Healthcare Professional"}
+            specialty={wallet.specialty ?? null}
+            country={wallet.country ?? "QA"}
+            totalRequired={wallet.required_credits}
+            totalCompleted={wallet.completed_credits}
+            gaps={gaps}
+            cycleEndDate={wallet.cycle_end_date ?? null}
+          />
+
+          {/* Activities */}
           <div className="bg-white rounded-xl border border-[#e2e8f0]">
             <div className="flex items-center justify-between px-6 py-4 border-b border-[#e2e8f0]">
               <h2 className="text-base font-semibold text-[#111]">CME Activities</h2>
-              <button className="text-sm bg-[#1a56a0] text-white px-4 py-2 rounded-lg hover:bg-[#1547a0] transition-colors">
-                + Log Activity
-              </button>
+              <div className="flex items-center gap-3">
+                {isPro(plan) ? (
+                  <DownloadReportButton />
+                ) : (
+                  <a href="/pricing" className="text-xs text-[#64748b] hover:text-[#1a56a0] transition-colors">
+                    Upgrade for PDF export ↗
+                  </a>
+                )}
+                <AddActivityButton walletId={wallet.id} />
+              </div>
             </div>
+
             {activities.length === 0 ? (
               <div className="px-6 py-12 text-center text-[#64748b] text-sm">
                 No activities logged yet. Add your first CME activity.
@@ -73,7 +138,19 @@ export default async function CmePage() {
                   <div key={a.id} className="px-6 py-4 flex items-center justify-between">
                     <div>
                       <p className="text-sm font-medium text-[#111]">{a.title}</p>
-                      <p className="text-xs text-[#64748b] mt-0.5">{a.provider ?? "—"} • {a.activity_date}</p>
+                      <p className="text-xs text-[#64748b] mt-0.5">
+                        {a.provider ?? "—"} • {a.activity_date}
+                        {a.category && (
+                          <span className="ml-2 bg-[#f1f5f9] text-[#374151] rounded px-1.5 py-0.5 text-[10px] capitalize">
+                            {a.category.replace("_", " ")}
+                          </span>
+                        )}
+                      </p>
+                      {a.certificate_url && (
+                        <div className="mt-0.5">
+                          <CertificateLink certificatePath={a.certificate_url} />
+                        </div>
+                      )}
                     </div>
                     <div className="flex items-center gap-3">
                       <span className="text-sm font-semibold text-[#1a56a0]">+{a.credits} credits</span>
@@ -96,11 +173,16 @@ export default async function CmePage() {
       ) : (
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-8 text-center">
           <p className="text-[#64748b] mb-4">Your CME wallet hasn&apos;t been set up yet.</p>
-          <a href="/onboarding/5" className="text-sm bg-[#1a56a0] text-white px-4 py-2 rounded-lg hover:bg-[#1547a0] transition-colors">
+          <a
+            href="/onboarding/5"
+            className="text-sm bg-[#1a56a0] text-white px-4 py-2 rounded-lg hover:bg-[#1547a0] transition-colors"
+          >
             Set up CME wallet
           </a>
         </div>
       )}
+
+      <ComplianceChatWidget />
     </div>
   );
 }

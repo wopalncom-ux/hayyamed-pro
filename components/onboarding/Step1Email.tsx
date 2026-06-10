@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 
-export default function Step1Email({ profile, userId }: { profile: Record<string, unknown> | null; userId: string }) {
+export default function Step1Email({ profile, userId }: { profile: Record<string, unknown> | null; userId: string; authorities?: unknown[] }) {
   const router = useRouter();
 
   // Step 1 is account creation (done at /register).

@@ -6,7 +6,7 @@ import { createClient } from "@/lib/supabase/client";
 
 const NATIONALITIES = ["Qatari", "Saudi", "Emirati", "Jordanian", "Egyptian", "Lebanese", "Syrian", "Indian", "Pakistani", "Filipino", "British", "American", "Other"];
 
-export default function Step2Personal({ profile, userId }: { profile: Record<string, unknown> | null; userId: string }) {
+export default function Step2Personal({ profile, userId }: { profile: Record<string, unknown> | null; userId: string; authorities?: unknown[] }) {
   const router = useRouter();
   const [form, setForm] = useState({
     full_name: String(profile?.full_name ?? ""),

@@ -13,7 +13,7 @@ const CME_DEFAULTS: Record<string, { required: number; cycle: number }> = {
   default: { required: 30, cycle: 2 },
 };
 
-export default function Step5Cme({ profile, userId }: { profile: Record<string, unknown> | null; userId: string }) {
+export default function Step5Cme({ profile, userId }: { profile: Record<string, unknown> | null; userId: string; authorities?: unknown[] }) {
   const router = useRouter();
   const profession = String(profile?.profession ?? "");
   const defaults = CME_DEFAULTS[profession] ?? CME_DEFAULTS.default;

@@ -9,12 +9,12 @@ create extension if not exists "uuid-ossp";
 -- ── professions / specialties lookup (reference tables) ──────────────────
 
 create table if not exists professions (
-  id   uuid primary key default uuid_generate_v4(),
+  id   uuid primary key default gen_random_uuid(),
   name text not null unique
 );
 
 create table if not exists specialties (
-  id            uuid primary key default uuid_generate_v4(),
+  id            uuid primary key default gen_random_uuid(),
   profession_id uuid references professions(id) on delete cascade,
   name          text not null
 );
@@ -24,7 +24,7 @@ create table if not exists specialties (
 create type org_type as enum ('hospital', 'clinic', 'pharmacy', 'university', 'lab', 'other');
 
 create table if not exists organizations (
-  id         uuid primary key default uuid_generate_v4(),
+  id         uuid primary key default gen_random_uuid(),
   name       text not null,
   type       org_type not null default 'other',
   country    text,
@@ -36,7 +36,7 @@ create table if not exists organizations (
 -- ── professional_profiles ─────────────────────────────────────────────────
 
 create table if not exists professional_profiles (
-  id                     uuid primary key default uuid_generate_v4(),
+  id                     uuid primary key default gen_random_uuid(),
   auth_id                uuid not null unique references auth.users(id) on delete cascade,
   email                  text not null,
   full_name              text,
@@ -99,7 +99,7 @@ create type user_role as enum (
 );
 
 create table if not exists organization_members (
-  id              uuid primary key default uuid_generate_v4(),
+  id              uuid primary key default gen_random_uuid(),
   organization_id uuid not null references organizations(id) on delete cascade,
   auth_id         uuid not null references auth.users(id) on delete cascade,
   role            user_role not null default 'employer_admin',
@@ -112,7 +112,7 @@ create table if not exists organization_members (
 create type link_status as enum ('pending', 'approved', 'rejected');
 
 create table if not exists employer_link_requests (
-  id                      uuid primary key default uuid_generate_v4(),
+  id                      uuid primary key default gen_random_uuid(),
   professional_id         uuid not null references auth.users(id) on delete cascade,
   organization_id         uuid references organizations(id) on delete set null,
   unverified_employer_name text,
@@ -126,7 +126,7 @@ create table if not exists employer_link_requests (
 -- ── profile_privacy_settings ──────────────────────────────────────────────
 
 create table if not exists profile_privacy_settings (
-  id                                      uuid primary key default uuid_generate_v4(),
+  id                                      uuid primary key default gen_random_uuid(),
   professional_id                         uuid not null unique references auth.users(id) on delete cascade,
   employer_can_view_cme_summary           boolean not null default true,
   employer_can_view_certificates          boolean not null default false,
@@ -145,7 +145,7 @@ create trigger privacy_settings_updated_at
 create type compliance_status as enum ('compliant', 'at_risk', 'non_compliant');
 
 create table if not exists cme_wallets (
-  id                   uuid primary key default uuid_generate_v4(),
+  id                   uuid primary key default gen_random_uuid(),
   professional_id      uuid not null unique references auth.users(id) on delete cascade,
   country              text not null default 'Qatar',
   profession           text not null,
@@ -190,7 +190,7 @@ create trigger cme_wallet_compliance_check
 create type verification_status as enum ('pending', 'verified', 'rejected');
 
 create table if not exists cme_activities (
-  id                  uuid primary key default uuid_generate_v4(),
+  id                  uuid primary key default gen_random_uuid(),
   wallet_id           uuid not null references cme_wallets(id) on delete cascade,
   professional_id     uuid not null references auth.users(id) on delete cascade,
   title               text not null,
@@ -226,7 +226,7 @@ create trigger cme_activity_sync
 -- ── audit_logs ─────────────────────────────────────────────────────────────
 
 create table if not exists audit_logs (
-  id            uuid primary key default uuid_generate_v4(),
+  id            uuid primary key default gen_random_uuid(),
   actor_auth_id uuid references auth.users(id) on delete set null,
   action        text not null,
   target_table  text,

@@ -4,10 +4,29 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
-const PROFESSIONS = ["Doctor (MD/MBBS)", "Dentist", "Pharmacist", "Nurse", "Physiotherapist", "Dietitian", "Radiologist", "Lab Technician", "Other"];
-const AUTHORITIES = ["QCHP (Qatar)", "DHA (Dubai)", "HAAD (Abu Dhabi)", "MOH (Saudi Arabia)", "MOH (UAE)", "CPHQ (Kuwait)", "NHRA (Bahrain)", "OMSB (Oman)", "Other"];
+type Authority = { id: string; abbreviation: string; authority_name: string; country: string };
 
-export default function Step3Professional({ profile, userId }: { profile: Record<string, unknown> | null; userId: string }) {
+const PROFESSIONS = [
+  "Doctor (MD/MBBS)",
+  "Dentist",
+  "Pharmacist",
+  "Nurse",
+  "Physiotherapist",
+  "Dietitian",
+  "Radiologist",
+  "Lab Technician",
+  "Other",
+];
+
+export default function Step3Professional({
+  profile,
+  userId,
+  authorities = [],
+}: {
+  profile: Record<string, unknown> | null;
+  userId: string;
+  authorities?: Authority[];
+}) {
   const router = useRouter();
   const [form, setForm] = useState({
     profession: String(profile?.profession ?? ""),
@@ -26,28 +45,44 @@ export default function Step3Professional({ profile, userId }: { profile: Record
     setLoading(true);
 
     const supabase = createClient();
+
+    // Resolve the licensing_authority_id from the selected abbreviation
+    const authority = authorities.find((a) => a.abbreviation === form.licensing_authority);
+    const updates: Record<string, unknown> = {
+      ...form,
+      onboarding_step: 4,
+    };
+    if (authority) updates.licensing_authority_id = authority.id;
+
     const { error } = await supabase
       .from("professional_profiles")
-      .update({ ...form, onboarding_step: 4 })
+      .update(updates)
       .eq("auth_id", userId);
 
     if (error) { setError(error.message); setLoading(false); return; }
     router.push("/onboarding/4");
   }
 
-  const textField = (id: string, label: string, placeholder = "") => (
+  const textField = (id: keyof typeof form, label: string, placeholder = "") => (
     <div>
       <label htmlFor={id} className="block text-sm font-medium text-[#374151] mb-1">{label}</label>
       <input
         id={id}
         type="text"
-        value={form[id as keyof typeof form]}
+        value={form[id]}
         onChange={(e) => setForm(f => ({ ...f, [id]: e.target.value }))}
         placeholder={placeholder}
         className="w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a56a0]"
       />
     </div>
   );
+
+  // Group authorities by country for <optgroup> display
+  const byCountry = authorities.reduce<Record<string, Authority[]>>((acc, a) => {
+    (acc[a.country] ??= []).push(a);
+    return acc;
+  }, {});
+  const countryOrder = ["Qatar", "UAE", "Saudi Arabia", "Kuwait", "Bahrain", "Oman"];
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -72,16 +107,39 @@ export default function Step3Professional({ profile, userId }: { profile: Record
       {textField("license_number", "License number", "e.g. QCHP-12345")}
 
       <div>
-        <label htmlFor="licensing_authority" className="block text-sm font-medium text-[#374151] mb-1">Licensing authority</label>
-        <select
-          id="licensing_authority"
-          value={form.licensing_authority}
-          onChange={(e) => setForm(f => ({ ...f, licensing_authority: e.target.value }))}
-          className="w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a56a0]"
-        >
-          <option value="">Select authority</option>
-          {AUTHORITIES.map(a => <option key={a} value={a}>{a}</option>)}
-        </select>
+        <label htmlFor="licensing_authority" className="block text-sm font-medium text-[#374151] mb-1">
+          Licensing authority
+        </label>
+        {authorities.length > 0 ? (
+          <select
+            id="licensing_authority"
+            value={form.licensing_authority}
+            onChange={(e) => setForm(f => ({ ...f, licensing_authority: e.target.value }))}
+            className="w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a56a0]"
+          >
+            <option value="">Select authority</option>
+            {countryOrder.map((country) =>
+              byCountry[country] ? (
+                <optgroup key={country} label={country}>
+                  {byCountry[country].map((a) => (
+                    <option key={a.id} value={a.abbreviation}>
+                      {a.abbreviation} — {a.authority_name}
+                    </option>
+                  ))}
+                </optgroup>
+              ) : null
+            )}
+          </select>
+        ) : (
+          <input
+            id="licensing_authority"
+            type="text"
+            value={form.licensing_authority}
+            onChange={(e) => setForm(f => ({ ...f, licensing_authority: e.target.value }))}
+            placeholder="e.g. QCHP (Qatar)"
+            className="w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a56a0]"
+          />
+        )}
       </div>
 
       <div>

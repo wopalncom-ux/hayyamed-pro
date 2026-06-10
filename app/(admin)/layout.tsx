@@ -25,6 +25,25 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <span className="text-xs text-blue-200 uppercase tracking-wide">{member.role.replace("_", " ")}</span>
         </div>
       </header>
+      <nav className="bg-white border-b border-[#e2e8f0] px-6">
+        <div className="max-w-6xl mx-auto flex gap-6 text-sm">
+          {[
+            { href: "/admin", label: "Overview" },
+            { href: "/admin/link-requests", label: "Link Requests" },
+            { href: "/admin/cme-activities", label: "CME Activities" },
+            { href: "/admin/organizations", label: "Organizations" },
+            { href: "/admin/professionals", label: "Professionals" },
+          ].map(({ href, label }) => (
+            <a
+              key={href}
+              href={href}
+              className="py-3 border-b-2 border-transparent hover:border-[#1a56a0] hover:text-[#1a56a0] text-[#64748b] transition-colors"
+            >
+              {label}
+            </a>
+          ))}
+        </div>
+      </nav>
       <main className="max-w-6xl mx-auto px-4 py-8">{children}</main>
     </div>
   );

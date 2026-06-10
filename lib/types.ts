@@ -130,3 +130,66 @@ export interface AuditLog {
   metadata: Record<string, unknown> | null;
   created_at: string;
 }
+
+// ── training_providers ─────────────────────────────────────────────────────
+
+export type ProviderStatus = "pending" | "active" | "suspended";
+
+export interface TrainingProvider {
+  id: string;
+  name: string;
+  description: string | null;
+  website_url: string | null;
+  country_code: string;
+  is_accredited: boolean;
+  accreditor: string | null;
+  logo_url: string | null;
+  contact_email: string | null;
+  status: ProviderStatus;
+  created_by: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+// ── courses ────────────────────────────────────────────────────────────────
+
+export type CourseStatus = "draft" | "active" | "closed" | "cancelled";
+export type DeliveryMode = "online" | "in_person" | "hybrid";
+
+export interface Course {
+  id: string;
+  provider_id: string;
+  title: string;
+  description: string | null;
+  category: string;
+  credits: number;
+  credit_type: string;
+  delivery_mode: DeliveryMode;
+  duration_hours: number | null;
+  price_usd: number | null;
+  is_free: boolean;
+  country_codes: string[];
+  professions: string[];
+  start_date: string | null;
+  end_date: string | null;
+  enrollment_deadline: string | null;
+  max_enrollments: number | null;
+  status: CourseStatus;
+  created_at: string;
+  updated_at: string;
+}
+
+// ── course_enrollments ─────────────────────────────────────────────────────
+
+export type EnrollmentStatus = "enrolled" | "in_progress" | "completed" | "cancelled";
+
+export interface CourseEnrollment {
+  id: string;
+  course_id: string;
+  professional_id: string;
+  enrolled_at: string;
+  completed_at: string | null;
+  credits_issued: number | null;
+  status: EnrollmentStatus;
+  certificate_url: string | null;
+}

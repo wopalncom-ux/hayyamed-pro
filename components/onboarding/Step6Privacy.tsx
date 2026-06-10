@@ -12,7 +12,7 @@ const PRIVACY_FIELDS = [
   { id: "employer_can_view_certificates", label: "CME certificates", description: "Uploaded certificate files", defaultOn: false },
 ];
 
-export default function Step6Privacy({ profile, userId }: { profile: Record<string, unknown> | null; userId: string }) {
+export default function Step6Privacy({ profile, userId }: { profile: Record<string, unknown> | null; userId: string; authorities?: unknown[] }) {
   const router = useRouter();
   const [settings, setSettings] = useState<Record<string, boolean>>(
     Object.fromEntries(PRIVACY_FIELDS.map(f => [f.id, f.defaultOn]))

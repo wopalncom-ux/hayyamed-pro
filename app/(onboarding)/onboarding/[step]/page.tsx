@@ -44,11 +44,12 @@ export default async function OnboardingStepPage({
   if (!user) redirect("/login");
 
   const admin = createAdminClient();
-  const { data: profile } = await admin
-    .from("professional_profiles")
-    .select("*")
-    .eq("auth_id", user.id)
-    .single();
+  const [{ data: profile }, { data: authorities }] = await Promise.all([
+    admin.from("professional_profiles").select("*").eq("auth_id", user.id).single(),
+    stepNum === 3
+      ? admin.from("licensing_authorities").select("id, abbreviation, authority_name, country").eq("is_active", true).order("country").order("authority_name")
+      : Promise.resolve({ data: [] }),
+  ]);
 
   if (profile?.onboarding_complete) redirect("/dashboard");
 
@@ -78,7 +79,7 @@ export default async function OnboardingStepPage({
       </div>
 
       <div className="bg-white rounded-xl shadow-sm border border-[#e2e8f0] p-8">
-        <StepComponent profile={profile} userId={user.id} />
+        <StepComponent profile={profile} userId={user.id} authorities={authorities ?? []} />
       </div>
     </div>
   );

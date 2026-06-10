@@ -17,7 +17,8 @@ export default async function EmployerLayout({ children }: { children: React.Rea
 
   if (!member) redirect("/dashboard");
 
-  const orgName = (member.organizations as { name: string } | null)?.name ?? "Your Organization";
+  const _orgs = member.organizations as { name: string }[] | { name: string } | null;
+  const orgName = (Array.isArray(_orgs) ? _orgs[0]?.name : (_orgs as { name: string } | null)?.name) ?? "Your Organization";
 
   return (
     <div className="min-h-screen bg-[#f8fafc]">

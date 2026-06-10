@@ -1,0 +1,13 @@
+.next
+node_modules
+.git
+.gitignore
+.env
+.env.*
+*.log
+.DS_Store
+npm-debug.log*
+coverage
+.nyc_output
+scripts
+supabase
