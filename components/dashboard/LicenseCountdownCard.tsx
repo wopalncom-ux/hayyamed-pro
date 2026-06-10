@@ -145,7 +145,7 @@ export default function LicenseCountdownCard({
       )}
 
       <div className="mt-4 pt-4 border-t border-[#e2e8f0] flex items-center justify-between">
-        <a href="/onboarding/3" className="text-xs text-[#1a56a0] hover:underline">
+        <a href="/dashboard/licenses" className="text-xs text-[#1a56a0] hover:underline">
           Update license details
         </a>
         <a href="/dashboard/cme" className="text-xs text-[#1a56a0] hover:underline">
