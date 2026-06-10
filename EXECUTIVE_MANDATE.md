@@ -39,6 +39,7 @@ and executed as a coordinated executive committee spanning all boards below.
 | Senior Product Manager | User stories, acceptance criteria, success metrics for every feature |
 | UX Director | Every screen must be usable by a GCC healthcare professional in 3 seconds |
 | Customer Experience Director | Every user journey from discovery to renewal must be frictionless |
+| Creative Director | Visual identity, layout hierarchy, typography scale, section flow — every page must feel like it belongs next to Linear, Vercel, and Stripe |
 
 ### Technology Board
 | Role | Operating Mandate |
@@ -50,6 +51,8 @@ and executed as a coordinated executive committee spanning all boards below.
 | API Architect | Versioned, documented, webhook-enabled, HRIS-integrable |
 | DevOps Architect | CI/CD, observability, rollback, load testing, deployment automation |
 | Scalability Architect | Design for 100K professionals from day one — no re-architecture at scale |
+| Motion Design Engineer | Framer Motion animations that direct attention and communicate capability — purposeful, never decorative; respects prefers-reduced-motion |
+| Frontend Performance Engineer | Lighthouse 90+ on every public page; Core Web Vitals (LCP < 2.5s, CLS 0, FID < 100ms); lazy loading, image optimization, animation budgets |
 
 ### Security Board
 | Role | Operating Mandate |
@@ -91,6 +94,8 @@ and executed as a coordinated executive committee spanning all boards below.
 | SEO Director | Medical professional search intent, Arabic SEO, GCC market SEO |
 | PR Director | GCC healthcare media, conference presence, authority building |
 | Healthcare Marketing Director | Messaging that resonates with physicians, nurses, pharmacists — not generic SaaS copy |
+| CRO Specialist | Every landing page element has one job — move the visitor to the next step; headline → proof → CTA hierarchy enforced on every page |
+| Brand Copywriter (Healthcare B2B) | Copy that speaks to a doctor or nurse with a renewal deadline; urgency without panic, authority without arrogance; GCC-aware, never generic global SaaS |
 
 ### Sales Board
 | Role | Operating Mandate |
@@ -252,12 +257,20 @@ Provide for every significant feature:
 - Real-Time Compliance Scoring (event trigger on activity verification)
 - FinOps / Cloud Cost Optimization (GCP billing alerts, committed use discounts)
 - Rate Limiting (Upstash Redis on auth + AI + webhook endpoints)
+- Framer Motion Animation Architecture (scroll-triggered, layout animations, reduced-motion compliance)
+- Core Web Vitals Engineering (LCP < 2.5s, CLS = 0, FID < 100ms — measured per page)
+- Dynamic Open Graph Image Generation (@vercel/og — branded social sharing cards)
+- Next.js Metadata API (per-page title, description, Open Graph, Twitter cards, canonical URLs)
+- Sitemap & Robots.txt Generation (Next.js App Router built-in — auto-updated on new pages)
+- JSON-LD Structured Data (SoftwareApplication, FAQPage, Organization schemas)
 
 **Rules:**
 - RLS enabled on every table — no exceptions, ever
 - All foreign keys explicitly declared and indexed
 - No country-specific logic hardcoded — rules engine governs all compliance
 - API contracts are versioned before any enterprise client integrates
+- Every public page must score Lighthouse Performance > 90 before shipping
+- All animations must respect `prefers-reduced-motion: reduce` — no exceptions
 
 ---
 
@@ -433,6 +446,52 @@ Hospital → Gov:     "License the platform for your entire authority"
 - Sponsored content must be disclosed — editorial independence is non-negotiable
 - Arabic content reviewed by a native Gulf Arabic medical professional before publishing
 - No marketing claim promises a specific regulatory outcome
+
+---
+
+### Domain 10 — Extended: CRO & Brand Copywriting
+
+**Active Skills:**
+- Conversion Rate Optimization (CRO) — landing page hierarchy, CTA placement, friction removal
+- Above-the-Fold Audit (headline + subhead + CTA must be immediately clear on every device)
+- Healthcare B2B Copywriting — benefit-first, authority-building, urgency without alarm
+- Social Proof Architecture — trust signals, authority logos, compliance accuracy statements
+- Pricing Page Optimization — plan comparison, anchor pricing, most-popular framing
+- A/B Test Hypothesis Writing — structured test ideas with success metrics pre-defined
+- GCC Cultural Copywriting — Gulf Arabic professional tone, formal but approachable
+- FAQ Schema Copywriting — structured for Google People Also Ask rich results
+
+**Rules:**
+- Every headline answers: "What does this do for me?" — not "What is this?"
+- No paragraph longer than 3 lines on a landing page — white space is not wasted space
+- Every CTA button uses a verb + benefit: "Start tracking free" not "Sign up"
+- Social proof placed within 2 scrolls of the hero — never below the fold only
+
+---
+
+### Domain 13 — Design, Creative & Motion
+
+**Active Skills:**
+- Landing Page Visual Architecture (section rhythm, contrast alternation, visual hierarchy)
+- Typography Scale Design (display / heading / body / caption — consistent rem scale)
+- Color System Application (primary, surface, muted, accent, semantic — applied consistently)
+- Hero Section Design (above-fold visual, dashboard preview, animated trust signals)
+- Scroll-Triggered Animation Design (Framer Motion `whileInView`, `viewport once`, stagger children)
+- Micro-interaction Design (button hover states, form focus rings, loading states)
+- Dark Section Design (navy/black sections for contrast rhythm — not full dark mode)
+- Dashboard Mockup Design (animated preview cards that demonstrate the product without login)
+- Icon System (lucide-react — consistent size, stroke weight, color usage)
+- Gradient & Background Design (mesh gradients, subtle noise textures, directional gradients)
+- Open Graph Card Design (1200×630 branded cards for social sharing)
+- Mobile-First Layout Design (375px design baseline, fluid scaling up to 1440px)
+
+**Rules:**
+- Design system colors defined in CLAUDE.md are the only colors used — no ad-hoc hex values
+- System font stack only — no external font CDN dependency (performance + privacy)
+- Every animation has a duration budget: micro = 150ms, standard = 300ms, emphasis = 500ms
+- No animation on first paint above the fold — content renders instantly, animation enhances
+- Dark sections use `#0f1f3d` (deep navy) as background — never pure black `#000000`
+- All decorative images use `next/image` with explicit width/height to prevent CLS
 
 ---
 
