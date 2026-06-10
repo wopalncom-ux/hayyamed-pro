@@ -5,6 +5,8 @@ import { createClient } from "@/lib/supabase/client";
 import { addCmeActivity } from "@/app/(dashboard)/dashboard/cme/actions";
 import { useToast } from "@/components/ui/toast";
 import { track } from "@/lib/analytics";
+import { isPro } from "@/lib/planUtils";
+import type { Plan } from "@/lib/planUtils";
 
 const CATEGORIES: { value: string; label: string }[] = [
   { value: "conference", label: "Conference / Seminar" },
@@ -34,10 +36,12 @@ interface AiSuggestion {
 export default function AddActivityModal({
   walletId,
   countryCode = "QA",
+  plan = "free",
   onClose,
 }: {
   walletId: string;
   countryCode?: string;
+  plan?: Plan;
   onClose: () => void;
 }) {
   const [loading, setLoading] = useState(false);
@@ -180,7 +184,11 @@ export default function AddActivityModal({
     });
 
     if (result?.error) {
-      setError(result.error);
+      if (result.error === "FREE_LIMIT_REACHED") {
+        setError("You've reached the 10-activity free limit. Upgrade to Pro for unlimited tracking.");
+      } else {
+        setError(result.error);
+      }
       setLoading(false);
       return;
     }
@@ -209,41 +217,51 @@ export default function AddActivityModal({
         </div>
 
         <form onSubmit={handleSubmit} className="px-6 py-5 space-y-4">
-          {/* Certificate upload (first — OCR fills other fields) */}
+          {/* Certificate upload (Pro only — OCR fills other fields) */}
           <div>
             <label className="block text-sm font-medium text-[#374151] mb-1">
               Certificate{" "}
               <span className="text-[#64748b] font-normal">(PDF or image)</span>
             </label>
-            <div className="flex items-center gap-2">
-              <input
-                ref={fileRef}
-                type="file"
-                accept=".pdf,.jpg,.jpeg,.png,.webp"
-                className="flex-1 text-sm text-[#64748b] file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-medium file:bg-[#f1f5f9] file:text-[#374151] hover:file:bg-[#e2e8f0] cursor-pointer"
-                onChange={(e) => {
-                  setSelectedFileName(e.target.files?.[0]?.name ?? "");
-                  setOcrDone(false);
-                }}
-              />
-              {selectedFileName && (
-                <button
-                  type="button"
-                  onClick={handleOcr}
-                  disabled={ocrLoading}
-                  className="shrink-0 flex items-center gap-1.5 text-xs font-medium text-[#1a56a0] border border-[#1a56a0]/30 rounded-lg px-2.5 py-1.5 hover:bg-[#1a56a0]/5 disabled:opacity-50 transition-colors"
-                >
-                  {ocrLoading ? (
-                    <>
-                      <span className="inline-block w-3 h-3 border border-[#1a56a0] border-t-transparent rounded-full animate-spin" />
-                      Reading…
-                    </>
-                  ) : (
-                    <>✦ Extract</>
-                  )}
-                </button>
-              )}
-            </div>
+            {!isPro(plan) ? (
+              <div className="flex items-center gap-3 bg-[#f8fafc] border border-[#e2e8f0] rounded-lg px-3 py-2.5">
+                <span className="text-[#94a3b8] text-xs">🔒</span>
+                <p className="text-xs text-[#64748b]">
+                  Certificate storage and AI extraction require{" "}
+                  <a href="/pricing" className="text-[#1a56a0] font-medium hover:underline">Pro plan</a>.
+                </p>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <input
+                  ref={fileRef}
+                  type="file"
+                  accept=".pdf,.jpg,.jpeg,.png,.webp"
+                  className="flex-1 text-sm text-[#64748b] file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-medium file:bg-[#f1f5f9] file:text-[#374151] hover:file:bg-[#e2e8f0] cursor-pointer"
+                  onChange={(e) => {
+                    setSelectedFileName(e.target.files?.[0]?.name ?? "");
+                    setOcrDone(false);
+                  }}
+                />
+                {selectedFileName && (
+                  <button
+                    type="button"
+                    onClick={handleOcr}
+                    disabled={ocrLoading}
+                    className="shrink-0 flex items-center gap-1.5 text-xs font-medium text-[#1a56a0] border border-[#1a56a0]/30 rounded-lg px-2.5 py-1.5 hover:bg-[#1a56a0]/5 disabled:opacity-50 transition-colors"
+                  >
+                    {ocrLoading ? (
+                      <>
+                        <span className="inline-block w-3 h-3 border border-[#1a56a0] border-t-transparent rounded-full animate-spin" />
+                        Reading…
+                      </>
+                    ) : (
+                      <>✦ Extract</>
+                    )}
+                  </button>
+                )}
+              </div>
+            )}
             {ocrDone && (
               <p className="mt-1.5 text-xs text-green-700 bg-green-50 border border-green-200 rounded px-2 py-1">
                 ✓ Fields extracted from certificate — review and adjust before saving

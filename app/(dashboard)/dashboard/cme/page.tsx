@@ -9,6 +9,7 @@ import ComplianceChatWidget from "@/components/dashboard/ComplianceChatWidget";
 import EmployerTasksSection from "@/components/dashboard/EmployerTasksSection";
 import UpgradeLink from "@/components/dashboard/UpgradeLink";
 import { getUserPlan, isPro } from "@/lib/subscription";
+import { FREE_ACTIVITY_LIMIT } from "@/lib/planLimits";
 
 export default async function CmePage() {
   const supabase = await createClient();
@@ -120,14 +121,31 @@ export default async function CmePage() {
           {/* Activities */}
           <div className="bg-white rounded-xl border border-[#e2e8f0]">
             <div className="flex items-center justify-between px-6 py-4 border-b border-[#e2e8f0]">
-              <h2 className="text-base font-semibold text-[#111]">CME Activities</h2>
+              <div>
+                <h2 className="text-base font-semibold text-[#111]">CME Activities</h2>
+                {!isPro(plan) && (
+                  <p className={`text-xs mt-0.5 ${activities.length >= FREE_ACTIVITY_LIMIT ? "text-[#dc2626]" : "text-[#64748b]"}`}>
+                    {activities.length} / {FREE_ACTIVITY_LIMIT} free activities used
+                    {activities.length >= FREE_ACTIVITY_LIMIT && " — limit reached"}
+                  </p>
+                )}
+              </div>
               <div className="flex items-center gap-3">
                 {isPro(plan) ? (
                   <DownloadReportButton />
                 ) : (
                   <UpgradeLink source="cme_wallet" />
                 )}
-                <AddActivityButton walletId={wallet.id} />
+                {isPro(plan) || activities.length < FREE_ACTIVITY_LIMIT ? (
+                  <AddActivityButton walletId={wallet.id} plan={plan} />
+                ) : (
+                  <a
+                    href="/pricing"
+                    className="text-xs bg-[#1a56a0] text-white px-3 py-2 rounded-lg font-semibold hover:bg-[#1547a0] transition-colors"
+                  >
+                    Upgrade to log more
+                  </a>
+                )}
               </div>
             </div>
 

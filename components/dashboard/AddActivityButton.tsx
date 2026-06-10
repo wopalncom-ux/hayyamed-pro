@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import AddActivityModal from "./AddActivityModal";
+import type { Plan } from "@/lib/planUtils";
 
-export default function AddActivityButton({ walletId }: { walletId: string }) {
+export default function AddActivityButton({ walletId, plan = "free" }: { walletId: string; plan?: Plan }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -15,7 +16,7 @@ export default function AddActivityButton({ walletId }: { walletId: string }) {
         + Log Activity
       </button>
       {open && (
-        <AddActivityModal walletId={walletId} onClose={() => setOpen(false)} />
+        <AddActivityModal walletId={walletId} plan={plan} onClose={() => setOpen(false)} />
       )}
     </>
   );

@@ -1,6 +1,9 @@
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { getUserPlan, isPro } from "@/lib/subscription";
+import { FREE_ACTIVITY_LIMIT } from "@/lib/planLimits";
+import FreeTierBanner from "@/components/dashboard/FreeTierBanner";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -9,10 +12,11 @@ export default async function DashboardPage() {
 
   const admin = createAdminClient();
 
-  const [profileRes, walletRes, activitiesRes] = await Promise.all([
+  const [profileRes, walletRes, activitiesRes, plan] = await Promise.all([
     admin.from("professional_profiles").select("*").eq("auth_id", user.id).single(),
     admin.from("cme_wallets").select("*").eq("professional_id", user.id).maybeSingle(),
     admin.from("cme_activities").select("id").eq("professional_id", user.id),
+    getUserPlan(user.id),
   ]);
 
   const profile = profileRes.data;
@@ -26,12 +30,17 @@ export default async function DashboardPage() {
 
   return (
     <div>
-      <div className="mb-8">
+      <div className="mb-6">
         <h1 className="text-2xl font-bold text-[#111]">
           Welcome back, {profile?.full_name?.split(" ")[0] ?? "Professional"}
         </h1>
         <p className="text-[#64748b] text-sm mt-1">{profile?.profession} • {profile?.specialty}</p>
       </div>
+
+      {/* Free tier upgrade banner — only shown to non-Pro users */}
+      {!isPro(plan) && (
+        <FreeTierBanner activityCount={activityCount} />
+      )}
 
       {/* Stats grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
@@ -56,7 +65,7 @@ export default async function DashboardPage() {
         <StatCard
           label="CME Activities"
           value={String(activityCount)}
-          sub="Logged activities"
+          sub={isPro(plan) ? "Unlimited · Pro plan" : `of ${FREE_ACTIVITY_LIMIT} free · ${Math.max(0, FREE_ACTIVITY_LIMIT - activityCount)} remaining`}
           color="blue"
         />
       </div>
