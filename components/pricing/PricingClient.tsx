@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { track } from "@/lib/analytics";
 import UpgradeButton from "./UpgradeButton";
+import QPayCheckout from "@/components/payments/QPayCheckout";
 import type { EmployerTierKey } from "@/lib/paddle";
 import type { Plan } from "@/lib/planUtils";
 
@@ -93,11 +94,14 @@ function Toggle({ annual, onChange }: { annual: boolean; onChange: (v: boolean) 
 export default function PricingClient({
   userPlan = null,
   trialDaysLeft = null,
+  qpayEnabled = false,
 }: {
   userPlan?: Plan | null;
   trialDaysLeft?: number | null;
+  qpayEnabled?: boolean;
 }) {
   const [annual, setAnnual] = useState(true);
+  const [showQPay, setShowQPay] = useState(false);
 
   useEffect(() => {
     const source = new URLSearchParams(window.location.search).get("source") ?? "direct";
@@ -208,12 +212,31 @@ export default function PricingClient({
                 Included in your Employer plan
               </div>
             ) : (
-              <UpgradeButton
-                plan="pro"
-                billingInterval={annual ? "annual" : "monthly"}
-                label={`Upgrade to Pro — $${proPrice}${proSuffix}`}
-                variant="white"
-              />
+              <div className="space-y-2">
+                <UpgradeButton
+                  plan="pro"
+                  billingInterval={annual ? "annual" : "monthly"}
+                  label={`Upgrade to Pro — $${proPrice}${proSuffix}`}
+                  variant="white"
+                />
+                {qpayEnabled && !showQPay && (
+                  <button
+                    type="button"
+                    onClick={() => { setShowQPay(true); track("qpay_checkout_opened", { plan: "pro" }); }}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-white/10 border border-white/25 text-white text-xs font-semibold rounded-xl hover:bg-white/20 transition-colors"
+                  >
+                    <span>🇶🇦</span>
+                    Pay with QPay (QAR)
+                  </button>
+                )}
+                {qpayEnabled && showQPay && (
+                  <QPayCheckout
+                    plan="pro"
+                    billingInterval={annual ? "annual" : "monthly"}
+                    onClose={() => setShowQPay(false)}
+                  />
+                )}
+              </div>
             )}
           </div>
         </div>

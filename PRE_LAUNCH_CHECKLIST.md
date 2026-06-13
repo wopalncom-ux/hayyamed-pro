@@ -1,4 +1,4 @@
-﻿# Hayya Med Pro â€” Pre-Launch Checklist
+# Hayya Med Pro â€” Pre-Launch Checklist
 ## Classification: Internal â€” Operational
 ## Owner: COO + CTO
 ## Review: Weekly until live
@@ -288,6 +288,9 @@ Tier 2 must be complete within 30 days.
 | CEO / Founder | Final approval to launch | [ ] |
 
 ---
+
+*Last updated: 2026-06-13 - Session 46: (1) Landing page redesign -- 14 to 8 sections, NeuralCanvas particle animation, Hayya Med AI branding, Vision/Mission section. (2) AI Module Control Center /admin/ai-modules -- 9 modules, 8 model options (Claude/GPT/Gemini), cost estimator, stored in platform_settings. (3) Hayya AI Voice Assistant -- floating orb, Web Speech API STT, /api/ai/voice-chat (Haiku 4.5 Pro-gated), browser TTS, conversation panel, mounted in dashboard layout. (4) Employer AI Analyzer /employer/ai-analyzer -- /api/ai/employer-analyzer (Sonnet 4.6), heatmap, risk gauge, severity alerts, PDF download, zero PII to AI. (5) Training Provider AI Analyzer /provider/ai-analyzer -- /api/ai/provider-analyzer (Sonnet 4.6), demand prediction, gap opportunity cards, revenue insights. (6) QPay Qatar -- lib/qpay.ts, /api/qpay/checkout, /api/qpay/callback (verify-first not blind trust), QPayCheckout component, migration 029 qpay_invoices with RLS, wired into pricing Pro card. COMBINED_RUN_ONCE.sql updated with migration 029. Provider analyzer bug fixed: courses table correct, enrollment aggregate via course_enrollments join. Build: 0 TypeScript errors.*
+
 
 *Last updated: 2026-06-12 â€” Session 39: (1) Employer layout infinite redirect fix â€” added `isRegisterPage` null-safe render path so `member.organizations` is never dereferenced when `member=null` on the register page. (2) Paddle webhook `SubscriptionActivated` handler â€” added case to fill `current_period_end` from first successful payment (was never set by `TransactionCompleted`); fixes billing page showing no renewal date and renewal reminder emails. (3) Email "14-day" cleanup â€” onboarding reminder and employer invite emails now say "Pro trial" (generic) not "14-day Pro trial" (wrong for 30-day referred users). (4) Migration 026 critical RLS fix â€” `employer_required_courses` RLS policies referenced `org_id` from `organization_members` but the actual column is `organization_id`; fixed in migration SQL. (5) Required-training page + actions â€” same `org_id` â†’ `organization_id` bug in app code fixed. Build: 0 TypeScript errors.*
 

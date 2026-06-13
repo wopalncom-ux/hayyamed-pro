@@ -108,7 +108,11 @@ export type AnalyticsEvent =
   | "referral_link_generated"
   | "referral_link_copied"
   | "referral_link_shared_linkedin"
-  | "referral_banner_shown";
+  | "referral_banner_shown"
+  // QPay
+  | "qpay_checkout_opened"
+  | "qpay_payment_initiated"
+  | "qpay_payment_confirmed";
 
 // ── Core tracker ─────────────────────────────────────────────────────────────
 export function track(

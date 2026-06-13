@@ -2,6 +2,7 @@
 import { getUserPlan } from "@/lib/subscription";
 import PricingClient from "@/components/pricing/PricingClient";
 import type { Plan } from "@/lib/planUtils";
+import { isQPayConfigured } from "@/lib/qpay";
 
 export const metadata = {
   title: "Pricing â€” Hayya Med Pro",
@@ -93,7 +94,7 @@ export default async function PricingPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(pricingFaqLd) }}
       />
-      <PricingClient userPlan={userPlan} trialDaysLeft={trialDaysLeft} />
+      <PricingClient userPlan={userPlan} trialDaysLeft={trialDaysLeft} qpayEnabled={isQPayConfigured()} />
     </>
   );
 }

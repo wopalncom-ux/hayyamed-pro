@@ -76,12 +76,38 @@ export async function POST(req: NextRequest) {
     return Response.json({ error: "AI not configured." }, { status: 503 });
   }
 
-  // Fetch provider's course enrollment and CME activity data (anonymized aggregates)
-  const { data: courses } = await admin
-    .from("marketplace_courses")
-    .select("id, title, specialty, category, price, status, enrolled_count, completion_rate")
-    .eq("provider_id", organizationId)
-    .eq("status", "active");
+  // Resolve training_provider row (provider is linked via created_by)
+  const { data: provider } = await admin
+    .from("training_providers")
+    .select("id, name")
+    .eq("created_by", user.id)
+    .eq("status", "active")
+    .maybeSingle();
+
+  // Fetch courses for this provider
+  const coursesRes = provider
+    ? await admin
+        .from("courses")
+        .select("id, title, category, credits, price_usd, is_free, status, delivery_mode, professions, country_codes")
+        .eq("provider_id", provider.id)
+        .eq("status", "active")
+    : { data: [] as Array<{ id: string; title: string; category: string; credits: number; price_usd: number | null; is_free: boolean; status: string; delivery_mode: string; professions: string[]; country_codes: string[] }> };
+
+  const courses = coursesRes.data ?? [];
+
+  // Count enrollments per course (anonymized aggregate — no PII)
+  const courseIds = courses.map((c) => c.id);
+  const enrollmentCountsRes = courseIds.length
+    ? await admin
+        .from("course_enrollments")
+        .select("course_id")
+        .in("course_id", courseIds)
+    : { data: [] as Array<{ course_id: string }> };
+
+  const enrollByC: Record<string, number> = {};
+  for (const e of enrollmentCountsRes.data ?? []) {
+    enrollByC[e.course_id] = (enrollByC[e.course_id] ?? 0) + 1;
+  }
 
   // Fetch anonymized demand signals from platform wallets (what professions/countries need)
   const { data: walletAggregates } = await admin
@@ -89,10 +115,9 @@ export async function POST(req: NextRequest) {
     .select("country, profession, compliance_status")
     .limit(500);
 
-  const totalCourses = courses?.length ?? 0;
-  const avgEnrollment = totalCourses > 0
-    ? Math.round((courses ?? []).reduce((sum, c) => sum + (c.enrolled_count ?? 0), 0) / totalCourses)
-    : 0;
+  const totalCourses = courses.length;
+  const totalEnrollments = Object.values(enrollByC).reduce((s, n) => s + n, 0);
+  const avgEnrollment = totalCourses > 0 ? Math.round(totalEnrollments / totalCourses) : 0;
 
   const specialtyDemand: Record<string, number> = {};
   const countryProfessions: Record<string, number> = {};
@@ -119,9 +144,9 @@ export async function POST(req: NextRequest) {
 
   const coursesSummary =
     totalCourses > 0
-      ? (courses ?? [])
+      ? courses
           .slice(0, 10)
-          .map((c) => `"${c.title}" — ${c.specialty ?? "General"}, enrolled: ${c.enrolled_count ?? 0}, completion: ${c.completion_rate ?? 0}%`)
+          .map((c) => `"${c.title}" — ${c.category}, ${c.credits} credits, ${c.delivery_mode}, enrolled: ${enrollByC[c.id] ?? 0}, professions: ${c.professions.join("/")}`)
           .join("\n")
       : "No active courses yet.";
 
