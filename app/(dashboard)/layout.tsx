@@ -4,7 +4,9 @@ import { createAdminClient } from "@/lib/supabase/server";
 import DashboardNav from "@/components/dashboard/DashboardNav";
 import NpsSurvey from "@/components/dashboard/NpsSurvey";
 import PostHogIdentify from "@/components/PostHogIdentify";
+import HayyaVoiceOrb from "@/components/ai/HayyaVoiceOrb";
 import { ToastProvider } from "@/components/ui/toast";
+import { getUserPlan } from "@/lib/subscription";
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient();
@@ -47,6 +49,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
 
   const profile = profileRes.data;
   const isEmployerAdmin = !!employerMemberRes?.data;
+  const userPlan = await getUserPlan(user.id);
 
   if (!profile?.onboarding_complete) {
     redirect(`/onboarding/${profile?.onboarding_step ?? 1}`);
@@ -64,6 +67,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
         />
         <main className="max-w-5xl mx-auto px-4 py-8">{children}</main>
         {profile?.created_at && <NpsSurvey createdAt={profile.created_at} />}
+        <HayyaVoiceOrb plan={userPlan} />
         <footer className="border-t border-[#e2e8f0] mt-4">
           <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between text-xs text-[#94a3b8]">
             <span>Hayya Med Pro supports CME tracking only. Verify requirements with your regulatory authority.</span>

@@ -60,12 +60,23 @@ export default async function ProviderDashboardPage() {
             <span className="text-xs text-[#64748b]">{provider.country_code}</span>
           </div>
         </div>
-        <Link
-          href="/provider/courses/new"
-          className="text-sm bg-[#1a56a0] text-white px-4 py-2 rounded-lg hover:bg-[#1547a0] transition-colors font-medium"
-        >
-          + New Course
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            href="/provider/ai-analyzer"
+            className="flex items-center gap-1.5 text-sm bg-[#0f1f3d] text-white px-3 py-2 rounded-lg hover:bg-[#1a2f5a] transition-colors font-medium"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z" />
+            </svg>
+            AI Analyzer
+          </Link>
+          <Link
+            href="/provider/courses/new"
+            className="text-sm bg-[#1a56a0] text-white px-4 py-2 rounded-lg hover:bg-[#1547a0] transition-colors font-medium"
+          >
+            + New Course
+          </Link>
+        </div>
       </div>
 
       {/* Stats */}
