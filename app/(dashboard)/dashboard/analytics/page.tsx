@@ -1,6 +1,8 @@
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import WalletTabs from "@/components/dashboard/WalletTabs";
+import RenewalPredictionWidget from "./RenewalPredictionWidget";
+import { getUserPlan, isPro } from "@/lib/subscription";
 
 interface Activity {
   credits: number;
@@ -52,12 +54,16 @@ export default async function AnalyticsPage({
 
   const admin = createAdminClient();
 
-  // Fetch all wallets first
-  const walletsRes = await admin
-    .from("cme_wallets")
-    .select("*")
-    .eq("professional_id", user.id)
-    .order("created_at", { ascending: true });
+  // Fetch wallets and plan in parallel
+  const [walletsRes, plan] = await Promise.all([
+    admin
+      .from("cme_wallets")
+      .select("*")
+      .eq("professional_id", user.id)
+      .order("created_at", { ascending: true }),
+    getUserPlan(user.id),
+  ]);
+  const userIsPro = isPro(plan);
 
   const wallets = walletsRes.data ?? [];
   const wallet = wallets.find((w) => w.id === walletParam) ?? wallets[0] ?? null;
@@ -407,6 +413,13 @@ export default async function AnalyticsPage({
               </svg>
             );
           })()}
+        </div>
+      )}
+
+      {/* AI Renewal Forecast widget */}
+      {wallet && (
+        <div className="mb-6">
+          <RenewalPredictionWidget walletId={wallet.id} isPro={userIsPro} />
         </div>
       )}
 
