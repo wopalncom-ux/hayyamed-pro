@@ -68,20 +68,47 @@ export type AnalyticsEvent =
   | "ai_chat_message_sent"
   | "ai_recommendation_viewed"
   // Revenue funnel (conversion signals)
+  | "pricing_page_viewed"
   | "pdf_report_downloaded"
   | "pdf_report_blocked"
   | "upgrade_clicked"
   | "subscription_started"
+  | "subscription_activated"
   | "subscription_cancelled"
+  | "promo_code_applied"
   // Employer funnel
   | "employer_link_requested"
   | "employer_link_approved"
   | "employer_task_assigned"
   | "employer_reminder_sent"
+  | "employer_setup_started"
+  | "employer_setup_completed"
+  | "employer_invite_link_copied"
   // Profile
   | "license_added"
   | "settings_updated"
-  | "profile_completed";
+  | "profile_completed"
+  // Bulk import
+  | "cme_activities_bulk_imported"
+  // PDF report paywall
+  | "pdf_paywall_shown"
+  | "pdf_report_upgrade_clicked"
+  // Badge
+  | "badge_link_copied"
+  | "badge_downloaded"
+  | "badge_shared_linkedin"
+  | "badge_shared_whatsapp"
+  // Public profile
+  | "profile_link_copied"
+  | "profile_shared_linkedin"
+  // NPS
+  | "nps_submitted"
+  | "nps_dismissed"
+  // Referral
+  | "referral_link_generated"
+  | "referral_link_copied"
+  | "referral_link_shared_linkedin"
+  | "referral_banner_shown";
 
 // ── Core tracker ─────────────────────────────────────────────────────────────
 export function track(

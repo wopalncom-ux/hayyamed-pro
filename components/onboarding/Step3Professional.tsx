@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { track } from "@/lib/analytics";
 
 type Authority = { id: string; abbreviation: string; authority_name: string; country: string };
 
@@ -60,6 +61,7 @@ export default function Step3Professional({
       .eq("auth_id", userId);
 
     if (error) { setError(error.message); setLoading(false); return; }
+    track("onboarding_step_completed", { step: 3, step_name: "professional", profession: form.profession });
     router.push("/onboarding/4");
   }
 

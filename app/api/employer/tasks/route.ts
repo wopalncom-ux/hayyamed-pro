@@ -81,13 +81,14 @@ export async function POST(req: NextRequest) {
     .select("id")
     .single();
 
-  const [profileRes, authRes] = await Promise.all([
-    admin.from("professional_profiles").select("full_name").eq("auth_id", professional_id).maybeSingle(),
-    admin.auth.admin.getUserById(professional_id),
-  ]);
+  const { data: staffProfile } = await admin
+    .from("professional_profiles")
+    .select("email, full_name")
+    .eq("auth_id", professional_id)
+    .maybeSingle();
 
-  const email = authRes.data?.user?.email;
-  const name = profileRes.data?.full_name;
+  const email = staffProfile?.email;
+  const name = staffProfile?.full_name;
 
   if (email && name) {
     await sendTaskAssignedEmail({

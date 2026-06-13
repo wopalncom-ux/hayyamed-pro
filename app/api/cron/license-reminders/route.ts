@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/server";
 import { sendLicenseExpiryEmail } from "@/lib/email";
+import { pingCronMonitor } from "@/lib/cronMonitor";
 
 export const runtime = "nodejs";
 
@@ -8,14 +9,13 @@ export const runtime = "nodejs";
 const REMINDER_DAYS = [90, 60, 30, 14, 7];
 
 export async function GET(req: NextRequest) {
-  const secret = req.headers.get("x-cron-secret") ?? req.nextUrl.searchParams.get("secret");
-  if (secret !== process.env.CRON_SECRET) {
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  const auth = req.headers.get("authorization");
+  if (auth !== `Bearer ${process.env.CRON_SECRET}`) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const admin = createAdminClient();
 
-  // Build a date condition: license_expiry is exactly N days from today for any N in REMINDER_DAYS
   const today = new Date();
   const targetDates = REMINDER_DAYS.map((d) => {
     const dt = new Date(today);
@@ -23,18 +23,20 @@ export async function GET(req: NextRequest) {
     return dt.toISOString().slice(0, 10);
   });
 
-  // Fetch professionals whose license expires on a reminder date
+  // Requires migration 022: email_license_expiry column with DEFAULT true
   const { data: profiles, error } = await admin
     .from("professional_profiles")
     .select("auth_id, email, full_name, license_expiry")
     .in("license_expiry", targetDates)
-    .not("email", "is", null);
+    .not("email", "is", null)
+    .eq("email_license_expiry", true);
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
   if (!profiles?.length) {
+    await pingCronMonitor("license-reminders");
     return NextResponse.json({ sent: 0, message: "No reminders due today" });
   }
 
@@ -53,11 +55,10 @@ export async function GET(req: NextRequest) {
         to: p.email,
         name,
         expiryDate: new Date(p.license_expiry).toLocaleDateString("en-GB", {
-          day: "numeric",
-          month: "long",
-          year: "numeric",
+          day: "numeric", month: "long", year: "numeric",
         }),
         daysLeft,
+        authId: p.auth_id,
       });
       sent++;
       results.push({ email: p.email, daysLeft, ok: true });
@@ -66,5 +67,6 @@ export async function GET(req: NextRequest) {
     }
   }
 
+  await pingCronMonitor("license-reminders");
   return NextResponse.json({ sent, total: profiles.length, results });
 }

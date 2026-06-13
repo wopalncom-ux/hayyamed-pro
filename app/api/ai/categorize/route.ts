@@ -1,7 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { getAnthropicClient } from "@/lib/anthropic";
 import { checkAndLogRateLimit } from "@/lib/rateLimit";
+import { logAudit } from "@/lib/audit";
+
+const CategorizeResponseSchema = z.object({
+  category: z.enum(["conference", "online", "workshop", "journal", "teaching", "simulation", "mandatory", "patient_safety", "other"]),
+  confidence: z.enum(["high", "medium", "low"]),
+  creditSuggestion: z.number().nullable(),
+  notes: z.string(),
+});
 
 export const runtime = "nodejs";
 
@@ -31,11 +40,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "AI features not configured" }, { status: 503 });
   }
 
+  const startTime = Date.now();
   try {
     const client = getAnthropicClient();
 
     const response = await client.messages.create({
-      model: "claude-opus-4-8",
+      model: "claude-haiku-4-5-20251001",
       max_tokens: 256,
       system: `You are a CME (Continuing Medical Education) classification expert for GCC healthcare professionals. Classify activities into the correct category. Respond ONLY with valid JSON matching this exact schema with no other text:
 {"category":"<category>","confidence":"high|medium|low","creditSuggestion":<number or null>,"notes":"<one sentence>"}
@@ -63,13 +73,28 @@ Set creditSuggestion to null if entered credits seem reasonable, or suggest a be
       ],
     });
 
+    logAudit({
+      actorAuthId: user.id,
+      action: "ai.categorize",
+      targetTable: "audit_logs",
+      metadata: {
+        model: "claude-haiku-4-5-20251001",
+        input_tokens: response.usage?.input_tokens ?? 0,
+        output_tokens: response.usage?.output_tokens ?? 0,
+        latency_ms: Date.now() - startTime,
+      },
+    }).catch(() => {});
+
     const textBlock = response.content.find((b) => b.type === "text");
     if (!textBlock || textBlock.type !== "text") {
       return NextResponse.json({ error: "No AI response" }, { status: 500 });
     }
 
-    const result = JSON.parse(textBlock.text.trim());
-    return NextResponse.json(result);
+    const parsed = CategorizeResponseSchema.safeParse(JSON.parse(textBlock.text.trim()));
+    if (!parsed.success) {
+      return NextResponse.json({ error: "Invalid AI response structure" }, { status: 500 });
+    }
+    return NextResponse.json(parsed.data);
   } catch {
     return NextResponse.json({ error: "Categorization failed" }, { status: 500 });
   }

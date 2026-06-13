@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/server";
 import { sendPushNotification } from "@/lib/push";
 import { sendLicenseExpiryEmail } from "@/lib/email";
+import { pingCronMonitor } from "@/lib/cronMonitor";
 
 export const runtime = "nodejs";
 
@@ -27,19 +28,15 @@ export async function GET(request: NextRequest) {
 
     const { data: profiles } = await admin
       .from("professional_profiles")
-      .select("auth_id, full_name, license_expiry")
+      .select("auth_id, email, full_name, license_expiry")
       .eq("license_expiry", dateStr);
 
     if (!profiles?.length) continue;
 
     for (const profile of profiles) {
-      // Get auth user email
-      const { data: authUser } = await admin.auth.admin.getUserById(profile.auth_id);
-      const email = authUser.user?.email;
-
-      if (email) {
+      if (profile.email) {
         await sendLicenseExpiryEmail({
-          to: email,
+          to: profile.email,
           name: profile.full_name ?? "Professional",
           expiryDate: profile.license_expiry,
           daysLeft: days,
@@ -68,5 +65,6 @@ export async function GET(request: NextRequest) {
     }
   }
 
+  await pingCronMonitor("license-expiry");
   return NextResponse.json({ ok: true, notified });
 }

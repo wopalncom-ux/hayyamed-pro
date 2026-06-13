@@ -113,8 +113,10 @@ export interface CmeActivity {
   provider: string | null;
   activity_date: string;
   credits: number;
+  category: string | null;
   certificate_url: string | null;
   verification_status: VerificationStatus;
+  rejection_reason: string | null;
   employer_visible: boolean;
   created_at: string;
 }
@@ -192,4 +194,81 @@ export interface CourseEnrollment {
   credits_issued: number | null;
   status: EnrollmentStatus;
   certificate_url: string | null;
+}
+
+// ── subscriptions (extended) ───────────────────────────────────────────────
+
+export type BillingInterval = "monthly" | "annual";
+export type EmployerTier = "clinic" | "growth" | "department" | "hospital" | "enterprise";
+
+export interface Subscription {
+  id: string;
+  professional_id: string;
+  paddle_customer_id: string | null;
+  paddle_subscription_id: string | null;
+  plan: "free" | "pro" | "employer";
+  status: "active" | "trialing" | "past_due" | "canceled" | "incomplete";
+  billing_interval: BillingInterval | null;
+  employer_tier: EmployerTier | null;
+  current_period_end: string | null;
+  cancel_at_period_end: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+// ── platform_settings ──────────────────────────────────────────────────────
+
+export interface PlatformSetting {
+  key: string;
+  value: string;
+  description: string | null;
+  updated_at: string;
+  updated_by: string | null;
+}
+
+// ── discounts ──────────────────────────────────────────────────────────────
+
+export type DiscountType = "percentage" | "fixed_amount" | "free_upgrade";
+export type DiscountTargetType = "user" | "organization" | "global";
+
+export interface Discount {
+  id: string;
+  name: string;
+  description: string | null;
+  discount_type: DiscountType;
+  discount_value: number;
+  target_type: DiscountTargetType;
+  target_id: string | null;
+  applicable_plans: string[];
+  valid_from: string;
+  valid_until: string | null;
+  max_uses: number | null;
+  current_uses: number;
+  is_active: boolean;
+  promo_code: string | null;
+  notes: string | null;
+  created_by: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+// ── partners ───────────────────────────────────────────────────────────────
+
+export type PartnerType = "accreditor" | "employer" | "technology" | "government" | "hospital" | "university";
+
+export interface Partner {
+  id: string;
+  name: string;
+  logo_url: string | null;
+  website_url: string | null;
+  country_code: string | null;
+  partner_type: PartnerType | null;
+  organization_id: string | null;
+  display_order: number;
+  is_active: boolean;
+  show_on_landing: boolean;
+  show_on_dashboard: boolean;
+  tagline: string | null;
+  created_at: string;
+  updated_at: string;
 }

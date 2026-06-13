@@ -1,5 +1,6 @@
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import WalletTabs from "@/components/dashboard/WalletTabs";
 
 interface Activity {
   credits: number;
@@ -36,7 +37,13 @@ function monthLabel(ym: string) {
   return new Date(y, m - 1, 1).toLocaleString("en", { month: "short" });
 }
 
-export default async function AnalyticsPage() {
+export default async function AnalyticsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ wallet?: string }>;
+}) {
+  const { wallet: walletParam } = await searchParams;
+
   const supabase = await createClient();
   const {
     data: { user },
@@ -44,17 +51,29 @@ export default async function AnalyticsPage() {
   if (!user) redirect("/login");
 
   const admin = createAdminClient();
-  const [walletRes, activitiesRes] = await Promise.all([
-    admin.from("cme_wallets").select("*").eq("professional_id", user.id).maybeSingle(),
-    admin
+
+  // Fetch all wallets first
+  const walletsRes = await admin
+    .from("cme_wallets")
+    .select("*")
+    .eq("professional_id", user.id)
+    .order("created_at", { ascending: true });
+
+  const wallets = walletsRes.data ?? [];
+  const wallet = wallets.find((w) => w.id === walletParam) ?? wallets[0] ?? null;
+
+  // Fetch activities only for the active wallet
+  let all: Activity[] = [];
+  if (wallet) {
+    const activitiesRes = await admin
       .from("cme_activities")
       .select("credits, category, activity_date, verification_status")
       .eq("professional_id", user.id)
-      .order("activity_date"),
-  ]);
+      .eq("wallet_id", wallet.id)
+      .order("activity_date");
+    all = activitiesRes.data ?? [];
+  }
 
-  const wallet = walletRes.data;
-  const all: Activity[] = activitiesRes.data ?? [];
   const valid = all.filter((a) => a.verification_status !== "rejected");
 
   // ── Stats ──────────────────────────────────────────────────────────────
@@ -87,7 +106,6 @@ export default async function AnalyticsPage() {
   const maxMonthCredits = Math.max(...monthData.map((m) => m.credits), 1);
 
   // Pace — avg credits per month over the active months
-  const activeMonths = Object.values(creditsByMonth).filter((v) => v > 0).length || 1;
   const firstActivity = valid[0]?.activity_date;
   const monthsSinceFirst = firstActivity
     ? Math.max(
@@ -142,6 +160,17 @@ export default async function AnalyticsPage() {
             : "Set up your CME wallet to see analytics"}
         </p>
       </div>
+
+      {/* Wallet tabs — shown when multiple wallets exist */}
+      <WalletTabs
+        wallets={wallets.map((w) => ({
+          id: w.id,
+          country: w.country,
+          label: w.label ?? null,
+          compliance_status: w.compliance_status ?? "non_compliant",
+        }))}
+        activeWalletId={wallet?.id ?? ""}
+      />
 
       {/* Stat cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
@@ -275,6 +304,112 @@ export default async function AnalyticsPage() {
         )}
       </div>
 
+      {/* Cumulative credits trend */}
+      {valid.length > 0 && (
+        <div className="bg-white rounded-xl border border-[#e2e8f0] p-6 mb-6">
+          <div className="flex items-center justify-between mb-5">
+            <h2 className="text-base font-semibold text-[#111]">Cumulative Credits Trend</h2>
+            <span className="text-xs text-[#64748b]">Last 6 months</span>
+          </div>
+          {(() => {
+            const W = 400;
+            const H = 90;
+            const PAD_X = 6;
+            const PAD_TOP = 12;
+            const PAD_BOT = 24;
+            const plotH = H - PAD_TOP - PAD_BOT;
+            const maxY = Math.max(...cumulative, required, 1);
+            const n = cumulative.length;
+            const xs = cumulative.map((_, i) =>
+              n === 1 ? W / 2 : PAD_X + (i / (n - 1)) * (W - 2 * PAD_X)
+            );
+            const ys = cumulative.map(
+              (v) => PAD_TOP + (1 - v / maxY) * plotH
+            );
+            const goalY = PAD_TOP + (1 - required / maxY) * plotH;
+            const pts = xs.map((x, i) => `${x},${ys[i]}`).join(" ");
+            const areaPath =
+              `M${xs[0]},${PAD_TOP + plotH} ` +
+              xs.map((x, i) => `L${x},${ys[i]}`).join(" ") +
+              ` L${xs[n - 1]},${PAD_TOP + plotH} Z`;
+            return (
+              <svg
+                viewBox={`0 0 ${W} ${H}`}
+                className="w-full"
+                style={{ maxHeight: 130 }}
+                aria-label="Cumulative credits trend"
+              >
+                {/* Goal line */}
+                {required > 0 && goalY > PAD_TOP && goalY < PAD_TOP + plotH && (
+                  <>
+                    <line
+                      x1={PAD_X}
+                      y1={goalY}
+                      x2={W - PAD_X}
+                      y2={goalY}
+                      stroke="#16a34a"
+                      strokeWidth={1}
+                      strokeDasharray="4 3"
+                      opacity={0.6}
+                    />
+                    <text
+                      x={W - PAD_X + 2}
+                      y={goalY + 4}
+                      fill="#16a34a"
+                      fontSize={8}
+                      fontFamily="system-ui,-apple-system,sans-serif"
+                      opacity={0.8}
+                    >
+                      Goal
+                    </text>
+                  </>
+                )}
+                {/* Area fill */}
+                <path d={areaPath} fill="#1a56a0" fillOpacity={0.08} />
+                {/* Line */}
+                <polyline
+                  points={pts}
+                  fill="none"
+                  stroke="#1a56a0"
+                  strokeWidth={2}
+                  strokeLinejoin="round"
+                  strokeLinecap="round"
+                />
+                {/* Data points */}
+                {xs.map((x, i) => (
+                  <g key={i}>
+                    <circle cx={x} cy={ys[i]} r={3.5} fill="#1a56a0" />
+                    {cumulative[i] > 0 && (
+                      <text
+                        x={x}
+                        y={ys[i] - 7}
+                        textAnchor="middle"
+                        fill="#374151"
+                        fontSize={8.5}
+                        fontFamily="system-ui,-apple-system,sans-serif"
+                        fontWeight={600}
+                      >
+                        {cumulative[i]}
+                      </text>
+                    )}
+                    <text
+                      x={x}
+                      y={H - 2}
+                      textAnchor="middle"
+                      fill="#94a3b8"
+                      fontSize={8.5}
+                      fontFamily="system-ui,-apple-system,sans-serif"
+                    >
+                      {monthData[i].label}
+                    </text>
+                  </g>
+                ))}
+              </svg>
+            );
+          })()}
+        </div>
+      )}
+
       {/* Category breakdown */}
       {categoryRows.length > 0 && (
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-6">
@@ -299,11 +434,6 @@ export default async function AnalyticsPage() {
                 </div>
               );
             })}
-            {Object.values(byCategory).length === 0 && (
-              <p className="text-sm text-[#64748b]">
-                Log activities with categories to see the breakdown.
-              </p>
-            )}
           </div>
         </div>
       )}

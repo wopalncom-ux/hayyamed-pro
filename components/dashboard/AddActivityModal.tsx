@@ -7,6 +7,7 @@ import { useToast } from "@/components/ui/toast";
 import { track } from "@/lib/analytics";
 import { isPro } from "@/lib/planUtils";
 import type { Plan } from "@/lib/planUtils";
+import { playSound } from "@/lib/sounds";
 
 const CATEGORIES: { value: string; label: string }[] = [
   { value: "conference", label: "Conference / Seminar" },
@@ -33,15 +34,22 @@ interface AiSuggestion {
   notes: string;
 }
 
+interface CategoryCapData {
+  max: number | null;
+  earned: number;
+}
+
 export default function AddActivityModal({
   walletId,
   countryCode = "QA",
   plan = "free",
+  categoryCapData = {},
   onClose,
 }: {
   walletId: string;
   countryCode?: string;
   plan?: Plan;
+  categoryCapData?: Record<string, CategoryCapData>;
   onClose: () => void;
 }) {
   const [loading, setLoading] = useState(false);
@@ -199,6 +207,7 @@ export default function AddActivityModal({
       ai_suggested: aiApplied,
       has_certificate: !!file,
     });
+    playSound("submit");
     toast("CME activity logged successfully", "success");
     onClose();
   }
@@ -228,7 +237,7 @@ export default function AddActivityModal({
                 <span className="text-[#94a3b8] text-xs">🔒</span>
                 <p className="text-xs text-[#64748b]">
                   Certificate storage and AI extraction require{" "}
-                  <a href="/pricing" className="text-[#1a56a0] font-medium hover:underline">Pro plan</a>.
+                  <a href="/pricing?source=add_activity_modal" className="text-[#1a56a0] font-medium hover:underline">Pro plan</a>.
                 </p>
               </div>
             ) : (
@@ -274,16 +283,28 @@ export default function AddActivityModal({
             <label className="block text-sm font-medium text-[#374151] mb-1">
               Activity Title <span className="text-red-500">*</span>
             </label>
-            <input
-              value={title}
-              onChange={(e) => {
-                setTitle(e.target.value);
-                setAiApplied(false);
-              }}
-              required
-              className="w-full border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20"
-              placeholder="e.g. Advanced Cardiology Workshop"
-            />
+            <div className="relative">
+              <input
+                value={title}
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                  setAiApplied(false);
+                  if (e.target.value.trim().length >= 3) playSound("validate");
+                }}
+                required
+                className={`w-full border rounded-lg px-3 py-2 pr-9 text-sm focus:outline-none focus:ring-2 transition-colors ${
+                  title.trim().length >= 3
+                    ? "border-[#16a34a] focus:ring-[#16a34a]/20"
+                    : "border-[#e2e8f0] focus:ring-[#1a56a0]/20"
+                }`}
+                placeholder="e.g. Advanced Cardiology Workshop"
+              />
+              {title.trim().length >= 3 && (
+                <svg className="absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#16a34a] pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              )}
+            </div>
             {(aiLoading || aiSuggestion) && (
               <div className="mt-1.5">
                 {aiLoading ? (
@@ -359,28 +380,46 @@ export default function AddActivityModal({
               <label className="block text-sm font-medium text-[#374151] mb-1">
                 Date <span className="text-red-500">*</span>
               </label>
-              <input
-                type="date"
-                value={activityDate}
-                onChange={(e) => setActivityDate(e.target.value)}
-                required
-                className="w-full border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20"
-              />
+              <div className="relative">
+                <input
+                  type="date"
+                  value={activityDate}
+                  onChange={(e) => { setActivityDate(e.target.value); if (e.target.value) playSound("validate"); }}
+                  required
+                  className={`w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 transition-colors ${
+                    activityDate ? "border-[#16a34a] focus:ring-[#16a34a]/20" : "border-[#e2e8f0] focus:ring-[#1a56a0]/20"
+                  }`}
+                />
+                {activityDate && (
+                  <svg className="absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#16a34a] pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                )}
+              </div>
             </div>
             <div>
               <label className="block text-sm font-medium text-[#374151] mb-1">
                 Credits <span className="text-red-500">*</span>
               </label>
-              <input
-                type="number"
-                step="0.5"
-                min="0.5"
-                value={credits}
-                onChange={(e) => setCredits(e.target.value)}
-                required
-                className="w-full border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20"
-                placeholder="e.g. 5"
-              />
+              <div className="relative">
+                <input
+                  type="number"
+                  step="0.5"
+                  min="0.5"
+                  value={credits}
+                  onChange={(e) => { setCredits(e.target.value); if (parseFloat(e.target.value) > 0) playSound("validate"); }}
+                  required
+                  className={`w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 transition-colors ${
+                    credits && parseFloat(credits) > 0 ? "border-[#16a34a] focus:ring-[#16a34a]/20" : "border-[#e2e8f0] focus:ring-[#1a56a0]/20"
+                  }`}
+                  placeholder="e.g. 5"
+                />
+                {credits && parseFloat(credits) > 0 && (
+                  <svg className="absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#16a34a] pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                )}
+              </div>
               {aiSuggestion?.creditSuggestion != null && (
                 <p className="mt-1 text-xs text-yellow-700">
                   AI suggests {aiSuggestion.creditSuggestion} credits for this type
@@ -388,6 +427,27 @@ export default function AddActivityModal({
               )}
             </div>
           </div>
+
+          {/* Category cap warning */}
+          {(() => {
+            if (!selectedCategory || !credits) return null;
+            const cap = categoryCapData[selectedCategory];
+            if (!cap || cap.max == null) return null;
+            const newTotal = cap.earned + parseFloat(credits || "0");
+            if (newTotal <= cap.max) return null;
+            const over = (newTotal - cap.max).toFixed(1);
+            return (
+              <div className="bg-[#fffbeb] border border-[#fde68a] rounded-lg px-3 py-2.5">
+                <p className="text-xs font-medium text-[#92400e]">
+                  Category cap notice
+                </p>
+                <p className="text-xs text-[#a16207] mt-0.5">
+                  You&apos;ll have logged {newTotal} credits in this category, which is {over} over the{" "}
+                  {cap.max}-credit cycle cap. The excess may not count toward your compliance total.
+                </p>
+              </div>
+            );
+          })()}
 
           {error && (
             <p className="text-sm text-red-600 bg-red-50 px-3 py-2 rounded-lg">{error}</p>

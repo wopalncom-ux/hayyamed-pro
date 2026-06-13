@@ -1,5 +1,6 @@
 import { createAdminClient } from "@/lib/supabase/server";
 import Link from "next/link";
+import AddCountryForm from "@/components/admin/AddCountryForm";
 
 export const metadata = { title: "Country Rules Engine — Admin" };
 
@@ -61,6 +62,8 @@ export default async function CountryRulesPage() {
         </div>
         <a href="/admin" className="text-sm text-[#1a56a0] hover:underline">← Back to admin</a>
       </div>
+
+      <AddCountryForm />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {[...byCountry.entries()].map(([countryCode, countryRules]) => {

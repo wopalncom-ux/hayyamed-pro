@@ -1,7 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { getAnthropicClient } from "@/lib/anthropic";
 import { checkAndLogRateLimit } from "@/lib/rateLimit";
+import { getUserPlan, isPro } from "@/lib/subscription";
+import { logAudit } from "@/lib/audit";
+
+const OcrResponseSchema = z.object({
+  title: z.string(),
+  provider: z.string().nullable().optional(),
+  date: z.string().nullable().optional(),
+  credits: z.number().nullable().optional(),
+  category: z.enum(["conference", "online", "workshop", "journal", "teaching", "simulation", "mandatory", "patient_safety", "other"]).nullable().optional(),
+});
 
 export const runtime = "nodejs";
 
@@ -13,6 +24,9 @@ export async function POST(req: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const plan = await getUserPlan(user.id);
+  if (!isPro(plan)) return NextResponse.json({ error: "Pro plan required" }, { status: 403 });
 
   const rl = await checkAndLogRateLimit({ action: "ai_ocr_certificate", userId: user.id, maxPerHour: 20 });
   if (!rl.allowed) return NextResponse.json({ error: "Rate limit exceeded" }, { status: 429, headers: { "Retry-After": String(rl.retryAfterSeconds) } });
@@ -34,6 +48,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "File too large (max 8 MB)" }, { status: 413 });
   }
 
+  const startTime = Date.now();
   try {
     const buffer = await file.arrayBuffer();
     const base64 = Buffer.from(buffer).toString("base64");
@@ -61,7 +76,7 @@ export async function POST(req: NextRequest) {
 
     const client = getAnthropicClient();
     const response = await client.messages.create({
-      model: "claude-opus-4-8",
+      model: "claude-sonnet-4-6",
       max_tokens: 512,
       messages: [
         {
@@ -86,13 +101,30 @@ Use null for any field not visible in the certificate.`,
       ],
     });
 
+    logAudit({
+      actorAuthId: user.id,
+      action: "ai.ocr_certificate",
+      targetTable: "audit_logs",
+      metadata: {
+        model: "claude-sonnet-4-6",
+        input_tokens: response.usage?.input_tokens ?? 0,
+        output_tokens: response.usage?.output_tokens ?? 0,
+        latency_ms: Date.now() - startTime,
+        file_type: file.type,
+        file_size_bytes: file.size,
+      },
+    }).catch(() => {});
+
     const text = response.content.find((b) => b.type === "text");
     if (!text || text.type !== "text") {
       return NextResponse.json({ error: "No AI response" }, { status: 500 });
     }
 
-    const result = JSON.parse(text.text.trim());
-    return NextResponse.json(result);
+    const parsed = OcrResponseSchema.safeParse(JSON.parse(text.text.trim()));
+    if (!parsed.success) {
+      return NextResponse.json({ error: "Invalid AI response structure" }, { status: 500 });
+    }
+    return NextResponse.json(parsed.data);
   } catch {
     return NextResponse.json({ error: "OCR failed" }, { status: 500 });
   }

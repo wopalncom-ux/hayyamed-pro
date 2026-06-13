@@ -25,7 +25,7 @@ export default async function ProviderRegisterPage() {
     <div className="min-h-screen bg-[#f8fafc] flex items-start justify-center pt-12 px-4">
       <div className="w-full max-w-xl">
         <div className="text-center mb-8">
-          <span className="text-base font-bold text-[#1a56a0]">Hayya Med PRO</span>
+          <span className="text-base font-bold text-[#1a56a0]">Hayya Med Pro</span>
           <h1 className="text-2xl font-bold text-[#111] mt-3 mb-1">Register as a Training Provider</h1>
           <p className="text-sm text-[#64748b]">
             List your accredited CME courses for GCC healthcare professionals.

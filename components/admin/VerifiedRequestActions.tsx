@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { approveVerifiedRequest, rejectAdminRequest } from "@/app/(admin)/admin/link-requests/actions";
+import { track } from "@/lib/analytics";
 
 export default function VerifiedRequestActions({ requestId }: { requestId: string }) {
   const [loading, setLoading] = useState<"approve" | "reject" | null>(null);
@@ -15,6 +16,7 @@ export default function VerifiedRequestActions({ requestId }: { requestId: strin
     const result = await fn(requestId);
     setLoading(null);
     if (result?.error) { setError(result.error); return; }
+    if (action === "approve") track("employer_link_approved");
     setDone(action === "approve" ? "approved" : "rejected");
   }
 

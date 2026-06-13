@@ -2,6 +2,9 @@ import { NextRequest } from "next/server";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { getAnthropicClient } from "@/lib/anthropic";
 import { checkAndLogRateLimit } from "@/lib/rateLimit";
+import { toCountryCode } from "@/lib/countryCode";
+import { getUserPlan, isPro } from "@/lib/subscription";
+import { logAudit } from "@/lib/audit";
 
 export const runtime = "nodejs";
 
@@ -11,6 +14,9 @@ export async function POST(req: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) return new Response("Unauthorized", { status: 401 });
+
+  const plan = await getUserPlan(user.id);
+  if (!isPro(plan)) return new Response("Pro plan required", { status: 403 });
 
   const rl = await checkAndLogRateLimit({ action: "ai_compliance_chat", userId: user.id, maxPerHour: 30 });
   if (!rl.allowed) return new Response("Rate limit exceeded", { status: 429, headers: { "Retry-After": String(rl.retryAfterSeconds) } });
@@ -24,7 +30,7 @@ export async function POST(req: NextRequest) {
   const admin = createAdminClient();
 
   const [walletRes, activitiesRes] = await Promise.all([
-    admin.from("cme_wallets").select("*").eq("professional_id", user.id).maybeSingle(),
+    admin.from("cme_wallets").select("*").eq("professional_id", user.id).order("created_at", { ascending: true }).limit(1).maybeSingle(),
     admin
       .from("cme_activities")
       .select("title, provider, activity_date, credits, category, verification_status")
@@ -36,6 +42,7 @@ export async function POST(req: NextRequest) {
   const wallet = walletRes.data;
   const activities = activitiesRes.data ?? [];
 
+  const countryCode = wallet?.country ? toCountryCode(wallet.country) : "";
   let categoryBreakdown = "";
   let mainRule = "";
 
@@ -46,13 +53,13 @@ export async function POST(req: NextRequest) {
         .select(
           "category_name, max_credits_per_cycle, min_credits_per_cycle, accreditation_required, notes"
         )
-        .eq("country_code", wallet.country),
+        .eq("country_code", countryCode),
       admin
         .from("country_compliance_rules")
         .select(
           "total_credits_required, credit_terminology, online_credits_max_pct, mandatory_credits_min, cycle_years"
         )
-        .eq("country_code", wallet.country)
+        .eq("country_code", countryCode)
         .maybeSingle(),
     ]);
 
@@ -124,7 +131,7 @@ GUIDELINES:
 - Be specific and use the actual numbers above
 - If they ask about a rule you're unsure of, say so and refer them to their regulatory body
 - Keep answers brief unless complexity demands detail
-- Always end with a disclaimer if giving regulatory advice: "Verify final requirements with ${wallet.country === "QA" ? "QCHP" : wallet.country === "SA" ? "SCFHS" : wallet.country === "AE-DU" ? "DHA" : "your regulatory authority"} directly."
+- Always end with a disclaimer if giving regulatory advice: "Verify final requirements with ${countryCode === "QA" ? "QCHP" : countryCode === "SA" ? "SCFHS" : countryCode === "AE" ? "DHA" : "your regulatory authority"} directly."
 - You may suggest they log missing activities or update uncategorized ones`
     : `You are a CME compliance advisor. This professional hasn't set up their CME wallet yet. Encourage them to complete their profile setup at /onboarding/5 to unlock CME tracking and personalized compliance guidance.`;
 
@@ -132,13 +139,14 @@ GUIDELINES:
     return new Response("AI features not configured", { status: 503 });
   }
 
+  const startTime = Date.now();
   const encoder = new TextEncoder();
   const readable = new ReadableStream({
     async start(controller) {
       try {
         const claude = getAnthropicClient();
         const stream = claude.messages.stream({
-          model: "claude-opus-4-8",
+          model: "claude-haiku-4-5-20251001",
           max_tokens: 1024,
           system: systemPrompt,
           messages: messages.slice(-10),
@@ -152,6 +160,21 @@ GUIDELINES:
             controller.enqueue(encoder.encode(chunk.delta.text));
           }
         }
+
+        // Fire-and-forget audit log after stream completes
+        stream.finalMessage().then((finalMsg) => {
+          logAudit({
+            actorAuthId: user.id,
+            action: "ai.compliance_chat",
+            targetTable: "audit_logs",
+            metadata: {
+              model: "claude-haiku-4-5-20251001",
+              input_tokens: finalMsg.usage?.input_tokens ?? 0,
+              output_tokens: finalMsg.usage?.output_tokens ?? 0,
+              latency_ms: Date.now() - startTime,
+            },
+          }).catch(() => {});
+        }).catch(() => {});
       } catch {
         controller.enqueue(
           encoder.encode("\n\n[I ran into an error — please try again.]")

@@ -1,16 +1,28 @@
 import { createAdminClient } from "@/lib/supabase/server";
+import OrgVerifyButton from "@/components/admin/OrgVerifyButton";
 
-export default async function AdminOrganizationsPage() {
+export default async function AdminOrganizationsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
+  const { q } = await searchParams;
   const admin = createAdminClient();
 
-  const { data: orgs } = await admin
+  let query = admin
     .from("organizations")
     .select("id, name, type, city, country, verified, created_at")
     .order("name");
 
+  if (q?.trim()) {
+    query = query.ilike("name", `%${q.trim()}%`);
+  }
+
+  const { data: orgs } = await query;
+
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-4">
         <div>
           <h1 className="text-2xl font-bold text-[#111]">Organizations</h1>
           <p className="text-sm text-[#64748b] mt-1">{orgs?.length ?? 0} total</p>
@@ -18,35 +30,73 @@ export default async function AdminOrganizationsPage() {
         <a href="/admin" className="text-sm text-[#1a56a0] hover:underline">← Back to admin</a>
       </div>
 
-      <div className="bg-white rounded-xl border border-[#e2e8f0]">
-        <div className="grid grid-cols-12 px-6 py-3 border-b border-[#e2e8f0] text-xs font-medium text-[#64748b] uppercase tracking-wide">
-          <span className="col-span-5">Name</span>
-          <span className="col-span-2">Type</span>
-          <span className="col-span-2">City</span>
-          <span className="col-span-2">Country</span>
-          <span className="col-span-1">Verified</span>
-        </div>
-        {!orgs || orgs.length === 0 ? (
-          <div className="px-6 py-10 text-center text-sm text-[#64748b]">No organizations yet.</div>
-        ) : (
-          <div className="divide-y divide-[#e2e8f0]">
-            {orgs.map((org) => (
-              <div key={org.id} className="grid grid-cols-12 px-6 py-3 items-center">
-                <p className="col-span-5 text-sm font-medium text-[#111]">{org.name}</p>
-                <p className="col-span-2 text-sm text-[#64748b] capitalize">{org.type}</p>
-                <p className="col-span-2 text-sm text-[#64748b]">{org.city ?? "—"}</p>
-                <p className="col-span-2 text-sm text-[#64748b]">{org.country ?? "—"}</p>
-                <div className="col-span-1">
-                  <span className={`text-xs px-2 py-0.5 rounded-full ${
-                    org.verified ? "bg-[#dcfce7] text-[#16a34a]" : "bg-[#fff7ed] text-[#d97706]"
-                  }`}>
-                    {org.verified ? "Yes" : "No"}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
+      <form method="GET" action="/admin/organizations" className="mb-4 flex gap-2">
+        <input
+          name="q"
+          type="search"
+          defaultValue={q ?? ""}
+          placeholder="Search by name…"
+          className="flex-1 text-sm border border-[#e2e8f0] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20 bg-white"
+        />
+        <button
+          type="submit"
+          className="text-sm font-semibold px-4 py-2 rounded-lg bg-[#1a56a0] text-white hover:bg-[#1547a0] transition-colors"
+        >
+          Search
+        </button>
+        {q && (
+          <a
+            href="/admin/organizations"
+            className="text-sm px-4 py-2 rounded-lg bg-[#f1f5f9] text-[#374151] hover:bg-[#e2e8f0] transition-colors"
+          >
+            Clear
+          </a>
         )}
+      </form>
+
+      <div className="bg-white rounded-xl border border-[#e2e8f0]">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm min-w-[640px]">
+            <thead className="bg-[#f8fafc] border-b border-[#e2e8f0]">
+              <tr>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-[#64748b] uppercase">Name</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-[#64748b] uppercase">Type</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-[#64748b] uppercase">City</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-[#64748b] uppercase">Country</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-[#64748b] uppercase">Status</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-[#64748b] uppercase">Action</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-[#f1f5f9]">
+              {!orgs || orgs.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="px-4 py-10 text-center text-sm text-[#64748b]">
+                    No organizations yet.
+                  </td>
+                </tr>
+              ) : (
+                orgs.map((org) => (
+                  <tr key={org.id} className="hover:bg-[#f8fafc] transition-colors">
+                    <td className="px-4 py-3 font-medium text-[#111] max-w-[200px] truncate">{org.name}</td>
+                    <td className="px-4 py-3 text-[#64748b] capitalize">{org.type}</td>
+                    <td className="px-4 py-3 text-[#64748b]">{org.city ?? "—"}</td>
+                    <td className="px-4 py-3 text-[#64748b]">{org.country ?? "—"}</td>
+                    <td className="px-4 py-3">
+                      <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+                        org.verified ? "bg-[#dcfce7] text-[#16a34a]" : "bg-[#fff7ed] text-[#d97706]"
+                      }`}>
+                        {org.verified ? "Verified" : "Unverified"}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3">
+                      <OrgVerifyButton orgId={org.id} verified={org.verified ?? false} />
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

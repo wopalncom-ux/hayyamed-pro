@@ -60,13 +60,12 @@ export async function POST(req: NextRequest) {
     .select("id")
     .single();
 
-  const [profileRes, walletRes, authRes] = await Promise.all([
-    admin.from("professional_profiles").select("full_name, license_expiry").eq("auth_id", professional_id).maybeSingle(),
-    admin.from("cme_wallets").select("completed_credits, required_credits").eq("professional_id", professional_id).maybeSingle(),
-    admin.auth.admin.getUserById(professional_id),
+  const [profileRes, walletRes] = await Promise.all([
+    admin.from("professional_profiles").select("email, full_name, license_expiry").eq("auth_id", professional_id).maybeSingle(),
+    admin.from("cme_wallets").select("completed_credits, required_credits").eq("professional_id", professional_id).order("created_at", { ascending: true }).limit(1).maybeSingle(),
   ]);
 
-  const email = authRes.data?.user?.email;
+  const email = profileRes.data?.email;
   const name = profileRes.data?.full_name;
   const licenseExpiry = profileRes.data?.license_expiry ?? null;
   const daysToExpiry = licenseExpiry

@@ -1,11 +1,11 @@
-export const metadata = { title: "Terms of Service — Hayya Med PRO" };
+export const metadata = { title: "Terms of Service — Hayya Med Pro" };
 
 export default function TermsPage() {
   return (
     <div className="min-h-screen bg-[#f8fafc]">
       <div className="max-w-3xl mx-auto px-4 py-16">
         <div className="mb-8">
-          <a href="/" className="text-[#1a56a0] text-sm hover:underline">← Hayya Med PRO</a>
+          <a href="/" className="text-[#1a56a0] text-sm hover:underline">← Hayya Med Pro</a>
         </div>
         <h1 className="text-3xl font-bold text-[#111] mb-2">Terms of Service</h1>
         <p className="text-[#64748b] text-sm mb-10">Last updated: 10 June 2026</p>
@@ -14,14 +14,14 @@ export default function TermsPage() {
 
           <section>
             <h2 className="text-lg font-semibold text-[#111] mb-3">1. Agreement to Terms</h2>
-            <p>By accessing or using Hayya Med PRO (&ldquo;the Platform&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;), operated by Hayya Med PRO (the &ldquo;Company&rdquo;), you agree to be bound by these Terms of Service (&ldquo;Terms&rdquo;). If you do not agree to these Terms, do not use the Platform.</p>
+            <p>By accessing or using Hayya Med Pro (&ldquo;the Platform&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;), operated by Hayya Med Pro (the &ldquo;Company&rdquo;), you agree to be bound by these Terms of Service (&ldquo;Terms&rdquo;). If you do not agree to these Terms, do not use the Platform.</p>
           </section>
 
           <section>
             <h2 className="text-lg font-semibold text-[#111] mb-3">2. Description of Service</h2>
-            <p>Hayya Med PRO is a software-as-a-service platform that helps healthcare professionals track continuing medical education (CME) credits, monitor professional license expiry dates, and manage compliance readiness. The Platform is designed for use in Qatar, the Gulf Cooperation Council (GCC), and other international markets.</p>
+            <p>Hayya Med Pro is a software-as-a-service platform that helps healthcare professionals track continuing medical education (CME) credits, monitor professional license expiry dates, and manage compliance readiness. The Platform is designed for use in Qatar, the Gulf Cooperation Council (GCC), and other international markets.</p>
             <div className="mt-3 p-4 bg-[#fef9c3] border border-[#fde68a] rounded-lg text-xs text-[#92400e]">
-              <strong>Important Disclaimer:</strong> Hayya Med PRO supports CME tracking and licensing readiness. It does not issue licenses and does not replace official licensing authorities. Users must verify final requirements directly with their relevant regulatory body (e.g., QCHP, SCFHS, DHA, DOH).
+              <strong>Important Disclaimer:</strong> Hayya Med Pro supports CME tracking and licensing readiness. It does not issue licenses and does not replace official licensing authorities. Users must verify final requirements directly with their relevant regulatory body (e.g., QCHP, SCFHS, DHA, DOH).
             </div>
           </section>
 

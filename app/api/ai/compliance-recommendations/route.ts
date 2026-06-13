@@ -1,7 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { getAnthropicClient } from "@/lib/anthropic";
 import { checkAndLogRateLimit } from "@/lib/rateLimit";
+import { getUserPlan, isPro } from "@/lib/subscription";
+import { logAudit } from "@/lib/audit";
+
+const RecommendationSchema = z.object({
+  title: z.string(),
+  category: z.string(),
+  credits: z.number().int(),
+  reason: z.string(),
+  action_label: z.string(),
+  urgency: z.enum(["high", "medium", "low"]),
+});
+
+const RecommendationsResponseSchema = z.object({
+  summary: z.string(),
+  recommendations: z.array(RecommendationSchema),
+});
 
 export const runtime = "nodejs";
 
@@ -9,6 +26,9 @@ export async function POST(req: NextRequest) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const plan = await getUserPlan(user.id);
+  if (!isPro(plan)) return NextResponse.json({ error: "Pro plan required" }, { status: 403 });
 
   const rl = await checkAndLogRateLimit({ action: "ai_compliance_recommendations", userId: user.id, maxPerHour: 10 });
   if (!rl.allowed) return NextResponse.json({ error: "Rate limit exceeded" }, { status: 429, headers: { "Retry-After": String(rl.retryAfterSeconds) } });
@@ -79,20 +99,35 @@ Rank by urgency: largest deficit first. Urgency: high (gap > 5 or < 60 days), me
     return NextResponse.json({ error: "AI features not configured" }, { status: 503 });
   }
 
+  const startTime = Date.now();
   try {
     const client = getAnthropicClient();
     const res = await client.messages.create({
-      model: "claude-haiku-4-5-20251001",
+      model: "claude-sonnet-4-6",
       max_tokens: 700,
       messages: [{ role: "user", content: prompt }],
     });
 
+    logAudit({
+      actorAuthId: user.id,
+      action: "ai.compliance_recommendations",
+      targetTable: "audit_logs",
+      metadata: {
+        model: "claude-sonnet-4-6",
+        input_tokens: res.usage?.input_tokens ?? 0,
+        output_tokens: res.usage?.output_tokens ?? 0,
+        latency_ms: Date.now() - startTime,
+      },
+    }).catch(() => {});
+
     const text = (res.content[0] as { type: string; text: string }).text.trim();
     const match = text.match(/\{[\s\S]*\}/);
     if (match) {
-      const parsed = JSON.parse(match[0]);
-      summary = parsed.summary ?? "";
-      recommendations = parsed.recommendations ?? [];
+      const validated = RecommendationsResponseSchema.safeParse(JSON.parse(match[0]));
+      if (validated.success) {
+        summary = validated.data.summary;
+        recommendations = validated.data.recommendations;
+      }
     }
   } catch {
     return NextResponse.json({ error: "AI unavailable" }, { status: 503 });

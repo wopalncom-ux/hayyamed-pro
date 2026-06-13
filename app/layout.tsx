@@ -1,8 +1,9 @@
-import type { Metadata, Viewport } from "next";
+﻿import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 import { PWARegister } from "@/components/PWARegister";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import { PostHogProvider } from "@/components/PostHogProvider";
+import CookieConsent from "@/components/CookieConsent";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -11,6 +12,7 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "https://hayyamed.pro"),
   title: "Hayya Med Pro",
   description: "Healthcare professional CME tracking, licensing, and compliance platform for Qatar and the GCC.",
   manifest: "/manifest.json",
@@ -20,8 +22,11 @@ export const metadata: Metadata = {
     title: "Hayya Med Pro",
   },
   icons: {
-    icon: "/icons/icon.svg",
-    apple: "/icons/icon.svg",
+    icon: "/icons/icon-192.png",
+    apple: "/icons/icon-192.png",
+  },
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION,
   },
 };
 
@@ -29,7 +34,6 @@ export const viewport: Viewport = {
   themeColor: "#1a56a0",
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
 };
 
 export default function RootLayout({
@@ -43,6 +47,7 @@ export default function RootLayout({
         <PostHogProvider>
           {children}
         </PostHogProvider>
+        <CookieConsent />
         <PWARegister />
         <PWAInstallPrompt />
       </body>

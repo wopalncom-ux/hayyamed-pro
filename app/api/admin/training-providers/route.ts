@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/server";
 import { logAudit } from "@/lib/audit";
-
-// Admin only — no role table, we protect via createAdminClient being service-key only on server
-// Page already calls createAdminClient so this route uses the same pattern
+import { requireAdminUser } from "@/lib/adminAuth";
+import { sendTrainingProviderApprovedEmail } from "@/lib/email";
 
 export async function GET() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await requireAdminUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const admin = createAdminClient();
@@ -21,8 +19,7 @@ export async function GET() {
 }
 
 export async function PATCH(req: NextRequest) {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await requireAdminUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const { providerId, action } = await req.json();
@@ -38,6 +35,15 @@ export async function PATCH(req: NextRequest) {
   };
 
   const admin = createAdminClient();
+
+  const { data: provider, error: fetchErr } = await admin
+    .from("training_providers")
+    .select("name, created_by")
+    .eq("id", providerId)
+    .single();
+
+  if (fetchErr || !provider) return NextResponse.json({ error: "Provider not found" }, { status: 404 });
+
   const { error } = await admin
     .from("training_providers")
     .update({ status: statusMap[action] })
@@ -52,6 +58,23 @@ export async function PATCH(req: NextRequest) {
     targetId: providerId,
     metadata: { newStatus: statusMap[action] },
   });
+
+  // Notify the provider owner when their account is approved
+  if (action === "approve" && provider.created_by) {
+    Promise.resolve(
+      admin.from("professional_profiles")
+        .select("email, full_name")
+        .eq("auth_id", provider.created_by)
+        .maybeSingle()
+    ).then(({ data: ownerProfile }) => {
+      if (!ownerProfile?.email) return;
+      sendTrainingProviderApprovedEmail({
+        to: ownerProfile.email,
+        name: ownerProfile.full_name ?? "Provider",
+        providerName: provider.name,
+      }).catch(() => {});
+    }).catch(() => {});
+  }
 
   return NextResponse.json({ ok: true });
 }

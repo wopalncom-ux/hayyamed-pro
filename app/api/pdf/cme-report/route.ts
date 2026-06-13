@@ -22,18 +22,22 @@ export async function GET(request: NextRequest) {
   }
 
   const admin = createAdminClient();
-  const [{ data: profile }, { data: wallet }, { data: activities }] = await Promise.all([
+  const [{ data: profile }, { data: wallet }, { data: allActivities }] = await Promise.all([
     admin.from("professional_profiles").select("full_name, profession, specialty, license_number, licensing_authority, license_expiry, country_of_residence").eq("auth_id", user.id).single(),
-    admin.from("cme_wallets").select("*").eq("professional_id", user.id).maybeSingle(),
-    admin.from("cme_activities").select("*").eq("professional_id", user.id).eq("verification_status", "verified").order("activity_date", { ascending: false }),
+    admin.from("cme_wallets").select("*").eq("professional_id", user.id).order("created_at", { ascending: true }).limit(1).maybeSingle(),
+    admin.from("cme_activities").select("*").eq("professional_id", user.id).in("verification_status", ["verified", "pending"]).order("activity_date", { ascending: false }),
   ]);
+
+  const activities = (allActivities ?? []).filter((a) => a.verification_status === "verified");
+  const pendingActivities = (allActivities ?? []).filter((a) => a.verification_status === "pending");
 
   const buffer = await renderToBuffer(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     React.createElement(CmeReportDocument, {
       profile: profile ?? {},
       wallet: wallet ?? {},
-      activities: activities ?? [],
+      activities,
+      pendingActivities,
       generatedAt: new Date().toISOString(),
     }) as any
   );

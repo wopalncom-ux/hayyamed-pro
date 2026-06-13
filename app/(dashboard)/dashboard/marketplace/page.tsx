@@ -13,6 +13,7 @@ interface SearchParams {
   category?: string;
   mode?: string;
   free?: string;
+  q?: string;
 }
 
 export default async function MarketplacePage({
@@ -37,6 +38,7 @@ export default async function MarketplacePage({
   if (sp.category && sp.category !== "All") query = query.eq("category", sp.category);
   if (sp.mode) query = query.eq("delivery_mode", sp.mode);
   if (sp.free === "1") query = query.eq("is_free", true);
+  if (sp.q?.trim()) query = query.ilike("title", `%${sp.q.trim()}%`);
 
   const [{ data: courses }, { data: myEnrollments }] = await Promise.all([
     query,
@@ -56,7 +58,9 @@ export default async function MarketplacePage({
         <div>
           <h1 className="text-2xl font-bold text-[#111]">Training Marketplace</h1>
           <p className="text-sm text-[#64748b] mt-1">
-            Accredited CME courses from GCC healthcare providers.
+            {sp.q?.trim()
+              ? `${courseList.length} result${courseList.length !== 1 ? "s" : ""} for "${sp.q.trim()}"`
+              : "Accredited CME courses from GCC healthcare providers."}
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -86,16 +90,18 @@ export default async function MarketplacePage({
           </div>
           <h2 className="text-base font-semibold text-[#111] mb-2">No courses found</h2>
           <p className="text-sm text-[#64748b] max-w-sm mx-auto">
-            {sp.category || sp.mode || sp.free
+            {sp.q?.trim()
+              ? `No courses match "${sp.q.trim()}". Try a different search term or clear filters.`
+              : sp.category || sp.mode || sp.free
               ? "Try adjusting your filters."
               : "We're onboarding accredited training providers. Check back soon."}
           </p>
-          {(sp.category || sp.mode || sp.free) && (
+          {(sp.q || sp.category || sp.mode || sp.free) && (
             <Link
               href="/dashboard/marketplace"
               className="inline-block mt-4 text-sm text-[#1a56a0] hover:underline"
             >
-              Clear filters
+              Clear all filters
             </Link>
           )}
         </div>

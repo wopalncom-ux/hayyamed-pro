@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { track } from "@/lib/analytics";
 
 const PRIVACY_FIELDS = [
   { id: "employer_can_view_cme_summary", label: "CME credit summary", description: "Total credits earned and compliance status", defaultOn: true },
@@ -34,6 +35,7 @@ export default function Step6Privacy({ profile, userId }: { profile: Record<stri
     if (privError) { setError(privError.message); setLoading(false); return; }
 
     await supabase.from("professional_profiles").update({ onboarding_step: 7 }).eq("auth_id", userId);
+    track("onboarding_step_completed", { step: 6, step_name: "privacy", employer_visible: Object.values(settings).filter(Boolean).length });
     router.push("/onboarding/7");
   }
 

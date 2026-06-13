@@ -3,6 +3,23 @@ import { redirect, notFound } from "next/navigation";
 import Link from "next/link";
 import CourseForm from "@/components/provider/CourseForm";
 import ProviderMarkCompleteButton from "@/components/provider/ProviderMarkCompleteButton";
+import WeeklyEnrollmentChart, { type WeekBucket } from "@/components/provider/WeeklyEnrollmentChart";
+
+function buildWeeklyData(enrolledAts: string[]): WeekBucket[] {
+  const WEEK = 7 * 86400000;
+  const now = Date.now();
+  return Array.from({ length: 8 }, (_, i) => {
+    const end = now - i * WEEK;
+    const start = end - WEEK;
+    const count = enrolledAts.filter((d) => {
+      const t = new Date(d).getTime();
+      return t >= start && t < end;
+    }).length;
+    const date = new Date(start);
+    const label = date.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+    return { label, count };
+  }).reverse();
+}
 
 export default async function CourseDetailPage({
   params,
@@ -57,6 +74,15 @@ export default async function CourseDetailPage({
   const pendingEnrollments = allEnrollments.filter((e) => e.status !== "completed");
   const completedEnrollments = allEnrollments.filter((e) => e.status === "completed");
 
+  const completionRate = allEnrollments.length > 0
+    ? Math.round((completedEnrollments.length / allEnrollments.length) * 100)
+    : 0;
+  const estimatedRevenue = course.is_free
+    ? null
+    : allEnrollments.length * (course.price_usd ?? 0);
+
+  const weeklyData = buildWeeklyData(allEnrollments.map((e) => e.enrolled_at));
+
   return (
     <div>
       <div className="flex items-center gap-2 mb-6">
@@ -65,6 +91,56 @@ export default async function CourseDetailPage({
         </Link>
         <span className="text-[#e2e8f0]">/</span>
         <span className="text-sm text-[#111] font-medium line-clamp-1">{course.title}</span>
+      </div>
+
+      {/* Stats row */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+        {[
+          {
+            label: "Total enrolled",
+            value: allEnrollments.length.toString(),
+            sub: allEnrollments.length === 0 ? "No enrollments yet" : `${pendingEnrollments.length} in progress`,
+            color: "#1a56a0",
+          },
+          {
+            label: "Completion rate",
+            value: `${completionRate}%`,
+            sub: `${completedEnrollments.length} completed`,
+            color: completionRate >= 70 ? "#16a34a" : completionRate >= 30 ? "#d97706" : "#64748b",
+          },
+          {
+            label: "In progress",
+            value: pendingEnrollments.length.toString(),
+            sub: pendingEnrollments.length === 1 ? "learner active" : "learners active",
+            color: "#374151",
+          },
+          {
+            label: estimatedRevenue !== null ? "Est. revenue" : "Course type",
+            value: estimatedRevenue !== null ? `$${estimatedRevenue.toLocaleString()}` : "Free",
+            sub: estimatedRevenue !== null
+              ? `$${course.price_usd} × ${allEnrollments.length} enrolled`
+              : "No revenue tracked",
+            color: estimatedRevenue !== null && estimatedRevenue > 0 ? "#16a34a" : "#64748b",
+          },
+        ].map((stat) => (
+          <div
+            key={stat.label}
+            className="bg-white rounded-xl border border-[#e2e8f0] px-5 py-4"
+          >
+            <p className="text-xs text-[#64748b] mb-1">{stat.label}</p>
+            <p className="text-2xl font-bold" style={{ color: stat.color }}>
+              {stat.value}
+            </p>
+            <p className="text-xs text-[#94a3b8] mt-0.5 truncate">{stat.sub}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Weekly enrollment chart */}
+      <div className="bg-white rounded-xl border border-[#e2e8f0] px-6 py-5 mb-6">
+        <h2 className="text-sm font-semibold text-[#111] mb-1">Weekly Enrollments</h2>
+        <p className="text-xs text-[#64748b] mb-4">Last 8 weeks</p>
+        <WeeklyEnrollmentChart data={weeklyData} />
       </div>
 
       {/* Enrollments panel */}

@@ -1,6 +1,7 @@
 import { redirect, notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/server";
+import { toCountryCode } from "@/lib/countryCode";
 import Step1Email from "@/components/onboarding/Step1Email";
 import Step2Personal from "@/components/onboarding/Step2Personal";
 import Step3Professional from "@/components/onboarding/Step3Professional";
@@ -44,16 +45,48 @@ export default async function OnboardingStepPage({
   if (!user) redirect("/login");
 
   const admin = createAdminClient();
-  const [{ data: profile }, { data: authorities }] = await Promise.all([
-    admin.from("professional_profiles").select("*").eq("auth_id", user.id).single(),
+
+  const { data: profile } = await admin
+    .from("professional_profiles")
+    .select("*")
+    .eq("auth_id", user.id)
+    .single();
+
+  // Profile profession label → rules engine profession_code
+  const PROFESSION_TO_CODE: Record<string, string> = {
+    "Doctor (MD/MBBS)": "physician", "Specialist Doctor": "physician",
+    "Consultant": "physician", "Dentist": "dentist",
+    "Pharmacist": "pharmacist", "Nurse": "nurse",
+  };
+
+  const [{ data: authorities }, cmeRulesResult] = await Promise.all([
     stepNum === 3
       ? admin.from("licensing_authorities").select("id, abbreviation, authority_name, country").eq("is_active", true).order("country").order("authority_name")
       : Promise.resolve({ data: [] }),
+    stepNum === 5
+      ? (async () => {
+          const countryCode = toCountryCode(String(profile?.country_of_residence ?? "Qatar"));
+          const profCode = PROFESSION_TO_CODE[String(profile?.profession ?? "")] ?? "ahp";
+          const { data } = await admin
+            .from("country_compliance_rules")
+            .select("total_credits_required, cycle_years, credit_terminology, profession_code")
+            .eq("country_code", countryCode)
+            .in("profession_code", [profCode, "all"]);
+          return (
+            data?.find((r) => r.profession_code === profCode) ??
+            data?.find((r) => r.profession_code === "all") ??
+            null
+          );
+        })()
+      : Promise.resolve(null),
   ]);
 
   if (profile?.onboarding_complete) redirect("/dashboard");
 
   const StepComponent = STEP_COMPONENTS[stepNum - 1];
+
+  // Referred users earn a 30-day trial; others get 14 days
+  const trialDays = (user.user_metadata?.referred_by as string | undefined) ? 30 : 14;
 
   return (
     <div>
@@ -79,7 +112,13 @@ export default async function OnboardingStepPage({
       </div>
 
       <div className="bg-white rounded-xl shadow-sm border border-[#e2e8f0] p-8">
-        <StepComponent profile={profile} userId={user.id} authorities={authorities ?? []} />
+        {stepNum === 5 ? (
+          <Step5Cme profile={profile} userId={user.id} cmeRules={cmeRulesResult} />
+        ) : stepNum === 7 ? (
+          <Step7Activate profile={profile} userId={user.id} trialDays={trialDays} />
+        ) : (
+          <StepComponent profile={profile} userId={user.id} authorities={authorities ?? []} />
+        )}
       </div>
     </div>
   );

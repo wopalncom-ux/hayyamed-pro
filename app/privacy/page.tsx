@@ -1,11 +1,11 @@
-export const metadata = { title: "Privacy Policy — Hayya Med PRO" };
+﻿export const metadata = { title: "Privacy Policy â€” Hayya Med Pro" };
 
 export default function PrivacyPage() {
   return (
     <div className="min-h-screen bg-[#f8fafc]">
       <div className="max-w-3xl mx-auto px-4 py-16">
         <div className="mb-8">
-          <a href="/" className="text-[#1a56a0] text-sm hover:underline">← Hayya Med PRO</a>
+          <a href="/" className="text-[#1a56a0] text-sm hover:underline">â† Hayya Med Pro</a>
         </div>
         <h1 className="text-3xl font-bold text-[#111] mb-2">Privacy Policy</h1>
         <p className="text-[#64748b] text-sm mb-10">Last updated: 10 June 2026</p>
@@ -14,7 +14,7 @@ export default function PrivacyPage() {
 
           <section>
             <h2 className="text-lg font-semibold text-[#111] mb-3">1. Introduction</h2>
-            <p>Hayya Med PRO (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;) is committed to protecting your personal data. This Privacy Policy explains how we collect, use, store, and share information when you use our platform at <a href="https://pro.hayyamed.pro" className="text-[#1a56a0] hover:underline">pro.hayyamed.pro</a>.</p>
+            <p>Hayya Med Pro (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;) is committed to protecting your personal data. This Privacy Policy explains how we collect, use, store, and share information when you use our platform at <a href="https://hayyamed.pro" className="text-[#1a56a0] hover:underline">hayyamed.pro</a>.</p>
             <p className="mt-2">We comply with Qatar&apos;s Personal Data Privacy Protection Law (Law No. 13 of 2016) (&ldquo;Qatar PDPL&rdquo;) and applicable GCC data protection regulations.</p>
           </section>
 
@@ -23,7 +23,7 @@ export default function PrivacyPage() {
             <div className="space-y-3">
               <div>
                 <p className="font-medium text-[#111]">Account Information</p>
-                <p className="mt-1">Email address, full name, date of birth, nationality, and password (hashed — never stored in plain text).</p>
+                <p className="mt-1">Email address, full name, date of birth, nationality, and password (hashed â€” never stored in plain text).</p>
               </div>
               <div>
                 <p className="font-medium text-[#111]">Professional Information</p>
@@ -35,7 +35,7 @@ export default function PrivacyPage() {
               </div>
               <div>
                 <p className="font-medium text-[#111]">Usage Data</p>
-                <p className="mt-1">Pages visited, features used, and session duration — collected via product analytics to improve the service.</p>
+                <p className="mt-1">Pages visited, features used, and session duration â€” collected via product analytics to improve the service.</p>
               </div>
               <div>
                 <p className="font-medium text-[#111]">Payment Data</p>
@@ -61,10 +61,10 @@ export default function PrivacyPage() {
             <h2 className="text-lg font-semibold text-[#111] mb-3">4. Legal Basis for Processing</h2>
             <p>We process your personal data on the following legal bases under the Qatar PDPL:</p>
             <ul className="list-disc ml-5 mt-2 space-y-1">
-              <li><strong>Contract performance</strong> — to provide the service you have subscribed to</li>
-              <li><strong>Legitimate interests</strong> — to improve the platform and prevent fraud</li>
-              <li><strong>Consent</strong> — for optional features such as employer visibility and marketing communications</li>
-              <li><strong>Legal obligation</strong> — to comply with applicable laws and regulatory requirements</li>
+              <li><strong>Contract performance</strong> â€” to provide the service you have subscribed to</li>
+              <li><strong>Legitimate interests</strong> â€” to improve the platform and prevent fraud</li>
+              <li><strong>Consent</strong> â€” for optional features such as employer visibility and marketing communications</li>
+              <li><strong>Legal obligation</strong> â€” to comply with applicable laws and regulatory requirements</li>
             </ul>
           </section>
 
@@ -72,9 +72,9 @@ export default function PrivacyPage() {
             <h2 className="text-lg font-semibold text-[#111] mb-3">5. Data Sharing</h2>
             <p>We do not sell your personal data. We share data only in the following circumstances:</p>
             <ul className="list-disc ml-5 mt-2 space-y-1">
-              <li><strong>Employers</strong> — only the compliance data fields you explicitly enable in your privacy settings, under a signed Data Processing Agreement</li>
-              <li><strong>Service providers</strong> — Supabase (database hosting), GCP Cloud Run (application hosting), Postmark (email delivery), Paddle (payments), and Anthropic (AI features) — all under data processing agreements</li>
-              <li><strong>Legal requirements</strong> — if required by Qatari or applicable law, court order, or government authority</li>
+              <li><strong>Employers</strong> â€” only the compliance data fields you explicitly enable in your privacy settings, under a signed Data Processing Agreement</li>
+              <li><strong>Service providers</strong> â€” Supabase (database hosting), GCP Cloud Run (application hosting), Postmark (email delivery), Paddle (payments), and Anthropic (AI features) â€” all under data processing agreements</li>
+              <li><strong>Legal requirements</strong> â€” if required by Qatari or applicable law, court order, or government authority</li>
             </ul>
           </section>
 
@@ -83,10 +83,10 @@ export default function PrivacyPage() {
             <p>Your data is stored on servers located in the AWS ap-southeast-2 (Sydney) region via Supabase, and processed on GCP me-central1 (Doha, Qatar). We implement the following security measures:</p>
             <ul className="list-disc ml-5 mt-2 space-y-1">
               <li>Encryption in transit (TLS 1.2+) and at rest (AES-256)</li>
-              <li>Row-Level Security (RLS) — each user can only access their own data</li>
+              <li>Row-Level Security (RLS) â€” each user can only access their own data</li>
               <li>Certificate files stored in a private bucket with signed URLs (1-hour expiry)</li>
               <li>All administrative actions logged in an append-only audit log</li>
-              <li>Secrets managed via GCP Secret Manager — never stored in application code</li>
+              <li>Secrets managed via GCP Secret Manager â€” never stored in application code</li>
             </ul>
           </section>
 
@@ -103,11 +103,11 @@ export default function PrivacyPage() {
             <h2 className="text-lg font-semibold text-[#111] mb-3">8. Your Rights</h2>
             <p>Under the Qatar PDPL and applicable regulations, you have the right to:</p>
             <ul className="list-disc ml-5 mt-2 space-y-1">
-              <li><strong>Access</strong> — request a copy of your personal data</li>
-              <li><strong>Correction</strong> — request correction of inaccurate data</li>
-              <li><strong>Deletion</strong> — request deletion of your account and personal data</li>
-              <li><strong>Portability</strong> — request your data in a machine-readable format</li>
-              <li><strong>Withdraw consent</strong> — opt out of optional data processing at any time via Settings</li>
+              <li><strong>Access</strong> â€” request a copy of your personal data</li>
+              <li><strong>Correction</strong> â€” request correction of inaccurate data</li>
+              <li><strong>Deletion</strong> â€” request deletion of your account and personal data</li>
+              <li><strong>Portability</strong> â€” request your data in a machine-readable format</li>
+              <li><strong>Withdraw consent</strong> â€” opt out of optional data processing at any time via Settings</li>
             </ul>
             <p className="mt-3">To exercise these rights, contact us at <a href="mailto:privacy@hayyamed.pro" className="text-[#1a56a0] hover:underline">privacy@hayyamed.pro</a>. We will respond within 30 days.</p>
           </section>
@@ -124,7 +124,7 @@ export default function PrivacyPage() {
 
           <section>
             <h2 className="text-lg font-semibold text-[#111] mb-3">11. Changes to This Policy</h2>
-            <p>We may update this Privacy Policy. We will notify you of material changes by email at least 14 days before they take effect. The current version is always available at <a href="/privacy" className="text-[#1a56a0] hover:underline">pro.hayyamed.pro/privacy</a>.</p>
+            <p>We may update this Privacy Policy. We will notify you of material changes by email at least 14 days before they take effect. The current version is always available at <a href="/privacy" className="text-[#1a56a0] hover:underline">hayyamed.pro/privacy</a>.</p>
           </section>
 
           <section>

@@ -21,14 +21,29 @@ create_secret() {
 }
 
 # ---------- Fill in real values below before running ----------
+# Values marked "see .env.cloudrun.yaml" are already generated — copy from that file.
+# Values marked "get from <service>" require you to create an account first.
 
+# ✅ Already have — copy SUPABASE_SERVICE_ROLE_KEY from .env.cloudrun.yaml
 create_secret "hayyamed-pro-service-role-key"  "<PASTE_SUPABASE_SERVICE_ROLE_KEY>"
-create_secret "hayyamed-pro-postmark-key"       "<PASTE_POSTMARK_API_KEY>"
+
+# ✅ Already have — copy POSTMARK_API_TOKEN from .env.cloudrun.yaml
+create_secret "hayyamed-pro-postmark-key"       "<PASTE_POSTMARK_API_TOKEN>"
+
+# ⚠ Get from Anthropic console: console.anthropic.com → API Keys
 create_secret "hayyamed-pro-anthropic-key"      "<PASTE_ANTHROPIC_API_KEY>"
+
+# ✅ Already have — copy CRON_SECRET from .env.cloudrun.yaml
 create_secret "hayyamed-pro-cron-secret"        "<PASTE_CRON_SECRET>"
+
+# ✅ Already have — copy VAPID_PRIVATE_KEY from .env.cloudrun.yaml
 create_secret "hayyamed-pro-vapid-private"      "<PASTE_VAPID_PRIVATE_KEY>"
-create_secret "hayyamed-pro-paddle-key"         "<PASTE_PADDLE_API_KEY_or_placeholder>"
-create_secret "hayyamed-pro-paddle-webhook"     "<PASTE_PADDLE_WEBHOOK_SECRET_or_placeholder>"
+
+# ⚠ Get from Paddle dashboard → Developer → Authentication → API keys
+create_secret "hayyamed-pro-paddle-key"         "<PASTE_PADDLE_API_KEY>"
+
+# ⚠ Get from Paddle dashboard → Notifications → Webhook endpoints → create endpoint → copy signing secret
+create_secret "hayyamed-pro-paddle-webhook"     "<PASTE_PADDLE_WEBHOOK_SECRET>"
 
 # ---------- Grant Cloud Build SA access to secrets ----------
 

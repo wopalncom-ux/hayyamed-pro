@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import CountryRuleForm from "@/components/admin/CountryRuleForm";
 import CategoryRulesTable from "@/components/admin/CategoryRulesTable";
+import AddProfessionRuleForm from "@/components/admin/AddProfessionRuleForm";
 
 const COUNTRY_NAMES: Record<string, string> = {
   QA: "Qatar (QCHP)",
@@ -83,6 +84,7 @@ export default async function CountryRuleDetailPage({
         {allRules.map((rule) => (
           <CountryRuleForm key={rule.id} rule={rule} authorities={allAuthorities} />
         ))}
+        <AddProfessionRuleForm countryCode={countryCode} />
       </div>
 
       {/* Activity Categories */}

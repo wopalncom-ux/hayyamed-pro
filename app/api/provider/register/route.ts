@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { logAudit } from "@/lib/audit";
+import { sendAdminProviderPendingEmail } from "@/lib/email";
 
 export async function POST(req: NextRequest) {
   const supabase = await createClient();
@@ -53,6 +54,15 @@ export async function POST(req: NextRequest) {
     targetId: provider.id,
     metadata: { name },
   });
+
+  // Fire-and-forget admin notification — never block the registration response
+  sendAdminProviderPendingEmail({
+    providerName: name.trim(),
+    contactEmail: contact_email?.trim() || null,
+    country: country_code ?? "QA",
+    isAccredited: !!is_accredited,
+    accreditor: is_accredited ? accreditor?.trim() || null : null,
+  }).catch(() => {});
 
   return NextResponse.json({ providerId: provider.id });
 }

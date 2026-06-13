@@ -7,6 +7,9 @@ import { useToast } from "@/components/ui/toast";
 interface Profile {
   full_name: string | null;
   mobile: string | null;
+  date_of_birth: string | null;
+  nationality: string | null;
+  country_of_residence: string | null;
   profession: string | null;
   specialty: string | null;
   license_number: string | null;
@@ -22,6 +25,9 @@ export default function ProfileEditForm({ profile }: { profile: Profile }) {
   const [form, setForm] = useState({
     fullName: profile.full_name ?? "",
     mobile: profile.mobile ?? "",
+    dateOfBirth: profile.date_of_birth ?? "",
+    nationality: profile.nationality ?? "",
+    countryOfResidence: profile.country_of_residence ?? "",
     profession: profile.profession ?? "",
     specialty: profile.specialty ?? "",
     licenseNumber: profile.license_number ?? "",
@@ -49,6 +55,9 @@ export default function ProfileEditForm({ profile }: { profile: Profile }) {
   const FIELDS: { key: keyof typeof form; label: string; type?: string; placeholder?: string }[] = [
     { key: "fullName", label: "Full name", placeholder: "Dr. Jane Smith" },
     { key: "mobile", label: "Mobile number", placeholder: "+974 5000 0000" },
+    { key: "dateOfBirth", label: "Date of birth", type: "date" },
+    { key: "nationality", label: "Nationality", placeholder: "Qatari, Saudi, British…" },
+    { key: "countryOfResidence", label: "Country of residence", placeholder: "Qatar, UAE, Saudi Arabia…" },
     { key: "profession", label: "Profession", placeholder: "Medicine, Nursing, Pharmacy…" },
     { key: "specialty", label: "Specialty", placeholder: "Cardiology, Paediatrics…" },
     { key: "licenseNumber", label: "License number", placeholder: "QCHP-12345" },
@@ -100,6 +109,9 @@ export default function ProfileEditForm({ profile }: { profile: Profile }) {
                 setForm({
                   fullName: profile.full_name ?? "",
                   mobile: profile.mobile ?? "",
+                  dateOfBirth: profile.date_of_birth ?? "",
+                  nationality: profile.nationality ?? "",
+                  countryOfResidence: profile.country_of_residence ?? "",
                   profession: profile.profession ?? "",
                   specialty: profile.specialty ?? "",
                   licenseNumber: profile.license_number ?? "",
@@ -118,6 +130,9 @@ export default function ProfileEditForm({ profile }: { profile: Profile }) {
           {[
             { label: "Full name", value: form.fullName },
             { label: "Mobile", value: form.mobile },
+            { label: "Date of birth", value: form.dateOfBirth },
+            { label: "Nationality", value: form.nationality },
+            { label: "Country of residence", value: form.countryOfResidence },
             { label: "Profession", value: form.profession },
             { label: "Specialty", value: form.specialty },
             { label: "License number", value: form.licenseNumber },

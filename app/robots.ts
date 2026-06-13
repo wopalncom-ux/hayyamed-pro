@@ -1,4 +1,4 @@
-import { MetadataRoute } from "next";
+﻿import { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/dashboard/", "/admin/", "/employer/", "/provider/", "/onboarding/", "/api/"],
     },
-    sitemap: "https://pro.hayyamed.pro/sitemap.xml",
+    sitemap: "https://hayyamed.pro/sitemap.xml",
   };
 }

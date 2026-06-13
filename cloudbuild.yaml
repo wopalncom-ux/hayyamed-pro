@@ -1,3 +1,34 @@
+# Cloud Build substitution variables — set these in the Cloud Build Trigger settings:
+#   _POSTHOG_KEY         = phc_xxxxx            (PostHog project API key)
+#   _SENTRY_DSN          = https://xxx@sentry.io/xxx  (Sentry DSN)
+#   _PADDLE_PRO_MONTHLY  = pri_xxxxxx           (Paddle price ID — Pro monthly)
+#   _PADDLE_PRO_ANNUAL   = pri_xxxxxx           (Paddle price ID — Pro annual)
+#   _PADDLE_CLINIC_MONTHLY  = pri_xxxxxx        (Paddle price ID — Employer Clinic monthly)
+#   _PADDLE_CLINIC_ANNUAL   = pri_xxxxxx        (Paddle price ID — Employer Clinic annual)
+#   _PADDLE_GROWTH_MONTHLY  = pri_xxxxxx        (Paddle price ID — Employer Growth monthly)
+#   _PADDLE_GROWTH_ANNUAL   = pri_xxxxxx        (Paddle price ID — Employer Growth annual)
+#   _PADDLE_DEPT_MONTHLY    = pri_xxxxxx        (Paddle price ID — Employer Dept monthly)
+#   _PADDLE_DEPT_ANNUAL     = pri_xxxxxx        (Paddle price ID — Employer Dept annual)
+#   _PADDLE_HOSP_MONTHLY    = pri_xxxxxx        (Paddle price ID — Employer Hospital monthly)
+#   _PADDLE_HOSP_ANNUAL     = pri_xxxxxx        (Paddle price ID — Employer Hospital annual)
+#
+# If not set, these default to empty string.
+# Paddle features require all 10 price IDs — leave blank to disable payments until ready.
+
+substitutions:
+  _POSTHOG_KEY: ""
+  _SENTRY_DSN: ""
+  _PADDLE_PRO_MONTHLY: ""
+  _PADDLE_PRO_ANNUAL: ""
+  _PADDLE_CLINIC_MONTHLY: ""
+  _PADDLE_CLINIC_ANNUAL: ""
+  _PADDLE_GROWTH_MONTHLY: ""
+  _PADDLE_GROWTH_ANNUAL: ""
+  _PADDLE_DEPT_MONTHLY: ""
+  _PADDLE_DEPT_ANNUAL: ""
+  _PADDLE_HOSP_MONTHLY: ""
+  _PADDLE_HOSP_ANNUAL: ""
+
 steps:
   - name: 'gcr.io/cloud-builders/docker'
     id: 'build'
@@ -12,9 +43,13 @@ steps:
       - '--build-arg'
       - 'NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVsZXZpYnl0YXhvY2R2ZGZtZmFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3MjA3OTgsImV4cCI6MjA5NjI5Njc5OH0.AmoNuAClh1RBnnWldrzQ773SakdOIGuJYErZGHbek-w'
       - '--build-arg'
-      - 'NEXT_PUBLIC_APP_URL=https://pro.hayyamed.pro'
+      - 'NEXT_PUBLIC_APP_URL=https://hayyamed.pro'
       - '--build-arg'
-      - 'NEXT_PUBLIC_VAPID_PUBLIC_KEY=BOpjviS_Vza82bDb1Gs-BIgs1njuGle2skNDWD9ofUbEYorWTRE760AqDYVp4-Eyn5ZnyWvR6xneWAaWqCWt_Mw'
+      - 'NEXT_PUBLIC_VAPID_PUBLIC_KEY=BKmyU-09Tox9-Z9V21e26-jP2I4paR3QuBjRG4gdnLS9UVauqYeGXO2l5OqBTGrk6Ga-m_gzX7jw5syPd87k9hw'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_POSTHOG_KEY=$_POSTHOG_KEY'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_SENTRY_DSN=$_SENTRY_DSN'
       - '--cache-from'
       - 'me-central1-docker.pkg.dev/project-38d955b0-84e7-44b6-8b5/hayyamed-pro/app:latest'
       - '.'
@@ -44,9 +79,10 @@ steps:
       - '--memory=512Mi'
       - '--min-instances=1'
       - '--max-instances=10'
-      - '--set-env-vars=VAPID_SUBJECT=mailto:support@hayyamed.pro'
       - >-
-        --set-secrets=SUPABASE_SERVICE_ROLE_KEY=hayyamed-pro-service-role-key:latest,POSTMARK_API_KEY=hayyamed-pro-postmark-key:latest,ANTHROPIC_API_KEY=hayyamed-pro-anthropic-key:latest,CRON_SECRET=hayyamed-pro-cron-secret:latest,VAPID_PRIVATE_KEY=hayyamed-pro-vapid-private:latest,PADDLE_API_KEY=hayyamed-pro-paddle-key:latest,PADDLE_WEBHOOK_SECRET=hayyamed-pro-paddle-webhook:latest
+        --set-env-vars=VAPID_SUBJECT=mailto:support@hayyamed.pro,SUPPORT_EMAIL=support@hayyamed.pro,ADMIN_NOTIFICATION_EMAIL=admin@hayyamed.pro,NEXT_PUBLIC_POSTHOG_HOST=https://eu.i.posthog.com,PADDLE_PRO_MONTHLY_PRICE_ID=$_PADDLE_PRO_MONTHLY,PADDLE_PRO_ANNUAL_PRICE_ID=$_PADDLE_PRO_ANNUAL,PADDLE_EMPLOYER_CLINIC_MONTHLY_PRICE_ID=$_PADDLE_CLINIC_MONTHLY,PADDLE_EMPLOYER_CLINIC_ANNUAL_PRICE_ID=$_PADDLE_CLINIC_ANNUAL,PADDLE_EMPLOYER_GROWTH_MONTHLY_PRICE_ID=$_PADDLE_GROWTH_MONTHLY,PADDLE_EMPLOYER_GROWTH_ANNUAL_PRICE_ID=$_PADDLE_GROWTH_ANNUAL,PADDLE_EMPLOYER_DEPT_MONTHLY_PRICE_ID=$_PADDLE_DEPT_MONTHLY,PADDLE_EMPLOYER_DEPT_ANNUAL_PRICE_ID=$_PADDLE_DEPT_ANNUAL,PADDLE_EMPLOYER_HOSP_MONTHLY_PRICE_ID=$_PADDLE_HOSP_MONTHLY,PADDLE_EMPLOYER_HOSP_ANNUAL_PRICE_ID=$_PADDLE_HOSP_ANNUAL
+      - >-
+        --set-secrets=SUPABASE_SERVICE_ROLE_KEY=hayyamed-pro-service-role-key:latest,POSTMARK_API_TOKEN=hayyamed-pro-postmark-key:latest,ANTHROPIC_API_KEY=hayyamed-pro-anthropic-key:latest,CRON_SECRET=hayyamed-pro-cron-secret:latest,VAPID_PRIVATE_KEY=hayyamed-pro-vapid-private:latest,PADDLE_API_KEY=hayyamed-pro-paddle-key:latest,PADDLE_WEBHOOK_SECRET=hayyamed-pro-paddle-webhook:latest
 
 images:
   - 'me-central1-docker.pkg.dev/project-38d955b0-84e7-44b6-8b5/hayyamed-pro/app'

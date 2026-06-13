@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { withSentryConfig } from "@sentry/nextjs";
 
 const isDev = process.env.NODE_ENV === "development";
 
@@ -14,6 +15,7 @@ const csp = [
   `img-src 'self' data: blob: https://${supabaseHost}`,
   "font-src 'self'",
   `connect-src 'self' https://${supabaseHost} wss://${supabaseHost} https://cloudflareinsights.com https://static.cloudflareinsights.com https://eu.i.posthog.com https://eu-assets.i.posthog.com`,
+  "worker-src 'self'",
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",
@@ -45,4 +47,18 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withSentryConfig(nextConfig, {
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+  authToken: process.env.SENTRY_AUTH_TOKEN,
+  // Proxy Sentry events through /monitoring to bypass ad-blockers
+  tunnelRoute: "/monitoring",
+  // Don't show Sentry CLI output during every build
+  silent: !process.env.CI,
+  // Disable Sentry telemetry from the build tool
+  telemetry: false,
+  // Skip source map upload if no auth token (local dev + unset envs)
+  sourcemaps: {
+    disable: !process.env.SENTRY_AUTH_TOKEN,
+  },
+});

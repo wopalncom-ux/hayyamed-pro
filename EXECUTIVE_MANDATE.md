@@ -554,7 +554,7 @@ Do not assume healthcare regulations are identical across countries.
 
 | Country | Authority | Cycle | Credits | Terminology |
 |---|---|---|---|---|
-| Qatar | QCHP | 1 year | 50 | CME |
+| Qatar | DHP-AS (MOPH) | 2 years | 80 (40/year min) | CPD |
 | Saudi Arabia | SCFHS | 1–3 years | 40–60 | CME |
 | UAE (Dubai) | DHA | 2 years | 40 | CME/CPD |
 | UAE (Abu Dhabi) | DOH | 1–2 years | 30–50 | CPD |

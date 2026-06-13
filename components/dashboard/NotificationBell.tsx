@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { Bell, BellOff } from "lucide-react";
+import { useToast } from "@/components/ui/toast";
 
 export default function NotificationBell() {
+  const { toast } = useToast();
   const [status, setStatus] = useState<"default" | "granted" | "denied" | "unsupported">("default");
   const [loading, setLoading] = useState(false);
 
@@ -22,6 +24,10 @@ export default function NotificationBell() {
     try {
       const permission = await Notification.requestPermission();
       setStatus(permission as "granted" | "denied" | "default");
+      if (permission === "denied") {
+        toast("Notifications blocked — enable them in your browser settings.", "info");
+        return;
+      }
       if (permission !== "granted") return;
 
       const reg = await navigator.serviceWorker.ready;
@@ -31,7 +37,7 @@ export default function NotificationBell() {
       });
 
       const json = sub.toJSON();
-      await fetch("/api/push/subscribe", {
+      const res = await fetch("/api/push/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -40,6 +46,14 @@ export default function NotificationBell() {
           auth: json.keys?.auth,
         }),
       });
+
+      if (res.ok) {
+        toast("Notifications enabled — you'll receive CME deadline and license expiry alerts.", "success");
+      } else {
+        toast("Could not save notification preferences — please try again.", "error");
+      }
+    } catch {
+      toast("Could not enable notifications — please try again.", "error");
     } finally {
       setLoading(false);
     }

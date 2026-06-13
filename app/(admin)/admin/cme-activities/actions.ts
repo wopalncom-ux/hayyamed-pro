@@ -4,6 +4,7 @@ import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { logAudit } from "@/lib/audit";
 import { sendCmeVerifiedEmail, sendCmeRejectedEmail } from "@/lib/email";
+import { getUserPlan, isPro } from "@/lib/subscription";
 
 async function getAdminUser() {
   const supabase = await createClient();
@@ -21,13 +22,13 @@ async function getAdminUser() {
   return member ? user : null;
 }
 
+
 export async function verifyCmeActivity(activityId: string) {
   const actor = await getAdminUser();
   if (!actor) return { error: "Not authorized" };
 
   const admin = createAdminClient();
 
-  // Fetch activity + professional info for email
   const { data: activity } = await admin
     .from("cme_activities")
     .select("title, credits, professional_id")
@@ -48,32 +49,19 @@ export async function verifyCmeActivity(activityId: string) {
     targetId: activityId,
   });
 
-  // Send email to professional (Pro users only — check subscription)
   if (activity) {
-    const { data: sub } = await admin
-      .from("subscriptions")
-      .select("plan, status")
-      .eq("professional_id", activity.professional_id)
-      .maybeSingle();
-
-    const isPro = sub && (sub.plan === "pro" || sub.plan === "employer") && sub.status === "active";
-
-    if (isPro) {
-      const { data: authUser } = await admin.auth.admin.getUserById(activity.professional_id);
-      const { data: profile } = await admin
-        .from("professional_profiles")
-        .select("full_name")
-        .eq("auth_id", activity.professional_id)
-        .single();
-
-      if (authUser?.user?.email) {
-        await sendCmeVerifiedEmail({
-          to: authUser.user.email,
-          name: profile?.full_name ?? "Doctor",
-          activityTitle: activity.title,
-          credits: activity.credits,
-        });
-      }
+    const [profileRes, plan] = await Promise.all([
+      admin.from("professional_profiles").select("email, full_name").eq("auth_id", activity.professional_id).single(),
+      getUserPlan(activity.professional_id),
+    ]);
+    if (profileRes.data?.email) {
+      await sendCmeVerifiedEmail({
+        to: profileRes.data.email,
+        name: profileRes.data.full_name ?? "Doctor",
+        activityTitle: activity.title,
+        credits: activity.credits,
+        isPro: isPro(plan),
+      });
     }
   }
 
@@ -81,7 +69,7 @@ export async function verifyCmeActivity(activityId: string) {
   return { error: null };
 }
 
-export async function rejectCmeActivity(activityId: string) {
+export async function rejectCmeActivity(activityId: string, reason: string) {
   const actor = await getAdminUser();
   if (!actor) return { error: "Not authorized" };
 
@@ -95,7 +83,7 @@ export async function rejectCmeActivity(activityId: string) {
 
   const { error } = await admin
     .from("cme_activities")
-    .update({ verification_status: "rejected" })
+    .update({ verification_status: "rejected", rejection_reason: reason.trim() || null })
     .eq("id", activityId);
 
   if (error) return { error: error.message };
@@ -105,32 +93,22 @@ export async function rejectCmeActivity(activityId: string) {
     action: "cme_activity.rejected",
     targetTable: "cme_activities",
     targetId: activityId,
+    metadata: { reason: reason.trim() || null },
   });
 
   if (activity) {
-    const { data: sub } = await admin
-      .from("subscriptions")
-      .select("plan, status")
-      .eq("professional_id", activity.professional_id)
-      .maybeSingle();
-
-    const isPro = sub && (sub.plan === "pro" || sub.plan === "employer") && sub.status === "active";
-
-    if (isPro) {
-      const { data: authUser } = await admin.auth.admin.getUserById(activity.professional_id);
-      const { data: profile } = await admin
-        .from("professional_profiles")
-        .select("full_name")
-        .eq("auth_id", activity.professional_id)
-        .single();
-
-      if (authUser?.user?.email) {
-        await sendCmeRejectedEmail({
-          to: authUser.user.email,
-          name: profile?.full_name ?? "Doctor",
-          activityTitle: activity.title,
-        });
-      }
+    const { data: profileRes } = await admin
+      .from("professional_profiles")
+      .select("email, full_name")
+      .eq("auth_id", activity.professional_id)
+      .single();
+    if (profileRes?.email) {
+      await sendCmeRejectedEmail({
+        to: profileRes.email,
+        name: profileRes.full_name ?? "Doctor",
+        activityTitle: activity.title,
+        reason: reason.trim() || null,
+      });
     }
   }
 

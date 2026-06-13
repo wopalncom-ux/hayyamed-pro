@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { track } from "@/lib/analytics";
 
 const NATIONALITIES = ["Qatari", "Saudi", "Emirati", "Jordanian", "Egyptian", "Lebanese", "Syrian", "Indian", "Pakistani", "Filipino", "British", "American", "Other"];
 
@@ -30,6 +31,7 @@ export default function Step2Personal({ profile, userId }: { profile: Record<str
       .eq("auth_id", userId);
 
     if (error) { setError(error.message); setLoading(false); return; }
+    track("onboarding_step_completed", { step: 2, step_name: "personal" });
     router.push("/onboarding/3");
   }
 

@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useToast } from "@/components/ui/toast";
 import { useRouter } from "next/navigation";
+import { track } from "@/lib/analytics";
+import { submitLinkRequest } from "@/app/(dashboard)/dashboard/settings/actions";
 
 export default function AddEmployerForm() {
   const { toast } = useToast();
@@ -14,7 +16,7 @@ export default function AddEmployerForm() {
   const [unverifiedName, setUnverifiedName] = useState("");
   const [showUnverified, setShowUnverified] = useState(false);
   const [searching, setSearching] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   async function handleSearch() {
     if (!search.trim()) return;
@@ -30,37 +32,24 @@ export default function AddEmployerForm() {
     if (!data?.length) setShowUnverified(true);
   }
 
-  async function handleSubmit(e: React.FormEvent) {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!selected && !unverifiedName.trim()) return;
-    setSubmitting(true);
 
-    const supabase = createClient();
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) { toast("Not authenticated", "error"); setSubmitting(false); return; }
+    startTransition(async () => {
+      const result = await submitLinkRequest({
+        organizationId: selected?.id ?? null,
+        unverifiedEmployerName: selected ? null : unverifiedName.trim(),
+      });
 
-    let error;
-    if (selected) {
-      ({ error } = await supabase.from("employer_link_requests").insert({
-        professional_id: user.id,
-        organization_id: selected.id,
-        status: "pending",
-      }));
-    } else {
-      ({ error } = await supabase.from("employer_link_requests").insert({
-        professional_id: user.id,
-        unverified_employer_name: unverifiedName.trim(),
-        status: "pending",
-      }));
-    }
-    setSubmitting(false);
-
-    if (error) {
-      toast(error.message, "error");
-    } else {
-      toast("Employer link request submitted — pending admin approval.", "success");
-      router.refresh();
-    }
+      if (result.error) {
+        toast(result.error, "error");
+      } else {
+        track("employer_link_requested", { verified_org: !!selected });
+        toast("Employer link request submitted — pending admin approval.", "success");
+        router.refresh();
+      }
+    });
   }
 
   return (
@@ -124,10 +113,10 @@ export default function AddEmployerForm() {
       {(selected || (showUnverified && unverifiedName.trim())) && (
         <button
           type="submit"
-          disabled={submitting}
+          disabled={isPending}
           className="bg-[#1a56a0] text-white text-sm px-5 py-2 rounded-lg font-medium hover:bg-[#1547a0] disabled:opacity-50 transition-colors"
         >
-          {submitting ? "Submitting…" : "Submit link request"}
+          {isPending ? "Submitting…" : "Submit link request"}
         </button>
       )}
     </form>

@@ -1,7 +1,7 @@
 import { ImageResponse } from "@vercel/og";
 
 export const runtime = "edge";
-export const alt = "Hayya Med PRO — CME Tracking & License Compliance for GCC Healthcare Professionals";
+export const alt = "Hayya Med Pro — CME Tracking & License Compliance for GCC Healthcare Professionals";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -48,7 +48,7 @@ export default function OGImage() {
             <div style={{ color: "white", fontSize: 24, fontWeight: 800 }}>H</div>
           </div>
           <span style={{ color: "white", fontSize: 28, fontWeight: 700, letterSpacing: "-0.5px" }}>
-            Hayya Med <span style={{ color: "#60a5fa" }}>PRO</span>
+            Hayya Med <span style={{ color: "#60a5fa" }}>Pro</span>
           </span>
         </div>
 

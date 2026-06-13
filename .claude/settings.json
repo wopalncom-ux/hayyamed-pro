@@ -1,4 +1,4 @@
-{
+﻿{
   "permissions": {
     "allow": [
       "Bash(npm run *)",
@@ -29,9 +29,9 @@
       "Bash(curl -s https://ulevibytaxocdvdfmfaq.supabase.co/auth/v1/settings -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVsZXZpYnl0YXhvY2R2ZGZtZmFxIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MDcyMDc5OCwiZXhwIjoyMDk2Mjk2Nzk4fQ.NCaDaHMseVIq9FrvglOYTqfWCjwWJJKjh_c3aMV-_vo')",
       "Bash(curl -s https://ulevibytaxocdvdfmfaq.supabase.co/auth/v1/settings -H 'apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVsZXZpYnl0YXhvY2R2ZGZtZmFxIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MDcyMDc5OCwiZXhwIjoyMDk2Mjk2Nzk4fQ.NCaDaHMseVIq9FrvglOYTqfWCjwWJJKjh_c3aMV-_vo' -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVsZXZpYnl0YXhvY2R2ZGZtZmFxIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MDcyMDc5OCwiZXhwIjoyMDk2Mjk2Nzk4fQ.NCaDaHMseVIq9FrvglOYTqfWCjwWJJKjh_c3aMV-_vo')",
       "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('site_url:', d.get\\('external',{}\\).get\\('site_url','N/A'\\)\\); print\\('redirect_urls:', d.get\\('external',{}\\).get\\('additional_redirect_urls','N/A'\\)[:200]\\)\")",
-      "Bash(curl -sv \"https://pro.hayyamed.pro\")",
-      "Bash(curl -s -o /dev/null -w '%{http_code}' https://hayyamed-pro-543551932098.me-central1.run.app -H 'Host: pro.hayyamed.pro')",
-      "Bash(curl -s -o /dev/null -w \"%{http_code} %{redirect_url}\" \"https://pro.hayyamed.pro\")",
+      "Bash(curl -sv \"https://hayyamed.pro\")",
+      "Bash(curl -s -o /dev/null -w '%{http_code}' https://hayyamed-pro-543551932098.me-central1.run.app -H 'Host: hayyamed.pro')",
+      "Bash(curl -s -o /dev/null -w \"%{http_code} %{redirect_url}\" \"https://hayyamed.pro\")",
       "Bash(curl -s -o /dev/null -w '%{http_code}' https://hayyamed-pro-543551932098.me-central1.run.app/dashboard -H 'Cookie: test=1')",
       "Bash(curl -s \"http://localhost:3000/terms\")",
       "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(d['scripts']\\)\")",
@@ -45,7 +45,20 @@
       "Bash(npm uninstall *)",
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
-      "Bash(grep -v \"process.env\\\\|//\\\\|test\\\\|spec\")"
+      "Bash(grep -v \"process.env\\\\|//\\\\|test\\\\|spec\")",
+      "Bash(mkdir -p \"c:\\\\Users\\\\wopal\\\\OneDrive\\\\Desktop\\\\Platform\\\\hayyamed-pro\\\\app\\\\api\\\\admin\\\\platform-settings\" \"c:\\\\Users\\\\wopal\\\\OneDrive\\\\Desktop\\\\Platform\\\\hayyamed-pro\\\\app\\\\api\\\\admin\\\\discounts\\\\[id]\" \"c:\\\\Users\\\\wopal\\\\OneDrive\\\\Desktop\\\\Platform\\\\hayyamed-pro\\\\app\\\\api\\\\admin\\\\partners\\\\[id]\" \"c:\\\\Users\\\\wopal\\\\OneDrive\\\\Desktop\\\\Platform\\\\hayyamed-pro\\\\app\\\\api\\\\admin\\\\subscriptions\")",
+      "Bash(node -e \"const p=require\\('./package.json'\\); const deps={...p.dependencies,...p.devDependencies}; ['framer-motion','gsap','@gsap','lenis','@studio-freight','three','@react-three','@lottiefiles','lottie-react','@upstash'].forEach\\(k=>Object.keys\\(deps\\).filter\\(d=>d.startsWith\\(k\\)\\).forEach\\(d=>console.log\\(d,deps[d]\\)\\)\\)\")",
+      "Bash(npx tsc *)",
+      "Bash(Remove-Item -Recurse -Force .next -ErrorAction SilentlyContinue)",
+      "Bash(npx next *)",
+      "Bash(Remove-Item \"c:\\\\Users\\\\wopal\\\\OneDrive\\\\Desktop\\\\Platform\\\\hayyamed-pro\\\\app\\\\api\\\\badge\\\\compliance\\\\route.ts\" -Force)",
+      "Bash(node -e \"const p = require\\('@paddle/paddle-node-sdk'\\); const t = p; console.log\\(Object.keys\\(t\\)\\);\")",
+      "Bash(cat app/manifest.ts)",
+      "Bash(cat public/manifest.json)"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\wopal\\OneDrive\\Desktop\\Platform\\hayyamed-pro\\app\\api\\admin\\discounts",
+      "c:\\Users\\wopal\\.claude\\projects\\c--Users-wopal-OneDrive-Desktop-Platform-hayyamed-pro\\memory"
     ]
   }
 }

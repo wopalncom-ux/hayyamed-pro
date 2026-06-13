@@ -1,13 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/server";
 import { sendEmployerDigestEmail, DigestStaffAlert } from "@/lib/email";
+import { pingCronMonitor } from "@/lib/cronMonitor";
 
 export const runtime = "nodejs";
 
 export async function GET(req: NextRequest) {
-  const secret = req.headers.get("x-cron-secret") ?? req.nextUrl.searchParams.get("secret");
-  if (secret !== process.env.CRON_SECRET) {
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  const auth = req.headers.get("authorization");
+  if (auth !== `Bearer ${process.env.CRON_SECRET}`) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const admin = createAdminClient();
@@ -23,6 +24,17 @@ export async function GET(req: NextRequest) {
   }
 
   const weekOf = new Date().toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+
+  // Batch-fetch email + name for all admin auth_ids in one query
+  const adminIds = members.map((m) => m.auth_id);
+  const { data: adminProfiles } = await admin
+    .from("professional_profiles")
+    .select("auth_id, email, full_name")
+    .in("auth_id", adminIds);
+  const adminProfileMap = Object.fromEntries(
+    (adminProfiles ?? []).map((p) => [p.auth_id, p])
+  );
+
   let sent = 0;
 
   for (const member of members) {
@@ -30,16 +42,9 @@ export async function GET(req: NextRequest) {
     const orgs = member.organizations as { name: string }[] | { name: string } | null;
     const orgName = (Array.isArray(orgs) ? orgs[0]?.name : (orgs as { name: string } | null)?.name) ?? "Your Organization";
 
-    // Fetch admin's email + name
-    const { data: adminAuth } = await admin.auth.admin.getUserById(member.auth_id);
-    if (!adminAuth?.user?.email) continue;
-    const adminEmail = adminAuth.user.email;
-
-    const { data: adminProfile } = await admin
-      .from("professional_profiles")
-      .select("full_name")
-      .eq("auth_id", member.auth_id)
-      .maybeSingle();
+    const adminProfile = adminProfileMap[member.auth_id];
+    const adminEmail = adminProfile?.email;
+    if (!adminEmail) continue;
     const adminName = adminProfile?.full_name ?? adminEmail;
 
     // Fetch approved links for this org
@@ -136,5 +141,6 @@ export async function GET(req: NextRequest) {
     sent++;
   }
 
+  await pingCronMonitor("employer-digest");
   return NextResponse.json({ sent });
 }

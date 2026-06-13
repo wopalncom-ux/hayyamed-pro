@@ -1,130 +1,99 @@
-import UpgradeButton from "@/components/pricing/UpgradeButton";
+﻿import { createClient, createAdminClient } from "@/lib/supabase/server";
+import { getUserPlan } from "@/lib/subscription";
+import PricingClient from "@/components/pricing/PricingClient";
+import type { Plan } from "@/lib/planUtils";
 
-const FREE_FEATURES = [
-  "Unlimited CME activity tracking",
-  "Compliance dashboard",
-  "Employer link requests",
-  "QCHP / GCC authority support",
-];
+export const metadata = {
+  title: "Pricing â€” Hayya Med Pro",
+  description: "Simple pricing for healthcare professionals and employers. Start free. Upgrade when you need PDF exports, AI compliance tools, and team management.",
+  openGraph: {
+    title: "Pricing â€” Hayya Med Pro",
+    description: "Free for individual professionals. Pro from $6/month. Employer plans from $50/month. 14-day free trial included.",
+    url: "https://hayyamed.pro/pricing",
+    type: "website",
+    images: [
+      {
+        url: "https://hayyamed.pro/api/og?t=Pricing+%E2%80%94+Hayya+Med+Pro&s=Free+forever+%C2%B7+Pro+from+%246%2Fmo+%C2%B7+Employer+from+%2450%2Fmo&a=%F0%9F%92%B3+Plans&k=Pricing",
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image" as const,
+    title: "Pricing â€” Hayya Med Pro",
+    description: "Free for individual professionals. Pro from $6/month. 14-day trial â€” no credit card required.",
+  },
+};
 
-const PRO_FEATURES = [
-  "Everything in Free",
-  "PDF compliance reports (QCHP-ready)",
-  "Email verification alerts",
-  "License expiry warnings (30 & 7 days)",
-  "Priority support",
-];
+const pricingFaqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "How much does Hayya Med Pro cost?",
+      acceptedAnswer: { "@type": "Answer", text: "The Free plan is always free. The Pro plan is $6/month (or $61.20/year â€” 15% off). Employer plans start at $50/month for up to 10 staff." },
+    },
+    {
+      "@type": "Question",
+      name: "Is there a free trial?",
+      acceptedAnswer: { "@type": "Answer", text: "Yes. New accounts receive a 14-day Pro trial automatically after completing onboarding â€” no credit card required." },
+    },
+    {
+      "@type": "Question",
+      name: "What is included in the Pro plan?",
+      acceptedAnswer: { "@type": "Answer", text: "Pro includes unlimited CME activity tracking, PDF compliance report download, AI-powered gap analysis (Claude), compliance chatbot, certificate storage, multi-license tracking, and priority support." },
+    },
+    {
+      "@type": "Question",
+      name: "Can I cancel my subscription at any time?",
+      acceptedAnswer: { "@type": "Answer", text: "Yes. You can cancel at any time from Dashboard â†’ Settings â†’ Manage Billing. Your Pro access continues until the end of the current billing period, then your account moves to the free plan. Your CME data is always preserved." },
+    },
+    {
+      "@type": "Question",
+      name: "What payment methods are accepted?",
+      acceptedAnswer: { "@type": "Answer", text: "We accept all major credit and debit cards through Paddle, our payment processor. Cards issued in Qatar, UAE, Saudi Arabia, and other GCC countries are supported." },
+    },
+  ],
+};
 
-const EMPLOYER_FEATURES = [
-  "Everything in Pro",
-  "Team compliance dashboard",
-  "Bulk staff compliance reporting",
-  "Staff link management & approvals",
-  "Dedicated account manager",
-];
+export default async function PricingPage() {
+  let userPlan: Plan | null = null;
+  let trialDaysLeft: number | null = null;
 
-function Check() {
+  try {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (user) {
+      const admin = createAdminClient();
+      const [plan, profileRes] = await Promise.all([
+        getUserPlan(user.id),
+        admin.from("professional_profiles")
+          .select("pro_trial_ends_at")
+          .eq("auth_id", user.id)
+          .maybeSingle(),
+      ]);
+      userPlan = plan;
+
+      if (plan === "trialing" && profileRes.data?.pro_trial_ends_at) {
+        trialDaysLeft = Math.max(0, Math.ceil(
+          (new Date(profileRes.data.pro_trial_ends_at).getTime() - Date.now()) / 86400000
+        ));
+      }
+    }
+  } catch {
+    // Not logged in or error â€” show public pricing
+  }
+
   return (
-    <svg className="w-4 h-4 text-[#16a34a] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-    </svg>
-  );
-}
-
-export default function PricingPage() {
-  return (
-    <div className="min-h-screen bg-[#f8fafc]">
-      {/* Nav */}
-      <header className="bg-white border-b border-[#e2e8f0] px-6 py-4">
-        <div className="max-w-5xl mx-auto flex items-center justify-between">
-          <a href="/" className="text-[#1a56a0] font-bold text-lg">Hayya Med Pro</a>
-          <a href="/login" className="text-sm text-[#64748b] hover:text-[#111] transition-colors">Sign in</a>
-        </div>
-      </header>
-
-      <div className="max-w-5xl mx-auto px-6 py-16">
-        {/* Heading */}
-        <div className="text-center mb-14">
-          <h1 className="text-4xl font-bold text-[#111] tracking-tight mb-4">
-            Simple, transparent pricing
-          </h1>
-          <p className="text-lg text-[#64748b] max-w-xl mx-auto">
-            Start free. Upgrade when you need PDF exports and automated reminders for license renewal.
-          </p>
-        </div>
-
-        {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Free */}
-          <div className="bg-white rounded-2xl border border-[#e2e8f0] p-7 flex flex-col">
-            <p className="text-sm font-medium text-[#64748b] mb-1">Free</p>
-            <div className="flex items-end gap-1 mb-1">
-              <span className="text-4xl font-bold text-[#111]">$0</span>
-            </div>
-            <p className="text-xs text-[#94a3b8] mb-6">Forever free</p>
-            <ul className="space-y-3 mb-8 flex-1">
-              {FREE_FEATURES.map(f => (
-                <li key={f} className="flex items-start gap-2.5 text-sm text-[#374151]">
-                  <Check />{f}
-                </li>
-              ))}
-            </ul>
-            <a href="/register" className="block w-full text-center border border-[#e2e8f0] text-[#374151] py-3 rounded-xl font-semibold text-sm hover:bg-[#f8fafc] transition-colors">
-              Get started free
-            </a>
-          </div>
-
-          {/* Pro — highlighted */}
-          <div className="bg-[#1a56a0] rounded-2xl p-7 flex flex-col relative overflow-hidden">
-            <div className="absolute top-4 right-4 bg-white/20 text-white text-xs font-semibold px-2.5 py-1 rounded-full">
-              Most popular
-            </div>
-            <p className="text-sm font-medium text-blue-200 mb-1">Pro</p>
-            <div className="flex items-end gap-1 mb-1">
-              <span className="text-4xl font-bold text-white">$49</span>
-              <span className="text-blue-200 mb-1">/year</span>
-            </div>
-            <p className="text-xs text-blue-300 mb-6">≈ $4 per month · Billed annually</p>
-            <ul className="space-y-3 mb-8 flex-1">
-              {PRO_FEATURES.map(f => (
-                <li key={f} className="flex items-start gap-2.5 text-sm text-white">
-                  <svg className="w-4 h-4 text-blue-200 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                  </svg>
-                  {f}
-                </li>
-              ))}
-            </ul>
-            <UpgradeButton plan="pro" label="Upgrade to Pro — $49/year" />
-          </div>
-
-          {/* Employer */}
-          <div className="bg-white rounded-2xl border border-[#e2e8f0] p-7 flex flex-col">
-            <p className="text-sm font-medium text-[#64748b] mb-1">Employer</p>
-            <div className="flex items-end gap-1 mb-1">
-              <span className="text-4xl font-bold text-[#111]">$199</span>
-              <span className="text-[#64748b] mb-1">/year</span>
-            </div>
-            <p className="text-xs text-[#94a3b8] mb-6">Per organization · Billed annually</p>
-            <ul className="space-y-3 mb-8 flex-1">
-              {EMPLOYER_FEATURES.map(f => (
-                <li key={f} className="flex items-start gap-2.5 text-sm text-[#374151]">
-                  <Check />{f}
-                </li>
-              ))}
-            </ul>
-            <UpgradeButton plan="employer" label="Get Employer Plan" />
-          </div>
-        </div>
-
-        {/* Reassurance */}
-        <div className="mt-12 text-center">
-          <p className="text-sm text-[#64748b]">
-            All plans include secure data storage · No credit card required for Free ·{" "}
-            <a href="/dashboard/settings" className="text-[#1a56a0] hover:underline">Cancel anytime</a>
-          </p>
-        </div>
-      </div>
-    </div>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(pricingFaqLd) }}
+      />
+      <PricingClient userPlan={userPlan} trialDaysLeft={trialDaysLeft} />
+    </>
   );
 }

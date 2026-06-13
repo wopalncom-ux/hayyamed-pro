@@ -53,7 +53,7 @@ export default function FreeTierBanner({ activityCount }: { activityCount: numbe
         </div>
 
         <a
-          href="/pricing"
+          href="/pricing?source=free_tier_banner"
           onClick={() => track("upgrade_clicked", { source: "dashboard_banner" })}
           className={`shrink-0 text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors whitespace-nowrap ${
             isAtCap
@@ -61,7 +61,7 @@ export default function FreeTierBanner({ activityCount }: { activityCount: numbe
               : "bg-[#1a56a0] text-white hover:bg-[#1547a0]"
           }`}
         >
-          {isAtCap ? "Upgrade now — $49/yr" : "Upgrade to Pro →"}
+          {isAtCap ? "Upgrade now — $6/mo" : "Upgrade to Pro →"}
         </a>
       </div>
     </div>

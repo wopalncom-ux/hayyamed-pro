@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { track } from "@/lib/analytics";
+import { submitLinkRequest } from "@/app/(dashboard)/dashboard/settings/actions";
 
 export default function Step4Employer({ profile, userId }: { profile: Record<string, unknown> | null; userId: string; authorities?: unknown[] }) {
   const router = useRouter();
@@ -11,8 +13,8 @@ export default function Step4Employer({ profile, userId }: { profile: Record<str
   const [selected, setSelected] = useState<{ id: string; name: string } | null>(null);
   const [unverifiedName, setUnverifiedName] = useState("");
   const [mode, setMode] = useState<"search" | "unverified" | null>(null);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
 
   async function handleSearch() {
     if (!search.trim()) return;
@@ -26,37 +28,41 @@ export default function Step4Employer({ profile, userId }: { profile: Record<str
     setMode("search");
   }
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setError(null);
-    setLoading(true);
-
+  async function advanceStep() {
     const supabase = createClient();
-
-    if (selected) {
-      const { error } = await supabase.from("employer_link_requests").insert({
-        professional_id: userId,
-        organization_id: selected.id,
-        status: "pending",
-      });
-      if (error) { setError(error.message); setLoading(false); return; }
-    } else if (unverifiedName) {
-      const { error } = await supabase.from("employer_link_requests").insert({
-        professional_id: userId,
-        unverified_employer_name: unverifiedName,
-        status: "pending",
-      });
-      if (error) { setError(error.message); setLoading(false); return; }
-    }
-
     await supabase.from("professional_profiles").update({ onboarding_step: 5 }).eq("auth_id", userId);
     router.push("/onboarding/5");
   }
 
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setError(null);
+
+    if (!selected && !unverifiedName.trim()) {
+      void advanceStep();
+      return;
+    }
+
+    startTransition(async () => {
+      const result = await submitLinkRequest({
+        organizationId: selected?.id ?? null,
+        unverifiedEmployerName: selected ? null : unverifiedName.trim(),
+      });
+
+      // "already active or pending" is fine during onboarding — just continue
+      if (result.error && !result.error.includes("already have an active or pending")) {
+        setError(result.error);
+        return;
+      }
+
+      track("onboarding_step_completed", { step: 4, step_name: "employer", employer_linked: !!(selected || unverifiedName) });
+      await advanceStep();
+    });
+  }
+
   async function handleSkip() {
-    const supabase = createClient();
-    await supabase.from("professional_profiles").update({ onboarding_step: 5 }).eq("auth_id", userId);
-    router.push("/onboarding/5");
+    track("onboarding_step_completed", { step: 4, step_name: "employer", employer_linked: false, skipped: true });
+    await advanceStep();
   }
 
   return (
@@ -136,8 +142,8 @@ export default function Step4Employer({ profile, userId }: { profile: Record<str
         <button type="button" onClick={handleSkip} className="px-4 py-2 text-sm text-[#64748b] hover:underline">
           Skip for now
         </button>
-        <button type="submit" disabled={loading} className="flex-1 bg-[#1a56a0] text-white py-2.5 rounded-lg text-sm font-medium hover:bg-[#1547a0] disabled:opacity-50 transition-colors">
-          {loading ? "Saving..." : "Continue"}
+        <button type="submit" disabled={isPending} className="flex-1 bg-[#1a56a0] text-white py-2.5 rounded-lg text-sm font-medium hover:bg-[#1547a0] disabled:opacity-50 transition-colors">
+          {isPending ? "Saving..." : "Continue"}
         </button>
       </div>
     </form>

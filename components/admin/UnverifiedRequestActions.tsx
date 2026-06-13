@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { approveUnverifiedRequest, rejectAdminRequest } from "@/app/(admin)/admin/link-requests/actions";
+import { track } from "@/lib/analytics";
 
 const ORG_TYPES = ["hospital", "clinic", "pharmacy", "university", "lab", "other"];
 
@@ -27,6 +28,7 @@ export default function UnverifiedRequestActions({
     const result = await approveUnverifiedRequest(requestId, orgName, orgType, professionalId);
     setLoading(null);
     if (result?.error) { setError(result.error); return; }
+    track("employer_link_approved", { org_type: orgType });
     setShowApproveModal(false);
     setDone("approved");
   }

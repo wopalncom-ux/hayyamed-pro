@@ -61,6 +61,17 @@ export default function ComplianceChatWidget() {
         }),
       });
 
+      if (res.status === 403) {
+        setMessages((prev) => [
+          ...prev.slice(0, -1),
+          {
+            role: "assistant" as const,
+            content: "__upgrade__",
+          },
+        ]);
+        return;
+      }
+
       if (!res.ok || !res.body) {
         setMessages((prev) => [
           ...prev.slice(0, -1),
@@ -131,18 +142,33 @@ export default function ComplianceChatWidget() {
                 key={i}
                 className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
               >
-                <div
-                  className={`max-w-[85%] text-sm rounded-2xl px-3.5 py-2.5 leading-relaxed whitespace-pre-wrap ${
-                    msg.role === "user"
-                      ? "bg-[#1a56a0] text-white rounded-br-sm"
-                      : "bg-[#f1f5f9] text-[#111] rounded-bl-sm"
-                  }`}
-                >
-                  {msg.content}
-                  {streaming && i === messages.length - 1 && msg.role === "assistant" && (
-                    <span className="inline-block w-1.5 h-3.5 bg-[#64748b] rounded-sm ml-1 animate-pulse align-middle" />
-                  )}
-                </div>
+                {msg.content === "__upgrade__" ? (
+                  <div className="max-w-[85%] bg-[#fffbeb] border border-[#fde68a] rounded-2xl rounded-bl-sm px-3.5 py-3 text-sm">
+                    <p className="font-semibold text-[#92400e] mb-1">Pro feature</p>
+                    <p className="text-[#78350f] text-xs mb-2.5">
+                      The AI Compliance Advisor is available on Pro and above. Upgrade to get personalized CME recommendations.
+                    </p>
+                    <a
+                      href="/pricing?source=chat_widget"
+                      className="inline-flex items-center gap-1 text-xs font-semibold bg-[#1a56a0] text-white px-3 py-1.5 rounded-lg hover:bg-[#1547a0] transition-colors"
+                    >
+                      Upgrade to Pro →
+                    </a>
+                  </div>
+                ) : (
+                  <div
+                    className={`max-w-[85%] text-sm rounded-2xl px-3.5 py-2.5 leading-relaxed whitespace-pre-wrap ${
+                      msg.role === "user"
+                        ? "bg-[#1a56a0] text-white rounded-br-sm"
+                        : "bg-[#f1f5f9] text-[#111] rounded-bl-sm"
+                    }`}
+                  >
+                    {msg.content}
+                    {streaming && i === messages.length - 1 && msg.role === "assistant" && (
+                      <span className="inline-block w-1.5 h-3.5 bg-[#64748b] rounded-sm ml-1 animate-pulse align-middle" />
+                    )}
+                  </div>
+                )}
               </div>
             ))}
             <div ref={bottomRef} />

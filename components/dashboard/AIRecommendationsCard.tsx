@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { track } from "@/lib/analytics";
+import type { Plan } from "@/lib/planUtils";
+import { isPro } from "@/lib/planUtils";
 
 interface Gap {
   category: string;
@@ -33,6 +36,7 @@ interface Props {
   totalCompleted: number;
   gaps: Gap[];
   cycleEndDate: string | null;
+  plan?: Plan;
 }
 
 const URGENCY_CONFIG = {
@@ -60,6 +64,7 @@ export default function AIRecommendationsCard(props: Props) {
   const [courses, setCourses] = useState<Record<string, MatchedCourse[]>>({});
 
   const hasGaps = props.gaps.length > 0;
+  const proUser = props.plan ? isPro(props.plan) : true;
 
   async function analyze() {
     setState("loading");
@@ -81,6 +86,42 @@ export default function AIRecommendationsCard(props: Props) {
   }
 
   if (!hasGaps) return null;
+
+  if (!proUser) {
+    return (
+      <div className="bg-white rounded-xl border border-[#e2e8f0] mb-6 overflow-hidden">
+        <div className="px-6 py-4 border-b border-[#e2e8f0] flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="text-base">✨</span>
+            <h2 className="text-base font-semibold text-[#111]">AI Compliance Advisor</h2>
+          </div>
+          <span className="text-xs font-semibold bg-[#1a56a0] text-white px-2.5 py-0.5 rounded-full">Pro</span>
+        </div>
+        <div className="px-6 py-5">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-[#111] mb-1">
+                {props.gaps.length} compliance gap{props.gaps.length > 1 ? "s" : ""} detected — AI analysis available
+              </p>
+              <p className="text-xs text-[#64748b]">
+                Upgrade to Pro for personalized CME recommendations tailored to your profession, specialty, and remaining credits.
+              </p>
+            </div>
+            <a
+              href="/pricing?source=ai_recommendations"
+              onClick={() => track("upgrade_clicked", { source: "ai_recommendations_card" })}
+              className="shrink-0 inline-flex items-center gap-1.5 text-sm font-semibold bg-[#1a56a0] text-white px-4 py-2 rounded-lg hover:bg-[#1547a0] transition-colors whitespace-nowrap"
+            >
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z" />
+              </svg>
+              Unlock AI Analysis
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white rounded-xl border border-[#e2e8f0] mb-6 overflow-hidden">

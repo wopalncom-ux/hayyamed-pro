@@ -5,6 +5,7 @@ import LinkRequestActions from "@/components/employer/LinkRequestActions";
 import AssignDepartmentButton from "@/components/employer/AssignDepartmentButton";
 import AssignTaskButton from "@/components/employer/AssignTaskButton";
 import SendReminderButton from "@/components/employer/SendReminderButton";
+import InviteLinkButton from "@/components/employer/InviteLinkButton";
 
 type ComplianceStatus = "compliant" | "at_risk" | "non_compliant" | "unknown";
 
@@ -30,7 +31,12 @@ const STATUS_CONFIG: Record<ComplianceStatus, { label: string; classes: string }
   unknown:       { label: "No Data",       classes: "bg-[#f1f5f9] text-[#64748b]" },
 };
 
-export default async function EmployerDashboardPage() {
+export default async function EmployerDashboardPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ setup?: string }>;
+}) {
+  const sp = await searchParams;
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
@@ -158,13 +164,33 @@ export default async function EmployerDashboardPage() {
 
   return (
     <div>
+      {/* Setup complete — shown once after employer registration */}
+      {sp.setup === "complete" && (
+        <div className="bg-[#f0fdf4] border border-[#bbf7d0] rounded-xl px-5 py-4 mb-6 flex items-start gap-3">
+          <div className="flex-shrink-0 mt-0.5 w-5 h-5 rounded-full bg-[#16a34a] flex items-center justify-center">
+            <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+            </svg>
+          </div>
+          <div>
+            <p className="text-sm font-semibold text-[#15803d]">Organization registered — employer dashboard is ready</p>
+            <p className="text-xs text-[#64748b] mt-0.5">
+              Copy your invite link above and share it with your staff to get started.
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-[#111]">Staff Compliance Overview</h1>
           <p className="text-sm text-[#64748b] mt-1">{orgName}</p>
         </div>
-        {total > 0 && <BulkReportButton organizationId={orgId} orgName={orgName} />}
+        <div className="flex items-center gap-3">
+          <InviteLinkButton organizationId={orgId} orgName={orgName} />
+          {total > 0 && <BulkReportButton organizationId={orgId} orgName={orgName} />}
+        </div>
       </div>
 
       {/* Summary Stats */}
@@ -240,8 +266,61 @@ export default async function EmployerDashboardPage() {
         </div>
 
         {staff.length === 0 ? (
-          <div className="px-6 py-12 text-center text-[#64748b] text-sm">
-            No linked staff yet. Approve pending requests above to see compliance data.
+          <div className="px-6 py-10">
+            <div className="text-center mb-8">
+              <div className="w-16 h-16 rounded-2xl bg-[#e8f0fe] flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-[#1a56a0]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
+                </svg>
+              </div>
+              <h3 className="text-base font-bold text-[#111] mb-1">No staff linked yet</h3>
+              <p className="text-sm text-[#64748b] max-w-sm mx-auto">
+                Staff need to link their Hayya Med Pro account to your organization. Here&apos;s how to get them started.
+              </p>
+            </div>
+
+            <div className="mb-6 flex justify-center">
+              <InviteLinkButton organizationId={orgId} orgName={orgName} />
+            </div>
+            <p className="text-center text-xs text-[#64748b] mb-6">
+              Share this link with your staff — they&apos;ll be auto-linked to {orgName} after registering.
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
+              <div className="bg-[#f8fafc] rounded-xl border border-[#e2e8f0] p-4 text-center">
+                <div className="w-8 h-8 rounded-full bg-[#1a56a0] text-white text-sm font-bold flex items-center justify-center mx-auto mb-2">1</div>
+                <p className="text-xs font-semibold text-[#111] mb-1">Copy &amp; share invite link</p>
+                <p className="text-xs text-[#64748b] leading-relaxed">
+                  Use the button above to copy your invite link and share it with staff via email or WhatsApp.
+                </p>
+              </div>
+              <div className="bg-[#f8fafc] rounded-xl border border-[#e2e8f0] p-4 text-center">
+                <div className="w-8 h-8 rounded-full bg-[#1a56a0] text-white text-sm font-bold flex items-center justify-center mx-auto mb-2">2</div>
+                <p className="text-xs font-semibold text-[#111] mb-1">Staff register via link</p>
+                <p className="text-xs text-[#64748b] leading-relaxed">
+                  Staff register using your invite link — a link request is auto-created when they finish onboarding.
+                </p>
+              </div>
+              <div className="bg-[#f8fafc] rounded-xl border border-[#e2e8f0] p-4 text-center">
+                <div className="w-8 h-8 rounded-full bg-[#1a56a0] text-white text-sm font-bold flex items-center justify-center mx-auto mb-2">3</div>
+                <p className="text-xs font-semibold text-[#111] mb-1">Approve requests here</p>
+                <p className="text-xs text-[#64748b] leading-relaxed">
+                  Approve each request and start seeing their compliance data in real time.
+                </p>
+              </div>
+            </div>
+
+            <div className="text-center mt-6">
+              <a
+                href="/employer/staff/import"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-[#1a56a0] hover:text-[#154890] transition-colors"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+                Or bulk-import staff via CSV →
+              </a>
+            </div>
           </div>
         ) : (
           <>

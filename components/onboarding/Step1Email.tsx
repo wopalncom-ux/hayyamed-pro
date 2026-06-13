@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { track } from "@/lib/analytics";
 
 export default function Step1Email({ profile, userId }: { profile: Record<string, unknown> | null; userId: string; authorities?: unknown[] }) {
   const router = useRouter();
@@ -19,7 +20,7 @@ export default function Step1Email({ profile, userId }: { profile: Record<string
         Your email has been verified. Let&apos;s set up your professional profile.
       </p>
       <button
-        onClick={() => router.push("/onboarding/2")}
+        onClick={() => { track("onboarding_step_completed", { step: 1, step_name: "account" }); router.push("/onboarding/2"); }}
         className="bg-[#1a56a0] text-white px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-[#1547a0] transition-colors"
       >
         Continue to Personal Info

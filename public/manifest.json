@@ -1,6 +1,7 @@
 {
   "name": "Hayya Med Pro",
   "short_name": "Hayya Med",
+  "id": "/",
   "description": "Healthcare CME tracking, licensing, and compliance for GCC professionals",
   "start_url": "/dashboard",
   "display": "standalone",

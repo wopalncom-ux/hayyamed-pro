@@ -1,13 +1,14 @@
-const CACHE_NAME = 'hayyamed-pro-v3';
+const CACHE_NAME = 'hayyamed-pro-v4';
 const OFFLINE_URL = '/offline.html';
 
 const STATIC_ASSETS = [
-  '/',
   '/offline.html',
   '/manifest.json',
   '/icons/icon-192.png',
   '/icons/icon-512.png',
 ];
+// Auth-required pages (/, /dashboard) are intentionally excluded from precache —
+// they need a live session and would serve a stale redirect or login wall offline.
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -52,6 +53,7 @@ self.addEventListener('fetch', (event) => {
   if (
     url.hostname.includes('supabase.co') ||
     url.hostname.includes('paddle.com') ||
+    url.hostname.includes('posthog.com') ||
     url.hostname.includes('cloudflareinsights.com') ||
     url.hostname.includes('cloudflare.com') ||
     url.pathname.startsWith('/api/')

@@ -18,7 +18,7 @@ export default function ProviderNav({ providerName }: { providerName: string }) 
       <div className="max-w-5xl mx-auto px-4">
         <div className="flex items-center justify-between py-4">
           <div>
-            <span className="text-base font-bold text-[#1a56a0]">Hayya Med PRO</span>
+            <span className="text-base font-bold text-[#1a56a0]">Hayya Med Pro</span>
             <span className="mx-2 text-[#e2e8f0]">|</span>
             <span className="text-sm text-[#374151] font-medium">{providerName}</span>
           </div>
