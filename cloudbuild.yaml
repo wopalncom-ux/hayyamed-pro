@@ -16,8 +16,8 @@
 # Paddle features require all 10 price IDs — leave blank to disable payments until ready.
 
 substitutions:
-  _POSTHOG_KEY: ""
-  _SENTRY_DSN: ""
+  _POSTHOG_KEY: "phc_p9y9o7LUUmS6bKxHGp3ZWSe2AADhSq2PaWJMMCcUdCWo"
+  _SENTRY_DSN: "https://f2a8cfb2d5ba7df0b97ebd4c24e59b1e@o4511560514338816.ingest.de.sentry.io/4511560521482320"
   _PADDLE_PRO_MONTHLY: ""
   _PADDLE_PRO_ANNUAL: ""
   _PADDLE_CLINIC_MONTHLY: ""
