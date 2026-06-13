@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { track } from "@/lib/analytics";
 import type { Plan } from "@/lib/planUtils";
-import { isPro } from "@/lib/subscription";
+import { isPro } from "@/lib/planUtils";
 
 const DownloadIcon = () => (
   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
