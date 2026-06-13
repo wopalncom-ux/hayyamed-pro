@@ -3,7 +3,15 @@ import ContactForm from "./ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact Support — Hayya Med Pro",
-  description: "Get help with CME tracking, licensing, or your Hayya Med Pro account.",
+  description: "Get help with CME tracking, licensing, or your Hayya Med Pro account. We respond within 24 hours for Pro users.",
+  alternates: { canonical: "https://hayyamed.pro/contact" },
+  openGraph: {
+    title: "Contact Support — Hayya Med Pro",
+    description: "Get help with CME tracking, licensing, or your Hayya Med Pro account.",
+    url: "https://hayyamed.pro/contact",
+    type: "website",
+    images: [{ url: "https://hayyamed.pro/api/og?t=Contact+Support&s=We+respond+within+24+hours&a=Support&k=Contact", width: 1200, height: 630 }],
+  },
 };
 
 export default function ContactPage() {

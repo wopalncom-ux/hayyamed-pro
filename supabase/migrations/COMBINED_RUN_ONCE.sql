@@ -1608,6 +1608,18 @@ CREATE POLICY "qpay_invoices_admin_all" ON qpay_invoices
   USING (true) WITH CHECK (true);
 
 -- ════════════════════════════════════════════════════════════
+-- MIGRATION 030 — Schema Standards: licensing_authorities updated_at
+-- ════════════════════════════════════════════════════════════
+
+ALTER TABLE licensing_authorities
+  ADD COLUMN IF NOT EXISTS updated_at timestamptz NOT NULL DEFAULT now();
+
+DROP TRIGGER IF EXISTS licensing_authorities_updated_at ON licensing_authorities;
+CREATE TRIGGER licensing_authorities_updated_at
+  BEFORE UPDATE ON licensing_authorities
+  FOR EACH ROW EXECUTE FUNCTION public.set_updated_at();
+
+-- ════════════════════════════════════════════════════════════
 -- POST-RUN VERIFICATION QUERIES
 -- Run these after the script completes to confirm success.
 -- ════════════════════════════════════════════════════════════

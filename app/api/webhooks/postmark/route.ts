@@ -16,12 +16,13 @@ interface PostmarkBouncePayload {
 }
 
 export async function POST(request: NextRequest) {
-  // Authenticate webhook — Postmark sends a custom header
-  if (WEBHOOK_TOKEN) {
-    const token = request.headers.get("x-webhook-token");
-    if (token !== WEBHOOK_TOKEN) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+  // Token is mandatory — reject all requests if env var not configured
+  if (!WEBHOOK_TOKEN) {
+    return NextResponse.json({ error: "Webhook not configured" }, { status: 503 });
+  }
+  const token = request.headers.get("x-webhook-token");
+  if (token !== WEBHOOK_TOKEN) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   let payload: PostmarkBouncePayload;
@@ -47,9 +48,9 @@ export async function POST(request: NextRequest) {
       .eq("email", email);
 
     await admin.from("audit_logs").insert({
-      actor_id: null,
+      actor_auth_id: null,
       action: "email_hard_bounce",
-      target_type: "professional_profile",
+      target_table: "professional_profiles",
       target_id: null,
       metadata: { email, bounce_type: Type, record_type: RecordType },
     });
@@ -64,9 +65,9 @@ export async function POST(request: NextRequest) {
       .eq("email", email);
 
     await admin.from("audit_logs").insert({
-      actor_id: null,
+      actor_auth_id: null,
       action: "email_spam_complaint",
-      target_type: "professional_profile",
+      target_table: "professional_profiles",
       target_id: null,
       metadata: { email, record_type: RecordType },
     });

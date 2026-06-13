@@ -21,10 +21,11 @@ export const metadata = {
     ],
   },
   twitter: {
-    card: "summary_large_image" as const,
-    title: "Pricing â€” Hayya Med Pro",
-    description: "Free for individual professionals. Pro from $6/month. 14-day trial â€” no credit card required.",
+    card: “summary_large_image” as const,
+    title: “Pricing — Hayya Med Pro”,
+    description: “Free for individual professionals. Pro from $6/month. 14-day trial — no credit card required.”,
   },
+  alternates: { canonical: “https://hayyamed.pro/pricing” },
 };
 
 const pricingFaqLd = {

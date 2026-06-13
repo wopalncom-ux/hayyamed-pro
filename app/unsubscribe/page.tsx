@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Unsubscribe — Hayya Med Pro",
+  robots: { index: false, follow: false },
+};
 
 const CATEGORY_LABELS: Record<string, string> = {
   all:       "all email notifications",
