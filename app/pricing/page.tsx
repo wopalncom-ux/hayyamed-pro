@@ -1,4 +1,4 @@
-﻿import { createClient, createAdminClient } from "@/lib/supabase/server";
+import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { getUserPlan } from "@/lib/subscription";
 import PricingClient from "@/components/pricing/PricingClient";
 import type { Plan } from "@/lib/planUtils";
@@ -21,11 +21,11 @@ export const metadata = {
     ],
   },
   twitter: {
-    card: “summary_large_image” as const,
-    title: “Pricing — Hayya Med Pro”,
-    description: “Free for individual professionals. Pro from $6/month. 14-day trial — no credit card required.”,
+    card: "summary_large_image" as const,
+    title: "Pricing — Hayya Med Pro",
+    description: "Free for individual professionals. Pro from $6/month. 14-day trial — no credit card required.",
   },
-  alternates: { canonical: “https://hayyamed.pro/pricing” },
+  alternates: { canonical: "https://hayyamed.pro/pricing" },
 };
 
 const pricingFaqLd = {
