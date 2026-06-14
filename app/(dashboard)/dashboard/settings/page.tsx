@@ -13,6 +13,7 @@ import SoundToggle from "@/components/dashboard/SoundToggle";
 import MultiCountryWallet from "@/components/dashboard/MultiCountryWallet";
 import MFAManager from "@/components/dashboard/MFAManager";
 import PasskeyManager from "@/components/dashboard/PasskeyManager";
+import NotificationsEnableButton from "@/components/dashboard/NotificationsEnableButton";
 
 const STATUS_STYLES: Record<string, string> = {
   pending: "bg-[#fff7ed] text-[#d97706]",
@@ -315,6 +316,15 @@ export default async function SettingsPage() {
             </div>
           </div>
         )}
+
+        {/* Push notifications */}
+        <div className="bg-white rounded-xl border border-[#e2e8f0] p-6">
+          <h2 className="text-base font-semibold text-[#111] mb-1">Push Notifications</h2>
+          <p className="text-xs text-[#64748b] mb-4">
+            Get instant alerts for license expiry, CME deadlines, and compliance status — even when the app is closed.
+          </p>
+          <NotificationsEnableButton />
+        </div>
 
         {/* Email notification preferences */}
         <div id="notifications" className="bg-white rounded-xl border border-[#e2e8f0] p-6">

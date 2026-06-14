@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/server";
 import { sendLicenseExpiryEmail } from "@/lib/email";
 import { pingCronMonitor } from "@/lib/cronMonitor";
+import { sendPushNotification } from "@/lib/push";
 
 export const runtime = "nodejs";
 
@@ -40,6 +41,18 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ sent: 0, message: "No reminders due today" });
   }
 
+  const authIds = profiles.map((p) => p.auth_id);
+  const { data: pushSubs } = await admin
+    .from("push_subscriptions")
+    .select("professional_id, endpoint, p256dh, auth")
+    .in("professional_id", authIds);
+
+  const pushMap = new Map<string, { endpoint: string; p256dh: string; auth: string }[]>();
+  for (const sub of pushSubs ?? []) {
+    if (!pushMap.has(sub.professional_id)) pushMap.set(sub.professional_id, []);
+    pushMap.get(sub.professional_id)!.push(sub);
+  }
+
   let sent = 0;
   const results: { email: string; daysLeft: number; ok: boolean }[] = [];
 
@@ -64,6 +77,20 @@ export async function GET(req: NextRequest) {
       results.push({ email: p.email, daysLeft, ok: true });
     } catch {
       results.push({ email: p.email, daysLeft, ok: false });
+    }
+
+    // Fire-and-forget push notifications
+    const subs = pushMap.get(p.auth_id) ?? [];
+    for (const sub of subs) {
+      sendPushNotification(sub, {
+        title: `License expiry in ${daysLeft} day${daysLeft === 1 ? "" : "s"}`,
+        body: `Your license expires on ${new Date(p.license_expiry!).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}. Review it now.`,
+        url: "/dashboard/cme",
+      }).then(({ expired }) => {
+        if (expired) {
+          admin.from("push_subscriptions").delete().eq("endpoint", sub.endpoint).then(() => {});
+        }
+      }).catch(() => {});
     }
   }
 

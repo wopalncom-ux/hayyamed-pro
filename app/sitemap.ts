@@ -141,5 +141,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/blog/pakistan-pmc-cpd-requirements-2026`,    lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/managing-multiple-gcc-medical-licenses`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/how-to-read-cme-certificate-gcc`,       lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    // Blog posts — session 61 (new English posts)
+    { url: `${BASE}/blog/ahpra-cpd-requirements-2026`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/emergency-medicine-cme-gcc`,           lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/online-vs-inperson-cme-gcc`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/cme-portfolio-best-practices-gcc`,    lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/specialty-board-recognition-gcc`,     lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
   ];
 }

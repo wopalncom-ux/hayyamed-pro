@@ -1,4 +1,5 @@
 import { createAdminClient } from "@/lib/supabase/server";
+import PushBroadcastPanel from "@/components/admin/PushBroadcastPanel";
 
 interface ServiceCheck {
   label: string;
@@ -272,6 +273,9 @@ export default async function AdminPage() {
             </a>
           </div>
         </div>
+
+        {/* Push Notification Broadcast */}
+        <PushBroadcastPanel />
       </div>
     </div>
   );
