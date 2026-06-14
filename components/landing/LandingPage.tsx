@@ -612,8 +612,8 @@ function Hero() {
       <div className="relative z-10 max-w-4xl mx-auto text-center">
         {/* Hayya Med AI badge */}
         <motion.div
-          initial={{ opacity: 0, y: 16, scale: 0.94 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
+          initial={{ y: 12, scale: 0.95 }}
+          animate={{ y: 0, scale: 1 }}
           transition={{ duration: 0.55, ease: "easeOut" }}
           className="inline-flex items-center gap-2.5 border border-white/10 bg-white/5 backdrop-blur-sm text-[#93c5fd] text-xs font-semibold px-4 py-2.5 rounded-full mb-8"
         >
@@ -621,14 +621,14 @@ function Hero() {
           Powered by Hayya Med AI · Built in Qatar&nbsp;🇶🇦
         </motion.div>
 
-        {/* Headline */}
+        {/* Headline — rendered visible in SSR; y-only animation after hydration (LCP fix) */}
         <h1 className="text-5xl sm:text-7xl font-bold leading-tight tracking-tight mb-6 text-white">
           {headline.map((word, i) => (
             <motion.span
               key={word + i}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.65, delay: 0.1 + i * 0.09, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ y: 20 }}
+              animate={{ y: 0 }}
+              transition={{ duration: 0.6, delay: 0.08 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
               className={`inline-block mr-[0.27em] ${word === "AI." ? "text-[#60a5fa]" : ""}`}
             >
               {word}
@@ -637,9 +637,9 @@ function Hero() {
         </h1>
 
         <motion.p
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
+          initial={{ y: 10 }}
+          animate={{ y: 0 }}
+          transition={{ duration: 0.55, delay: 0.5, ease: "easeOut" }}
           className="text-lg sm:text-xl text-white/50 max-w-xl mx-auto mb-8 leading-relaxed"
         >
           Track CME credits, manage license renewals, and generate compliance reports —
@@ -647,24 +647,19 @@ function Hero() {
         </motion.p>
 
         {/* Authority pills */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.72 }}
-          className="flex flex-wrap justify-center gap-x-5 gap-y-1 mb-10"
-        >
+        <div className="flex flex-wrap justify-center gap-x-5 gap-y-1 mb-10">
           {AUTHORITIES.map((auth) => (
             <span key={auth} className="text-[11px] font-semibold text-white/22 tracking-widest uppercase">
               {auth}
             </span>
           ))}
-        </motion.div>
+        </div>
 
         {/* CTAs */}
         <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, delay: 0.82 }}
+          initial={{ y: 10 }}
+          animate={{ y: 0 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
           className="flex flex-col sm:flex-row gap-3 justify-center items-center"
         >
           <MagneticButton
@@ -683,21 +678,16 @@ function Hero() {
           </motion.div>
         </motion.div>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 1.0 }}
-          className="text-white/22 text-sm mt-3"
-        >
+        <p className="text-white/22 text-sm mt-3">
           Free forever · No credit card required · 14-day Pro trial
-        </motion.p>
+        </p>
       </div>
 
       {/* Floating dashboard card */}
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.85, delay: 0.95, ease: [0.22, 1, 0.36, 1] }}
+        initial={{ y: 40 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.8, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
         className="relative z-10 w-full max-w-2xl mx-auto mt-12"
         style={reduced ? {} : { animation: "floatCard 6s ease-in-out infinite" }}
       >

@@ -29,6 +29,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         <div className="max-w-6xl mx-auto flex gap-6 text-sm whitespace-nowrap">
           {[
             { href: "/admin",                label: "Overview" },
+            { href: "/admin/analytics",      label: "Analytics" },
             { href: "/admin/link-requests",  label: "Link Requests" },
             { href: "/admin/cme-activities", label: "CME Activities" },
             { href: "/admin/organizations",  label: "Organizations" },

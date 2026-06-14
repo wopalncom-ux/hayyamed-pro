@@ -246,6 +246,9 @@ export default async function AdminPage() {
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-6">
           <h2 className="text-base font-semibold text-[#111] mb-4">Master Controls</h2>
           <div className="space-y-2">
+            <a href="/admin/analytics" className="block text-sm font-semibold text-[#1a56a0] hover:underline">
+              Analytics — Signups / Activation / DAU / Funnel
+            </a>
             <a href="/admin/revenue" className="block text-sm font-semibold text-[#16a34a] hover:underline">
               Revenue Dashboard — MRR / ARR / Signups
             </a>
