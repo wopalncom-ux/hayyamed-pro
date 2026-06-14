@@ -1,15 +1,9 @@
 ﻿import type { Metadata, Viewport } from "next";
-import { Geist } from "next/font/google";
 import { PWARegister } from "@/components/PWARegister";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import { PostHogProvider } from "@/components/PostHogProvider";
 import CookieConsent from "@/components/CookieConsent";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "https://hayyamed.pro"),
@@ -42,7 +36,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${geistSans.variable} h-full antialiased`}>
+    <html lang="en" className="h-full antialiased">
       <body className="min-h-full bg-background text-foreground">
         <a
           href="#main-content"
