@@ -284,6 +284,7 @@ const MOB_NAV_LINKS = [
 // ── Nav ──────────────────────────────────────────────────────────────────────
 function Nav() {
   const t = useTranslations("nav");
+  const locale = useLocale();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -407,7 +408,7 @@ function Nav() {
                   className="block text-center text-sm bg-[#1a56a0] text-white py-3 rounded-xl font-semibold hover:bg-[#1547a0] transition-colors"
                   onClick={() => setMobileOpen(false)}
                 >
-                  {t("get_started_free")} →
+                  {t("get_started_free")} {locale === "ar" ? "←" : "→"}
                 </Link>
                 <Link
                   href="/login"
@@ -588,9 +589,9 @@ function Hero() {
           <div className="flex items-end gap-2 mb-2">
             <span className="text-4xl font-bold text-white tabular-nums">52</span>
             <span className="text-xl text-white/30 mb-0.5">{t("dashboard_credits")}</span>
-            <span className="text-sm text-white/22 mb-0.5 ml-auto">65%</span>
+            <span className="text-sm text-white/22 mb-0.5 ms-auto">65%</span>
           </div>
-          <div className="w-full bg-white/8 rounded-full h-2 mb-4">
+          <div className="w-full bg-white/8 rounded-full h-2 mb-4" dir="ltr">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: "65%" }}
@@ -901,6 +902,7 @@ function VisionMission() {
 // ── AI Demo + Countries ───────────────────────────────────────────────────────
 function AIDemo() {
   const t = useTranslations("ai_demo");
+  const locale = useLocale();
   const chatMessages = [
     { role: "user", text: t("chat_q1") },
     { role: "ai",   text: t("chat_a1") },
@@ -949,7 +951,7 @@ function AIDemo() {
               <div className="flex items-center gap-2 pb-3 border-b border-white/6">
                 <span className="w-2 h-2 rounded-full bg-[#4ade80]" style={{ animation: "pulse 2s infinite" }} aria-hidden="true" />
                 <span className="text-xs text-white/30 font-medium">{t("assistant_label")}</span>
-                <span className="ml-auto text-[10px] text-white/20 bg-white/5 px-2 py-0.5 rounded-full border border-white/5">Claude Haiku</span>
+                <span className="ms-auto text-[10px] text-white/20 bg-white/5 px-2 py-0.5 rounded-full border border-white/5">Claude Haiku</span>
               </div>
 
               {chatMessages.map((msg, i) => (
@@ -958,7 +960,11 @@ function AIDemo() {
                   initial={{ opacity: 0, y: 8 }}
                   animate={visible > i ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.3, ease: "easeOut" }}
-                  className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+                  className={`flex ${
+                    msg.role === "user"
+                      ? (locale === "ar" ? "justify-start" : "justify-end")
+                      : (locale === "ar" ? "justify-end" : "justify-start")
+                  }`}
                 >
                   <div className={`max-w-[88%] rounded-xl px-3.5 py-2.5 text-sm leading-relaxed ${
                     msg.role === "user"
@@ -971,7 +977,7 @@ function AIDemo() {
               ))}
 
               {visible < chatMessages.length && (
-                <div className="flex justify-start">
+                <div className={`flex ${locale === "ar" ? "justify-end" : "justify-start"}`}>
                   <div className="bg-white/7 border border-white/6 rounded-xl px-4 py-3 flex items-center gap-1.5">
                     {[0, 150, 300].map((d) => (
                       <span key={d} className="w-1.5 h-1.5 bg-white/30 rounded-full" style={{ animation: `bounce 1s ease-in-out ${d}ms infinite` }} aria-hidden="true" />
@@ -996,7 +1002,7 @@ function AIDemo() {
 
           {/* GCC countries */}
           <FadeUp delay={0.12}>
-            <p className="text-[10px] font-bold text-[#60a5fa] uppercase tracking-widest mb-4">GCC Coverage</p>
+            <p className="text-[10px] font-bold text-[#60a5fa] uppercase tracking-widest mb-4">{t("gcc_coverage")}</p>
             <div className="grid grid-cols-2 gap-2.5 mb-5">
               {COUNTRIES.map(({ name, body, cycle, flag, href }, i) => (
                 <motion.div
@@ -1029,12 +1035,12 @@ function AIDemo() {
                 transition={{ duration: 0.4, delay: 0.41 }}
                 className="bg-white/[0.02] border border-dashed border-white/8 rounded-xl p-3.5"
               >
-                <p className="text-xs font-semibold text-white/22 mb-0.5">More coming</p>
-                <p className="text-[11px] text-white/15">UK · India · Australia · EU</p>
+                <p className="text-xs font-semibold text-white/22 mb-0.5">{t("more_coming")}</p>
+                <p className="text-[11px] text-white/15">{t("more_coming_countries")}</p>
               </motion.div>
             </div>
             <Link href="/countries" className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#60a5fa] hover:text-[#93c5fd] transition-colors">
-              Compare all GCC CME requirements →
+              {t("compare_link")}
             </Link>
           </FadeUp>
         </div>
