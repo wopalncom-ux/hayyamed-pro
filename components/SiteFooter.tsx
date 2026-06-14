@@ -141,10 +141,10 @@ export default function SiteFooter() {
               </div>
               <span className="font-bold text-sm text-[#111]">Hayya Med <span className="text-[#1a56a0]">Pro</span></span>
             </Link>
-            <p className="text-xs text-[#94a3b8] leading-relaxed max-w-[180px] mb-3">
+            <p className="text-xs text-[#64748b] leading-relaxed max-w-[180px] mb-3">
               CME tracking and licensing compliance for GCC healthcare professionals.
             </p>
-            <p className="text-[11px] text-[#94a3b8] leading-relaxed">
+            <p className="text-[11px] text-[#64748b] leading-relaxed">
               Powered by{" "}
               <span className="font-semibold text-[#64748b]">Hayya Med AI</span>
               <br />
@@ -159,7 +159,7 @@ export default function SiteFooter() {
               <ul className="space-y-2">
                 {col.links.map((l) => (
                   <li key={l.href}>
-                    <Link href={l.href} className="text-xs text-[#94a3b8] hover:text-[#1a56a0] transition-colors">
+                    <Link href={l.href} className="text-xs text-[#64748b] hover:text-[#1a56a0] transition-colors">
                       {l.label}
                     </Link>
                   </li>

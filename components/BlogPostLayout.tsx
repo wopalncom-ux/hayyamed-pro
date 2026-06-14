@@ -75,11 +75,11 @@ export default function BlogPostLayout({
             <span className={`inline-flex items-center text-xs font-semibold px-2.5 py-1 rounded-full border ${catStyle}`}>
               {catLabel}
             </span>
-            <span className="text-xs text-[#94a3b8]">{readingMinutes} min read</span>
+            <span className="text-xs text-[#64748b]">{readingMinutes} min read</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-[#111] leading-tight mb-4">{title}</h1>
           <p className="text-base text-[#475569] leading-relaxed mb-5">{description}</p>
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-[#94a3b8] border-t border-[#f1f5f9] pt-4">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-[#64748b] border-t border-[#f1f5f9] pt-4">
             <span>By <span className="font-medium text-[#64748b]">{author}</span></span>
             <span>Published {formatDate(publishedAt)}</span>
             {updatedAt && updatedAt !== publishedAt && (

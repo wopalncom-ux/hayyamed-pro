@@ -559,7 +559,7 @@ function Hero() {
           </motion.div>
         </motion.div>
 
-        <p className="text-white/22 text-sm mt-3">
+        <p className="text-white/55 text-sm mt-3">
           {t("trust_text")}
         </p>
       </div>
@@ -673,7 +673,7 @@ function TrustSignals() {
     >
       <div className="max-w-5xl mx-auto">
         <FadeUp>
-          <p className="text-center text-[11px] font-semibold text-[#94a3b8] uppercase tracking-[0.18em] mb-7">
+          <p className="text-center text-[11px] font-semibold text-[#64748b] uppercase tracking-[0.18em] mb-7">
             {t("authority_text")}
           </p>
 
@@ -693,7 +693,7 @@ function TrustSignals() {
                 >
                   <span className="text-sm leading-none" aria-hidden="true">{flag}</span>
                   <span className="text-xs font-bold text-[#1a56a0]">{abbr}</span>
-                  <span className="text-xs text-[#94a3b8] hidden sm:inline">{country}</span>
+                  <span className="text-xs text-[#64748b] hidden sm:inline">{country}</span>
                 </Link>
               </motion.div>
             ))}

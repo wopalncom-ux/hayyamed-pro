@@ -36,6 +36,12 @@ body {
   100% { transform: translateX(-50%); }
 }
 
+/* Hero dashboard card float */
+@keyframes floatCard {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
 .animate-marquee {
   animation: marquee 28s linear infinite;
   will-change: transform;
@@ -67,7 +73,5 @@ body {
   text-align: left;
 }
 
-/* Ensure RTL scrollbars appear on the correct side */
-[dir="rtl"] * {
-  direction: rtl;
-}
+/* direction: rtl inherits naturally from [dir="rtl"] on <html> — no wildcard rule needed.
+   A [dir="rtl"] * rule would override explicit dir="ltr" on child elements (e.g. progress bars). */

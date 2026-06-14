@@ -192,7 +192,7 @@ export default function PricingClient({
               <span className="text-4xl font-bold text-white">${proPrice}</span>
               <span className="text-blue-200 mb-1">{proSuffix}</span>
             </div>
-            <p className="text-xs text-blue-300 mb-6">{proSub}</p>
+            <p className="text-xs text-blue-100 mb-6">{proSub}</p>
             <ul className="space-y-3 mb-8 flex-1">
               {proFeatures.map((f) => (
                 <li key={f} className="flex items-start gap-2.5 text-sm text-white">
@@ -275,7 +275,7 @@ export default function PricingClient({
                 <div className={`text-3xl font-bold mb-0.5 ${tier.highlight ? "text-white" : "text-[#111]"}`}>
                   ${price}
                 </div>
-                <p className={`text-xs mb-5 ${tier.highlight ? "text-blue-300" : "text-[#94a3b8]"}`}>
+                <p className={`text-xs mb-5 ${tier.highlight ? "text-blue-100" : "text-[#64748b]"}`}>
                   {suffix} · {subLine}
                 </p>
                 <ul className="space-y-2 mb-6 flex-1">
