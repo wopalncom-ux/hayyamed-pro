@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "Nurse CPD Requirements in GCC â€” Qatar, Saudi Arabia, UAE, Kuwait, Bahrain, Oman",
+  title: "Nurse CPD Requirements in GCC — Qatar, Saudi Arabia, UAE, Kuwait, Bahrain, Oman",
   description:
     "Complete guide to nursing CPD and CME requirements across the GCC. QCHP Qatar (80 CPD/2yr), SCFHS Saudi Arabia (30 CME/yr), DHA UAE (40 CME/2yr), Kuwait MOH (20 CME/yr). Track all requirements in one app.",
   keywords: [
@@ -20,16 +20,16 @@ export const metadata: Metadata = {
     "RN CME requirements Qatar",
   ],
   openGraph: {
-    title: "Nurse CPD Requirements Across the GCC â€” Complete Guide",
+    title: "Nurse CPD Requirements Across the GCC — Complete Guide",
     description:
-      "QCHP, SCFHS, DHA, DOH, MOH Kuwait, NHRA, OMSB â€” nursing CPD and CME requirements across all 7 GCC countries in one guide.",
+      "QCHP, SCFHS, DHA, DOH, MOH Kuwait, NHRA, OMSB — nursing CPD and CME requirements across all 7 GCC countries in one guide.",
     url: `${APP_URL}/nurse-cpd`,
     type: "website",
     images: [{ url: `${APP_URL}/api/og?t=Nurse+CPD+Requirements+%E2%80%94+GCC&s=QCHP+%C2%B7+SCFHS+%C2%B7+DHA+%C2%B7+MOH+Kuwait+%E2%80%94+all+7+countries&a=%F0%9F%91%A9%E2%80%8D%E2%9A%95%EF%B8%8F+Nursing&k=Profession+Guide`, width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nurse CPD Requirements in GCC â€” Track All 7 Countries",
+    title: "Nurse CPD Requirements in GCC — Track All 7 Countries",
     description: "Complete nursing CPD guide for Qatar, Saudi Arabia, UAE, Kuwait, Bahrain, and Oman.",
   },
   alternates: { canonical: `${APP_URL}/nurse-cpd` },
@@ -60,7 +60,7 @@ const faqLd = {
       name: "What are the nursing CPD requirements in Kuwait?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Nurses licensed with the Kuwait Ministry of Health (MOH) must complete 20 CME credits per year. Kuwait has the strictest online activity cap in the GCC â€” a maximum of 30% of credits (6 credits) may come from online sources.",
+        text: "Nurses licensed with the Kuwait Ministry of Health (MOH) must complete 20 CME credits per year. Kuwait has the strictest online activity cap in the GCC — a maximum of 30% of credits (6 credits) may come from online sources.",
       },
     },
     {
@@ -68,7 +68,7 @@ const faqLd = {
       name: "Are nursing CPD requirements different from physician CME requirements in GCC?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes â€” in Saudi Arabia and Kuwait, nurses have lower credit requirements than physicians. SCFHS requires physicians to complete 60 CME credits per year, compared to 30 for nurses. Kuwait MOH requires 30 credits per year for physicians and 20 for nurses. Qatar (QCHP), UAE (DHA and DOH), Bahrain (NHRA), and Oman (OMSB) apply the same requirements regardless of profession.",
+        text: "Yes — in Saudi Arabia and Kuwait, nurses have lower credit requirements than physicians. SCFHS requires physicians to complete 60 CME credits per year, compared to 30 for nurses. Kuwait MOH requires 30 credits per year for physicians and 20 for nurses. Qatar (QCHP), UAE (DHA and DOH), Bahrain (NHRA), and Oman (OMSB) apply the same requirements regardless of profession.",
       },
     },
     {
@@ -104,7 +104,7 @@ const GCC_REQUIREMENTS = [
     href: "/scfhs",
   },
   {
-    country: "ðŸ‡¦ðŸ‡ª UAE â€” Dubai",
+    country: "ðŸ‡¦ðŸ‡ª UAE — Dubai",
     authority: "DHA",
     credits: "40 credits",
     cycle: "2 years",
@@ -114,7 +114,7 @@ const GCC_REQUIREMENTS = [
     href: "/dha",
   },
   {
-    country: "ðŸ‡¦ðŸ‡ª UAE â€” Abu Dhabi",
+    country: "ðŸ‡¦ðŸ‡ª UAE — Abu Dhabi",
     authority: "DOH",
     credits: "40 credits",
     cycle: "2 years",
@@ -205,21 +205,21 @@ export default function NurseCpdPage() {
           {/* Hero */}
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-2 bg-[#eff6ff] border border-[#bfdbfe] text-[#1a56a0] text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
-              ðŸ‘©â€âš•ï¸ Nurses Â· All GCC Countries Â· CPD & CME
+              ðŸ‘©â€âš•ï¸ Nurses · All GCC Countries · CPD & CME
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-[#111] tracking-tight mb-4 leading-tight">
-              Nursing CPD requirements<br className="hidden sm:block" /> across the GCC â€” one tracker
+              Nursing CPD requirements<br className="hidden sm:block" /> across the GCC — one tracker
             </h1>
             <p className="text-lg text-[#64748b] max-w-2xl mx-auto mb-8">
               Requirements differ by country: SCFHS nurses need 30 CME credits per year, Kuwait MOH nurses need 20, QCHP nurses need 80 per 2-year cycle.
-              Hayya Med Pro tracks your compliance against any â€” or all â€” of these authorities.
+              Hayya Med Pro tracks your compliance against any — or all — of these authorities.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link
                 href="/register"
                 className="inline-flex items-center gap-2 bg-[#1a56a0] text-white font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#154890] transition-colors"
               >
-                Track my nursing CPD â€” free â†’
+                Track my nursing CPD — free â†’
               </Link>
               <Link
                 href="/pricing"
@@ -228,13 +228,13 @@ export default function NurseCpdPage() {
                 See what&apos;s free vs Pro
               </Link>
             </div>
-            <p className="text-xs text-[#94a3b8] mt-3">No credit card required Â· 14-day Pro trial included</p>
+            <p className="text-xs text-[#94a3b8] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>
 
           {/* GCC comparison table */}
           <div className="bg-white rounded-2xl border border-[#e2e8f0] overflow-hidden mb-10 shadow-sm">
             <div className="px-6 py-5 border-b border-[#f1f5f9]">
-              <h2 className="text-lg font-bold text-[#111]">Nursing CPD / CME requirements â€” GCC at a glance</h2>
+              <h2 className="text-lg font-bold text-[#111]">Nursing CPD / CME requirements — GCC at a glance</h2>
               <p className="text-sm text-[#64748b] mt-1">Requirements as of 2025. Always verify current requirements with your licensing authority.</p>
             </div>
             <div className="overflow-x-auto">
@@ -267,7 +267,7 @@ export default function NurseCpdPage() {
             </div>
             <div className="px-6 py-4 bg-[#f0fdf4] border-t border-[#f1f5f9]">
               <p className="text-xs text-[#15803d] font-medium">
-                ðŸ’¡ Working across borders? Hayya Med Pro tracks your nursing CPD progress against multiple GCC authorities simultaneously â€” no spreadsheets.
+                ðŸ’¡ Working across borders? Hayya Med Pro tracks your nursing CPD progress against multiple GCC authorities simultaneously — no spreadsheets.
               </p>
             </div>
           </div>
@@ -311,7 +311,7 @@ export default function NurseCpdPage() {
 
           {/* FAQ */}
           <div className="mb-10">
-            <h2 className="text-xl font-bold text-[#111] mb-6">Frequently asked questions â€” nursing CPD in GCC</h2>
+            <h2 className="text-xl font-bold text-[#111] mb-6">Frequently asked questions — nursing CPD in GCC</h2>
             <div className="space-y-3">
               {faqLd.mainEntity.map((faq) => (
                 <details
@@ -380,7 +380,7 @@ export default function NurseCpdPage() {
               Never miss a nursing CPD deadline
             </h2>
             <p className="text-[#94a3b8] text-sm max-w-xl mx-auto mb-6">
-              Hayya Med Pro tracks your credits, enforces online caps, flags mandatory requirements, and sends renewal reminders â€”
+              Hayya Med Pro tracks your credits, enforces online caps, flags mandatory requirements, and sends renewal reminders —
               for Qatar, Saudi Arabia, UAE, Kuwait, Bahrain, and Oman.
             </p>
             <Link
@@ -389,7 +389,7 @@ export default function NurseCpdPage() {
             >
               Start tracking free â†’ 14-day Pro trial
             </Link>
-            <p className="text-[#475569] text-xs mt-3">No credit card required Â· Cancel anytime</p>
+            <p className="text-[#475569] text-xs mt-3">No credit card required · Cancel anytime</p>
           </div>
 
           {/* Disclaimer */}

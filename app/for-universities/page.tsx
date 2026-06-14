@@ -4,9 +4,9 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "Faculty CME Compliance for Medical Universities â€” Hayya Med Pro",
+  title: "Faculty CME Compliance for Medical Universities — Hayya Med Pro",
   description:
-    "Give your medical school full visibility into faculty CME compliance. Real-time dashboard, department grouping, license expiry tracking, and automated alerts â€” built for GCC healthcare universities.",
+    "Give your medical school full visibility into faculty CME compliance. Real-time dashboard, department grouping, license expiry tracking, and automated alerts — built for GCC healthcare universities.",
   keywords: [
     "university CME compliance management",
     "medical school faculty CME tracking",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     "nursing college CPD tracking",
   ],
   openGraph: {
-    title: "Faculty CME Compliance for Medical Universities â€” Hayya Med Pro",
+    title: "Faculty CME Compliance for Medical Universities — Hayya Med Pro",
     description:
       "Full faculty compliance visibility in one dashboard. Real-time CME status, department breakdowns, license alerts, and required training management.",
     url: `${APP_URL}/for-universities`,
@@ -51,7 +51,7 @@ const BENEFITS = [
   {
     icon: "ðŸ“Š",
     title: "Real-time faculty compliance dashboard",
-    body: "See every faculty member's CME completion status, compliance rate, and license expiry at a glance â€” no spreadsheets, no chasing, no surprises before accreditation reviews.",
+    body: "See every faculty member's CME completion status, compliance rate, and license expiry at a glance — no spreadsheets, no chasing, no surprises before accreditation reviews.",
   },
   {
     icon: "ðŸ¢",
@@ -66,7 +66,7 @@ const BENEFITS = [
   {
     icon: "ðŸ””",
     title: "Automated faculty alerts",
-    body: "Faculty receive automated reminders when their CME deadline or license expiry is approaching â€” reducing the administrative burden on your compliance team.",
+    body: "Faculty receive automated reminders when their CME deadline or license expiry is approaching — reducing the administrative burden on your compliance team.",
   },
   {
     icon: "ðŸ”’",
@@ -76,7 +76,7 @@ const BENEFITS = [
   {
     icon: "ðŸ“‘",
     title: "Bulk compliance reporting",
-    body: "Generate PDF compliance reports for your entire faculty with a single click â€” ready for JCI, CBAHI, or national accreditation body submissions.",
+    body: "Generate PDF compliance reports for your entire faculty with a single click — ready for JCI, CBAHI, or national accreditation body submissions.",
   },
 ];
 
@@ -84,12 +84,12 @@ const STEPS = [
   {
     step: "01",
     title: "Register your institution",
-    body: "Submit your institution's details â€” name, type, country, and contact. Our team verifies your account within 2 business days.",
+    body: "Submit your institution's details — name, type, country, and contact. Our team verifies your account within 2 business days.",
   },
   {
     step: "02",
     title: "Invite faculty to link",
-    body: "Share your unique invite link with faculty. They connect their individual Hayya Med Pro profiles to your institution â€” no IT integration required.",
+    body: "Share your unique invite link with faculty. They connect their individual Hayya Med Pro profiles to your institution — no IT integration required.",
   },
   {
     step: "03",
@@ -106,15 +106,15 @@ const STEPS = [
 const FAQS = [
   {
     q: "What types of institutions does Hayya Med Pro support?",
-    a: "Medical schools, nursing colleges, pharmacy colleges, health sciences faculties, dental schools, and allied health institutes â€” any academic institution that employs licensed healthcare professionals.",
+    a: "Medical schools, nursing colleges, pharmacy colleges, health sciences faculties, dental schools, and allied health institutes — any academic institution that employs licensed healthcare professionals.",
   },
   {
     q: "How does faculty onboarding work?",
-    a: "Faculty members create their own individual Hayya Med Pro accounts and link to your institution using your unique invite link. There is no bulk import of personal data â€” each faculty member controls their own profile.",
+    a: "Faculty members create their own individual Hayya Med Pro accounts and link to your institution using your unique invite link. There is no bulk import of personal data — each faculty member controls their own profile.",
   },
   {
     q: "Can we see individual faculty CME records?",
-    a: "You see only what each faculty member chooses to share. Individual faculty control their privacy settings. You always have access to aggregate compliance statistics and the ability to identify who is non-compliant â€” but not granular activity details unless the faculty member explicitly grants access.",
+    a: "You see only what each faculty member chooses to share. Individual faculty control their privacy settings. You always have access to aggregate compliance statistics and the ability to identify who is non-compliant — but not granular activity details unless the faculty member explicitly grants access.",
   },
   {
     q: "Which CME authorities are recognized?",
@@ -122,11 +122,11 @@ const FAQS = [
   },
   {
     q: "How is university billing handled?",
-    a: "University accounts are billed via annual institutional contract â€” not via the standard individual subscription. Contact us for institutional pricing based on your faculty headcount.",
+    a: "University accounts are billed via annual institutional contract — not via the standard individual subscription. Contact us for institutional pricing based on your faculty headcount.",
   },
   {
     q: "Can we assign required training from the marketplace?",
-    a: "Yes. You can browse the Hayya Med Pro course marketplace, select accredited courses, and assign them as required training for your faculty â€” with due dates and completion tracking built in.",
+    a: "Yes. You can browse the Hayya Med Pro course marketplace, select accredited courses, and assign them as required training for your faculty — with due dates and completion tracking built in.",
   },
 ];
 
@@ -172,7 +172,7 @@ export default function ForUniversitiesPage() {
               Full CME visibility<br className="hidden sm:block" /> across your entire faculty
             </h1>
             <p className="text-lg text-[#64748b] max-w-2xl mx-auto mb-8">
-              Give your medical school real-time compliance oversight â€” from individual faculty CME status
+              Give your medical school real-time compliance oversight — from individual faculty CME status
               to department-level reporting, license expiry tracking, and required training management.
               Built for GCC healthcare universities.
             </p>
@@ -190,7 +190,7 @@ export default function ForUniversitiesPage() {
                 Talk to our team
               </Link>
             </div>
-            <p className="text-xs text-[#94a3b8] mt-4">Institutional billing Â· Verified within 2 business days Â· No per-seat login fees</p>
+            <p className="text-xs text-[#94a3b8] mt-4">Institutional billing · Verified within 2 business days · No per-seat login fees</p>
           </div>
         </section>
 
@@ -228,7 +228,7 @@ export default function ForUniversitiesPage() {
                 >
                   <span>{code}</span>
                   <span className="font-semibold text-[#111]">{name}</span>
-                  <span className="text-[#94a3b8]">Â· {country}</span>
+                  <span className="text-[#94a3b8]">· {country}</span>
                 </div>
               ))}
             </div>
@@ -323,7 +323,7 @@ export default function ForUniversitiesPage() {
               Ready to see your faculty&apos;s compliance at a glance?
             </h2>
             <p className="text-blue-100 mb-8">
-              Register your institution today. No IT integration required â€” your faculty bring their own records.
+              Register your institution today. No IT integration required — your faculty bring their own records.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link
@@ -345,7 +345,7 @@ export default function ForUniversitiesPage() {
         {/* Footer */}
         <footer className="bg-[#0f1f3d] px-6 py-8">
           <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#94a3b8]">
-            <span>Â© {new Date().getFullYear()} Hayya Med Pro Â· hayyamed.pro</span>
+            <span>Â© {new Date().getFullYear()} Hayya Med Pro · hayyamed.pro</span>
             <div className="flex items-center gap-4">
               <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
               <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>

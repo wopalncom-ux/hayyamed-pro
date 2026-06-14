@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "Nephrology CME Requirements in GCC â€” Nephrologist CME Guide | Hayya Med Pro",
+  title: "Nephrology CME Requirements in GCC — Nephrologist CME Guide | Hayya Med Pro",
   description:
     "Complete CME and CPD guide for nephrologists in GCC. QCHP Qatar 80 CPD/2yr, SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. Dialysis training, renal biopsy, and transplant CME count. Track all 7 authorities.",
   keywords: [
@@ -22,9 +22,9 @@ export const metadata: Metadata = {
     "kidney transplant CME GCC",
   ],
   openGraph: {
-    title: "Nephrology CME Requirements in GCC â€” Nephrologist Guide",
+    title: "Nephrology CME Requirements in GCC — Nephrologist Guide",
     description:
-      "QCHP Qatar 80 CPD/2yr Â· SCFHS Saudi 60 CME/yr Â· DHA Dubai 40 CME/2yr. Dialysis + renal biopsy workshops count. Track all GCC nephrology requirements.",
+      "QCHP Qatar 80 CPD/2yr · SCFHS Saudi 60 CME/yr · DHA Dubai 40 CME/2yr. Dialysis + renal biopsy workshops count. Track all GCC nephrology requirements.",
     url: `${APP_URL}/nephrology-cme`,
     type: "website",
     images: [
@@ -90,7 +90,7 @@ const faqLd = {
       name: "Can a nephrologist track CME for both QCHP and DHA licences in one app?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. Hayya Med Pro supports multi-jurisdiction tracking. Nephrologists with both QCHP and DHA licences maintain separate wallets for each authority within one account. Each wallet independently tracks credits, cycle dates, and compliance status â€” so you can see at a glance which licence needs attention before renewal.",
+        text: "Yes. Hayya Med Pro supports multi-jurisdiction tracking. Nephrologists with both QCHP and DHA licences maintain separate wallets for each authority within one account. Each wallet independently tracks credits, cycle dates, and compliance status — so you can see at a glance which licence needs attention before renewal.",
       },
     },
   ],
@@ -115,12 +115,12 @@ const SPECIALTY_NOTES = [
   {
     icon: "ðŸ”¬",
     title: "Renal biopsy & histopathology",
-    body: "Accredited renal biopsy workshops (ultrasound-guided technique, complication management) and histopathology interpretation sessions count as clinical CME at QCHP, SCFHS, and DHA â€” and are often required for hospital credentialing.",
+    body: "Accredited renal biopsy workshops (ultrasound-guided technique, complication management) and histopathology interpretation sessions count as clinical CME at QCHP, SCFHS, and DHA — and are often required for hospital credentialing.",
   },
   {
     icon: "ðŸ’Š",
     title: "Transplant medicine CME",
-    body: "Kidney transplant medicine courses â€” immunosuppression protocols, rejection management, post-transplant monitoring â€” count as specialty CME and are recognised by SSNT, ISN, and major GCC authorities. Highly valued for nephrologists in transplant centres.",
+    body: "Kidney transplant medicine courses — immunosuppression protocols, rejection management, post-transplant monitoring — count as specialty CME and are recognised by SSNT, ISN, and major GCC authorities. Highly valued for nephrologists in transplant centres.",
   },
   {
     icon: "ðŸ“Š",
@@ -145,7 +145,7 @@ export default function NephrologyCmePage() {
             Nephrology CME Requirements<br />Across GCC
           </h1>
           <p style={{ fontSize: 18, color: "#cbd5e1", maxWidth: 620, margin: "0 auto 32px" }}>
-            QCHP Qatar Â· SCFHS Saudi Arabia Â· DHA Dubai Â· and 4 more authorities.
+            QCHP Qatar · SCFHS Saudi Arabia · DHA Dubai · and 4 more authorities.
             Dialysis training, renal biopsy, and transplant CME all count toward your licence.
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
@@ -214,7 +214,7 @@ export default function NephrologyCmePage() {
       <section style={{ background: "#f0f4f8", padding: "64px 24px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto" }}>
           <h2 style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", textAlign: "center", marginBottom: 48 }}>
-            Nephrology CME â€” Frequently Asked Questions
+            Nephrology CME — Frequently Asked Questions
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {faqLd.mainEntity.map((q) => (
@@ -264,7 +264,7 @@ export default function NephrologyCmePage() {
           <Link href="/register" style={{ background: "#1a56a0", color: "#fff", padding: "16px 36px", borderRadius: 8, fontWeight: 700, textDecoration: "none", fontSize: 17, display: "inline-block" }}>
             Start tracking free â†’
           </Link>
-          <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required Â· Free plan always available</p>
+          <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required · Free plan always available</p>
         </div>
       </section>
 

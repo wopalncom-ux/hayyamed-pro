@@ -123,7 +123,7 @@ export async function GET() {
 
     events.push({
       uid: `license-expiry-${user.id}@hayyamed.pro`,
-      summary: `License Expiry â€” ${authority}`,
+      summary: `License Expiry — ${authority}`,
       description: `Your ${authority} license expires today. Download your CME compliance report from Hayya Med Pro and submit your renewal. ${APP_URL}/dashboard`,
       dtstart: toIcsDate(expiryDate),
       dtend: toIcsDate(addDays(expiryDate, 1)),
@@ -141,7 +141,7 @@ export async function GET() {
     if (new Date(remind90) > new Date()) {
       events.push({
         uid: `license-90d-${user.id}@hayyamed.pro`,
-        summary: `License Renewal â€” 90 days to go (${authority})`,
+        summary: `License Renewal — 90 days to go (${authority})`,
         description: `Your ${authority} license expires in 90 days on ${expiryDate}. Start preparing your CME portfolio now. ${APP_URL}/dashboard`,
         dtstart: toIcsDate(remind90),
         dtend: toIcsDate(addDays(remind90, 1)),
@@ -161,8 +161,8 @@ export async function GET() {
 
     events.push({
       uid: `cme-cycle-end-${wallet.id}@hayyamed.pro`,
-      summary: `CME Cycle Ends â€” ${country}`,
-      description: `Your ${country} CME cycle ends today. You have completed ${wallet.completed_credits ?? 0} of ${wallet.required_credits ?? 0} required credits${remaining > 0 ? ` â€” ${remaining} credits still needed` : " â€” cycle complete!"}. Track your progress at ${APP_URL}/dashboard/cme`,
+      summary: `CME Cycle Ends — ${country}`,
+      description: `Your ${country} CME cycle ends today. You have completed ${wallet.completed_credits ?? 0} of ${wallet.required_credits ?? 0} required credits${remaining > 0 ? ` — ${remaining} credits still needed` : " — cycle complete!"}. Track your progress at ${APP_URL}/dashboard/cme`,
       dtstart: toIcsDate(wallet.cycle_end_date),
       dtend: toIcsDate(addDays(wallet.cycle_end_date, 1)),
       dtstamp,
@@ -179,8 +179,8 @@ export async function GET() {
     if (new Date(remind90) > new Date()) {
       events.push({
         uid: `cme-90d-${wallet.id}@hayyamed.pro`,
-        summary: `CME Deadline â€” 90 days left (${country})`,
-        description: `Your ${country} CME cycle ends in 90 days on ${wallet.cycle_end_date}. ${remaining > 0 ? `You need ${remaining} more credits.` : "You are on track â€” keep logging activities!"} ${APP_URL}/dashboard/cme`,
+        summary: `CME Deadline — 90 days left (${country})`,
+        description: `Your ${country} CME cycle ends in 90 days on ${wallet.cycle_end_date}. ${remaining > 0 ? `You need ${remaining} more credits.` : "You are on track — keep logging activities!"} ${APP_URL}/dashboard/cme`,
         dtstart: toIcsDate(remind90),
         dtend: toIcsDate(addDays(remind90, 1)),
         dtstamp,
@@ -194,7 +194,7 @@ export async function GET() {
     // Return an empty but valid calendar
     events.push({
       uid: `cme-setup-reminder-${user.id}@hayyamed.pro`,
-      summary: "Set up your CME wallet â€” Hayya Med Pro",
+      summary: "Set up your CME wallet — Hayya Med Pro",
       description: `Complete your CME wallet setup to start tracking compliance deadlines. ${APP_URL}/onboarding/5`,
       dtstart: toIcsDate(new Date().toISOString().slice(0, 10)),
       dtend: toIcsDate(addDays(new Date().toISOString().slice(0, 10), 1)),
@@ -211,7 +211,7 @@ export async function GET() {
     "PRODID:-//Hayya Med Pro//CME Compliance//EN",
     "CALSCALE:GREGORIAN",
     "METHOD:PUBLISH",
-    foldLine(`X-WR-CALNAME:Hayya Med Pro â€” ${escapeIcs(name)}`),
+    foldLine(`X-WR-CALNAME:Hayya Med Pro — ${escapeIcs(name)}`),
     "X-WR-CALDESC:CME compliance deadlines and license renewal reminders from Hayya Med Pro",
     "X-WR-TIMEZONE:Asia/Qatar",
     ...events.map(buildVEvent),

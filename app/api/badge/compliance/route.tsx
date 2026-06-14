@@ -55,7 +55,7 @@ export async function GET(request: NextRequest) {
 
   const profession = profile.profession ?? null;
   const specialty = profile.specialty ?? null;
-  const subtitle = [profession, specialty, country].filter(Boolean).join("  Â·  ");
+  const subtitle = [profession, specialty, country].filter(Boolean).join("  ·  ");
 
   return new ImageResponse(
     (
@@ -165,7 +165,7 @@ export async function GET(request: NextRequest) {
             </div>
           </div>
 
-          {/* Main content â€” two columns */}
+          {/* Main content — two columns */}
           <div style={{ display: "flex", flex: 1, gap: 56, alignItems: "center" }}>
             {/* Left: professional info */}
             <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>

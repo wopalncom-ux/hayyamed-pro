@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "Pediatrics CME Requirements in GCC â€” Pediatrician CME Guide | Hayya Med Pro",
+  title: "Pediatrics CME Requirements in GCC — Pediatrician CME Guide | Hayya Med Pro",
   description:
     "CME and CPD requirements for pediatricians in GCC. QCHP Qatar 80 CPD/2yr, SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. PALS, NRP, and pediatric conference CME guidance.",
   keywords: [
@@ -20,9 +20,9 @@ export const metadata: Metadata = {
     "continuing medical education pediatrics",
   ],
   openGraph: {
-    title: "Pediatrics CME Requirements in GCC â€” Complete Pediatrician Guide",
+    title: "Pediatrics CME Requirements in GCC — Complete Pediatrician Guide",
     description:
-      "QCHP, SCFHS, DHA, DOH â€” CME requirements for pediatricians. PALS, NRP, Saudi Pediatric Society events, and all pediatric CME guidance for GCC authorities.",
+      "QCHP, SCFHS, DHA, DOH — CME requirements for pediatricians. PALS, NRP, Saudi Pediatric Society events, and all pediatric CME guidance for GCC authorities.",
     url: `${APP_URL}/pediatrics-cme`,
     type: "website",
     images: [{ url: `${APP_URL}/api/og?t=Pediatrics+CME+Requirements+%E2%80%94+GCC&s=QCHP+%C2%B7+SCFHS+%C2%B7+DHA+%E2%80%94+PALS+%C2%B7+NRP+%C2%B7+Saudi+Pediatric+Society&a=%F0%9F%91%B6+Pediatrics&k=Specialty+Guide`, width: 1200, height: 630 }],
@@ -143,7 +143,7 @@ export default function PediatricsCmePage() {
         <main className="max-w-4xl mx-auto px-6 py-12">
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-2 bg-[#eff6ff] border border-[#bfdbfe] text-[#1e40af] text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
-              ðŸ‘¶ Pediatrics Â· All GCC Licensing Authorities
+              ðŸ‘¶ Pediatrics · All GCC Licensing Authorities
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-[#111] tracking-tight mb-4 leading-tight">
               Pediatrics CME requirements<br className="hidden sm:block" /> across the GCC
@@ -153,19 +153,19 @@ export default function PediatricsCmePage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link href="/register" className="inline-flex items-center gap-2 bg-[#1a56a0] text-white font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#154890] transition-colors">
-                Track my pediatrics CME â€” free â†’
+                Track my pediatrics CME — free â†’
               </Link>
               <Link href="/physician-cme" className="inline-flex items-center gap-1 text-sm text-[#64748b] hover:text-[#1a56a0] transition-colors">
                 See all physician CME requirements
               </Link>
             </div>
-            <p className="text-xs text-[#94a3b8] mt-3">No credit card required Â· 14-day Pro trial included</p>
+            <p className="text-xs text-[#94a3b8] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>
 
           <div className="bg-white rounded-2xl border border-[#e2e8f0] overflow-hidden mb-10 shadow-sm">
             <div className="px-6 py-5 border-b border-[#f1f5f9]">
               <h2 className="text-lg font-bold text-[#111]">CME/CPD requirements by GCC authority</h2>
-              <p className="text-sm text-[#64748b] mt-1">General physician requirements apply to pediatricians â€” PALS, NRP, and pediatric CME all count</p>
+              <p className="text-sm text-[#64748b] mt-1">General physician requirements apply to pediatricians — PALS, NRP, and pediatric CME all count</p>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
@@ -209,7 +209,7 @@ export default function PediatricsCmePage() {
           </div>
 
           <div className="mb-12">
-            <h2 className="text-xl font-bold text-[#111] mb-6">Pediatrics CME â€” frequently asked questions</h2>
+            <h2 className="text-xl font-bold text-[#111] mb-6">Pediatrics CME — frequently asked questions</h2>
             <div className="space-y-3">
               {faqLd.mainEntity.map((item) => (
                 <details key={item.name} className="bg-white rounded-xl border border-[#e2e8f0] group">
@@ -246,14 +246,14 @@ export default function PediatricsCmePage() {
 
           <div className="bg-gradient-to-br from-[#0f1f3d] to-[#1a3563] rounded-2xl p-10 text-center">
             <div className="text-3xl mb-3">ðŸ‘¶</div>
-            <h2 className="text-2xl font-bold text-white mb-2">Track your pediatrics CME â€” free</h2>
+            <h2 className="text-2xl font-bold text-white mb-2">Track your pediatrics CME — free</h2>
             <p className="text-[rgba(255,255,255,0.65)] mb-6 max-w-md mx-auto text-sm">
               Log PALS, NRP, AAP conferences, and online courses all in one wallet. Never miss a renewal deadline again.
             </p>
             <Link href="/register" className="inline-flex items-center gap-2 bg-white text-[#1a56a0] font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#f0f7ff] transition-colors">
-              Track my CME â€” free â†’
+              Track my CME — free â†’
             </Link>
-            <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">No credit card required Â· 14-day Pro trial included</p>
+            <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>
 
           <div className="mt-6 bg-[#fef9c3] border border-[#fde68a] rounded-lg px-4 py-3 text-xs text-[#92400e] text-center">

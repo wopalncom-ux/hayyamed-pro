@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "Healthcare Compliance Software for GCC Clinics & Hospitals â€” Hayya Med Pro",
+  title: "Healthcare Compliance Software for GCC Clinics & Hospitals — Hayya Med Pro",
   description:
     "Healthcare compliance software for Qatar, Saudi Arabia, and UAE. Track staff CME requirements, manage QCHP/SCFHS/DHA renewals, and generate bulk compliance reports. Trusted by GCC clinic administrators and hospital HR teams.",
   keywords: [
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Healthcare Compliance Software â€” GCC Clinics & Hospitals",
+    title: "Healthcare Compliance Software — GCC Clinics & Hospitals",
     description: "Track staff CME compliance for QCHP, SCFHS, DHA. Real-time dashboard, bulk PDF reports, weekly digest. From $50/month.",
   },
   alternates: { canonical: `${APP_URL}/healthcare-compliance-software` },
@@ -44,7 +44,7 @@ const faqLd = {
       name: "What is healthcare compliance software?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Healthcare compliance software is a platform that helps clinic administrators, hospital HR managers, and medical directors track whether their staff have completed the CME/CPD requirements needed for license renewal. It provides a real-time view of who is compliant, at risk, or non-compliant â€” and generates the reports needed for accreditation audits like JCI and CBAHI.",
+        text: "Healthcare compliance software is a platform that helps clinic administrators, hospital HR managers, and medical directors track whether their staff have completed the CME/CPD requirements needed for license renewal. It provides a real-time view of who is compliant, at risk, or non-compliant — and generates the reports needed for accreditation audits like JCI and CBAHI.",
       },
     },
     {
@@ -68,7 +68,7 @@ const faqLd = {
       name: "How is Hayya Med Pro different from a spreadsheet or HR system?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Spreadsheets require manual updating and don't enforce category caps or annual minimums. Most HR systems don't understand GCC CME requirements at all. Hayya Med Pro is purpose-built for GCC healthcare compliance â€” it knows that QCHP requires 80 CPD per 2 years (40/year minimum), that SCFHS requires 60 CME per year for physicians (30 for nurses), and that DHA has specific patient safety requirements. It applies these rules automatically.",
+        text: "Spreadsheets require manual updating and don't enforce category caps or annual minimums. Most HR systems don't understand GCC CME requirements at all. Hayya Med Pro is purpose-built for GCC healthcare compliance — it knows that QCHP requires 80 CPD per 2 years (40/year minimum), that SCFHS requires 60 CME per year for physicians (30 for nurses), and that DHA has specific patient safety requirements. It applies these rules automatically.",
       },
     },
     {
@@ -76,7 +76,7 @@ const faqLd = {
       name: "What compliance reports can I generate for JCI or CBAHI audits?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Hayya Med Pro generates bulk PDF compliance reports showing every staff member's CME credit total, compliance status, category breakdown, and license expiry. The report can be filtered by department and exported as a single PDF â€” ready to present to JCI or CBAHI auditors as evidence of staff compliance management.",
+        text: "Hayya Med Pro generates bulk PDF compliance reports showing every staff member's CME credit total, compliance status, category breakdown, and license expiry. The report can be filtered by department and exported as a single PDF — ready to present to JCI or CBAHI auditors as evidence of staff compliance management.",
       },
     },
   ],
@@ -105,7 +105,7 @@ const FEATURES = [
   {
     icon: "ðŸ“„",
     title: "One-click bulk PDF reports",
-    body: "Generate a PDF compliance report for your entire team in seconds â€” formatted for QCHP, JCI, and CBAHI audit requirements.",
+    body: "Generate a PDF compliance report for your entire team in seconds — formatted for QCHP, JCI, and CBAHI audit requirements.",
     color: "#16a34a",
   },
   {
@@ -123,7 +123,7 @@ const FEATURES = [
   {
     icon: "ðŸŒ",
     title: "All GCC authorities",
-    body: "QCHP, SCFHS, DHA, DOH, NHRA, OMSB, and MOH Kuwait â€” all in one dashboard. Staff licensed in multiple countries are tracked separately per jurisdiction.",
+    body: "QCHP, SCFHS, DHA, DOH, NHRA, OMSB, and MOH Kuwait — all in one dashboard. Staff licensed in multiple countries are tracked separately per jurisdiction.",
     color: "#0891b2",
   },
   {
@@ -185,16 +185,16 @@ export default function HealthcareComplianceSoftwarePage() {
               </h1>
               <p className="text-lg text-[#475569] mb-8 max-w-2xl leading-relaxed">
                 Stop chasing staff for CME certificates. Hayya Med Pro gives clinic and hospital
-                teams a real-time compliance dashboard â€” QCHP, SCFHS, DHA, and all GCC authorities
+                teams a real-time compliance dashboard — QCHP, SCFHS, DHA, and all GCC authorities
                 supported. From $50/month.
               </p>
 
               <div className="flex flex-wrap gap-4 mb-8">
                 {[
-                  "ðŸ‡¶ðŸ‡¦ QCHP â€” Qatar",
-                  "ðŸ‡¸ðŸ‡¦ SCFHS â€” Saudi Arabia",
-                  "ðŸ‡¦ðŸ‡ª DHA â€” Dubai",
-                  "ðŸ‡¦ðŸ‡ª DOH â€” Abu Dhabi",
+                  "ðŸ‡¶ðŸ‡¦ QCHP — Qatar",
+                  "ðŸ‡¸ðŸ‡¦ SCFHS — Saudi Arabia",
+                  "ðŸ‡¦ðŸ‡ª DHA — Dubai",
+                  "ðŸ‡¦ðŸ‡ª DOH — Abu Dhabi",
                   "+ 3 more GCC authorities",
                 ].map((item) => (
                   <span key={item} className="text-xs font-medium text-[#374151] bg-[#f8fafc] border border-[#e2e8f0] px-3 py-1.5 rounded-full">
@@ -214,7 +214,7 @@ export default function HealthcareComplianceSoftwarePage() {
                   href="/pricing#employer"
                   className="inline-block border border-[#e2e8f0] text-[#374151] font-medium px-8 py-3.5 rounded-xl hover:border-[#1a56a0] hover:text-[#1a56a0] transition-colors text-sm"
                 >
-                  See pricing â€” from $50/month
+                  See pricing — from $50/month
                 </Link>
               </div>
             </div>
@@ -242,7 +242,7 @@ export default function HealthcareComplianceSoftwarePage() {
               Spreadsheet vs Hayya Med Pro
             </h2>
             <p className="text-sm text-[#64748b] text-center mb-8">
-              Purpose-built for GCC compliance â€” not a generic spreadsheet workaround.
+              Purpose-built for GCC compliance — not a generic spreadsheet workaround.
             </p>
             <div className="bg-white rounded-2xl border border-[#e2e8f0] overflow-hidden shadow-sm">
               <table className="w-full">
@@ -274,7 +274,7 @@ export default function HealthcareComplianceSoftwarePage() {
               Everything a GCC clinic or hospital needs
             </h2>
             <p className="text-sm text-[#64748b] text-center mb-10">
-              Built around QCHP, SCFHS, DHA, and DOH requirements â€” not generic HR compliance.
+              Built around QCHP, SCFHS, DHA, and DOH requirements — not generic HR compliance.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {FEATURES.map((f) => (
@@ -316,7 +316,7 @@ export default function HealthcareComplianceSoftwarePage() {
             <div className="bg-white rounded-xl border border-[#e2e8f0] p-5 flex flex-col sm:flex-row items-center justify-between gap-3">
               <div>
                 <p className="text-sm font-semibold text-[#111]">Hospital group or government authority?</p>
-                <p className="text-xs text-[#64748b] mt-0.5">Unlimited staff Â· HRIS API integration Â· White-label Â· Custom SLA</p>
+                <p className="text-xs text-[#64748b] mt-0.5">Unlimited staff · HRIS API integration · White-label · Custom SLA</p>
               </div>
               <Link href="/request-demo" className="flex-shrink-0 text-sm font-semibold bg-[#f1f5f9] text-[#1a56a0] px-5 py-2 rounded-xl hover:bg-[#e2e8f0] transition-colors">
                 Contact us for Enterprise â†’
@@ -384,11 +384,11 @@ export default function HealthcareComplianceSoftwarePage() {
             </p>
             <p className="text-xs text-[#94a3b8] text-center mt-2">
               <Link href="/employers" className="hover:text-[#64748b]">Employer features</Link>
-              {" Â· "}
+              {" · "}
               <Link href="/pricing" className="hover:text-[#64748b]">Pricing</Link>
-              {" Â· "}
+              {" · "}
               <Link href="/request-demo" className="hover:text-[#64748b]">Request demo</Link>
-              {" Â· "}
+              {" · "}
               <Link href="/privacy" className="hover:text-[#64748b]">Privacy</Link>
             </p>
           </div>

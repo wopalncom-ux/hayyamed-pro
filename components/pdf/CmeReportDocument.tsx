@@ -1,4 +1,4 @@
-﻿// @ts-nocheck â€” @react-pdf/renderer has known type incompatibilities with React 19 JSX types
+﻿// @ts-nocheck — @react-pdf/renderer has known type incompatibilities with React 19 JSX types
 import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 
 const styles = StyleSheet.create({
@@ -56,19 +56,19 @@ export function CmeReportDocument({ profile, wallet, activities, pendingActiviti
           </View>
           <View style={styles.headerRight}>
             <Text>Generated: {new Date(generatedAt).toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" })}</Text>
-            <Text style={{ marginTop: 2 }}>Confidential â€” For License Renewal Use</Text>
+            <Text style={{ marginTop: 2 }}>Confidential — For License Renewal Use</Text>
           </View>
         </View>
 
         {/* Professional Info */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Professional Information</Text>
-          <View style={styles.row}><Text style={styles.label}>Full Name</Text><Text style={styles.value}>{String(profile.full_name ?? "â€”")}</Text></View>
-          <View style={styles.row}><Text style={styles.label}>Profession</Text><Text style={styles.value}>{String(profile.profession ?? "â€”")}</Text></View>
-          <View style={styles.row}><Text style={styles.label}>Specialty</Text><Text style={styles.value}>{String(profile.specialty ?? "â€”")}</Text></View>
-          <View style={styles.row}><Text style={styles.label}>License Number</Text><Text style={styles.value}>{String(profile.license_number ?? "â€”")}</Text></View>
-          <View style={styles.row}><Text style={styles.label}>Licensing Authority</Text><Text style={styles.value}>{String(profile.licensing_authority ?? "â€”")}</Text></View>
-          <View style={styles.row}><Text style={styles.label}>License Expiry</Text><Text style={styles.value}>{String(profile.license_expiry ?? "â€”")}</Text></View>
+          <View style={styles.row}><Text style={styles.label}>Full Name</Text><Text style={styles.value}>{String(profile.full_name ?? "—")}</Text></View>
+          <View style={styles.row}><Text style={styles.label}>Profession</Text><Text style={styles.value}>{String(profile.profession ?? "—")}</Text></View>
+          <View style={styles.row}><Text style={styles.label}>Specialty</Text><Text style={styles.value}>{String(profile.specialty ?? "—")}</Text></View>
+          <View style={styles.row}><Text style={styles.label}>License Number</Text><Text style={styles.value}>{String(profile.license_number ?? "—")}</Text></View>
+          <View style={styles.row}><Text style={styles.label}>Licensing Authority</Text><Text style={styles.value}>{String(profile.licensing_authority ?? "—")}</Text></View>
+          <View style={styles.row}><Text style={styles.label}>License Expiry</Text><Text style={styles.value}>{String(profile.license_expiry ?? "—")}</Text></View>
         </View>
 
         {/* Wallet Summary */}
@@ -90,13 +90,13 @@ export function CmeReportDocument({ profile, wallet, activities, pendingActiviti
               </View>
               <View style={styles.walletStat}>
                 <Text style={[styles.walletStatNum, { fontSize: 13, color: wallet.compliance_status === "compliant" ? "#16a34a" : "#d97706" }]}>
-                  {String(wallet.compliance_status ?? "â€”").replace("_", " ").toUpperCase()}
+                  {String(wallet.compliance_status ?? "—").replace("_", " ").toUpperCase()}
                 </Text>
                 <Text style={styles.walletStatLabel}>Status</Text>
               </View>
             </View>
             <Text style={{ fontSize: 8, color: "#64748b", marginTop: 4 }}>
-              Cycle: {String(wallet.cycle_start_date ?? "â€”")} to {String(wallet.cycle_end_date ?? "â€”")}
+              Cycle: {String(wallet.cycle_start_date ?? "—")} to {String(wallet.cycle_end_date ?? "—")}
             </Text>
           </View>
         )}
@@ -116,9 +116,9 @@ export function CmeReportDocument({ profile, wallet, activities, pendingActiviti
               </View>
               {activities.map((a, i) => (
                 <View key={String(a.id)} style={i === activities.length - 1 ? styles.tableRowLast : styles.tableRow}>
-                  <Text style={styles.col1}>{String(a.title ?? "â€”")}</Text>
-                  <Text style={styles.col2}>{String(a.provider ?? "â€”")}</Text>
-                  <Text style={styles.col3}>{String(a.activity_date ?? "â€”")}</Text>
+                  <Text style={styles.col1}>{String(a.title ?? "—")}</Text>
+                  <Text style={styles.col2}>{String(a.provider ?? "—")}</Text>
+                  <Text style={styles.col3}>{String(a.activity_date ?? "—")}</Text>
                   <Text style={[styles.col4, styles.badge]}>+{String(a.credits ?? 0)}</Text>
                 </View>
               ))}
@@ -129,7 +129,7 @@ export function CmeReportDocument({ profile, wallet, activities, pendingActiviti
         {/* Pending Activities (not yet counted toward compliance) */}
         {pendingActivities.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Pending Activities â€” Awaiting Verification ({pendingActivities.length})</Text>
+            <Text style={styles.sectionTitle}>Pending Activities — Awaiting Verification ({pendingActivities.length})</Text>
             <Text style={styles.pendingNote}>
               The following activities have been submitted and are awaiting verification. They are NOT yet included in your verified credit total above and should NOT be counted for license renewal purposes until verified.
             </Text>
@@ -142,9 +142,9 @@ export function CmeReportDocument({ profile, wallet, activities, pendingActiviti
               </View>
               {pendingActivities.map((a, i) => (
                 <View key={String(a.id)} style={i === pendingActivities.length - 1 ? styles.tableRowLast : styles.tableRow}>
-                  <Text style={styles.col1}>{String(a.title ?? "â€”")}</Text>
-                  <Text style={styles.col2}>{String(a.provider ?? "â€”")}</Text>
-                  <Text style={styles.col3}>{String(a.activity_date ?? "â€”")}</Text>
+                  <Text style={styles.col1}>{String(a.title ?? "—")}</Text>
+                  <Text style={styles.col2}>{String(a.provider ?? "—")}</Text>
+                  <Text style={styles.col3}>{String(a.activity_date ?? "—")}</Text>
                   <Text style={[styles.col4, styles.badgePending]}>{String(a.credits ?? 0)} (pending)</Text>
                 </View>
               ))}
@@ -154,8 +154,8 @@ export function CmeReportDocument({ profile, wallet, activities, pendingActiviti
 
         {/* Footer */}
         <View style={styles.footer} fixed>
-          <Text>Hayya Med Pro Â· hayyamed.pro</Text>
-          <Text>Verified credits counted. Pending activities shown for reference only â€” not for submission.</Text>
+          <Text>Hayya Med Pro · hayyamed.pro</Text>
+          <Text>Verified credits counted. Pending activities shown for reference only — not for submission.</Text>
         </View>
       </Page>
     </Document>

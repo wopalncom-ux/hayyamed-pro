@@ -2,12 +2,12 @@
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "About Hayya Med Pro â€” Healthcare CME Compliance Platform for the GCC",
+  title: "About Hayya Med Pro — Healthcare CME Compliance Platform for the GCC",
   description:
-    "Hayya Med Pro is a healthcare SaaS platform built in Qatar for GCC healthcare professionals â€” CME tracking, CPD compliance, licensing readiness, and employer staff management across QCHP, SCFHS, DHA, DOH, NHRA, OMSB, and more.",
+    "Hayya Med Pro is a healthcare SaaS platform built in Qatar for GCC healthcare professionals — CME tracking, CPD compliance, licensing readiness, and employer staff management across QCHP, SCFHS, DHA, DOH, NHRA, OMSB, and more.",
   alternates: { canonical: "https://hayyamed.pro/about" },
   openGraph: {
-    title: "About Hayya Med Pro â€” Healthcare CME Platform for the GCC",
+    title: "About Hayya Med Pro — Healthcare CME Platform for the GCC",
     description: "Built in Qatar for GCC healthcare professionals. CME tracking, CPD compliance, licensing readiness, and employer staff management across 7 GCC countries.",
     url: "https://hayyamed.pro/about",
     type: "website",
@@ -36,7 +36,7 @@ const principles = [
   {
     icon: "ðŸŽ¯",
     title: "Accuracy over convenience",
-    body: "Every compliance rule is sourced from official authority publications â€” not estimates. Wrong compliance advice is a liability, not just an inconvenience.",
+    body: "Every compliance rule is sourced from official authority publications — not estimates. Wrong compliance advice is a liability, not just an inconvenience.",
   },
   {
     icon: "ðŸ”’",
@@ -46,7 +46,7 @@ const principles = [
   {
     icon: "ðŸŒ",
     title: "Built for scale, not one country",
-    body: "The platform has no hardcoded country logic. Every rule lives in a configurable engine â€” adding a new country or authority requires no code deployment.",
+    body: "The platform has no hardcoded country logic. Every rule lives in a configurable engine — adding a new country or authority requires no code deployment.",
   },
   {
     icon: "ðŸ“±",
@@ -80,14 +80,14 @@ export default function AboutPage() {
         <section className="bg-[#0f1f3d] py-16 sm:py-20 px-4 sm:px-6">
           <div className="max-w-4xl mx-auto text-center">
             <span className="inline-block bg-[#1a3563] border border-[#2a4a7f] text-[#93c5fd] text-xs font-semibold px-3 py-1 rounded-full mb-5">
-              Built in Qatar Â· For GCC Healthcare
+              Built in Qatar · For GCC Healthcare
             </span>
             <h1 className="text-3xl sm:text-4xl font-bold text-white mb-5 leading-tight">
               Healthcare compliance shouldn&apos;t require a spreadsheet
             </h1>
             <p className="text-lg text-[#94a3b8] max-w-2xl mx-auto leading-relaxed">
               Hayya Med Pro is a healthcare SaaS platform that tracks CME credits, manages licensing
-              readiness, and helps GCC healthcare professionals and their employers stay compliant â€”
+              readiness, and helps GCC healthcare professionals and their employers stay compliant —
               without the paperwork.
             </p>
           </div>
@@ -120,12 +120,12 @@ export default function AboutPage() {
               <p>
                 The current solution for most professionals is a combination of a spreadsheet, a folder
                 of PDF certificates, and a recurring anxiety about whether they&apos;ve logged everything
-                correctly before their renewal deadline. For employers â€” hospitals, clinics, health
-                networks â€” the problem compounds across dozens or hundreds of staff.
+                correctly before their renewal deadline. For employers — hospitals, clinics, health
+                networks — the problem compounds across dozens or hundreds of staff.
               </p>
               <p>
                 Hayya Med Pro was built to solve this. One platform, every GCC authority, every
-                profession, every country â€” with automated credit counting, deadline reminders,
+                profession, every country — with automated credit counting, deadline reminders,
                 certificate storage, and AI-powered gap analysis.
               </p>
             </div>
@@ -155,7 +155,7 @@ export default function AboutPage() {
                 <span className="text-xl flex-shrink-0">ðŸŒ</span>
                 <div>
                   <p className="text-sm font-semibold text-[#0369a1]">More coming</p>
-                  <p className="text-[11px] text-[#0369a1] leading-tight">UK Â· India Â· Australia Â· EU</p>
+                  <p className="text-[11px] text-[#0369a1] leading-tight">UK · India · Australia · EU</p>
                 </div>
               </div>
             </div>
@@ -172,7 +172,7 @@ export default function AboutPage() {
           <div className="max-w-5xl mx-auto">
             <h2 className="text-2xl font-bold text-[#111] mb-2 text-center">All healthcare professions</h2>
             <p className="text-sm text-[#64748b] text-center mb-8">
-              Physicians, nurses, pharmacists, dentists, and allied health â€” each profession has different requirements in different countries. We track them all.
+              Physicians, nurses, pharmacists, dentists, and allied health — each profession has different requirements in different countries. We track them all.
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
               {[
@@ -207,7 +207,7 @@ export default function AboutPage() {
               <p className="text-[#374151] leading-relaxed text-sm mb-5">
                 Hospitals, clinics, and healthcare networks use the Employer plan to monitor staff
                 renewal status in real time, assign CME tasks, send compliance reminders, and export
-                accreditation-ready reports â€” without accessing staff&apos;s private health information.
+                accreditation-ready reports — without accessing staff&apos;s private health information.
               </p>
               <Link
                 href="/employers"
@@ -268,7 +268,7 @@ export default function AboutPage() {
                 {
                   icon: "ðŸ”",
                   title: "Row-Level Security",
-                  body: "Every database table uses Supabase RLS â€” professionals can only ever access their own data. No exceptions.",
+                  body: "Every database table uses Supabase RLS — professionals can only ever access their own data. No exceptions.",
                 },
                 {
                   icon: "ðŸŒ",
@@ -304,7 +304,7 @@ export default function AboutPage() {
               <p className="leading-relaxed">
                 Hayya Med Pro supports CME tracking and licensing readiness. It does not issue
                 licenses and does not replace official licensing authorities. Users must verify final
-                requirements with their relevant regulatory body â€” QCHP, SCFHS, DHA, DOH, NHRA,
+                requirements with their relevant regulatory body — QCHP, SCFHS, DHA, DOH, NHRA,
                 OMSB, or MOH Kuwait.
               </p>
             </div>

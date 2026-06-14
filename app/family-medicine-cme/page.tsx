@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "Family Medicine CME Requirements in GCC â€” GP & Family Physician CME Guide | Hayya Med Pro",
+  title: "Family Medicine CME Requirements in GCC — GP & Family Physician CME Guide | Hayya Med Pro",
   description:
     "Complete CME and CPD guide for family medicine physicians and GPs in GCC. QCHP Qatar 80 CPD/2yr, SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. Broadest CME scope. Track all requirements in one app.",
   keywords: [
@@ -22,9 +22,9 @@ export const metadata: Metadata = {
     "family medicine CPD GCC",
   ],
   openGraph: {
-    title: "Family Medicine CME Requirements in GCC â€” GP & Family Physician CME Guide",
+    title: "Family Medicine CME Requirements in GCC — GP & Family Physician CME Guide",
     description:
-      "QCHP Qatar 80 CPD/2yr Â· SCFHS Saudi 60 CME/yr Â· DHA Dubai 40 CME/2yr. Broadest CME scope in medicine. Track all GCC family medicine requirements in one app.",
+      "QCHP Qatar 80 CPD/2yr · SCFHS Saudi 60 CME/yr · DHA Dubai 40 CME/2yr. Broadest CME scope in medicine. Track all GCC family medicine requirements in one app.",
     url: `${APP_URL}/family-medicine-cme`,
     type: "website",
     images: [
@@ -48,7 +48,7 @@ const faqLd = {
       name: "How many CME credits does a family physician need in Saudi Arabia (SCFHS)?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "SCFHS-registered family physicians must complete 60 CME credits per year. The Saudi Board of Family Medicine and the Saudi Society of Family and Community Medicine (SSFCM) are recognised accreditors. Family medicine has the broadest accepted CME scope â€” activities from most clinical areas count, making it easier to accumulate credits across practice.",
+        text: "SCFHS-registered family physicians must complete 60 CME credits per year. The Saudi Board of Family Medicine and the Saudi Society of Family and Community Medicine (SSFCM) are recognised accreditors. Family medicine has the broadest accepted CME scope — activities from most clinical areas count, making it easier to accumulate credits across practice.",
       },
     },
     {
@@ -87,9 +87,9 @@ const faqLd = {
 };
 
 const AUTHORITIES = [
-  { flag: "ðŸ‡¶ðŸ‡¦", name: "QCHP",  country: "Qatar",        cycle: "80 CPD / 2 yr",   note: "Broadest scope Â· preventive care counts" },
+  { flag: "ðŸ‡¶ðŸ‡¦", name: "QCHP",  country: "Qatar",        cycle: "80 CPD / 2 yr",   note: "Broadest scope · preventive care counts" },
   { flag: "ðŸ‡¸ðŸ‡¦", name: "SCFHS", country: "Saudi Arabia",  cycle: "60 CME / yr",     note: "SSFCM & SBFM recognised" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DHA",   country: "Dubai",         cycle: "40 CME / 2 yr",   note: "50% online cap Â· patient safety required" },
+  { flag: "ðŸ‡¦ðŸ‡ª", name: "DHA",   country: "Dubai",         cycle: "40 CME / 2 yr",   note: "50% online cap · patient safety required" },
   { flag: "ðŸ‡¦ðŸ‡ª", name: "DOH",   country: "Abu Dhabi",     cycle: "40 CPD / cycle",  note: "Verify per licence category" },
   { flag: "ðŸ‡°ðŸ‡¼", name: "MOH",   country: "Kuwait",        cycle: "30 CME / yr",     note: "Ministry of Health approved" },
   { flag: "ðŸ‡§ðŸ‡­", name: "NHRA",  country: "Bahrain",       cycle: "40 CPD / 2 yr",   note: "NHRA accredited events" },
@@ -100,7 +100,7 @@ const SPECIALTY_NOTES = [
   {
     icon: "ðŸŒ¿",
     title: "Broadest CME Scope in Medicine",
-    body: "Family medicine has the most flexible CME landscape of any specialty. Activities across most clinical domains count â€” from cardiology updates to paediatric screening, mental health first aid to dermatology workshops. This makes accumulating CME credits more achievable for busy GPs.",
+    body: "Family medicine has the most flexible CME landscape of any specialty. Activities across most clinical domains count — from cardiology updates to paediatric screening, mental health first aid to dermatology workshops. This makes accumulating CME credits more achievable for busy GPs.",
   },
   {
     icon: "ðŸŒ",
@@ -136,7 +136,7 @@ export default function FamilyMedicineCmePage() {
             Family Medicine CME Requirements<br />Across GCC
           </h1>
           <p style={{ fontSize: 18, color: "#cbd5e1", maxWidth: 620, margin: "0 auto 32px" }}>
-            QCHP Qatar Â· SCFHS Saudi Arabia Â· DHA Dubai Â· and 4 more authorities.
+            QCHP Qatar · SCFHS Saudi Arabia · DHA Dubai · and 4 more authorities.
             The broadest CME scope in medicine. Track every credit in one dashboard.
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
@@ -195,7 +195,7 @@ export default function FamilyMedicineCmePage() {
 
       <section style={{ background: "#f0f4f8", padding: "64px 24px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto" }}>
-          <h2 style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", textAlign: "center", marginBottom: 48 }}>Family Medicine CME â€” Frequently Asked Questions</h2>
+          <h2 style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", textAlign: "center", marginBottom: 48 }}>Family Medicine CME — Frequently Asked Questions</h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {faqLd.mainEntity.map((q) => (
               <div key={q.name} style={{ background: "#fff", borderRadius: 12, padding: 24, border: "1px solid #e2e8f0" }}>
@@ -236,7 +236,7 @@ export default function FamilyMedicineCmePage() {
           <Link href="/register" style={{ background: "#1a56a0", color: "#fff", padding: "16px 36px", borderRadius: 8, fontWeight: 700, textDecoration: "none", fontSize: 17, display: "inline-block" }}>
             Start tracking free â†’
           </Link>
-          <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required Â· Free plan always available</p>
+          <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required · Free plan always available</p>
         </div>
       </section>
 

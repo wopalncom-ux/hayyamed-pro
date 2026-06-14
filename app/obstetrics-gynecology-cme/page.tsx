@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "Obstetrics & Gynecology CME Requirements in GCC â€” OB/GYN CME Guide | Hayya Med Pro",
+  title: "Obstetrics & Gynecology CME Requirements in GCC — OB/GYN CME Guide | Hayya Med Pro",
   description:
     "Complete CME and CPD guide for OB/GYN specialists in GCC. QCHP Qatar 80 CPD/2yr, SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. ALSO and NRP mandatory. Track all requirements in one app.",
   keywords: [
@@ -22,9 +22,9 @@ export const metadata: Metadata = {
     "continuing medical education obstetrics",
   ],
   openGraph: {
-    title: "Obstetrics & Gynecology CME Requirements in GCC â€” OB/GYN CME Guide",
+    title: "Obstetrics & Gynecology CME Requirements in GCC — OB/GYN CME Guide",
     description:
-      "QCHP Qatar 80 CPD/2yr Â· SCFHS Saudi 60 CME/yr Â· DHA Dubai 40 CME/2yr. ALSO & NRP mandatory. Track all GCC OB/GYN requirements in one app.",
+      "QCHP Qatar 80 CPD/2yr · SCFHS Saudi 60 CME/yr · DHA Dubai 40 CME/2yr. ALSO & NRP mandatory. Track all GCC OB/GYN requirements in one app.",
     url: `${APP_URL}/obstetrics-gynecology-cme`,
     type: "website",
     images: [
@@ -99,7 +99,7 @@ const AUTHORITIES = [
 const SPECIALTY_NOTES = [
   {
     icon: "ðŸ†˜",
-    title: "ALSO & NRP â€” Safety Essentials",
+    title: "ALSO & NRP — Safety Essentials",
     body: "Advanced Life Support in Obstetrics (ALSO) and Neonatal Resuscitation Program (NRP) courses are recognised across all GCC authorities. Both earn CME/CPD credits and demonstrate clinical readiness. QCHP recommends renewal every 2â€“4 years.",
   },
   {
@@ -115,7 +115,7 @@ const SPECIALTY_NOTES = [
   {
     icon: "ðŸ“‹",
     title: "Audit, QI & Perinatal Review",
-    body: "Perinatal mortality review, clinical audit of caesarean rates, and quality improvement projects are accepted by QCHP and DHA for up to 10 CPD/CME credits per cycle â€” valuable for OB/GYN specialists in academic hospital settings.",
+    body: "Perinatal mortality review, clinical audit of caesarean rates, and quality improvement projects are accepted by QCHP and DHA for up to 10 CPD/CME credits per cycle — valuable for OB/GYN specialists in academic hospital settings.",
   },
 ];
 
@@ -136,7 +136,7 @@ export default function ObstetricsGynecologyCmePage() {
             Obstetrics &amp; Gynecology CME<br />Requirements Across GCC
           </h1>
           <p style={{ fontSize: 18, color: "#cbd5e1", maxWidth: 620, margin: "0 auto 32px" }}>
-            QCHP Qatar Â· SCFHS Saudi Arabia Â· DHA Dubai Â· and 4 more authorities.
+            QCHP Qatar · SCFHS Saudi Arabia · DHA Dubai · and 4 more authorities.
             ALSO &amp; NRP mandatory. Track every credit in one compliance dashboard.
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
@@ -195,7 +195,7 @@ export default function ObstetricsGynecologyCmePage() {
 
       <section style={{ background: "#f0f4f8", padding: "64px 24px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto" }}>
-          <h2 style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", textAlign: "center", marginBottom: 48 }}>OB/GYN CME â€” Frequently Asked Questions</h2>
+          <h2 style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", textAlign: "center", marginBottom: 48 }}>OB/GYN CME — Frequently Asked Questions</h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {faqLd.mainEntity.map((q) => (
               <div key={q.name} style={{ background: "#fff", borderRadius: 12, padding: 24, border: "1px solid #e2e8f0" }}>
@@ -236,7 +236,7 @@ export default function ObstetricsGynecologyCmePage() {
           <Link href="/register" style={{ background: "#1a56a0", color: "#fff", padding: "16px 36px", borderRadius: 8, fontWeight: 700, textDecoration: "none", fontSize: 17, display: "inline-block" }}>
             Start tracking free â†’
           </Link>
-          <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required Â· Free plan always available</p>
+          <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required · Free plan always available</p>
         </div>
       </section>
 

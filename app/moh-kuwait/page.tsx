@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "Kuwait CME Tracker â€” MOH Kuwait CME Requirements | Hayya Med Pro",
+  title: "Kuwait CME Tracker — MOH Kuwait CME Requirements | Hayya Med Pro",
   description:
     "Track your Kuwait Ministry of Health CME requirements automatically. Physicians need 30 CME credits per year. Hayya Med Pro calculates your progress, alerts you to gaps, and generates your compliance report.",
   keywords: [
@@ -18,16 +18,16 @@ export const metadata: Metadata = {
     "CME tracker Kuwait",
   ],
   openGraph: {
-    title: "Kuwait CME Tracker â€” MOH Kuwait Requirements",
+    title: "Kuwait CME Tracker — MOH Kuwait Requirements",
     description:
-      "Physicians: 30 CME/year. Nurses: 20 CME/year. Track your Kuwait MOH compliance automatically â€” free to start.",
+      "Physicians: 30 CME/year. Nurses: 20 CME/year. Track your Kuwait MOH compliance automatically — free to start.",
     url: `${APP_URL}/moh-kuwait`,
     type: "website",
     images: [{ url: `${APP_URL}/api/og?t=MOH+Kuwait+CME+Requirements&s=30+CME%2Fyear+%28physicians%29+%C2%B7+20%2Fyear+%28nurses%29+%C2%B7+Annual+renewal+cycle&a=%F0%9F%87%B0%F0%9F%87%BC+MOH+Kuwait&k=Authority+Guide`, width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kuwait CME Tracker â€” MOH Requirements",
+    title: "Kuwait CME Tracker — MOH Requirements",
     description: "Track Kuwait MOH CME requirements automatically. Free for Kuwait healthcare professionals.",
   },
   alternates: { canonical: `${APP_URL}/moh-kuwait` },
@@ -50,7 +50,7 @@ const faqLd = {
       name: "What is Kuwait's limit on online CME activities?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Kuwait has the strictest online CME cap in the GCC â€” a maximum of 30% of your total annual credits (9 out of 30 for physicians) can come from online activities. The remaining 70% must come from in-person activities such as conferences, workshops, or seminars.",
+        text: "Kuwait has the strictest online CME cap in the GCC — a maximum of 30% of your total annual credits (9 out of 30 for physicians) can come from online activities. The remaining 70% must come from in-person activities such as conferences, workshops, or seminars.",
       },
     },
     {
@@ -58,7 +58,7 @@ const faqLd = {
       name: "What categories of CME does Kuwait MOH accept?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Kuwait MOH accepts: Conferences and Seminars (accredited events), Workshops (hands-on practical training), Online Activities (capped at 30%), and Self-Directed Learning (journal reading, case studies â€” capped). All activities must be accredited by MOH Kuwait or a recognized accrediting body.",
+        text: "Kuwait MOH accepts: Conferences and Seminars (accredited events), Workshops (hands-on practical training), Online Activities (capped at 30%), and Self-Directed Learning (journal reading, case studies — capped). All activities must be accredited by MOH Kuwait or a recognized accrediting body.",
       },
     },
     {
@@ -126,7 +126,7 @@ const HOW_IT_WORKS = [
   {
     step: "4",
     title: "Generate your compliance report",
-    desc: "Download a PDF summary of all CME activities formatted for Kuwait MOH â€” with providers, dates, credits, and totals.",
+    desc: "Download a PDF summary of all CME activities formatted for Kuwait MOH — with providers, dates, credits, and totals.",
   },
 ];
 
@@ -158,10 +158,10 @@ export default function MohKuwaitPage() {
           {/* Hero */}
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-2 bg-[#eff6ff] border border-[#bfdbfe] text-[#1a56a0] text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
-              ðŸ‡°ðŸ‡¼ Kuwait Â· Ministry of Health (MOH)
+              ðŸ‡°ðŸ‡¼ Kuwait · Ministry of Health (MOH)
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-[#111] tracking-tight mb-4 leading-tight">
-              Track your Kuwait MOH CME<br className="hidden sm:block" /> requirements â€” automatically
+              Track your Kuwait MOH CME<br className="hidden sm:block" /> requirements — automatically
             </h1>
             <p className="text-lg text-[#64748b] max-w-2xl mx-auto mb-8">
               Kuwait physicians must complete <strong className="text-[#111]">30 CME credits per year</strong>. Nurses and allied health: <strong className="text-[#111]">20 credits per year</strong>.
@@ -169,13 +169,13 @@ export default function MohKuwaitPage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link href="/register" className="inline-flex items-center gap-2 bg-[#1a56a0] text-white font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#154890] transition-colors">
-                Track my Kuwait CME â€” free â†’
+                Track my Kuwait CME — free â†’
               </Link>
               <Link href="/pricing" className="inline-flex items-center gap-1 text-sm text-[#64748b] hover:text-[#1a56a0] transition-colors">
                 See what&apos;s free vs Pro
               </Link>
             </div>
-            <p className="text-xs text-[#94a3b8] mt-3">No credit card required Â· 14-day Pro trial included</p>
+            <p className="text-xs text-[#94a3b8] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>
 
           {/* Requirements card */}
@@ -278,7 +278,7 @@ export default function MohKuwaitPage() {
 
           {/* FAQ */}
           <div className="mb-12">
-            <h2 className="text-xl font-bold text-[#111] mb-6">Kuwait MOH CME â€” frequently asked questions</h2>
+            <h2 className="text-xl font-bold text-[#111] mb-6">Kuwait MOH CME — frequently asked questions</h2>
             <div className="space-y-3">
               {faqLd.mainEntity.map((item) => (
                 <details key={item.name} className="bg-white rounded-xl border border-[#e2e8f0] group">
@@ -369,12 +369,12 @@ export default function MohKuwaitPage() {
             <div className="inline-block text-3xl mb-3">ðŸ‡°ðŸ‡¼</div>
             <h2 className="text-2xl font-bold text-white mb-2">Start tracking your Kuwait CME today</h2>
             <p className="text-[rgba(255,255,255,0.65)] mb-6 max-w-md mx-auto text-sm">
-              Hayya Med Pro automatically applies Kuwait MOH rules â€” profession-specific credits, the 30% online cap, and annual renewal tracking. Free to start.
+              Hayya Med Pro automatically applies Kuwait MOH rules — profession-specific credits, the 30% online cap, and annual renewal tracking. Free to start.
             </p>
             <Link href="/register" className="inline-flex items-center gap-2 bg-white text-[#1a56a0] font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#f0f7ff] transition-colors">
-              Track my Kuwait CME â€” free â†’
+              Track my Kuwait CME — free â†’
             </Link>
-            <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">No credit card required Â· 14-day Pro trial included</p>
+            <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>
 
           <div className="mt-6 bg-[#fef9c3] border border-[#fde68a] rounded-lg px-4 py-3 text-xs text-[#92400e] text-center">

@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "GCC CME Requirements â€” Compare Healthcare CME by Country | Hayya Med Pro",
+  title: "GCC CME Requirements — Compare Healthcare CME by Country | Hayya Med Pro",
   description:
     "Compare CME and CPD requirements for healthcare professionals across all GCC countries: Qatar (QCHP), Saudi Arabia (SCFHS), UAE (DHA, DOH), Kuwait (MOH), Bahrain (NHRA), and Oman (OMSB). Credits, cycles, and key rules at a glance.",
   keywords: [
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     "GCC CPD requirements comparison",
   ],
   openGraph: {
-    title: "GCC CME Requirements â€” All Countries Compared",
+    title: "GCC CME Requirements — All Countries Compared",
     description:
       "Compare QCHP, SCFHS, DHA, DOH, MOH, NHRA, and OMSB CME requirements side by side. Credits, cycles, and rules for every GCC country.",
     url: `${APP_URL}/countries`,
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "GCC CME Requirements â€” Compare All GCC Countries",
+    title: "GCC CME Requirements — Compare All GCC Countries",
     description:
       "Credits, cycles, and requirements for Qatar, Saudi Arabia, UAE, Kuwait, Bahrain, and Oman healthcare professionals.",
   },
@@ -68,7 +68,7 @@ const faqLd = {
       name: "Can I track CME requirements for multiple GCC countries in one place?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. Hayya Med Pro supports multi-jurisdiction tracking. Healthcare professionals licensed in multiple GCC countries can add separate CME wallets for each authority â€” QCHP, SCFHS, DHA, DOH, NHRA, OMSB, and MOH Kuwait â€” within the same account. Each wallet tracks credits independently against its authority's specific requirements.",
+        text: "Yes. Hayya Med Pro supports multi-jurisdiction tracking. Healthcare professionals licensed in multiple GCC countries can add separate CME wallets for each authority — QCHP, SCFHS, DHA, DOH, NHRA, OMSB, and MOH Kuwait — within the same account. Each wallet tracks credits independently against its authority's specific requirements.",
       },
     },
     {
@@ -122,7 +122,7 @@ const COUNTRIES_DATA = [
     text: "#15803d",
   },
   {
-    name: "UAE â€” Dubai",
+    name: "UAE — Dubai",
     flag: "ðŸ‡¦ðŸ‡ª",
     authority: "DHA",
     authorityFull: "Dubai Health Authority",
@@ -141,7 +141,7 @@ const COUNTRIES_DATA = [
     text: "#0c4a6e",
   },
   {
-    name: "UAE â€” Abu Dhabi",
+    name: "UAE — Abu Dhabi",
     flag: "ðŸ‡¦ðŸ‡ª",
     authority: "DOH",
     authorityFull: "Department of Health â€“ Abu Dhabi",
@@ -163,7 +163,7 @@ const COUNTRIES_DATA = [
     name: "Kuwait",
     flag: "ðŸ‡°ðŸ‡¼",
     authority: "MOH Kuwait",
-    authorityFull: "Ministry of Health â€” Kuwait",
+    authorityFull: "Ministry of Health — Kuwait",
     term: "CME",
     cycle: "1 year",
     credits: 30,
@@ -268,22 +268,22 @@ export default function CountriesPage() {
           {/* Hero */}
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-2 bg-[#eff6ff] border border-[#bfdbfe] text-[#1e40af] text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
-              GCC Â· 7 countries Â· 8 licensing authorities
+              GCC · 7 countries · 8 licensing authorities
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-[#111] tracking-tight mb-4 leading-tight">
               GCC CME requirements,<br className="hidden sm:block" /> compared country by country
             </h1>
             <p className="text-lg text-[#64748b] max-w-2xl mx-auto mb-8">
               Every GCC licensing authority has different credit requirements, cycle lengths, and mandatory categories.
-              Use this guide to understand what&apos;s required where â€” and track it all in one account.
+              Use this guide to understand what&apos;s required where — and track it all in one account.
             </p>
             <Link
               href="/register"
               className="inline-flex items-center gap-2 bg-[#1a56a0] text-white font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#154890] transition-colors"
             >
-              Track my compliance â€” free â†’
+              Track my compliance — free â†’
             </Link>
-            <p className="text-xs text-[#94a3b8] mt-3">Supports all 7 GCC countries Â· No credit card required</p>
+            <p className="text-xs text-[#94a3b8] mt-3">Supports all 7 GCC countries · No credit card required</p>
           </div>
 
           {/* Country cards grid */}
@@ -339,7 +339,7 @@ export default function CountriesPage() {
           <div className="mb-14">
             <h2 className="text-2xl font-bold text-[#111] mb-2">Side-by-side comparison</h2>
             <p className="text-sm text-[#64748b] mb-6">
-              Key requirements for each GCC licensing authority at a glance. Requirements may vary by profession â€” click &ldquo;Full guide&rdquo; for profession-specific rules.
+              Key requirements for each GCC licensing authority at a glance. Requirements may vary by profession — click &ldquo;Full guide&rdquo; for profession-specific rules.
             </p>
             <div className="overflow-x-auto rounded-xl border border-[#e2e8f0]">
               <table className="w-full text-sm min-w-[700px]">
@@ -394,7 +394,7 @@ export default function CountriesPage() {
             <div className="flex-1">
               <h2 className="text-base font-bold text-[#92400e] mb-1">Licensed in more than one GCC country?</h2>
               <p className="text-sm text-[#92400e] leading-relaxed">
-                Many GCC healthcare professionals hold licenses in two or more countries. Hayya Med Pro supports separate CME wallets per jurisdiction in a single account â€” each tracking credits independently against its authority&apos;s specific rules.
+                Many GCC healthcare professionals hold licenses in two or more countries. Hayya Med Pro supports separate CME wallets per jurisdiction in a single account — each tracking credits independently against its authority&apos;s specific rules.
               </p>
             </div>
             <Link
@@ -422,13 +422,13 @@ export default function CountriesPage() {
                     <span className="text-2xl">{c.flag}</span>
                     <div>
                       <p className="text-sm font-bold text-[#111] group-hover:text-[#1a56a0] transition-colors">
-                        {c.authority} â€” {c.name}
+                        {c.authority} — {c.name}
                       </p>
                       <p className="text-xs text-[#64748b]">{c.authorityFull}</p>
                     </div>
                   </div>
                   <div className="flex items-center justify-between text-xs text-[#94a3b8]">
-                    <span>{c.creditsLabel} Â· {c.cycle} cycle</span>
+                    <span>{c.creditsLabel} · {c.cycle} cycle</span>
                     <span className="text-[#1a56a0] font-semibold group-hover:translate-x-1 transition-transform inline-block">â†’</span>
                   </div>
                 </Link>
@@ -438,7 +438,7 @@ export default function CountriesPage() {
 
           {/* FAQ */}
           <div className="mb-12">
-            <h2 className="text-xl font-bold text-[#111] mb-6">GCC CME requirements â€” frequently asked questions</h2>
+            <h2 className="text-xl font-bold text-[#111] mb-6">GCC CME requirements — frequently asked questions</h2>
             <div className="space-y-3">
               {faqLd.mainEntity.map((item) => (
                 <details key={item.name} className="bg-white rounded-xl border border-[#e2e8f0] group">
@@ -458,7 +458,7 @@ export default function CountriesPage() {
 
           {/* CTA */}
           <div className="bg-gradient-to-br from-[#0f1f3d] to-[#1a3563] rounded-2xl p-10 text-center">
-            <h2 className="text-2xl font-bold text-white mb-2">Track your GCC compliance â€” all in one place</h2>
+            <h2 className="text-2xl font-bold text-white mb-2">Track your GCC compliance — all in one place</h2>
             <p className="text-[rgba(255,255,255,0.65)] mb-6 max-w-xl mx-auto text-sm">
               Add one wallet per jurisdiction and Hayya Med Pro tracks each country&apos;s credits, caps, and deadlines independently. Free to start, upgrade for PDF reports and AI gap analysis.
             </p>
@@ -467,7 +467,7 @@ export default function CountriesPage() {
                 href="/register"
                 className="bg-white text-[#1a56a0] font-semibold text-sm px-7 py-3 rounded-xl hover:bg-[#f0f7ff] transition-colors"
               >
-                Start tracking â€” free â†’
+                Start tracking — free â†’
               </Link>
               <Link
                 href="/pricing"
@@ -485,7 +485,7 @@ export default function CountriesPage() {
           <div className="mt-8 mb-6 bg-[#eff6ff] border border-[#bfdbfe] rounded-xl px-5 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
               <p className="text-sm font-semibold text-[#1e3a5f]">Not sure if your authority uses CME or CPD?</p>
-              <p className="text-xs text-[#3b5a8a] mt-0.5">QCHP says CPD. SCFHS says CME. Here&apos;s the difference â€” and why it doesn&apos;t change how you track.</p>
+              <p className="text-xs text-[#3b5a8a] mt-0.5">QCHP says CPD. SCFHS says CME. Here&apos;s the difference — and why it doesn&apos;t change how you track.</p>
             </div>
             <Link href="/cme-vs-cpd" className="flex-shrink-0 text-xs font-semibold text-[#1a56a0] border border-[#1a56a0]/30 rounded-lg px-3 py-2 hover:bg-white transition-colors whitespace-nowrap">
               CME vs CPD explained â†’
@@ -501,10 +501,10 @@ export default function CountriesPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {[
                 { href: "/physician-cme",    icon: "ðŸ©º",  title: "Physicians",    sub: "Doctor CME requirements across all GCC authorities" },
-                { href: "/nurse-cpd",        icon: "ðŸ‘©â€âš•ï¸", title: "Nurses",        sub: "Nursing CPD â€” lower in Saudi (30/yr) and Kuwait (20/yr)" },
-                { href: "/pharmacist-cme",   icon: "ðŸ’Š",  title: "Pharmacists",   sub: "Pharmacy CME â€” same as physicians in most GCC countries" },
+                { href: "/nurse-cpd",        icon: "ðŸ‘©â€âš•ï¸", title: "Nurses",        sub: "Nursing CPD — lower in Saudi (30/yr) and Kuwait (20/yr)" },
+                { href: "/pharmacist-cme",   icon: "ðŸ’Š",  title: "Pharmacists",   sub: "Pharmacy CME — same as physicians in most GCC countries" },
                 { href: "/dentist-cme",      icon: "ðŸ¦·",  title: "Dentists",      sub: "Dental CME requirements across SCFHS, QCHP, DHA, and more" },
-                { href: "/allied-health-cpd",icon: "ðŸ¦¿",  title: "Allied Health", sub: "Physiotherapists, radiographers, lab techs, OTs â€” 30/yr SCFHS" },
+                { href: "/allied-health-cpd",icon: "ðŸ¦¿",  title: "Allied Health", sub: "Physiotherapists, radiographers, lab techs, OTs — 30/yr SCFHS" },
               ].map((p) => (
                 <Link
                   key={p.href}

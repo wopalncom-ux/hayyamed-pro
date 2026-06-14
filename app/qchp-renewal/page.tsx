@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "QCHP License Renewal â€” Complete Guide for Qatar Healthcare Professionals",
+  title: "QCHP License Renewal — Complete Guide for Qatar Healthcare Professionals",
   description:
     "Step-by-step guide to QCHP license renewal in Qatar. 80 CPD credits required per 2-year cycle. Find out what you need, how to submit, and how to track your CPD with Hayya Med Pro.",
   keywords: [
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     "QCHP renewal checklist",
   ],
   openGraph: {
-    title: "QCHP License Renewal â€” Step-by-Step Guide for Qatar Healthcare Professionals",
+    title: "QCHP License Renewal — Step-by-Step Guide for Qatar Healthcare Professionals",
     description:
       "Everything you need to renew your QCHP healthcare license in Qatar. 80 CPD credits, patient safety requirements, and how to submit your portfolio.",
     url: `${APP_URL}/qchp-renewal`,
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "QCHP License Renewal Guide â€” Qatar Healthcare Professionals",
+    title: "QCHP License Renewal Guide — Qatar Healthcare Professionals",
     description: "80 CPD credits per 2-year cycle. Step-by-step QCHP renewal checklist and CPD tracking with Hayya Med Pro.",
   },
   alternates: { canonical: `${APP_URL}/qchp-renewal` },
@@ -51,7 +51,7 @@ const faqLd = {
       name: "How do I submit my CPD portfolio to QCHP?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "CPD submissions are made through the QCHP online portal (qchp.org.qa). You submit your CPD portfolio showing all activities, certificates, and credit totals. Hayya Med Pro's PDF CPD report is formatted to show all the information QCHP requires â€” activity title, category, date, credits, and accrediting body.",
+        text: "CPD submissions are made through the QCHP online portal (qchp.org.qa). You submit your CPD portfolio showing all activities, certificates, and credit totals. Hayya Med Pro's PDF CPD report is formatted to show all the information QCHP requires — activity title, category, date, credits, and accrediting body.",
       },
     },
     {
@@ -59,7 +59,7 @@ const faqLd = {
       name: "What counts as CPD for QCHP?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "QCHP accepts activities in several categories: accredited conferences and workshops (Category 1), online learning modules (Category 2), postgraduate qualifications (Category 3), research and publications (Category 4), teaching and mentoring (Category 5), and self-directed learning (Category 6). Category caps may apply â€” Hayya Med Pro enforces these automatically.",
+        text: "QCHP accepts activities in several categories: accredited conferences and workshops (Category 1), online learning modules (Category 2), postgraduate qualifications (Category 3), research and publications (Category 4), teaching and mentoring (Category 5), and self-directed learning (Category 6). Category caps may apply — Hayya Med Pro enforces these automatically.",
       },
     },
     {
@@ -75,7 +75,7 @@ const faqLd = {
       name: "Can I use online CME/CPD activities for QCHP renewal?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes, QCHP accepts online learning activities as part of your CPD portfolio. However, there are caps on how many credits can come from online sources â€” the exact limit depends on the category. QCHP requires that a meaningful portion of your CPD comes from accredited live or interactive activities.",
+        text: "Yes, QCHP accepts online learning activities as part of your CPD portfolio. However, there are caps on how many credits can come from online sources — the exact limit depends on the category. QCHP requires that a meaningful portion of your CPD comes from accredited live or interactive activities.",
       },
     },
   ],
@@ -181,11 +181,11 @@ export default function QchpRenewalPage() {
             <div className="flex items-center gap-2 mb-4">
               <span className="text-xl">ðŸ‡¶ðŸ‡¦</span>
               <span className="text-xs font-semibold text-[#1a56a0] bg-[#eff6ff] px-2.5 py-1 rounded-full">
-                QCHP â€” Qatar Healthcare License Renewal
+                QCHP — Qatar Healthcare License Renewal
               </span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold text-[#111] mb-4 leading-tight">
-              QCHP license renewal â€”<br className="hidden sm:block" /> complete guide
+              QCHP license renewal —<br className="hidden sm:block" /> complete guide
             </h1>
             <p className="text-lg text-[#475569] mb-6 max-w-2xl leading-relaxed">
               Everything you need to renew your healthcare license in Qatar.
@@ -228,7 +228,7 @@ export default function QchpRenewalPage() {
         {/* Renewal steps */}
         <section className="py-12 bg-[#f8fafc] border-t border-[#e2e8f0]">
           <div className="max-w-4xl mx-auto px-4 sm:px-6">
-            <h2 className="text-2xl font-bold text-[#111] mb-8">The QCHP renewal process â€” step by step</h2>
+            <h2 className="text-2xl font-bold text-[#111] mb-8">The QCHP renewal process — step by step</h2>
             <div className="space-y-5">
               {RENEWAL_STEPS.map((s) => (
                 <div key={s.step} className="bg-white rounded-2xl border border-[#e2e8f0] p-6 flex gap-5 items-start">
@@ -287,7 +287,7 @@ export default function QchpRenewalPage() {
                   <p className="text-sm text-[#334e7a] mb-5 leading-relaxed">
                     Hayya Med Pro tracks your CPD credits, enforces the 40/year minimum,
                     ensures patient safety credits are counted, and generates your
-                    submission-ready PDF portfolio â€” all automatically.
+                    submission-ready PDF portfolio — all automatically.
                   </p>
                   <ul className="space-y-2 mb-5">
                     {[
@@ -309,9 +309,9 @@ export default function QchpRenewalPage() {
                     href="/register"
                     className="block w-full text-center bg-[#1a56a0] text-white font-semibold text-sm py-3 rounded-xl hover:bg-[#1547a0] transition-colors"
                   >
-                    Start tracking QCHP CPD â€” free â†’
+                    Start tracking QCHP CPD — free â†’
                   </Link>
-                  <p className="text-xs text-[#64748b] text-center mt-2">Free plan available Â· 14-day Pro trial Â· No card required</p>
+                  <p className="text-xs text-[#64748b] text-center mt-2">Free plan available · 14-day Pro trial · No card required</p>
                 </div>
               </div>
             </div>
@@ -322,7 +322,7 @@ export default function QchpRenewalPage() {
         <section className="py-12 bg-[#f8fafc] border-t border-[#e2e8f0]">
           <div className="max-w-3xl mx-auto px-4 sm:px-6">
             <h2 className="text-2xl font-bold text-[#111] mb-8">
-              QCHP renewal â€” frequently asked questions
+              QCHP renewal — frequently asked questions
             </h2>
             <div className="space-y-3">
               {faqLd.mainEntity.map((faq) => (
@@ -402,11 +402,11 @@ export default function QchpRenewalPage() {
             </p>
             <p className="text-xs text-[#94a3b8] text-center mt-2">
               <Link href="/qchp" className="hover:text-[#64748b]">QCHP Guide</Link>
-              {" Â· "}
+              {" · "}
               <Link href="/cpd-tracker" className="hover:text-[#64748b]">CPD Tracker</Link>
-              {" Â· "}
+              {" · "}
               <Link href="/privacy" className="hover:text-[#64748b]">Privacy</Link>
-              {" Â· "}
+              {" · "}
               <Link href="/terms" className="hover:text-[#64748b]">Terms</Link>
             </p>
           </div>

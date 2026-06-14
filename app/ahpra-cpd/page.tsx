@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "AHPRA CPD Requirements Australia â€” Doctor & Healthcare Professional CPD Guide 2025 | Hayya Med Pro",
+  title: "AHPRA CPD Requirements Australia — Doctor & Healthcare Professional CPD Guide 2025 | Hayya Med Pro",
   description:
     "Complete guide to AHPRA CPD requirements for Australian healthcare professionals. Medical practitioners need 50 CPD hours per year from 2023. Track AHPRA CPD and GCC CME in one compliance app.",
   keywords: [
@@ -22,9 +22,9 @@ export const metadata: Metadata = {
     "AHPRA CPD hours",
   ],
   openGraph: {
-    title: "AHPRA CPD Requirements Australia â€” 2025 Framework",
+    title: "AHPRA CPD Requirements Australia — 2025 Framework",
     description:
-      "50 CPD hours/year Â· 4 domains Â· Annual declaration. Track AHPRA CPD and GCC CME requirements in one compliance dashboard.",
+      "50 CPD hours/year · 4 domains · Annual declaration. Track AHPRA CPD and GCC CME requirements in one compliance dashboard.",
     url: `${APP_URL}/ahpra-cpd`,
     type: "website",
     images: [
@@ -56,7 +56,7 @@ const faqLd = {
       name: "What are the 4 CPD domains under the Australian Medical Board (AHPRA) framework?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "The Medical Board of Australia CPD framework has four domains: (1) Educational activities â€” conferences, courses, online modules, workshops (min 12.5 hours); (2) Reviewing performance â€” peer review, MSF, clinical audit with feedback (min 12.5 hours); (3) Measuring outcomes â€” clinical audit, QI projects, data-driven review (min 12.5 hours); (4) Other CPD activities â€” teaching, mentoring, research, self-directed learning (remaining hours). The minimum in each of the first three domains is mandatory.",
+        text: "The Medical Board of Australia CPD framework has four domains: (1) Educational activities — conferences, courses, online modules, workshops (min 12.5 hours); (2) Reviewing performance — peer review, MSF, clinical audit with feedback (min 12.5 hours); (3) Measuring outcomes — clinical audit, QI projects, data-driven review (min 12.5 hours); (4) Other CPD activities — teaching, mentoring, research, self-directed learning (remaining hours). The minimum in each of the first three domains is mandatory.",
       },
     },
     {
@@ -133,13 +133,13 @@ export default function AhpraCpdPage() {
       <section style={{ background: "#0f1f3d", color: "#fff", padding: "72px 24px 56px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontSize: 13, letterSpacing: "0.08em", textTransform: "uppercase", color: "#93c5fd", marginBottom: 16 }}>
-            ðŸ‡¦ðŸ‡º Authority Guide â€” Australia
+            ðŸ‡¦ðŸ‡º Authority Guide — Australia
           </p>
           <h1 style={{ fontSize: "clamp(28px,5vw,48px)", fontWeight: 800, lineHeight: 1.15, marginBottom: 20 }}>
-            AHPRA CPD Requirements<br />for Australian Doctors â€” 2025
+            AHPRA CPD Requirements<br />for Australian Doctors — 2025
           </h1>
           <p style={{ fontSize: 18, color: "#cbd5e1", maxWidth: 640, margin: "0 auto 32px" }}>
-            50 CPD hours per year Â· 4 mandatory domains Â· Annual registration declaration.
+            50 CPD hours per year · 4 mandatory domains · Annual registration declaration.
             New framework active from 1 January 2023.
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
@@ -197,7 +197,7 @@ export default function AhpraCpdPage() {
       <section style={{ background: "#fff", padding: "64px 24px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto" }}>
           <h2 style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", textAlign: "center", marginBottom: 48 }}>
-            AHPRA CPD â€” Frequently Asked Questions
+            AHPRA CPD — Frequently Asked Questions
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {faqLd.mainEntity.map((q) => (
@@ -241,14 +241,14 @@ export default function AhpraCpdPage() {
       {/* CTA */}
       <section style={{ background: "#0f1f3d", padding: "72px 24px", textAlign: "center" }}>
         <div style={{ maxWidth: 640, margin: "0 auto" }}>
-          <h2 style={{ fontSize: 32, fontWeight: 800, color: "#fff", marginBottom: 16 }}>Track AHPRA CPD â€” and your GCC CME</h2>
+          <h2 style={{ fontSize: 32, fontWeight: 800, color: "#fff", marginBottom: 16 }}>Track AHPRA CPD — and your GCC CME</h2>
           <p style={{ fontSize: 18, color: "#cbd5e1", marginBottom: 32 }}>
-            50 hours, 4 domains, annual declaration â€” plus any GCC authority you hold. All in one dashboard, free to start.
+            50 hours, 4 domains, annual declaration — plus any GCC authority you hold. All in one dashboard, free to start.
           </p>
           <Link href="/register" style={{ background: "#1a56a0", color: "#fff", padding: "16px 36px", borderRadius: 8, fontWeight: 700, textDecoration: "none", fontSize: 17, display: "inline-block" }}>
             Start tracking free â†’
           </Link>
-          <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required Â· 14-day Pro trial included</p>
+          <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required · 14-day Pro trial included</p>
         </div>
       </section>
 

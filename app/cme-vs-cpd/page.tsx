@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "CME vs CPD â€” What's the Difference? GCC Healthcare Professional Guide",
+  title: "CME vs CPD — What's the Difference? GCC Healthcare Professional Guide",
   description:
     "CME (Continuing Medical Education) and CPD (Continuing Professional Development) are both used in GCC healthcare. Learn the difference, which term your licensing authority uses, and how credits count toward your renewal.",
   keywords: [
@@ -20,9 +20,9 @@ export const metadata: Metadata = {
     "CPD portfolio healthcare",
   ],
   openGraph: {
-    title: "CME vs CPD â€” What's the Difference for GCC Healthcare Professionals?",
+    title: "CME vs CPD — What's the Difference for GCC Healthcare Professionals?",
     description:
-      "QCHP uses CPD. SCFHS uses CME. DHA uses CME. What does each term mean â€” and do credits from one count toward the other? Complete GCC guide.",
+      "QCHP uses CPD. SCFHS uses CME. DHA uses CME. What does each term mean — and do credits from one count toward the other? Complete GCC guide.",
     url: `${APP_URL}/cme-vs-cpd`,
     type: "website",
     images: [{ url: `${APP_URL}/api/og?t=CME+vs+CPD+%E2%80%94+What%27s+the+Difference%3F&s=QCHP+uses+CPD+%C2%B7+SCFHS+uses+CME+%C2%B7+DHA+uses+CME+%E2%80%94+the+complete+GCC+guide&a=%F0%9F%93%9A+Guide&k=Explainer`, width: 1200, height: 630 }],
@@ -44,7 +44,7 @@ const faqLd = {
       name: "What is the difference between CME and CPD?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "CME (Continuing Medical Education) and CPD (Continuing Professional Development) are both frameworks for healthcare professionals to maintain their knowledge and skills after qualifying. CME is the older, more medically-focused term used widely in North America and adopted by many GCC countries including Saudi Arabia (SCFHS) and UAE Dubai (DHA). CPD is a broader concept used in UK and Commonwealth countries that encompasses not just clinical education but also management, communication, and leadership skills â€” adopted by Qatar (QCHP) and Bahrain (NHRA). In practice, both frameworks require healthcare professionals to log educational activities and earn credits toward license renewal. The credits are structured similarly; the main difference is terminology and which activities qualify.",
+        text: "CME (Continuing Medical Education) and CPD (Continuing Professional Development) are both frameworks for healthcare professionals to maintain their knowledge and skills after qualifying. CME is the older, more medically-focused term used widely in North America and adopted by many GCC countries including Saudi Arabia (SCFHS) and UAE Dubai (DHA). CPD is a broader concept used in UK and Commonwealth countries that encompasses not just clinical education but also management, communication, and leadership skills — adopted by Qatar (QCHP) and Bahrain (NHRA). In practice, both frameworks require healthcare professionals to log educational activities and earn credits toward license renewal. The credits are structured similarly; the main difference is terminology and which activities qualify.",
       },
     },
     {
@@ -68,7 +68,7 @@ const faqLd = {
       name: "Can CME credits from Saudi Arabia (SCFHS) count toward QCHP requirements in Qatar?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Not automatically. Each licensing authority maintains its own list of approved providers. However, activities accredited by internationally recognised bodies (such as AMA PRA Category 1, RCPCH, EACCME, or GMC) are often accepted by multiple GCC authorities. The activity itself may qualify for both â€” but you must submit it separately to each authority and verify it meets their specific category requirements. Hayya Med Pro lets you log each activity once and track its contribution to multiple jurisdiction wallets simultaneously.",
+        text: "Not automatically. Each licensing authority maintains its own list of approved providers. However, activities accredited by internationally recognised bodies (such as AMA PRA Category 1, RCPCH, EACCME, or GMC) are often accepted by multiple GCC authorities. The activity itself may qualify for both — but you must submit it separately to each authority and verify it meets their specific category requirements. Hayya Med Pro lets you log each activity once and track its contribution to multiple jurisdiction wallets simultaneously.",
       },
     },
     {
@@ -76,7 +76,7 @@ const faqLd = {
       name: "Are CPD credits worth the same as CME credits?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Generally yes â€” 1 CPD credit is equivalent to approximately 1 hour of educational activity, as is 1 CME credit (1 AMA PRA Category 1 Credit = 1 hour of instruction). Both are typically awarded in increments of 0.5 or 1.0. However, the conversion may differ for certain activity types (e.g., research publications, teaching hours) where different authorities apply different multipliers. Always check the specific authority's credit calculation rules.",
+        text: "Generally yes — 1 CPD credit is equivalent to approximately 1 hour of educational activity, as is 1 CME credit (1 AMA PRA Category 1 Credit = 1 hour of instruction). Both are typically awarded in increments of 0.5 or 1.0. However, the conversion may differ for certain activity types (e.g., research publications, teaching hours) where different authorities apply different multipliers. Always check the specific authority's credit calculation rules.",
       },
     },
     {
@@ -93,8 +93,8 @@ const faqLd = {
 const AUTHORITY_TERMS = [
   { country: "ðŸ‡¶ðŸ‡¦ Qatar", authority: "QCHP / DHP-AS", term: "CPD", credits: "80 / 2yr", href: "/qchp" },
   { country: "ðŸ‡¸ðŸ‡¦ Saudi Arabia", authority: "SCFHS", term: "CME", credits: "60 / yr (physicians)", href: "/scfhs" },
-  { country: "ðŸ‡¦ðŸ‡ª UAE â€” Dubai", authority: "DHA", term: "CME", credits: "40 / 2yr", href: "/dha" },
-  { country: "ðŸ‡¦ðŸ‡ª UAE â€” Abu Dhabi", authority: "DOH", term: "CPD", credits: "40 / 2yr", href: "/doh" },
+  { country: "ðŸ‡¦ðŸ‡ª UAE — Dubai", authority: "DHA", term: "CME", credits: "40 / 2yr", href: "/dha" },
+  { country: "ðŸ‡¦ðŸ‡ª UAE — Abu Dhabi", authority: "DOH", term: "CPD", credits: "40 / 2yr", href: "/doh" },
   { country: "ðŸ‡°ðŸ‡¼ Kuwait", authority: "MOH Kuwait", term: "CME", credits: "30 / yr (physicians)", href: "/moh-kuwait" },
   { country: "ðŸ‡§ðŸ‡­ Bahrain", authority: "NHRA", term: "CPD", credits: "40 / 2yr", href: "/nhra" },
   { country: "ðŸ‡´ðŸ‡² Oman", authority: "OMSB", term: "CME", credits: "40 / 2yr (physicians)", href: "/omsb" },
@@ -102,7 +102,7 @@ const AUTHORITY_TERMS = [
 
 const SIMILARITIES = [
   { icon: "ðŸŽ¯", title: "Both require credit accumulation", desc: "Whether called CME or CPD, healthcare professionals must earn a set number of credits per renewal cycle through approved educational activities." },
-  { icon: "ðŸ“‹", title: "Both use activity logs", desc: "Every authority requires you to maintain a portfolio or log of activities â€” provider name, date, credit value, and often a certificate of attendance." },
+  { icon: "ðŸ“‹", title: "Both use activity logs", desc: "Every authority requires you to maintain a portfolio or log of activities — provider name, date, credit value, and often a certificate of attendance." },
   { icon: "âœ…", title: "Both accept similar activity types", desc: "Conferences, workshops, online courses, research, and teaching activities are accepted by virtually every GCC authority under both frameworks." },
   { icon: "ðŸ”„", title: "Both link to license renewal", desc: "Failing to meet CME or CPD requirements means your license renewal application will be rejected. Both are mandatory, not optional." },
 ];
@@ -110,7 +110,7 @@ const SIMILARITIES = [
 const DIFFERENCES = [
   { aspect: "Origin", cme: "North American medical education system (ACCME)", cpd: "UK/Commonwealth professional regulation (GMC, NMC)" },
   { aspect: "Scope", cme: "Primarily clinical and medical knowledge", cpd: "Broader: clinical + management, communication, leadership" },
-  { aspect: "Portfolio style", cme: "Credit-based log with certificates", cpd: "Reflective portfolio â€” learning needs, outcomes, and reflection" },
+  { aspect: "Portfolio style", cme: "Credit-based log with certificates", cpd: "Reflective portfolio — learning needs, outcomes, and reflection" },
   { aspect: "Who uses it", cme: "SCFHS, DHA, MOH Kuwait, OMSB", cpd: "QCHP, DOH, NHRA" },
   { aspect: "Online cap", cme: "Typically 30â€“50% of total credits", cpd: "Typically 30â€“50% of total credits (same in practice)" },
 ];
@@ -149,22 +149,22 @@ export default function CmeVsCpdPage() {
           {/* Hero */}
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-2 bg-[#eff6ff] border border-[#bfdbfe] text-[#1a56a0] text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
-              ðŸ“š CME vs CPD Â· GCC Healthcare Professionals Â· Complete Guide
+              ðŸ“š CME vs CPD · GCC Healthcare Professionals · Complete Guide
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-[#111] tracking-tight mb-4 leading-tight">
-              CME vs CPD â€” what&apos;s the difference<br className="hidden sm:block" /> for GCC healthcare professionals?
+              CME vs CPD — what&apos;s the difference<br className="hidden sm:block" /> for GCC healthcare professionals?
             </h1>
             <p className="text-lg text-[#64748b] max-w-2xl mx-auto mb-8">
               QCHP Qatar calls it <strong className="text-[#111]">CPD</strong>. SCFHS Saudi Arabia calls it <strong className="text-[#111]">CME</strong>.
               DHA Dubai calls it <strong className="text-[#111]">CME</strong>. Bahrain NHRA calls it <strong className="text-[#111]">CPD</strong> again.
-              Here&apos;s what it all means â€” and why it matters for your license renewal.
+              Here&apos;s what it all means — and why it matters for your license renewal.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link
                 href="/register"
                 className="inline-flex items-center gap-2 bg-[#1a56a0] text-white font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#154890] transition-colors"
               >
-                Track my CME / CPD â€” free â†’
+                Track my CME / CPD — free â†’
               </Link>
               <Link
                 href="/countries"
@@ -173,7 +173,7 @@ export default function CmeVsCpdPage() {
                 Compare all GCC requirements â†’
               </Link>
             </div>
-            <p className="text-xs text-[#94a3b8] mt-3">Works for both CME and CPD Â· All GCC authorities supported</p>
+            <p className="text-xs text-[#94a3b8] mt-3">Works for both CME and CPD · All GCC authorities supported</p>
           </div>
 
           {/* Short answer card */}
@@ -186,10 +186,10 @@ export default function CmeVsCpdPage() {
             <p className="text-sm text-[#374151] leading-relaxed mb-4">
               The terminology differs by country and licensing authority. In GCC countries, the term depends entirely on which authority
               regulates your profession and license. Some authorities use CME; others use CPD. In practice, the requirements are
-              structurally identical â€” you earn credits by completing approved educational activities and submit a portfolio at renewal time.
+              structurally identical — you earn credits by completing approved educational activities and submit a portfolio at renewal time.
             </p>
             <p className="text-sm text-[#1a56a0] font-semibold">
-              Hayya Med Pro tracks both â€” you log activities once and it applies them to whichever framework your authority uses.
+              Hayya Med Pro tracks both — you log activities once and it applies them to whichever framework your authority uses.
             </p>
           </div>
 
@@ -306,9 +306,9 @@ export default function CmeVsCpdPage() {
             <h2 className="text-xl font-bold text-[#111] mb-4">Requirements by profession</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {[
-                { href: "/physician-cme",  icon: "ðŸ©º", title: "Physicians",   sub: "60 CME/yr in Saudi Â· 80 CPD/2yr in Qatar Â· 40/2yr in UAE" },
-                { href: "/nurse-cpd",      icon: "ðŸ‘©â€âš•ï¸", title: "Nurses",      sub: "30 CME/yr in Saudi Â· 20/yr in Kuwait Â· 80 CPD/2yr in Qatar" },
-                { href: "/pharmacist-cme", icon: "ðŸ’Š", title: "Pharmacists",  sub: "60 CME/yr in Saudi Â· 80 CPD/2yr in Qatar Â· 40/2yr in UAE" },
+                { href: "/physician-cme",  icon: "ðŸ©º", title: "Physicians",   sub: "60 CME/yr in Saudi · 80 CPD/2yr in Qatar · 40/2yr in UAE" },
+                { href: "/nurse-cpd",      icon: "ðŸ‘©â€âš•ï¸", title: "Nurses",      sub: "30 CME/yr in Saudi · 20/yr in Kuwait · 80 CPD/2yr in Qatar" },
+                { href: "/pharmacist-cme", icon: "ðŸ’Š", title: "Pharmacists",  sub: "60 CME/yr in Saudi · 80 CPD/2yr in Qatar · 40/2yr in UAE" },
               ].map((p) => (
                 <Link
                   key={p.href}
@@ -348,7 +348,7 @@ export default function CmeVsCpdPage() {
           {/* Dark CTA */}
           <div className="rounded-2xl bg-[#0f1f3d] px-8 py-10 text-center mb-10">
             <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
-              One app for CME and CPD â€” across every GCC authority
+              One app for CME and CPD — across every GCC authority
             </h2>
             <p className="text-[#94a3b8] text-sm max-w-xl mx-auto mb-6">
               Whether your authority calls it CME or CPD, Hayya Med Pro tracks your credits, enforces category caps,
@@ -360,7 +360,7 @@ export default function CmeVsCpdPage() {
             >
               Start tracking free â†’ 14-day Pro trial
             </Link>
-            <p className="text-[#475569] text-xs mt-3">No credit card required Â· Works for QCHP, SCFHS, DHA, DOH, NHRA, OMSB, MOH Kuwait</p>
+            <p className="text-[#475569] text-xs mt-3">No credit card required · Works for QCHP, SCFHS, DHA, DOH, NHRA, OMSB, MOH Kuwait</p>
           </div>
 
           {/* Disclaimer */}

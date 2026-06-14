@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "MOH Kuwait License Renewal â€” CME Requirements for Kuwait Healthcare Professionals",
+  title: "MOH Kuwait License Renewal — CME Requirements for Kuwait Healthcare Professionals",
   description:
     "Complete guide to renewing your MOH Kuwait license. 30 CME credits required per annual renewal cycle. Step-by-step MOH Kuwait renewal process for physicians, nurses, pharmacists, and all Kuwait healthcare professionals.",
   keywords: [
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     "Kuwait CME credits renewal",
   ],
   openGraph: {
-    title: "MOH Kuwait License Renewal â€” Complete Guide for Kuwait Healthcare Professionals",
+    title: "MOH Kuwait License Renewal — Complete Guide for Kuwait Healthcare Professionals",
     description:
       "30 CME credits per annual cycle. Step-by-step MOH Kuwait renewal process, checklist, and how Hayya Med Pro tracks your CME progress automatically.",
     url: `${APP_URL}/moh-kuwait-renewal`,
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "MOH Kuwait License Renewal Guide â€” Kuwait Healthcare CME",
+    title: "MOH Kuwait License Renewal Guide — Kuwait Healthcare CME",
     description: "30 CME credits per year. Complete MOH Kuwait renewal checklist and CME compliance tracking for Kuwait healthcare professionals.",
   },
   alternates: { canonical: `${APP_URL}/moh-kuwait-renewal` },
@@ -44,7 +44,7 @@ const faqLd = {
       name: "How many CME credits do I need to renew my MOH Kuwait license?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "MOH (Ministry of Health) Kuwait requires 30 CME credits per annual renewal cycle for licensed healthcare professionals. Licenses are renewed annually, so you must accumulate 30 CME credits each year before your license expires. Requirements may vary by profession â€” always verify with MOH Kuwait directly.",
+        text: "MOH (Ministry of Health) Kuwait requires 30 CME credits per annual renewal cycle for licensed healthcare professionals. Licenses are renewed annually, so you must accumulate 30 CME credits each year before your license expires. Requirements may vary by profession — always verify with MOH Kuwait directly.",
       },
     },
     {
@@ -101,7 +101,7 @@ const RENEWAL_STEPS = [
   {
     step: "4",
     title: "Collect and organise all CME certificates",
-    desc: "Gather CME certificates with provider name, accreditation reference, activity date, and credit value. Hayya Med Pro stores certificates securely and generates a PDF CME portfolio ready for MOH Kuwait submission â€” saving hours of manual collation at renewal time.",
+    desc: "Gather CME certificates with provider name, accreditation reference, activity date, and credit value. Hayya Med Pro stores certificates securely and generates a PDF CME portfolio ready for MOH Kuwait submission — saving hours of manual collation at renewal time.",
   },
   {
     step: "5",
@@ -173,10 +173,10 @@ export default function MohKuwaitRenewalPage() {
           {/* Hero */}
           <div className="mb-10">
             <div className="inline-flex items-center gap-2 bg-[#f0f9ff] border border-[#bae6fd] text-[#0369a1] text-xs font-semibold px-3 py-1.5 rounded-full mb-4">
-              ðŸ‡°ðŸ‡¼ Kuwait Â· Ministry of Health Kuwait (MOH)
+              ðŸ‡°ðŸ‡¼ Kuwait · Ministry of Health Kuwait (MOH)
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold text-[#111] mb-4 leading-tight">
-              MOH Kuwait license renewal â€” complete guide for Kuwait healthcare professionals
+              MOH Kuwait license renewal — complete guide for Kuwait healthcare professionals
             </h1>
             <p className="text-base text-[#475569] max-w-2xl leading-relaxed">
               MOH Kuwait (Ministry of Health) requires <strong className="text-[#111]">30 CME credits per annual
@@ -207,7 +207,7 @@ export default function MohKuwaitRenewalPage() {
               <span className="text-xl flex-shrink-0 mt-0.5">âš¡</span>
               <div>
                 <p className="text-sm font-semibold text-[#c2410c] mb-1">
-                  Kuwait uses annual renewal â€” not a 2-year cycle
+                  Kuwait uses annual renewal — not a 2-year cycle
                 </p>
                 <p className="text-sm text-[#9a3412] leading-relaxed">
                   Unlike Qatar (2-year) and Saudi Arabia (1â€“3 year), Kuwait MOH licenses renew every year.
@@ -222,7 +222,7 @@ export default function MohKuwaitRenewalPage() {
           {/* Step-by-step */}
           <div className="mb-10">
             <h2 className="text-xl font-bold text-[#111] mb-6">
-              MOH Kuwait license renewal â€” step by step
+              MOH Kuwait license renewal — step by step
             </h2>
             <div className="space-y-4">
               {RENEWAL_STEPS.map((s) => (
@@ -261,7 +261,7 @@ export default function MohKuwaitRenewalPage() {
                 <p className="text-sm text-[rgba(255,255,255,0.75)] leading-relaxed mb-4">
                   Hayya Med Pro tracks your 30-credit annual Kuwait CME requirement, stores
                   certificates securely, and generates a PDF CME portfolio for MOH Kuwait renewal
-                  submission â€” every year without the manual effort.
+                  submission — every year without the manual effort.
                 </p>
                 <ul className="space-y-2 mb-5">
                   {[
@@ -281,7 +281,7 @@ export default function MohKuwaitRenewalPage() {
                 href="/register"
                 className="block w-full text-center bg-white text-[#1a56a0] font-semibold text-sm py-3 rounded-lg hover:bg-[#f0f7ff] transition-colors"
               >
-                Start tracking Kuwait CME â€” free â†’
+                Start tracking Kuwait CME — free â†’
               </Link>
             </div>
           </div>
@@ -289,7 +289,7 @@ export default function MohKuwaitRenewalPage() {
           {/* FAQ */}
           <div className="mb-12">
             <h2 className="text-xl font-bold text-[#111] mb-6">
-              MOH Kuwait license renewal â€” frequently asked questions
+              MOH Kuwait license renewal — frequently asked questions
             </h2>
             <div className="space-y-3">
               {faqLd.mainEntity.map((faq) => (
@@ -346,10 +346,10 @@ export default function MohKuwaitRenewalPage() {
               href="/register"
               className="inline-flex items-center gap-2 bg-white text-[#1a56a0] font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#f0f7ff] transition-colors"
             >
-              Track my Kuwait CME â€” free â†’
+              Track my Kuwait CME — free â†’
             </Link>
             <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">
-              No credit card required Â· 14-day Pro trial included
+              No credit card required · 14-day Pro trial included
             </p>
           </div>
 

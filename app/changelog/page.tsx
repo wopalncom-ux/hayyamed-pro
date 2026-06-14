@@ -2,9 +2,9 @@
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Changelog â€” Hayya Med Pro",
+  title: "Changelog — Hayya Med Pro",
   description:
-    "New features, improvements, and fixes shipped to Hayya Med Pro â€” the CME and CPD compliance platform for GCC healthcare professionals.",
+    "New features, improvements, and fixes shipped to Hayya Med Pro — the CME and CPD compliance platform for GCC healthcare professionals.",
   alternates: { canonical: "https://hayyamed.pro/changelog" },
   openGraph: {
     title: "What's new in Hayya Med Pro",
@@ -43,10 +43,10 @@ const RELEASES: Release[] = [
     title: "Email reliability & Pro export tools",
     summary: "One-click email unsubscribe, Postmark bounce protection, Pro calendar export (.ics), and NPS analytics for admins.",
     entries: [
-      { tag: "New",      text: "Calendar export (.ics) â€” add all CME deadlines and license expiry dates to any calendar app. Pro only." },
-      { tag: "New",      text: "One-click email unsubscribe â€” HMAC-signed tokens, full email preference control, and an unsubscribe landing page." },
-      { tag: "New",      text: "Postmark bounce webhook â€” hard-bounced addresses are automatically suppressed to protect sender reputation." },
-      { tag: "New",      text: "Admin NPS analytics page â€” view NPS score, promoter/detractor breakdown, and open-text responses." },
+      { tag: "New",      text: "Calendar export (.ics) — add all CME deadlines and license expiry dates to any calendar app. Pro only." },
+      { tag: "New",      text: "One-click email unsubscribe — HMAC-signed tokens, full email preference control, and an unsubscribe landing page." },
+      { tag: "New",      text: "Postmark bounce webhook — hard-bounced addresses are automatically suppressed to protect sender reputation." },
+      { tag: "New",      text: "Admin NPS analytics page — view NPS score, promoter/detractor breakdown, and open-text responses." },
       { tag: "Improved", text: "Provider dashboard now shows enrollment counts per course and completion rate as a 4th stat card." },
       { tag: "Improved", text: "Settings page shows a clear warning banner when an email address has hard-bounced or reported spam." },
     ],
@@ -55,14 +55,14 @@ const RELEASES: Release[] = [
     version: "1.3",
     date: "June 2026",
     title: "Analytics funnel, PostHog identity & upgrade attribution",
-    summary: "Full conversion funnel now measurable end-to-end â€” from first page view through payment confirmation.",
+    summary: "Full conversion funnel now measurable end-to-end — from first page view through payment confirmation.",
     entries: [
-      { tag: "New",      text: "PostHog user identity â€” all analytics events now tied to the authenticated user ID for per-user funnel analysis." },
-      { tag: "New",      text: "subscription_activated event â€” fires when the user lands back on the dashboard after completing payment, closing the full funnel." },
+      { tag: "New",      text: "PostHog user identity — all analytics events now tied to the authenticated user ID for per-user funnel analysis." },
+      { tag: "New",      text: "subscription_activated event — fires when the user lands back on the dashboard after completing payment, closing the full funnel." },
       { tag: "Improved", text: "All 13 upgrade CTAs now include ?source= attribution, revealing which feature drives the most upgrades." },
       { tag: "New",      text: "AI Compliance Chat widget added to the main dashboard home page (was CME page only)." },
-      { tag: "New",      text: "Referral short URL â€” /r/[code] shows a personalised invitation page with referrer name and 30-day trial callout." },
-      { tag: "New",      text: "Employer invitation landing page â€” /invite/[orgId] shows org branding and privacy reassurance before staff register." },
+      { tag: "New",      text: "Referral short URL — /r/[code] shows a personalised invitation page with referrer name and 30-day trial callout." },
+      { tag: "New",      text: "Employer invitation landing page — /invite/[orgId] shows org branding and privacy reassurance before staff register." },
     ],
   },
   {
@@ -71,13 +71,13 @@ const RELEASES: Release[] = [
     title: "University portal, training provider marketplace & GCC SEO",
     summary: "Full university admin portal, employer analytics, training provider course management, and 33 GCC SEO pages.",
     entries: [
-      { tag: "New",      text: "University portal â€” faculty compliance overview, analytics, required training, and staff management for medical schools." },
-      { tag: "New",      text: "Employer analytics â€” compliance rate %, average credits, license expiry breakdown, department comparison, and 6-month activity chart." },
-      { tag: "New",      text: "Provider dashboard N+1 queries fixed â€” course stats now load with 2 parallel queries instead of N+1 per course." },
-      { tag: "New",      text: "Complete GCC renewal guide set â€” QCHP, SCFHS, DHA, DOH, NHRA, OMSB, MOH Kuwait â€” all with FAQPage JSON-LD." },
+      { tag: "New",      text: "University portal — faculty compliance overview, analytics, required training, and staff management for medical schools." },
+      { tag: "New",      text: "Employer analytics — compliance rate %, average credits, license expiry breakdown, department comparison, and 6-month activity chart." },
+      { tag: "New",      text: "Provider dashboard N+1 queries fixed — course stats now load with 2 parallel queries instead of N+1 per course." },
+      { tag: "New",      text: "Complete GCC renewal guide set — QCHP, SCFHS, DHA, DOH, NHRA, OMSB, MOH Kuwait — all with FAQPage JSON-LD." },
       { tag: "New",      text: "For-providers and for-universities SEO landing pages added." },
       { tag: "Improved", text: "All 7 GCC country authority pages now cross-link to profession pages bidirectionally." },
-      { tag: "New",      text: "Demo request form (/request-demo) â€” structured lead capture for employer prospects with admin email notification." },
+      { tag: "New",      text: "Demo request form (/request-demo) — structured lead capture for employer prospects with admin email notification." },
     ],
   },
   {
@@ -87,36 +87,36 @@ const RELEASES: Release[] = [
     summary: "14-day Pro trial on every signup, AI chat and gap analysis for Pro users, employer dashboard with staff compliance tracking.",
     entries: [
       { tag: "New",      text: "14-day Pro trial activates on onboarding completion. Referred users receive a 30-day trial automatically." },
-      { tag: "New",      text: "AI Compliance Advisor â€” Pro tier chatbot (Claude Haiku) answers CME questions. Gap analysis uses Claude Sonnet." },
-      { tag: "New",      text: "Employer portal â€” staff compliance grid, department grouping, bulk CSV import, weekly email digest, required training." },
-      { tag: "New",      text: "Training provider marketplace â€” course listing, enrollment, CME auto-sync on completion." },
-      { tag: "New",      text: "PDF compliance report (Pro) â€” A4 PDF with verified activities, pending section, and renewal status." },
-      { tag: "New",      text: "Compliance badge â€” shareable OG image with LinkedIn and WhatsApp share buttons." },
-      { tag: "New",      text: "NPS in-app survey â€” shown at 30 days and annually, with admin analytics page." },
-      { tag: "New",      text: "Push notifications â€” license expiry, CME deadline alerts via web push." },
-      { tag: "New",      text: "Multi-country compliance wallet â€” track CPD/CME across multiple GCC authorities simultaneously." },
-      { tag: "New",      text: "Referral programme â€” share a link, earn a trial extension for every colleague who signs up." },
+      { tag: "New",      text: "AI Compliance Advisor — Pro tier chatbot (Claude Haiku) answers CME questions. Gap analysis uses Claude Sonnet." },
+      { tag: "New",      text: "Employer portal — staff compliance grid, department grouping, bulk CSV import, weekly email digest, required training." },
+      { tag: "New",      text: "Training provider marketplace — course listing, enrollment, CME auto-sync on completion." },
+      { tag: "New",      text: "PDF compliance report (Pro) — A4 PDF with verified activities, pending section, and renewal status." },
+      { tag: "New",      text: "Compliance badge — shareable OG image with LinkedIn and WhatsApp share buttons." },
+      { tag: "New",      text: "NPS in-app survey — shown at 30 days and annually, with admin analytics page." },
+      { tag: "New",      text: "Push notifications — license expiry, CME deadline alerts via web push." },
+      { tag: "New",      text: "Multi-country compliance wallet — track CPD/CME across multiple GCC authorities simultaneously." },
+      { tag: "New",      text: "Referral programme — share a link, earn a trial extension for every colleague who signs up." },
       { tag: "Security", text: "All AI routes (chat, recommendations, OCR) now require Pro subscription server-side. Previously only rate-limited." },
-      { tag: "Security", text: "Employer registration gated by active employer subscription â€” no free employer dashboard access." },
+      { tag: "Security", text: "Employer registration gated by active employer subscription — no free employer dashboard access." },
       { tag: "Security", text: "Employer staff limit enforced per tier (Clinic 10 / Growth 25 / Department 50 / Hospital 200) in server action." },
     ],
   },
   {
     version: "1.0",
     date: "June 2026",
-    title: "Platform launch â€” CME tracking for GCC healthcare professionals",
+    title: "Platform launch — CME tracking for GCC healthcare professionals",
     summary: "Foundation release: CME activity tracking, 7-step onboarding, licensing readiness, Paddle payments, and full admin panel.",
     entries: [
-      { tag: "New", text: "7-step onboarding â€” profession, specialty, license details, employer link, CME cycle setup, notifications, and trial activation." },
-      { tag: "New", text: "CME activity log â€” add, edit, delete activities with AI-assisted categorisation and OCR certificate upload." },
-      { tag: "New", text: "Compliance wallet â€” real-time credits progress, compliance status (Compliant / At Risk / Non-Compliant), cycle countdown." },
-      { tag: "New", text: "License management â€” expiry tracking, renewal readiness checklist, inline edit, reminder scheduling." },
-      { tag: "New", text: "Country rules engine â€” GCC compliance rules (QCHP, SCFHS, DHA, DOH, NHRA, OMSB, MOH Kuwait) stored in DB, never hardcoded." },
-      { tag: "New", text: "Paddle payments â€” Pro monthly ($6) and annual ($61.20), 4 employer tiers (Clinic/Growth/Department/Hospital)." },
-      { tag: "New", text: "Admin panel â€” CME moderation, professional profiles, organisation management, country rules, audit log, revenue dashboard." },
-      { tag: "New", text: "Full email system â€” welcome, CME verified/rejected, trial start/ending/expired, license expiry, employer digest, weekly professional digest." },
-      { tag: "New", text: "PWA support â€” installable, offline fallback, push notifications via VAPID web push." },
-      { tag: "New", text: "33 GCC SEO pages â€” country authorities, profession guides, renewal guides, and CME/CPD tracker pages." },
+      { tag: "New", text: "7-step onboarding — profession, specialty, license details, employer link, CME cycle setup, notifications, and trial activation." },
+      { tag: "New", text: "CME activity log — add, edit, delete activities with AI-assisted categorisation and OCR certificate upload." },
+      { tag: "New", text: "Compliance wallet — real-time credits progress, compliance status (Compliant / At Risk / Non-Compliant), cycle countdown." },
+      { tag: "New", text: "License management — expiry tracking, renewal readiness checklist, inline edit, reminder scheduling." },
+      { tag: "New", text: "Country rules engine — GCC compliance rules (QCHP, SCFHS, DHA, DOH, NHRA, OMSB, MOH Kuwait) stored in DB, never hardcoded." },
+      { tag: "New", text: "Paddle payments — Pro monthly ($6) and annual ($61.20), 4 employer tiers (Clinic/Growth/Department/Hospital)." },
+      { tag: "New", text: "Admin panel — CME moderation, professional profiles, organisation management, country rules, audit log, revenue dashboard." },
+      { tag: "New", text: "Full email system — welcome, CME verified/rejected, trial start/ending/expired, license expiry, employer digest, weekly professional digest." },
+      { tag: "New", text: "PWA support — installable, offline fallback, push notifications via VAPID web push." },
+      { tag: "New", text: "33 GCC SEO pages — country authorities, profession guides, renewal guides, and CME/CPD tracker pages." },
     ],
   },
 ];
@@ -215,7 +215,7 @@ export default function ChangelogPage() {
         <div className="mt-14 bg-gradient-to-br from-[#0f1f3d] to-[#1a3563] rounded-2xl p-8 text-center">
           <h2 className="text-xl font-bold text-white mb-2">Start tracking your CME compliance</h2>
           <p className="text-[rgba(255,255,255,0.7)] text-sm mb-6 max-w-sm mx-auto">
-            Free to start Â· 14-day Pro trial Â· No credit card required
+            Free to start · 14-day Pro trial · No credit card required
           </p>
           <Link
             href="/register"

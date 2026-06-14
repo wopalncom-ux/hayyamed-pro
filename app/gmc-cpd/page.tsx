@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "GMC CPD Requirements UK â€” Doctor CPD Guide 2025 | Hayya Med Pro",
+  title: "GMC CPD Requirements UK — Doctor CPD Guide 2025 | Hayya Med Pro",
   description:
     "Complete guide to GMC CPD requirements for UK-licensed doctors. 50 CPD credits per year recommended. Revalidation every 5 years. Track your UK GMC CPD and GCC CME in one compliance dashboard.",
   keywords: [
@@ -22,9 +22,9 @@ export const metadata: Metadata = {
     "GMC CPD app",
   ],
   openGraph: {
-    title: "GMC CPD Requirements UK â€” Doctor CPD Guide 2025",
+    title: "GMC CPD Requirements UK — Doctor CPD Guide 2025",
     description:
-      "50 CPD credits per year Â· Revalidation every 5 years Â· Royal college CPD portfolio. Track UK GMC CPD and GCC CME in one app.",
+      "50 CPD credits per year · Revalidation every 5 years · Royal college CPD portfolio. Track UK GMC CPD and GCC CME in one app.",
     url: `${APP_URL}/gmc-cpd`,
     type: "website",
     images: [
@@ -64,7 +64,7 @@ const faqLd = {
       name: "How often do UK doctors need to revalidate with the GMC?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "UK doctors must revalidate every 5 years. Revalidation requires a recommendation from a Responsible Officer (usually via annual appraisal) supported by supporting information including CPD records. There is no formal pass/fail for CPD â€” the GMC expects engagement, reflection, and documentation rather than a credit count.",
+        text: "UK doctors must revalidate every 5 years. Revalidation requires a recommendation from a Responsible Officer (usually via annual appraisal) supported by supporting information including CPD records. There is no formal pass/fail for CPD — the GMC expects engagement, reflection, and documentation rather than a credit count.",
       },
     },
     {
@@ -91,7 +91,7 @@ const CPD_CATEGORIES = [
   { icon: "ðŸ”¬", title: "Clinical Experience", desc: "Case reviews, ward rounds, clinical simulation, procedures. Documents active clinical engagement. Up to 20% of annual CPD." },
   { icon: "ðŸ“Š", title: "Reviewing Performance", desc: "360-degree feedback (MSF), patient surveys, colleague feedback. Required for revalidation portfolio." },
   { icon: "ðŸ“ˆ", title: "Measuring Outcomes", desc: "Clinical audit, quality improvement projects, significant event analysis. Demonstrates impact on patient care." },
-  { icon: "ðŸ“š", title: "Self-Directed Learning", desc: "Journal reading, research, guided self-reflection. Must include evidence of learning â€” not just reading time." },
+  { icon: "ðŸ“š", title: "Self-Directed Learning", desc: "Journal reading, research, guided self-reflection. Must include evidence of learning — not just reading time." },
   { icon: "ðŸ‘¨â€ðŸ«", title: "Teaching & Supervision", desc: "Supervising trainees, developing educational material, examiner roles. Recognised by all major UK royal colleges." },
 ];
 
@@ -116,13 +116,13 @@ export default function GmcCpdPage() {
       <section style={{ background: "#0f1f3d", color: "#fff", padding: "72px 24px 56px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontSize: 13, letterSpacing: "0.08em", textTransform: "uppercase", color: "#93c5fd", marginBottom: 16 }}>
-            ðŸ‡¬ðŸ‡§ Authority Guide â€” United Kingdom
+            ðŸ‡¬ðŸ‡§ Authority Guide — United Kingdom
           </p>
           <h1 style={{ fontSize: "clamp(28px,5vw,48px)", fontWeight: 800, lineHeight: 1.15, marginBottom: 20 }}>
-            GMC CPD Requirements<br />for UK Doctors â€” 2025
+            GMC CPD Requirements<br />for UK Doctors — 2025
           </h1>
           <p style={{ fontSize: 18, color: "#cbd5e1", maxWidth: 620, margin: "0 auto 32px" }}>
-            50 CPD credits per year Â· 5-year revalidation cycle.
+            50 CPD credits per year · 5-year revalidation cycle.
             Track UK GMC CPD and GCC CME in one compliance dashboard.
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
@@ -152,7 +152,7 @@ export default function GmcCpdPage() {
       <section style={{ background: "#f8fafc", padding: "64px 24px" }}>
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
           <h2 style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", textAlign: "center", marginBottom: 8 }}>
-            GMC CPD â€” What UK Doctors Need to Know
+            GMC CPD — What UK Doctors Need to Know
           </h2>
           <p style={{ textAlign: "center", color: "#64748b", marginBottom: 40, maxWidth: 680, margin: "0 auto 40px" }}>
             The General Medical Council expects all licensed doctors to engage in regular CPD as part of the annual appraisal and 5-year revalidation process.
@@ -170,7 +170,7 @@ export default function GmcCpdPage() {
           </div>
           <div style={{ background: "#fef9c3", border: "1px solid #fde68a", borderRadius: 10, padding: "16px 20px" }}>
             <p style={{ color: "#92400e", fontSize: 14, margin: 0 }}>
-              <strong>Also licensed in GCC?</strong> Many UK-trained doctors practise in Qatar, Saudi Arabia, or UAE. Hayya Med Pro tracks GMC CPD alongside QCHP, SCFHS, and DHA requirements â€” in one dashboard, with separate deadlines for each authority.
+              <strong>Also licensed in GCC?</strong> Many UK-trained doctors practise in Qatar, Saudi Arabia, or UAE. Hayya Med Pro tracks GMC CPD alongside QCHP, SCFHS, and DHA requirements — in one dashboard, with separate deadlines for each authority.
             </p>
           </div>
         </div>
@@ -201,7 +201,7 @@ export default function GmcCpdPage() {
       <section style={{ background: "#f0f4f8", padding: "64px 24px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto" }}>
           <h2 style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", textAlign: "center", marginBottom: 48 }}>
-            GMC CPD â€” Frequently Asked Questions
+            GMC CPD — Frequently Asked Questions
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {faqLd.mainEntity.map((q) => (
@@ -245,14 +245,14 @@ export default function GmcCpdPage() {
       {/* CTA */}
       <section style={{ background: "#0f1f3d", padding: "72px 24px", textAlign: "center" }}>
         <div style={{ maxWidth: 640, margin: "0 auto" }}>
-          <h2 style={{ fontSize: 32, fontWeight: 800, color: "#fff", marginBottom: 16 }}>Track your GMC CPD â€” and your GCC CME</h2>
+          <h2 style={{ fontSize: 32, fontWeight: 800, color: "#fff", marginBottom: 16 }}>Track your GMC CPD — and your GCC CME</h2>
           <p style={{ fontSize: 18, color: "#cbd5e1", marginBottom: 32 }}>
             One dashboard for UK revalidation CPD and every GCC licensing authority. Free to start.
           </p>
           <Link href="/register" style={{ background: "#1a56a0", color: "#fff", padding: "16px 36px", borderRadius: 8, fontWeight: 700, textDecoration: "none", fontSize: 17, display: "inline-block" }}>
             Start tracking free â†’
           </Link>
-          <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required Â· 14-day Pro trial included</p>
+          <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required · 14-day Pro trial included</p>
         </div>
       </section>
 

@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "CME Compliance Report â€” Generate Your QCHP, SCFHS, or DHA Portfolio PDF | Hayya Med Pro",
+  title: "CME Compliance Report — Generate Your QCHP, SCFHS, or DHA Portfolio PDF | Hayya Med Pro",
   description:
     "Generate a professional CME compliance report for QCHP, SCFHS, DHA, or any GCC licensing authority. One-click PDF showing credit totals, categories, certificates, and renewal readiness. Required for license renewal submission.",
   keywords: [
@@ -20,15 +20,15 @@ export const metadata: Metadata = {
     "CME compliance certificate PDF",
   ],
   openGraph: {
-    title: "Generate Your CME Compliance Report â€” QCHP, SCFHS, DHA Ready",
+    title: "Generate Your CME Compliance Report — QCHP, SCFHS, DHA Ready",
     description:
-      "One-click PDF CME compliance report for any GCC licensing authority. Hayya Med Pro generates your portfolio automatically â€” credit totals, categories, certificates, and renewal readiness. Pro feature.",
+      "One-click PDF CME compliance report for any GCC licensing authority. Hayya Med Pro generates your portfolio automatically — credit totals, categories, certificates, and renewal readiness. Pro feature.",
     url: `${APP_URL}/cme-compliance-report`,
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "CME Compliance Report Generator â€” GCC Healthcare Professionals",
+    title: "CME Compliance Report Generator — GCC Healthcare Professionals",
     description: "Generate a professional CME compliance report for QCHP, SCFHS, or DHA in one click. PDF formatted for renewal submission.",
   },
   alternates: { canonical: `${APP_URL}/cme-compliance-report` },
@@ -43,7 +43,7 @@ const faqLd = {
       name: "What should a CME compliance report include for QCHP renewal?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "A QCHP CPD compliance report should include: (1) Professional name, license number, and renewal cycle dates, (2) Total CPD credits (must be â‰¥80 for the 2-year cycle, â‰¥40 per year), (3) Category breakdown â€” structured activities, self-directed learning, patient safety (minimum 2 credits), (4) A list of all activities with provider name, accreditation body, activity date, and credit value for each, (5) Copies or references to certificates for each activity.",
+        text: "A QCHP CPD compliance report should include: (1) Professional name, license number, and renewal cycle dates, (2) Total CPD credits (must be â‰¥80 for the 2-year cycle, â‰¥40 per year), (3) Category breakdown — structured activities, self-directed learning, patient safety (minimum 2 credits), (4) A list of all activities with provider name, accreditation body, activity date, and credit value for each, (5) Copies or references to certificates for each activity.",
       },
     },
     {
@@ -59,7 +59,7 @@ const faqLd = {
       name: "Can I download a CME report for free?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "The CME compliance report PDF download is a Pro feature in Hayya Med Pro. Free plan users can track unlimited CME activities and see their compliance dashboard, but the PDF portfolio export requires a Pro subscription (from $6/month, or $61.20/year). All new accounts include a 14-day Pro trial â€” no credit card required â€” so you can generate and test your first compliance report for free.",
+        text: "The CME compliance report PDF download is a Pro feature in Hayya Med Pro. Free plan users can track unlimited CME activities and see their compliance dashboard, but the PDF portfolio export requires a Pro subscription (from $6/month, or $61.20/year). All new accounts include a 14-day Pro trial — no credit card required — so you can generate and test your first compliance report for free.",
       },
     },
     {
@@ -105,7 +105,7 @@ const REPORT_SECTIONS = [
   {
     number: "05",
     title: "Compliance status",
-    items: ["Overall compliance status (compliant / at risk / non-compliant)", "Gap analysis â€” credits needed to complete", "Renewal readiness summary"],
+    items: ["Overall compliance status (compliant / at risk / non-compliant)", "Gap analysis — credits needed to complete", "Renewal readiness summary"],
   },
 ];
 
@@ -180,20 +180,20 @@ export default function CmeComplianceReportPage() {
               âœ¦ Pro feature
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold text-[#111] mb-4 leading-tight">
-              CME compliance report â€” generate your renewal-ready portfolio PDF
+              CME compliance report — generate your renewal-ready portfolio PDF
             </h1>
             <p className="text-base text-[#475569] max-w-2xl leading-relaxed">
               Your licensing authority requires a complete CME/CPD portfolio at renewal. Hayya Med Pro
-              generates this as a formatted PDF â€” credit totals, categories, certificates, and
-              compliance status â€” ready to attach to your QCHP, SCFHS, DHA, or DOH renewal application.
+              generates this as a formatted PDF — credit totals, categories, certificates, and
+              compliance status — ready to attach to your QCHP, SCFHS, DHA, or DOH renewal application.
             </p>
           </div>
 
-          {/* Upgrade CTA â€” inline */}
+          {/* Upgrade CTA — inline */}
           <div className="bg-[#1a56a0] rounded-2xl p-6 mb-12 flex flex-col sm:flex-row items-center gap-4">
             <div className="flex-1">
               <p className="text-white font-semibold text-base mb-1">Generate your CME compliance report now</p>
-              <p className="text-[rgba(255,255,255,0.75)] text-sm">Start free â†’ add your activities â†’ download your PDF report with Pro. 14-day trial â€” no credit card required.</p>
+              <p className="text-[rgba(255,255,255,0.75)] text-sm">Start free â†’ add your activities â†’ download your PDF report with Pro. 14-day trial — no credit card required.</p>
             </div>
             <div className="flex flex-col sm:flex-row gap-2 flex-shrink-0">
               <Link
@@ -269,7 +269,7 @@ export default function CmeComplianceReportPage() {
           {/* FAQ */}
           <div className="mb-12">
             <h2 className="text-xl font-bold text-[#111] mb-6">
-              CME compliance report â€” frequently asked questions
+              CME compliance report — frequently asked questions
             </h2>
             <div className="space-y-3">
               {faqLd.mainEntity.map((faq) => (
@@ -328,7 +328,7 @@ export default function CmeComplianceReportPage() {
                 href="/register"
                 className="inline-block bg-white text-[#1a56a0] font-semibold px-8 py-3 rounded-lg hover:bg-[#f0f4f8] transition-colors text-sm"
               >
-                Start free â€” 14-day Pro trial â†’
+                Start free — 14-day Pro trial â†’
               </Link>
               <Link
                 href="/pricing"
@@ -343,7 +343,7 @@ export default function CmeComplianceReportPage() {
           <div className="bg-[#f8fafc] border border-[#e2e8f0] rounded-lg px-4 py-3 text-xs text-[#64748b] text-center leading-relaxed">
             Hayya Med Pro CME compliance reports support license renewal preparation. Always verify final
             requirements with QCHP, SCFHS, DHA, DOH, or your relevant GCC licensing authority. The PDF
-            report is a summary of activities you have logged â€” accuracy of certificate data is your responsibility.
+            report is a summary of activities you have logged — accuracy of certificate data is your responsibility.
           </div>
         </main>
       </div>

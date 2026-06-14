@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "Pharmacist CME Requirements in GCC â€” SCFHS, QCHP, DHA, Kuwait MOH, NHRA, OMSB",
+  title: "Pharmacist CME Requirements in GCC — SCFHS, QCHP, DHA, Kuwait MOH, NHRA, OMSB",
   description:
     "Complete guide to pharmacist CME and CPD requirements across the GCC. QCHP Qatar (80 CPD/2yr), SCFHS Saudi Arabia (60 CME/yr), DHA UAE (40 CME/2yr). Track all requirements in one professional compliance app.",
   keywords: [
@@ -20,16 +20,16 @@ export const metadata: Metadata = {
     "pharmacy CPD portfolio",
   ],
   openGraph: {
-    title: "Pharmacist CME Requirements Across the GCC â€” Complete Guide",
+    title: "Pharmacist CME Requirements Across the GCC — Complete Guide",
     description:
-      "QCHP, SCFHS, DHA, DOH, MOH Kuwait, NHRA, OMSB â€” pharmacist CME and CPD requirements across all 7 GCC countries in one guide.",
+      "QCHP, SCFHS, DHA, DOH, MOH Kuwait, NHRA, OMSB — pharmacist CME and CPD requirements across all 7 GCC countries in one guide.",
     url: `${APP_URL}/pharmacist-cme`,
     type: "website",
     images: [{ url: `${APP_URL}/api/og?t=Pharmacist+CME+Requirements+%E2%80%94+GCC&s=QCHP+%C2%B7+SCFHS+%C2%B7+DHA+%E2%80%94+all+7+GCC+countries+in+one+guide&a=%F0%9F%92%8A+Pharmacy&k=Profession+Guide`, width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pharmacist CME Requirements in GCC â€” Track All 7 Countries",
+    title: "Pharmacist CME Requirements in GCC — Track All 7 Countries",
     description: "Complete pharmacist CME guide for Qatar, Saudi Arabia, UAE, Kuwait, Bahrain, and Oman.",
   },
   alternates: { canonical: `${APP_URL}/pharmacist-cme` },
@@ -44,7 +44,7 @@ const faqLd = {
       name: "How many CME credits does a pharmacist need for SCFHS renewal in Saudi Arabia?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Pharmacists registered with SCFHS in Saudi Arabia must complete 60 CME credits per year â€” the same requirement as physicians. No more than 50% of credits (30 credits) may come from online activities. SCFHS renewal cycles range from 1 to 3 years depending on the specialty.",
+        text: "Pharmacists registered with SCFHS in Saudi Arabia must complete 60 CME credits per year — the same requirement as physicians. No more than 50% of credits (30 credits) may come from online activities. SCFHS renewal cycles range from 1 to 3 years depending on the specialty.",
       },
     },
     {
@@ -104,7 +104,7 @@ const GCC_REQUIREMENTS = [
     href: "/scfhs",
   },
   {
-    country: "ðŸ‡¦ðŸ‡ª UAE â€” Dubai",
+    country: "ðŸ‡¦ðŸ‡ª UAE — Dubai",
     authority: "DHA",
     credits: "40 credits",
     cycle: "2 years",
@@ -114,7 +114,7 @@ const GCC_REQUIREMENTS = [
     href: "/dha",
   },
   {
-    country: "ðŸ‡¦ðŸ‡ª UAE â€” Abu Dhabi",
+    country: "ðŸ‡¦ðŸ‡ª UAE — Abu Dhabi",
     authority: "DOH",
     credits: "40 credits",
     cycle: "2 years",
@@ -205,21 +205,21 @@ export default function PharmacistCmePage() {
           {/* Hero */}
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-2 bg-[#eff6ff] border border-[#bfdbfe] text-[#1a56a0] text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
-              ðŸ’Š Pharmacists Â· All GCC Countries Â· CME & CPD
+              ðŸ’Š Pharmacists · All GCC Countries · CME & CPD
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-[#111] tracking-tight mb-4 leading-tight">
-              Pharmacist CME requirements<br className="hidden sm:block" /> across the GCC â€” one tracker
+              Pharmacist CME requirements<br className="hidden sm:block" /> across the GCC — one tracker
             </h1>
             <p className="text-lg text-[#64748b] max-w-2xl mx-auto mb-8">
               SCFHS Saudi Arabia requires 60 CME credits per year. QCHP Qatar requires 80 CPD credits per 2-year cycle.
-              DHA Dubai requires 40 CME per 2 years. Hayya Med Pro tracks your progress against all of these â€” simultaneously.
+              DHA Dubai requires 40 CME per 2 years. Hayya Med Pro tracks your progress against all of these — simultaneously.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link
                 href="/register"
                 className="inline-flex items-center gap-2 bg-[#1a56a0] text-white font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#154890] transition-colors"
               >
-                Track my pharmacist CME â€” free â†’
+                Track my pharmacist CME — free â†’
               </Link>
               <Link
                 href="/pricing"
@@ -228,13 +228,13 @@ export default function PharmacistCmePage() {
                 See what&apos;s free vs Pro
               </Link>
             </div>
-            <p className="text-xs text-[#94a3b8] mt-3">No credit card required Â· 14-day Pro trial included</p>
+            <p className="text-xs text-[#94a3b8] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>
 
           {/* GCC comparison table */}
           <div className="bg-white rounded-2xl border border-[#e2e8f0] overflow-hidden mb-10 shadow-sm">
             <div className="px-6 py-5 border-b border-[#f1f5f9]">
-              <h2 className="text-lg font-bold text-[#111]">Pharmacist CME / CPD requirements â€” GCC at a glance</h2>
+              <h2 className="text-lg font-bold text-[#111]">Pharmacist CME / CPD requirements — GCC at a glance</h2>
               <p className="text-sm text-[#64748b] mt-1">Requirements as of 2025. Always verify current requirements with your licensing authority.</p>
             </div>
             <div className="overflow-x-auto">
@@ -315,7 +315,7 @@ export default function PharmacistCmePage() {
 
           {/* FAQ */}
           <div className="mb-10">
-            <h2 className="text-xl font-bold text-[#111] mb-6">Frequently asked questions â€” pharmacist CME in GCC</h2>
+            <h2 className="text-xl font-bold text-[#111] mb-6">Frequently asked questions — pharmacist CME in GCC</h2>
             <div className="space-y-3">
               {faqLd.mainEntity.map((faq) => (
                 <details
@@ -385,7 +385,7 @@ export default function PharmacistCmePage() {
             </h2>
             <p className="text-[#94a3b8] text-sm max-w-xl mx-auto mb-6">
               Hayya Med Pro tracks every credit, enforces online caps, flags patient safety requirements,
-              and generates your submission-ready PDF portfolio â€” for every GCC authority you&apos;re licensed with.
+              and generates your submission-ready PDF portfolio — for every GCC authority you&apos;re licensed with.
             </p>
             <Link
               href="/register"
@@ -393,7 +393,7 @@ export default function PharmacistCmePage() {
             >
               Start tracking free â†’ 14-day Pro trial
             </Link>
-            <p className="text-[#475569] text-xs mt-3">No credit card required Â· Cancel anytime</p>
+            <p className="text-[#475569] text-xs mt-3">No credit card required · Cancel anytime</p>
           </div>
 
           {/* Disclaimer */}

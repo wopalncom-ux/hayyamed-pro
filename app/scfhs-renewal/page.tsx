@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "SCFHS License Renewal â€” CME Requirements for Saudi Healthcare Professionals",
+  title: "SCFHS License Renewal — CME Requirements for Saudi Healthcare Professionals",
   description:
     "Complete guide to SCFHS license renewal in Saudi Arabia. CME requirements by profession: 60 credits/year (physicians, dentists, pharmacists) and 30 credits/year (nurses, allied health). Renewal steps, categories, and how to track CME.",
   keywords: [
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     "SCFHS 2024 renewal",
   ],
   openGraph: {
-    title: "SCFHS License Renewal Guide â€” Saudi Arabia Healthcare Professionals",
+    title: "SCFHS License Renewal Guide — Saudi Arabia Healthcare Professionals",
     description:
       "60 CME credits/year for physicians, dentists, pharmacists. 30 CME credits/year for nurses and allied health. Step-by-step SCFHS renewal guide.",
     url: `${APP_URL}/scfhs-renewal`,
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "SCFHS Renewal Guide â€” CME Requirements for Saudi Healthcare Professionals",
+    title: "SCFHS Renewal Guide — CME Requirements for Saudi Healthcare Professionals",
     description: "Profession-specific CME requirements for SCFHS renewal. Track with Hayya Med Pro.",
   },
   alternates: { canonical: `${APP_URL}/scfhs-renewal` },
@@ -60,7 +60,7 @@ const faqLd = {
       name: "What categories of CME count for SCFHS renewal?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "SCFHS accepts CME activities in several categories: Category 1 â€” Accredited conferences, seminars, and workshops. Category 2 â€” Online modules and e-learning (caps apply). Category 3 â€” Postgraduate qualifications. Category 4 â€” Research and publications. Category 5 â€” Teaching and training activities. Category 6 â€” Self-directed learning. Categories 1 and 2 are the most commonly used. Caps on online learning apply.",
+        text: "SCFHS accepts CME activities in several categories: Category 1 — Accredited conferences, seminars, and workshops. Category 2 — Online modules and e-learning (caps apply). Category 3 — Postgraduate qualifications. Category 4 — Research and publications. Category 5 — Teaching and training activities. Category 6 — Self-directed learning. Categories 1 and 2 are the most commonly used. Caps on online learning apply.",
       },
     },
     {
@@ -118,7 +118,7 @@ const RENEWAL_STEPS = [
   {
     step: "5",
     title: "Submit renewal at least 3 months early",
-    body: "Log in to the SCFHS portal and submit your renewal application with your CME portfolio. Pay the renewal fee. Processing can take several weeks â€” submit early to avoid gaps in licensure.",
+    body: "Log in to the SCFHS portal and submit your renewal application with your CME portfolio. Pay the renewal fee. Processing can take several weeks — submit early to avoid gaps in licensure.",
     icon: "âœ…",
   },
 ];
@@ -179,15 +179,15 @@ export default function ScfhsRenewalPage() {
             <div className="flex items-center gap-2 mb-4">
               <span className="text-xl">ðŸ‡¸ðŸ‡¦</span>
               <span className="text-xs font-semibold text-[#1a56a0] bg-[#eff6ff] px-2.5 py-1 rounded-full">
-                SCFHS â€” Saudi Arabia Healthcare License Renewal
+                SCFHS — Saudi Arabia Healthcare License Renewal
               </span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold text-[#111] mb-4 leading-tight">
-              SCFHS license renewal â€”<br className="hidden sm:block" /> CME requirements guide
+              SCFHS license renewal —<br className="hidden sm:block" /> CME requirements guide
             </h1>
             <p className="text-lg text-[#475569] mb-6 max-w-2xl leading-relaxed">
               Everything you need to renew your healthcare license with the Saudi Commission
-              for Health Specialties. CME requirements differ by profession â€”
+              for Health Specialties. CME requirements differ by profession —
               60 credits/year for physicians, 30 for nurses and allied health.
             </p>
 
@@ -195,11 +195,11 @@ export default function ScfhsRenewalPage() {
             <div className="flex flex-wrap gap-3 mb-8">
               <div className="bg-[#eff6ff] border border-[#bfdbfe] rounded-xl px-4 py-2.5 text-center">
                 <p className="text-base font-black text-[#1a56a0]">60 CME/yr</p>
-                <p className="text-[11px] text-[#475569]">Physicians Â· Dentists Â· Pharmacists</p>
+                <p className="text-[11px] text-[#475569]">Physicians · Dentists · Pharmacists</p>
               </div>
               <div className="bg-[#f0fdf4] border border-[#bbf7d0] rounded-xl px-4 py-2.5 text-center">
                 <p className="text-base font-black text-[#16a34a]">30 CME/yr</p>
-                <p className="text-[11px] text-[#475569]">Nurses Â· Allied Health</p>
+                <p className="text-[11px] text-[#475569]">Nurses · Allied Health</p>
               </div>
               <div className="bg-[#f8fafc] border border-[#e2e8f0] rounded-xl px-4 py-2.5 text-center">
                 <p className="text-base font-black text-[#111]">1â€“3 yr</p>
@@ -271,7 +271,7 @@ export default function ScfhsRenewalPage() {
         {/* Renewal steps */}
         <section className="py-12 bg-white border-t border-[#e2e8f0]">
           <div className="max-w-4xl mx-auto px-4 sm:px-6">
-            <h2 className="text-2xl font-bold text-[#111] mb-8">The SCFHS renewal process â€” step by step</h2>
+            <h2 className="text-2xl font-bold text-[#111] mb-8">The SCFHS renewal process — step by step</h2>
             <div className="space-y-5">
               {RENEWAL_STEPS.map((s) => (
                 <div key={s.step} className="bg-[#f8fafc] rounded-2xl border border-[#e2e8f0] p-6 flex gap-5 items-start">
@@ -300,8 +300,8 @@ export default function ScfhsRenewalPage() {
               <div>
                 <h2 className="text-2xl font-bold text-[#111] mb-3">Track SCFHS CME automatically</h2>
                 <p className="text-sm text-[#475569] mb-6 leading-relaxed">
-                  Hayya Med Pro applies your SCFHS requirements based on your profession â€”
-                  60 credits/year for physicians, 30 for nurses â€” and tracks your progress
+                  Hayya Med Pro applies your SCFHS requirements based on your profession —
+                  60 credits/year for physicians, 30 for nurses — and tracks your progress
                   automatically throughout the year.
                 </p>
                 <ul className="space-y-3">
@@ -323,7 +323,7 @@ export default function ScfhsRenewalPage() {
                 </ul>
               </div>
               <div className="bg-white rounded-2xl border border-[#bfdbfe] p-6">
-                <p className="text-sm font-semibold text-[#1e3a5f] mb-2">Free to start â€” no credit card required</p>
+                <p className="text-sm font-semibold text-[#1e3a5f] mb-2">Free to start — no credit card required</p>
                 <p className="text-sm text-[#475569] mb-5 leading-relaxed">
                   Start tracking your SCFHS CME for free. Upgrade to Pro ($6/month) for
                   PDF reports, AI gap analysis, and certificate storage.
@@ -332,11 +332,11 @@ export default function ScfhsRenewalPage() {
                   href="/register"
                   className="block w-full text-center bg-[#1a56a0] text-white font-semibold text-sm py-3 rounded-xl hover:bg-[#1547a0] transition-colors mb-3"
                 >
-                  Start tracking SCFHS CME â€” free â†’
+                  Start tracking SCFHS CME — free â†’
                 </Link>
                 <div className="flex justify-center gap-4 text-xs text-[#64748b]">
                   <span>14-day Pro trial</span>
-                  <span>Â·</span>
+                  <span>·</span>
                   <span>Cancel anytime</span>
                 </div>
               </div>
@@ -348,7 +348,7 @@ export default function ScfhsRenewalPage() {
         <section className="py-12 bg-white border-t border-[#e2e8f0]">
           <div className="max-w-3xl mx-auto px-4 sm:px-6">
             <h2 className="text-2xl font-bold text-[#111] mb-8">
-              SCFHS renewal â€” frequently asked questions
+              SCFHS renewal — frequently asked questions
             </h2>
             <div className="space-y-3">
               {faqLd.mainEntity.map((faq) => (
@@ -399,7 +399,7 @@ export default function ScfhsRenewalPage() {
             <p className="text-[#94a3b8] mb-8 text-sm max-w-xl mx-auto">
               Hayya Med Pro applies your profession-specific SCFHS CME requirement automatically.
               Track activities, store certificates, and download your submission-ready report.
-              Free to start â€” no credit card needed.
+              Free to start — no credit card needed.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link
@@ -428,11 +428,11 @@ export default function ScfhsRenewalPage() {
             </p>
             <p className="text-xs text-[#94a3b8] text-center mt-2">
               <Link href="/scfhs" className="hover:text-[#64748b]">SCFHS Guide</Link>
-              {" Â· "}
+              {" · "}
               <Link href="/cme-tracker" className="hover:text-[#64748b]">CME Tracker</Link>
-              {" Â· "}
+              {" · "}
               <Link href="/privacy" className="hover:text-[#64748b]">Privacy</Link>
-              {" Â· "}
+              {" · "}
               <Link href="/terms" className="hover:text-[#64748b]">Terms</Link>
             </p>
           </div>

@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "Neurology CME Requirements in GCC â€” Neurologist CME Guide | Hayya Med Pro",
+  title: "Neurology CME Requirements in GCC — Neurologist CME Guide | Hayya Med Pro",
   description:
     "Complete CME and CPD guide for neurologists in GCC. QCHP Qatar 80 CPD/2yr, SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. EEG, EMG workshops and stroke simulation count. Track all 7 GCC authorities in one app.",
   keywords: [
@@ -22,9 +22,9 @@ export const metadata: Metadata = {
     "epilepsy CME GCC",
   ],
   openGraph: {
-    title: "Neurology CME Requirements in GCC â€” Neurologist Guide",
+    title: "Neurology CME Requirements in GCC — Neurologist Guide",
     description:
-      "QCHP Qatar 80 CPD/2yr Â· SCFHS Saudi 60 CME/yr Â· DHA Dubai 40 CME/2yr. EEG + stroke simulation count. Track all GCC neurology CME requirements.",
+      "QCHP Qatar 80 CPD/2yr · SCFHS Saudi 60 CME/yr · DHA Dubai 40 CME/2yr. EEG + stroke simulation count. Track all GCC neurology CME requirements.",
     url: `${APP_URL}/neurology-cme`,
     type: "website",
     images: [
@@ -58,7 +58,7 @@ const faqLd = {
       name: "How many CME credits does a neurologist need in Saudi Arabia (SCFHS)?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "SCFHS-registered neurologists must complete 60 CME credits per year. Events accredited by the Saudi Neurological Society (SNS), World Federation of Neurology (WFN), American Academy of Neurology (AAN), and European Academy of Neurology (EAN) count toward this requirement. No more than 50% of credits may come from online sources. Hands-on workshops â€” EEG, EMG, neurosonology, and stroke simulation â€” count as clinical credits.",
+        text: "SCFHS-registered neurologists must complete 60 CME credits per year. Events accredited by the Saudi Neurological Society (SNS), World Federation of Neurology (WFN), American Academy of Neurology (AAN), and European Academy of Neurology (EAN) count toward this requirement. No more than 50% of credits may come from online sources. Hands-on workshops — EEG, EMG, neurosonology, and stroke simulation — count as clinical credits.",
       },
     },
     {
@@ -90,7 +90,7 @@ const faqLd = {
       name: "Can a neurologist track CME for both QCHP and DHA licences in one app?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. Hayya Med Pro supports multi-jurisdiction CME tracking. Neurologists with both QCHP and DHA licences can maintain separate wallets for each authority within a single account. Each wallet independently tracks credit totals, cycle dates, and compliance status â€” so you can see at a glance which licence needs attention.",
+        text: "Yes. Hayya Med Pro supports multi-jurisdiction CME tracking. Neurologists with both QCHP and DHA licences can maintain separate wallets for each authority within a single account. Each wallet independently tracks credit totals, cycle dates, and compliance status — so you can see at a glance which licence needs attention.",
       },
     },
   ],
@@ -115,7 +115,7 @@ const SPECIALTY_NOTES = [
   {
     icon: "ðŸ¥",
     title: "Stroke simulation & NIHSS",
-    body: "NIHSS certification and accredited stroke simulation courses count as clinical CME in QCHP and SCFHS. Most GCC hospitals require these for credentialing â€” combining CME and hospital privilege maintenance.",
+    body: "NIHSS certification and accredited stroke simulation courses count as clinical CME in QCHP and SCFHS. Most GCC hospitals require these for credentialing — combining CME and hospital privilege maintenance.",
   },
   {
     icon: "ðŸ§¬",
@@ -145,7 +145,7 @@ export default function NeurologyCmePage() {
             Neurology CME Requirements<br />Across GCC
           </h1>
           <p style={{ fontSize: 18, color: "#cbd5e1", maxWidth: 620, margin: "0 auto 32px" }}>
-            QCHP Qatar Â· SCFHS Saudi Arabia Â· DHA Dubai Â· and 4 more authorities.
+            QCHP Qatar · SCFHS Saudi Arabia · DHA Dubai · and 4 more authorities.
             EEG, stroke simulation, and EMG workshops all count toward your licence.
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
@@ -214,7 +214,7 @@ export default function NeurologyCmePage() {
       <section style={{ background: "#f0f4f8", padding: "64px 24px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto" }}>
           <h2 style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", textAlign: "center", marginBottom: 48 }}>
-            Neurology CME â€” Frequently Asked Questions
+            Neurology CME — Frequently Asked Questions
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {faqLd.mainEntity.map((q) => (
@@ -264,7 +264,7 @@ export default function NeurologyCmePage() {
           <Link href="/register" style={{ background: "#1a56a0", color: "#fff", padding: "16px 36px", borderRadius: 8, fontWeight: 700, textDecoration: "none", fontSize: 17, display: "inline-block" }}>
             Start tracking free â†’
           </Link>
-          <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required Â· Free plan always available</p>
+          <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required · Free plan always available</p>
         </div>
       </section>
 

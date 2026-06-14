@@ -5,11 +5,11 @@ import DemoForm from "./DemoForm";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "Request a Demo â€” Hayya Med Pro Employer",
+  title: "Request a Demo — Hayya Med Pro Employer",
   description:
     "See how Hayya Med Pro helps clinic directors and hospital HR managers track staff CME compliance in real time. Request a personalised demo for your organisation.",
   openGraph: {
-    title: "Request a Demo â€” Hayya Med Pro Employer Compliance Dashboard",
+    title: "Request a Demo — Hayya Med Pro Employer Compliance Dashboard",
     description:
       "Real-time staff compliance tracking for GCC clinics and hospitals. See QCHP, SCFHS, DHA, and DOH compliance at a glance. Request a demo for your team.",
     url: `${APP_URL}/request-demo`,
@@ -28,7 +28,7 @@ const TRUST_POINTS = [
   {
     icon: "ðŸ“„",
     title: "Bulk PDF reports",
-    body: "One-click PDF showing full team compliance â€” ready for QCHP, JCI, and CBAHI audits.",
+    body: "One-click PDF showing full team compliance — ready for QCHP, JCI, and CBAHI audits.",
   },
   {
     icon: "ðŸ“§",
@@ -38,7 +38,7 @@ const TRUST_POINTS = [
   {
     icon: "ðŸ¥",
     title: "All GCC authorities",
-    body: "QCHP, SCFHS, DHA, DOH, NHRA, OMSB, and MOH Kuwait â€” all in one dashboard.",
+    body: "QCHP, SCFHS, DHA, DOH, NHRA, OMSB, and MOH Kuwait — all in one dashboard.",
   },
 ];
 
@@ -70,7 +70,7 @@ export default function RequestDemoPage() {
       <main className="max-w-5xl mx-auto px-4 py-10 sm:py-14">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-14 items-start">
 
-          {/* Left â€” context + trust signals */}
+          {/* Left — context + trust signals */}
           <div className="lg:col-span-2">
             <span className="inline-block bg-[#fff7ed] border border-[#fed7aa] text-[#c2410c] text-xs font-semibold px-3 py-1 rounded-full mb-4">
               For clinic admins and hospital HR
@@ -99,7 +99,7 @@ export default function RequestDemoPage() {
             <div className="bg-white rounded-xl border border-[#e2e8f0] p-4 text-sm">
               <p className="font-semibold text-[#111] mb-1">Employer plans start at $50/month</p>
               <p className="text-[#64748b] text-xs leading-relaxed mb-3">
-                Up to 10 staff Â· Real-time dashboard Â· Bulk PDF reports Â· Weekly digest Â· No setup fee
+                Up to 10 staff · Real-time dashboard · Bulk PDF reports · Weekly digest · No setup fee
               </p>
               <Link
                 href="/pricing#employer"
@@ -110,7 +110,7 @@ export default function RequestDemoPage() {
             </div>
           </div>
 
-          {/* Right â€” form */}
+          {/* Right — form */}
           <div className="lg:col-span-3">
             <p className="text-sm font-medium text-[#374151] mb-4">
               Fill in your details and we&apos;ll be in touch within one business day.
@@ -125,7 +125,7 @@ export default function RequestDemoPage() {
           <p>Individual professional? <Link href="/register" className="text-[#1a56a0] hover:underline">Create a free account â†’</Link></p>
           <p className="sm:ml-auto">
             <Link href="/privacy" className="hover:text-[#64748b] transition-colors">Privacy Policy</Link>
-            {" Â· "}
+            {" · "}
             <Link href="/terms" className="hover:text-[#64748b] transition-colors">Terms</Link>
           </p>
         </div>

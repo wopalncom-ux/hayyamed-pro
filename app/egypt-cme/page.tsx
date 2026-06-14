@@ -4,9 +4,9 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "Egypt CME Requirements â€” Egyptian Medical Syndicate CME Guide | Hayya Med Pro",
+  title: "Egypt CME Requirements — Egyptian Medical Syndicate CME Guide | Hayya Med Pro",
   description:
-    "Complete CME guide for Egyptian healthcare professionals. Egyptian Medical Syndicate (EMS): 25 CME credits/year. Plus: hundreds of thousands of Egyptian doctors working in GCC â€” track both your Egyptian and GCC licences in one app.",
+    "Complete CME guide for Egyptian healthcare professionals. Egyptian Medical Syndicate (EMS): 25 CME credits/year. Plus: hundreds of thousands of Egyptian doctors working in GCC — track both your Egyptian and GCC licences in one app.",
   keywords: [
     "Egypt CME requirements",
     "Egyptian Medical Syndicate CME",
@@ -22,9 +22,9 @@ export const metadata: Metadata = {
     "Egypt GCC dual license CME",
   ],
   openGraph: {
-    title: "Egypt CME Requirements â€” Egyptian Medical Syndicate Guide",
+    title: "Egypt CME Requirements — Egyptian Medical Syndicate Guide",
     description:
-      "Egyptian Medical Syndicate (EMS): 25 CME credits/year. 600K+ Egyptian healthcare professionals in GCC â€” track Egypt + GCC licences in one app.",
+      "Egyptian Medical Syndicate (EMS): 25 CME credits/year. 600K+ Egyptian healthcare professionals in GCC — track Egypt + GCC licences in one app.",
     url: `${APP_URL}/egypt-cme`,
     type: "website",
     images: [
@@ -66,12 +66,12 @@ const faqLd = {
       name: "Do Egyptian CME credits count toward GCC licence requirements (QCHP, SCFHS, DHA)?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Egyptian CME activities count toward GCC requirements if they were accredited by a recognised international body (AMA-PRA, EACCME, Royal Colleges) or by an authority that the GCC licensing body accepts. Simply attending an Egyptian Medical Syndicate-accredited event is not automatically sufficient for QCHP or SCFHS â€” the accreditor must be on the approved list. Always check with your GCC authority before relying on Egyptian CME credits for a GCC licence.",
+        text: "Egyptian CME activities count toward GCC requirements if they were accredited by a recognised international body (AMA-PRA, EACCME, Royal Colleges) or by an authority that the GCC licensing body accepts. Simply attending an Egyptian Medical Syndicate-accredited event is not automatically sufficient for QCHP or SCFHS — the accreditor must be on the approved list. Always check with your GCC authority before relying on Egyptian CME credits for a GCC licence.",
       },
     },
     {
       "@type": "Question",
-      name: "I have both an Egyptian licence and a Saudi SCFHS licence â€” how do I track both?",
+      name: "I have both an Egyptian licence and a Saudi SCFHS licence — how do I track both?",
       acceptedAnswer: {
         "@type": "Answer",
         text: "Hayya Med Pro supports multi-jurisdiction tracking. You can set up separate compliance wallets for your Egyptian Medical Syndicate requirements (25 CME/yr) and your SCFHS requirements (60 CME/yr for physicians). Each wallet tracks independently with separate cycle dates, credit totals, and compliance status. Log an activity once and assign it to the relevant wallet.",
@@ -118,7 +118,7 @@ const NOTES = [
   {
     icon: "ðŸŒ",
     title: "600K+ Egyptians work in GCC",
-    body: "Egypt is the single largest source of healthcare professionals in the GCC. Hundreds of thousands of Egyptian doctors, nurses, pharmacists, and allied health professionals work in Saudi Arabia, UAE, Qatar, Kuwait, Bahrain, and Oman â€” many holding both an Egyptian and at least one GCC licence.",
+    body: "Egypt is the single largest source of healthcare professionals in the GCC. Hundreds of thousands of Egyptian doctors, nurses, pharmacists, and allied health professionals work in Saudi Arabia, UAE, Qatar, Kuwait, Bahrain, and Oman — many holding both an Egyptian and at least one GCC licence.",
   },
   {
     icon: "ðŸ“‹",
@@ -154,7 +154,7 @@ export default function EgyptCmePage() {
           </h1>
           <p style={{ fontSize: 18, color: "#cbd5e1", maxWidth: 620, margin: "0 auto 32px" }}>
             EMS requires 25 CME credits per year. Over 600,000 Egyptian healthcare professionals
-            work in GCC â€” track your Egyptian and GCC licences in one compliance app.
+            work in GCC — track your Egyptian and GCC licences in one compliance app.
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/register" style={{ background: "#1a56a0", color: "#fff", padding: "14px 28px", borderRadius: 8, fontWeight: 600, textDecoration: "none", fontSize: 16 }}>
@@ -236,7 +236,7 @@ export default function EgyptCmePage() {
       <section style={{ background: "#f0f4f8", padding: "64px 24px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto" }}>
           <h2 style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", textAlign: "center", marginBottom: 48 }}>
-            Egypt CME â€” Frequently Asked Questions
+            Egypt CME — Frequently Asked Questions
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {faqLd.mainEntity.map((q) => (
@@ -278,7 +278,7 @@ export default function EgyptCmePage() {
       <section style={{ background: "#0f1f3d", padding: "72px 24px", textAlign: "center" }}>
         <div style={{ maxWidth: 640, margin: "0 auto" }}>
           <h2 style={{ fontSize: 32, fontWeight: 800, color: "#fff", marginBottom: 16 }}>
-            Track your Egyptian and GCC CME â€” free
+            Track your Egyptian and GCC CME — free
           </h2>
           <p style={{ fontSize: 18, color: "#cbd5e1", marginBottom: 32 }}>
             Set up wallets for Egyptian Medical Syndicate and all 7 GCC authorities in one compliance dashboard.
@@ -286,7 +286,7 @@ export default function EgyptCmePage() {
           <Link href="/register" style={{ background: "#1a56a0", color: "#fff", padding: "16px 36px", borderRadius: 8, fontWeight: 700, textDecoration: "none", fontSize: 17, display: "inline-block" }}>
             Start tracking free â†’
           </Link>
-          <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required Â· Free plan always available</p>
+          <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required · Free plan always available</p>
         </div>
       </section>
 

@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "Dentist CME Requirements in GCC â€” SCFHS, QCHP, DHA, DOH, MOH Kuwait, NHRA, OMSB",
+  title: "Dentist CME Requirements in GCC — SCFHS, QCHP, DHA, DOH, MOH Kuwait, NHRA, OMSB",
   description:
     "Complete guide to dentist CME and CPD requirements across the GCC. QCHP Qatar (80 CPD/2yr), SCFHS Saudi Arabia (60 CME/yr), DHA Dubai (40 CME/2yr). Track all dental CME requirements in one professional compliance app.",
   keywords: [
@@ -20,16 +20,16 @@ export const metadata: Metadata = {
     "dentist CPD portfolio",
   ],
   openGraph: {
-    title: "Dentist CME Requirements Across the GCC â€” Complete Guide",
+    title: "Dentist CME Requirements Across the GCC — Complete Guide",
     description:
-      "QCHP, SCFHS, DHA, DOH, MOH Kuwait, NHRA, OMSB â€” dentist CME and CPD requirements across all 7 GCC countries in one guide.",
+      "QCHP, SCFHS, DHA, DOH, MOH Kuwait, NHRA, OMSB — dentist CME and CPD requirements across all 7 GCC countries in one guide.",
     url: `${APP_URL}/dentist-cme`,
     type: "website",
     images: [{ url: `${APP_URL}/api/og?t=Dentist+CME+Requirements+%E2%80%94+GCC&s=QCHP+%C2%B7+SCFHS+%C2%B7+DHA+%C2%B7+DOH+%E2%80%94+all+7+GCC+countries&a=%F0%9F%A6%B7+Dentistry&k=Profession+Guide`, width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dentist CME Requirements in GCC â€” Track All 7 Countries",
+    title: "Dentist CME Requirements in GCC — Track All 7 Countries",
     description: "Complete dentist CME guide for Qatar, Saudi Arabia, UAE, Kuwait, Bahrain, and Oman.",
   },
   alternates: { canonical: `${APP_URL}/dentist-cme` },
@@ -44,7 +44,7 @@ const faqLd = {
       name: "How many CME credits does a dentist need for SCFHS renewal in Saudi Arabia?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Dentists registered with SCFHS in Saudi Arabia must complete 60 CME credits per year â€” the same requirement as physicians and pharmacists. No more than 50% of credits (30 credits) may come from online activities. The renewal cycle ranges from 1 to 3 years depending on the dental specialty.",
+        text: "Dentists registered with SCFHS in Saudi Arabia must complete 60 CME credits per year — the same requirement as physicians and pharmacists. No more than 50% of credits (30 credits) may come from online activities. The renewal cycle ranges from 1 to 3 years depending on the dental specialty.",
       },
     },
     {
@@ -97,7 +97,7 @@ const countries = [
     authority: "SCFHS",
     credits: "60 CME",
     cycle: "1 year",
-    minPerYear: "â€”",
+    minPerYear: "—",
     terminology: "CME",
     note: "Max 50% online (30 credits)",
   },
@@ -106,7 +106,7 @@ const countries = [
     authority: "DHA",
     credits: "40 CME",
     cycle: "2 years",
-    minPerYear: "â€”",
+    minPerYear: "—",
     terminology: "CME",
     note: "",
   },
@@ -115,7 +115,7 @@ const countries = [
     authority: "DOH",
     credits: "40 CPD",
     cycle: "2 years",
-    minPerYear: "â€”",
+    minPerYear: "—",
     terminology: "CPD",
     note: "",
   },
@@ -124,7 +124,7 @@ const countries = [
     authority: "MOH Kuwait",
     credits: "30 CME",
     cycle: "1 year",
-    minPerYear: "â€”",
+    minPerYear: "—",
     terminology: "CME",
     note: "",
   },
@@ -133,7 +133,7 @@ const countries = [
     authority: "NHRA",
     credits: "40 CPD",
     cycle: "2 years",
-    minPerYear: "â€”",
+    minPerYear: "—",
     terminology: "CPD",
     note: "",
   },
@@ -142,7 +142,7 @@ const countries = [
     authority: "OMSB",
     credits: "40 CME",
     cycle: "2 years",
-    minPerYear: "â€”",
+    minPerYear: "—",
     terminology: "CME",
     note: "",
   },
@@ -152,7 +152,7 @@ const categories = [
   {
     icon: "ðŸ¦·",
     title: "Dental Clinical Practice",
-    description: "Restorative, endodontics, periodontics, oral surgery â€” accredited clinical CPD",
+    description: "Restorative, endodontics, periodontics, oral surgery — accredited clinical CPD",
   },
   {
     icon: "ðŸ’»",
@@ -214,13 +214,13 @@ export default function DentistCmePage() {
         <section className="bg-white border-b border-[#e2e8f0] py-12 sm:py-16">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
             <span className="inline-block bg-[#eff6ff] text-[#1a56a0] text-xs font-semibold px-3 py-1 rounded-full mb-4">
-              Dentist CME &amp; CPD â€” GCC Guide
+              Dentist CME &amp; CPD — GCC Guide
             </span>
             <h1 className="text-3xl sm:text-4xl font-bold text-[#111] mb-4 leading-tight">
               Dentist CME Requirements<br className="hidden sm:block" /> Across the GCC
             </h1>
             <p className="text-lg text-[#475569] mb-8 max-w-2xl mx-auto">
-              QCHP, SCFHS, DHA, DOH, MOH Kuwait, NHRA, OMSB â€” dentist CME and CPD requirements for
+              QCHP, SCFHS, DHA, DOH, MOH Kuwait, NHRA, OMSB — dentist CME and CPD requirements for
               every GCC country. One app to track them all.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -281,7 +281,7 @@ export default function DentistCmePage() {
                           {c.terminology}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-xs text-[#64748b]">{c.note || "â€”"}</td>
+                      <td className="px-4 py-3 text-xs text-[#64748b]">{c.note || "—"}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -297,7 +297,7 @@ export default function DentistCmePage() {
               Accepted CME Categories for Dentists
             </h2>
             <p className="text-sm text-[#64748b] text-center mb-8">
-              Categories vary by authority â€” check your specific licensing body for exact credit limits.
+              Categories vary by authority — check your specific licensing body for exact credit limits.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {categories.map((cat) => (
@@ -384,13 +384,13 @@ export default function DentistCmePage() {
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
               {[
-                { label: "QCHP Qatar â€” Dentists", href: "/qchp" },
-                { label: "SCFHS Saudi â€” Dentists", href: "/scfhs" },
-                { label: "DHA Dubai â€” Dentists", href: "/dha" },
-                { label: "DOH Abu Dhabi â€” Dentists", href: "/doh" },
-                { label: "MOH Kuwait â€” Dentists", href: "/moh-kuwait" },
-                { label: "NHRA Bahrain â€” Dentists", href: "/nhra" },
-                { label: "OMSB Oman â€” Dentists", href: "/omsb" },
+                { label: "QCHP Qatar — Dentists", href: "/qchp" },
+                { label: "SCFHS Saudi — Dentists", href: "/scfhs" },
+                { label: "DHA Dubai — Dentists", href: "/dha" },
+                { label: "DOH Abu Dhabi — Dentists", href: "/doh" },
+                { label: "MOH Kuwait — Dentists", href: "/moh-kuwait" },
+                { label: "NHRA Bahrain — Dentists", href: "/nhra" },
+                { label: "OMSB Oman — Dentists", href: "/omsb" },
                 { label: "CME vs CPD Explained", href: "/cme-vs-cpd" },
               ].map((l) => (
                 <Link
@@ -438,7 +438,7 @@ export default function DentistCmePage() {
             </h2>
             <p className="text-[#94a3b8] mb-8 text-sm max-w-xl mx-auto">
               Hayya Med Pro automatically calculates your progress toward SCFHS, QCHP, DHA, and all
-              GCC authority requirements. Free to start â€” no credit card needed.
+              GCC authority requirements. Free to start — no credit card needed.
             </p>
             <Link
               href="/register"
@@ -459,9 +459,9 @@ export default function DentistCmePage() {
             </p>
             <p className="text-xs text-[#94a3b8] text-center mt-2">
               <Link href="/privacy" className="hover:text-[#64748b]">Privacy</Link>
-              {" Â· "}
+              {" · "}
               <Link href="/terms" className="hover:text-[#64748b]">Terms</Link>
-              {" Â· "}
+              {" · "}
               <Link href="/countries" className="hover:text-[#64748b]">All Countries</Link>
             </p>
           </div>

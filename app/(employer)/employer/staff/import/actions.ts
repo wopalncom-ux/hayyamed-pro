@@ -41,7 +41,7 @@ async function sendStaffInviteEmail(to: string, name: string, orgName: string) {
             Hi${name ? " " + name : ""},
           </p>
           <p style="color:#374151;font-size:15px;line-height:1.6;margin:0 0 16px">
-            <strong>${orgName}</strong> has added you to Hayya Med Pro â€” a platform for tracking CME/CPD compliance and managing your healthcare license renewals.
+            <strong>${orgName}</strong> has added you to Hayya Med Pro — a platform for tracking CME/CPD compliance and managing your healthcare license renewals.
           </p>
           <a href="${registerUrl}" style="display:inline-block;background:#1a56a0;color:white;text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:600;font-size:15px">
             Create Account â†’
@@ -138,7 +138,7 @@ export async function importStaffCsv(
 
         results.push({ email: row.email, outcome: "linked" });
       } else {
-        // Not on platform yet â€” send invite
+        // Not on platform yet — send invite
         const name = [row.first_name, row.last_name].filter(Boolean).join(" ");
         await sendStaffInviteEmail(row.email, name, orgName).catch(() => {});
         results.push({ email: row.email, outcome: "invited" });

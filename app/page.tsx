@@ -4,9 +4,9 @@ import type { Metadata } from "next";
 import LandingPage from "@/components/landing/LandingPage";
 
 const SITE_URL = "https://hayyamed.pro";
-const TITLE = "Hayya Med Pro â€” CME Tracking & License Compliance for GCC Healthcare Professionals";
+const TITLE = "Hayya Med Pro — CME Tracking & License Compliance for GCC Healthcare Professionals";
 const DESCRIPTION =
-  "Track CME credits, manage license renewals, and stay compliant with QCHP, SCFHS, DHA, and all GCC licensing authorities â€” free, on web and mobile. Built for Qatar, Saudi Arabia, UAE, Kuwait, Bahrain, and Oman.";
+  "Track CME credits, manage license renewals, and stay compliant with QCHP, SCFHS, DHA, and all GCC licensing authorities — free, on web and mobile. Built for Qatar, Saudi Arabia, UAE, Kuwait, Bahrain, and Oman.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
         url: `${SITE_URL}/opengraph-image`,
         width: 1200,
         height: 630,
-        alt: "Hayya Med Pro â€” CME Tracking for GCC Healthcare Professionals",
+        alt: "Hayya Med Pro — CME Tracking for GCC Healthcare Professionals",
       },
     ],
   },
@@ -64,7 +64,7 @@ const jsonLd = {
       name: "Free Plan",
       price: "0",
       priceCurrency: "USD",
-      description: "CME tracking, compliance dashboard, analytics â€” free forever.",
+      description: "CME tracking, compliance dashboard, analytics — free forever.",
     },
     {
       "@type": "Offer",
@@ -80,7 +80,7 @@ const jsonLd = {
       price: "61.20",
       priceCurrency: "USD",
       billingDuration: "P1Y",
-      description: "Pro plan billed annually â€” 15% off vs monthly.",
+      description: "Pro plan billed annually — 15% off vs monthly.",
     },
   ],
   audience: {
@@ -109,7 +109,7 @@ const orgJsonLd = {
   name: "Hayya Med",
   url: SITE_URL,
   logo: `${SITE_URL}/icons/icon-512.png`,
-  description: "Healthcare compliance technology company â€” CME tracking, licensing readiness, and workforce compliance for GCC healthcare professionals.",
+  description: "Healthcare compliance technology company — CME tracking, licensing readiness, and workforce compliance for GCC healthcare professionals.",
   foundingLocation: {
     "@type": "Place",
     addressCountry: "QA",
@@ -140,7 +140,7 @@ const faqJsonLd = {
       name: "Is Hayya Med Pro free to use?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. The Free plan is free forever â€” it includes CME activity tracking, a compliance dashboard, and analytics. The Pro plan ($6/month or $61.20/year â€” 15% off) unlocks PDF compliance reports, AI-powered gap analysis, unlimited activity entries, and license expiry alerts.",
+        text: "Yes. The Free plan is free forever — it includes CME activity tracking, a compliance dashboard, and analytics. The Pro plan ($6/month or $61.20/year — 15% off) unlocks PDF compliance reports, AI-powered gap analysis, unlimited activity entries, and license expiry alerts.",
       },
     },
     {
@@ -148,7 +148,7 @@ const faqJsonLd = {
       name: "Is there a free trial for the Pro plan?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes â€” every new account automatically receives a 14-day Pro trial. No credit card required. You can explore every Pro feature before you pay anything.",
+        text: "Yes — every new account automatically receives a 14-day Pro trial. No credit card required. You can explore every Pro feature before you pay anything.",
       },
     },
     {
@@ -156,7 +156,7 @@ const faqJsonLd = {
       name: "Is Hayya Med Pro recognised by QCHP, SCFHS, or DHA?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Hayya Med Pro is a compliance tracking tool, not a licensing authority. Your official compliance record remains with QCHP, SCFHS, DHA, DOH, NHRA, OMSB, or MOH Kuwait. Our PDF reports are formatted to match what these authorities require, making submission faster â€” but you must always verify final requirements directly with your authority.",
+        text: "Hayya Med Pro is a compliance tracking tool, not a licensing authority. Your official compliance record remains with QCHP, SCFHS, DHA, DOH, NHRA, OMSB, or MOH Kuwait. Our PDF reports are formatted to match what these authorities require, making submission faster — but you must always verify final requirements directly with your authority.",
       },
     },
     {
@@ -172,7 +172,7 @@ const faqJsonLd = {
       name: "Can my employer or hospital see my CME records?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Only if you explicitly approve the connection. Your profile is private by default. Privacy settings give you full control over what information â€” if any â€” is visible to your employer.",
+        text: "Only if you explicitly approve the connection. Your profile is private by default. Privacy settings give you full control over what information — if any — is visible to your employer.",
       },
     },
     {

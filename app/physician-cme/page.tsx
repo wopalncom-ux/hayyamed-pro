@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "Physician CME Requirements in GCC â€” Qatar, Saudi Arabia, UAE, Kuwait, Bahrain, Oman",
+  title: "Physician CME Requirements in GCC — Qatar, Saudi Arabia, UAE, Kuwait, Bahrain, Oman",
   description:
     "Complete guide to physician CME and CPD requirements across the GCC. QCHP Qatar (80 CPD/2yr), SCFHS Saudi Arabia (60 CME/yr), DHA UAE (40 CME/2yr), and more. Track all requirements in one place.",
   keywords: [
@@ -20,16 +20,16 @@ export const metadata: Metadata = {
     "continuing medical education physician GCC",
   ],
   openGraph: {
-    title: "Physician CME Requirements Across the GCC â€” Complete Guide",
+    title: "Physician CME Requirements Across the GCC — Complete Guide",
     description:
-      "QCHP, SCFHS, DHA, DOH, MOH Kuwait, NHRA, OMSB â€” physician CME and CPD requirements across all 7 GCC countries in one guide.",
+      "QCHP, SCFHS, DHA, DOH, MOH Kuwait, NHRA, OMSB — physician CME and CPD requirements across all 7 GCC countries in one guide.",
     url: `${APP_URL}/physician-cme`,
     type: "website",
     images: [{ url: `${APP_URL}/api/og?t=Physician+CME+Requirements+%E2%80%94+GCC&s=QCHP+%C2%B7+SCFHS+%C2%B7+DHA+%C2%B7+DOH+%C2%B7+all+7+GCC+countries+in+one+guide&a=%F0%9F%A9%BA+Physician&k=Profession+Guide`, width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Physician CME Requirements in GCC â€” Track All 7 Countries",
+    title: "Physician CME Requirements in GCC — Track All 7 Countries",
     description: "Complete physician CME guide for Qatar, Saudi Arabia, UAE, Kuwait, Bahrain, and Oman.",
   },
   alternates: { canonical: `${APP_URL}/physician-cme` },
@@ -104,7 +104,7 @@ const GCC_REQUIREMENTS = [
     href: "/scfhs",
   },
   {
-    country: "ðŸ‡¦ðŸ‡ª UAE â€” Dubai",
+    country: "ðŸ‡¦ðŸ‡ª UAE — Dubai",
     authority: "DHA",
     credits: "40 credits",
     cycle: "2 years",
@@ -114,7 +114,7 @@ const GCC_REQUIREMENTS = [
     href: "/dha",
   },
   {
-    country: "ðŸ‡¦ðŸ‡ª UAE â€” Abu Dhabi",
+    country: "ðŸ‡¦ðŸ‡ª UAE — Abu Dhabi",
     authority: "DOH",
     credits: "40 credits",
     cycle: "2 years",
@@ -159,7 +159,7 @@ const CATEGORIES = [
   { icon: "ðŸ¥", name: "Clinical Practice", desc: "Conferences, workshops, case presentations, grand rounds, simulation labs" },
   { icon: "ðŸ’»", name: "Online / E-Learning", desc: "Accredited e-learning modules, webinars, virtual conferences (capped at 30â€“50% depending on country)" },
   { icon: "ðŸ“„", name: "Research & Publications", desc: "Authoring peer-reviewed papers, presenting at conferences, participating in clinical trials" },
-  { icon: "ðŸŽ“", name: "Postgraduate Education", desc: "Fellowship programs, subspecialty diplomas, master's degrees â€” typically earn 10â€“25 credits per semester" },
+  { icon: "ðŸŽ“", name: "Postgraduate Education", desc: "Fellowship programs, subspecialty diplomas, master's degrees — typically earn 10â€“25 credits per semester" },
   { icon: "ðŸ«", name: "Teaching & Supervision", desc: "Supervising residents, lecturing at medical schools, developing clinical education programs" },
   { icon: "ðŸ›¡ï¸", name: "Patient Safety", desc: "Mandatory in Qatar (2 credits) and UAE Dubai (5 credits). Covers adverse events, quality improvement, risk management" },
 ];
@@ -167,8 +167,8 @@ const CATEGORIES = [
 const HOW_IT_WORKS = [
   { step: "1", title: "Select your country (or countries)", desc: "If you hold licenses in multiple GCC countries, add each compliance wallet. Hayya Med Pro tracks your progress against each authority's specific rules." },
   { step: "2", title: "Log CME activities as you complete them", desc: "Add conferences, workshops, and online courses with provider name, date, and credit value. AI auto-categorizes activities by title." },
-  { step: "3", title: "Monitor your readiness dashboard", desc: "See your total credits, category breakdown, online cap status, and whether mandatory activities (patient safety) are met â€” for every country at once." },
-  { step: "4", title: "Download your compliance report", desc: "Generate a PDF compliance portfolio formatted for QCHP, SCFHS, DHA, or any GCC authority â€” ready to submit at renewal." },
+  { step: "3", title: "Monitor your readiness dashboard", desc: "See your total credits, category breakdown, online cap status, and whether mandatory activities (patient safety) are met — for every country at once." },
+  { step: "4", title: "Download your compliance report", desc: "Generate a PDF compliance portfolio formatted for QCHP, SCFHS, DHA, or any GCC authority — ready to submit at renewal." },
 ];
 
 export default function PhysicianCmePage() {
@@ -205,13 +205,13 @@ export default function PhysicianCmePage() {
           {/* Hero */}
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-2 bg-[#eff6ff] border border-[#bfdbfe] text-[#1a56a0] text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
-              ðŸ©º Physicians Â· All GCC Countries Â· CME & CPD
+              ðŸ©º Physicians · All GCC Countries · CME & CPD
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-[#111] tracking-tight mb-4 leading-tight">
-              Physician CME requirements<br className="hidden sm:block" /> across the GCC â€” one tracker
+              Physician CME requirements<br className="hidden sm:block" /> across the GCC — one tracker
             </h1>
             <p className="text-lg text-[#64748b] max-w-2xl mx-auto mb-8">
-              Qatar, Saudi Arabia, UAE, Kuwait, Bahrain, Oman â€” every GCC authority sets different CME and CPD requirements for physicians.
+              Qatar, Saudi Arabia, UAE, Kuwait, Bahrain, Oman — every GCC authority sets different CME and CPD requirements for physicians.
               Hayya Med Pro tracks all of them automatically so you never miss a renewal deadline.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -219,7 +219,7 @@ export default function PhysicianCmePage() {
                 href="/register"
                 className="inline-flex items-center gap-2 bg-[#1a56a0] text-white font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#154890] transition-colors"
               >
-                Track my physician CME â€” free â†’
+                Track my physician CME — free â†’
               </Link>
               <Link
                 href="/pricing"
@@ -228,13 +228,13 @@ export default function PhysicianCmePage() {
                 See what&apos;s free vs Pro
               </Link>
             </div>
-            <p className="text-xs text-[#94a3b8] mt-3">No credit card required Â· 14-day Pro trial included</p>
+            <p className="text-xs text-[#94a3b8] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>
 
           {/* GCC requirements table */}
           <div className="bg-white rounded-2xl border border-[#e2e8f0] overflow-hidden mb-10 shadow-sm">
             <div className="px-6 py-5 border-b border-[#f1f5f9]">
-              <h2 className="text-lg font-bold text-[#111]">Physician CME / CPD requirements â€” GCC at a glance</h2>
+              <h2 className="text-lg font-bold text-[#111]">Physician CME / CPD requirements — GCC at a glance</h2>
               <p className="text-sm text-[#64748b] mt-1">Requirements as of 2025. Always verify current requirements with your licensing authority.</p>
             </div>
             <div className="overflow-x-auto">
@@ -266,7 +266,7 @@ export default function PhysicianCmePage() {
               </table>
             </div>
             <div className="px-6 py-4 bg-[#f8fafc] border-t border-[#f1f5f9] flex items-center justify-between gap-4">
-              <p className="text-xs text-[#64748b]">Hayya Med Pro tracks your progress against every authority in this table â€” simultaneously.</p>
+              <p className="text-xs text-[#64748b]">Hayya Med Pro tracks your progress against every authority in this table — simultaneously.</p>
               <Link
                 href="/register"
                 className="flex-shrink-0 text-xs font-semibold text-white bg-[#1a56a0] px-3 py-2 rounded-lg hover:bg-[#154890] transition-colors"
@@ -315,7 +315,7 @@ export default function PhysicianCmePage() {
 
           {/* FAQ */}
           <div className="mb-10">
-            <h2 className="text-xl font-bold text-[#111] mb-6">Frequently asked questions â€” physician CME in GCC</h2>
+            <h2 className="text-xl font-bold text-[#111] mb-6">Frequently asked questions — physician CME in GCC</h2>
             <div className="space-y-3">
               {faqLd.mainEntity.map((faq) => (
                 <details
@@ -385,7 +385,7 @@ export default function PhysicianCmePage() {
             </h2>
             <p className="text-[#94a3b8] text-sm max-w-xl mx-auto mb-6">
               Hayya Med Pro calculates your compliance score, flags category gaps, tracks mandatory requirements,
-              and generates your submission-ready PDF report â€” for every GCC country you&apos;re licensed in.
+              and generates your submission-ready PDF report — for every GCC country you&apos;re licensed in.
             </p>
             <Link
               href="/register"
@@ -393,7 +393,7 @@ export default function PhysicianCmePage() {
             >
               Start tracking free â†’ 14-day Pro trial
             </Link>
-            <p className="text-[#475569] text-xs mt-3">No credit card required Â· Cancel anytime</p>
+            <p className="text-[#475569] text-xs mt-3">No credit card required · Cancel anytime</p>
           </div>
 
           {/* Disclaimer */}

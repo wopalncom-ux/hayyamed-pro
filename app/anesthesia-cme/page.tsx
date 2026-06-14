@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "Anesthesia CME Requirements in GCC â€” Anaesthesiologist CME Guide | Hayya Med Pro",
+  title: "Anesthesia CME Requirements in GCC — Anaesthesiologist CME Guide | Hayya Med Pro",
   description:
     "Complete CME and CPD guide for anaesthesiologists in GCC. QCHP Qatar 80 CPD/2yr, SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. ACLS mandatory. Track all requirements in one compliance app.",
   keywords: [
@@ -22,9 +22,9 @@ export const metadata: Metadata = {
     "anaesthesia CPD GCC",
   ],
   openGraph: {
-    title: "Anesthesia CME Requirements in GCC â€” Anaesthesiologist CME Guide",
+    title: "Anesthesia CME Requirements in GCC — Anaesthesiologist CME Guide",
     description:
-      "QCHP Qatar 80 CPD/2yr Â· SCFHS Saudi 60 CME/yr Â· DHA Dubai 40 CME/2yr. ACLS mandatory. Track all GCC anaesthesia requirements in one app.",
+      "QCHP Qatar 80 CPD/2yr · SCFHS Saudi 60 CME/yr · DHA Dubai 40 CME/2yr. ACLS mandatory. Track all GCC anaesthesia requirements in one app.",
     url: `${APP_URL}/anesthesia-cme`,
     type: "website",
     images: [
@@ -87,7 +87,7 @@ const faqLd = {
 };
 
 const AUTHORITIES = [
-  { flag: "ðŸ‡¶ðŸ‡¦", name: "QCHP",  country: "Qatar",        cycle: "80 CPD / 2 yr",   note: "ACLS required Â· simulation credits accepted" },
+  { flag: "ðŸ‡¶ðŸ‡¦", name: "QCHP",  country: "Qatar",        cycle: "80 CPD / 2 yr",   note: "ACLS required · simulation credits accepted" },
   { flag: "ðŸ‡¸ðŸ‡¦", name: "SCFHS", country: "Saudi Arabia",  cycle: "60 CME / yr",     note: "SBA & SSA recognised" },
   { flag: "ðŸ‡¦ðŸ‡ª", name: "DHA",   country: "Dubai",         cycle: "40 CME / 2 yr",   note: "Simulation CME recognised" },
   { flag: "ðŸ‡¦ðŸ‡ª", name: "DOH",   country: "Abu Dhabi",     cycle: "40 CPD / cycle",  note: "Verify per licence category" },
@@ -99,7 +99,7 @@ const AUTHORITIES = [
 const SPECIALTY_NOTES = [
   {
     icon: "ðŸ’“",
-    title: "ACLS â€” Required, Not Optional",
+    title: "ACLS — Required, Not Optional",
     body: "ACLS certification is a prerequisite for anaesthesiology licence renewal with QCHP and is strongly recommended by SCFHS. Each ACLS renewal course earns CPD/CME credits. Providers include AHA-certified centres across all GCC countries.",
   },
   {
@@ -114,7 +114,7 @@ const SPECIALTY_NOTES = [
   },
   {
     icon: "ðŸ›¡ï¸",
-    title: "Patient Safety â€” Mandatory Category",
+    title: "Patient Safety — Mandatory Category",
     body: "QCHP requires at least 5 CPD credits in patient safety per 2-year cycle. For anaesthesiologists, this includes adverse event reporting, critical incident reviews, difficult airway management training, and malignant hyperthermia management courses.",
   },
 ];
@@ -136,7 +136,7 @@ export default function AnesthesiaCmePage() {
             Anaesthesia CME Requirements<br />Across GCC
           </h1>
           <p style={{ fontSize: 18, color: "#cbd5e1", maxWidth: 620, margin: "0 auto 32px" }}>
-            QCHP Qatar Â· SCFHS Saudi Arabia Â· DHA Dubai Â· and 4 more authorities.
+            QCHP Qatar · SCFHS Saudi Arabia · DHA Dubai · and 4 more authorities.
             ACLS mandatory. Track every credit in one compliance dashboard.
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
@@ -195,7 +195,7 @@ export default function AnesthesiaCmePage() {
 
       <section style={{ background: "#f0f4f8", padding: "64px 24px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto" }}>
-          <h2 style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", textAlign: "center", marginBottom: 48 }}>Anaesthesia CME â€” Frequently Asked Questions</h2>
+          <h2 style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", textAlign: "center", marginBottom: 48 }}>Anaesthesia CME — Frequently Asked Questions</h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {faqLd.mainEntity.map((q) => (
               <div key={q.name} style={{ background: "#fff", borderRadius: 12, padding: 24, border: "1px solid #e2e8f0" }}>
@@ -236,7 +236,7 @@ export default function AnesthesiaCmePage() {
           <Link href="/register" style={{ background: "#1a56a0", color: "#fff", padding: "16px 36px", borderRadius: 8, fontWeight: 700, textDecoration: "none", fontSize: 17, display: "inline-block" }}>
             Start tracking free â†’
           </Link>
-          <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required Â· Free plan always available</p>
+          <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required · Free plan always available</p>
         </div>
       </section>
 

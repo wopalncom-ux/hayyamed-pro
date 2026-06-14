@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "NHRA License Renewal â€” CPD Requirements for Bahrain Healthcare Professionals",
+  title: "NHRA License Renewal — CPD Requirements for Bahrain Healthcare Professionals",
   description:
     "Complete guide to renewing your NHRA license in Bahrain. 40 CPD credits per 2-year renewal cycle. Step-by-step NHRA renewal process for physicians, nurses, pharmacists, and all Bahrain healthcare professionals.",
   keywords: [
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     "NHRA CPD credits renewal",
   ],
   openGraph: {
-    title: "NHRA License Renewal â€” Complete Guide for Bahrain Healthcare Professionals",
+    title: "NHRA License Renewal — Complete Guide for Bahrain Healthcare Professionals",
     description:
       "40 CPD credits per 2-year cycle. Step-by-step NHRA renewal process, checklist, and how Hayya Med Pro tracks your CPD progress automatically.",
     url: `${APP_URL}/nhra-renewal`,
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "NHRA License Renewal Guide â€” Bahrain Healthcare CPD",
+    title: "NHRA License Renewal Guide — Bahrain Healthcare CPD",
     description: "40 CPD credits per 2-year cycle. Complete NHRA renewal checklist, step-by-step process, and CPD compliance tracking for Bahrain healthcare professionals.",
   },
   alternates: { canonical: `${APP_URL}/nhra-renewal` },
@@ -101,7 +101,7 @@ const RENEWAL_STEPS = [
   {
     step: "4",
     title: "Collect and organise CPD certificates",
-    desc: "Gather all CPD certificates with provider name, accreditation details, activity date, and credit value. Hayya Med Pro securely stores certificates and generates a PDF CPD portfolio sorted by category and date â€” ready for NHRA portal upload.",
+    desc: "Gather all CPD certificates with provider name, accreditation details, activity date, and credit value. Hayya Med Pro securely stores certificates and generates a PDF CPD portfolio sorted by category and date — ready for NHRA portal upload.",
   },
   {
     step: "5",
@@ -173,10 +173,10 @@ export default function NhraRenewalPage() {
           {/* Hero */}
           <div className="mb-10">
             <div className="inline-flex items-center gap-2 bg-[#f0f9ff] border border-[#bae6fd] text-[#0369a1] text-xs font-semibold px-3 py-1.5 rounded-full mb-4">
-              ðŸ‡§ðŸ‡­ Bahrain Â· National Health Regulatory Authority (NHRA)
+              ðŸ‡§ðŸ‡­ Bahrain · National Health Regulatory Authority (NHRA)
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold text-[#111] mb-4 leading-tight">
-              NHRA license renewal â€” complete guide for Bahrain healthcare professionals
+              NHRA license renewal — complete guide for Bahrain healthcare professionals
             </h1>
             <p className="text-base text-[#475569] max-w-2xl leading-relaxed">
               NHRA (National Health Regulatory Authority) requires <strong className="text-[#111]">40 CPD credits
@@ -226,7 +226,7 @@ export default function NhraRenewalPage() {
           {/* Step-by-step */}
           <div className="mb-10">
             <h2 className="text-xl font-bold text-[#111] mb-6">
-              NHRA license renewal â€” step by step
+              NHRA license renewal — step by step
             </h2>
             <div className="space-y-4">
               {RENEWAL_STEPS.map((s) => (
@@ -285,7 +285,7 @@ export default function NhraRenewalPage() {
                 href="/register"
                 className="block w-full text-center bg-white text-[#1a56a0] font-semibold text-sm py-3 rounded-lg hover:bg-[#f0f7ff] transition-colors"
               >
-                Start tracking NHRA CPD â€” free â†’
+                Start tracking NHRA CPD — free â†’
               </Link>
             </div>
           </div>
@@ -293,7 +293,7 @@ export default function NhraRenewalPage() {
           {/* FAQ */}
           <div className="mb-12">
             <h2 className="text-xl font-bold text-[#111] mb-6">
-              NHRA license renewal â€” frequently asked questions
+              NHRA license renewal — frequently asked questions
             </h2>
             <div className="space-y-3">
               {faqLd.mainEntity.map((faq) => (
@@ -350,10 +350,10 @@ export default function NhraRenewalPage() {
               href="/register"
               className="inline-flex items-center gap-2 bg-white text-[#1a56a0] font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#f0f7ff] transition-colors"
             >
-              Track my NHRA compliance â€” free â†’
+              Track my NHRA compliance — free â†’
             </Link>
             <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">
-              No credit card required Â· 14-day Pro trial included
+              No credit card required · 14-day Pro trial included
             </p>
           </div>
 

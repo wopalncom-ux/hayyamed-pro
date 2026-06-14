@@ -14,7 +14,7 @@ export async function deleteAccount() {
 
   const admin = createAdminClient();
 
-  // Audit log before deletion (append-only â€” survives the cascade)
+  // Audit log before deletion (append-only — survives the cascade)
   await logAudit({
     actorAuthId: user.id,
     action: "account.deleted",
@@ -24,7 +24,7 @@ export async function deleteAccount() {
   });
 
   // Deleting the auth user cascades to professional_profiles and all child tables.
-  // Audit logs are append-only and reference actor_auth_id as a plain UUID â€” they are
+  // Audit logs are append-only and reference actor_auth_id as a plain UUID — they are
   // retained for the 7-year compliance window even after the auth user is gone.
   const { error } = await admin.auth.admin.deleteUser(user.id);
   if (error) return { error: error.message };

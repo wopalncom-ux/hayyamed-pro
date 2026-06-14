@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "Ophthalmology CME Requirements in GCC â€” Ophthalmologist CME Guide | Hayya Med Pro",
+  title: "Ophthalmology CME Requirements in GCC — Ophthalmologist CME Guide | Hayya Med Pro",
   description:
     "Complete CME and CPD guide for ophthalmologists in GCC. QCHP Qatar 80 CPD/2yr, SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. Surgical simulation, phacoemulsification, and LASIK courses count. Track all 7 authorities.",
   keywords: [
@@ -22,9 +22,9 @@ export const metadata: Metadata = {
     "vitreoretinal CME GCC",
   ],
   openGraph: {
-    title: "Ophthalmology CME Requirements in GCC â€” Ophthalmologist Guide",
+    title: "Ophthalmology CME Requirements in GCC — Ophthalmologist Guide",
     description:
-      "QCHP Qatar 80 CPD/2yr Â· SCFHS Saudi 60 CME/yr Â· DHA Dubai 40 CME/2yr. Surgical simulation + phaco + LASIK count. Track all GCC ophthalmology requirements.",
+      "QCHP Qatar 80 CPD/2yr · SCFHS Saudi 60 CME/yr · DHA Dubai 40 CME/2yr. Surgical simulation + phaco + LASIK count. Track all GCC ophthalmology requirements.",
     url: `${APP_URL}/ophthalmology-cme`,
     type: "website",
     images: [
@@ -58,7 +58,7 @@ const faqLd = {
       name: "How many CME credits does an ophthalmologist need in Saudi Arabia (SCFHS)?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "SCFHS-registered ophthalmologists must complete 60 CME credits per year. Events accredited by the Saudi Ophthalmological Society (SOS), International Council of Ophthalmology (ICO), American Academy of Ophthalmology (AAO), European Society of Ophthalmology (SOE), and World Ophthalmology Congress (WOC) are recognised. Surgical skills workshops â€” including phacoemulsification, LASIK, and vitreoretinal simulation â€” count as clinical credits.",
+        text: "SCFHS-registered ophthalmologists must complete 60 CME credits per year. Events accredited by the Saudi Ophthalmological Society (SOS), International Council of Ophthalmology (ICO), American Academy of Ophthalmology (AAO), European Society of Ophthalmology (SOE), and World Ophthalmology Congress (WOC) are recognised. Surgical skills workshops — including phacoemulsification, LASIK, and vitreoretinal simulation — count as clinical credits.",
       },
     },
     {
@@ -74,7 +74,7 @@ const faqLd = {
       name: "Does LASIK certification and refractive surgery training count as CME?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. Accredited LASIK and refractive surgery training courses â€” including femtosecond laser platforms, SMILE procedure training, and excimer laser certification â€” count as clinical CME when offered by an approved provider. QCHP and SCFHS recognise these under the clinical skills or procedural competency category. Many GCC hospitals also require documented laser certification for clinical privileges.",
+        text: "Yes. Accredited LASIK and refractive surgery training courses — including femtosecond laser platforms, SMILE procedure training, and excimer laser certification — count as clinical CME when offered by an approved provider. QCHP and SCFHS recognise these under the clinical skills or procedural competency category. Many GCC hospitals also require documented laser certification for clinical privileges.",
       },
     },
     {
@@ -90,7 +90,7 @@ const faqLd = {
       name: "Can an ophthalmologist track CME for both QCHP and SCFHS licences simultaneously?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. Hayya Med Pro supports multi-jurisdiction tracking. Ophthalmologists with both QCHP (Qatar) and SCFHS (Saudi Arabia) licences can maintain separate compliance wallets within one account. Each wallet tracks independently â€” separate credit totals, cycle dates, and compliance status â€” so nothing falls through the cracks at renewal time.",
+        text: "Yes. Hayya Med Pro supports multi-jurisdiction tracking. Ophthalmologists with both QCHP (Qatar) and SCFHS (Saudi Arabia) licences can maintain separate compliance wallets within one account. Each wallet tracks independently — separate credit totals, cycle dates, and compliance status — so nothing falls through the cracks at renewal time.",
       },
     },
   ],
@@ -115,7 +115,7 @@ const SPECIALTY_NOTES = [
   {
     icon: "ðŸ©º",
     title: "OCT & imaging workshops",
-    body: "Accredited optical coherence tomography (OCT) interpretation courses, fundus photography workshops, fluorescein angiography training, and retinal imaging CME count as clinical CME in QCHP and SCFHS â€” increasingly relevant as imaging platforms advance.",
+    body: "Accredited optical coherence tomography (OCT) interpretation courses, fundus photography workshops, fluorescein angiography training, and retinal imaging CME count as clinical CME in QCHP and SCFHS — increasingly relevant as imaging platforms advance.",
   },
   {
     icon: "ðŸ‘",
@@ -145,7 +145,7 @@ export default function OphthalmologyCmePage() {
             Ophthalmology CME Requirements<br />Across GCC
           </h1>
           <p style={{ fontSize: 18, color: "#cbd5e1", maxWidth: 620, margin: "0 auto 32px" }}>
-            QCHP Qatar Â· SCFHS Saudi Arabia Â· DHA Dubai Â· and 4 more authorities.
+            QCHP Qatar · SCFHS Saudi Arabia · DHA Dubai · and 4 more authorities.
             Surgical simulation, phacoemulsification, and LASIK training all count.
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
@@ -214,7 +214,7 @@ export default function OphthalmologyCmePage() {
       <section style={{ background: "#f0f4f8", padding: "64px 24px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto" }}>
           <h2 style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", textAlign: "center", marginBottom: 48 }}>
-            Ophthalmology CME â€” Frequently Asked Questions
+            Ophthalmology CME — Frequently Asked Questions
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {faqLd.mainEntity.map((q) => (
@@ -264,7 +264,7 @@ export default function OphthalmologyCmePage() {
           <Link href="/register" style={{ background: "#1a56a0", color: "#fff", padding: "16px 36px", borderRadius: 8, fontWeight: 700, textDecoration: "none", fontSize: 17, display: "inline-block" }}>
             Start tracking free â†’
           </Link>
-          <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required Â· Free plan always available</p>
+          <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required · Free plan always available</p>
         </div>
       </section>
 

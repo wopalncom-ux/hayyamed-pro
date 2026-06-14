@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "Oman CME Tracker â€” OMSB CME Requirements | Hayya Med Pro",
+  title: "Oman CME Tracker — OMSB CME Requirements | Hayya Med Pro",
   description:
     "Track your OMSB Oman CME requirements automatically. Physicians need 40 CME credits per 2-year cycle; nurses and AHPs need 30. Hayya Med Pro tracks Category A and B activities, enforces online caps, and generates your OMSB-ready compliance report.",
   keywords: [
@@ -18,16 +18,16 @@ export const metadata: Metadata = {
     "CME tracker Oman",
   ],
   openGraph: {
-    title: "OMSB CME Tracker â€” Oman Healthcare Compliance",
+    title: "OMSB CME Tracker — Oman Healthcare Compliance",
     description:
-      "40 CME credits/2yr for physicians Â· 30 for nurses/AHP. Track Category A & B activities, enforce caps, and get your OMSB compliance report â€” free to start.",
+      "40 CME credits/2yr for physicians · 30 for nurses/AHP. Track Category A & B activities, enforce caps, and get your OMSB compliance report — free to start.",
     url: `${APP_URL}/omsb`,
     type: "website",
     images: [{ url: `${APP_URL}/api/og?t=OMSB+CME+Tracker+%E2%80%94+Oman&s=40+CME%2F2yr+%28physicians%29+%C2%B7+30%2F2yr+%28nurses%29+%C2%B7+Category+A+%26+B+framework&a=%F0%9F%87%B4%F0%9F%87%B2+OMSB&k=Authority+Guide`, width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "OMSB CME Tracker â€” Oman Healthcare Compliance",
+    title: "OMSB CME Tracker — Oman Healthcare Compliance",
     description: "Track your OMSB Oman CME requirements automatically. Free for healthcare professionals in Oman.",
   },
   alternates: { canonical: `${APP_URL}/omsb` },
@@ -74,7 +74,7 @@ const faqLd = {
       name: "How do I submit my CME portfolio to OMSB Oman for license renewal?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "CME portfolios are submitted through the OMSB online portal (omsb.org) before your license renewal date. Hayya Med Pro generates a complete CME activity log categorized by Category A and B â€” including activity type, credits, dates, and accreditation â€” ready for OMSB portal submission.",
+        text: "CME portfolios are submitted through the OMSB online portal (omsb.org) before your license renewal date. Hayya Med Pro generates a complete CME activity log categorized by Category A and B — including activity type, credits, dates, and accreditation — ready for OMSB portal submission.",
       },
     },
   ],
@@ -82,25 +82,25 @@ const faqLd = {
 
 const CATEGORIES = [
   {
-    name: "Cat A â€” Accredited (In-Person)",
+    name: "Cat A — Accredited (In-Person)",
     icon: "ðŸ›ï¸",
     description: "Conferences, workshops, symposia, and hands-on training courses accredited by OMSB or recognized bodies",
     bg: "#eff6ff", border: "#bfdbfe", text: "#1e40af",
   },
   {
-    name: "Cat A â€” Online (max 20)",
+    name: "Cat A — Online (max 20)",
     icon: "ðŸ’»",
     description: "Accredited e-learning and online CME from OMSB-recognized providers (maximum 20 credits per 2-year cycle)",
     bg: "#fff7ed", border: "#fed7aa", text: "#c2410c",
   },
   {
-    name: "Cat B â€” Self-Directed",
+    name: "Cat B — Self-Directed",
     icon: "ðŸ“š",
     description: "Journal reading, clinical audit, case discussions, and independent self-study activities",
     bg: "#faf5ff", border: "#e9d5ff", text: "#7e22ce",
   },
   {
-    name: "Cat B â€” Teaching & Research",
+    name: "Cat B — Teaching & Research",
     icon: "ðŸ”¬",
     description: "Teaching clinical staff, research participation, academic publications, and postgraduate study",
     bg: "#f0fdf4", border: "#bbf7d0", text: "#15803d",
@@ -111,7 +111,7 @@ const HOW_IT_WORKS = [
   {
     step: "1",
     title: "Set your profession and OMSB cycle",
-    desc: "Select Oman as your country and your profession (physician, nurse, or AHP). Hayya Med Pro automatically applies the correct requirement â€” 40 credits for physicians, 30 for nurses/AHP â€” and tracks Category A/B totals.",
+    desc: "Select Oman as your country and your profession (physician, nurse, or AHP). Hayya Med Pro automatically applies the correct requirement — 40 credits for physicians, 30 for nurses/AHP — and tracks Category A/B totals.",
   },
   {
     step: "2",
@@ -126,7 +126,7 @@ const HOW_IT_WORKS = [
   {
     step: "4",
     title: "Generate your OMSB compliance report",
-    desc: "Download a PDF CME report organized by Category A and Category B â€” with activity names, dates, credits, and accreditation details â€” ready for OMSB portal submission.",
+    desc: "Download a PDF CME report organized by Category A and Category B — with activity names, dates, credits, and accreditation details — ready for OMSB portal submission.",
   },
 ];
 
@@ -158,10 +158,10 @@ export default function OmsbPage() {
           {/* Hero */}
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-2 bg-[#eff6ff] border border-[#bfdbfe] text-[#1a56a0] text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
-              ðŸ‡´ðŸ‡² Oman Â· Oman Medical Specialty Board (OMSB)
+              ðŸ‡´ðŸ‡² Oman · Oman Medical Specialty Board (OMSB)
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-[#111] tracking-tight mb-4 leading-tight">
-              Track your OMSB Oman CME<br className="hidden sm:block" /> requirements â€” automatically
+              Track your OMSB Oman CME<br className="hidden sm:block" /> requirements — automatically
             </h1>
             <p className="text-lg text-[#64748b] max-w-2xl mx-auto mb-8">
               Oman physicians need <strong className="text-[#111]">40 CME credits</strong> per 2-year cycle. Nurses and AHPs need <strong className="text-[#111]">30 credits</strong>.
@@ -169,13 +169,13 @@ export default function OmsbPage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link href="/register" className="inline-flex items-center gap-2 bg-[#1a56a0] text-white font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#154890] transition-colors">
-                Track my OMSB compliance â€” free â†’
+                Track my OMSB compliance — free â†’
               </Link>
               <Link href="/pricing" className="inline-flex items-center gap-1 text-sm text-[#64748b] hover:text-[#1a56a0] transition-colors">
                 See what&apos;s free vs Pro
               </Link>
             </div>
-            <p className="text-xs text-[#94a3b8] mt-3">No credit card required Â· 14-day Pro trial included</p>
+            <p className="text-xs text-[#94a3b8] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>
 
           {/* Requirements card */}
@@ -276,7 +276,7 @@ export default function OmsbPage() {
 
           {/* FAQ */}
           <div className="mb-12">
-            <h2 className="text-xl font-bold text-[#111] mb-6">OMSB Oman CME â€” frequently asked questions</h2>
+            <h2 className="text-xl font-bold text-[#111] mb-6">OMSB Oman CME — frequently asked questions</h2>
             <div className="space-y-3">
               {faqLd.mainEntity.map((item) => (
                 <details key={item.name} className="bg-white rounded-xl border border-[#e2e8f0] group">
@@ -367,12 +367,12 @@ export default function OmsbPage() {
             <div className="inline-block text-3xl mb-3">ðŸ‡´ðŸ‡²</div>
             <h2 className="text-2xl font-bold text-white mb-2">Start tracking your OMSB CME today</h2>
             <p className="text-[rgba(255,255,255,0.65)] mb-6 max-w-md mx-auto text-sm">
-              Hayya Med Pro applies OMSB Oman rules automatically â€” profession-specific credit targets, Category A/B split, and the 20-credit online cap. Free to start, no setup required.
+              Hayya Med Pro applies OMSB Oman rules automatically — profession-specific credit targets, Category A/B split, and the 20-credit online cap. Free to start, no setup required.
             </p>
             <Link href="/register" className="inline-flex items-center gap-2 bg-white text-[#1a56a0] font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#f0f7ff] transition-colors">
-              Track my OMSB CME â€” free â†’
+              Track my OMSB CME — free â†’
             </Link>
-            <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">No credit card required Â· 14-day Pro trial included</p>
+            <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>
 
           <div className="mt-6 bg-[#fef9c3] border border-[#fde68a] rounded-lg px-4 py-3 text-xs text-[#92400e] text-center">

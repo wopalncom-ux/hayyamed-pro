@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "DOH License Renewal â€” CPD Requirements for Abu Dhabi Healthcare Professionals",
+  title: "DOH License Renewal — CPD Requirements for Abu Dhabi Healthcare Professionals",
   description:
     "Complete guide to renewing your DOH license in Abu Dhabi. 30â€“50 CPD credits per renewal cycle depending on profession. Step-by-step DOH renewal process for physicians, nurses, pharmacists, and all Abu Dhabi healthcare professionals.",
   keywords: [
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     "DOH CPD credits renewal",
   ],
   openGraph: {
-    title: "DOH License Renewal â€” Complete Guide for Abu Dhabi Healthcare Professionals",
+    title: "DOH License Renewal — Complete Guide for Abu Dhabi Healthcare Professionals",
     description:
       "30â€“50 CPD credits per cycle. Step-by-step DOH renewal process, checklist, and how Hayya Med Pro tracks your CPD progress automatically.",
     url: `${APP_URL}/doh-renewal`,
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "DOH License Renewal Guide â€” Abu Dhabi Healthcare CPD",
+    title: "DOH License Renewal Guide — Abu Dhabi Healthcare CPD",
     description: "30â€“50 CPD credits per cycle. Complete DOH renewal checklist, step-by-step process, and CPD compliance tracking for Abu Dhabi healthcare professionals.",
   },
   alternates: { canonical: `${APP_URL}/doh-renewal` },
@@ -52,7 +52,7 @@ const faqLd = {
       name: "How do I renew my DOH license online?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "DOH license renewal is completed through the DOH portal (doh.gov.ae) or via the Tamm Abu Dhabi digital services platform (tamm.abudhabi). You will need to upload your CPD portfolio with all activity certificates, provider names, accreditation details, and credit values. Complete the online renewal form and submit. Processing times vary â€” start at least 60 days before your license expiry.",
+        text: "DOH license renewal is completed through the DOH portal (doh.gov.ae) or via the Tamm Abu Dhabi digital services platform (tamm.abudhabi). You will need to upload your CPD portfolio with all activity certificates, provider names, accreditation details, and credit values. Complete the online renewal form and submit. Processing times vary — start at least 60 days before your license expiry.",
       },
     },
     {
@@ -86,7 +86,7 @@ const RENEWAL_STEPS = [
   {
     step: "1",
     title: "Confirm your DOH license type and renewal date",
-    desc: "Log in to the DOH portal (doh.gov.ae) or Tamm platform to confirm your license category, expiry date, and the exact CPD credit requirement for your profession. Different license types have different credit targets â€” verify your specific requirement before planning.",
+    desc: "Log in to the DOH portal (doh.gov.ae) or Tamm platform to confirm your license category, expiry date, and the exact CPD credit requirement for your profession. Different license types have different credit targets — verify your specific requirement before planning.",
   },
   {
     step: "2",
@@ -174,10 +174,10 @@ export default function DohRenewalPage() {
           {/* Hero */}
           <div className="mb-10">
             <div className="inline-flex items-center gap-2 bg-[#f0f9ff] border border-[#bae6fd] text-[#0369a1] text-xs font-semibold px-3 py-1.5 rounded-full mb-4">
-              ðŸ‡¦ðŸ‡ª Abu Dhabi Â· Department of Health â€” Abu Dhabi (DOH)
+              ðŸ‡¦ðŸ‡ª Abu Dhabi · Department of Health — Abu Dhabi (DOH)
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold text-[#111] mb-4 leading-tight">
-              DOH license renewal â€” complete guide for Abu Dhabi healthcare professionals
+              DOH license renewal — complete guide for Abu Dhabi healthcare professionals
             </h1>
             <p className="text-base text-[#475569] max-w-2xl leading-relaxed">
               DOH (Department of Health Abu Dhabi) requires <strong className="text-[#111]">30â€“50 CPD credits
@@ -227,7 +227,7 @@ export default function DohRenewalPage() {
           {/* Step-by-step */}
           <div className="mb-10">
             <h2 className="text-xl font-bold text-[#111] mb-6">
-              DOH license renewal â€” step by step
+              DOH license renewal — step by step
             </h2>
             <div className="space-y-4">
               {RENEWAL_STEPS.map((s) => (
@@ -286,7 +286,7 @@ export default function DohRenewalPage() {
                 href="/register"
                 className="block w-full text-center bg-white text-[#1a56a0] font-semibold text-sm py-3 rounded-lg hover:bg-[#f0f7ff] transition-colors"
               >
-                Start tracking DOH CPD â€” free â†’
+                Start tracking DOH CPD — free â†’
               </Link>
             </div>
           </div>
@@ -294,7 +294,7 @@ export default function DohRenewalPage() {
           {/* FAQ */}
           <div className="mb-12">
             <h2 className="text-xl font-bold text-[#111] mb-6">
-              DOH license renewal â€” frequently asked questions
+              DOH license renewal — frequently asked questions
             </h2>
             <div className="space-y-3">
               {faqLd.mainEntity.map((faq) => (
@@ -351,10 +351,10 @@ export default function DohRenewalPage() {
               href="/register"
               className="inline-flex items-center gap-2 bg-white text-[#1a56a0] font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#f0f7ff] transition-colors"
             >
-              Track my DOH compliance â€” free â†’
+              Track my DOH compliance — free â†’
             </Link>
             <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">
-              No credit card required Â· 14-day Pro trial included
+              No credit card required · 14-day Pro trial included
             </p>
           </div>
 

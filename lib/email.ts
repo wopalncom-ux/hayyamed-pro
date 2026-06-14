@@ -21,7 +21,7 @@ const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://hayyamed.pro";
 function baseLayout(content: string, unsubscribeUrl?: string) {
   const prefsUrl = `${APP_URL}/dashboard/settings#notifications`;
   const unsubLink = unsubscribeUrl
-    ? `<a href="${unsubscribeUrl}" style="color:#94a3b8;text-decoration:underline">Unsubscribe</a> Â· `
+    ? `<a href="${unsubscribeUrl}" style="color:#94a3b8;text-decoration:underline">Unsubscribe</a> · `
     : "";
   return `
     <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:600px;margin:0 auto;background:#f8fafc;padding:24px">
@@ -31,7 +31,7 @@ function baseLayout(content: string, unsubscribeUrl?: string) {
       <div style="background:white;border:1px solid #e2e8f0;border-top:none;padding:32px;border-radius:0 0 12px 12px">
         ${content}
         <hr style="border:none;border-top:1px solid #e2e8f0;margin:28px 0"/>
-        <p style="color:#94a3b8;font-size:12px;margin:0 0 6px">Hayya Med Pro Â· Healthcare Professional Platform Â· Qatar</p>
+        <p style="color:#94a3b8;font-size:12px;margin:0 0 6px">Hayya Med Pro · Healthcare Professional Platform · Qatar</p>
         <p style="color:#94a3b8;font-size:11px;margin:0">${unsubLink}<a href="${prefsUrl}" style="color:#94a3b8;text-decoration:underline">Manage email preferences</a></p>
       </div>
     </div>`;
@@ -47,7 +47,7 @@ async function isSuppressed(email: string): Promise<boolean> {
       .maybeSingle();
     return !!(data?.email_hard_bounced || data?.email_spam_reported);
   } catch {
-    return false; // fail open â€” better to attempt delivery than silently drop
+    return false; // fail open — better to attempt delivery than silently drop
   }
 }
 
@@ -73,7 +73,7 @@ export async function sendCmeVerifiedEmail({
       <p style="margin:0 0 12px;color:#374151;font-size:13px">Pro members can download a formatted QCHP, SCFHS, or DHA-ready PDF report at any time. Upgrade to Pro to generate yours.</p>
       <a href="${APP_URL}/pricing" style="display:inline-block;background:#1a56a0;color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px">Upgrade to Pro â†’</a>
     </div>`;
-  await send(to, `CME Activity Verified â€” +${credits} credits added`, baseLayout(`
+  await send(to, `CME Activity Verified — +${credits} credits added`, baseLayout(`
     <p style="color:#374151;font-size:16px;margin:0 0 8px">Hi ${esc(name)},</p>
     <p style="color:#374151;margin:0 0 24px">Your CME activity has been <strong style="color:#16a34a">verified</strong> and credits added to your wallet.</p>
     <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:16px 20px;margin:0 0 24px">
@@ -189,9 +189,9 @@ export async function sendWelcomeEmail({
 }: { to: string; name: string; profession: string | null; country: string | null }) {
   const profLine = profession ? ` as a ${esc(profession.replace(/_/g, " "))}` : "";
   const countryLine = country ? ` in ${esc(country)}` : "";
-  await send(to, `Welcome to Hayya Med Pro â€” your compliance journey starts here`, baseLayout(`
+  await send(to, `Welcome to Hayya Med Pro — your compliance journey starts here`, baseLayout(`
     <p style="color:#374151;font-size:16px;margin:0 0 8px">Hi ${esc(name)},</p>
-    <p style="color:#374151;margin:0 0 20px">Welcome to Hayya Med Pro â€” your professional CME tracking and licensing platform${profLine}${countryLine}.</p>
+    <p style="color:#374151;margin:0 0 20px">Welcome to Hayya Med Pro — your professional CME tracking and licensing platform${profLine}${countryLine}.</p>
     <div style="background:#f0f7ff;border:1px solid #bfdbfe;border-radius:8px;padding:16px 20px;margin:0 0 24px">
       <p style="margin:0;font-weight:600;color:#111;font-size:14px">What you can do now:</p>
       <ul style="margin:10px 0 0;padding-left:18px;color:#374151;font-size:14px;line-height:1.8">
@@ -236,17 +236,17 @@ export async function sendEmployerDigestEmail({
     const statusColor = s.complianceStatus === "non_compliant" ? "#dc2626"
       : s.complianceStatus === "at_risk" ? "#d97706" : "#374151";
     const statusLabel = s.complianceStatus === "non_compliant" ? "Non-Compliant"
-      : s.complianceStatus === "at_risk" ? "At Risk" : "â€”";
+      : s.complianceStatus === "at_risk" ? "At Risk" : "—";
     const cmeText = s.completedCredits !== null
       ? `${s.completedCredits}/${s.requiredCredits ?? "?"} credits`
       : "Private";
     const licText = s.daysToExpiry !== null
       ? (s.daysToExpiry < 0 ? "EXPIRED" : `${s.daysToExpiry}d`)
-      : "â€”";
+      : "—";
     return `
       <tr>
         <td style="padding:8px 12px;border-bottom:1px solid #f1f5f9;color:#111;font-size:13px">${esc(s.name)}</td>
-        <td style="padding:8px 12px;border-bottom:1px solid #f1f5f9;color:#64748b;font-size:13px">${esc(s.department ?? "â€”")}</td>
+        <td style="padding:8px 12px;border-bottom:1px solid #f1f5f9;color:#64748b;font-size:13px">${esc(s.department ?? "—")}</td>
         <td style="padding:8px 12px;border-bottom:1px solid #f1f5f9;color:${statusColor};font-size:13px;font-weight:500">${statusLabel || cmeText}</td>
         <td style="padding:8px 12px;border-bottom:1px solid #f1f5f9;color:${s.daysToExpiry !== null && s.daysToExpiry <= 30 ? "#dc2626" : "#374151"};font-size:13px">${licText}</td>
       </tr>`;
@@ -264,9 +264,9 @@ export async function sendEmployerDigestEmail({
         </tr>
       </thead>
       <tbody>${alertRows}</tbody>
-    </table>` : `<p style="color:#16a34a;margin:16px 0">All staff are compliant â€” no action required this week.</p>`;
+    </table>` : `<p style="color:#16a34a;margin:16px 0">All staff are compliant — no action required this week.</p>`;
 
-  await send(to, `Weekly Compliance Digest â€” ${esc(orgName)} (${esc(weekOf)})`, baseLayout(`
+  await send(to, `Weekly Compliance Digest — ${esc(orgName)} (${esc(weekOf)})`, baseLayout(`
     <p style="color:#374151;font-size:16px;margin:0 0 4px">Hi ${esc(adminName)},</p>
     <p style="color:#64748b;margin:0 0 24px;font-size:14px">Here is your weekly compliance snapshot for <strong style="color:#111">${esc(orgName)}</strong>.</p>
 
@@ -307,9 +307,9 @@ export async function sendCmeDeadlineEmail({
   const urgent = daysLeft <= 7;
   const color = urgent ? "#dc2626" : "#d97706";
   const unsub = authId ? unsubUrl(authId, "cme") : undefined;
-  await send(to, `${urgent ? "âš ï¸ " : ""}CME Cycle Ends in ${daysLeft} Days â€” ${creditsNeeded} Credits Still Needed`, baseLayout(`
+  await send(to, `${urgent ? "âš ï¸ " : ""}CME Cycle Ends in ${daysLeft} Days — ${creditsNeeded} Credits Still Needed`, baseLayout(`
     <p style="color:#374151;font-size:16px;margin:0 0 8px">Hi ${esc(name)},</p>
-    <p style="color:#374151;margin:0 0 20px">Your CME cycle ends on <strong style="color:${color}">${cycleEndDate}</strong> â€” only <strong style="color:${color}">${daysLeft} days away</strong>.</p>
+    <p style="color:#374151;margin:0 0 20px">Your CME cycle ends on <strong style="color:${color}">${cycleEndDate}</strong> — only <strong style="color:${color}">${daysLeft} days away</strong>.</p>
     <div style="background:${urgent ? "#fef2f2" : "#fff7ed"};border:1px solid ${urgent ? "#fecaca" : "#fed7aa"};border-radius:8px;padding:16px 20px;margin:0 0 24px">
       <p style="margin:0;font-size:13px;color:#64748b">Credits still needed to complete your cycle</p>
       <p style="margin:6px 0 0;font-size:28px;font-weight:700;color:${color}">${creditsNeeded}</p>
@@ -328,15 +328,15 @@ export async function sendTrialStartEmail({
     : `${APP_URL}/dashboard/settings#referral`;
   const referralSection = `
     <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:16px 20px;margin:24px 0">
-      <p style="margin:0 0 6px;font-weight:600;color:#15803d;font-size:14px">Earn 30 more free days â€” refer a colleague</p>
+      <p style="margin:0 0 6px;font-weight:600;color:#15803d;font-size:14px">Earn 30 more free days — refer a colleague</p>
       <p style="margin:0 0 12px;font-size:13px;color:#374151">Share Hayya Med Pro with a fellow healthcare professional. Each colleague who joins extends your trial by 30 days.</p>
       ${referralCode ? `<p style="margin:0 0 10px;font-size:12px;color:#64748b">Your referral link:</p>
       <p style="margin:0 0 12px;font-family:monospace;font-size:12px;color:#111;background:#fff;border:1px solid #d1fae5;border-radius:4px;padding:8px 12px;word-break:break-all">${referralUrl}</p>` : ""}
       <a href="${referralUrl}" style="display:inline-block;background:#16a34a;color:white;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:600;font-size:13px">${referralCode ? "Copy my referral link â†’" : "Generate my referral link â†’"}</a>
     </div>`;
-  await send(to, `Your ${trialDays}-day Pro trial has started â€” welcome to full access`, baseLayout(`
+  await send(to, `Your ${trialDays}-day Pro trial has started — welcome to full access`, baseLayout(`
     <p style="color:#374151;font-size:16px;margin:0 0 8px">Hi ${esc(name)},</p>
-    <p style="color:#374151;margin:0 0 20px">Your <strong>${trialDays}-day Pro trial</strong> is now active. You have full access to every Pro feature â€” no credit card required.</p>
+    <p style="color:#374151;margin:0 0 20px">Your <strong>${trialDays}-day Pro trial</strong> is now active. You have full access to every Pro feature — no credit card required.</p>
     <div style="background:#f0f7ff;border:1px solid #bfdbfe;border-radius:8px;padding:16px 20px;margin:0 0 16px">
       <p style="margin:0;font-weight:600;color:#111;font-size:14px">What's included in your Pro trial:</p>
       <ul style="margin:10px 0 0;padding-left:18px;color:#374151;font-size:14px;line-height:1.9">
@@ -363,9 +363,9 @@ export async function sendTrialEndingSoonEmail({
   const urgent = daysLeft <= 1;
   const color = urgent ? "#dc2626" : "#d97706";
   const unsub = authId ? unsubUrl(authId, "reminders") : undefined;
-  await send(to, `${urgent ? "âš ï¸ " : ""}Your Pro trial ends ${daysLeft === 1 ? "tomorrow" : `in ${daysLeft} days`} â€” don't lose access`, baseLayout(`
+  await send(to, `${urgent ? "âš ï¸ " : ""}Your Pro trial ends ${daysLeft === 1 ? "tomorrow" : `in ${daysLeft} days`} — don't lose access`, baseLayout(`
     <p style="color:#374151;font-size:16px;margin:0 0 8px">Hi ${esc(name)},</p>
-    <p style="color:#374151;margin:0 0 20px">Your Pro trial expires on <strong style="color:${color}">${expiryDate}</strong> â€” <strong style="color:${color}">${daysLeft === 1 ? "tomorrow" : `in ${daysLeft} days`}</strong>.</p>
+    <p style="color:#374151;margin:0 0 20px">Your Pro trial expires on <strong style="color:${color}">${expiryDate}</strong> — <strong style="color:${color}">${daysLeft === 1 ? "tomorrow" : `in ${daysLeft} days`}</strong>.</p>
     <div style="background:${urgent ? "#fef2f2" : "#fff7ed"};border:1px solid ${urgent ? "#fecaca" : "#fed7aa"};border-radius:8px;padding:16px 20px;margin:0 0 24px">
       <p style="margin:0;font-weight:600;color:#111;font-size:14px">After your trial you will lose access to:</p>
       <ul style="margin:10px 0 0;padding-left:18px;color:#374151;font-size:14px;line-height:1.9">
@@ -375,7 +375,7 @@ export async function sendTrialEndingSoonEmail({
         <li>Multi-country tracking</li>
       </ul>
     </div>
-    <a href="${APP_URL}/pricing" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Upgrade Now â€” from $6/month â†’</a>
+    <a href="${APP_URL}/pricing" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Upgrade Now — from $6/month â†’</a>
     <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">Your data is always safe regardless of plan. If you don't upgrade, you'll stay on the free tier with limited access.</p>
   `, unsub), unsub);
 }
@@ -383,14 +383,14 @@ export async function sendTrialEndingSoonEmail({
 export async function sendTrialExpiredEmail({
   to, name, authId,
 }: { to: string; name: string; authId?: string }) {
-  await send(to, `Your Pro trial has ended â€” upgrade to keep your compliance on track`, baseLayout(`
+  await send(to, `Your Pro trial has ended — upgrade to keep your compliance on track`, baseLayout(`
     <p style="color:#374151;font-size:16px;margin:0 0 8px">Hi ${esc(name)},</p>
     <p style="color:#374151;margin:0 0 20px">Your Pro trial has ended. Your account is now on the <strong>Free plan</strong>.</p>
     <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:16px 20px;margin:0 0 24px">
       <p style="margin:0;font-weight:600;color:#111;font-size:14px;margin-bottom:8px">Upgrade to Pro to restore full access:</p>
       <div style="display:flex;align-items:baseline;gap:6px;margin:12px 0">
         <span style="font-size:32px;font-weight:700;color:#1a56a0">$6</span>
-        <span style="font-size:14px;color:#64748b">/month â€” or $61.20/year (save 15%)</span>
+        <span style="font-size:14px;color:#64748b">/month — or $61.20/year (save 15%)</span>
       </div>
       <ul style="margin:8px 0 0;padding-left:18px;color:#374151;font-size:13px;line-height:1.9">
         <li>Unlimited CME activity submissions</li>
@@ -409,19 +409,19 @@ export async function sendTrialDay3Email({
 }: { to: string; name: string; trialEndsAt: string }) {
   const expiryDate = new Date(trialEndsAt).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
   const daysRemaining = Math.max(1, Math.ceil((new Date(trialEndsAt).getTime() - Date.now()) / 86400000));
-  await send(to, `You're on day 3 of Pro â€” have you logged your first CME activity?`, baseLayout(`
+  await send(to, `You're on day 3 of Pro — have you logged your first CME activity?`, baseLayout(`
     <p style="color:#374151;font-size:16px;margin:0 0 8px">Hi ${esc(name)},</p>
-    <p style="color:#374151;margin:0 0 20px">You started your Pro trial 3 days ago. Your compliance tracker is ready â€” but it looks like you haven't logged your first CME activity yet.</p>
+    <p style="color:#374151;margin:0 0 20px">You started your Pro trial 3 days ago. Your compliance tracker is ready — but it looks like you haven't logged your first CME activity yet.</p>
     <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:16px 20px;margin:0 0 20px">
       <p style="margin:0 0 8px;font-weight:600;color:#15803d;font-size:14px">Logging your first activity only takes 60 seconds:</p>
       <ol style="margin:0;padding-left:18px;color:#374151;font-size:14px;line-height:2">
         <li>Go to <strong>CME Wallet</strong> in your dashboard</li>
         <li>Click <strong>Add Activity</strong></li>
-        <li>Enter the title, date, and credits â€” then submit</li>
+        <li>Enter the title, date, and credits — then submit</li>
       </ol>
     </div>
     <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px 18px;margin:0 0 24px">
-      <p style="margin:0;font-size:13px;color:#64748b">Your Pro trial ends: <strong style="color:#111">${expiryDate}</strong> Â· ${daysRemaining} days remaining</p>
+      <p style="margin:0;font-size:13px;color:#64748b">Your Pro trial ends: <strong style="color:#111">${expiryDate}</strong> · ${daysRemaining} days remaining</p>
     </div>
     <a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Log my first CME activity â†’</a>
     <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">Your compliance snapshot updates automatically as you add activities. Every verified activity brings you closer to renewal.</p>
@@ -434,15 +434,15 @@ export async function sendTrialDay7Email({
   const expiryDate = new Date(trialEndsAt).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
   const pct = required > 0 ? Math.min(100, Math.round((completed / required) * 100)) : 0;
   const barWidth = Math.max(4, pct);
-  await send(to, `Halfway through your trial â€” here's your compliance snapshot`, baseLayout(`
+  await send(to, `Halfway through your trial — here's your compliance snapshot`, baseLayout(`
     <p style="color:#374151;font-size:16px;margin:0 0 8px">Hi ${esc(name)},</p>
-    <p style="color:#374151;margin:0 0 20px">You're 7 days into your Pro trial â€” ${Math.max(1, Math.ceil((new Date(trialEndsAt).getTime() - Date.now()) / 86400000))} days left. Here's where your CME compliance stands right now.</p>
+    <p style="color:#374151;margin:0 0 20px">You're 7 days into your Pro trial — ${Math.max(1, Math.ceil((new Date(trialEndsAt).getTime() - Date.now()) / 86400000))} days left. Here's where your CME compliance stands right now.</p>
     <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px;margin:0 0 20px">
       <p style="margin:0 0 12px;font-weight:600;color:#111;font-size:14px">Your compliance progress</p>
       <div style="background:#e2e8f0;border-radius:999px;height:8px;margin:0 0 8px;overflow:hidden">
         <div style="background:#1a56a0;height:8px;width:${barWidth}%;border-radius:999px"></div>
       </div>
-      <p style="margin:0;font-size:13px;color:#64748b"><strong style="color:#111">${completed}</strong> of <strong style="color:#111">${required}</strong> credits verified Â· <strong style="color:#1a56a0">${pct}% complete</strong></p>
+      <p style="margin:0;font-size:13px;color:#64748b"><strong style="color:#111">${completed}</strong> of <strong style="color:#111">${required}</strong> credits verified · <strong style="color:#1a56a0">${pct}% complete</strong></p>
     </div>
     <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:16px 20px;margin:0 0 24px">
       <p style="margin:0 0 8px;font-weight:600;color:#92400e;font-size:14px">After your trial ends on ${expiryDate}:</p>
@@ -453,8 +453,8 @@ export async function sendTrialDay7Email({
         <li>Multi-country tracking locked</li>
       </ul>
     </div>
-    <a href="${APP_URL}/pricing" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Keep Pro access â€” $6/month â†’</a>
-    <p style="color:#64748b;font-size:12px;margin:16px 0 0">Or $61.20/year (save 15%) Â· 14-day money-back guarantee Â· Cancel any time</p>
+    <a href="${APP_URL}/pricing" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Keep Pro access — $6/month â†’</a>
+    <p style="color:#64748b;font-size:12px;margin:16px 0 0">Or $61.20/year (save 15%) · 14-day money-back guarantee · Cancel any time</p>
     <p style="color:#94a3b8;font-size:11px;margin:12px 0 0">Your CME data and profile are always kept, regardless of plan.</p>
   `));
 }
@@ -470,14 +470,14 @@ export async function sendSubscriptionActivatedEmail({
       : "Employer";
     await send(
       to,
-      `Your ${tierLabel} employer plan is active â€” complete your setup`,
+      `Your ${tierLabel} employer plan is active — complete your setup`,
       baseLayout(`
         <p style="font-size:20px;font-weight:700;color:#111;margin:0 0 8px">You're on the ${esc(tierLabel)} Employer Plan, ${esc(name)}</p>
         <p style="color:#374151;margin:0 0 20px">Your ${esc(tierLabel)} plan is active (${esc(intervalLabel)} billing). One step left before you can see your team's compliance.</p>
         <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:16px 20px;margin-bottom:24px">
           <p style="margin:0 0 10px;font-weight:700;color:#92400e;font-size:15px">Complete your setup in 2 minutes</p>
-          <p style="margin:0 0 6px;color:#374151;font-size:14px"><strong>Step 1</strong> â€” Register your organization (name, type, country)</p>
-          <p style="margin:0;color:#374151;font-size:14px"><strong>Step 2</strong> â€” Share your org link with staff so they can request to link their profiles</p>
+          <p style="margin:0 0 6px;color:#374151;font-size:14px"><strong>Step 1</strong> — Register your organization (name, type, country)</p>
+          <p style="margin:0;color:#374151;font-size:14px"><strong>Step 2</strong> — Share your org link with staff so they can request to link their profiles</p>
         </div>
         <a href="${APP_URL}/employer/register?welcome=1" style="display:inline-block;background:#d97706;color:white;text-decoration:none;padding:13px 28px;border-radius:8px;font-weight:700;font-size:15px;margin-bottom:20px">Set up my organization â†’</a>
         <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:14px 18px;margin-top:4px">
@@ -499,7 +499,7 @@ export async function sendSubscriptionActivatedEmail({
   const planLabel = plan === "pro" ? "Pro" : plan.charAt(0).toUpperCase() + plan.slice(1);
   await send(
     to,
-    `You're now on ${planLabel} â€” Hayya Med Pro`,
+    `You're now on ${planLabel} — Hayya Med Pro`,
     baseLayout(`
       <p style="font-size:20px;font-weight:700;color:#111;margin:0 0 8px">Welcome to ${esc(planLabel)}, ${esc(name)}</p>
       <p style="color:#374151;margin:0 0 20px">Your ${esc(planLabel)} subscription is now active (${esc(intervalLabel)} billing). Everything is unlocked.</p>
@@ -633,8 +633,8 @@ export async function sendProfessionalWeeklyDigestEmail({
     : `<a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Log CME Activity â†’</a>`;
 
   const subject = complianceStatus === "compliant"
-    ? `Your CME is on track â€” ${pct}% complete for ${country}`
-    : `Weekly CME update â€” ${pct}% complete, ${remaining} credits to go`;
+    ? `Your CME is on track — ${pct}% complete for ${country}`
+    : `Weekly CME update — ${pct}% complete, ${remaining} credits to go`;
 
   await send(to, subject, baseLayout(`
     <p style="color:#374151;font-size:16px;margin:0 0 4px">Hi ${esc(name)},</p>
@@ -689,7 +689,7 @@ export async function sendSupportEmail({
       From: FROM,
       To: SUPPORT_EMAIL,
       ReplyTo: email,
-      Subject: `[Support] ${esc(subject)} â€” from ${esc(name)}`,
+      Subject: `[Support] ${esc(subject)} — from ${esc(name)}`,
       HtmlBody: baseLayout(`
         <p style="color:#374151;margin:0 0 16px">New support request from <strong>${esc(name)}</strong> (<a href="mailto:${esc(email)}" style="color:#1a56a0">${esc(email)}</a>).</p>
         <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:16px 20px;margin-bottom:16px">
@@ -710,7 +710,7 @@ export async function sendSupportConfirmationEmail({
 }: { to: string; name: string; subject: string }) {
   await send(
     to,
-    `We received your message â€” Hayya Med Pro`,
+    `We received your message — Hayya Med Pro`,
     baseLayout(`
       <p style="font-size:20px;font-weight:700;color:#111;margin:0 0 6px">Got it, ${esc(name)}.</p>
       <p style="color:#374151;margin:0 0 20px">
@@ -749,11 +749,11 @@ export async function sendReferralRewardEmail({
 
   await send(
     to,
-    `ðŸŽ‰ Your referral joined â€” you've earned ${bonusDays} free Pro days`,
+    `ðŸŽ‰ Your referral joined — you've earned ${bonusDays} free Pro days`,
     baseLayout(`
       <p style="color:#374151;font-size:16px;margin:0 0 8px">Hi ${esc(referrerName)},</p>
       <p style="color:#374151;margin:0 0 24px">
-        Great news â€” <strong>${esc(refereeName)}</strong> just completed their onboarding on Hayya Med Pro
+        Great news — <strong>${esc(refereeName)}</strong> just completed their onboarding on Hayya Med Pro
         using your referral link. As a thank you, your Pro access has been extended.
       </p>
 
@@ -764,7 +764,7 @@ export async function sendReferralRewardEmail({
       </div>
 
       <p style="color:#374151;margin:0 0 24px;font-size:14px">
-        Keep sharing your referral link â€” every colleague who joins earns you another ${bonusDays} days of Pro.
+        Keep sharing your referral link — every colleague who joins earns you another ${bonusDays} days of Pro.
         There's no cap.
       </p>
 
@@ -794,17 +794,17 @@ export async function sendOnboardingReminderEmail({
 
   await send(to, `Finish setting up your Hayya Med Pro account`, baseLayout(`
     <p style="color:#374151;font-size:16px;margin:0 0 8px">Hi ${esc(name)},</p>
-    <p style="color:#374151;margin:0 0 20px">You started setting up your Hayya Med Pro account but haven't finished yet. You're just a couple of minutes from activating your <strong>Pro trial</strong> â€” no credit card required.</p>
+    <p style="color:#374151;margin:0 0 20px">You started setting up your Hayya Med Pro account but haven't finished yet. You're just a couple of minutes from activating your <strong>Pro trial</strong> — no credit card required.</p>
     <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:16px 20px;margin:0 0 24px">
       <p style="margin:0 0 8px;font-weight:600;color:#15803d;font-size:14px">Your Pro trial includes:</p>
       <ul style="margin:0;padding-left:18px;color:#374151;font-size:14px;line-height:1.9">
         <li>Unlimited CME activity tracking</li>
         <li>AI compliance gap analysis (powered by Claude)</li>
-        <li>Official CPD PDF report â€” ready for QCHP or SCFHS submission</li>
+        <li>Official CPD PDF report — ready for QCHP or SCFHS submission</li>
         <li>License expiry reminders and renewal readiness score</li>
       </ul>
     </div>
-    <a href="${href}" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Continue setup â€” finish ${esc(stepLabel)} â†’</a>
+    <a href="${href}" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Continue setup — finish ${esc(stepLabel)} â†’</a>
     <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">Setup takes about 3 minutes total. Your Pro trial activates automatically when you finish. Your CME data is always yours on any plan.</p>
   `));
 }
@@ -827,7 +827,7 @@ export async function sendAdminActivityPendingEmail({
 
   await send(
     adminEmail,
-    `[Action needed] CME activity pending verification â€” ${esc(activityTitle)}`,
+    `[Action needed] CME activity pending verification — ${esc(activityTitle)}`,
     baseLayout(`
       <p style="color:#374151;font-size:16px;margin:0 0 8px">New activity pending verification</p>
       <p style="color:#374151;margin:0 0 24px;font-size:14px">
@@ -873,7 +873,7 @@ export async function sendDemoRequestEmail({
       From: FROM,
       To: SUPPORT_EMAIL,
       ReplyTo: email,
-      Subject: `[Demo Request] ${esc(orgName)} â€” ${esc(staffCount)} staff â€” ${esc(country)}`,
+      Subject: `[Demo Request] ${esc(orgName)} — ${esc(staffCount)} staff — ${esc(country)}`,
       HtmlBody: baseLayout(`
         <p style="color:#374151;font-size:16px;margin:0 0 4px">New employer demo request</p>
         <p style="color:#64748b;font-size:14px;margin:0 0 24px">From <strong>${esc(name)}</strong> at <strong>${esc(orgName)}</strong></p>
@@ -918,32 +918,32 @@ export async function sendFirstActivityEmail({
 }) {
   await send(
     to,
-    `âœ… First activity logged â€” your CME tracker is live`,
+    `âœ… First activity logged — your CME tracker is live`,
     baseLayout(`
       <p style="font-size:20px;font-weight:700;color:#111;margin:0 0 6px">Your first CME activity is in, ${esc(name)}.</p>
-      <p style="color:#374151;margin:0 0 20px">You just logged <strong>${esc(activityTitle)}</strong> â€” <strong>${credits} credit${credits !== 1 ? "s" : ""}</strong>. Your compliance dashboard has been updated automatically.</p>
+      <p style="color:#374151;margin:0 0 20px">You just logged <strong>${esc(activityTitle)}</strong> — <strong>${credits} credit${credits !== 1 ? "s" : ""}</strong>. Your compliance dashboard has been updated automatically.</p>
 
       <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:16px 20px;margin:0 0 20px">
         <p style="margin:0 0 6px;font-weight:600;color:#15803d;font-size:14px">What happens next</p>
         <ul style="margin:0;padding-left:18px;color:#374151;font-size:14px;line-height:2">
           <li>Your activity is queued for verification by the Hayya Med team</li>
           <li>Once verified, it counts toward your compliance total</li>
-          <li>Add more activities as you complete them â€” your tracker updates in real time</li>
+          <li>Add more activities as you complete them — your tracker updates in real time</li>
         </ul>
       </div>
 
       ${userIsPro ? `
       <div style="background:#f0f7ff;border:1px solid #bfdbfe;border-radius:8px;padding:16px 20px;margin:0 0 24px">
         <p style="margin:0 0 6px;font-weight:600;color:#1a56a0;font-size:14px">Download your compliance report any time</p>
-        <p style="margin:0;color:#374151;font-size:14px">Your Pro plan includes a one-click PDF compliance report â€” formatted for QCHP, SCFHS, DHA, or any GCC authority renewal submission.</p>
+        <p style="margin:0;color:#374151;font-size:14px">Your Pro plan includes a one-click PDF compliance report — formatted for QCHP, SCFHS, DHA, or any GCC authority renewal submission.</p>
       </div>
       <a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">View my CME dashboard â†’</a>
       ` : `
       <div style="background:#fdf4ff;border:1px solid #e9d5ff;border-radius:8px;padding:16px 20px;margin:0 0 24px">
         <p style="margin:0 0 6px;font-weight:600;color:#7c3aed;font-size:14px">Upgrade to Pro to download your compliance report</p>
-        <p style="margin:0;color:#374151;font-size:14px">Pro generates a one-click PDF compliance report â€” ready to attach to your QCHP, SCFHS, or DHA renewal application. From $6/month.</p>
+        <p style="margin:0;color:#374151;font-size:14px">Pro generates a one-click PDF compliance report — ready to attach to your QCHP, SCFHS, or DHA renewal application. From $6/month.</p>
       </div>
-      <a href="${APP_URL}/pricing" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Upgrade to Pro â€” from $6/month â†’</a>
+      <a href="${APP_URL}/pricing" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Upgrade to Pro — from $6/month â†’</a>
       `}
 
       <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">Every verified activity brings you closer to renewal. Keep going.</p>
@@ -965,7 +965,7 @@ export async function sendAdminUnverifiedLinkRequestEmail({
 
   await send(
     adminEmail,
-    `[Action needed] Unverified employer link request â€” ${esc(unverifiedEmployerName)}`,
+    `[Action needed] Unverified employer link request — ${esc(unverifiedEmployerName)}`,
     baseLayout(`
       <p style="color:#374151;font-size:16px;margin:0 0 8px">Unverified employer link request</p>
       <p style="color:#374151;margin:0 0 24px;font-size:14px">
@@ -1007,7 +1007,7 @@ export async function sendEmployerLinkRequestNotificationEmail({
 }) {
   await send(
     to,
-    `New link request â€” ${esc(professionalName)} wants to join ${esc(orgName)}`,
+    `New link request — ${esc(professionalName)} wants to join ${esc(orgName)}`,
     baseLayout(`
       <p style="color:#374151;font-size:16px;margin:0 0 8px">Hi ${esc(adminName)},</p>
       <p style="color:#374151;margin:0 0 24px">A healthcare professional has requested to link their compliance profile to <strong>${esc(orgName)}</strong>.</p>
@@ -1094,7 +1094,7 @@ export async function sendUniversityWelcomeEmail({
 }) {
   await send(
     to,
-    `Welcome to Hayya Med Pro â€” ${esc(universityName)} is registered`,
+    `Welcome to Hayya Med Pro — ${esc(universityName)} is registered`,
     baseLayout(`
       <p style="color:#374151;font-size:16px;margin:0 0 8px">Hi ${esc(adminName)},</p>
       <p style="color:#374151;margin:0 0 24px">
@@ -1106,7 +1106,7 @@ export async function sendUniversityWelcomeEmail({
         <p style="margin:0 0 12px;font-size:15px;font-weight:600;color:#111">Getting started</p>
         <p style="margin:0 0 8px;color:#374151;font-size:14px">1. <strong>Copy your faculty invite link</strong> from the dashboard and share it with your faculty.</p>
         <p style="margin:0 0 8px;color:#374151;font-size:14px">2. <strong>Approve faculty requests</strong> as they link their accounts to your institution.</p>
-        <p style="margin:0;color:#374151;font-size:14px">3. <strong>Track compliance</strong> in real time â€” CME credits, license expiry, and overall institutional compliance rate.</p>
+        <p style="margin:0;color:#374151;font-size:14px">3. <strong>Track compliance</strong> in real time — CME credits, license expiry, and overall institutional compliance rate.</p>
       </div>
 
       <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:10px;padding:16px 24px;margin:0 0 24px">
@@ -1138,7 +1138,7 @@ export async function sendAdminProviderPendingEmail({
 
   await send(
     adminEmail,
-    `[Action needed] New training provider application â€” ${esc(providerName)}`,
+    `[Action needed] New training provider application — ${esc(providerName)}`,
     baseLayout(`
       <p style="font-size:16px;color:#374151;margin:0 0 8px">New training provider application</p>
       <p style="color:#374151;font-size:14px;margin:0 0 24px">A new training provider has applied and is awaiting your review.</p>
@@ -1147,7 +1147,7 @@ export async function sendAdminProviderPendingEmail({
         <p style="margin:0 0 4px;font-size:16px;font-weight:700;color:#111">${esc(providerName)}</p>
         <p style="margin:0 0 4px;color:#374151;font-size:14px">Country: <strong>${esc(country)}</strong></p>
         ${contactEmail ? `<p style="margin:0 0 4px;color:#374151;font-size:14px">Contact: <strong>${esc(contactEmail)}</strong></p>` : ""}
-        <p style="margin:0;color:#374151;font-size:14px">Accredited: <strong>${isAccredited ? `Yes â€” ${esc(accreditor ?? "unknown")}` : "No"}</strong></p>
+        <p style="margin:0;color:#374151;font-size:14px">Accredited: <strong>${isAccredited ? `Yes — ${esc(accreditor ?? "unknown")}` : "No"}</strong></p>
       </div>
       <a href="${APP_URL}/admin/training-providers" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Review in Admin Panel â†’</a>
     `)
@@ -1235,14 +1235,14 @@ export async function sendDemoRequestConfirmationEmail({
         <ol style="margin:0;padding-left:20px;color:#374151;font-size:14px;line-height:2">
           <li>Our team will review your request and reply directly to this email</li>
           <li>We'll schedule a 30-minute walkthrough tailored to your team's size and location</li>
-          <li>You can start with a free account immediately â€” no payment needed to explore</li>
+          <li>You can start with a free account immediately — no payment needed to explore</li>
         </ol>
       </div>
 
       <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:16px 20px;margin:0 0 24px">
         <p style="margin:0 0 10px;font-size:13px;text-transform:uppercase;letter-spacing:0.5px;color:#64748b;font-weight:600">Want to start right now?</p>
         <p style="margin:0 0 14px;color:#374151;font-size:14px">
-          Create a free account while you wait â€” you'll have full access to the employer dashboard during your Pro trial (up to 30 days for referrals).
+          Create a free account while you wait — you'll have full access to the employer dashboard during your Pro trial (up to 30 days for referrals).
         </p>
         <a href="${APP_URL}/register"
            style="display:inline-block;background:#1a56a0;color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px">
@@ -1251,7 +1251,7 @@ export async function sendDemoRequestConfirmationEmail({
       </div>
 
       <p style="color:#64748b;font-size:13px;margin:0">
-        Questions? Reply directly to this email â€” it goes straight to our team.
+        Questions? Reply directly to this email — it goes straight to our team.
       </p>
     `)
   );

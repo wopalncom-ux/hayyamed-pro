@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "SCFHS CME Tracker â€” Track Saudi Arabia CPD Requirements | Hayya Med Pro",
+  title: "SCFHS CME Tracker — Track Saudi Arabia CPD Requirements | Hayya Med Pro",
   description:
     "Track your SCFHS CME requirements automatically. Saudi healthcare professionals need 40â€“60 CME credits per year depending on profession. Hayya Med Pro tracks your progress and generates your SCFHS-ready compliance report.",
   keywords: [
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     "Saudi healthcare professional CME",
   ],
   openGraph: {
-    title: "SCFHS CME Tracker â€” Track Saudi Arabia Healthcare CME",
+    title: "SCFHS CME Tracker — Track Saudi Arabia Healthcare CME",
     description:
       "40â€“60 CME credits per year. Hayya Med Pro tracks your SCFHS progress, flags gaps, and generates your compliance report. Free to start.",
     url: `${APP_URL}/scfhs`,
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "SCFHS CME Tracker â€” Saudi Arabia Healthcare CME",
+    title: "SCFHS CME Tracker — Saudi Arabia Healthcare CME",
     description: "Track your SCFHS CME credits automatically. Free for Saudi healthcare professionals.",
   },
   alternates: { canonical: `${APP_URL}/scfhs` },
@@ -107,7 +107,7 @@ const HOW_IT_WORKS = [
   {
     step: "4",
     title: "Download your SCFHS report",
-    desc: "Export a PDF compliance report with all activities, providers, accreditation numbers, and credit totals â€” ready for SCFHS submission.",
+    desc: "Export a PDF compliance report with all activities, providers, accreditation numbers, and credit totals — ready for SCFHS submission.",
   },
 ];
 
@@ -145,10 +145,10 @@ export default function ScfhsPage() {
           {/* Hero */}
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-2 bg-[#f0fdf4] border border-[#bbf7d0] text-[#15803d] text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
-              ðŸ‡¸ðŸ‡¦ Saudi Arabia Â· SCFHS Â· Saudi Commission for Health Specialties
+              ðŸ‡¸ðŸ‡¦ Saudi Arabia · SCFHS · Saudi Commission for Health Specialties
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-[#111] tracking-tight mb-4 leading-tight">
-              Track your SCFHS CME<br className="hidden sm:block" /> requirements â€” automatically
+              Track your SCFHS CME<br className="hidden sm:block" /> requirements — automatically
             </h1>
             <p className="text-lg text-[#64748b] max-w-2xl mx-auto mb-8">
               Saudi Arabia healthcare professionals must complete{" "}
@@ -160,7 +160,7 @@ export default function ScfhsPage() {
                 href="/register"
                 className="inline-flex items-center gap-2 bg-[#1a56a0] text-white font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#154890] transition-colors"
               >
-                Track my SCFHS compliance â€” free â†’
+                Track my SCFHS compliance — free â†’
               </Link>
               <Link
                 href="/pricing"
@@ -169,7 +169,7 @@ export default function ScfhsPage() {
                 See what&apos;s free vs Pro
               </Link>
             </div>
-            <p className="text-xs text-[#94a3b8] mt-3">No credit card required Â· 14-day Pro trial included</p>
+            <p className="text-xs text-[#94a3b8] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>
 
           {/* Credits by profession */}
@@ -225,7 +225,7 @@ export default function ScfhsPage() {
 
           {/* FAQ */}
           <div className="mb-12">
-            <h2 className="text-xl font-bold text-[#111] mb-6">SCFHS CME â€” frequently asked questions</h2>
+            <h2 className="text-xl font-bold text-[#111] mb-6">SCFHS CME — frequently asked questions</h2>
             <div className="space-y-3">
               {faqLd.mainEntity.map((item) => (
                 <details key={item.name} className="bg-white rounded-xl border border-[#e2e8f0] group">
@@ -316,16 +316,16 @@ export default function ScfhsPage() {
             <div className="inline-block text-3xl mb-3">ðŸ‡¸ðŸ‡¦</div>
             <h2 className="text-2xl font-bold text-white mb-2">Start tracking your SCFHS CME today</h2>
             <p className="text-[rgba(255,255,255,0.65)] mb-6 max-w-md mx-auto text-sm">
-              Join Saudi Arabia healthcare professionals tracking their annual CME requirements with Hayya Med Pro. Free to start â€” upgrade for PDF reports and AI compliance tools.
+              Join Saudi Arabia healthcare professionals tracking their annual CME requirements with Hayya Med Pro. Free to start — upgrade for PDF reports and AI compliance tools.
             </p>
             <Link
               href="/register"
               className="inline-flex items-center gap-2 bg-white text-[#1a56a0] font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#f0f7ff] transition-colors"
             >
-              Track my SCFHS compliance â€” free â†’
+              Track my SCFHS compliance — free â†’
             </Link>
             <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">
-              No credit card required Â· 14-day Pro trial included
+              No credit card required · 14-day Pro trial included
             </p>
           </div>
 

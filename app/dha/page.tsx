@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "DHA CME Tracker â€” Track Dubai Healthcare CME Requirements | Hayya Med Pro",
+  title: "DHA CME Tracker — Track Dubai Healthcare CME Requirements | Hayya Med Pro",
   description:
     "Track your DHA CME requirements automatically. Dubai healthcare professionals need 40 CME credits per 2-year cycle. Hayya Med Pro tracks your progress and generates your DHA-ready compliance report.",
   keywords: [
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     "DHA CPD requirements",
   ],
   openGraph: {
-    title: "DHA CME Tracker â€” Dubai Healthcare Compliance",
+    title: "DHA CME Tracker — Dubai Healthcare Compliance",
     description:
       "40 CME credits per 2-year cycle. Hayya Med Pro tracks your DHA progress and generates your compliance report. Free to start.",
     url: `${APP_URL}/dha`,
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "DHA CME Tracker â€” Dubai Healthcare CME",
+    title: "DHA CME Tracker — Dubai Healthcare CME",
     description: "Track your DHA CME credits automatically. Free for Dubai healthcare professionals.",
   },
   alternates: { canonical: `${APP_URL}/dha` },
@@ -85,7 +85,7 @@ const HOW_IT_WORKS = [
   {
     step: "1",
     title: "Set up your DHA CME wallet",
-    desc: "Select UAE â€” Dubai and your profession. Hayya Med Pro applies the 40-credit/2-year rule with patient safety tracking automatically.",
+    desc: "Select UAE — Dubai and your profession. Hayya Med Pro applies the 40-credit/2-year rule with patient safety tracking automatically.",
   },
   {
     step: "2",
@@ -100,7 +100,7 @@ const HOW_IT_WORKS = [
   {
     step: "4",
     title: "Generate your DHA CME report",
-    desc: "Download a PDF compliance report with all activity details â€” ready to submit to the Dubai Health Authority portal.",
+    desc: "Download a PDF compliance report with all activity details — ready to submit to the Dubai Health Authority portal.",
   },
 ];
 
@@ -138,10 +138,10 @@ export default function DhaPage() {
           {/* Hero */}
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-2 bg-[#eff6ff] border border-[#bfdbfe] text-[#1e40af] text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
-              ðŸ‡¦ðŸ‡ª UAE â€” Dubai Â· DHA Â· Dubai Health Authority
+              ðŸ‡¦ðŸ‡ª UAE — Dubai · DHA · Dubai Health Authority
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-[#111] tracking-tight mb-4 leading-tight">
-              Track your DHA CME<br className="hidden sm:block" /> requirements â€” automatically
+              Track your DHA CME<br className="hidden sm:block" /> requirements — automatically
             </h1>
             <p className="text-lg text-[#64748b] max-w-2xl mx-auto mb-8">
               Dubai Health Authority requires{" "}
@@ -153,7 +153,7 @@ export default function DhaPage() {
                 href="/register"
                 className="inline-flex items-center gap-2 bg-[#1a56a0] text-white font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#154890] transition-colors"
               >
-                Track my DHA compliance â€” free â†’
+                Track my DHA compliance — free â†’
               </Link>
               <Link
                 href="/pricing"
@@ -162,7 +162,7 @@ export default function DhaPage() {
                 See what&apos;s free vs Pro
               </Link>
             </div>
-            <p className="text-xs text-[#94a3b8] mt-3">No credit card required Â· 14-day Pro trial included</p>
+            <p className="text-xs text-[#94a3b8] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>
 
           {/* Requirement summary */}
@@ -193,7 +193,7 @@ export default function DhaPage() {
           <div className="bg-[#fef9c3] border border-[#fde68a] rounded-xl px-5 py-4 mb-10">
             <p className="text-sm font-semibold text-[#92400e] mb-1">Licensed in both Dubai (DHA) and Abu Dhabi (DOH)?</p>
             <p className="text-xs text-[#92400e] leading-relaxed">
-              Hayya Med Pro supports multi-jurisdiction tracking. Add separate wallets for DHA and DOH within the same account â€” credits are tracked independently since they have different approved provider lists and category structures.
+              Hayya Med Pro supports multi-jurisdiction tracking. Add separate wallets for DHA and DOH within the same account — credits are tracked independently since they have different approved provider lists and category structures.
             </p>
           </div>
 
@@ -217,7 +217,7 @@ export default function DhaPage() {
 
           {/* FAQ */}
           <div className="mb-12">
-            <h2 className="text-xl font-bold text-[#111] mb-6">DHA CME â€” frequently asked questions</h2>
+            <h2 className="text-xl font-bold text-[#111] mb-6">DHA CME — frequently asked questions</h2>
             <div className="space-y-3">
               {faqLd.mainEntity.map((item) => (
                 <details key={item.name} className="bg-white rounded-xl border border-[#e2e8f0] group">
@@ -308,16 +308,16 @@ export default function DhaPage() {
             <div className="inline-block text-3xl mb-3">ðŸ‡¦ðŸ‡ª</div>
             <h2 className="text-2xl font-bold text-white mb-2">Start tracking your DHA compliance today</h2>
             <p className="text-[rgba(255,255,255,0.65)] mb-6 max-w-md mx-auto text-sm">
-              Join Dubai healthcare professionals tracking their CME requirements with Hayya Med Pro. Free to start â€” upgrade for PDF reports and AI compliance tools.
+              Join Dubai healthcare professionals tracking their CME requirements with Hayya Med Pro. Free to start — upgrade for PDF reports and AI compliance tools.
             </p>
             <Link
               href="/register"
               className="inline-flex items-center gap-2 bg-white text-[#1a56a0] font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#f0f7ff] transition-colors"
             >
-              Track my DHA compliance â€” free â†’
+              Track my DHA compliance — free â†’
             </Link>
             <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">
-              No credit card required Â· 14-day Pro trial included
+              No credit card required · 14-day Pro trial included
             </p>
           </div>
 

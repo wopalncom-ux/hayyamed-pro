@@ -2,13 +2,13 @@
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "List CME Courses on Hayya Med Pro â€” Training Provider Marketplace",
+  title: "List CME Courses on Hayya Med Pro — Training Provider Marketplace",
   description:
-    "Reach 10,000+ GCC healthcare professionals. List your CME and CPD courses on the Hayya Med Pro marketplace â€” accredited by QCHP, SCFHS, DHA, DOH, NHRA and OMSB.",
+    "Reach 10,000+ GCC healthcare professionals. List your CME and CPD courses on the Hayya Med Pro marketplace — accredited by QCHP, SCFHS, DHA, DOH, NHRA and OMSB.",
   openGraph: {
     title: "List CME Courses on Hayya Med Pro",
     description:
-      "Reach GCC healthcare professionals searching for accredited CME. No upfront fees â€” you pay only when professionals enroll.",
+      "Reach GCC healthcare professionals searching for accredited CME. No upfront fees — you pay only when professionals enroll.",
     url: "https://hayyamed.pro/for-providers",
     siteName: "Hayya Med Pro",
     type: "website",
@@ -30,7 +30,7 @@ const BENEFITS = [
   {
     icon: "ðŸ‘¥",
     title: "Reach verified GCC professionals",
-    body: "Your courses appear in front of physicians, nurses, pharmacists, and dentists actively tracking their CME deadlines â€” the highest-intent audience in GCC healthcare.",
+    body: "Your courses appear in front of physicians, nurses, pharmacists, and dentists actively tracking their CME deadlines — the highest-intent audience in GCC healthcare.",
   },
   {
     icon: "âœ…",
@@ -40,7 +40,7 @@ const BENEFITS = [
   {
     icon: "ðŸ“Š",
     title: "Real-time enrollment analytics",
-    body: "See who enrolled, completion rates, weekly growth, and estimated revenue â€” all in your provider dashboard, updated in real time.",
+    body: "See who enrolled, completion rates, weekly growth, and estimated revenue — all in your provider dashboard, updated in real time.",
   },
   {
     icon: "ðŸ”’",
@@ -50,12 +50,12 @@ const BENEFITS = [
   {
     icon: "ðŸŒ",
     title: "All delivery modes supported",
-    body: "Live conferences, workshops, online modules, hybrid events, and on-demand videos â€” all listed and searchable in one marketplace.",
+    body: "Live conferences, workshops, online modules, hybrid events, and on-demand videos — all listed and searchable in one marketplace.",
   },
   {
     icon: "ðŸ’°",
     title: "Free and paid courses",
-    body: "List free courses to build your audience, or sell paid courses and keep the revenue. No upfront listing fees â€” we only succeed when you succeed.",
+    body: "List free courses to build your audience, or sell paid courses and keep the revenue. No upfront listing fees — we only succeed when you succeed.",
   },
 ];
 
@@ -68,7 +68,7 @@ const STEPS = [
   {
     step: "02",
     title: "List your first course",
-    body: "Add your course â€” title, category, credits, delivery mode, schedule, and price. Free or paid. Online or in-person.",
+    body: "Add your course — title, category, credits, delivery mode, schedule, and price. Free or paid. Online or in-person.",
   },
   {
     step: "03",
@@ -93,7 +93,7 @@ const FAQS = [
   },
   {
     q: "How do professionals find my course?",
-    a: "Courses are surfaced based on the professional's country, profession, compliance gaps, and upcoming renewal deadlines â€” matching intent at the right moment.",
+    a: "Courses are surfaced based on the professional's country, profession, compliance gaps, and upcoming renewal deadlines — matching intent at the right moment.",
   },
   {
     q: "Can I list a course even if it is not yet accredited?",
@@ -164,7 +164,7 @@ export default function ForProvidersPage() {
                 Browse the marketplace
               </Link>
             </div>
-            <p className="text-xs text-[#94a3b8] mt-4">No upfront fees Â· Approved within 2 business days</p>
+            <p className="text-xs text-[#94a3b8] mt-4">No upfront fees · Approved within 2 business days</p>
           </div>
         </section>
 
@@ -182,7 +182,7 @@ export default function ForProvidersPage() {
                 >
                   <span>{code}</span>
                   <span className="font-semibold text-[#111]">{name}</span>
-                  <span className="text-[#94a3b8]">Â· {country}</span>
+                  <span className="text-[#94a3b8]">· {country}</span>
                 </div>
               ))}
             </div>
@@ -194,7 +194,7 @@ export default function ForProvidersPage() {
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-[#0f1f3d] mb-3">Why list on Hayya Med Pro?</h2>
-              <p className="text-[#64748b]">The only GCC marketplace built around compliance gaps â€” not just course discovery.</p>
+              <p className="text-[#64748b]">The only GCC marketplace built around compliance gaps — not just course discovery.</p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {BENEFITS.map(({ icon, title, body }) => (
@@ -213,7 +213,7 @@ export default function ForProvidersPage() {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-white mb-3">Get listed in 4 steps</h2>
-              <p className="text-[#94a3b8]">From registration to your first enrollment â€” as fast as 2 business days.</p>
+              <p className="text-[#94a3b8]">From registration to your first enrollment — as fast as 2 business days.</p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {STEPS.map(({ step, title, body }) => (
@@ -264,7 +264,7 @@ export default function ForProvidersPage() {
               Ready to reach GCC healthcare professionals?
             </h2>
             <p className="text-blue-100 mb-8">
-              Register your organization today â€” no upfront fees, approved within 2 business days.
+              Register your organization today — no upfront fees, approved within 2 business days.
             </p>
             <Link
               href="/provider/register"
@@ -278,7 +278,7 @@ export default function ForProvidersPage() {
         {/* Footer */}
         <footer className="bg-[#0f1f3d] px-6 py-8">
           <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#94a3b8]">
-            <span>Â© {new Date().getFullYear()} Hayya Med Pro Â· hayyamed.pro</span>
+            <span>Â© {new Date().getFullYear()} Hayya Med Pro · hayyamed.pro</span>
             <div className="flex items-center gap-4">
               <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
               <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>

@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "Internal Medicine CME Requirements in GCC â€” Internist CME Guide | Hayya Med Pro",
+  title: "Internal Medicine CME Requirements in GCC — Internist CME Guide | Hayya Med Pro",
   description:
     "Complete CME and CPD guide for internal medicine specialists in GCC. QCHP Qatar 80 CPD/2yr, SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. Track all requirements in one compliance app.",
   keywords: [
@@ -20,9 +20,9 @@ export const metadata: Metadata = {
     "continuing medical education internal medicine",
   ],
   openGraph: {
-    title: "Internal Medicine CME Requirements in GCC â€” Complete Internist Guide",
+    title: "Internal Medicine CME Requirements in GCC — Complete Internist Guide",
     description:
-      "QCHP, SCFHS, DHA, DOH, MOH Kuwait, NHRA, OMSB â€” CME and CPD requirements for internal medicine specialists across all 7 GCC countries.",
+      "QCHP, SCFHS, DHA, DOH, MOH Kuwait, NHRA, OMSB — CME and CPD requirements for internal medicine specialists across all 7 GCC countries.",
     url: `${APP_URL}/internal-medicine-cme`,
     type: "website",
     images: [{ url: `${APP_URL}/api/og?t=Internal+Medicine+CME+%E2%80%94+GCC+Guide&s=QCHP+%C2%B7+SCFHS+%C2%B7+DHA+%E2%80%94+all+7+GCC+authorities+%C2%B7+Free+to+track&a=%F0%9F%A9%BA+Internal+Medicine&k=Specialty+Guide`, width: 1200, height: 630 }],
@@ -76,7 +76,7 @@ const faqLd = {
       name: "Can I track CME for multiple GCC licenses (Qatar and Saudi Arabia) in one place?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. Hayya Med Pro supports multi-wallet tracking â€” one wallet per licensing authority, all within the same account. Your QCHP (Qatar) and SCFHS (Saudi Arabia) requirements are tracked independently with separate credit totals, cycle dates, and compliance status. You can log one CME activity once and assign it to multiple wallets if the accreditor is recognized by each authority.",
+        text: "Yes. Hayya Med Pro supports multi-wallet tracking — one wallet per licensing authority, all within the same account. Your QCHP (Qatar) and SCFHS (Saudi Arabia) requirements are tracked independently with separate credit totals, cycle dates, and compliance status. You can log one CME activity once and assign it to multiple wallets if the accreditor is recognized by each authority.",
       },
     },
   ],
@@ -144,23 +144,23 @@ export default function InternalMedicineCmePage() {
           {/* Hero */}
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-2 bg-[#eff6ff] border border-[#bfdbfe] text-[#1e40af] text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
-              ðŸ©º Internal Medicine Â· All GCC Licensing Authorities
+              ðŸ©º Internal Medicine · All GCC Licensing Authorities
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-[#111] tracking-tight mb-4 leading-tight">
               Internal medicine CME<br className="hidden sm:block" /> requirements in GCC
             </h1>
             <p className="text-lg text-[#64748b] max-w-2xl mx-auto mb-8">
-              Track your CME and CPD requirements across every GCC licensing authority â€” QCHP, SCFHS, DHA, DOH, and more â€” in one compliance app built for internists.
+              Track your CME and CPD requirements across every GCC licensing authority — QCHP, SCFHS, DHA, DOH, and more — in one compliance app built for internists.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link href="/register" className="inline-flex items-center gap-2 bg-[#1a56a0] text-white font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#154890] transition-colors">
-                Track my CME â€” free â†’
+                Track my CME — free â†’
               </Link>
               <Link href="/physician-cme" className="inline-flex items-center gap-1 text-sm text-[#64748b] hover:text-[#1a56a0] transition-colors">
                 See all physician CME requirements
               </Link>
             </div>
-            <p className="text-xs text-[#94a3b8] mt-3">No credit card required Â· 14-day Pro trial included</p>
+            <p className="text-xs text-[#94a3b8] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>
 
           {/* Requirements table */}
@@ -213,7 +213,7 @@ export default function InternalMedicineCmePage() {
 
           {/* FAQ */}
           <div className="mb-12">
-            <h2 className="text-xl font-bold text-[#111] mb-6">Internal medicine CME â€” frequently asked questions</h2>
+            <h2 className="text-xl font-bold text-[#111] mb-6">Internal medicine CME — frequently asked questions</h2>
             <div className="space-y-3">
               {faqLd.mainEntity.map((item) => (
                 <details key={item.name} className="bg-white rounded-xl border border-[#e2e8f0] group">
@@ -252,14 +252,14 @@ export default function InternalMedicineCmePage() {
           {/* CTA */}
           <div className="bg-gradient-to-br from-[#0f1f3d] to-[#1a3563] rounded-2xl p-10 text-center">
             <div className="text-3xl mb-3">ðŸ©º</div>
-            <h2 className="text-2xl font-bold text-white mb-2">Start tracking your CME â€” free</h2>
+            <h2 className="text-2xl font-bold text-white mb-2">Start tracking your CME — free</h2>
             <p className="text-[rgba(255,255,255,0.65)] mb-6 max-w-md mx-auto text-sm">
-              Set up your wallet for QCHP, SCFHS, or any GCC authority in under 2 minutes. Free to start â€” upgrade for PDF reports and AI gap analysis.
+              Set up your wallet for QCHP, SCFHS, or any GCC authority in under 2 minutes. Free to start — upgrade for PDF reports and AI gap analysis.
             </p>
             <Link href="/register" className="inline-flex items-center gap-2 bg-white text-[#1a56a0] font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#f0f7ff] transition-colors">
-              Track my CME â€” free â†’
+              Track my CME — free â†’
             </Link>
-            <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">No credit card required Â· 14-day Pro trial included</p>
+            <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>
 
           <div className="mt-6 bg-[#fef9c3] border border-[#fde68a] rounded-lg px-4 py-3 text-xs text-[#92400e] text-center">

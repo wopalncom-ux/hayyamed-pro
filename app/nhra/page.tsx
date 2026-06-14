@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "Bahrain CPD Tracker â€” NHRA CPD Requirements | Hayya Med Pro",
+  title: "Bahrain CPD Tracker — NHRA CPD Requirements | Hayya Med Pro",
   description:
     "Track your NHRA Bahrain CPD requirements automatically. Bahrain healthcare professionals need 40 CPD credits every 2 years. Hayya Med Pro tracks structured and unstructured CPD, enforces caps, and generates your NHRA compliance report.",
   keywords: [
@@ -18,16 +18,16 @@ export const metadata: Metadata = {
     "CPD tracker Bahrain",
   ],
   openGraph: {
-    title: "NHRA CPD Tracker â€” Bahrain Healthcare Compliance",
+    title: "NHRA CPD Tracker — Bahrain Healthcare Compliance",
     description:
-      "40 CPD credits every 2 years. Track structured and unstructured Bahrain NHRA CPD automatically â€” free to start.",
+      "40 CPD credits every 2 years. Track structured and unstructured Bahrain NHRA CPD automatically — free to start.",
     url: `${APP_URL}/nhra`,
     type: "website",
     images: [{ url: `${APP_URL}/api/og?t=NHRA+CPD+Tracker+%E2%80%94+Bahrain&s=40+CPD+credits+%C2%B7+2-year+cycle+%C2%B7+Structured+%2B+unstructured+CPD&a=%F0%9F%87%A7%F0%9F%87%AD+NHRA&k=Authority+Guide`, width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "NHRA CPD Tracker â€” Bahrain Healthcare Compliance",
+    title: "NHRA CPD Tracker — Bahrain Healthcare Compliance",
     description: "Track your 40 NHRA CPD credits automatically. Free for Bahrain healthcare professionals.",
   },
   alternates: { canonical: `${APP_URL}/nhra` },
@@ -74,7 +74,7 @@ const faqLd = {
       name: "How do I submit my CPD portfolio to NHRA Bahrain?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "CPD portfolios are submitted through the NHRA online portal (nhra.bh) before your 2-year license renewal date. Hayya Med Pro generates a structured CPD report listing all activities by category â€” ready for NHRA submission.",
+        text: "CPD portfolios are submitted through the NHRA online portal (nhra.bh) before your 2-year license renewal date. Hayya Med Pro generates a structured CPD report listing all activities by category — ready for NHRA submission.",
       },
     },
   ],
@@ -84,7 +84,7 @@ const CATEGORIES = [
   {
     name: "Structured Accredited",
     icon: "ðŸ›ï¸",
-    description: "Conferences, workshops, seminars â€” all accredited by NHRA or recognized bodies",
+    description: "Conferences, workshops, seminars — all accredited by NHRA or recognized bodies",
     bg: "#eff6ff", border: "#bfdbfe", text: "#1e40af",
   },
   {
@@ -126,7 +126,7 @@ const HOW_IT_WORKS = [
   {
     step: "4",
     title: "Generate your NHRA CPD report",
-    desc: "Download a PDF CPD report categorized for NHRA Bahrain â€” structured, unstructured, online, and teaching activities all listed.",
+    desc: "Download a PDF CPD report categorized for NHRA Bahrain — structured, unstructured, online, and teaching activities all listed.",
   },
 ];
 
@@ -158,10 +158,10 @@ export default function NhraPage() {
           {/* Hero */}
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-2 bg-[#eff6ff] border border-[#bfdbfe] text-[#1a56a0] text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
-              ðŸ‡§ðŸ‡­ Bahrain Â· National Health Regulatory Authority (NHRA)
+              ðŸ‡§ðŸ‡­ Bahrain · National Health Regulatory Authority (NHRA)
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-[#111] tracking-tight mb-4 leading-tight">
-              Track your NHRA Bahrain CPD<br className="hidden sm:block" /> requirements â€” automatically
+              Track your NHRA Bahrain CPD<br className="hidden sm:block" /> requirements — automatically
             </h1>
             <p className="text-lg text-[#64748b] max-w-2xl mx-auto mb-8">
               Bahrain healthcare professionals must complete <strong className="text-[#111]">40 CPD credits</strong> every 2 years.
@@ -169,13 +169,13 @@ export default function NhraPage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link href="/register" className="inline-flex items-center gap-2 bg-[#1a56a0] text-white font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#154890] transition-colors">
-                Track my NHRA compliance â€” free â†’
+                Track my NHRA compliance — free â†’
               </Link>
               <Link href="/pricing" className="inline-flex items-center gap-1 text-sm text-[#64748b] hover:text-[#1a56a0] transition-colors">
                 See what&apos;s free vs Pro
               </Link>
             </div>
-            <p className="text-xs text-[#94a3b8] mt-3">No credit card required Â· 14-day Pro trial included</p>
+            <p className="text-xs text-[#94a3b8] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>
 
           {/* Requirements card */}
@@ -275,7 +275,7 @@ export default function NhraPage() {
 
           {/* FAQ */}
           <div className="mb-12">
-            <h2 className="text-xl font-bold text-[#111] mb-6">NHRA Bahrain CPD â€” frequently asked questions</h2>
+            <h2 className="text-xl font-bold text-[#111] mb-6">NHRA Bahrain CPD — frequently asked questions</h2>
             <div className="space-y-3">
               {faqLd.mainEntity.map((item) => (
                 <details key={item.name} className="bg-white rounded-xl border border-[#e2e8f0] group">
@@ -366,12 +366,12 @@ export default function NhraPage() {
             <div className="inline-block text-3xl mb-3">ðŸ‡§ðŸ‡­</div>
             <h2 className="text-2xl font-bold text-white mb-2">Start tracking your NHRA CPD today</h2>
             <p className="text-[rgba(255,255,255,0.65)] mb-6 max-w-md mx-auto text-sm">
-              Hayya Med Pro automatically applies NHRA Bahrain rules â€” 40 credits per 2-year cycle, structured/unstructured balance, and online cap tracking. Free to start.
+              Hayya Med Pro automatically applies NHRA Bahrain rules — 40 credits per 2-year cycle, structured/unstructured balance, and online cap tracking. Free to start.
             </p>
             <Link href="/register" className="inline-flex items-center gap-2 bg-white text-[#1a56a0] font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#f0f7ff] transition-colors">
-              Track my NHRA CPD â€” free â†’
+              Track my NHRA CPD — free â†’
             </Link>
-            <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">No credit card required Â· 14-day Pro trial included</p>
+            <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>
 
           <div className="mt-6 bg-[#fef9c3] border border-[#fde68a] rounded-lg px-4 py-3 text-xs text-[#92400e] text-center">

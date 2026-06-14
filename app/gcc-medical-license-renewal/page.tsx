@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "GCC Medical License Renewal â€” CME & CPD Requirements by Country | Hayya Med Pro",
+  title: "GCC Medical License Renewal — CME & CPD Requirements by Country | Hayya Med Pro",
   description:
     "Complete guide to medical license renewal across GCC countries. QCHP (Qatar), SCFHS (Saudi Arabia), DHA and DOH (UAE), NHRA (Bahrain), OMSB (Oman), MOH Kuwait. CME/CPD requirements, renewal checklists, and step-by-step processes for every GCC authority.",
   keywords: [
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     "healthcare license renewal Middle East",
   ],
   openGraph: {
-    title: "GCC Medical License Renewal â€” All Country Requirements",
+    title: "GCC Medical License Renewal — All Country Requirements",
     description:
       "QCHP, SCFHS, DHA, DOH, NHRA, OMSB, MOH Kuwait. CME/CPD requirements and renewal process for every GCC healthcare licensing authority. Complete renewal checklists.",
     url: `${APP_URL}/gcc-medical-license-renewal`,
@@ -29,8 +29,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "GCC Medical License Renewal â€” CME & CPD by Country",
-    description: "Renewal guides for every GCC country â€” Qatar, Saudi Arabia, UAE Dubai, UAE Abu Dhabi, Bahrain, Oman, Kuwait. CME/CPD requirements and step-by-step renewal processes.",
+    title: "GCC Medical License Renewal — CME & CPD by Country",
+    description: "Renewal guides for every GCC country — Qatar, Saudi Arabia, UAE Dubai, UAE Abu Dhabi, Bahrain, Oman, Kuwait. CME/CPD requirements and step-by-step renewal processes.",
   },
   alternates: { canonical: `${APP_URL}/gcc-medical-license-renewal` },
 };
@@ -52,7 +52,7 @@ const faqLd = {
       name: "Can I use the same CME activities for multiple GCC license renewals?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Generally yes â€” CME activities from internationally recognised providers and major regional conferences (Arab Health, Saudi Health, QCHP Annual Conference) are typically accepted by multiple GCC authorities. However, each authority has its own accreditation requirements. You should verify that a specific activity is accepted by each authority you are renewing with. Hayya Med Pro lets you tag activities to multiple licensing jurisdictions.",
+        text: "Generally yes — CME activities from internationally recognised providers and major regional conferences (Arab Health, Saudi Health, QCHP Annual Conference) are typically accepted by multiple GCC authorities. However, each authority has its own accreditation requirements. You should verify that a specific activity is accepted by each authority you are renewing with. Hayya Med Pro lets you tag activities to multiple licensing jurisdictions.",
       },
     },
     {
@@ -60,7 +60,7 @@ const faqLd = {
       name: "What is the difference between CME and CPD in GCC countries?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "CME (Continuing Medical Education) and CPD (Continuing Professional Development) describe essentially the same concept of ongoing professional learning, but different GCC authorities use different terminology. Qatar (QCHP), UAE Abu Dhabi (DOH), and Bahrain (NHRA) use CPD. Saudi Arabia (SCFHS), UAE Dubai (DHA), Oman (OMSB), and Kuwait (MOH) use CME. The learning activities themselves are similar â€” conferences, workshops, online courses, and self-directed learning.",
+        text: "CME (Continuing Medical Education) and CPD (Continuing Professional Development) describe essentially the same concept of ongoing professional learning, but different GCC authorities use different terminology. Qatar (QCHP), UAE Abu Dhabi (DOH), and Bahrain (NHRA) use CPD. Saudi Arabia (SCFHS), UAE Dubai (DHA), Oman (OMSB), and Kuwait (MOH) use CME. The learning activities themselves are similar — conferences, workshops, online courses, and self-directed learning.",
       },
     },
     {
@@ -68,7 +68,7 @@ const faqLd = {
       name: "What happens if I let my GCC medical license expire?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Practising healthcare with an expired license is illegal in all GCC countries and can result in serious professional and legal consequences. If your license has lapsed, contact the relevant authority immediately. Reinstatement may require completing all outstanding CME/CPD credits, paying reinstatement fees, and in some cases undergoing a fitness-to-practise review. Do not delay â€” most GCC authorities send renewal reminders 60â€“90 days before expiry.",
+        text: "Practising healthcare with an expired license is illegal in all GCC countries and can result in serious professional and legal consequences. If your license has lapsed, contact the relevant authority immediately. Reinstatement may require completing all outstanding CME/CPD credits, paying reinstatement fees, and in some cases undergoing a fitness-to-practise review. Do not delay — most GCC authorities send renewal reminders 60â€“90 days before expiry.",
       },
     },
     {
@@ -76,7 +76,7 @@ const faqLd = {
       name: "Which GCC country has the strictest CME renewal requirements?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Saudi Arabia (SCFHS) has among the strictest requirements â€” physicians, pharmacists, and dentists need 60 CME credits per year (the highest annual requirement in the GCC). Qatar (QCHP) requires 80 CPD over 2 years (40/year minimum). DHA requires 40 CME per 2 years. All GCC authorities have mandatory patient safety credit requirements on top of the general CME/CPD total.",
+        text: "Saudi Arabia (SCFHS) has among the strictest requirements — physicians, pharmacists, and dentists need 60 CME credits per year (the highest annual requirement in the GCC). Qatar (QCHP) requires 80 CPD over 2 years (40/year minimum). DHA requires 40 CME per 2 years. All GCC authorities have mandatory patient safety credit requirements on top of the general CME/CPD total.",
       },
     },
   ],
@@ -109,7 +109,7 @@ const GCC_AUTHORITIES = [
   },
   {
     flag: "ðŸ‡¦ðŸ‡ª",
-    country: "UAE â€” Dubai",
+    country: "UAE — Dubai",
     authority: "DHA",
     fullName: "Dubai Health Authority",
     credits: "40 CME",
@@ -121,7 +121,7 @@ const GCC_AUTHORITIES = [
   },
   {
     flag: "ðŸ‡¦ðŸ‡ª",
-    country: "UAE â€” Abu Dhabi",
+    country: "UAE — Abu Dhabi",
     authority: "DOH",
     fullName: "Department of Health Abu Dhabi",
     credits: "30â€“50 CPD",
@@ -173,7 +173,7 @@ const COMMON_STEPS = [
   {
     step: "1",
     title: "Find your license expiry date",
-    desc: "Log in to your licensing authority portal. Most GCC authorities send renewal reminders 60â€“90 days before expiry â€” don't wait for the reminder. Set your own 90-day alert in Hayya Med Pro.",
+    desc: "Log in to your licensing authority portal. Most GCC authorities send renewal reminders 60â€“90 days before expiry — don't wait for the reminder. Set your own 90-day alert in Hayya Med Pro.",
   },
   {
     step: "2",
@@ -231,7 +231,7 @@ export default function GccMedicalLicenseRenewalPage() {
           {/* Hero */}
           <div className="mb-12">
             <h1 className="text-3xl sm:text-4xl font-bold text-[#111] mb-4 leading-tight">
-              GCC medical license renewal â€” CME &amp; CPD requirements by country
+              GCC medical license renewal — CME &amp; CPD requirements by country
             </h1>
             <p className="text-base text-[#475569] max-w-3xl leading-relaxed mb-6">
               Every GCC country has its own healthcare licensing authority, renewal timeline, and
@@ -307,7 +307,7 @@ export default function GccMedicalLicenseRenewalPage() {
           {/* Common renewal process */}
           <div className="mb-14">
             <h2 className="text-xl font-bold text-[#111] mb-2">
-              The GCC license renewal process â€” what all countries have in common
+              The GCC license renewal process — what all countries have in common
             </h2>
             <p className="text-sm text-[#64748b] mb-6">
               While each authority has different credit requirements and portals, the renewal workflow
@@ -330,9 +330,9 @@ export default function GccMedicalLicenseRenewalPage() {
 
           {/* CME vs CPD note */}
           <div className="mb-12 bg-white rounded-xl border border-[#e2e8f0] p-6">
-            <h2 className="text-base font-bold text-[#111] mb-3">CME vs CPD in GCC â€” what is the difference?</h2>
+            <h2 className="text-base font-bold text-[#111] mb-3">CME vs CPD in GCC — what is the difference?</h2>
             <p className="text-sm text-[#475569] leading-relaxed mb-3">
-              Both terms describe the same concept â€” structured professional learning to maintain clinical
+              Both terms describe the same concept — structured professional learning to maintain clinical
               competence and licensing. The terminology difference is administrative, not substantive.
               The actual activities (conferences, workshops, online courses, hospital education sessions)
               are the same regardless of which term your authority uses.
@@ -348,14 +348,14 @@ export default function GccMedicalLicenseRenewalPage() {
               </div>
             </div>
             <p className="text-xs text-[#64748b] mt-3">
-              See the full breakdown: <Link href="/cme-vs-cpd" className="text-[#1a56a0] hover:underline">CME vs CPD â€” complete guide â†’</Link>
+              See the full breakdown: <Link href="/cme-vs-cpd" className="text-[#1a56a0] hover:underline">CME vs CPD — complete guide â†’</Link>
             </p>
           </div>
 
           {/* FAQ */}
           <div className="mb-12">
             <h2 className="text-xl font-bold text-[#111] mb-6">
-              GCC medical license renewal â€” frequently asked questions
+              GCC medical license renewal — frequently asked questions
             </h2>
             <div className="space-y-3">
               {faqLd.mainEntity.map((faq) => (
@@ -392,7 +392,7 @@ export default function GccMedicalLicenseRenewalPage() {
                 href="/register"
                 className="inline-block bg-white text-[#1a56a0] font-semibold px-8 py-3 rounded-lg hover:bg-[#f0f4f8] transition-colors text-sm"
               >
-                Start tracking my GCC licenses â€” free â†’
+                Start tracking my GCC licenses — free â†’
               </Link>
               <Link
                 href="/countries"

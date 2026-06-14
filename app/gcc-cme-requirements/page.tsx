@@ -4,9 +4,9 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "GCC CME Requirements 2025 â€” All 7 Countries Compared | Hayya Med Pro",
+  title: "GCC CME Requirements 2025 — All 7 Countries Compared | Hayya Med Pro",
   description:
-    "Complete guide to CME and CPD requirements across all 7 GCC countries. Compare QCHP Qatar, SCFHS Saudi Arabia, DHA Dubai, DOH Abu Dhabi, MOH Kuwait, NHRA Bahrain, and OMSB Oman â€” credits, cycles, mandatory categories, and online caps.",
+    "Complete guide to CME and CPD requirements across all 7 GCC countries. Compare QCHP Qatar, SCFHS Saudi Arabia, DHA Dubai, DOH Abu Dhabi, MOH Kuwait, NHRA Bahrain, and OMSB Oman — credits, cycles, mandatory categories, and online caps.",
   keywords: [
     "GCC CME requirements",
     "GCC healthcare professional CME",
@@ -22,9 +22,9 @@ export const metadata: Metadata = {
     "GCC CME credits by country",
   ],
   openGraph: {
-    title: "GCC CME Requirements 2025 â€” All 7 Countries Compared",
+    title: "GCC CME Requirements 2025 — All 7 Countries Compared",
     description:
-      "QCHP Â· SCFHS Â· DHA Â· DOH Â· MOH Kuwait Â· NHRA Â· OMSB. Credits, cycles, online caps, and mandatory categories â€” all in one guide.",
+      "QCHP · SCFHS · DHA · DOH · MOH Kuwait · NHRA · OMSB. Credits, cycles, online caps, and mandatory categories — all in one guide.",
     url: `${APP_URL}/gcc-cme-requirements`,
     type: "website",
     images: [
@@ -207,14 +207,14 @@ export default function GccCmeRequirementsPage() {
       <section style={{ background: "#0f1f3d", color: "#fff", padding: "72px 24px 56px" }}>
         <div style={{ maxWidth: 860, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontSize: 13, letterSpacing: "0.08em", textTransform: "uppercase", color: "#93c5fd", marginBottom: 16 }}>
-            ðŸŒ GCC CME Requirements â€” Complete Guide
+            ðŸŒ GCC CME Requirements — Complete Guide
           </p>
           <h1 style={{ fontSize: "clamp(30px,5vw,52px)", fontWeight: 800, lineHeight: 1.12, marginBottom: 20 }}>
             CME & CPD Requirements Across<br />All 7 GCC Countries
           </h1>
           <p style={{ fontSize: 18, color: "#cbd5e1", maxWidth: 660, margin: "0 auto 32px" }}>
-            QCHP Â· SCFHS Â· DHA Â· DOH Â· MOH Kuwait Â· NHRA Â· OMSB.
-            Every country, every authority, every specialty â€” in one place.
+            QCHP · SCFHS · DHA · DOH · MOH Kuwait · NHRA · OMSB.
+            Every country, every authority, every specialty — in one place.
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <Link
@@ -255,7 +255,7 @@ export default function GccCmeRequirementsPage() {
       <section style={{ background: "#f8fafc", padding: "64px 24px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <h2 style={{ fontSize: 30, fontWeight: 700, color: "#0f172a", textAlign: "center", marginBottom: 8 }}>
-            GCC CME Requirements â€” Country Comparison
+            GCC CME Requirements — Country Comparison
           </h2>
           <p style={{ textAlign: "center", color: "#64748b", marginBottom: 40, maxWidth: 700, margin: "0 auto 40px" }}>
             All figures as of 2025. Verify current requirements with your licensing authority before renewal.
@@ -302,7 +302,7 @@ export default function GccCmeRequirementsPage() {
             CME Requirements by Authority
           </h2>
           <p style={{ textAlign: "center", color: "#64748b", marginBottom: 40 }}>
-            Deep-dive guides for each licensing authority â€” requirements, activity types, accepted providers, and renewal steps.
+            Deep-dive guides for each licensing authority — requirements, activity types, accepted providers, and renewal steps.
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 16 }}>
             {COUNTRIES.map((c) => (
@@ -381,7 +381,7 @@ export default function GccCmeRequirementsPage() {
       <section style={{ background: "#f8fafc", padding: "64px 24px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto" }}>
           <h2 style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", textAlign: "center", marginBottom: 48 }}>
-            GCC CME Requirements â€” Frequently Asked Questions
+            GCC CME Requirements — Frequently Asked Questions
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {faqLd.mainEntity.map((q) => (
@@ -417,7 +417,7 @@ export default function GccCmeRequirementsPage() {
               See pricing
             </Link>
           </div>
-          <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required Â· Free plan always available</p>
+          <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required · Free plan always available</p>
         </div>
       </section>
 

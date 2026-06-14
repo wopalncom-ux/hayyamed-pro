@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "Global CME Requirements 2025 â€” International CME Guide by Country | Hayya Med Pro",
+  title: "Global CME Requirements 2025 — International CME Guide by Country | Hayya Med Pro",
   description:
     "Complete guide to CME and CPD requirements for healthcare professionals worldwide. GCC (QCHP, SCFHS, DHA), UK (GMC), Australia (AHPRA), India (NMC), Egypt (EMS), Jordan (JMC), and more. Track any licence in one app.",
   keywords: [
@@ -22,9 +22,9 @@ export const metadata: Metadata = {
     "international physician CME tracker",
   ],
   openGraph: {
-    title: "Global CME Requirements 2025 â€” International CME Guide by Country",
+    title: "Global CME Requirements 2025 — International CME Guide by Country",
     description:
-      "GCC Â· UK GMC Â· Australia AHPRA Â· India NMC Â· Egypt EMS Â· Jordan JMC â€” CME requirements for every major healthcare market. Track any licence in one app.",
+      "GCC · UK GMC · Australia AHPRA · India NMC · Egypt EMS · Jordan JMC — CME requirements for every major healthcare market. Track any licence in one app.",
     url: `${APP_URL}/global-cme-requirements`,
     type: "website",
     images: [
@@ -65,7 +65,7 @@ const faqLd = {
       name: "Do international CME credits (AMA-PRA, EACCME) count across multiple countries?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Many international CME accreditations are mutually recognised across markets. AMA-PRA Category 1 credits (USA) are accepted by QCHP, SCFHS, DHA, and many other authorities. EACCME credits (European CME) are accepted in GCC, UK, and most European markets. Royal College credits (UK) are accepted by QCHP and some other GCC authorities. However, mutual recognition is not universal â€” always verify with your specific licensing authority before relying on credits from another country.",
+        text: "Many international CME accreditations are mutually recognised across markets. AMA-PRA Category 1 credits (USA) are accepted by QCHP, SCFHS, DHA, and many other authorities. EACCME credits (European CME) are accepted in GCC, UK, and most European markets. Royal College credits (UK) are accepted by QCHP and some other GCC authorities. However, mutual recognition is not universal — always verify with your specific licensing authority before relying on credits from another country.",
       },
     },
     {
@@ -73,7 +73,7 @@ const faqLd = {
       name: "Can I track CME for multiple countries in one app?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. Hayya Med Pro supports multi-jurisdiction CME tracking. You can set up separate compliance wallets for each country or authority â€” for example, QCHP (Qatar), SCFHS (Saudi Arabia), and UK GMC simultaneously. Each wallet tracks independently with separate credit totals, cycle dates, and compliance status. Log an activity once and assign it to the relevant wallets.",
+        text: "Yes. Hayya Med Pro supports multi-jurisdiction CME tracking. You can set up separate compliance wallets for each country or authority — for example, QCHP (Qatar), SCFHS (Saudi Arabia), and UK GMC simultaneously. Each wallet tracks independently with separate credit totals, cycle dates, and compliance status. Log an activity once and assign it to the relevant wallets.",
       },
     },
     {
@@ -81,7 +81,7 @@ const faqLd = {
       name: "Which countries have the strictest CME requirements?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Saudi Arabia (SCFHS) has among the highest annual CME requirements globally â€” 60 CME credits per year for physicians. Qatar (QCHP) requires 80 CPD credits per 2-year cycle (40 per year). The UK GMC requires 50 CPD hours per year with a detailed portfolio review every 5 years. Australia AHPRA requires approximately 50 hours per year across mandatory CPD domains. Kuwait MOH is notable for a strict annual renewal cycle (30 CME/year) and the tightest online cap in the GCC region (30%).",
+        text: "Saudi Arabia (SCFHS) has among the highest annual CME requirements globally — 60 CME credits per year for physicians. Qatar (QCHP) requires 80 CPD credits per 2-year cycle (40 per year). The UK GMC requires 50 CPD hours per year with a detailed portfolio review every 5 years. Australia AHPRA requires approximately 50 hours per year across mandatory CPD domains. Kuwait MOH is notable for a strict annual renewal cycle (30 CME/year) and the tightest online cap in the GCC region (30%).",
       },
     },
     {
@@ -89,7 +89,7 @@ const faqLd = {
       name: "What is the difference between CME and CPD?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "CME (Continuing Medical Education) and CPD (Continuing Professional Development) are terms used interchangeably in many contexts but differ in emphasis. CME traditionally refers to formal educational activities focused on clinical knowledge, while CPD is broader â€” including leadership, communication, ethics, quality improvement, and professional skills. GCC countries like Qatar (QCHP), Bahrain (NHRA), and UAE Abu Dhabi (DOH) use 'CPD'. Saudi Arabia (SCFHS), Kuwait (MOH), and Oman (OMSB) use 'CME'. The UK, Australia, and India all use 'CPD'. The activities that qualify are broadly similar regardless of terminology.",
+        text: "CME (Continuing Medical Education) and CPD (Continuing Professional Development) are terms used interchangeably in many contexts but differ in emphasis. CME traditionally refers to formal educational activities focused on clinical knowledge, while CPD is broader — including leadership, communication, ethics, quality improvement, and professional skills. GCC countries like Qatar (QCHP), Bahrain (NHRA), and UAE Abu Dhabi (DOH) use 'CPD'. Saudi Arabia (SCFHS), Kuwait (MOH), and Oman (OMSB) use 'CME'. The UK, Australia, and India all use 'CPD'. The activities that qualify are broadly similar regardless of terminology.",
       },
     },
   ],
@@ -97,33 +97,33 @@ const faqLd = {
 
 const REGIONS = [
   {
-    region: "GCC â€” Gulf Cooperation Council",
+    region: "GCC — Gulf Cooperation Council",
     flag: "ðŸŒ",
     countries: [
-      { flag: "ðŸ‡¶ðŸ‡¦", name: "Qatar â€” QCHP",         term: "CPD",  credits: "80",  cycle: "2 years",  link: "/qchp" },
-      { flag: "ðŸ‡¸ðŸ‡¦", name: "Saudi Arabia â€” SCFHS",  term: "CME",  credits: "60",  cycle: "1 year",   link: "/scfhs" },
-      { flag: "ðŸ‡¦ðŸ‡ª", name: "UAE Dubai â€” DHA",       term: "CME",  credits: "40",  cycle: "2 years",  link: "/dha" },
-      { flag: "ðŸ‡¦ðŸ‡ª", name: "UAE Abu Dhabi â€” DOH",   term: "CPD",  credits: "40",  cycle: "2 years",  link: "/doh" },
-      { flag: "ðŸ‡°ðŸ‡¼", name: "Kuwait â€” MOH",          term: "CME",  credits: "30",  cycle: "1 year",   link: "/moh-kuwait" },
-      { flag: "ðŸ‡§ðŸ‡­", name: "Bahrain â€” NHRA",        term: "CPD",  credits: "40",  cycle: "2 years",  link: "/nhra" },
-      { flag: "ðŸ‡´ðŸ‡²", name: "Oman â€” OMSB",           term: "CME",  credits: "40",  cycle: "2 years",  link: "/omsb" },
+      { flag: "ðŸ‡¶ðŸ‡¦", name: "Qatar — QCHP",         term: "CPD",  credits: "80",  cycle: "2 years",  link: "/qchp" },
+      { flag: "ðŸ‡¸ðŸ‡¦", name: "Saudi Arabia — SCFHS",  term: "CME",  credits: "60",  cycle: "1 year",   link: "/scfhs" },
+      { flag: "ðŸ‡¦ðŸ‡ª", name: "UAE Dubai — DHA",       term: "CME",  credits: "40",  cycle: "2 years",  link: "/dha" },
+      { flag: "ðŸ‡¦ðŸ‡ª", name: "UAE Abu Dhabi — DOH",   term: "CPD",  credits: "40",  cycle: "2 years",  link: "/doh" },
+      { flag: "ðŸ‡°ðŸ‡¼", name: "Kuwait — MOH",          term: "CME",  credits: "30",  cycle: "1 year",   link: "/moh-kuwait" },
+      { flag: "ðŸ‡§ðŸ‡­", name: "Bahrain — NHRA",        term: "CPD",  credits: "40",  cycle: "2 years",  link: "/nhra" },
+      { flag: "ðŸ‡´ðŸ‡²", name: "Oman — OMSB",           term: "CME",  credits: "40",  cycle: "2 years",  link: "/omsb" },
     ],
   },
   {
-    region: "Phase 2 â€” MENA Expansion",
+    region: "Phase 2 — MENA Expansion",
     flag: "ðŸŒ",
     countries: [
-      { flag: "ðŸ‡ªðŸ‡¬", name: "Egypt â€” EMS",           term: "CME",  credits: "25",  cycle: "1 year",   link: "/egypt-cme" },
-      { flag: "ðŸ‡¯ðŸ‡´", name: "Jordan â€” JMC",          term: "CME",  credits: "30",  cycle: "1 year",   link: "/jordan-cme" },
+      { flag: "ðŸ‡ªðŸ‡¬", name: "Egypt — EMS",           term: "CME",  credits: "25",  cycle: "1 year",   link: "/egypt-cme" },
+      { flag: "ðŸ‡¯ðŸ‡´", name: "Jordan — JMC",          term: "CME",  credits: "30",  cycle: "1 year",   link: "/jordan-cme" },
     ],
   },
   {
     region: "International Markets",
     flag: "ðŸŒ",
     countries: [
-      { flag: "ðŸ‡¬ðŸ‡§", name: "UK â€” GMC (Physicians)", term: "CPD",  credits: "50",  cycle: "1 year",   link: "/gmc-cpd" },
-      { flag: "ðŸ‡¦ðŸ‡º", name: "Australia â€” AHPRA",     term: "CPD",  credits: "~50", cycle: "1 year",   link: "/ahpra-cpd" },
-      { flag: "ðŸ‡®ðŸ‡³", name: "India â€” NMC",           term: "CME",  credits: "30",  cycle: "5 years",  link: "/nmc-india-cme" },
+      { flag: "ðŸ‡¬ðŸ‡§", name: "UK — GMC (Physicians)", term: "CPD",  credits: "50",  cycle: "1 year",   link: "/gmc-cpd" },
+      { flag: "ðŸ‡¦ðŸ‡º", name: "Australia — AHPRA",     term: "CPD",  credits: "~50", cycle: "1 year",   link: "/ahpra-cpd" },
+      { flag: "ðŸ‡®ðŸ‡³", name: "India — NMC",           term: "CME",  credits: "30",  cycle: "5 years",  link: "/nmc-india-cme" },
     ],
   },
 ];
@@ -153,7 +153,7 @@ export default function GlobalCmeRequirementsPage() {
             Global CME Requirements 2025
           </h1>
           <p style={{ fontSize: 18, color: "#cbd5e1", maxWidth: 660, margin: "0 auto 20px" }}>
-            CME and CPD credit requirements for every major healthcare market â€” GCC, UK, Australia, India, Egypt, Jordan, and more.
+            CME and CPD credit requirements for every major healthcare market — GCC, UK, Australia, India, Egypt, Jordan, and more.
             Track any licence in one compliance dashboard.
           </p>
           <div style={{ display: "flex", gap: 8, justifyContent: "center", flexWrap: "wrap", marginBottom: 40 }}>
@@ -163,7 +163,7 @@ export default function GlobalCmeRequirementsPage() {
           </div>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/register" style={{ background: "#1a56a0", color: "#fff", padding: "14px 28px", borderRadius: 8, fontWeight: 600, textDecoration: "none", fontSize: 16 }}>
-              Track my CME â€” free â†’
+              Track my CME — free â†’
             </Link>
             <Link href="/gcc-cme-requirements" style={{ background: "rgba(255,255,255,0.1)", color: "#fff", padding: "14px 28px", borderRadius: 8, fontWeight: 600, textDecoration: "none", fontSize: 16 }}>
               GCC guide â†’
@@ -252,7 +252,7 @@ export default function GlobalCmeRequirementsPage() {
                 {ACCREDITOR_TABLE.map((row, i) => (
                   <tr key={row.accreditor} style={{ background: i % 2 === 0 ? "#fff" : "#f8fafc", borderBottom: "1px solid #e2e8f0" }}>
                     <td style={{ padding: "14px 16px", fontWeight: 600, color: "#0f172a" }}>{row.accreditor}</td>
-                    <td style={{ padding: "14px 16px", color: "#64748b", fontSize: 14 }}>{row.accepted.join(" Â· ")}</td>
+                    <td style={{ padding: "14px 16px", color: "#64748b", fontSize: 14 }}>{row.accepted.join(" · ")}</td>
                   </tr>
                 ))}
               </tbody>
@@ -273,44 +273,44 @@ export default function GlobalCmeRequirementsPage() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24 }}>
             {[
               {
-                title: "GCC â€” All 7 Countries",
+                title: "GCC — All 7 Countries",
                 icon: "ðŸŒ",
                 desc: "Complete requirements for QCHP, SCFHS, DHA, DOH, MOH Kuwait, NHRA, and OMSB in one comparison table.",
                 href: "/gcc-cme-requirements",
                 cta: "View GCC guide â†’",
               },
               {
-                title: "UK â€” GMC CPD",
+                title: "UK — GMC CPD",
                 icon: "ðŸ‡¬ðŸ‡§",
-                desc: "GMC revalidation â€” 50 CPD hours/year, 250 over 5 years. Annual appraisal + enhanced portfolio review.",
+                desc: "GMC revalidation — 50 CPD hours/year, 250 over 5 years. Annual appraisal + enhanced portfolio review.",
                 href: "/gmc-cpd",
                 cta: "View UK GMC guide â†’",
               },
               {
-                title: "Australia â€” AHPRA CPD",
+                title: "Australia — AHPRA CPD",
                 icon: "ðŸ‡¦ðŸ‡º",
-                desc: "2023 AHPRA framework â€” 50 CPD hours/year across 4 mandatory domains including Practice Review.",
+                desc: "2023 AHPRA framework — 50 CPD hours/year across 4 mandatory domains including Practice Review.",
                 href: "/ahpra-cpd",
                 cta: "View AHPRA guide â†’",
               },
               {
-                title: "India â€” NMC CME",
+                title: "India — NMC CME",
                 icon: "ðŸ‡®ðŸ‡³",
-                desc: "NMC Medical Education Regulations â€” 30 CME credits per 5-year cycle. 1.2M+ Indian doctors in GCC.",
+                desc: "NMC Medical Education Regulations — 30 CME credits per 5-year cycle. 1.2M+ Indian doctors in GCC.",
                 href: "/nmc-india-cme",
                 cta: "View NMC guide â†’",
               },
               {
-                title: "Egypt â€” EMS CME",
+                title: "Egypt — EMS CME",
                 icon: "ðŸ‡ªðŸ‡¬",
-                desc: "Egyptian Medical Syndicate â€” 25 CME credits/year. 600K+ Egyptian healthcare professionals in GCC.",
+                desc: "Egyptian Medical Syndicate — 25 CME credits/year. 600K+ Egyptian healthcare professionals in GCC.",
                 href: "/egypt-cme",
                 cta: "View Egypt guide â†’",
               },
               {
-                title: "Jordan â€” JMC CME",
+                title: "Jordan — JMC CME",
                 icon: "ðŸ‡¯ðŸ‡´",
-                desc: "Jordan Medical Council â€” 30 CME credits/year. Arab world's medical education hub â€” large GCC diaspora.",
+                desc: "Jordan Medical Council — 30 CME credits/year. Arab world's medical education hub — large GCC diaspora.",
                 href: "/jordan-cme",
                 cta: "View Jordan guide â†’",
               },
@@ -332,7 +332,7 @@ export default function GlobalCmeRequirementsPage() {
       <section style={{ background: "#fff", padding: "64px 24px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto" }}>
           <h2 style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", textAlign: "center", marginBottom: 48 }}>
-            Global CME â€” Frequently Asked Questions
+            Global CME — Frequently Asked Questions
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {faqLd.mainEntity.map((q) => (
@@ -348,9 +348,9 @@ export default function GlobalCmeRequirementsPage() {
       {/* CME vs CPD callout */}
       <section style={{ background: "#eff6ff", padding: "48px 24px", borderTop: "1px solid #bfdbfe", borderBottom: "1px solid #bfdbfe" }}>
         <div style={{ maxWidth: 700, margin: "0 auto", textAlign: "center" }}>
-          <h3 style={{ fontSize: 20, fontWeight: 700, color: "#1e3a5f", marginBottom: 12 }}>CME vs CPD â€” What's the difference?</h3>
+          <h3 style={{ fontSize: 20, fontWeight: 700, color: "#1e3a5f", marginBottom: 12 }}>CME vs CPD — What's the difference?</h3>
           <p style={{ color: "#1e40af", fontSize: 15, lineHeight: 1.7, marginBottom: 16 }}>
-            CME (Continuing Medical Education) focuses on clinical knowledge. CPD (Continuing Professional Development) is broader â€” including ethics, leadership, and quality improvement. Most GCC authorities use one term but accept the same activity types.
+            CME (Continuing Medical Education) focuses on clinical knowledge. CPD (Continuing Professional Development) is broader — including ethics, leadership, and quality improvement. Most GCC authorities use one term but accept the same activity types.
           </p>
           <Link href="/cme-vs-cpd" style={{ color: "#1a56a0", fontWeight: 600, fontSize: 14 }}>
             Read the full CME vs CPD guide â†’
@@ -362,22 +362,22 @@ export default function GlobalCmeRequirementsPage() {
       <section style={{ background: "#0f1f3d", padding: "72px 24px", textAlign: "center" }}>
         <div style={{ maxWidth: 640, margin: "0 auto" }}>
           <h2 style={{ fontSize: 32, fontWeight: 800, color: "#fff", marginBottom: 16 }}>
-            Track CME for any country â€” in one app
+            Track CME for any country — in one app
           </h2>
           <p style={{ fontSize: 18, color: "#cbd5e1", marginBottom: 32 }}>
-            Set up compliance wallets for every licence you hold. GCC, UK, Australia, India, Egypt, Jordan â€” all in one dashboard. Free to start.
+            Set up compliance wallets for every licence you hold. GCC, UK, Australia, India, Egypt, Jordan — all in one dashboard. Free to start.
           </p>
           <Link href="/register" style={{ background: "#1a56a0", color: "#fff", padding: "16px 36px", borderRadius: 8, fontWeight: 700, textDecoration: "none", fontSize: 17, display: "inline-block" }}>
             Start tracking free â†’
           </Link>
-          <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required Â· Free plan always available</p>
+          <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required · Free plan always available</p>
         </div>
       </section>
 
       {/* Disclaimer */}
       <section style={{ background: "#f8fafc", padding: "32px 24px", borderTop: "1px solid #e2e8f0" }}>
         <p style={{ maxWidth: 800, margin: "0 auto", textAlign: "center", color: "#94a3b8", fontSize: 13, lineHeight: 1.7 }}>
-          Hayya Med Pro supports CME tracking and licensing readiness. It does not issue licenses and does not replace official licensing authorities. CME requirements change â€” always verify current requirements directly with your licensing authority before your renewal date.
+          Hayya Med Pro supports CME tracking and licensing readiness. It does not issue licenses and does not replace official licensing authorities. CME requirements change — always verify current requirements directly with your licensing authority before your renewal date.
         </p>
       </section>
     </>

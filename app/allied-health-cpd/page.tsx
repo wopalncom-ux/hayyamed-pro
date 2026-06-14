@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "Allied Health CPD Requirements in GCC â€” Physiotherapist, Radiographer, Lab Technician CME",
+  title: "Allied Health CPD Requirements in GCC — Physiotherapist, Radiographer, Lab Technician CME",
   description:
     "CPD and CME requirements for allied health professionals across GCC: physiotherapists, radiographers, lab technicians, occupational therapists. SCFHS Saudi (30/yr), QCHP Qatar (80/2yr), DHA Dubai (40/2yr). Track all requirements in one app.",
   keywords: [
@@ -20,16 +20,16 @@ export const metadata: Metadata = {
     "physiotherapy CPD requirements",
   ],
   openGraph: {
-    title: "Allied Health CPD Requirements Across the GCC â€” Complete Guide",
+    title: "Allied Health CPD Requirements Across the GCC — Complete Guide",
     description:
-      "SCFHS, QCHP, DHA, DOH, MOH Kuwait â€” CPD and CME requirements for physiotherapists, radiographers, lab technicians, and all allied health professionals.",
+      "SCFHS, QCHP, DHA, DOH, MOH Kuwait — CPD and CME requirements for physiotherapists, radiographers, lab technicians, and all allied health professionals.",
     url: `${APP_URL}/allied-health-cpd`,
     type: "website",
     images: [{ url: `${APP_URL}/api/og?t=Allied+Health+CPD+Requirements+%E2%80%94+GCC&s=Physiotherapy+%C2%B7+Radiology+%C2%B7+Lab+%C2%B7+OT+%E2%80%94+all+GCC+authorities&a=%F0%9F%A6%BF+Allied+Health&k=Profession+Guide`, width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Allied Health CPD in GCC â€” All Countries & Authorities",
+    title: "Allied Health CPD in GCC — All Countries & Authorities",
     description: "CPD requirements for physiotherapists, radiographers, lab technicians, and allied health across Qatar, Saudi Arabia, and UAE.",
   },
   alternates: { canonical: `${APP_URL}/allied-health-cpd` },
@@ -44,7 +44,7 @@ const faqLd = {
       name: "How many CME credits do allied health professionals need in Saudi Arabia (SCFHS)?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Allied health professionals registered with SCFHS in Saudi Arabia â€” including physiotherapists, radiographers, medical laboratory technicians, occupational therapists, and speech therapists â€” must complete 30 CME credits per year. This is half the requirement for physicians (60/yr). No more than 50% (15 credits) may come from online activities.",
+        text: "Allied health professionals registered with SCFHS in Saudi Arabia — including physiotherapists, radiographers, medical laboratory technicians, occupational therapists, and speech therapists — must complete 30 CME credits per year. This is half the requirement for physicians (60/yr). No more than 50% (15 credits) may come from online activities.",
       },
     },
     {
@@ -52,7 +52,7 @@ const faqLd = {
       name: "What are the CPD requirements for allied health professionals in Qatar (QCHP)?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "All healthcare professionals licensed by QCHP in Qatar â€” including allied health â€” must complete 80 CPD credits per 2-year renewal cycle, with a minimum of 40 credits per year. Qatar does not differentiate requirements by profession at the overall credit level.",
+        text: "All healthcare professionals licensed by QCHP in Qatar — including allied health — must complete 80 CPD credits per 2-year renewal cycle, with a minimum of 40 credits per year. Qatar does not differentiate requirements by profession at the overall credit level.",
       },
     },
     {
@@ -76,7 +76,7 @@ const faqLd = {
       name: "Do physiotherapists and radiographers have the same CPD requirements in GCC?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "In most GCC countries, yes. SCFHS applies 30 CME/yr to all allied health professions â€” physiotherapists and radiographers alike. QCHP applies 80 CPD/2yr to all licensed healthcare professionals regardless of profession. DHA applies 40 CME/2yr. Some authorities may have specialty-specific category requirements within the overall total.",
+        text: "In most GCC countries, yes. SCFHS applies 30 CME/yr to all allied health professions — physiotherapists and radiographers alike. QCHP applies 80 CPD/2yr to all licensed healthcare professionals regardless of profession. DHA applies 40 CME/2yr. Some authorities may have specialty-specific category requirements within the overall total.",
       },
     },
   ],
@@ -108,7 +108,7 @@ const countries = [
     authority: "SCFHS",
     credits: "30 CME",
     cycle: "1 year",
-    minPerYear: "â€”",
+    minPerYear: "—",
     onlineCap: "Max 50% online",
     terminology: "CME",
   },
@@ -117,7 +117,7 @@ const countries = [
     authority: "DHA",
     credits: "40 CME",
     cycle: "2 years",
-    minPerYear: "â€”",
+    minPerYear: "—",
     onlineCap: "Max 50% online",
     terminology: "CME",
   },
@@ -135,7 +135,7 @@ const countries = [
     authority: "MOH Kuwait",
     credits: "20 CME",
     cycle: "1 year",
-    minPerYear: "â€”",
+    minPerYear: "—",
     onlineCap: "Max 30% online",
     terminology: "CME",
   },
@@ -144,7 +144,7 @@ const countries = [
     authority: "NHRA",
     credits: "40 CPD",
     cycle: "2 years",
-    minPerYear: "â€”",
+    minPerYear: "—",
     onlineCap: "Max 20 online",
     terminology: "CPD",
   },
@@ -153,7 +153,7 @@ const countries = [
     authority: "OMSB",
     credits: "30 CME",
     cycle: "2 years",
-    minPerYear: "â€”",
+    minPerYear: "—",
     onlineCap: "Max 20 online",
     terminology: "CME",
   },
@@ -168,7 +168,7 @@ const categories = [
   {
     icon: "ðŸ’»",
     title: "Online & E-Learning",
-    description: "Accredited online modules â€” capped at 50% in Saudi Arabia and Kuwait",
+    description: "Accredited online modules — capped at 50% in Saudi Arabia and Kuwait",
   },
   {
     icon: "ðŸ¥",
@@ -225,7 +225,7 @@ export default function AlliedHealthCpdPage() {
         <section className="bg-white border-b border-[#e2e8f0] py-12 sm:py-16">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
             <span className="inline-block bg-[#eff6ff] text-[#1a56a0] text-xs font-semibold px-3 py-1 rounded-full mb-4">
-              Allied Health CPD &amp; CME â€” GCC Guide
+              Allied Health CPD &amp; CME — GCC Guide
             </span>
             <h1 className="text-3xl sm:text-4xl font-bold text-[#111] mb-4 leading-tight">
               Allied Health CPD Requirements<br className="hidden sm:block" /> Across the GCC
@@ -265,14 +265,14 @@ export default function AlliedHealthCpdPage() {
           </div>
         </section>
 
-        {/* Saudi callout â€” most searched */}
+        {/* Saudi callout — most searched */}
         <section className="py-8 bg-[#f0fdf4] border-b border-[#bbf7d0]">
           <div className="max-w-4xl mx-auto px-4 sm:px-6">
             <div className="bg-white border border-[#bbf7d0] rounded-xl px-5 py-4 flex items-start gap-4">
               <span className="text-2xl flex-shrink-0">ðŸ‡¸ðŸ‡¦</span>
               <div>
                 <p className="text-sm font-semibold text-[#111] mb-1">
-                  SCFHS (Saudi Arabia): Allied health professionals require <strong>30 CME credits per year</strong> â€” half the physician requirement
+                  SCFHS (Saudi Arabia): Allied health professionals require <strong>30 CME credits per year</strong> — half the physician requirement
                 </p>
                 <p className="text-sm text-[#475569]">
                   This is one of the most common questions from physiotherapists and radiographers working in Saudi Arabia. The 30/yr rule applies to all allied health specialties under SCFHS, with a maximum 50% from online activities.
@@ -313,7 +313,7 @@ export default function AlliedHealthCpdPage() {
                       <td className="px-4 py-3 text-[#475569]">{c.authority}</td>
                       <td className="px-4 py-3">
                         <span className="font-semibold text-[#1a56a0]">{c.credits}</span>
-                        {c.minPerYear !== "â€”" && (
+                        {c.minPerYear !== "—" && (
                           <span className="block text-xs text-[#64748b]">{c.minPerYear}</span>
                         )}
                       </td>
@@ -374,7 +374,7 @@ export default function AlliedHealthCpdPage() {
                 {
                   step: "3",
                   title: "Log CPD activities",
-                  body: "Add conferences, online courses, training days, and research â€” AI reads your certificates.",
+                  body: "Add conferences, online courses, training days, and research — AI reads your certificates.",
                 },
                 {
                   step: "4",
@@ -480,7 +480,7 @@ export default function AlliedHealthCpdPage() {
             </h2>
             <p className="text-[#94a3b8] mb-8 text-sm max-w-xl mx-auto">
               Hayya Med Pro supports all allied health professions across all GCC authorities.
-              Free to start â€” no credit card needed.
+              Free to start — no credit card needed.
             </p>
             <Link
               href="/register"
@@ -501,9 +501,9 @@ export default function AlliedHealthCpdPage() {
             </p>
             <p className="text-xs text-[#94a3b8] text-center mt-2">
               <Link href="/privacy" className="hover:text-[#64748b]">Privacy</Link>
-              {" Â· "}
+              {" · "}
               <Link href="/terms" className="hover:text-[#64748b]">Terms</Link>
-              {" Â· "}
+              {" · "}
               <Link href="/countries" className="hover:text-[#64748b]">All Countries</Link>
             </p>
           </div>

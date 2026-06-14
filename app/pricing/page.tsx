@@ -5,10 +5,10 @@ import type { Plan } from "@/lib/planUtils";
 import { isQPayConfigured } from "@/lib/qpay";
 
 export const metadata = {
-  title: "Pricing â€” Hayya Med Pro",
+  title: "Pricing — Hayya Med Pro",
   description: "Simple pricing for healthcare professionals and employers. Start free. Upgrade when you need PDF exports, AI compliance tools, and team management.",
   openGraph: {
-    title: "Pricing â€” Hayya Med Pro",
+    title: "Pricing — Hayya Med Pro",
     description: "Free for individual professionals. Pro from $6/month. Employer plans from $50/month. 14-day free trial included.",
     url: "https://hayyamed.pro/pricing",
     type: "website",
@@ -35,12 +35,12 @@ const pricingFaqLd = {
     {
       "@type": "Question",
       name: "How much does Hayya Med Pro cost?",
-      acceptedAnswer: { "@type": "Answer", text: "The Free plan is always free. The Pro plan is $6/month (or $61.20/year â€” 15% off). Employer plans start at $50/month for up to 10 staff." },
+      acceptedAnswer: { "@type": "Answer", text: "The Free plan is always free. The Pro plan is $6/month (or $61.20/year — 15% off). Employer plans start at $50/month for up to 10 staff." },
     },
     {
       "@type": "Question",
       name: "Is there a free trial?",
-      acceptedAnswer: { "@type": "Answer", text: "Yes. New accounts receive a 14-day Pro trial automatically after completing onboarding â€” no credit card required." },
+      acceptedAnswer: { "@type": "Answer", text: "Yes. New accounts receive a 14-day Pro trial automatically after completing onboarding — no credit card required." },
     },
     {
       "@type": "Question",
@@ -86,7 +86,7 @@ export default async function PricingPage() {
       }
     }
   } catch {
-    // Not logged in or error â€” show public pricing
+    // Not logged in or error — show public pricing
   }
 
   return (

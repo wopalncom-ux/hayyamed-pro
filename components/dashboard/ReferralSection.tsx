@@ -49,7 +49,7 @@ export default function ReferralSection({
   function shareLinkedIn() {
     if (!referralUrl) return;
     const text = encodeURIComponent(
-      `I track my CME compliance with Hayya Med Pro â€” QCHP, SCFHS, DHA and more in one platform. Sign up free:`
+      `I track my CME compliance with Hayya Med Pro - QCHP, SCFHS, DHA and more in one platform. Sign up free:`
     );
     window.open(
       `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(referralUrl)}&summary=${text}`,
@@ -68,7 +68,7 @@ export default function ReferralSection({
         <h2 className="text-base font-semibold text-[#111]">Refer a Colleague</h2>
         {referralCount > 0 && (
           <span className="flex-shrink-0 text-xs font-semibold px-2.5 py-1 rounded-full bg-[#dcfce7] text-[#16a34a] border border-[#bbf7d0]">
-            {referralCount} colleague{referralCount === 1 ? "" : "s"} referred Â· {bonusEarned} days earned
+            {referralCount} colleague{referralCount === 1 ? "" : "s"} referred · {bonusEarned} days earned
           </span>
         )}
       </div>
@@ -97,7 +97,7 @@ export default function ReferralSection({
             disabled={isPending}
             className="text-sm font-semibold bg-[#1a56a0] text-white px-4 py-2.5 rounded-lg hover:bg-[#154890] disabled:opacity-50 transition-colors"
           >
-            {isPending ? "Generatingâ€¦" : "Generate my referral link"}
+            {isPending ? "Generating…" : "Generate my referral link"}
           </button>
           {error && <p className="text-xs text-[#dc2626] mt-2">{error}</p>}
         </div>

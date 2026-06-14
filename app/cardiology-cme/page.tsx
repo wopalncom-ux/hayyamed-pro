@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "Cardiology CME Requirements in GCC â€” Cardiologist CME Guide | Hayya Med Pro",
+  title: "Cardiology CME Requirements in GCC — Cardiologist CME Guide | Hayya Med Pro",
   description:
     "CME and CPD requirements for cardiologists in GCC. QCHP Qatar 80 CPD/2yr, SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. Track cardiology CME across all 7 GCC licensing authorities.",
   keywords: [
@@ -20,9 +20,9 @@ export const metadata: Metadata = {
     "continuing medical education cardiology",
   ],
   openGraph: {
-    title: "Cardiology CME Requirements in GCC â€” Complete Cardiologist Guide",
+    title: "Cardiology CME Requirements in GCC — Complete Cardiologist Guide",
     description:
-      "QCHP, SCFHS, DHA, DOH, MOH Kuwait, NHRA, OMSB â€” CME and CPD requirements for cardiologists across all 7 GCC countries.",
+      "QCHP, SCFHS, DHA, DOH, MOH Kuwait, NHRA, OMSB — CME and CPD requirements for cardiologists across all 7 GCC countries.",
     url: `${APP_URL}/cardiology-cme`,
     type: "website",
     images: [{ url: `${APP_URL}/api/og?t=Cardiology+CME+Requirements+%E2%80%94+GCC&s=QCHP+%C2%B7+SCFHS+%C2%B7+DHA+%E2%80%94+all+7+GCC+authorities+%C2%B7+Free+to+track&a=%E2%9D%A4%EF%B8%8F+Cardiology&k=Specialty+Guide`, width: 1200, height: 630 }],
@@ -76,7 +76,7 @@ const faqLd = {
       name: "Can I track cardiology CME for both QCHP (Qatar) and DHA (Dubai) in the same app?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. Hayya Med Pro supports multi-jurisdiction tracking. You can create separate wallets for QCHP and DHA within one account. Each wallet tracks independently â€” separate credit totals, different cycle dates, and separate compliance statuses. Log an activity once and assign it to both wallets if the accreditor is recognized by each authority.",
+        text: "Yes. Hayya Med Pro supports multi-jurisdiction tracking. You can create separate wallets for QCHP and DHA within one account. Each wallet tracks independently — separate credit totals, different cycle dates, and separate compliance statuses. Log an activity once and assign it to both wallets if the accreditor is recognized by each authority.",
       },
     },
   ],
@@ -143,29 +143,29 @@ export default function CardiologyCmePage() {
         <main className="max-w-4xl mx-auto px-6 py-12">
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-2 bg-[#eff6ff] border border-[#bfdbfe] text-[#1e40af] text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
-              â¤ï¸ Cardiology Â· All GCC Licensing Authorities
+              â¤ï¸ Cardiology · All GCC Licensing Authorities
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-[#111] tracking-tight mb-4 leading-tight">
               Cardiology CME requirements<br className="hidden sm:block" /> across the GCC
             </h1>
             <p className="text-lg text-[#64748b] max-w-2xl mx-auto mb-8">
-              Track CME and CPD credits for your cardiology license across every GCC authority â€” QCHP, SCFHS, DHA, and more â€” in one compliance platform.
+              Track CME and CPD credits for your cardiology license across every GCC authority — QCHP, SCFHS, DHA, and more — in one compliance platform.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link href="/register" className="inline-flex items-center gap-2 bg-[#1a56a0] text-white font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#154890] transition-colors">
-                Track my cardiology CME â€” free â†’
+                Track my cardiology CME — free â†’
               </Link>
               <Link href="/physician-cme" className="inline-flex items-center gap-1 text-sm text-[#64748b] hover:text-[#1a56a0] transition-colors">
                 See all physician CME requirements
               </Link>
             </div>
-            <p className="text-xs text-[#94a3b8] mt-3">No credit card required Â· 14-day Pro trial included</p>
+            <p className="text-xs text-[#94a3b8] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>
 
           <div className="bg-white rounded-2xl border border-[#e2e8f0] overflow-hidden mb-10 shadow-sm">
             <div className="px-6 py-5 border-b border-[#f1f5f9]">
               <h2 className="text-lg font-bold text-[#111]">CME/CPD requirements by GCC authority</h2>
-              <p className="text-sm text-[#64748b] mt-1">General physician requirements apply to cardiologists â€” specialty-specific notes in the table</p>
+              <p className="text-sm text-[#64748b] mt-1">General physician requirements apply to cardiologists — specialty-specific notes in the table</p>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
@@ -209,7 +209,7 @@ export default function CardiologyCmePage() {
           </div>
 
           <div className="mb-12">
-            <h2 className="text-xl font-bold text-[#111] mb-6">Cardiology CME â€” frequently asked questions</h2>
+            <h2 className="text-xl font-bold text-[#111] mb-6">Cardiology CME — frequently asked questions</h2>
             <div className="space-y-3">
               {faqLd.mainEntity.map((item) => (
                 <details key={item.name} className="bg-white rounded-xl border border-[#e2e8f0] group">
@@ -246,14 +246,14 @@ export default function CardiologyCmePage() {
 
           <div className="bg-gradient-to-br from-[#0f1f3d] to-[#1a3563] rounded-2xl p-10 text-center">
             <div className="text-3xl mb-3">â¤ï¸</div>
-            <h2 className="text-2xl font-bold text-white mb-2">Track your cardiology CME â€” free</h2>
+            <h2 className="text-2xl font-bold text-white mb-2">Track your cardiology CME — free</h2>
             <p className="text-[rgba(255,255,255,0.65)] mb-6 max-w-md mx-auto text-sm">
               Set up wallets for QCHP, SCFHS, and DHA in under 2 minutes. Log conferences, workshops, and online courses. Never miss a renewal deadline.
             </p>
             <Link href="/register" className="inline-flex items-center gap-2 bg-white text-[#1a56a0] font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#f0f7ff] transition-colors">
-              Track my CME â€” free â†’
+              Track my CME — free â†’
             </Link>
-            <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">No credit card required Â· 14-day Pro trial included</p>
+            <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>
 
           <div className="mt-6 bg-[#fef9c3] border border-[#fde68a] rounded-lg px-4 py-3 text-xs text-[#92400e] text-center">

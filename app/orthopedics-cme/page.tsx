@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "Orthopedic Surgery CME Requirements in GCC â€” Orthopedic Surgeon CME Guide | Hayya Med Pro",
+  title: "Orthopedic Surgery CME Requirements in GCC — Orthopedic Surgeon CME Guide | Hayya Med Pro",
   description:
     "Complete CME and CPD guide for orthopedic surgeons in GCC. QCHP Qatar 80 CPD/2yr, SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. ATLS mandatory. Track all requirements in one compliance app.",
   keywords: [
@@ -22,9 +22,9 @@ export const metadata: Metadata = {
     "orthopaedic surgery CPD GCC",
   ],
   openGraph: {
-    title: "Orthopedic Surgery CME Requirements in GCC â€” Orthopedic Surgeon CME Guide",
+    title: "Orthopedic Surgery CME Requirements in GCC — Orthopedic Surgeon CME Guide",
     description:
-      "QCHP Qatar 80 CPD/2yr Â· SCFHS Saudi 60 CME/yr Â· DHA Dubai 40 CME/2yr. ATLS mandatory. Track all GCC orthopedic CME requirements in one app.",
+      "QCHP Qatar 80 CPD/2yr · SCFHS Saudi 60 CME/yr · DHA Dubai 40 CME/2yr. ATLS mandatory. Track all GCC orthopedic CME requirements in one app.",
     url: `${APP_URL}/orthopedics-cme`,
     type: "website",
     images: [
@@ -87,8 +87,8 @@ const faqLd = {
 };
 
 const AUTHORITIES = [
-  { flag: "ðŸ‡¶ðŸ‡¦", name: "QCHP",  country: "Qatar",        cycle: "80 CPD / 2 yr",   note: "ATLS recommended Â· trauma CME counts" },
-  { flag: "ðŸ‡¸ðŸ‡¦", name: "SCFHS", country: "Saudi Arabia",  cycle: "60 CME / yr",     note: "SOS recognised Â· surgical skills count" },
+  { flag: "ðŸ‡¶ðŸ‡¦", name: "QCHP",  country: "Qatar",        cycle: "80 CPD / 2 yr",   note: "ATLS recommended · trauma CME counts" },
+  { flag: "ðŸ‡¸ðŸ‡¦", name: "SCFHS", country: "Saudi Arabia",  cycle: "60 CME / yr",     note: "SOS recognised · surgical skills count" },
   { flag: "ðŸ‡¦ðŸ‡ª", name: "DHA",   country: "Dubai",         cycle: "40 CME / 2 yr",   note: "Hands-on workshops recognised" },
   { flag: "ðŸ‡¦ðŸ‡ª", name: "DOH",   country: "Abu Dhabi",     cycle: "40 CPD / cycle",  note: "Verify per licence category" },
   { flag: "ðŸ‡°ðŸ‡¼", name: "MOH",   country: "Kuwait",        cycle: "30 CME / yr",     note: "Ministry of Health approved" },
@@ -99,7 +99,7 @@ const AUTHORITIES = [
 const SPECIALTY_NOTES = [
   {
     icon: "ðŸ†˜",
-    title: "ATLS â€” Trauma Standard",
+    title: "ATLS — Trauma Standard",
     body: "Advanced Trauma Life Support (ATLS) certification is the global standard for trauma surgeons and earns CPD credits across all GCC authorities. ATLS renewal every 4 years is recommended. Courses are available at accredited trauma centres across Qatar, Saudi Arabia, and UAE.",
   },
   {
@@ -115,7 +115,7 @@ const SPECIALTY_NOTES = [
   {
     icon: "ðŸ“",
     title: "Biomechanics & Implant Training",
-    body: "Industry-sponsored courses on implant biomechanics, surgical technique, and new fixation systems can earn CME credits when offered through accredited providers. QCHP and SCFHS limit commercially sponsored credits to a percentage of total CME â€” check your authority's cap before claiming.",
+    body: "Industry-sponsored courses on implant biomechanics, surgical technique, and new fixation systems can earn CME credits when offered through accredited providers. QCHP and SCFHS limit commercially sponsored credits to a percentage of total CME — check your authority's cap before claiming.",
   },
 ];
 
@@ -136,7 +136,7 @@ export default function OrthopedicsCmePage() {
             Orthopedic Surgery CME<br />Requirements Across GCC
           </h1>
           <p style={{ fontSize: 18, color: "#cbd5e1", maxWidth: 620, margin: "0 auto 32px" }}>
-            QCHP Qatar Â· SCFHS Saudi Arabia Â· DHA Dubai Â· and 4 more authorities.
+            QCHP Qatar · SCFHS Saudi Arabia · DHA Dubai · and 4 more authorities.
             ATLS mandatory. Track every credit in one compliance dashboard.
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
@@ -195,7 +195,7 @@ export default function OrthopedicsCmePage() {
 
       <section style={{ background: "#f0f4f8", padding: "64px 24px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto" }}>
-          <h2 style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", textAlign: "center", marginBottom: 48 }}>Orthopedic CME â€” Frequently Asked Questions</h2>
+          <h2 style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", textAlign: "center", marginBottom: 48 }}>Orthopedic CME — Frequently Asked Questions</h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {faqLd.mainEntity.map((q) => (
               <div key={q.name} style={{ background: "#fff", borderRadius: 12, padding: 24, border: "1px solid #e2e8f0" }}>
@@ -236,7 +236,7 @@ export default function OrthopedicsCmePage() {
           <Link href="/register" style={{ background: "#1a56a0", color: "#fff", padding: "16px 36px", borderRadius: 8, fontWeight: 700, textDecoration: "none", fontSize: 17, display: "inline-block" }}>
             Start tracking free â†’
           </Link>
-          <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required Â· Free plan always available</p>
+          <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required · Free plan always available</p>
         </div>
       </section>
 

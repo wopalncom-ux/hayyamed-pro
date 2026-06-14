@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "CPD Tracker for GCC Healthcare Professionals â€” Track QCHP, DOH, NHRA Credits",
+  title: "CPD Tracker for GCC Healthcare Professionals — Track QCHP, DOH, NHRA Credits",
   description:
     "The leading CPD tracker for GCC healthcare professionals. Track CPD credits for QCHP Qatar, DOH Abu Dhabi, NHRA Bahrain, and all GCC licensing authorities. Free to start. Web and mobile.",
   keywords: [
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     "GCC CPD compliance",
   ],
   openGraph: {
-    title: "CPD Tracker for GCC Healthcare Professionals â€” QCHP Â· DOH Â· NHRA",
+    title: "CPD Tracker for GCC Healthcare Professionals — QCHP · DOH · NHRA",
     description:
       "Track CPD credits for every GCC licensing authority in one place. QCHP Qatar, DOH Abu Dhabi, NHRA Bahrain. Free to start.",
     url: `${APP_URL}/cpd-tracker`,
@@ -52,7 +52,7 @@ const faqLd = {
       name: "What is the difference between a CPD tracker and a CME tracker?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "CPD (Continuing Professional Development) and CME (Continuing Medical Education) refer to the same concept â€” ongoing learning activities that healthcare professionals must complete to renew their license. Qatar (QCHP), UAE Abu Dhabi (DOH), and Bahrain (NHRA) use the term CPD. Saudi Arabia (SCFHS), UAE Dubai (DHA), Kuwait (MOH), and Oman (OMSB) use CME. Hayya Med Pro tracks both under the same platform.",
+        text: "CPD (Continuing Professional Development) and CME (Continuing Medical Education) refer to the same concept — ongoing learning activities that healthcare professionals must complete to renew their license. Qatar (QCHP), UAE Abu Dhabi (DOH), and Bahrain (NHRA) use the term CPD. Saudi Arabia (SCFHS), UAE Dubai (DHA), Kuwait (MOH), and Oman (OMSB) use CME. Hayya Med Pro tracks both under the same platform.",
       },
     },
     {
@@ -60,7 +60,7 @@ const faqLd = {
       name: "How many CPD credits do I need in Qatar (QCHP)?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Healthcare professionals licensed by QCHP in Qatar must complete 80 CPD credits per 2-year renewal cycle, with a minimum of 40 credits each year. At least 2 credits must come from patient safety activities. This requirement applies to all licensed healthcare professions â€” physicians, nurses, pharmacists, dentists, and allied health.",
+        text: "Healthcare professionals licensed by QCHP in Qatar must complete 80 CPD credits per 2-year renewal cycle, with a minimum of 40 credits each year. At least 2 credits must come from patient safety activities. This requirement applies to all licensed healthcare professions — physicians, nurses, pharmacists, dentists, and allied health.",
       },
     },
     {
@@ -89,13 +89,13 @@ const cpdAuthorities = [
 ];
 
 const allAuthorities = [
-  { flag: "ðŸ‡¶ðŸ‡¦", name: "QCHP â€” Qatar", href: "/qchp", term: "CPD" },
-  { flag: "ðŸ‡¸ðŸ‡¦", name: "SCFHS â€” Saudi Arabia", href: "/scfhs", term: "CME" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DHA â€” Dubai", href: "/dha", term: "CME" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DOH â€” Abu Dhabi", href: "/doh", term: "CPD" },
-  { flag: "ðŸ‡°ðŸ‡¼", name: "MOH â€” Kuwait", href: "/moh-kuwait", term: "CME" },
-  { flag: "ðŸ‡§ðŸ‡­", name: "NHRA â€” Bahrain", href: "/nhra", term: "CPD" },
-  { flag: "ðŸ‡´ðŸ‡²", name: "OMSB â€” Oman", href: "/omsb", term: "CME" },
+  { flag: "ðŸ‡¶ðŸ‡¦", name: "QCHP — Qatar", href: "/qchp", term: "CPD" },
+  { flag: "ðŸ‡¸ðŸ‡¦", name: "SCFHS — Saudi Arabia", href: "/scfhs", term: "CME" },
+  { flag: "ðŸ‡¦ðŸ‡ª", name: "DHA — Dubai", href: "/dha", term: "CME" },
+  { flag: "ðŸ‡¦ðŸ‡ª", name: "DOH — Abu Dhabi", href: "/doh", term: "CPD" },
+  { flag: "ðŸ‡°ðŸ‡¼", name: "MOH — Kuwait", href: "/moh-kuwait", term: "CME" },
+  { flag: "ðŸ‡§ðŸ‡­", name: "NHRA — Bahrain", href: "/nhra", term: "CPD" },
+  { flag: "ðŸ‡´ðŸ‡²", name: "OMSB — Oman", href: "/omsb", term: "CME" },
 ];
 
 export default function CpdTrackerPage() {
@@ -134,14 +134,14 @@ export default function CpdTrackerPage() {
         <section className="bg-white border-b border-[#e2e8f0] py-14 sm:py-20">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
             <span className="inline-block bg-[#eff6ff] text-[#1a56a0] text-xs font-semibold px-3 py-1 rounded-full mb-4">
-              CPD Tracker â€” GCC Healthcare Professionals
+              CPD Tracker — GCC Healthcare Professionals
             </span>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#111] mb-5 leading-tight">
               The CPD tracker built<br className="hidden sm:block" /> for GCC authorities
             </h1>
             <p className="text-lg text-[#475569] mb-6 max-w-2xl mx-auto leading-relaxed">
               Track QCHP, DOH, NHRA, and all GCC CPD requirements in one place.
-              Qatar requires 80 CPD per 2 years â€” Hayya Med Pro tracks every credit,
+              Qatar requires 80 CPD per 2 years — Hayya Med Pro tracks every credit,
               enforces category caps, and generates your submission-ready report.
             </p>
 
@@ -173,7 +173,7 @@ export default function CpdTrackerPage() {
                 QCHP requirements
               </Link>
             </div>
-            <p className="text-xs text-[#94a3b8]">Free plan available Â· 14-day Pro trial Â· No credit card required</p>
+            <p className="text-xs text-[#94a3b8]">Free plan available · 14-day Pro trial · No credit card required</p>
           </div>
         </section>
 
@@ -182,9 +182,9 @@ export default function CpdTrackerPage() {
           <div className="max-w-3xl mx-auto px-4 sm:px-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 bg-white rounded-xl border border-[#bfdbfe] px-5 py-4">
               <div className="flex-1">
-                <p className="text-sm font-semibold text-[#1e3a5f] mb-1">CPD in Qatar â€” the same as CME, different name</p>
+                <p className="text-sm font-semibold text-[#1e3a5f] mb-1">CPD in Qatar — the same as CME, different name</p>
                 <p className="text-sm text-[#475569]">
-                  QCHP uses &ldquo;CPD.&rdquo; SCFHS uses &ldquo;CME.&rdquo; Both mean the same thing â€” ongoing learning requirements for license renewal.
+                  QCHP uses &ldquo;CPD.&rdquo; SCFHS uses &ldquo;CME.&rdquo; Both mean the same thing — ongoing learning requirements for license renewal.
                   Hayya Med Pro handles both terminologies in the same platform.
                 </p>
               </div>
@@ -202,7 +202,7 @@ export default function CpdTrackerPage() {
         <section className="py-14 bg-[#f8fafc] border-t border-[#e2e8f0]">
           <div className="max-w-4xl mx-auto px-4 sm:px-6">
             <h2 className="text-2xl font-bold text-[#111] mb-10 text-center">
-              How it works â€” set up in 3 minutes
+              How it works — set up in 3 minutes
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
@@ -219,7 +219,7 @@ export default function CpdTrackerPage() {
                 {
                   step: "3",
                   title: "Log CPD activities",
-                  body: "Add conferences, online modules, workshops. Upload certificates â€” AI reads the credits automatically.",
+                  body: "Add conferences, online modules, workshops. Upload certificates — AI reads the credits automatically.",
                 },
                 {
                   step: "4",
@@ -241,13 +241,13 @@ export default function CpdTrackerPage() {
                 href="/register"
                 className="inline-block bg-[#1a56a0] text-white font-semibold px-8 py-3 rounded-xl hover:bg-[#1547a0] transition-colors text-sm"
               >
-                Start tracking CPD â€” free â†’
+                Start tracking CPD — free â†’
               </Link>
             </div>
           </div>
         </section>
 
-        {/* All authorities â€” CPD and CME */}
+        {/* All authorities — CPD and CME */}
         <section className="py-12 bg-white border-t border-[#e2e8f0]">
           <div className="max-w-5xl mx-auto px-4 sm:px-6">
             <h2 className="text-2xl font-bold text-[#111] mb-2 text-center">
@@ -308,7 +308,7 @@ export default function CpdTrackerPage() {
         <section className="py-12 bg-white border-t border-[#e2e8f0]">
           <div className="max-w-3xl mx-auto px-4 sm:px-6">
             <h2 className="text-2xl font-bold text-[#111] mb-8 text-center">
-              CPD tracker â€” frequently asked questions
+              CPD tracker — frequently asked questions
             </h2>
             <div className="space-y-3">
               {faqLd.mainEntity.map((faq) => (
@@ -333,9 +333,9 @@ export default function CpdTrackerPage() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {[
                 { href: "/qchp-renewal", label: "ðŸ‡¶ðŸ‡¦ QCHP renewal guide", sub: "80 CPD, 2-year cycle" },
-                { href: "/doh-renewal", label: "ðŸ‡¦ðŸ‡ª DOH renewal guide â€” Abu Dhabi", sub: "30â€“50 CPD per cycle" },
+                { href: "/doh-renewal", label: "ðŸ‡¦ðŸ‡ª DOH renewal guide — Abu Dhabi", sub: "30â€“50 CPD per cycle" },
                 { href: "/scfhs-renewal", label: "ðŸ‡¸ðŸ‡¦ SCFHS renewal guide", sub: "30â€“60 CME per year" },
-                { href: "/dha-renewal", label: "ðŸ‡¦ðŸ‡ª DHA renewal guide â€” Dubai", sub: "40 CME, 2-year cycle" },
+                { href: "/dha-renewal", label: "ðŸ‡¦ðŸ‡ª DHA renewal guide — Dubai", sub: "40 CME, 2-year cycle" },
                 { href: "/gcc-medical-license-renewal", label: "ðŸŒ All GCC renewal guides", sub: "All 7 authorities" },
                 { href: "/cme-compliance-report", label: "ðŸ“„ Generate CPD compliance report", sub: "Download PDF for renewal" },
               ].map((g) => (
@@ -360,7 +360,7 @@ export default function CpdTrackerPage() {
             </h2>
             <p className="text-[#94a3b8] mb-8 text-sm max-w-xl mx-auto">
               Healthcare professionals across Qatar, UAE, and Bahrain use Hayya Med Pro to track CPD
-              credits for QCHP, DOH, and NHRA renewal. Free to start â€” no credit card needed.
+              credits for QCHP, DOH, and NHRA renewal. Free to start — no credit card needed.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link
@@ -389,11 +389,11 @@ export default function CpdTrackerPage() {
             </p>
             <p className="text-xs text-[#94a3b8] text-center mt-2">
               <Link href="/privacy" className="hover:text-[#64748b]">Privacy</Link>
-              {" Â· "}
+              {" · "}
               <Link href="/terms" className="hover:text-[#64748b]">Terms</Link>
-              {" Â· "}
+              {" · "}
               <Link href="/cme-tracker" className="hover:text-[#64748b]">CME Tracker</Link>
-              {" Â· "}
+              {" · "}
               <Link href="/cme-vs-cpd" className="hover:text-[#64748b]">CME vs CPD</Link>
             </p>
           </div>

@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "CME Tracker for GCC Healthcare Professionals â€” Track QCHP, SCFHS, DHA Credits",
+  title: "CME Tracker for GCC Healthcare Professionals — Track QCHP, SCFHS, DHA Credits",
   description:
     "The #1 CME tracker for GCC healthcare professionals. Track CME and CPD credits for QCHP Qatar, SCFHS Saudi Arabia, DHA UAE, and all GCC licensing authorities. Free to start. Web and mobile.",
   keywords: [
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     "GCC CME compliance tracker",
   ],
   openGraph: {
-    title: "CME Tracker for GCC Healthcare Professionals â€” QCHP Â· SCFHS Â· DHA",
+    title: "CME Tracker for GCC Healthcare Professionals — QCHP · SCFHS · DHA",
     description:
       "Track CME credits for every GCC licensing authority in one place. Free for individual professionals. Web + PWA + mobile.",
     url: `${APP_URL}/cme-tracker`,
@@ -68,7 +68,7 @@ const faqLd = {
       name: "Can I use this CME tracker on my phone?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. Hayya Med Pro is a Progressive Web App (PWA) â€” you can add it to your home screen from any mobile browser (Chrome, Safari) and use it like a native app. Core features including CME activity logging work offline and sync when you reconnect. Native iOS and Android apps are planned.",
+        text: "Yes. Hayya Med Pro is a Progressive Web App (PWA) — you can add it to your home screen from any mobile browser (Chrome, Safari) and use it like a native app. Core features including CME activity logging work offline and sync when you reconnect. Native iOS and Android apps are planned.",
       },
     },
     {
@@ -76,7 +76,7 @@ const faqLd = {
       name: "Does the CME tracker generate a PDF report for license renewal?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. The Pro plan generates a formatted PDF compliance report that lists all verified CME activities, categories, credit totals, and compliance status â€” formatted for submission to your licensing authority. This is available for QCHP, SCFHS, DHA, and all other supported GCC authorities.",
+        text: "Yes. The Pro plan generates a formatted PDF compliance report that lists all verified CME activities, categories, credit totals, and compliance status — formatted for submission to your licensing authority. This is available for QCHP, SCFHS, DHA, and all other supported GCC authorities.",
       },
     },
   ],
@@ -96,7 +96,7 @@ const features = [
   {
     icon: "ðŸ¤–",
     title: "AI certificate reading",
-    body: "Take a photo of your certificate â€” AI reads the title, date, credits, and accreditor automatically.",
+    body: "Take a photo of your certificate — AI reads the title, date, credits, and accreditor automatically.",
   },
   {
     icon: "ðŸ“…",
@@ -111,7 +111,7 @@ const features = [
   {
     icon: "ðŸŒ",
     title: "Multi-country tracking",
-    body: "Licensed in Qatar and Saudi Arabia? Add both â€” separate wallets, separate credit counters, separate deadlines.",
+    body: "Licensed in Qatar and Saudi Arabia? Add both — separate wallets, separate credit counters, separate deadlines.",
   },
 ];
 
@@ -168,7 +168,7 @@ export default function CmeTrackerPage() {
         <section className="bg-white border-b border-[#e2e8f0] py-14 sm:py-20">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
             <span className="inline-block bg-[#eff6ff] text-[#1a56a0] text-xs font-semibold px-3 py-1 rounded-full mb-4">
-              CME Tracker â€” GCC Healthcare Professionals
+              CME Tracker — GCC Healthcare Professionals
             </span>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#111] mb-5 leading-tight">
               The CME tracker built<br className="hidden sm:block" /> for GCC licensing authorities
@@ -176,7 +176,7 @@ export default function CmeTrackerPage() {
             <p className="text-lg text-[#475569] mb-8 max-w-2xl mx-auto leading-relaxed">
               Track QCHP, SCFHS, DHA, DOH, NHRA, and OMSB CME credits in one place.
               Automatic credit counting, deadline reminders, certificate storage, and
-              PDF reports â€” free to start.
+              PDF reports — free to start.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
               <Link
@@ -192,7 +192,7 @@ export default function CmeTrackerPage() {
                 See pricing
               </Link>
             </div>
-            <p className="text-xs text-[#94a3b8]">Free plan available Â· 14-day Pro trial Â· No credit card required</p>
+            <p className="text-xs text-[#94a3b8]">Free plan available · 14-day Pro trial · No credit card required</p>
           </div>
         </section>
 
@@ -275,7 +275,7 @@ export default function CmeTrackerPage() {
                 {
                   step: "3",
                   title: "Log your CME activities",
-                  body: "Add conferences, online courses, and workshops. Upload certificates â€” AI reads the credits for you.",
+                  body: "Add conferences, online courses, and workshops. Upload certificates — AI reads the credits for you.",
                 },
                 {
                   step: "4",
@@ -297,7 +297,7 @@ export default function CmeTrackerPage() {
                 href="/register"
                 className="inline-block bg-[#1a56a0] text-white font-semibold px-8 py-3 rounded-xl hover:bg-[#1547a0] transition-colors text-sm"
               >
-                Start tracking â€” free â†’
+                Start tracking — free â†’
               </Link>
             </div>
           </div>
@@ -362,7 +362,7 @@ export default function CmeTrackerPage() {
         <section className="py-12 bg-white border-t border-[#e2e8f0]">
           <div className="max-w-3xl mx-auto px-4 sm:px-6">
             <h2 className="text-2xl font-bold text-[#111] mb-8 text-center">
-              CME tracker â€” frequently asked questions
+              CME tracker — frequently asked questions
             </h2>
             <div className="space-y-3">
               {faqLd.mainEntity.map((faq) => (
@@ -414,7 +414,7 @@ export default function CmeTrackerPage() {
             </h2>
             <p className="text-[#94a3b8] mb-8 text-sm max-w-xl mx-auto">
               Join healthcare professionals across Qatar, Saudi Arabia, UAE, Kuwait, Bahrain, and Oman
-              who track their compliance with Hayya Med Pro. Free to start â€” no credit card needed.
+              who track their compliance with Hayya Med Pro. Free to start — no credit card needed.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link
@@ -443,11 +443,11 @@ export default function CmeTrackerPage() {
             </p>
             <p className="text-xs text-[#94a3b8] text-center mt-2">
               <Link href="/privacy" className="hover:text-[#64748b]">Privacy</Link>
-              {" Â· "}
+              {" · "}
               <Link href="/terms" className="hover:text-[#64748b]">Terms</Link>
-              {" Â· "}
+              {" · "}
               <Link href="/about" className="hover:text-[#64748b]">About</Link>
-              {" Â· "}
+              {" · "}
               <Link href="/countries" className="hover:text-[#64748b]">All Countries</Link>
             </p>
           </div>

@@ -4,9 +4,9 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "Jordan CME Requirements â€” Jordan Medical Council CME Guide | Hayya Med Pro",
+  title: "Jordan CME Requirements — Jordan Medical Council CME Guide | Hayya Med Pro",
   description:
-    "Complete CME guide for Jordanian healthcare professionals. Jordan Medical Council (JMC): 30 CME credits/year. Hundreds of thousands of Jordanian doctors work in GCC â€” track your Jordanian and GCC licences in one app.",
+    "Complete CME guide for Jordanian healthcare professionals. Jordan Medical Council (JMC): 30 CME credits/year. Hundreds of thousands of Jordanian doctors work in GCC — track your Jordanian and GCC licences in one app.",
   keywords: [
     "Jordan CME requirements",
     "Jordan Medical Council CME",
@@ -22,9 +22,9 @@ export const metadata: Metadata = {
     "High Health Council Jordan CME",
   ],
   openGraph: {
-    title: "Jordan CME Requirements â€” Jordan Medical Council Guide",
+    title: "Jordan CME Requirements — Jordan Medical Council Guide",
     description:
-      "Jordan Medical Council (JMC): 30 CME credits/year. Large Jordanian healthcare diaspora in GCC â€” track Jordan + GCC licences in one app.",
+      "Jordan Medical Council (JMC): 30 CME credits/year. Large Jordanian healthcare diaspora in GCC — track Jordan + GCC licences in one app.",
     url: `${APP_URL}/jordan-cme`,
     type: "website",
     images: [
@@ -71,7 +71,7 @@ const faqLd = {
     },
     {
       "@type": "Question",
-      name: "I have both a Jordanian and a Saudi SCFHS licence â€” how do I track both?",
+      name: "I have both a Jordanian and a Saudi SCFHS licence — how do I track both?",
       acceptedAnswer: {
         "@type": "Answer",
         text: "Hayya Med Pro supports multi-jurisdiction CME tracking. You can set up separate compliance wallets for your Jordan Medical Council requirements (30 CME/yr) and your SCFHS requirements (60 CME/yr for physicians). Each wallet tracks independently with separate cycle dates, credit totals, and compliance status. Log an activity once and assign it to the wallet(s) it qualifies for.",
@@ -90,7 +90,7 @@ const faqLd = {
       name: "Can Jordanian doctors working in GCC maintain their Jordanian licence while abroad?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. Jordanian doctors working in GCC countries can fulfil JMC CME requirements through international conferences, GCC-based accredited workshops, and approved online CME programmes. CME activities at GCC hospitals â€” particularly those with international accreditation (JCI) â€” often qualify for JMC credit if the accreditor is recognised. Hayya Med Pro tracks both your GCC and Jordanian CME requirements simultaneously.",
+        text: "Yes. Jordanian doctors working in GCC countries can fulfil JMC CME requirements through international conferences, GCC-based accredited workshops, and approved online CME programmes. CME activities at GCC hospitals — particularly those with international accreditation (JCI) — often qualify for JMC credit if the accreditor is recognised. Hayya Med Pro tracks both your GCC and Jordanian CME requirements simultaneously.",
       },
     },
   ],
@@ -101,7 +101,7 @@ const KEY_FACTS = [
   { label: "CME Credits", value: "30 credits / year" },
   { label: "Accreditor", value: "High Health Council (HHC)" },
   { label: "Renewal Cycle", value: "Annual" },
-  { label: "Known for", value: "Medical education hub â€” trains for GCC" },
+  { label: "Known for", value: "Medical education hub — trains for GCC" },
 ];
 
 const GCC_COMPARISON = [
@@ -118,7 +118,7 @@ const NOTES = [
   {
     icon: "ðŸ¥",
     title: "Jordan is a regional medical education hub",
-    body: "Jordan has some of the highest physician-to-population ratios in the Arab world and trains doctors for the entire MENA region. Many Jordanian doctors pursue careers in GCC while maintaining their JMC registration â€” often holding simultaneous SCFHS, QCHP, or DHA licences.",
+    body: "Jordan has some of the highest physician-to-population ratios in the Arab world and trains doctors for the entire MENA region. Many Jordanian doctors pursue careers in GCC while maintaining their JMC registration — often holding simultaneous SCFHS, QCHP, or DHA licences.",
   },
   {
     icon: "ðŸ“‹",
@@ -154,7 +154,7 @@ export default function JordanCmePage() {
           </h1>
           <p style={{ fontSize: 18, color: "#cbd5e1", maxWidth: 620, margin: "0 auto 32px" }}>
             JMC requires 30 CME credits per year. Jordan is the Arab world's medical
-            education hub â€” track your Jordanian and GCC licences in one compliance app.
+            education hub — track your Jordanian and GCC licences in one compliance app.
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/register" style={{ background: "#1a56a0", color: "#fff", padding: "14px 28px", borderRadius: 8, fontWeight: 600, textDecoration: "none", fontSize: 16 }}>
@@ -236,7 +236,7 @@ export default function JordanCmePage() {
       <section style={{ background: "#f0f4f8", padding: "64px 24px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto" }}>
           <h2 style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", textAlign: "center", marginBottom: 48 }}>
-            Jordan CME â€” Frequently Asked Questions
+            Jordan CME — Frequently Asked Questions
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {faqLd.mainEntity.map((q) => (
@@ -278,7 +278,7 @@ export default function JordanCmePage() {
       <section style={{ background: "#0f1f3d", padding: "72px 24px", textAlign: "center" }}>
         <div style={{ maxWidth: 640, margin: "0 auto" }}>
           <h2 style={{ fontSize: 32, fontWeight: 800, color: "#fff", marginBottom: 16 }}>
-            Track your Jordanian and GCC CME â€” free
+            Track your Jordanian and GCC CME — free
           </h2>
           <p style={{ fontSize: 18, color: "#cbd5e1", marginBottom: 32 }}>
             Set up wallets for Jordan Medical Council and all 7 GCC authorities in one compliance dashboard.
@@ -286,7 +286,7 @@ export default function JordanCmePage() {
           <Link href="/register" style={{ background: "#1a56a0", color: "#fff", padding: "16px 36px", borderRadius: 8, fontWeight: 700, textDecoration: "none", fontSize: 17, display: "inline-block" }}>
             Start tracking free â†’
           </Link>
-          <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required Â· Free plan always available</p>
+          <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required · Free plan always available</p>
         </div>
       </section>
 

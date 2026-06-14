@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "UAE Abu Dhabi CPD Tracker â€” DOH CPD Requirements | Hayya Med Pro",
+  title: "UAE Abu Dhabi CPD Tracker — DOH CPD Requirements | Hayya Med Pro",
   description:
     "Track your DOH Abu Dhabi CPD requirements automatically. UAE Abu Dhabi healthcare professionals must complete 30â€“50 CPD credits per cycle depending on profession. Hayya Med Pro tracks accredited, online, and self-directed CPD and generates your DOH-ready compliance report.",
   keywords: [
@@ -18,16 +18,16 @@ export const metadata: Metadata = {
     "CPD tracker Abu Dhabi",
   ],
   openGraph: {
-    title: "DOH Abu Dhabi CPD Tracker â€” UAE Healthcare Compliance",
+    title: "DOH Abu Dhabi CPD Tracker — UAE Healthcare Compliance",
     description:
-      "30â€“50 CPD credits per cycle for UAE Abu Dhabi healthcare professionals. Track accredited and self-directed CPD, enforce caps, and generate your DOH compliance report â€” free to start.",
+      "30â€“50 CPD credits per cycle for UAE Abu Dhabi healthcare professionals. Track accredited and self-directed CPD, enforce caps, and generate your DOH compliance report — free to start.",
     url: `${APP_URL}/doh`,
     type: "website",
     images: [{ url: `${APP_URL}/api/og?t=DOH+CPD+Tracker+%E2%80%94+Abu+Dhabi&s=40+CPD+credits+%C2%B7+2-year+cycle+%C2%B7+Accredited+%2B+self-directed+categories&a=%F0%9F%87%A6%F0%9F%87%AA+DOH&k=Authority+Guide`, width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "DOH Abu Dhabi CPD Tracker â€” UAE Healthcare Compliance",
+    title: "DOH Abu Dhabi CPD Tracker — UAE Healthcare Compliance",
     description: "Track your DOH Abu Dhabi CPD requirements automatically. Free for UAE healthcare professionals.",
   },
   alternates: { canonical: `${APP_URL}/doh` },
@@ -74,7 +74,7 @@ const faqLd = {
       name: "How do I submit my CPD portfolio to DOH Abu Dhabi?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "CPD portfolios are submitted through the DOH Abu Dhabi online portal (doh.gov.ae) before your license renewal date. Hayya Med Pro generates a structured CPD activity report listing all activities by category â€” accredited, online, self-directed, postgraduate, research, and teaching â€” ready for DOH submission.",
+        text: "CPD portfolios are submitted through the DOH Abu Dhabi online portal (doh.gov.ae) before your license renewal date. Hayya Med Pro generates a structured CPD activity report listing all activities by category — accredited, online, self-directed, postgraduate, research, and teaching — ready for DOH submission.",
       },
     },
   ],
@@ -111,7 +111,7 @@ const HOW_IT_WORKS = [
   {
     step: "1",
     title: "Set your profession and DOH cycle",
-    desc: "Select UAE â€” Abu Dhabi as your country and your profession. Hayya Med Pro applies the correct DOH credit target for your profession and tracks accredited, online, self-directed, and postgraduate CPD separately.",
+    desc: "Select UAE — Abu Dhabi as your country and your profession. Hayya Med Pro applies the correct DOH credit target for your profession and tracks accredited, online, self-directed, and postgraduate CPD separately.",
   },
   {
     step: "2",
@@ -126,7 +126,7 @@ const HOW_IT_WORKS = [
   {
     step: "4",
     title: "Generate your DOH CPD report",
-    desc: "Download a PDF CPD report organized by DOH category â€” accredited, online, self-directed, postgraduate, research, and teaching â€” ready for DOH portal submission.",
+    desc: "Download a PDF CPD report organized by DOH category — accredited, online, self-directed, postgraduate, research, and teaching — ready for DOH portal submission.",
   },
 ];
 
@@ -158,10 +158,10 @@ export default function DohPage() {
           {/* Hero */}
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-2 bg-[#eff6ff] border border-[#bfdbfe] text-[#1a56a0] text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
-              ðŸ‡¦ðŸ‡ª UAE â€” Abu Dhabi Â· Department of Health (DOH)
+              ðŸ‡¦ðŸ‡ª UAE — Abu Dhabi · Department of Health (DOH)
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-[#111] tracking-tight mb-4 leading-tight">
-              Track your DOH Abu Dhabi CPD<br className="hidden sm:block" /> requirements â€” automatically
+              Track your DOH Abu Dhabi CPD<br className="hidden sm:block" /> requirements — automatically
             </h1>
             <p className="text-lg text-[#64748b] max-w-2xl mx-auto mb-8">
               UAE Abu Dhabi healthcare professionals need <strong className="text-[#111]">30â€“50 CPD credits</strong> per renewal cycle.
@@ -169,13 +169,13 @@ export default function DohPage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link href="/register" className="inline-flex items-center gap-2 bg-[#1a56a0] text-white font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#154890] transition-colors">
-                Track my DOH compliance â€” free â†’
+                Track my DOH compliance — free â†’
               </Link>
               <Link href="/pricing" className="inline-flex items-center gap-1 text-sm text-[#64748b] hover:text-[#1a56a0] transition-colors">
                 See what&apos;s free vs Pro
               </Link>
             </div>
-            <p className="text-xs text-[#94a3b8] mt-3">No credit card required Â· 14-day Pro trial included</p>
+            <p className="text-xs text-[#94a3b8] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>
 
           {/* Requirements card */}
@@ -210,7 +210,7 @@ export default function DohPage() {
           <div className="mb-10">
             <h2 className="text-xl font-bold text-[#111] mb-2">Accepted CPD activity categories</h2>
             <p className="text-sm text-[#64748b] mb-6">
-              DOH Abu Dhabi accepts structured, online, and self-directed CPD activities. Category caps apply per cycle â€” Hayya Med Pro enforces them automatically.
+              DOH Abu Dhabi accepts structured, online, and self-directed CPD activities. Category caps apply per cycle — Hayya Med Pro enforces them automatically.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {CATEGORIES.map((c) => (
@@ -281,15 +281,15 @@ export default function DohPage() {
           {/* DOH vs DHA comparison */}
           <div className="bg-white rounded-2xl border border-[#e2e8f0] overflow-hidden mb-10 shadow-sm">
             <div className="px-6 py-4 border-b border-[#f1f5f9]">
-              <h2 className="text-base font-bold text-[#111]">DOH Abu Dhabi vs DHA Dubai â€” key differences</h2>
+              <h2 className="text-base font-bold text-[#111]">DOH Abu Dhabi vs DHA Dubai — key differences</h2>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-[#f1f5f9] bg-[#f8fafc]">
                     <th className="text-left px-6 py-3 text-xs font-semibold text-[#64748b] uppercase tracking-wide"></th>
-                    <th className="text-center px-4 py-3 text-xs font-bold text-[#1d4ed8] uppercase tracking-wide">DOH â€” Abu Dhabi</th>
-                    <th className="text-center px-4 py-3 text-xs font-bold text-[#0c4a6e] uppercase tracking-wide">DHA â€” Dubai</th>
+                    <th className="text-center px-4 py-3 text-xs font-bold text-[#1d4ed8] uppercase tracking-wide">DOH — Abu Dhabi</th>
+                    <th className="text-center px-4 py-3 text-xs font-bold text-[#0c4a6e] uppercase tracking-wide">DHA — Dubai</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#f8fafc]">
@@ -319,7 +319,7 @@ export default function DohPage() {
 
           {/* FAQ */}
           <div className="mb-12">
-            <h2 className="text-xl font-bold text-[#111] mb-6">DOH Abu Dhabi CPD â€” frequently asked questions</h2>
+            <h2 className="text-xl font-bold text-[#111] mb-6">DOH Abu Dhabi CPD — frequently asked questions</h2>
             <div className="space-y-3">
               {faqLd.mainEntity.map((item) => (
                 <details key={item.name} className="bg-white rounded-xl border border-[#e2e8f0] group">
@@ -410,12 +410,12 @@ export default function DohPage() {
             <div className="inline-block text-3xl mb-3">ðŸ‡¦ðŸ‡ª</div>
             <h2 className="text-2xl font-bold text-white mb-2">Start tracking your DOH Abu Dhabi CPD today</h2>
             <p className="text-[rgba(255,255,255,0.65)] mb-6 max-w-md mx-auto text-sm">
-              Hayya Med Pro applies DOH Abu Dhabi rules automatically â€” profession-specific credit targets, online and self-directed caps, and renewal reminders. Free to start.
+              Hayya Med Pro applies DOH Abu Dhabi rules automatically — profession-specific credit targets, online and self-directed caps, and renewal reminders. Free to start.
             </p>
             <Link href="/register" className="inline-flex items-center gap-2 bg-white text-[#1a56a0] font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#f0f7ff] transition-colors">
-              Track my DOH CPD â€” free â†’
+              Track my DOH CPD — free â†’
             </Link>
-            <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">No credit card required Â· 14-day Pro trial included</p>
+            <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>
 
           <div className="mt-6 bg-[#fef9c3] border border-[#fde68a] rounded-lg px-4 py-3 text-xs text-[#92400e] text-center">

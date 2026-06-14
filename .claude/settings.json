@@ -1,4 +1,4 @@
-﻿{
+{
   "permissions": {
     "allow": [
       "Bash(npm run *)",
@@ -54,11 +54,32 @@
       "Bash(Remove-Item \"c:\\\\Users\\\\wopal\\\\OneDrive\\\\Desktop\\\\Platform\\\\hayyamed-pro\\\\app\\\\api\\\\badge\\\\compliance\\\\route.ts\" -Force)",
       "Bash(node -e \"const p = require\\('@paddle/paddle-node-sdk'\\); const t = p; console.log\\(Object.keys\\(t\\)\\);\")",
       "Bash(cat app/manifest.ts)",
-      "Bash(cat public/manifest.json)"
+      "Bash(cat public/manifest.json)",
+      "Bash(git push *)",
+      "Bash(git rm *)",
+      "Bash(xargs grep -l \"analytics\\\\|analytics\")",
+      "PowerShell(gcloud secrets describe hayyamed-pro-anthropic-key --project=project-38d955b0-84e7-44b6-8b5 2>&1)",
+      "PowerShell(gcloud secrets versions list hayyamed-pro-anthropic-key --project=project-38d955b0-84e7-44b6-8b5 2>&1)",
+      "PowerShell(gcloud builds describe 46598b98-700a-41e5-928e-078a1c79adb6 --region=me-central1 --project=project-38d955b0-84e7-44b6-8b5 --format=\"value\\(status,finishTime\\)\" 2>&1)",
+      "PowerShell(gcloud builds log 46598b98-700a-41e5-928e-078a1c79adb6 --region=me-central1 --project=project-38d955b0-84e7-44b6-8b5 2>&1)",
+      "PowerShell(gcloud builds list --region=me-central1 --project=project-38d955b0-84e7-44b6-8b5 --limit=1 --format=\"value\\(id,status,createTime\\)\" 2>&1)",
+      "PowerShell(gcloud scheduler jobs list --location=us-central1 --project=project-38d955b0-84e7-44b6-8b5 --format=\"table\\(name,schedule,state\\)\" 2>&1)",
+      "PowerShell(gcloud services enable cloudscheduler.googleapis.com --project=project-38d955b0-84e7-44b6-8b5 2>&1)",
+      "PowerShell(gcloud secrets versions access latest --secret=hayyamed-pro-cron-secret --project=project-38d955b0-84e7-44b6-8b5 2>&1)",
+      "PowerShell(cd \"c:\\\\Users\\\\wopal\\\\OneDrive\\\\Desktop\\\\Platform\\\\hayyamed-pro\"; git add app/coming-soon/page.tsx lib/supabase/middleware.ts components/dashboard/CopyVerificationLinkButton.tsx app/\\(dashboard\\)/dashboard/licenses/page.tsx; git status)",
+      "Bash(xargs grep -l \"notification\\\\|import\\\\|bulk\")",
+      "Bash(xargs grep -l \"bulk\\\\|import\")",
+      "Bash(New-Item -ItemType Directory -Path \"c:\\\\Users\\\\wopal\\\\OneDrive\\\\Desktop\\\\Platform\\\\hayyamed-pro\\\\app\\\\\\(admin\\)\\\\admin\\\\waitlist\" -Force)",
+      "Bash(Out-Null)",
+      "PowerShell(New-Item -ItemType Directory -Path \"c:\\\\Users\\\\wopal\\\\OneDrive\\\\Desktop\\\\Platform\\\\hayyamed-pro\\\\app\\\\api\\\\admin\\\\waitlist\" -Force)",
+      "PowerShell(cd \"c:\\\\Users\\\\wopal\\\\OneDrive\\\\Desktop\\\\Platform\\\\hayyamed-pro\"; git add supabase/migrations/COMBINED_RUN_ONCE.sql supabase/migrations/031_waitlist_signups.sql lib/supabase/middleware.ts app/\\(admin\\)/layout.tsx \"app/\\(admin\\)/admin/waitlist/page.tsx\" app/api/admin/waitlist/export/route.ts; git status --short)",
+      "PowerShell(New-Item -ItemType Directory -Path \"c:\\\\Users\\\\wopal\\\\OneDrive\\\\Desktop\\\\Platform\\\\hayyamed-pro\\\\app\\\\\\(admin\\)\\\\admin\\\\demo-requests\" -Force)",
+      "PowerShell(New-Item -ItemType Directory -Path \"c:\\\\Users\\\\wopal\\\\OneDrive\\\\Desktop\\\\Platform\\\\hayyamed-pro\\\\app\\\\api\\\\admin\\\\demo-requests\\\\export\" -Force)"
     ],
     "additionalDirectories": [
       "c:\\Users\\wopal\\OneDrive\\Desktop\\Platform\\hayyamed-pro\\app\\api\\admin\\discounts",
-      "c:\\Users\\wopal\\.claude\\projects\\c--Users-wopal-OneDrive-Desktop-Platform-hayyamed-pro\\memory"
+      "c:\\Users\\wopal\\.claude\\projects\\c--Users-wopal-OneDrive-Desktop-Platform-hayyamed-pro\\memory",
+      "c:\\Users\\wopal\\OneDrive\\Desktop\\Platform\\hayyamed-pro\\app\\api\\admin\\demo-requests"
     ]
   }
 }

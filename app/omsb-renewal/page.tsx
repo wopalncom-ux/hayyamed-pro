@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "OMSB License Renewal â€” CME Requirements for Oman Healthcare Professionals",
+  title: "OMSB License Renewal — CME Requirements for Oman Healthcare Professionals",
   description:
     "Complete guide to renewing your OMSB license in Oman. 40 CME credits per 2-year renewal cycle. Step-by-step OMSB renewal process for physicians, nurses, pharmacists, and all Oman healthcare professionals.",
   keywords: [
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     "OMSB CME credits renewal",
   ],
   openGraph: {
-    title: "OMSB License Renewal â€” Complete Guide for Oman Healthcare Professionals",
+    title: "OMSB License Renewal — Complete Guide for Oman Healthcare Professionals",
     description:
       "40 CME credits per 2-year cycle. Step-by-step OMSB renewal process, checklist, and how Hayya Med Pro tracks your CME progress automatically.",
     url: `${APP_URL}/omsb-renewal`,
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "OMSB License Renewal Guide â€” Oman Healthcare CME",
+    title: "OMSB License Renewal Guide — Oman Healthcare CME",
     description: "40 CME credits per 2-year cycle. Complete OMSB renewal checklist, step-by-step process, and CME compliance tracking for Oman healthcare professionals.",
   },
   alternates: { canonical: `${APP_URL}/omsb-renewal` },
@@ -173,10 +173,10 @@ export default function OmsbRenewalPage() {
           {/* Hero */}
           <div className="mb-10">
             <div className="inline-flex items-center gap-2 bg-[#f0f9ff] border border-[#bae6fd] text-[#0369a1] text-xs font-semibold px-3 py-1.5 rounded-full mb-4">
-              ðŸ‡´ðŸ‡² Oman Â· Oman Medical Specialty Board (OMSB)
+              ðŸ‡´ðŸ‡² Oman · Oman Medical Specialty Board (OMSB)
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold text-[#111] mb-4 leading-tight">
-              OMSB license renewal â€” complete guide for Oman healthcare professionals
+              OMSB license renewal — complete guide for Oman healthcare professionals
             </h1>
             <p className="text-base text-[#475569] max-w-2xl leading-relaxed">
               OMSB (Oman Medical Specialty Board) requires <strong className="text-[#111]">40 CME credits
@@ -226,7 +226,7 @@ export default function OmsbRenewalPage() {
           {/* Step-by-step */}
           <div className="mb-10">
             <h2 className="text-xl font-bold text-[#111] mb-6">
-              OMSB license renewal â€” step by step
+              OMSB license renewal — step by step
             </h2>
             <div className="space-y-4">
               {RENEWAL_STEPS.map((s) => (
@@ -285,7 +285,7 @@ export default function OmsbRenewalPage() {
                 href="/register"
                 className="block w-full text-center bg-white text-[#1a56a0] font-semibold text-sm py-3 rounded-lg hover:bg-[#f0f7ff] transition-colors"
               >
-                Start tracking OMSB CME â€” free â†’
+                Start tracking OMSB CME — free â†’
               </Link>
             </div>
           </div>
@@ -293,7 +293,7 @@ export default function OmsbRenewalPage() {
           {/* FAQ */}
           <div className="mb-12">
             <h2 className="text-xl font-bold text-[#111] mb-6">
-              OMSB license renewal â€” frequently asked questions
+              OMSB license renewal — frequently asked questions
             </h2>
             <div className="space-y-3">
               {faqLd.mainEntity.map((faq) => (
@@ -350,10 +350,10 @@ export default function OmsbRenewalPage() {
               href="/register"
               className="inline-flex items-center gap-2 bg-white text-[#1a56a0] font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#f0f7ff] transition-colors"
             >
-              Track my OMSB compliance â€” free â†’
+              Track my OMSB compliance — free â†’
             </Link>
             <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">
-              No credit card required Â· 14-day Pro trial included
+              No credit card required · 14-day Pro trial included
             </p>
           </div>
 

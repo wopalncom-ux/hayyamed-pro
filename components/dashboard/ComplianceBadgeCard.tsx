@@ -27,9 +27,9 @@ export default function ComplianceBadgeCard({ professionalId, plan, name, pct, c
   const profileLinkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(profileUrl)}`;
   const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(absoluteUrl)}`;
 
-  const linkedInPostText = `I'm tracking my CME compliance with Hayya Med Pro â€” keeping my renewal on track.\n\n${pct}% complete Â· ${complianceStatus === "compliant" ? "Compliant âœ“" : complianceStatus === "at_risk" ? "At Risk âš ï¸" : "In Progress"}\n\nFree to start for GCC healthcare professionals: ${referralUrl}`;
+  const linkedInPostText = `I'm tracking my CME compliance with Hayya Med Pro — keeping my renewal on track.\n\n${pct}% complete · ${complianceStatus === "compliant" ? "Compliant âœ“" : complianceStatus === "at_risk" ? "At Risk âš ï¸" : "In Progress"}\n\nFree to start for GCC healthcare professionals: ${referralUrl}`;
 
-  const whatsappText = `I'm using Hayya Med Pro to track my CME compliance â€” ${pct}% complete. Free to start for GCC healthcare professionals: ${referralUrl}`;
+  const whatsappText = `I'm using Hayya Med Pro to track my CME compliance — ${pct}% complete. Free to start for GCC healthcare professionals: ${referralUrl}`;
   const whatsappShareUrl = `https://wa.me/?text=${encodeURIComponent(whatsappText)}`;
 
   async function copyLink() {
@@ -143,7 +143,7 @@ export default function ComplianceBadgeCard({ professionalId, plan, name, pct, c
         <div>
           <h3 className="text-base font-semibold text-[#111]">Compliance Badge</h3>
           <p className="text-xs text-[#64748b] mt-0.5">
-            Share your {pct}% compliance status â€” {" "}
+            Share your {pct}% compliance status — {" "}
             <span className={statusColor + " font-medium"}>{statusLabel}</span>
           </p>
         </div>

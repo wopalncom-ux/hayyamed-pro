@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "Dermatology CME Requirements in GCC â€” Dermatologist CME Guide | Hayya Med Pro",
+  title: "Dermatology CME Requirements in GCC — Dermatologist CME Guide | Hayya Med Pro",
   description:
     "Complete CME and CPD guide for dermatologists in GCC. QCHP Qatar 80 CPD/2yr, SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. Laser, cosmetic, and procedural workshops count. Track all 7 authorities in one app.",
   keywords: [
@@ -22,9 +22,9 @@ export const metadata: Metadata = {
     "dermatopathology CME",
   ],
   openGraph: {
-    title: "Dermatology CME Requirements in GCC â€” Dermatologist Guide",
+    title: "Dermatology CME Requirements in GCC — Dermatologist Guide",
     description:
-      "QCHP Qatar 80 CPD/2yr Â· SCFHS Saudi 60 CME/yr Â· DHA Dubai 40 CME/2yr. Laser + cosmetic procedures count. Track all GCC dermatology requirements.",
+      "QCHP Qatar 80 CPD/2yr · SCFHS Saudi 60 CME/yr · DHA Dubai 40 CME/2yr. Laser + cosmetic procedures count. Track all GCC dermatology requirements.",
     url: `${APP_URL}/dermatology-cme`,
     type: "website",
     images: [
@@ -58,7 +58,7 @@ const faqLd = {
       name: "How many CME credits does a dermatologist need in Saudi Arabia (SCFHS)?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Dermatologists registered with SCFHS must complete 60 CME credits per year. Events accredited by the Saudi Dermatology Society (SDS), AAD, EADV, and other internationally recognised dermatology bodies count. No more than 50% of credits may come from online activities. Procedural workshops â€” including laser, cosmetic dermatology, and dermatosurgery courses â€” count toward the clinical activity category.",
+        text: "Dermatologists registered with SCFHS must complete 60 CME credits per year. Events accredited by the Saudi Dermatology Society (SDS), AAD, EADV, and other internationally recognised dermatology bodies count. No more than 50% of credits may come from online activities. Procedural workshops — including laser, cosmetic dermatology, and dermatosurgery courses — count toward the clinical activity category.",
       },
     },
     {
@@ -90,7 +90,7 @@ const faqLd = {
       name: "Can a dermatologist track CME for both QCHP (Qatar) and DHA (Dubai) simultaneously?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. Hayya Med Pro supports multi-jurisdiction tracking. Dermatologists with licences in both Qatar and Dubai can maintain separate QCHP and DHA wallets within one account. Each wallet tracks independently â€” separate credit totals, cycle dates, and compliance statuses â€” so both licences stay current without any double-counting confusion.",
+        text: "Yes. Hayya Med Pro supports multi-jurisdiction tracking. Dermatologists with licences in both Qatar and Dubai can maintain separate QCHP and DHA wallets within one account. Each wallet tracks independently — separate credit totals, cycle dates, and compliance statuses — so both licences stay current without any double-counting confusion.",
       },
     },
   ],
@@ -120,7 +120,7 @@ const SPECIALTY_NOTES = [
   {
     icon: "ðŸ§¬",
     title: "Dermatopathology & histopathology",
-    body: "Dermatopathology review sessions, histopathology reporting workshops, and immunohistochemistry interpretation courses count toward SCFHS and QCHP clinical CME credits â€” particularly relevant for dermatologists with lab affiliations.",
+    body: "Dermatopathology review sessions, histopathology reporting workshops, and immunohistochemistry interpretation courses count toward SCFHS and QCHP clinical CME credits — particularly relevant for dermatologists with lab affiliations.",
   },
   {
     icon: "ðŸŒ",
@@ -145,7 +145,7 @@ export default function DermatologyCmePage() {
             Dermatology CME Requirements<br />Across GCC
           </h1>
           <p style={{ fontSize: 18, color: "#cbd5e1", maxWidth: 620, margin: "0 auto 32px" }}>
-            QCHP Qatar Â· SCFHS Saudi Arabia Â· DHA Dubai Â· and 4 more authorities.
+            QCHP Qatar · SCFHS Saudi Arabia · DHA Dubai · and 4 more authorities.
             Laser training, cosmetic procedures, and dermatopathology workshops all count.
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
@@ -214,7 +214,7 @@ export default function DermatologyCmePage() {
       <section style={{ background: "#f0f4f8", padding: "64px 24px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto" }}>
           <h2 style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", textAlign: "center", marginBottom: 48 }}>
-            Dermatology CME â€” Frequently Asked Questions
+            Dermatology CME — Frequently Asked Questions
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {faqLd.mainEntity.map((q) => (
@@ -264,7 +264,7 @@ export default function DermatologyCmePage() {
           <Link href="/register" style={{ background: "#1a56a0", color: "#fff", padding: "16px 36px", borderRadius: 8, fontWeight: 700, textDecoration: "none", fontSize: 17, display: "inline-block" }}>
             Start tracking free â†’
           </Link>
-          <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required Â· Free plan always available</p>
+          <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required · Free plan always available</p>
         </div>
       </section>
 

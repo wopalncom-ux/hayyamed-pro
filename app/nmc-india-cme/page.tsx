@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "NMC India CME Requirements â€” Indian Doctor CME Guide 2025 | Hayya Med Pro",
+  title: "NMC India CME Requirements — Indian Doctor CME Guide 2025 | Hayya Med Pro",
   description:
     "Complete guide to NMC India CME requirements. Indian doctors need 30 CME credits per 5-year re-registration cycle. Track NMC India CME and GCC CME requirements in one compliance app.",
   keywords: [
@@ -22,9 +22,9 @@ export const metadata: Metadata = {
     "MCI CME requirements",
   ],
   openGraph: {
-    title: "NMC India CME Requirements â€” Indian Doctor CME Guide 2025",
+    title: "NMC India CME Requirements — Indian Doctor CME Guide 2025",
     description:
-      "30 CME credits per 5-year cycle Â· NMC digital portal Â· Online CME up to 15 credits. Track NMC India and GCC CME in one app.",
+      "30 CME credits per 5-year cycle · NMC digital portal · Online CME up to 15 credits. Track NMC India and GCC CME in one app.",
     url: `${APP_URL}/nmc-india-cme`,
     type: "website",
     images: [
@@ -90,7 +90,7 @@ const CME_TYPES = [
   { icon: "ðŸ›ï¸", title: "In-Person CME Events",      desc: "Conferences, symposia, workshops run by NMC-accredited medical colleges, professional societies (IMA, API, FOGSI, etc.), and hospitals. Most credits per activity." },
   { icon: "ðŸ’»", title: "Online / E-Learning CME",    desc: "Accredited e-learning platforms, webinars, and virtual conferences. Capped at 15 credits per 5-year cycle (50% of total). Must be from NMC-registered providers." },
   { icon: "ðŸ“–", title: "CME at Medical Colleges",    desc: "Grand rounds, case presentations, departmental seminars at NMC-recognised medical colleges. Commonly 1â€“2 credits per session, submitted by the institution." },
-  { icon: "ðŸ”¬", title: "Research & Publications",    desc: "Presenting at peer-reviewed conferences, authoring published research. Credits vary â€” check with your State Medical Council for accepted research CME rules." },
+  { icon: "ðŸ”¬", title: "Research & Publications",    desc: "Presenting at peer-reviewed conferences, authoring published research. Credits vary — check with your State Medical Council for accepted research CME rules." },
   { icon: "ðŸŒ", title: "International Conferences",  desc: "International CME events from AHPRA, GMC, or GCC-accredited providers may count if the provider is on the NMC approved list. Verify before attending." },
   { icon: "ðŸ“‹", title: "State Medical Council CME",  desc: "Some State Medical Councils (Maharashtra, Karnataka, etc.) have additional CME requirements for state licence renewal. Check your state council's rules separately." },
 ];
@@ -107,13 +107,13 @@ export default function NmcIndiaCmePage() {
       <section style={{ background: "#0f1f3d", color: "#fff", padding: "72px 24px 56px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontSize: 13, letterSpacing: "0.08em", textTransform: "uppercase", color: "#93c5fd", marginBottom: 16 }}>
-            ðŸ‡®ðŸ‡³ Authority Guide â€” India
+            ðŸ‡®ðŸ‡³ Authority Guide — India
           </p>
           <h1 style={{ fontSize: "clamp(28px,5vw,48px)", fontWeight: 800, lineHeight: 1.15, marginBottom: 20 }}>
-            NMC India CME Requirements<br />for Indian Doctors â€” 2025
+            NMC India CME Requirements<br />for Indian Doctors — 2025
           </h1>
           <p style={{ fontSize: 18, color: "#cbd5e1", maxWidth: 640, margin: "0 auto 32px" }}>
-            30 CME credits per 5-year cycle Â· NMC digital portal Â· Up to 15 credits online.
+            30 CME credits per 5-year cycle · NMC digital portal · Up to 15 credits online.
             Track NMC India CME and GCC CME in one dashboard.
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
@@ -149,7 +149,7 @@ export default function NmcIndiaCmePage() {
       <section style={{ background: "#f8fafc", padding: "64px 24px" }}>
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
           <h2 style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", textAlign: "center", marginBottom: 8 }}>
-            NMC CME â€” What Indian Doctors Need to Know
+            NMC CME — What Indian Doctors Need to Know
           </h2>
           <p style={{ textAlign: "center", color: "#64748b", marginBottom: 40, maxWidth: 680, margin: "0 auto 40px" }}>
             The National Medical Commission replaced the MCI in 2020 and launched a new digital CME tracking framework.
@@ -173,7 +173,7 @@ export default function NmcIndiaCmePage() {
           </div>
           <div style={{ background: "#fef9c3", border: "1px solid #fde68a", borderRadius: 10, padding: "16px 20px" }}>
             <p style={{ color: "#92400e", fontSize: 14, margin: 0 }}>
-              <strong>Working in GCC?</strong> Indian doctors are the largest expatriate medical workforce in the GCC. Hayya Med Pro tracks NMC India CME alongside QCHP, SCFHS, and DHA requirements â€” in one dashboard, with separate deadline alerts for each authority.
+              <strong>Working in GCC?</strong> Indian doctors are the largest expatriate medical workforce in the GCC. Hayya Med Pro tracks NMC India CME alongside QCHP, SCFHS, and DHA requirements — in one dashboard, with separate deadline alerts for each authority.
             </p>
           </div>
         </div>
@@ -204,7 +204,7 @@ export default function NmcIndiaCmePage() {
       <section style={{ background: "#f0f4f8", padding: "64px 24px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto" }}>
           <h2 style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", textAlign: "center", marginBottom: 48 }}>
-            NMC India CME â€” Frequently Asked Questions
+            NMC India CME — Frequently Asked Questions
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {faqLd.mainEntity.map((q) => (
@@ -248,14 +248,14 @@ export default function NmcIndiaCmePage() {
       {/* CTA */}
       <section style={{ background: "#0f1f3d", padding: "72px 24px", textAlign: "center" }}>
         <div style={{ maxWidth: 640, margin: "0 auto" }}>
-          <h2 style={{ fontSize: 32, fontWeight: 800, color: "#fff", marginBottom: 16 }}>Track NMC India CME â€” and your GCC requirements</h2>
+          <h2 style={{ fontSize: 32, fontWeight: 800, color: "#fff", marginBottom: 16 }}>Track NMC India CME — and your GCC requirements</h2>
           <p style={{ fontSize: 18, color: "#cbd5e1", marginBottom: 32 }}>
-            One dashboard for NMC India and every GCC authority. Free to start â€” never miss a CME deadline again.
+            One dashboard for NMC India and every GCC authority. Free to start — never miss a CME deadline again.
           </p>
           <Link href="/register" style={{ background: "#1a56a0", color: "#fff", padding: "16px 36px", borderRadius: 8, fontWeight: 700, textDecoration: "none", fontSize: 17, display: "inline-block" }}>
             Start tracking free â†’
           </Link>
-          <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required Â· 14-day Pro trial included</p>
+          <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required · 14-day Pro trial included</p>
         </div>
       </section>
 

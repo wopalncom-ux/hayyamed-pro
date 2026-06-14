@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "DHA License Renewal â€” CME Requirements for Dubai Healthcare Professionals",
+  title: "DHA License Renewal — CME Requirements for Dubai Healthcare Professionals",
   description:
     "Complete guide to renewing your DHA license in Dubai. 40 CME credits required per 2-year cycle, 5 mandatory patient safety credits. Step-by-step DHA renewal process for physicians, nurses, pharmacists, and all Dubai healthcare professionals.",
   keywords: [
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     "renew medical license Dubai",
   ],
   openGraph: {
-    title: "DHA License Renewal â€” Complete Guide for Dubai Healthcare Professionals",
+    title: "DHA License Renewal — Complete Guide for Dubai Healthcare Professionals",
     description:
       "40 CME credits per 2 years. Step-by-step DHA renewal process, checklist, and how Hayya Med Pro tracks your CME progress automatically.",
     url: `${APP_URL}/dha-renewal`,
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "DHA License Renewal Guide â€” Dubai Healthcare CME",
+    title: "DHA License Renewal Guide — Dubai Healthcare CME",
     description: "40 CME credits per 2-year cycle. Complete DHA renewal checklist, step-by-step process, and compliance tracking for Dubai healthcare professionals.",
   },
   alternates: { canonical: `${APP_URL}/dha-renewal` },
@@ -68,7 +68,7 @@ const faqLd = {
       name: "What CME activities are accepted by DHA?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "DHA accepts CME from DHA-approved providers including international conferences (with DHA recognition), online courses from accredited platforms, hospital-based grand rounds, workshops, and self-directed learning (e-modules, journal reading â€” up to 10 credits). Activities must have a DHA accreditation certificate or be from a provider listed on the DHA approved accreditors list.",
+        text: "DHA accepts CME from DHA-approved providers including international conferences (with DHA recognition), online courses from accredited platforms, hospital-based grand rounds, workshops, and self-directed learning (e-modules, journal reading — up to 10 credits). Activities must have a DHA accreditation certificate or be from a provider listed on the DHA approved accreditors list.",
       },
     },
     {
@@ -175,10 +175,10 @@ export default function DhaRenewalPage() {
           {/* Hero */}
           <div className="mb-10">
             <div className="inline-flex items-center gap-2 bg-[#f0f9ff] border border-[#bae6fd] text-[#0369a1] text-xs font-semibold px-3 py-1.5 rounded-full mb-4">
-              ðŸ‡¦ðŸ‡ª Dubai Â· Dubai Health Authority (DHA)
+              ðŸ‡¦ðŸ‡ª Dubai · Dubai Health Authority (DHA)
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold text-[#111] mb-4 leading-tight">
-              DHA license renewal â€” complete guide for Dubai healthcare professionals
+              DHA license renewal — complete guide for Dubai healthcare professionals
             </h1>
             <p className="text-base text-[#475569] max-w-2xl leading-relaxed">
               DHA requires <strong className="text-[#111]">40 CME credits per 2-year renewal cycle</strong>,
@@ -222,7 +222,7 @@ export default function DhaRenewalPage() {
           {/* Step-by-step renewal process */}
           <div className="mb-10">
             <h2 className="text-xl font-bold text-[#111] mb-6">
-              DHA license renewal â€” step by step
+              DHA license renewal — step by step
             </h2>
             <div className="space-y-4">
               {RENEWAL_STEPS.map((s) => (
@@ -259,7 +259,7 @@ export default function DhaRenewalPage() {
                   Track your DHA CME automatically
                 </h2>
                 <p className="text-sm text-[rgba(255,255,255,0.75)] leading-relaxed mb-4">
-                  Hayya Med Pro tracks all four DHA limits in real time â€” total credits,
+                  Hayya Med Pro tracks all four DHA limits in real time — total credits,
                   patient safety, online cap, and self-directed cap. See your renewal
                   readiness at a glance and generate a PDF report for Salama in one click.
                 </p>
@@ -281,7 +281,7 @@ export default function DhaRenewalPage() {
                 href="/register"
                 className="block w-full text-center bg-white text-[#1a56a0] font-semibold text-sm py-3 rounded-lg hover:bg-[#f0f7ff] transition-colors"
               >
-                Start tracking DHA CME â€” free â†’
+                Start tracking DHA CME — free â†’
               </Link>
             </div>
           </div>
@@ -289,7 +289,7 @@ export default function DhaRenewalPage() {
           {/* FAQ */}
           <div className="mb-12">
             <h2 className="text-xl font-bold text-[#111] mb-6">
-              DHA license renewal â€” frequently asked questions
+              DHA license renewal — frequently asked questions
             </h2>
             <div className="space-y-3">
               {faqLd.mainEntity.map((faq) => (
@@ -346,10 +346,10 @@ export default function DhaRenewalPage() {
               href="/register"
               className="inline-flex items-center gap-2 bg-white text-[#1a56a0] font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#f0f7ff] transition-colors"
             >
-              Track my DHA compliance â€” free â†’
+              Track my DHA compliance — free â†’
             </Link>
             <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">
-              No credit card required Â· 14-day Pro trial included
+              No credit card required · 14-day Pro trial included
             </p>
           </div>
 

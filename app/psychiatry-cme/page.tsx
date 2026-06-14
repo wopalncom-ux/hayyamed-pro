@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "Psychiatry CME Requirements in GCC â€” Psychiatrist CME Guide | Hayya Med Pro",
+  title: "Psychiatry CME Requirements in GCC — Psychiatrist CME Guide | Hayya Med Pro",
   description:
     "Complete CME and CPD guide for psychiatrists in GCC. QCHP Qatar 80 CPD/2yr (ethics mandatory), SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. Track all requirements in one compliance app.",
   keywords: [
@@ -22,9 +22,9 @@ export const metadata: Metadata = {
     "mental health law training CME",
   ],
   openGraph: {
-    title: "Psychiatry CME Requirements in GCC â€” Psychiatrist CME Guide",
+    title: "Psychiatry CME Requirements in GCC — Psychiatrist CME Guide",
     description:
-      "QCHP Qatar 80 CPD/2yr Â· SCFHS Saudi 60 CME/yr Â· DHA Dubai 40 CME/2yr. Ethics CPD mandatory. Track all GCC psychiatry requirements in one app.",
+      "QCHP Qatar 80 CPD/2yr · SCFHS Saudi 60 CME/yr · DHA Dubai 40 CME/2yr. Ethics CPD mandatory. Track all GCC psychiatry requirements in one app.",
     url: `${APP_URL}/psychiatry-cme`,
     type: "website",
     images: [
@@ -72,7 +72,7 @@ const faqLd = {
       name: "Which psychiatry conferences are recognised for CME across GCC?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "The Saudi Mental Health Association (SMHA) annual congress, Gulf Psychiatry Association (GPA) meetings, Arab Board of Psychiatry conferences, and international meetings such as the World Psychiatric Association (WPA) congress are widely recognised. QCHP, SCFHS, and DHA each publish their own recognised accreditor lists â€” always verify before attendance.",
+        text: "The Saudi Mental Health Association (SMHA) annual congress, Gulf Psychiatry Association (GPA) meetings, Arab Board of Psychiatry conferences, and international meetings such as the World Psychiatric Association (WPA) congress are widely recognised. QCHP, SCFHS, and DHA each publish their own recognised accreditor lists — always verify before attendance.",
       },
     },
     {
@@ -99,7 +99,7 @@ const AUTHORITIES = [
 const SPECIALTY_NOTES = [
   {
     icon: "âš–ï¸",
-    title: "Ethics & Law â€” Non-Negotiable",
+    title: "Ethics & Law — Non-Negotiable",
     body: "Ethics and patient rights credits are required (not optional) for QCHP renewal. Mental health law workshops covering Qatar Law No. 2 (2016) count toward CPD. DHA and SCFHS strongly recommend ethics credits each cycle.",
   },
   {
@@ -115,7 +115,7 @@ const SPECIALTY_NOTES = [
   {
     icon: "ðŸ“‹",
     title: "Quality Improvement & Clinical Audit",
-    body: "Quality improvement projects, morbidity and mortality reviews, and clinical audit activities are accepted by QCHP and DHA for up to 10 CPD credits per cycle â€” valuable for psychiatrists in academic or hospital settings.",
+    body: "Quality improvement projects, morbidity and mortality reviews, and clinical audit activities are accepted by QCHP and DHA for up to 10 CPD credits per cycle — valuable for psychiatrists in academic or hospital settings.",
   },
 ];
 
@@ -137,7 +137,7 @@ export default function PsychiatryCmePage() {
             Psychiatry CME Requirements<br />Across GCC
           </h1>
           <p style={{ fontSize: 18, color: "#cbd5e1", maxWidth: 620, margin: "0 auto 32px" }}>
-            QCHP Qatar Â· SCFHS Saudi Arabia Â· DHA Dubai Â· and 4 more authorities.
+            QCHP Qatar · SCFHS Saudi Arabia · DHA Dubai · and 4 more authorities.
             Ethics CPD mandatory. Track every credit in one compliance dashboard.
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
@@ -212,7 +212,7 @@ export default function PsychiatryCmePage() {
       <section style={{ background: "#f0f4f8", padding: "64px 24px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto" }}>
           <h2 style={{ fontSize: 28, fontWeight: 700, color: "#0f172a", textAlign: "center", marginBottom: 48 }}>
-            Psychiatry CME â€” Frequently Asked Questions
+            Psychiatry CME — Frequently Asked Questions
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {faqLd.mainEntity.map((q) => (
@@ -270,7 +270,7 @@ export default function PsychiatryCmePage() {
             Start tracking free â†’
           </Link>
           <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>
-            No credit card required Â· Free plan always available
+            No credit card required · Free plan always available
           </p>
         </div>
       </section>

@@ -4,7 +4,7 @@ import Link from "next/link";
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "Healthcare Staff CME Compliance Software â€” Hayya Med Pro Employer",
+  title: "Healthcare Staff CME Compliance Software — Hayya Med Pro Employer",
   description:
     "Manage your entire team's CME compliance in one dashboard. Real-time staff compliance grid, bulk PDF reports, department grouping, and weekly digest emails. For clinics, hospitals, and medical departments across the GCC.",
   keywords: [
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     "GCC healthcare workforce compliance",
   ],
   openGraph: {
-    title: "Healthcare Staff CME Compliance â€” Hayya Med Pro Employer",
+    title: "Healthcare Staff CME Compliance — Hayya Med Pro Employer",
     description:
       "Know your entire team's compliance status before QCHP renewal. Real-time dashboard, bulk PDF reports, and automated staff alerts. From $50/month.",
     url: `${APP_URL}/employers`,
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Healthcare Staff CME Compliance â€” Hayya Med Pro Employer",
+    title: "Healthcare Staff CME Compliance — Hayya Med Pro Employer",
     description: "Manage staff CME compliance across the GCC. Real-time dashboard for clinics and hospitals.",
   },
   alternates: { canonical: `${APP_URL}/employers` },
@@ -50,7 +50,7 @@ const orgFaqLd = {
       name: "How does staff linking work?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Healthcare professionals create their own Hayya Med Pro account and either request to link to your organization, or you can bulk-import staff via CSV. Each professional controls their own privacy settings â€” they choose what compliance data is visible to their employer.",
+        text: "Healthcare professionals create their own Hayya Med Pro account and either request to link to your organization, or you can bulk-import staff via CSV. Each professional controls their own privacy settings — they choose what compliance data is visible to their employer.",
       },
     },
     {
@@ -98,7 +98,7 @@ const FEATURES = [
       </svg>
     ),
     title: "Bulk PDF compliance reports",
-    desc: "Download a single PDF showing every staff member's compliance status â€” ready for QCHP, JCI, or CBAHI accreditation audits.",
+    desc: "Download a single PDF showing every staff member's compliance status — ready for QCHP, JCI, or CBAHI accreditation audits.",
     color: "#16a34a",
     bg: "#f0fdf4",
   },
@@ -168,7 +168,7 @@ function MockDashboard() {
       <div className="bg-[#0f1f3d] px-5 py-3.5 flex items-center justify-between">
         <div>
           <p className="text-white text-sm font-semibold">Staff Compliance Dashboard</p>
-          <p className="text-[rgba(255,255,255,0.5)] text-xs">Hamad Medical Centre â€” 18 staff linked</p>
+          <p className="text-[rgba(255,255,255,0.5)] text-xs">Hamad Medical Centre — 18 staff linked</p>
         </div>
         <div className="flex gap-2">
           <div className="bg-[rgba(255,255,255,0.1)] text-white text-xs px-2.5 py-1 rounded-lg">Download PDF</div>
@@ -200,7 +200,7 @@ function MockDashboard() {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-xs font-semibold text-[#111] truncate">{s.name}</p>
-                <p className="text-[11px] text-[#64748b]">{s.profession} Â· {s.dept}</p>
+                <p className="text-[11px] text-[#64748b]">{s.profession} · {s.dept}</p>
               </div>
               <div className="hidden sm:flex items-center gap-1.5 w-20">
                 <div className="flex-1 bg-[#e2e8f0] rounded-full h-1.5">
@@ -274,14 +274,14 @@ export default function EmployersPage() {
                 Know your team&apos;s compliance status before QCHP renewal
               </h1>
               <p className="text-lg text-[#64748b] mb-6">
-                Stop chasing staff for CME certificates. Hayya Med Pro gives you a real-time dashboard showing every professional&apos;s compliance progress â€” automatically.
+                Stop chasing staff for CME certificates. Hayya Med Pro gives you a real-time dashboard showing every professional&apos;s compliance progress — automatically.
               </p>
               <ul className="space-y-2.5 mb-8">
                 {[
-                  "See who is compliant, at risk, or non-compliant â€” at a glance",
+                  "See who is compliant, at risk, or non-compliant — at a glance",
                   "Download bulk PDF compliance reports for accreditation audits",
                   "Receive weekly digest emails with actionable compliance alerts",
-                  "Staff link their own accounts â€” you never touch their certificates",
+                  "Staff link their own accounts — you never touch their certificates",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-2.5 text-sm text-[#374151]">
                     <div className="w-4 h-4 rounded-full bg-[#dcfce7] flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -298,7 +298,7 @@ export default function EmployersPage() {
                   href="/pricing#employer"
                   className="inline-flex items-center justify-center gap-2 bg-[#1a56a0] text-white font-semibold text-sm px-6 py-3 rounded-xl hover:bg-[#154890] transition-colors"
                 >
-                  See employer plans â€” from $50/month â†’
+                  See employer plans — from $50/month â†’
                 </Link>
                 <Link
                   href="/request-demo"
@@ -312,7 +312,7 @@ export default function EmployersPage() {
             {/* Live dashboard mockup */}
             <div>
               <MockDashboard />
-              <p className="text-xs text-[#94a3b8] text-center mt-2">Live staff compliance dashboard â€” example data</p>
+              <p className="text-xs text-[#94a3b8] text-center mt-2">Live staff compliance dashboard — example data</p>
             </div>
           </div>
 
@@ -329,7 +329,7 @@ export default function EmployersPage() {
           {/* Feature grid */}
           <div className="mb-14">
             <h2 className="text-2xl font-bold text-[#111] mb-2 text-center">Everything you need to manage team compliance</h2>
-            <p className="text-sm text-[#64748b] text-center mb-8">Built for Qatar, Saudi Arabia, and UAE â€” QCHP, SCFHS, DHA, and DOH requirements supported.</p>
+            <p className="text-sm text-[#64748b] text-center mb-8">Built for Qatar, Saudi Arabia, and UAE — QCHP, SCFHS, DHA, and DOH requirements supported.</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {FEATURES.map((f) => (
                 <div key={f.title} className="bg-white rounded-xl border border-[#e2e8f0] p-5">
@@ -422,7 +422,7 @@ export default function EmployersPage() {
               <div>
                 <p className="text-sm font-semibold text-[#111]">Hospital group or government authority?</p>
                 <p className="text-xs text-[#64748b] mt-0.5">
-                  Unlimited staff Â· HRIS API integration Â· White-label Â· Dedicated SLA
+                  Unlimited staff · HRIS API integration · White-label · Dedicated SLA
                 </p>
               </div>
               <Link
@@ -436,7 +436,7 @@ export default function EmployersPage() {
 
           {/* FAQ */}
           <div className="mb-12">
-            <h2 className="text-xl font-bold text-[#111] mb-6">Employer plan â€” frequently asked questions</h2>
+            <h2 className="text-xl font-bold text-[#111] mb-6">Employer plan — frequently asked questions</h2>
             <div className="space-y-3">
               {orgFaqLd.mainEntity.map((item) => (
                 <details key={item.name} className="bg-white rounded-xl border border-[#e2e8f0] group">
@@ -465,7 +465,7 @@ export default function EmployersPage() {
                 href="/pricing#employer"
                 className="bg-white text-[#1a56a0] font-semibold text-sm px-7 py-3 rounded-xl hover:bg-[#f0f7ff] transition-colors"
               >
-                See employer plans â€” from $50/month â†’
+                See employer plans — from $50/month â†’
               </Link>
               <Link
                 href="/request-demo"
