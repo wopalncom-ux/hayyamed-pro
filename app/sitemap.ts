@@ -118,5 +118,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/aesthetic-medicine-cme`,       lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/palliative-care-cme`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/cardiothoracic-surgery-cme`,   lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    // Blog posts — sessions 55–59 (Arabic + new English posts)
+    { url: `${BASE}/blog/qchp-renewal-arabic`,                   lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/scfhs-cme-arabic`,                      lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/dha-cpd-arabic`,                        lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/gcc-cme-comparison-arabic`,             lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/cme-tracking-tips-arabic`,              lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/saudi-vision-2030-healthcare-cme`,      lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/haad-to-dha-license-transfer`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/scfhs-eligibility-requirements-expats`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/kuwait-moh-license-renewal-guide`,      lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/nursing-cpd-uk-vs-gcc`,                 lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/omsb-cme-renewal-guide-2026`,           lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/nhra-cpd-renewal-guide-bahrain`,        lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/physician-vs-nurse-cme-requirements-gcc`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/dataflow-verification-guide-gcc`,       lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/conference-cme-credits-how-it-works`,   lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    // Blog posts — session 60 (new English posts)
+    { url: `${BASE}/blog/india-nmc-cme-requirements-gcc-2026`,   lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/do-cme-credits-expire-gcc`,             lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/cme-compliance-career-break-gcc`,       lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/pakistan-pmc-cpd-requirements-2026`,    lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/managing-multiple-gcc-medical-licenses`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/how-to-read-cme-certificate-gcc`,       lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
   ];
 }
