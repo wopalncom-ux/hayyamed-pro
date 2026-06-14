@@ -12,6 +12,7 @@ import ReferralSection from "@/components/dashboard/ReferralSection";
 import SoundToggle from "@/components/dashboard/SoundToggle";
 import MultiCountryWallet from "@/components/dashboard/MultiCountryWallet";
 import MFAManager from "@/components/dashboard/MFAManager";
+import PasskeyManager from "@/components/dashboard/PasskeyManager";
 
 const STATUS_STYLES: Record<string, string> = {
   pending: "bg-[#fff7ed] text-[#d97706]",
@@ -335,6 +336,9 @@ export default async function SettingsPage() {
 
         {/* Two-Factor Authentication */}
         <MFAManager />
+
+        {/* Passkeys */}
+        <PasskeyManager />
 
         {/* Change password */}
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-6">

@@ -1,6 +1,7 @@
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import BulkReportButton from "@/components/employer/BulkReportButton";
+import ExportStaffCsvButton from "@/components/employer/ExportStaffCsvButton";
 import LinkRequestActions from "@/components/employer/LinkRequestActions";
 import AssignDepartmentButton from "@/components/employer/AssignDepartmentButton";
 import AssignTaskButton from "@/components/employer/AssignTaskButton";
@@ -198,6 +199,7 @@ export default async function EmployerDashboardPage({
             AI Analyzer
           </a>
           <InviteLinkButton organizationId={orgId} orgName={orgName} />
+          {total > 0 && <ExportStaffCsvButton organizationId={orgId} orgName={orgName} />}
           {total > 0 && <BulkReportButton organizationId={orgId} orgName={orgName} />}
         </div>
       </div>
