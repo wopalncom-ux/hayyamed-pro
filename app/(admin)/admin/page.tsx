@@ -264,6 +264,9 @@ export default async function AdminPage() {
             <a href="/admin/audit-logs" className="block text-sm text-[#1a56a0] hover:underline">
               Audit Log — append-only, 7-year retention
             </a>
+            <a href="/admin/monitoring" className="block text-sm font-semibold text-[#1a56a0] hover:underline">
+              🔍 Monitoring — Health, Crons, Infra Links
+            </a>
             <a href="/admin/settings" className="block text-sm font-semibold text-[#1a56a0] hover:underline">
               ⚙ Platform Settings (prices &amp; limits)
             </a>

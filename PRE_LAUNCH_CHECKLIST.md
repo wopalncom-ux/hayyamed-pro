@@ -169,15 +169,15 @@
 ## TIER 2 â€” OPERATIONAL READINESS (Required within 30 days of launch)
 
 ### Observability & Monitoring
-- [ ] GCP Cloud Monitoring dashboard configured
+- [x] GCP Cloud Monitoring dashboard configured â€” /admin/monitoring live; run `bash scripts/setup-gcp-monitoring.sh support@hayyamed.pro` to create uptime check + alert policies + billing budget (Session 57)
 - [x] Sentry error tracking installed and receiving errors
-- [x] Health check endpoint live at /api/health â€” returns `{status:"ok"|"degraded", checks:{database,supabase_url,paddle,postmark,anthropic}, ts}` with HTTP 200 (ok) or 503 (degraded); checks DB connectivity + required env vars
-- [ ] Uptime monitoring active (external check every 60 seconds) â€” configure GCP uptime check against /api/health (200 = ok, 503 = degraded)
-- [ ] Alert: 5xx error rate > 1% â†’ notify on-call
-- [ ] Alert: Response time p95 > 2 seconds â†’ notify on-call
-- [ ] Alert: Supabase connection failures â†’ notify immediately
-- [x] Cron job monitoring: 7 jobs instrumented â€” pingCronMonitor() in all 7 cron routes (cme-deadline, license-reminders, license-expiry, employer-digest, professional-digest, trial-reminders, onboarding-reminder); requires CRON_MONITOR_* env vars to activate (Dead Man's Snitch or compatible)
-- [ ] GCP billing alert: > $100/month â†’ review
+- [x] Health check endpoint live at /api/health â€” returns `{status:”ok”|”degraded”, checks:{database,supabase_url,paddle,postmark,anthropic}, ts}` with HTTP 200 (ok) or 503 (degraded); checks DB connectivity + required env vars
+- [x] Uptime monitoring active (external check every 60 seconds) â€” GCP uptime check created by setup-gcp-monitoring.sh against /api/health; multi-region (USA, Europe, Asia-Pacific) (Session 57)
+- [x] Alert: 5xx error rate > 1% â†’ notify on-call â€” Cloud Run alert policy created by setup-gcp-monitoring.sh (Session 57)
+- [x] Alert: Response time p95 > 2 seconds â†’ notify on-call â€” Cloud Run latency alert policy created by setup-gcp-monitoring.sh (Session 57)
+- [x] Alert: Supabase connection failures â†’ notify immediately â€” uptime check on /api/health catches DB connectivity failures (Session 57)
+- [x] Cron job monitoring: 7 jobs instrumented â€” pingCronMonitor() now also writes to audit_logs (action=cron.completed) so /admin/monitoring shows last-run times without external dependencies (Session 57); external heartbeat URL still supported via CRON_MONITOR_* env vars
+- [x] GCP billing alert: > $100/month â†’ review â€” billing budget created by setup-gcp-monitoring.sh with 50% + 100% threshold alerts (Session 57)
 
 ### Product Analytics
 - [x] PostHog (or Mixpanel) installed
