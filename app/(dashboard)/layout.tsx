@@ -65,7 +65,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
           orgLogoUrl={orgLogoRes?.logo_url ?? undefined}
           isEmployerAdmin={isEmployerAdmin}
         />
-        <main className="max-w-5xl mx-auto px-4 py-8">{children}</main>
+        <main id="main-content" className="max-w-5xl mx-auto px-4 py-8">{children}</main>
         {profile?.created_at && <NpsSurvey createdAt={profile.created_at} />}
         <HayyaVoiceOrb plan={userPlan} />
         <footer className="border-t border-[#e2e8f0] mt-4">

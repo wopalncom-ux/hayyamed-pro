@@ -72,7 +72,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       </aside>
 
       {/* Right panel — form */}
-      <main className="flex-1 flex items-center justify-center px-4 py-12 bg-[#f0f4f8]">
+      <main id="main-content" className="flex-1 flex items-center justify-center px-4 py-12 bg-[#f0f4f8]">
         <div className="w-full max-w-md">
           {/* Mobile-only logo (left panel is hidden) */}
           <div className="lg:hidden text-center mb-8">
