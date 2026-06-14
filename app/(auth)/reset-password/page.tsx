@@ -89,9 +89,10 @@ export default function ResetPasswordPage() {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-[#374151] mb-1">New password</label>
+          <label htmlFor="new-password" className="block text-sm font-medium text-[#374151] mb-1">New password</label>
           <div className="relative">
             <input
+              id="new-password"
               type={showPassword ? "text" : "password"}
               required
               value={password}
@@ -124,9 +125,10 @@ export default function ResetPasswordPage() {
           )}
         </div>
         <div>
-          <label className="block text-sm font-medium text-[#374151] mb-1">Confirm password</label>
+          <label htmlFor="confirm-password" className="block text-sm font-medium text-[#374151] mb-1">Confirm password</label>
           <div className="relative">
             <input
+              id="confirm-password"
               type={showConfirm ? "text" : "password"}
               required
               value={confirm}

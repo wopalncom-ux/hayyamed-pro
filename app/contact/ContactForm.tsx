@@ -54,10 +54,11 @@ export default function ContactForm() {
     <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-[#e2e8f0] p-6 space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-medium text-[#374151] mb-1.5">
-            Full name <span className="text-[#dc2626]">*</span>
+          <label htmlFor="contact-name" className="block text-xs font-medium text-[#374151] mb-1.5">
+            Full name <span className="text-[#dc2626]" aria-hidden="true">*</span>
           </label>
           <input
+            id="contact-name"
             name="name"
             type="text"
             required
@@ -67,10 +68,11 @@ export default function ContactForm() {
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-[#374151] mb-1.5">
-            Email address <span className="text-[#dc2626]">*</span>
+          <label htmlFor="contact-email" className="block text-xs font-medium text-[#374151] mb-1.5">
+            Email address <span className="text-[#dc2626]" aria-hidden="true">*</span>
           </label>
           <input
+            id="contact-email"
             name="email"
             type="email"
             required
@@ -82,10 +84,11 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label className="block text-xs font-medium text-[#374151] mb-1.5">
-          Subject <span className="text-[#dc2626]">*</span>
+        <label htmlFor="contact-subject" className="block text-xs font-medium text-[#374151] mb-1.5">
+          Subject <span className="text-[#dc2626]" aria-hidden="true">*</span>
         </label>
         <select
+          id="contact-subject"
           name="subject"
           required
           defaultValue=""
@@ -99,10 +102,11 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label className="block text-xs font-medium text-[#374151] mb-1.5">
-          Message <span className="text-[#dc2626]">*</span>
+        <label htmlFor="contact-message" className="block text-xs font-medium text-[#374151] mb-1.5">
+          Message <span className="text-[#dc2626]" aria-hidden="true">*</span>
         </label>
         <textarea
+          id="contact-message"
           name="message"
           required
           rows={5}
@@ -112,7 +116,7 @@ export default function ContactForm() {
       </div>
 
       {error && (
-        <p className="text-sm text-[#dc2626] bg-[#fef2f2] border border-[#fecaca] rounded-lg px-3 py-2">
+        <p role="alert" className="text-sm text-[#dc2626] bg-[#fef2f2] border border-[#fecaca] rounded-lg px-3 py-2">
           {error}
         </p>
       )}

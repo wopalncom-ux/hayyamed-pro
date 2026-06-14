@@ -122,8 +122,9 @@ export default function Step4Employer({ profile, userId }: { profile: Record<str
 
       {mode === "unverified" && (
         <div>
-          <label className="block text-sm font-medium text-[#374151] mb-1">Employer name (will be reviewed by admin)</label>
+          <label htmlFor="employer-unverified-name" className="block text-sm font-medium text-[#374151] mb-1">Employer name (will be reviewed by admin)</label>
           <input
+            id="employer-unverified-name"
             type="text"
             value={unverifiedName}
             onChange={(e) => setUnverifiedName(e.target.value)}

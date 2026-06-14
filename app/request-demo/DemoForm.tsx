@@ -82,8 +82,9 @@ export default function DemoForm() {
       {/* Name + Email */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className={labelCls}>Full name <span className="text-[#dc2626]">*</span></label>
+          <label htmlFor="demo-name" className={labelCls}>Full name <span className="text-[#dc2626]" aria-hidden="true">*</span></label>
           <input
+            id="demo-name"
             name="name"
             type="text"
             required
@@ -93,8 +94,9 @@ export default function DemoForm() {
           />
         </div>
         <div>
-          <label className={labelCls}>Work email <span className="text-[#dc2626]">*</span></label>
+          <label htmlFor="demo-email" className={labelCls}>Work email <span className="text-[#dc2626]" aria-hidden="true">*</span></label>
           <input
+            id="demo-email"
             name="email"
             type="email"
             required
@@ -108,8 +110,9 @@ export default function DemoForm() {
       {/* Job title + Org name */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className={labelCls}>Job title <span className="text-[#dc2626]">*</span></label>
+          <label htmlFor="demo-job-title" className={labelCls}>Job title <span className="text-[#dc2626]" aria-hidden="true">*</span></label>
           <input
+            id="demo-job-title"
             name="jobTitle"
             type="text"
             required
@@ -118,8 +121,9 @@ export default function DemoForm() {
           />
         </div>
         <div>
-          <label className={labelCls}>Organisation name <span className="text-[#dc2626]">*</span></label>
+          <label htmlFor="demo-org-name" className={labelCls}>Organisation name <span className="text-[#dc2626]" aria-hidden="true">*</span></label>
           <input
+            id="demo-org-name"
             name="orgName"
             type="text"
             required
@@ -131,8 +135,8 @@ export default function DemoForm() {
 
       {/* Org type */}
       <div>
-        <label className={labelCls}>Organisation type <span className="text-[#dc2626]">*</span></label>
-        <select name="orgType" required defaultValue="" className={inputCls + " text-[#374151]"}>
+        <label htmlFor="demo-org-type" className={labelCls}>Organisation type <span className="text-[#dc2626]" aria-hidden="true">*</span></label>
+        <select id="demo-org-type" name="orgType" required defaultValue="" className={inputCls + " text-[#374151]"}>
           <option value="" disabled>Select type…</option>
           {ORG_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
         </select>
@@ -141,15 +145,15 @@ export default function DemoForm() {
       {/* Staff count + Country */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className={labelCls}>Number of licensed staff <span className="text-[#dc2626]">*</span></label>
-          <select name="staffCount" required defaultValue="" className={inputCls + " text-[#374151]"}>
+          <label htmlFor="demo-staff-count" className={labelCls}>Number of licensed staff <span className="text-[#dc2626]" aria-hidden="true">*</span></label>
+          <select id="demo-staff-count" name="staffCount" required defaultValue="" className={inputCls + " text-[#374151]"}>
             <option value="" disabled>Select range…</option>
             {STAFF_RANGES.map((r) => <option key={r} value={r}>{r}</option>)}
           </select>
         </div>
         <div>
-          <label className={labelCls}>Primary country <span className="text-[#dc2626]">*</span></label>
-          <select name="country" required defaultValue="" className={inputCls + " text-[#374151]"}>
+          <label htmlFor="demo-country" className={labelCls}>Primary country <span className="text-[#dc2626]" aria-hidden="true">*</span></label>
+          <select id="demo-country" name="country" required defaultValue="" className={inputCls + " text-[#374151]"}>
             <option value="" disabled>Select country…</option>
             {COUNTRIES.map((c) => <option key={c} value={c}>{c}</option>)}
           </select>
@@ -158,8 +162,9 @@ export default function DemoForm() {
 
       {/* Optional message */}
       <div>
-        <label className={labelCls}>Anything you&apos;d like us to know? <span className="text-[#94a3b8] font-normal">(optional)</span></label>
+        <label htmlFor="demo-message" className={labelCls}>Anything you&apos;d like us to know? <span className="text-[#94a3b8] font-normal">(optional)</span></label>
         <textarea
+          id="demo-message"
           name="message"
           rows={3}
           placeholder="Specific compliance requirements, current systems, questions about pricing…"
@@ -168,7 +173,7 @@ export default function DemoForm() {
       </div>
 
       {error && (
-        <p className="text-sm text-[#dc2626] bg-[#fef2f2] border border-[#fecaca] rounded-lg px-3 py-2">
+        <p role="alert" className="text-sm text-[#dc2626] bg-[#fef2f2] border border-[#fecaca] rounded-lg px-3 py-2">
           {error}
         </p>
       )}

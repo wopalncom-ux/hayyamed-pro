@@ -192,8 +192,9 @@ export default function Step5Cme({
         </summary>
         <div className="mt-3 grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-[#374151] mb-1">Required credits</label>
+            <label htmlFor="cme-required-credits" className="block text-sm font-medium text-[#374151] mb-1">Required credits</label>
             <input
+              id="cme-required-credits"
               type="number"
               value={form.required_credits}
               onChange={(e) => setForm(f => ({ ...f, required_credits: parseInt(e.target.value) || 0 }))}
@@ -202,8 +203,9 @@ export default function Step5Cme({
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-[#374151] mb-1">Cycle years</label>
+            <label htmlFor="cme-cycle-years" className="block text-sm font-medium text-[#374151] mb-1">Cycle years</label>
             <input
+              id="cme-cycle-years"
               type="number"
               value={form.renewal_cycle_years}
               onChange={(e) => setForm(f => ({ ...f, renewal_cycle_years: parseInt(e.target.value) || 1 }))}
