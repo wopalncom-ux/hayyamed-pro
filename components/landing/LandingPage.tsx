@@ -1089,12 +1089,15 @@ function EmployerSection() {
               </li>
             ))}
           </ul>
-          <div className="flex flex-col sm:flex-row gap-3">
+          <div className="flex flex-col sm:flex-row gap-3 flex-wrap">
             <Link href="/employers" className="inline-block bg-[#1a56a0] text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-[#1547a0] transition-colors shadow-md shadow-blue-900/20">
               See employer features →
             </Link>
             <Link href="/pricing#employer" className="inline-block border border-[#c7daf7] text-[#1a56a0] bg-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-[#f0f7ff] transition-colors">
               View employer pricing →
+            </Link>
+            <Link href="/request-demo" className="inline-block text-sm font-semibold text-[#1a56a0] hover:underline py-2.5">
+              Book a demo →
             </Link>
           </div>
         </FadeUp>
@@ -1156,7 +1159,7 @@ function Pricing() {
     {
       name: "Pro", price: "$6", period: "/month · $61.20/year", highlight: true,
       features: ["Everything in Free", "PDF compliance reports", "Hayya AI chat", "License expiry alerts", "Priority support"],
-      cta: "Get Pro", href: "/pricing",
+      cta: "Start 14-day free trial", href: "/register",
     },
     {
       name: "Employer", price: "From $50", period: "/month", highlight: false,

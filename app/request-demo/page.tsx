@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     type: "website",
   },
   alternates: { canonical: `${APP_URL}/request-demo` },
-  robots: { index: false },
+  robots: { index: true, follow: true },
 };
 
 const TRUST_POINTS = [

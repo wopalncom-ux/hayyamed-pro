@@ -16,6 +16,20 @@ export default async function WaitlistPage() {
   const notified = signups?.filter((s) => s.notified).length ?? 0;
   const pending = total - notified;
 
+  // Segmentation breakdown
+  const professionCounts = (signups ?? []).reduce<Record<string, number>>((acc, s) => {
+    const k = s.profession || "Not specified";
+    acc[k] = (acc[k] ?? 0) + 1;
+    return acc;
+  }, {});
+  const countryCounts = (signups ?? []).reduce<Record<string, number>>((acc, s) => {
+    const k = s.country || "Not specified";
+    acc[k] = (acc[k] ?? 0) + 1;
+    return acc;
+  }, {});
+  const profBreakdown = Object.entries(professionCounts).sort((a, b) => b[1] - a[1]);
+  const countryBreakdown = Object.entries(countryCounts).sort((a, b) => b[1] - a[1]);
+
   // Build CSV string for client-side download
   const csvRows = [
     ["Email", "Profession", "Country", "Source", "Signed Up", "Notified"],
@@ -60,6 +74,46 @@ export default async function WaitlistPage() {
           <p className="text-3xl font-bold text-[#16a34a]">{notified}</p>
         </div>
       </div>
+
+      {/* Segmentation */}
+      {total > 0 && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
+          <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
+            <p className="text-xs font-semibold text-[#64748b] uppercase tracking-wide mb-3">By Profession</p>
+            <div className="space-y-2">
+              {profBreakdown.map(([label, count]) => (
+                <div key={label} className="flex items-center gap-2">
+                  <div className="flex-1 text-xs text-[#374151] truncate">{label}</div>
+                  <div className="w-24 bg-[#f1f5f9] rounded-full h-1.5">
+                    <div
+                      className="h-1.5 rounded-full bg-[#1a56a0]"
+                      style={{ width: `${Math.round((count / total) * 100)}%` }}
+                    />
+                  </div>
+                  <div className="text-xs font-semibold text-[#374151] w-8 text-right">{count}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
+            <p className="text-xs font-semibold text-[#64748b] uppercase tracking-wide mb-3">By Country</p>
+            <div className="space-y-2">
+              {countryBreakdown.map(([label, count]) => (
+                <div key={label} className="flex items-center gap-2">
+                  <div className="flex-1 text-xs text-[#374151] truncate">{label}</div>
+                  <div className="w-24 bg-[#f1f5f9] rounded-full h-1.5">
+                    <div
+                      className="h-1.5 rounded-full bg-[#7c3aed]"
+                      style={{ width: `${Math.round((count / total) * 100)}%` }}
+                    />
+                  </div>
+                  <div className="text-xs font-semibold text-[#374151] w-8 text-right">{count}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       {error && (
         <div className="bg-[#fef2f2] border border-[#fecaca] text-[#dc2626] text-sm px-4 py-3 rounded-lg mb-6">
