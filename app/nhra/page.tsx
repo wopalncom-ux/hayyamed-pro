@@ -148,7 +148,7 @@ export default function NhraPage() {
               <span className="font-bold text-base text-[#111]">Hayya Med <span className="text-[#1a56a0]">Pro</span></span>
             </Link>
             <Link href="/register" className="text-sm font-semibold text-white bg-[#1a56a0] px-4 py-2 rounded-lg hover:bg-[#154890] transition-colors">
-              Start free â†’
+              Start free →
             </Link>
           </div>
         </header>
@@ -169,7 +169,7 @@ export default function NhraPage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link href="/register" className="inline-flex items-center gap-2 bg-[#1a56a0] text-white font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#154890] transition-colors">
-                Track my NHRA compliance — free â†’
+                Track my NHRA compliance — free →
               </Link>
               <Link href="/pricing" className="inline-flex items-center gap-1 text-sm text-[#64748b] hover:text-[#1a56a0] transition-colors">
                 See what&apos;s free vs Pro
@@ -253,14 +253,14 @@ export default function NhraPage() {
                 </thead>
                 <tbody className="divide-y divide-[#f8fafc]">
                   {[
-                    ["Structured vs unstructured tracking", "âŒ", "âœ…"],
-                    ["Online CPD cap enforcement (20 max)", "âŒ", "âœ…"],
-                    ["Real-time 2-year cycle progress", "âŒ", "âœ…"],
-                    ["License renewal reminders", "âŒ", "âœ…"],
-                    ["PDF report for NHRA submission", "âŒ", "âœ… Pro"],
-                    ["AI CPD gap analysis", "âŒ", "âœ… Pro"],
-                    ["Certificate storage", "âŒ", "âœ… Pro"],
-                    ["Employer compliance dashboard", "âŒ", "âœ… Employer"],
+                    ["Structured vs unstructured tracking", "âŒ", "✅"],
+                    ["Online CPD cap enforcement (20 max)", "âŒ", "✅"],
+                    ["Real-time 2-year cycle progress", "âŒ", "✅"],
+                    ["License renewal reminders", "âŒ", "✅"],
+                    ["PDF report for NHRA submission", "âŒ", "✅ Pro"],
+                    ["AI CPD gap analysis", "âŒ", "✅ Pro"],
+                    ["Certificate storage", "âŒ", "✅ Pro"],
+                    ["Employer compliance dashboard", "âŒ", "✅ Employer"],
                   ].map(([feature, manual, platform]) => (
                     <tr key={feature}>
                       <td className="px-6 py-3 text-sm text-[#374151]">{feature}</td>
@@ -296,11 +296,11 @@ export default function NhraPage() {
           {/* Renewal guide link */}
           <div className="mb-10 bg-[#fef9c3] border border-[#fde68a] rounded-xl px-5 py-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <div className="flex-1">
-              <p className="text-sm font-semibold text-[#92400e]">Ready to renew? GCC license renewal guide â†’</p>
+              <p className="text-sm font-semibold text-[#92400e]">Ready to renew? GCC license renewal guide →</p>
               <p className="text-xs text-[#a16207] mt-0.5">Step-by-step NHRA renewal checklist and CPD portfolio tips for Bahrain healthcare professionals.</p>
             </div>
             <Link href="/gcc-medical-license-renewal" className="flex-shrink-0 bg-[#d97706] text-white text-xs font-semibold px-4 py-2 rounded-lg hover:bg-[#b45309] transition-colors whitespace-nowrap">
-              GCC Renewal Guides â†’
+              GCC Renewal Guides →
             </Link>
           </div>
 
@@ -369,7 +369,7 @@ export default function NhraPage() {
               Hayya Med Pro automatically applies NHRA Bahrain rules — 40 credits per 2-year cycle, structured/unstructured balance, and online cap tracking. Free to start.
             </p>
             <Link href="/register" className="inline-flex items-center gap-2 bg-white text-[#1a56a0] font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#f0f7ff] transition-colors">
-              Track my NHRA CPD — free â†’
+              Track my NHRA CPD — free →
             </Link>
             <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>

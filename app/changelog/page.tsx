@@ -139,7 +139,7 @@ export default function ChangelogPage() {
             href="/register"
             className="text-sm font-semibold text-white bg-[#1a56a0] px-4 py-2 rounded-lg hover:bg-[#154890] transition-colors"
           >
-            Start free â†’
+            Start free →
           </Link>
         </div>
       </header>
@@ -221,7 +221,7 @@ export default function ChangelogPage() {
             href="/register"
             className="inline-flex items-center gap-2 text-sm font-semibold bg-white text-[#1a56a0] px-6 py-3 rounded-xl hover:bg-[#f0f4f8] transition-colors"
           >
-            Create free account â†’
+            Create free account →
           </Link>
         </div>
       </main>

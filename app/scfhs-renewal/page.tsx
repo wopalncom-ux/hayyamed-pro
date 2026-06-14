@@ -119,7 +119,7 @@ const RENEWAL_STEPS = [
     step: "5",
     title: "Submit renewal at least 3 months early",
     body: "Log in to the SCFHS portal and submit your renewal application with your CME portfolio. Pay the renewal fee. Processing can take several weeks — submit early to avoid gaps in licensure.",
-    icon: "âœ…",
+    icon: "✅",
   },
 ];
 
@@ -212,7 +212,7 @@ export default function ScfhsRenewalPage() {
                 href="/register"
                 className="inline-block bg-[#1a56a0] text-white font-semibold px-7 py-3 rounded-xl hover:bg-[#1547a0] transition-colors text-sm"
               >
-                Start tracking SCFHS CME free â†’
+                Start tracking SCFHS CME free →
               </Link>
               <Link
                 href="/scfhs"
@@ -332,7 +332,7 @@ export default function ScfhsRenewalPage() {
                   href="/register"
                   className="block w-full text-center bg-[#1a56a0] text-white font-semibold text-sm py-3 rounded-xl hover:bg-[#1547a0] transition-colors mb-3"
                 >
-                  Start tracking SCFHS CME — free â†’
+                  Start tracking SCFHS CME — free →
                 </Link>
                 <div className="flex justify-center gap-4 text-xs text-[#64748b]">
                   <span>14-day Pro trial</span>
@@ -406,13 +406,13 @@ export default function ScfhsRenewalPage() {
                 href="/register"
                 className="bg-white text-[#1a56a0] font-semibold px-8 py-3 rounded-lg hover:bg-[#f0f4f8] transition-colors text-sm"
               >
-                Start tracking CME free â†’
+                Start tracking CME free →
               </Link>
               <Link
                 href="/scfhs"
                 className="border border-[rgba(255,255,255,0.25)] text-white font-medium px-8 py-3 rounded-lg hover:bg-[rgba(255,255,255,0.08)] transition-colors text-sm"
               >
-                Full SCFHS requirements â†’
+                Full SCFHS requirements →
               </Link>
             </div>
           </div>

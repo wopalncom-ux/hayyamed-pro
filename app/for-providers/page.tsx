@@ -33,7 +33,7 @@ const BENEFITS = [
     body: "Your courses appear in front of physicians, nurses, pharmacists, and dentists actively tracking their CME deadlines — the highest-intent audience in GCC healthcare.",
   },
   {
-    icon: "âœ…",
+    icon: "✅",
     title: "Automatic CME credit sync",
     body: "When a professional completes your course, CME credits are automatically added to their compliance wallet. Zero manual paperwork for you or them.",
   },
@@ -155,7 +155,7 @@ export default function ForProvidersPage() {
                 href="/provider/register"
                 className="bg-[#1a56a0] text-white px-6 py-3 rounded-xl text-base font-semibold hover:bg-[#1547a0] transition-colors"
               >
-                Register your organization â†’
+                Register your organization →
               </Link>
               <Link
                 href="/dashboard/marketplace"
@@ -229,7 +229,7 @@ export default function ForProvidersPage() {
                 href="/provider/register"
                 className="bg-[#1a56a0] text-white px-8 py-3.5 rounded-xl text-base font-semibold hover:bg-[#1e66c0] transition-colors"
               >
-                Start listing your courses â†’
+                Start listing your courses →
               </Link>
             </div>
           </div>
@@ -270,7 +270,7 @@ export default function ForProvidersPage() {
               href="/provider/register"
               className="bg-white text-[#1a56a0] px-8 py-3.5 rounded-xl text-base font-semibold hover:bg-blue-50 transition-colors inline-block"
             >
-              Register as a training provider â†’
+              Register as a training provider →
             </Link>
           </div>
         </section>

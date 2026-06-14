@@ -183,7 +183,7 @@ export default function CmeTrackerPage() {
                 href="/register"
                 className="bg-[#1a56a0] text-white font-semibold px-8 py-3.5 rounded-xl hover:bg-[#1547a0] transition-colors text-sm"
               >
-                Start tracking free â†’
+                Start tracking free →
               </Link>
               <Link
                 href="/pricing"
@@ -220,11 +220,11 @@ export default function CmeTrackerPage() {
                   className={`grid grid-cols-2 ${i < vsSpreadsheet.length - 1 ? "border-b border-[#f0f4f8]" : ""}`}
                 >
                   <div className="px-4 py-3.5 text-sm text-[#64748b] flex items-start gap-2 border-r border-[#f0f4f8]">
-                    <span className="text-[#dc2626] flex-shrink-0 mt-0.5">âœ—</span>
+                    <span className="text-[#dc2626] flex-shrink-0 mt-0.5">✔</span>
                     {r.pain}
                   </div>
                   <div className="px-4 py-3.5 text-sm text-[#374151] flex items-start gap-2">
-                    <span className="text-[#16a34a] flex-shrink-0 mt-0.5">âœ“</span>
+                    <span className="text-[#16a34a] flex-shrink-0 mt-0.5">✓</span>
                     {r.solution}
                   </div>
                 </div>
@@ -297,7 +297,7 @@ export default function CmeTrackerPage() {
                 href="/register"
                 className="inline-block bg-[#1a56a0] text-white font-semibold px-8 py-3 rounded-xl hover:bg-[#1547a0] transition-colors text-sm"
               >
-                Start tracking — free â†’
+                Start tracking — free →
               </Link>
             </div>
           </div>
@@ -321,7 +321,7 @@ export default function CmeTrackerPage() {
                 >
                   <span className="text-2xl block mb-2">{p.icon}</span>
                   <p className="text-sm font-semibold text-[#111] group-hover:text-[#1a56a0] transition-colors">{p.title}</p>
-                  <p className="text-xs text-[#1a56a0] mt-1">See requirements â†’</p>
+                  <p className="text-xs text-[#1a56a0] mt-1">See requirements →</p>
                 </Link>
               ))}
             </div>
@@ -421,7 +421,7 @@ export default function CmeTrackerPage() {
                 href="/register"
                 className="bg-white text-[#1a56a0] font-semibold px-8 py-3 rounded-lg hover:bg-[#f0f4f8] transition-colors text-sm"
               >
-                Start tracking free â†’
+                Start tracking free →
               </Link>
               <Link
                 href="/employers"

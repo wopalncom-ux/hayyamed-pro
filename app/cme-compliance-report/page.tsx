@@ -166,7 +166,7 @@ export default function CmeComplianceReportPage() {
                 href="/register"
                 className="text-sm font-semibold text-white bg-[#1a56a0] px-4 py-2 rounded-lg hover:bg-[#154890] transition-colors"
               >
-                Start free â†’
+                Start free →
               </Link>
             </div>
           </div>
@@ -193,14 +193,14 @@ export default function CmeComplianceReportPage() {
           <div className="bg-[#1a56a0] rounded-2xl p-6 mb-12 flex flex-col sm:flex-row items-center gap-4">
             <div className="flex-1">
               <p className="text-white font-semibold text-base mb-1">Generate your CME compliance report now</p>
-              <p className="text-[rgba(255,255,255,0.75)] text-sm">Start free â†’ add your activities â†’ download your PDF report with Pro. 14-day trial — no credit card required.</p>
+              <p className="text-[rgba(255,255,255,0.75)] text-sm">Start free → add your activities → download your PDF report with Pro. 14-day trial — no credit card required.</p>
             </div>
             <div className="flex flex-col sm:flex-row gap-2 flex-shrink-0">
               <Link
                 href="/register"
                 className="text-center bg-white text-[#1a56a0] font-semibold text-sm px-6 py-2.5 rounded-lg hover:bg-[#f0f7ff] transition-colors whitespace-nowrap"
               >
-                Start free trial â†’
+                Start free trial →
               </Link>
               <Link
                 href="/pricing"
@@ -222,7 +222,7 @@ export default function CmeComplianceReportPage() {
                   <ul className="space-y-1.5">
                     {s.items.map((item) => (
                       <li key={item} className="flex items-start gap-2 text-xs text-[#64748b]">
-                        <span className="text-[#16a34a] mt-0.5 flex-shrink-0">âœ“</span>
+                        <span className="text-[#16a34a] mt-0.5 flex-shrink-0">✓</span>
                         {item}
                       </li>
                     ))}
@@ -328,7 +328,7 @@ export default function CmeComplianceReportPage() {
                 href="/register"
                 className="inline-block bg-white text-[#1a56a0] font-semibold px-8 py-3 rounded-lg hover:bg-[#f0f4f8] transition-colors text-sm"
               >
-                Start free — 14-day Pro trial â†’
+                Start free — 14-day Pro trial →
               </Link>
               <Link
                 href="/pricing"

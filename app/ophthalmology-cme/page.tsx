@@ -150,7 +150,7 @@ export default function OphthalmologyCmePage() {
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/register" style={{ background: "#1a56a0", color: "#fff", padding: "14px 28px", borderRadius: 8, fontWeight: 600, textDecoration: "none", fontSize: 16 }}>
-              Start tracking free â†’
+              Start tracking free →
             </Link>
             <Link href="/pricing" style={{ background: "rgba(255,255,255,0.1)", color: "#fff", padding: "14px 28px", borderRadius: 8, fontWeight: 600, textDecoration: "none", fontSize: 16 }}>
               View plans
@@ -262,7 +262,7 @@ export default function OphthalmologyCmePage() {
             Track QCHP, SCFHS, DHA, and 4 more authorities in one compliance dashboard. Free to start.
           </p>
           <Link href="/register" style={{ background: "#1a56a0", color: "#fff", padding: "16px 36px", borderRadius: 8, fontWeight: 700, textDecoration: "none", fontSize: 17, display: "inline-block" }}>
-            Start tracking free â†’
+            Start tracking free →
           </Link>
           <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required · Free plan always available</p>
         </div>

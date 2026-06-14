@@ -44,7 +44,7 @@ async function sendStaffInviteEmail(to: string, name: string, orgName: string) {
             <strong>${orgName}</strong> has added you to Hayya Med Pro — a platform for tracking CME/CPD compliance and managing your healthcare license renewals.
           </p>
           <a href="${registerUrl}" style="display:inline-block;background:#1a56a0;color:white;text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:600;font-size:15px">
-            Create Account â†’
+            Create Account →
           </a>
           <p style="color:#94a3b8;font-size:12px;margin:28px 0 0">If you did not expect this, you can safely ignore this email.</p>
         </div>

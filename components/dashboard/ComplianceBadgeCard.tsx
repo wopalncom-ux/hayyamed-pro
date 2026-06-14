@@ -27,7 +27,7 @@ export default function ComplianceBadgeCard({ professionalId, plan, name, pct, c
   const profileLinkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(profileUrl)}`;
   const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(absoluteUrl)}`;
 
-  const linkedInPostText = `I'm tracking my CME compliance with Hayya Med Pro — keeping my renewal on track.\n\n${pct}% complete · ${complianceStatus === "compliant" ? "Compliant âœ“" : complianceStatus === "at_risk" ? "At Risk âš ï¸" : "In Progress"}\n\nFree to start for GCC healthcare professionals: ${referralUrl}`;
+  const linkedInPostText = `I'm tracking my CME compliance with Hayya Med Pro — keeping my renewal on track.\n\n${pct}% complete · ${complianceStatus === "compliant" ? "Compliant ✓" : complianceStatus === "at_risk" ? "At Risk ⚠ï¸" : "In Progress"}\n\nFree to start for GCC healthcare professionals: ${referralUrl}`;
 
   const whatsappText = `I'm using Hayya Med Pro to track my CME compliance — ${pct}% complete. Free to start for GCC healthcare professionals: ${referralUrl}`;
   const whatsappShareUrl = `https://wa.me/?text=${encodeURIComponent(whatsappText)}`;
@@ -130,7 +130,7 @@ export default function ComplianceBadgeCard({ professionalId, plan, name, pct, c
             onClick={() => track("upgrade_clicked", { source: "compliance_badge" })}
             className="inline-block text-sm font-semibold bg-[#1a56a0] text-white px-5 py-2.5 rounded-lg hover:bg-[#1547a0] transition-colors"
           >
-            Upgrade to Pro â†’
+            Upgrade to Pro →
           </a>
         </div>
       </div>

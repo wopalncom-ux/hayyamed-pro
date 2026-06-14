@@ -195,7 +195,7 @@ export default function NurseCpdPage() {
               href="/register"
               className="text-sm font-semibold text-white bg-[#1a56a0] px-4 py-2 rounded-lg hover:bg-[#154890] transition-colors"
             >
-              Start free â†’
+              Start free →
             </Link>
           </div>
         </header>
@@ -219,7 +219,7 @@ export default function NurseCpdPage() {
                 href="/register"
                 className="inline-flex items-center gap-2 bg-[#1a56a0] text-white font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#154890] transition-colors"
               >
-                Track my nursing CPD — free â†’
+                Track my nursing CPD — free →
               </Link>
               <Link
                 href="/pricing"
@@ -368,7 +368,7 @@ export default function NurseCpdPage() {
                 >
                   <p className="text-xl mb-1.5">{p.icon}</p>
                   <p className="text-xs font-semibold text-[#111]">{p.title}</p>
-                  <p className="text-[10px] text-[#1a56a0] mt-1">View guide â†’</p>
+                  <p className="text-[10px] text-[#1a56a0] mt-1">View guide →</p>
                 </Link>
               ))}
             </div>
@@ -387,7 +387,7 @@ export default function NurseCpdPage() {
               href="/register"
               className="inline-flex items-center gap-2 bg-white text-[#1a56a0] font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-blue-50 transition-colors"
             >
-              Start tracking free â†’ 14-day Pro trial
+              Start tracking free → 14-day Pro trial
             </Link>
             <p className="text-[#475569] text-xs mt-3">No credit card required · Cancel anytime</p>
           </div>

@@ -109,7 +109,7 @@ const SPECIALTY_NOTES = [
     body: "Published research, case reports, and teaching activities typically count toward SCFHS Category B and C credits (up to 20/yr). QCHP accepts similar academic activities toward CPD.",
   },
   {
-    icon: "âš ï¸",
+    icon: "⚠ï¸",
     title: "ACLS required by most hospitals",
     body: "While not always a licensing authority requirement, most GCC hospital privileges require valid ACLS certification. ACLS renewal counts as CME toward most authority requirements.",
   },
@@ -135,7 +135,7 @@ export default function InternalMedicineCmePage() {
               </span>
             </Link>
             <Link href="/register" className="text-sm font-semibold text-white bg-[#1a56a0] px-4 py-2 rounded-lg hover:bg-[#154890] transition-colors">
-              Start free â†’
+              Start free →
             </Link>
           </div>
         </header>
@@ -154,7 +154,7 @@ export default function InternalMedicineCmePage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link href="/register" className="inline-flex items-center gap-2 bg-[#1a56a0] text-white font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#154890] transition-colors">
-                Track my CME — free â†’
+                Track my CME — free →
               </Link>
               <Link href="/physician-cme" className="inline-flex items-center gap-1 text-sm text-[#64748b] hover:text-[#1a56a0] transition-colors">
                 See all physician CME requirements
@@ -257,7 +257,7 @@ export default function InternalMedicineCmePage() {
               Set up your wallet for QCHP, SCFHS, or any GCC authority in under 2 minutes. Free to start — upgrade for PDF reports and AI gap analysis.
             </p>
             <Link href="/register" className="inline-flex items-center gap-2 bg-white text-[#1a56a0] font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#f0f7ff] transition-colors">
-              Track my CME — free â†’
+              Track my CME — free →
             </Link>
             <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>

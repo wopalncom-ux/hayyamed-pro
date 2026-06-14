@@ -158,7 +158,7 @@ export default function JordanCmePage() {
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/register" style={{ background: "#1a56a0", color: "#fff", padding: "14px 28px", borderRadius: 8, fontWeight: 600, textDecoration: "none", fontSize: 16 }}>
-              Track my CME free â†’
+              Track my CME free →
             </Link>
             <Link href="/gcc-cme-requirements" style={{ background: "rgba(255,255,255,0.1)", color: "#fff", padding: "14px 28px", borderRadius: 8, fontWeight: 600, textDecoration: "none", fontSize: 16 }}>
               GCC CME requirements
@@ -284,7 +284,7 @@ export default function JordanCmePage() {
             Set up wallets for Jordan Medical Council and all 7 GCC authorities in one compliance dashboard.
           </p>
           <Link href="/register" style={{ background: "#1a56a0", color: "#fff", padding: "16px 36px", borderRadius: 8, fontWeight: 700, textDecoration: "none", fontSize: 17, display: "inline-block" }}>
-            Start tracking free â†’
+            Start tracking free →
           </Link>
           <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required · Free plan always available</p>
         </div>

@@ -165,7 +165,7 @@ export default function DhaRenewalPage() {
               href="/register"
               className="text-sm font-semibold text-white bg-[#1a56a0] px-4 py-2 rounded-lg hover:bg-[#154890] transition-colors"
             >
-              Start free â†’
+              Start free →
             </Link>
           </div>
         </header>
@@ -206,7 +206,7 @@ export default function DhaRenewalPage() {
           {/* CME requirement callout */}
           <div className="mb-10 bg-[#fffbeb] border border-[#fcd34d] rounded-xl p-5">
             <div className="flex gap-3">
-              <span className="text-xl flex-shrink-0 mt-0.5">âš ï¸</span>
+              <span className="text-xl flex-shrink-0 mt-0.5">⚠ï¸</span>
               <div>
                 <p className="text-sm font-semibold text-[#92400e] mb-1">Important: DHA CME category caps</p>
                 <p className="text-sm text-[#78350f] leading-relaxed">
@@ -272,7 +272,7 @@ export default function DhaRenewalPage() {
                     "License expiry reminders at 90, 60, 30 days",
                   ].map((f) => (
                     <li key={f} className="flex items-center gap-2 text-xs text-white">
-                      <span className="text-[#4ade80]">âœ“</span> {f}
+                      <span className="text-[#4ade80]">✓</span> {f}
                     </li>
                   ))}
                 </ul>
@@ -281,7 +281,7 @@ export default function DhaRenewalPage() {
                 href="/register"
                 className="block w-full text-center bg-white text-[#1a56a0] font-semibold text-sm py-3 rounded-lg hover:bg-[#f0f7ff] transition-colors"
               >
-                Start tracking DHA CME — free â†’
+                Start tracking DHA CME — free →
               </Link>
             </div>
           </div>
@@ -346,7 +346,7 @@ export default function DhaRenewalPage() {
               href="/register"
               className="inline-flex items-center gap-2 bg-white text-[#1a56a0] font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#f0f7ff] transition-colors"
             >
-              Track my DHA compliance — free â†’
+              Track my DHA compliance — free →
             </Link>
             <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">
               No credit card required · 14-day Pro trial included

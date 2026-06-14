@@ -221,7 +221,7 @@ export default function GccMedicalLicenseRenewalPage() {
               href="/register"
               className="text-sm font-semibold text-white bg-[#1a56a0] px-4 py-2 rounded-lg hover:bg-[#154890] transition-colors"
             >
-              Start free â†’
+              Start free →
             </Link>
           </div>
         </header>
@@ -291,7 +291,7 @@ export default function GccMedicalLicenseRenewalPage() {
                         href={a.renewalHref}
                         className="flex-1 text-center text-xs font-semibold text-white bg-[#1a56a0] py-2 rounded-lg hover:bg-[#154890] transition-colors"
                       >
-                        Renewal guide â†’
+                        Renewal guide →
                       </Link>
                     ) : (
                       <span className="flex-1 text-center text-xs font-medium text-[#94a3b8] bg-[#f8fafc] border border-[#e2e8f0] py-2 rounded-lg">
@@ -348,7 +348,7 @@ export default function GccMedicalLicenseRenewalPage() {
               </div>
             </div>
             <p className="text-xs text-[#64748b] mt-3">
-              See the full breakdown: <Link href="/cme-vs-cpd" className="text-[#1a56a0] hover:underline">CME vs CPD — complete guide â†’</Link>
+              See the full breakdown: <Link href="/cme-vs-cpd" className="text-[#1a56a0] hover:underline">CME vs CPD — complete guide →</Link>
             </p>
           </div>
 
@@ -392,7 +392,7 @@ export default function GccMedicalLicenseRenewalPage() {
                 href="/register"
                 className="inline-block bg-white text-[#1a56a0] font-semibold px-8 py-3 rounded-lg hover:bg-[#f0f4f8] transition-colors text-sm"
               >
-                Start tracking my GCC licenses — free â†’
+                Start tracking my GCC licenses — free →
               </Link>
               <Link
                 href="/countries"

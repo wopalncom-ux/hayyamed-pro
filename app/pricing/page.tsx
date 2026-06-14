@@ -50,7 +50,7 @@ const pricingFaqLd = {
     {
       "@type": "Question",
       name: "Can I cancel my subscription at any time?",
-      acceptedAnswer: { "@type": "Answer", text: "Yes. You can cancel at any time from Dashboard â†’ Settings â†’ Manage Billing. Your Pro access continues until the end of the current billing period, then your account moves to the free plan. Your CME data is always preserved." },
+      acceptedAnswer: { "@type": "Answer", text: "Yes. You can cancel at any time from Dashboard → Settings → Manage Billing. Your Pro access continues until the end of the current billing period, then your account moves to the free plan. Your CME data is always preserved." },
     },
     {
       "@type": "Question",

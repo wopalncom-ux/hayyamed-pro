@@ -197,7 +197,7 @@ export async function GET(request: NextRequest) {
             }}
           >
             <span style={{ color: "white", fontSize: 15, fontWeight: 700 }}>
-              Track free â†’
+              Track free →
             </span>
           </div>
         </div>

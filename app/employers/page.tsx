@@ -256,7 +256,7 @@ export default function EmployersPage() {
                 href="/pricing#employer"
                 className="text-sm font-semibold text-white bg-[#1a56a0] px-4 py-2 rounded-lg hover:bg-[#154890] transition-colors"
               >
-                See plans â†’
+                See plans →
               </Link>
             </div>
           </div>
@@ -298,7 +298,7 @@ export default function EmployersPage() {
                   href="/pricing#employer"
                   className="inline-flex items-center justify-center gap-2 bg-[#1a56a0] text-white font-semibold text-sm px-6 py-3 rounded-xl hover:bg-[#154890] transition-colors"
                 >
-                  See employer plans — from $50/month â†’
+                  See employer plans — from $50/month →
                 </Link>
                 <Link
                   href="/request-demo"
@@ -429,7 +429,7 @@ export default function EmployersPage() {
                 href="/request-demo"
                 className="flex-shrink-0 text-sm font-semibold bg-[#f1f5f9] text-[#1a56a0] px-5 py-2 rounded-xl hover:bg-[#e2e8f0] transition-colors"
               >
-                Contact us for Enterprise â†’
+                Contact us for Enterprise →
               </Link>
             </div>
           </div>
@@ -465,7 +465,7 @@ export default function EmployersPage() {
                 href="/pricing#employer"
                 className="bg-white text-[#1a56a0] font-semibold text-sm px-7 py-3 rounded-xl hover:bg-[#f0f7ff] transition-colors"
               >
-                See employer plans — from $50/month â†’
+                See employer plans — from $50/month →
               </Link>
               <Link
                 href="/request-demo"
@@ -475,7 +475,7 @@ export default function EmployersPage() {
               </Link>
             </div>
             <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">
-              Individual professionals: <Link href="/register" className="underline hover:text-white/60">create a free account â†’</Link>
+              Individual professionals: <Link href="/register" className="underline hover:text-white/60">create a free account →</Link>
             </p>
           </div>
         </main>

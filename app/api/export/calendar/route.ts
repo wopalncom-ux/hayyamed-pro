@@ -8,7 +8,7 @@ export const runtime = "nodejs";
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://hayyamed.pro";
 
 function toIcsDate(isoDate: string): string {
-  // Convert "YYYY-MM-DD" â†’ "YYYYMMDD"
+  // Convert "YYYY-MM-DD" → "YYYYMMDD"
   return isoDate.replace(/-/g, "");
 }
 

@@ -71,7 +71,7 @@ export async function sendCmeVerifiedEmail({
     <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:16px 20px;margin:20px 0 0">
       <p style="margin:0 0 4px;font-weight:600;color:#1e40af;font-size:14px">Download your compliance report</p>
       <p style="margin:0 0 12px;color:#374151;font-size:13px">Pro members can download a formatted QCHP, SCFHS, or DHA-ready PDF report at any time. Upgrade to Pro to generate yours.</p>
-      <a href="${APP_URL}/pricing" style="display:inline-block;background:#1a56a0;color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px">Upgrade to Pro â†’</a>
+      <a href="${APP_URL}/pricing" style="display:inline-block;background:#1a56a0;color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px">Upgrade to Pro →</a>
     </div>`;
   await send(to, `CME Activity Verified — +${credits} credits added`, baseLayout(`
     <p style="color:#374151;font-size:16px;margin:0 0 8px">Hi ${esc(name)},</p>
@@ -80,7 +80,7 @@ export async function sendCmeVerifiedEmail({
       <p style="margin:0;color:#111;font-weight:600;font-size:15px">${esc(activityTitle)}</p>
       <p style="margin:6px 0 0;color:#16a34a;font-size:22px;font-weight:700">+${credits} credits</p>
     </div>
-    <a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">View CME Wallet â†’</a>
+    <a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">View CME Wallet →</a>
     ${upgradeBlock}
   `));
 }
@@ -96,7 +96,7 @@ export async function sendCmeRejectedEmail({
       <p style="margin:6px 0 0;color:#dc2626;font-size:13px">Status: Not verified</p>
       ${reason ? `<p style="margin:10px 0 0;color:#374151;font-size:13px;border-top:1px solid #fecaca;padding-top:10px"><strong>Reason:</strong> ${esc(reason)}</p>` : ""}
     </div>
-    <a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Review &amp; Resubmit â†’</a>
+    <a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Review &amp; Resubmit →</a>
   `));
 }
 
@@ -125,7 +125,7 @@ export async function sendComplianceReminderEmail({
       <p style="margin:0;color:#374151;font-size:14px;line-height:1.6">${esc(message)}</p>
     </div>
     ${cmeBlock}
-    <a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">View My CPD Wallet â†’</a>
+    <a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">View My CPD Wallet →</a>
     <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">This reminder was sent by your employer administrator via Hayya Med Pro.</p>
   `));
 }
@@ -156,7 +156,7 @@ export async function sendTaskAssignedEmail({
       ${meta ? `<div style="margin:10px 0 0;display:flex;gap:12px;flex-wrap:wrap">${meta}</div>` : ""}
       ${message ? `<p style="margin:12px 0 0;color:#374151;font-size:13px;border-top:1px solid #dbeafe;padding-top:12px">${esc(message)}</p>` : ""}
     </div>
-    <a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">View My CPD Tasks â†’</a>
+    <a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">View My CPD Tasks →</a>
     <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">This task was assigned by your employer administrator via Hayya Med Pro.</p>
   `));
 }
@@ -167,10 +167,10 @@ export async function sendLicenseExpiryEmail({
   const urgent = daysLeft <= 7;
   const color = urgent ? "#dc2626" : "#d97706";
   const unsub = authId ? unsubUrl(authId, "license") : undefined;
-  await send(to, `${urgent ? "âš ï¸ Urgent: " : ""}License Expiring in ${daysLeft} Days`, baseLayout(`
+  await send(to, `${urgent ? "⚠ï¸ Urgent: " : ""}License Expiring in ${daysLeft} Days`, baseLayout(`
     <p style="color:#374151;font-size:16px;margin:0 0 8px">Hi ${esc(name)},</p>
     <p style="color:#374151;margin:0 0 24px">Your license expires in <strong style="color:${color}">${daysLeft} days</strong> (${expiryDate}). Ensure your CME credits are complete before renewal.</p>
-    <a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Check CME Status â†’</a>
+    <a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Check CME Status →</a>
   `, unsub), unsub);
 }
 
@@ -201,7 +201,7 @@ export async function sendWelcomeEmail({
         <li>Download your official CPD report (Pro)</li>
       </ul>
     </div>
-    <a href="${APP_URL}/dashboard" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Go to My Dashboard â†’</a>
+    <a href="${APP_URL}/dashboard" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Go to My Dashboard →</a>
     <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">Hayya Med Pro supports CME tracking and licensing readiness. It does not issue licenses and does not replace official licensing authorities. Always verify final requirements with your relevant regulatory body.</p>
   `));
 }
@@ -289,14 +289,14 @@ export async function sendEmployerDigestEmail({
       </div>` : ""}
       ${expiringSoon > 0 ? `<div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:12px 20px;text-align:center;min-width:80px">
         <p style="margin:0;font-size:22px;font-weight:700;color:#dc2626">${expiringSoon}</p>
-        <p style="margin:4px 0 0;font-size:11px;color:#64748b">License â‰¤30d</p>
+        <p style="margin:4px 0 0;font-size:11px;color:#64748b">License ≤30d</p>
       </div>` : ""}
     </div>
 
     ${alertSection}
 
     <div style="margin-top:24px">
-      <a href="${APP_URL}/employer" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">View Full Dashboard â†’</a>
+      <a href="${APP_URL}/employer" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">View Full Dashboard →</a>
     </div>
   `));
 }
@@ -307,14 +307,14 @@ export async function sendCmeDeadlineEmail({
   const urgent = daysLeft <= 7;
   const color = urgent ? "#dc2626" : "#d97706";
   const unsub = authId ? unsubUrl(authId, "cme") : undefined;
-  await send(to, `${urgent ? "âš ï¸ " : ""}CME Cycle Ends in ${daysLeft} Days — ${creditsNeeded} Credits Still Needed`, baseLayout(`
+  await send(to, `${urgent ? "⚠ï¸ " : ""}CME Cycle Ends in ${daysLeft} Days — ${creditsNeeded} Credits Still Needed`, baseLayout(`
     <p style="color:#374151;font-size:16px;margin:0 0 8px">Hi ${esc(name)},</p>
     <p style="color:#374151;margin:0 0 20px">Your CME cycle ends on <strong style="color:${color}">${cycleEndDate}</strong> — only <strong style="color:${color}">${daysLeft} days away</strong>.</p>
     <div style="background:${urgent ? "#fef2f2" : "#fff7ed"};border:1px solid ${urgent ? "#fecaca" : "#fed7aa"};border-radius:8px;padding:16px 20px;margin:0 0 24px">
       <p style="margin:0;font-size:13px;color:#64748b">Credits still needed to complete your cycle</p>
       <p style="margin:6px 0 0;font-size:28px;font-weight:700;color:${color}">${creditsNeeded}</p>
     </div>
-    <a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Log CME Activities â†’</a>
+    <a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Log CME Activities →</a>
     <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">Hayya Med Pro supports CME tracking and licensing readiness. It does not issue licenses and does not replace official licensing authorities.</p>
   `, unsub), unsub);
 }
@@ -332,7 +332,7 @@ export async function sendTrialStartEmail({
       <p style="margin:0 0 12px;font-size:13px;color:#374151">Share Hayya Med Pro with a fellow healthcare professional. Each colleague who joins extends your trial by 30 days.</p>
       ${referralCode ? `<p style="margin:0 0 10px;font-size:12px;color:#64748b">Your referral link:</p>
       <p style="margin:0 0 12px;font-family:monospace;font-size:12px;color:#111;background:#fff;border:1px solid #d1fae5;border-radius:4px;padding:8px 12px;word-break:break-all">${referralUrl}</p>` : ""}
-      <a href="${referralUrl}" style="display:inline-block;background:#16a34a;color:white;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:600;font-size:13px">${referralCode ? "Copy my referral link â†’" : "Generate my referral link â†’"}</a>
+      <a href="${referralUrl}" style="display:inline-block;background:#16a34a;color:white;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:600;font-size:13px">${referralCode ? "Copy my referral link →" : "Generate my referral link →"}</a>
     </div>`;
   await send(to, `Your ${trialDays}-day Pro trial has started — welcome to full access`, baseLayout(`
     <p style="color:#374151;font-size:16px;margin:0 0 8px">Hi ${esc(name)},</p>
@@ -350,7 +350,7 @@ export async function sendTrialStartEmail({
     <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px 18px;margin:0 0 20px">
       <p style="margin:0;font-size:13px;color:#64748b">Trial expires: <strong style="color:#111">${expiryDate}</strong></p>
     </div>
-    <a href="${APP_URL}/dashboard" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Explore Pro Features â†’</a>
+    <a href="${APP_URL}/dashboard" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Explore Pro Features →</a>
     ${referralSection}
     <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">No charge during the trial. Upgrade any time at <a href="${APP_URL}/pricing" style="color:#94a3b8">${APP_URL}/pricing</a> to keep Pro access after ${expiryDate}.</p>
   `));
@@ -363,7 +363,7 @@ export async function sendTrialEndingSoonEmail({
   const urgent = daysLeft <= 1;
   const color = urgent ? "#dc2626" : "#d97706";
   const unsub = authId ? unsubUrl(authId, "reminders") : undefined;
-  await send(to, `${urgent ? "âš ï¸ " : ""}Your Pro trial ends ${daysLeft === 1 ? "tomorrow" : `in ${daysLeft} days`} — don't lose access`, baseLayout(`
+  await send(to, `${urgent ? "⚠ï¸ " : ""}Your Pro trial ends ${daysLeft === 1 ? "tomorrow" : `in ${daysLeft} days`} — don't lose access`, baseLayout(`
     <p style="color:#374151;font-size:16px;margin:0 0 8px">Hi ${esc(name)},</p>
     <p style="color:#374151;margin:0 0 20px">Your Pro trial expires on <strong style="color:${color}">${expiryDate}</strong> — <strong style="color:${color}">${daysLeft === 1 ? "tomorrow" : `in ${daysLeft} days`}</strong>.</p>
     <div style="background:${urgent ? "#fef2f2" : "#fff7ed"};border:1px solid ${urgent ? "#fecaca" : "#fed7aa"};border-radius:8px;padding:16px 20px;margin:0 0 24px">
@@ -375,7 +375,7 @@ export async function sendTrialEndingSoonEmail({
         <li>Multi-country tracking</li>
       </ul>
     </div>
-    <a href="${APP_URL}/pricing" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Upgrade Now — from $6/month â†’</a>
+    <a href="${APP_URL}/pricing" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Upgrade Now — from $6/month →</a>
     <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">Your data is always safe regardless of plan. If you don't upgrade, you'll stay on the free tier with limited access.</p>
   `, unsub), unsub);
 }
@@ -399,7 +399,7 @@ export async function sendTrialExpiredEmail({
         <li>Multi-country compliance tracking</li>
       </ul>
     </div>
-    <a href="${APP_URL}/pricing" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Upgrade to Pro â†’</a>
+    <a href="${APP_URL}/pricing" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Upgrade to Pro →</a>
     <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">Your CME history and profile data are always retained regardless of your plan.</p>
   `, authId ? unsubUrl(authId, "reminders") : undefined), authId ? unsubUrl(authId, "reminders") : undefined);
 }
@@ -423,7 +423,7 @@ export async function sendTrialDay3Email({
     <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px 18px;margin:0 0 24px">
       <p style="margin:0;font-size:13px;color:#64748b">Your Pro trial ends: <strong style="color:#111">${expiryDate}</strong> · ${daysRemaining} days remaining</p>
     </div>
-    <a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Log my first CME activity â†’</a>
+    <a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Log my first CME activity →</a>
     <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">Your compliance snapshot updates automatically as you add activities. Every verified activity brings you closer to renewal.</p>
   `));
 }
@@ -453,7 +453,7 @@ export async function sendTrialDay7Email({
         <li>Multi-country tracking locked</li>
       </ul>
     </div>
-    <a href="${APP_URL}/pricing" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Keep Pro access — $6/month â†’</a>
+    <a href="${APP_URL}/pricing" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Keep Pro access — $6/month →</a>
     <p style="color:#64748b;font-size:12px;margin:16px 0 0">Or $61.20/year (save 15%) · 14-day money-back guarantee · Cancel any time</p>
     <p style="color:#94a3b8;font-size:11px;margin:12px 0 0">Your CME data and profile are always kept, regardless of plan.</p>
   `));
@@ -479,7 +479,7 @@ export async function sendSubscriptionActivatedEmail({
           <p style="margin:0 0 6px;color:#374151;font-size:14px"><strong>Step 1</strong> — Register your organization (name, type, country)</p>
           <p style="margin:0;color:#374151;font-size:14px"><strong>Step 2</strong> — Share your org link with staff so they can request to link their profiles</p>
         </div>
-        <a href="${APP_URL}/employer/register?welcome=1" style="display:inline-block;background:#d97706;color:white;text-decoration:none;padding:13px 28px;border-radius:8px;font-weight:700;font-size:15px;margin-bottom:20px">Set up my organization â†’</a>
+        <a href="${APP_URL}/employer/register?welcome=1" style="display:inline-block;background:#d97706;color:white;text-decoration:none;padding:13px 28px;border-radius:8px;font-weight:700;font-size:15px;margin-bottom:20px">Set up my organization →</a>
         <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:14px 18px;margin-top:4px">
           <p style="margin:0 0 6px;font-weight:600;color:#111;font-size:13px">Your employer plan includes:</p>
           <ul style="margin:0;padding-left:18px;color:#374151;font-size:13px;line-height:1.8">
@@ -513,7 +513,7 @@ export async function sendSubscriptionActivatedEmail({
           <li>Certificate storage with signed URLs</li>
         </ul>
       </div>
-      <a href="${APP_URL}/dashboard" style="display:inline-block;background:#1a56a0;color:white;text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:600;font-size:14px">Go to dashboard â†’</a>
+      <a href="${APP_URL}/dashboard" style="display:inline-block;background:#1a56a0;color:white;text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:600;font-size:14px">Go to dashboard →</a>
       <p style="color:#64748b;font-size:12px;margin:20px 0 0">Questions? Reply to this email or visit <a href="${APP_URL}/help" style="color:#1a56a0">${APP_URL}/help</a>.</p>
     `)
   );
@@ -536,7 +536,7 @@ export async function sendSubscriptionCanceledEmail({
         <p style="margin:0;color:#92400e;font-size:14px">${accessLine} After that, your account will move to the free plan and your CME data will be preserved.</p>
       </div>
       <p style="color:#374151;margin:0 0 20px">Changed your mind? You can resubscribe at any time.</p>
-      <a href="${APP_URL}/pricing" style="display:inline-block;background:#1a56a0;color:white;text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:600;font-size:14px">Resubscribe â†’</a>
+      <a href="${APP_URL}/pricing" style="display:inline-block;background:#1a56a0;color:white;text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:600;font-size:14px">Resubscribe →</a>
       <p style="color:#64748b;font-size:12px;margin:20px 0 0">Your CME history and profile data are always preserved, regardless of plan.</p>
     `)
   );
@@ -549,7 +549,7 @@ export async function sendLinkApprovedEmail({
     to,
     `Your employer link to ${orgName} has been approved`,
     baseLayout(`
-      <p style="font-size:20px;font-weight:700;color:#111;margin:0 0 8px">Employer link approved âœ“</p>
+      <p style="font-size:20px;font-weight:700;color:#111;margin:0 0 8px">Employer link approved ✓</p>
       <p style="color:#374151;margin:0 0 20px">Hi ${esc(name)}, your request to link your profile to <strong>${esc(orgName)}</strong> has been approved.</p>
       <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:16px 20px;margin-bottom:20px">
         <p style="margin:0;color:#16a34a;font-weight:600">Your employer can now see your compliance summary as permitted by your privacy settings.</p>
@@ -612,12 +612,12 @@ export async function sendProfessionalWeeklyDigestEmail({
     complianceStatus === "at_risk" ? "#d97706" : "#dc2626";
 
   const statusLabel =
-    complianceStatus === "compliant" ? "Compliant âœ“" :
+    complianceStatus === "compliant" ? "Compliant ✓" :
     complianceStatus === "at_risk" ? "At Risk" : "Needs Attention";
 
   const inactivityNote = daysSinceActivity !== null && daysSinceActivity > 14
     ? `<div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:12px 16px;margin:0 0 20px">
-        <p style="margin:0;font-size:13px;color:#92400e">â° You haven't logged any activities in <strong>${daysSinceActivity} days</strong>. Log one today to keep your compliance on track.</p>
+        <p style="margin:0;font-size:13px;color:#92400e">⏰ You haven't logged any activities in <strong>${daysSinceActivity} days</strong>. Log one today to keep your compliance on track.</p>
       </div>`
     : "";
 
@@ -628,9 +628,9 @@ export async function sendProfessionalWeeklyDigestEmail({
     : "";
 
   const ctaHtml = isPro
-    ? `<a href="${APP_URL}/api/pdf/cme-report" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Download PDF Report â†’</a>
-       <a href="${APP_URL}/dashboard/cme" style="display:inline-block;margin-left:12px;background:white;color:#1a56a0;border:1px solid #1a56a0;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Log Activity â†’</a>`
-    : `<a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Log CME Activity â†’</a>`;
+    ? `<a href="${APP_URL}/api/pdf/cme-report" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Download PDF Report →</a>
+       <a href="${APP_URL}/dashboard/cme" style="display:inline-block;margin-left:12px;background:white;color:#1a56a0;border:1px solid #1a56a0;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Log Activity →</a>`
+    : `<a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Log CME Activity →</a>`;
 
   const subject = complianceStatus === "compliant"
     ? `Your CME is on track — ${pct}% complete for ${country}`
@@ -722,7 +722,7 @@ export async function sendSupportConfirmationEmail({
       </p>
       <a href="${APP_URL}/help"
          style="display:inline-block;background:#f0f7ff;color:#1a56a0;border:1px solid #bfdbfe;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px">
-        Browse Help & FAQ â†’
+        Browse Help & FAQ →
       </a>
     `)
   );
@@ -770,7 +770,7 @@ export async function sendReferralRewardEmail({
 
       <a href="${APP_URL}/dashboard/settings#referral"
          style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">
-        View my referral link â†’
+        View my referral link →
       </a>
 
       <p style="color:#94a3b8;font-size:12px;margin:24px 0 0">
@@ -804,7 +804,7 @@ export async function sendOnboardingReminderEmail({
         <li>License expiry reminders and renewal readiness score</li>
       </ul>
     </div>
-    <a href="${href}" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Continue setup — finish ${esc(stepLabel)} â†’</a>
+    <a href="${href}" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Continue setup — finish ${esc(stepLabel)} →</a>
     <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">Setup takes about 3 minutes total. Your Pro trial activates automatically when you finish. Your CME data is always yours on any plan.</p>
   `));
 }
@@ -846,7 +846,7 @@ export async function sendAdminActivityPendingEmail({
 
       <a href="${APP_URL}/admin/cme-activities"
          style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">
-        Review in Admin Panel â†’
+        Review in Admin Panel →
       </a>
     `)
   );
@@ -900,7 +900,7 @@ export async function sendDemoRequestEmail({
 
         <a href="mailto:${esc(email)}"
            style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">
-          Reply to ${esc(name)} â†’
+          Reply to ${esc(name)} →
         </a>
       `),
     });
@@ -918,7 +918,7 @@ export async function sendFirstActivityEmail({
 }) {
   await send(
     to,
-    `âœ… First activity logged — your CME tracker is live`,
+    `✅ First activity logged — your CME tracker is live`,
     baseLayout(`
       <p style="font-size:20px;font-weight:700;color:#111;margin:0 0 6px">Your first CME activity is in, ${esc(name)}.</p>
       <p style="color:#374151;margin:0 0 20px">You just logged <strong>${esc(activityTitle)}</strong> — <strong>${credits} credit${credits !== 1 ? "s" : ""}</strong>. Your compliance dashboard has been updated automatically.</p>
@@ -937,13 +937,13 @@ export async function sendFirstActivityEmail({
         <p style="margin:0 0 6px;font-weight:600;color:#1a56a0;font-size:14px">Download your compliance report any time</p>
         <p style="margin:0;color:#374151;font-size:14px">Your Pro plan includes a one-click PDF compliance report — formatted for QCHP, SCFHS, DHA, or any GCC authority renewal submission.</p>
       </div>
-      <a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">View my CME dashboard â†’</a>
+      <a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">View my CME dashboard →</a>
       ` : `
       <div style="background:#fdf4ff;border:1px solid #e9d5ff;border-radius:8px;padding:16px 20px;margin:0 0 24px">
         <p style="margin:0 0 6px;font-weight:600;color:#7c3aed;font-size:14px">Upgrade to Pro to download your compliance report</p>
         <p style="margin:0;color:#374151;font-size:14px">Pro generates a one-click PDF compliance report — ready to attach to your QCHP, SCFHS, or DHA renewal application. From $6/month.</p>
       </div>
-      <a href="${APP_URL}/pricing" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Upgrade to Pro — from $6/month â†’</a>
+      <a href="${APP_URL}/pricing" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Upgrade to Pro — from $6/month →</a>
       `}
 
       <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">Every verified activity brings you closer to renewal. Keep going.</p>
@@ -982,7 +982,7 @@ export async function sendAdminUnverifiedLinkRequestEmail({
 
       <a href="${APP_URL}/admin/link-requests"
          style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">
-        Review in Admin Panel â†’
+        Review in Admin Panel →
       </a>
     `)
   );
@@ -1022,7 +1022,7 @@ export async function sendEmployerLinkRequestNotificationEmail({
 
       <a href="${esc(portalUrl)}"
          style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">
-        ${esc(portalLabel)} â†’
+        ${esc(portalLabel)} →
       </a>
 
       <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">
@@ -1072,12 +1072,12 @@ export async function sendUniversityRegistrationAdminEmail({
       </div>
 
       <p style="color:#374151;margin:0 0 16px;font-size:14px">
-        <strong>Action required:</strong> Verify the institution in the Admin â†’ Organizations panel to activate their university dashboard.
+        <strong>Action required:</strong> Verify the institution in the Admin → Organizations panel to activate their university dashboard.
       </p>
 
       <a href="${APP_URL}/admin/organizations"
          style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">
-        Verify in Admin Panel â†’
+        Verify in Admin Panel →
       </a>
     `)
   );
@@ -1111,14 +1111,14 @@ export async function sendUniversityWelcomeEmail({
 
       <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:10px;padding:16px 24px;margin:0 0 24px">
         <p style="margin:0;color:#92400e;font-size:13px;">
-          â³ <strong>Verification pending:</strong> Our team will verify your institution details within 1 business day.
+          ⏳ <strong>Verification pending:</strong> Our team will verify your institution details within 1 business day.
           You can add faculty and configure settings in the meantime.
         </p>
       </div>
 
       <a href="${APP_URL}/university"
          style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">
-        Go to your dashboard â†’
+        Go to your dashboard →
       </a>
     `)
   );
@@ -1149,7 +1149,7 @@ export async function sendAdminProviderPendingEmail({
         ${contactEmail ? `<p style="margin:0 0 4px;color:#374151;font-size:14px">Contact: <strong>${esc(contactEmail)}</strong></p>` : ""}
         <p style="margin:0;color:#374151;font-size:14px">Accredited: <strong>${isAccredited ? `Yes — ${esc(accreditor ?? "unknown")}` : "No"}</strong></p>
       </div>
-      <a href="${APP_URL}/admin/training-providers" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Review in Admin Panel â†’</a>
+      <a href="${APP_URL}/admin/training-providers" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Review in Admin Panel →</a>
     `)
   );
 }
@@ -1165,7 +1165,7 @@ export async function sendTrainingProviderApprovedEmail({
     to,
     `${providerName} is now live on Hayya Med Pro`,
     baseLayout(`
-      <p style="font-size:20px;font-weight:700;color:#111;margin:0 0 8px">Your provider account is approved âœ“</p>
+      <p style="font-size:20px;font-weight:700;color:#111;margin:0 0 8px">Your provider account is approved ✓</p>
       <p style="color:#374151;margin:0 0 20px">Hi ${esc(name)}, <strong>${esc(providerName)}</strong> has been approved and is now live on the Hayya Med Pro marketplace.</p>
       <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:16px 20px;margin-bottom:20px">
         <p style="margin:0 0 8px;font-weight:600;color:#15803d;font-size:14px">You can now:</p>
@@ -1175,7 +1175,7 @@ export async function sendTrainingProviderApprovedEmail({
           <li>Track enrollments from GCC healthcare professionals</li>
         </ul>
       </div>
-      <a href="${APP_URL}/provider" style="display:inline-block;background:#1a56a0;color:white;text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:600;font-size:14px">Go to provider portal â†’</a>
+      <a href="${APP_URL}/provider" style="display:inline-block;background:#1a56a0;color:white;text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:600;font-size:14px">Go to provider portal →</a>
     `)
   );
 }
@@ -1246,7 +1246,7 @@ export async function sendDemoRequestConfirmationEmail({
         </p>
         <a href="${APP_URL}/register"
            style="display:inline-block;background:#1a56a0;color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px">
-          Create your free account â†’
+          Create your free account →
         </a>
       </div>
 

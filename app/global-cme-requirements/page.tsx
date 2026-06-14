@@ -163,10 +163,10 @@ export default function GlobalCmeRequirementsPage() {
           </div>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/register" style={{ background: "#1a56a0", color: "#fff", padding: "14px 28px", borderRadius: 8, fontWeight: 600, textDecoration: "none", fontSize: 16 }}>
-              Track my CME — free â†’
+              Track my CME — free →
             </Link>
             <Link href="/gcc-cme-requirements" style={{ background: "rgba(255,255,255,0.1)", color: "#fff", padding: "14px 28px", borderRadius: 8, fontWeight: 600, textDecoration: "none", fontSize: 16 }}>
-              GCC guide â†’
+              GCC guide →
             </Link>
           </div>
         </div>
@@ -219,7 +219,7 @@ export default function GlobalCmeRequirementsPage() {
                       <td style={{ padding: "14px 16px", color: "#374151" }}>{c.cycle}</td>
                       <td style={{ padding: "14px 16px" }}>
                         <Link href={c.link} style={{ color: "#1a56a0", fontWeight: 600, fontSize: 14, textDecoration: "none" }}>
-                          View guide â†’
+                          View guide →
                         </Link>
                       </td>
                     </tr>
@@ -277,42 +277,42 @@ export default function GlobalCmeRequirementsPage() {
                 icon: "ðŸŒ",
                 desc: "Complete requirements for QCHP, SCFHS, DHA, DOH, MOH Kuwait, NHRA, and OMSB in one comparison table.",
                 href: "/gcc-cme-requirements",
-                cta: "View GCC guide â†’",
+                cta: "View GCC guide →",
               },
               {
                 title: "UK — GMC CPD",
                 icon: "ðŸ‡¬ðŸ‡§",
                 desc: "GMC revalidation — 50 CPD hours/year, 250 over 5 years. Annual appraisal + enhanced portfolio review.",
                 href: "/gmc-cpd",
-                cta: "View UK GMC guide â†’",
+                cta: "View UK GMC guide →",
               },
               {
                 title: "Australia — AHPRA CPD",
                 icon: "ðŸ‡¦ðŸ‡º",
                 desc: "2023 AHPRA framework — 50 CPD hours/year across 4 mandatory domains including Practice Review.",
                 href: "/ahpra-cpd",
-                cta: "View AHPRA guide â†’",
+                cta: "View AHPRA guide →",
               },
               {
                 title: "India — NMC CME",
                 icon: "ðŸ‡®ðŸ‡³",
                 desc: "NMC Medical Education Regulations — 30 CME credits per 5-year cycle. 1.2M+ Indian doctors in GCC.",
                 href: "/nmc-india-cme",
-                cta: "View NMC guide â†’",
+                cta: "View NMC guide →",
               },
               {
                 title: "Egypt — EMS CME",
                 icon: "ðŸ‡ªðŸ‡¬",
                 desc: "Egyptian Medical Syndicate — 25 CME credits/year. 600K+ Egyptian healthcare professionals in GCC.",
                 href: "/egypt-cme",
-                cta: "View Egypt guide â†’",
+                cta: "View Egypt guide →",
               },
               {
                 title: "Jordan — JMC CME",
                 icon: "ðŸ‡¯ðŸ‡´",
                 desc: "Jordan Medical Council — 30 CME credits/year. Arab world's medical education hub — large GCC diaspora.",
                 href: "/jordan-cme",
-                cta: "View Jordan guide â†’",
+                cta: "View Jordan guide →",
               },
             ].map((card) => (
               <div key={card.href} style={{ background: "#fff", borderRadius: 16, padding: 28, border: "1px solid #e2e8f0" }}>
@@ -353,7 +353,7 @@ export default function GlobalCmeRequirementsPage() {
             CME (Continuing Medical Education) focuses on clinical knowledge. CPD (Continuing Professional Development) is broader — including ethics, leadership, and quality improvement. Most GCC authorities use one term but accept the same activity types.
           </p>
           <Link href="/cme-vs-cpd" style={{ color: "#1a56a0", fontWeight: 600, fontSize: 14 }}>
-            Read the full CME vs CPD guide â†’
+            Read the full CME vs CPD guide →
           </Link>
         </div>
       </section>
@@ -368,7 +368,7 @@ export default function GlobalCmeRequirementsPage() {
             Set up compliance wallets for every licence you hold. GCC, UK, Australia, India, Egypt, Jordan — all in one dashboard. Free to start.
           </p>
           <Link href="/register" style={{ background: "#1a56a0", color: "#fff", padding: "16px 36px", borderRadius: 8, fontWeight: 700, textDecoration: "none", fontSize: 17, display: "inline-block" }}>
-            Start tracking free â†’
+            Start tracking free →
           </Link>
           <p style={{ color: "#64748b", fontSize: 13, marginTop: 16 }}>No credit card required · Free plan always available</p>
         </div>

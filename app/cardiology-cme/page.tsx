@@ -135,7 +135,7 @@ export default function CardiologyCmePage() {
               </span>
             </Link>
             <Link href="/register" className="text-sm font-semibold text-white bg-[#1a56a0] px-4 py-2 rounded-lg hover:bg-[#154890] transition-colors">
-              Start free â†’
+              Start free →
             </Link>
           </div>
         </header>
@@ -153,7 +153,7 @@ export default function CardiologyCmePage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link href="/register" className="inline-flex items-center gap-2 bg-[#1a56a0] text-white font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#154890] transition-colors">
-                Track my cardiology CME — free â†’
+                Track my cardiology CME — free →
               </Link>
               <Link href="/physician-cme" className="inline-flex items-center gap-1 text-sm text-[#64748b] hover:text-[#1a56a0] transition-colors">
                 See all physician CME requirements
@@ -251,7 +251,7 @@ export default function CardiologyCmePage() {
               Set up wallets for QCHP, SCFHS, and DHA in under 2 minutes. Log conferences, workshops, and online courses. Never miss a renewal deadline.
             </p>
             <Link href="/register" className="inline-flex items-center gap-2 bg-white text-[#1a56a0] font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#f0f7ff] transition-colors">
-              Track my CME — free â†’
+              Track my CME — free →
             </Link>
             <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>

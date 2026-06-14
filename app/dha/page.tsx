@@ -128,7 +128,7 @@ export default function DhaPage() {
               href="/register"
               className="text-sm font-semibold text-white bg-[#1a56a0] px-4 py-2 rounded-lg hover:bg-[#154890] transition-colors"
             >
-              Start free â†’
+              Start free →
             </Link>
           </div>
         </header>
@@ -153,7 +153,7 @@ export default function DhaPage() {
                 href="/register"
                 className="inline-flex items-center gap-2 bg-[#1a56a0] text-white font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#154890] transition-colors"
               >
-                Track my DHA compliance — free â†’
+                Track my DHA compliance — free →
               </Link>
               <Link
                 href="/pricing"
@@ -238,11 +238,11 @@ export default function DhaPage() {
           {/* Renewal guide link */}
           <div className="mb-10 bg-[#fef9c3] border border-[#fde68a] rounded-xl px-5 py-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <div className="flex-1">
-              <p className="text-sm font-semibold text-[#92400e]">Ready to renew? Step-by-step DHA renewal guide â†’</p>
+              <p className="text-sm font-semibold text-[#92400e]">Ready to renew? Step-by-step DHA renewal guide →</p>
               <p className="text-xs text-[#a16207] mt-0.5">Renewal checklist, Salama submission steps, category caps, and how to prepare your CME portfolio for DHA.</p>
             </div>
             <Link href="/dha-renewal" className="flex-shrink-0 bg-[#d97706] text-white text-xs font-semibold px-4 py-2 rounded-lg hover:bg-[#b45309] transition-colors whitespace-nowrap">
-              DHA Renewal Guide â†’
+              DHA Renewal Guide →
             </Link>
           </div>
 
@@ -314,7 +314,7 @@ export default function DhaPage() {
               href="/register"
               className="inline-flex items-center gap-2 bg-white text-[#1a56a0] font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#f0f7ff] transition-colors"
             >
-              Track my DHA compliance — free â†’
+              Track my DHA compliance — free →
             </Link>
             <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">
               No credit card required · 14-day Pro trial included

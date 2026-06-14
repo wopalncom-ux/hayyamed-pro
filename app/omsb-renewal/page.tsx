@@ -163,7 +163,7 @@ export default function OmsbRenewalPage() {
               href="/register"
               className="text-sm font-semibold text-white bg-[#1a56a0] px-4 py-2 rounded-lg hover:bg-[#154890] transition-colors"
             >
-              Start free â†’
+              Start free →
             </Link>
           </div>
         </header>
@@ -276,7 +276,7 @@ export default function OmsbRenewalPage() {
                     "Track OMSB and other GCC licenses in one dashboard",
                   ].map((f) => (
                     <li key={f} className="flex items-center gap-2 text-xs text-white">
-                      <span className="text-[#4ade80]">âœ“</span> {f}
+                      <span className="text-[#4ade80]">✓</span> {f}
                     </li>
                   ))}
                 </ul>
@@ -285,7 +285,7 @@ export default function OmsbRenewalPage() {
                 href="/register"
                 className="block w-full text-center bg-white text-[#1a56a0] font-semibold text-sm py-3 rounded-lg hover:bg-[#f0f7ff] transition-colors"
               >
-                Start tracking OMSB CME — free â†’
+                Start tracking OMSB CME — free →
               </Link>
             </div>
           </div>
@@ -350,7 +350,7 @@ export default function OmsbRenewalPage() {
               href="/register"
               className="inline-flex items-center gap-2 bg-white text-[#1a56a0] font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#f0f7ff] transition-colors"
             >
-              Track my OMSB compliance — free â†’
+              Track my OMSB compliance — free →
             </Link>
             <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">
               No credit card required · 14-day Pro trial included

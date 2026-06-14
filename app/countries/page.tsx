@@ -257,7 +257,7 @@ export default function CountriesPage() {
                 href="/register"
                 className="text-sm font-semibold text-white bg-[#1a56a0] px-4 py-2 rounded-lg hover:bg-[#154890] transition-colors"
               >
-                Start free â†’
+                Start free →
               </Link>
             </div>
           </div>
@@ -281,7 +281,7 @@ export default function CountriesPage() {
               href="/register"
               className="inline-flex items-center gap-2 bg-[#1a56a0] text-white font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#154890] transition-colors"
             >
-              Track my compliance — free â†’
+              Track my compliance — free →
             </Link>
             <p className="text-xs text-[#94a3b8] mt-3">Supports all 7 GCC countries · No credit card required</p>
           </div>
@@ -305,7 +305,7 @@ export default function CountriesPage() {
                       className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-white/80 hover:bg-white transition-colors"
                       style={{ color: c.text }}
                     >
-                      Full guide â†’
+                      Full guide →
                     </Link>
                   </div>
                   <p className="text-xs text-[#64748b]">{c.name}</p>
@@ -375,7 +375,7 @@ export default function CountriesPage() {
                           href={c.href!}
                           className="inline-block text-[11px] font-semibold text-[#1a56a0] hover:underline"
                         >
-                          View â†’
+                          View →
                         </Link>
                       </td>
                     ))}
@@ -401,7 +401,7 @@ export default function CountriesPage() {
               href="/register"
               className="flex-shrink-0 text-sm font-semibold bg-[#d97706] text-white px-5 py-2.5 rounded-xl hover:bg-[#b45309] transition-colors"
             >
-              Track multiple jurisdictions â†’
+              Track multiple jurisdictions →
             </Link>
           </div>
 
@@ -429,7 +429,7 @@ export default function CountriesPage() {
                   </div>
                   <div className="flex items-center justify-between text-xs text-[#94a3b8]">
                     <span>{c.creditsLabel} · {c.cycle} cycle</span>
-                    <span className="text-[#1a56a0] font-semibold group-hover:translate-x-1 transition-transform inline-block">â†’</span>
+                    <span className="text-[#1a56a0] font-semibold group-hover:translate-x-1 transition-transform inline-block">→</span>
                   </div>
                 </Link>
               ))}
@@ -467,7 +467,7 @@ export default function CountriesPage() {
                 href="/register"
                 className="bg-white text-[#1a56a0] font-semibold text-sm px-7 py-3 rounded-xl hover:bg-[#f0f7ff] transition-colors"
               >
-                Start tracking — free â†’
+                Start tracking — free →
               </Link>
               <Link
                 href="/pricing"
@@ -477,7 +477,7 @@ export default function CountriesPage() {
               </Link>
             </div>
             <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">
-              For healthcare employers: <Link href="/employers" className="underline hover:text-white/60">manage staff compliance â†’</Link>
+              For healthcare employers: <Link href="/employers" className="underline hover:text-white/60">manage staff compliance →</Link>
             </p>
           </div>
 
@@ -488,7 +488,7 @@ export default function CountriesPage() {
               <p className="text-xs text-[#3b5a8a] mt-0.5">QCHP says CPD. SCFHS says CME. Here&apos;s the difference — and why it doesn&apos;t change how you track.</p>
             </div>
             <Link href="/cme-vs-cpd" className="flex-shrink-0 text-xs font-semibold text-[#1a56a0] border border-[#1a56a0]/30 rounded-lg px-3 py-2 hover:bg-white transition-colors whitespace-nowrap">
-              CME vs CPD explained â†’
+              CME vs CPD explained →
             </Link>
           </div>
 
@@ -515,7 +515,7 @@ export default function CountriesPage() {
                   <div>
                     <p className="text-sm font-semibold text-[#111] mb-0.5">{p.title}</p>
                     <p className="text-xs text-[#64748b] leading-relaxed">{p.sub}</p>
-                    <p className="text-xs text-[#1a56a0] font-medium mt-1.5">View guide â†’</p>
+                    <p className="text-xs text-[#1a56a0] font-medium mt-1.5">View guide →</p>
                   </div>
                 </Link>
               ))}

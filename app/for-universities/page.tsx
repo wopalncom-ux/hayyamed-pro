@@ -181,7 +181,7 @@ export default function ForUniversitiesPage() {
                 href="/university/register"
                 className="bg-[#1a56a0] text-white px-6 py-3 rounded-xl text-base font-semibold hover:bg-[#1547a0] transition-colors"
               >
-                Register your institution â†’
+                Register your institution →
               </Link>
               <Link
                 href="/contact"
@@ -275,7 +275,7 @@ export default function ForUniversitiesPage() {
                 href="/university/register"
                 className="bg-[#1a56a0] text-white px-8 py-3.5 rounded-xl text-base font-semibold hover:bg-[#1e66c0] transition-colors"
               >
-                Register your institution â†’
+                Register your institution →
               </Link>
             </div>
           </div>
@@ -330,7 +330,7 @@ export default function ForUniversitiesPage() {
                 href="/university/register"
                 className="bg-white text-[#1a56a0] px-8 py-3.5 rounded-xl text-base font-semibold hover:bg-blue-50 transition-colors"
               >
-                Register your institution â†’
+                Register your institution →
               </Link>
               <Link
                 href="/contact"

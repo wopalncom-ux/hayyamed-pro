@@ -74,7 +74,8 @@
       "PowerShell(New-Item -ItemType Directory -Path \"c:\\\\Users\\\\wopal\\\\OneDrive\\\\Desktop\\\\Platform\\\\hayyamed-pro\\\\app\\\\api\\\\admin\\\\waitlist\" -Force)",
       "PowerShell(cd \"c:\\\\Users\\\\wopal\\\\OneDrive\\\\Desktop\\\\Platform\\\\hayyamed-pro\"; git add supabase/migrations/COMBINED_RUN_ONCE.sql supabase/migrations/031_waitlist_signups.sql lib/supabase/middleware.ts app/\\(admin\\)/layout.tsx \"app/\\(admin\\)/admin/waitlist/page.tsx\" app/api/admin/waitlist/export/route.ts; git status --short)",
       "PowerShell(New-Item -ItemType Directory -Path \"c:\\\\Users\\\\wopal\\\\OneDrive\\\\Desktop\\\\Platform\\\\hayyamed-pro\\\\app\\\\\\(admin\\)\\\\admin\\\\demo-requests\" -Force)",
-      "PowerShell(New-Item -ItemType Directory -Path \"c:\\\\Users\\\\wopal\\\\OneDrive\\\\Desktop\\\\Platform\\\\hayyamed-pro\\\\app\\\\api\\\\admin\\\\demo-requests\\\\export\" -Force)"
+      "PowerShell(New-Item -ItemType Directory -Path \"c:\\\\Users\\\\wopal\\\\OneDrive\\\\Desktop\\\\Platform\\\\hayyamed-pro\\\\app\\\\api\\\\admin\\\\demo-requests\\\\export\" -Force)",
+      "PowerShell($bytes = [System.IO.File]::ReadAllBytes\\(\"C:\\\\Users\\\\wopal\\\\OneDrive\\\\Desktop\\\\Platform\\\\hayyamed-pro\\\\lib\\\\email.ts\"\\); $found = @\\(\\); for \\($i = 0; $i -lt $bytes.Length - 3; $i++\\) { if \\($bytes[$i] -eq 0xC3 -and $bytes[$i+1] -eq 0xA2 -and $bytes[$i+2] -eq 0xC2\\) { $nxt = $bytes[$i+3].ToString\\(\"X2\"\\); $found += \"C3 A2 C2 $nxt\" } }; $found | Select-Object -Unique)"
     ],
     "additionalDirectories": [
       "c:\\Users\\wopal\\OneDrive\\Desktop\\Platform\\hayyamed-pro\\app\\api\\admin\\discounts",

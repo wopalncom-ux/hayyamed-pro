@@ -148,7 +148,7 @@ export default function OmsbPage() {
               <span className="font-bold text-base text-[#111]">Hayya Med <span className="text-[#1a56a0]">Pro</span></span>
             </Link>
             <Link href="/register" className="text-sm font-semibold text-white bg-[#1a56a0] px-4 py-2 rounded-lg hover:bg-[#154890] transition-colors">
-              Start free â†’
+              Start free →
             </Link>
           </div>
         </header>
@@ -169,7 +169,7 @@ export default function OmsbPage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link href="/register" className="inline-flex items-center gap-2 bg-[#1a56a0] text-white font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#154890] transition-colors">
-                Track my OMSB compliance — free â†’
+                Track my OMSB compliance — free →
               </Link>
               <Link href="/pricing" className="inline-flex items-center gap-1 text-sm text-[#64748b] hover:text-[#1a56a0] transition-colors">
                 See what&apos;s free vs Pro
@@ -253,15 +253,15 @@ export default function OmsbPage() {
                 </thead>
                 <tbody className="divide-y divide-[#f8fafc]">
                   {[
-                    ["Category A vs B tracking", "âŒ", "âœ…"],
-                    ["Profession-based credit requirement (40 vs 30)", "âŒ", "âœ…"],
-                    ["Online CME cap enforcement (20 max)", "âŒ", "âœ…"],
-                    ["Real-time 2-year cycle progress", "âŒ", "âœ…"],
-                    ["License renewal reminders", "âŒ", "âœ…"],
-                    ["PDF report for OMSB submission", "âŒ", "âœ… Pro"],
-                    ["AI CME gap analysis", "âŒ", "âœ… Pro"],
-                    ["Certificate storage", "âŒ", "âœ… Pro"],
-                    ["Employer compliance dashboard", "âŒ", "âœ… Employer"],
+                    ["Category A vs B tracking", "âŒ", "✅"],
+                    ["Profession-based credit requirement (40 vs 30)", "âŒ", "✅"],
+                    ["Online CME cap enforcement (20 max)", "âŒ", "✅"],
+                    ["Real-time 2-year cycle progress", "âŒ", "✅"],
+                    ["License renewal reminders", "âŒ", "✅"],
+                    ["PDF report for OMSB submission", "âŒ", "✅ Pro"],
+                    ["AI CME gap analysis", "âŒ", "✅ Pro"],
+                    ["Certificate storage", "âŒ", "✅ Pro"],
+                    ["Employer compliance dashboard", "âŒ", "✅ Employer"],
                   ].map(([feature, manual, platform]) => (
                     <tr key={feature}>
                       <td className="px-6 py-3 text-sm text-[#374151]">{feature}</td>
@@ -297,11 +297,11 @@ export default function OmsbPage() {
           {/* Renewal guide link */}
           <div className="mb-10 bg-[#fef9c3] border border-[#fde68a] rounded-xl px-5 py-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <div className="flex-1">
-              <p className="text-sm font-semibold text-[#92400e]">Ready to renew? GCC license renewal guide â†’</p>
+              <p className="text-sm font-semibold text-[#92400e]">Ready to renew? GCC license renewal guide →</p>
               <p className="text-xs text-[#a16207] mt-0.5">Step-by-step OMSB renewal checklist and CME portfolio tips for Oman healthcare professionals.</p>
             </div>
             <Link href="/gcc-medical-license-renewal" className="flex-shrink-0 bg-[#d97706] text-white text-xs font-semibold px-4 py-2 rounded-lg hover:bg-[#b45309] transition-colors whitespace-nowrap">
-              GCC Renewal Guides â†’
+              GCC Renewal Guides →
             </Link>
           </div>
 
@@ -370,7 +370,7 @@ export default function OmsbPage() {
               Hayya Med Pro applies OMSB Oman rules automatically — profession-specific credit targets, Category A/B split, and the 20-credit online cap. Free to start, no setup required.
             </p>
             <Link href="/register" className="inline-flex items-center gap-2 bg-white text-[#1a56a0] font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#f0f7ff] transition-colors">
-              Track my OMSB CME — free â†’
+              Track my OMSB CME — free →
             </Link>
             <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>

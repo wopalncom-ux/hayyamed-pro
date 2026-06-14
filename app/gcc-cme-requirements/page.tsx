@@ -221,7 +221,7 @@ export default function GccCmeRequirementsPage() {
               href="/register"
               style={{ background: "#1a56a0", color: "#fff", padding: "14px 28px", borderRadius: 8, fontWeight: 600, textDecoration: "none", fontSize: 16 }}
             >
-              Track my compliance free â†’
+              Track my compliance free →
             </Link>
             <Link
               href="/countries"
@@ -322,7 +322,7 @@ export default function GccCmeRequirementsPage() {
                   <span style={{ background: "#dbeafe", color: "#1d4ed8", fontSize: 11, fontWeight: 600, padding: "3px 8px", borderRadius: 4 }}>{c.credits} {c.term}</span>
                   <span style={{ background: "#f0fdf4", color: "#15803d", fontSize: 11, fontWeight: 600, padding: "3px 8px", borderRadius: 4 }}>{c.cycle}</span>
                 </div>
-                <p style={{ color: "#1a56a0", fontWeight: 600, fontSize: 13, marginTop: 12, marginBottom: 0 }}>Full guide â†’</p>
+                <p style={{ color: "#1a56a0", fontWeight: 600, fontSize: 13, marginTop: 12, marginBottom: 0 }}>Full guide →</p>
               </Link>
             ))}
           </div>
@@ -408,7 +408,7 @@ export default function GccCmeRequirementsPage() {
               href="/register"
               style={{ background: "#1a56a0", color: "#fff", padding: "16px 36px", borderRadius: 8, fontWeight: 700, textDecoration: "none", fontSize: 17, display: "inline-block" }}
             >
-              Start tracking free â†’
+              Start tracking free →
             </Link>
             <Link
               href="/pricing"

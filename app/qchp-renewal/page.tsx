@@ -110,7 +110,7 @@ const RENEWAL_STEPS = [
     step: "5",
     title: "Submit renewal application",
     body: "Submit your renewal application through the QCHP portal with your CPD portfolio. Applications should be submitted 3 months before your license expiry. Renewal fee applies.",
-    icon: "âœ…",
+    icon: "✅",
   },
 ];
 
@@ -213,7 +213,7 @@ export default function QchpRenewalPage() {
                 href="/register"
                 className="inline-block bg-[#1a56a0] text-white font-semibold px-7 py-3 rounded-xl hover:bg-[#1547a0] transition-colors text-sm"
               >
-                Start tracking QCHP CPD free â†’
+                Start tracking QCHP CPD free →
               </Link>
               <Link
                 href="/qchp"
@@ -309,7 +309,7 @@ export default function QchpRenewalPage() {
                     href="/register"
                     className="block w-full text-center bg-[#1a56a0] text-white font-semibold text-sm py-3 rounded-xl hover:bg-[#1547a0] transition-colors"
                   >
-                    Start tracking QCHP CPD — free â†’
+                    Start tracking QCHP CPD — free →
                   </Link>
                   <p className="text-xs text-[#64748b] text-center mt-2">Free plan available · 14-day Pro trial · No card required</p>
                 </div>
@@ -380,13 +380,13 @@ export default function QchpRenewalPage() {
                 href="/register"
                 className="bg-white text-[#1a56a0] font-semibold px-8 py-3 rounded-lg hover:bg-[#f0f4f8] transition-colors text-sm"
               >
-                Start tracking CPD free â†’
+                Start tracking CPD free →
               </Link>
               <Link
                 href="/qchp"
                 className="border border-[rgba(255,255,255,0.25)] text-white font-medium px-8 py-3 rounded-lg hover:bg-[rgba(255,255,255,0.08)] transition-colors text-sm"
               >
-                Full QCHP requirements â†’
+                Full QCHP requirements →
               </Link>
             </div>
           </div>

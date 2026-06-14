@@ -105,7 +105,7 @@ export default function RequestDemoPage() {
                 href="/pricing#employer"
                 className="text-xs font-semibold text-[#1a56a0] hover:underline"
               >
-                See full pricing â†’
+                See full pricing →
               </Link>
             </div>
           </div>
@@ -121,8 +121,8 @@ export default function RequestDemoPage() {
 
         {/* Bottom reassurance */}
         <div className="mt-12 border-t border-[#e2e8f0] pt-8 flex flex-col sm:flex-row items-start sm:items-center gap-6 text-xs text-[#94a3b8]">
-          <p>Already have an account? <Link href="/login" className="text-[#1a56a0] hover:underline">Sign in â†’</Link></p>
-          <p>Individual professional? <Link href="/register" className="text-[#1a56a0] hover:underline">Create a free account â†’</Link></p>
+          <p>Already have an account? <Link href="/login" className="text-[#1a56a0] hover:underline">Sign in →</Link></p>
+          <p>Individual professional? <Link href="/register" className="text-[#1a56a0] hover:underline">Create a free account →</Link></p>
           <p className="sm:ml-auto">
             <Link href="/privacy" className="hover:text-[#64748b] transition-colors">Privacy Policy</Link>
             {" · "}

@@ -164,7 +164,7 @@ export default function CpdTrackerPage() {
                 href="/register"
                 className="bg-[#1a56a0] text-white font-semibold px-8 py-3.5 rounded-xl hover:bg-[#1547a0] transition-colors text-sm"
               >
-                Start tracking CPD free â†’
+                Start tracking CPD free →
               </Link>
               <Link
                 href="/qchp"
@@ -192,7 +192,7 @@ export default function CpdTrackerPage() {
                 href="/cme-vs-cpd"
                 className="flex-shrink-0 text-xs font-semibold text-[#1a56a0] border border-[#1a56a0]/30 rounded-lg px-3 py-2 hover:bg-[#eff6ff] transition-colors whitespace-nowrap"
               >
-                CME vs CPD explained â†’
+                CME vs CPD explained →
               </Link>
             </div>
           </div>
@@ -241,7 +241,7 @@ export default function CpdTrackerPage() {
                 href="/register"
                 className="inline-block bg-[#1a56a0] text-white font-semibold px-8 py-3 rounded-xl hover:bg-[#1547a0] transition-colors text-sm"
               >
-                Start tracking CPD — free â†’
+                Start tracking CPD — free →
               </Link>
             </div>
           </div>
@@ -297,7 +297,7 @@ export default function CpdTrackerPage() {
                 >
                   <span className="text-2xl block mb-2">{p.icon}</span>
                   <p className="text-sm font-semibold text-[#111] group-hover:text-[#1a56a0] transition-colors">{p.title}</p>
-                  <p className="text-xs text-[#1a56a0] mt-1">View guide â†’</p>
+                  <p className="text-xs text-[#1a56a0] mt-1">View guide →</p>
                 </Link>
               ))}
             </div>
@@ -367,7 +367,7 @@ export default function CpdTrackerPage() {
                 href="/register"
                 className="bg-white text-[#1a56a0] font-semibold px-8 py-3 rounded-lg hover:bg-[#f0f4f8] transition-colors text-sm"
               >
-                Start tracking CPD free â†’
+                Start tracking CPD free →
               </Link>
               <Link
                 href="/cme-vs-cpd"

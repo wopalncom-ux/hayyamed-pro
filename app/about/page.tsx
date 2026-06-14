@@ -161,7 +161,7 @@ export default function AboutPage() {
             </div>
             <div className="mt-6 text-center">
               <Link href="/countries" className="text-sm font-semibold text-[#1a56a0] hover:underline">
-                Compare all GCC CME requirements â†’
+                Compare all GCC CME requirements →
               </Link>
             </div>
           </div>
@@ -189,7 +189,7 @@ export default function AboutPage() {
                 >
                   <span className="text-2xl block mb-2">{p.icon}</span>
                   <p className="text-sm font-semibold text-[#111]">{p.title}</p>
-                  <p className="text-xs text-[#1a56a0] mt-1">View guide â†’</p>
+                  <p className="text-xs text-[#1a56a0] mt-1">View guide →</p>
                 </Link>
               ))}
             </div>
@@ -213,7 +213,7 @@ export default function AboutPage() {
                 href="/employers"
                 className="inline-flex items-center gap-2 bg-[#1a56a0] text-white text-sm font-semibold px-5 py-2.5 rounded-lg hover:bg-[#154890] transition-colors"
               >
-                See employer features â†’
+                See employer features →
               </Link>
             </div>
             <div className="bg-white rounded-xl border border-[#e2e8f0] p-5 shadow-sm">
@@ -290,7 +290,7 @@ export default function AboutPage() {
             </div>
             <div className="mt-5 text-center">
               <Link href="/legal/dpa" className="text-sm text-[#1a56a0] hover:underline">
-                View our Data Processing Agreement â†’
+                View our Data Processing Agreement →
               </Link>
             </div>
           </div>
@@ -325,7 +325,7 @@ export default function AboutPage() {
                 href="/register"
                 className="bg-white text-[#1a56a0] font-semibold px-7 py-3 rounded-lg hover:bg-[#f0f4f8] transition-colors text-sm"
               >
-                Start tracking free â†’
+                Start tracking free →
               </Link>
               <Link
                 href="/contact"

@@ -103,7 +103,7 @@ const AUTHORITY_TERMS = [
 const SIMILARITIES = [
   { icon: "ðŸŽ¯", title: "Both require credit accumulation", desc: "Whether called CME or CPD, healthcare professionals must earn a set number of credits per renewal cycle through approved educational activities." },
   { icon: "ðŸ“‹", title: "Both use activity logs", desc: "Every authority requires you to maintain a portfolio or log of activities — provider name, date, credit value, and often a certificate of attendance." },
-  { icon: "âœ…", title: "Both accept similar activity types", desc: "Conferences, workshops, online courses, research, and teaching activities are accepted by virtually every GCC authority under both frameworks." },
+  { icon: "✅", title: "Both accept similar activity types", desc: "Conferences, workshops, online courses, research, and teaching activities are accepted by virtually every GCC authority under both frameworks." },
   { icon: "ðŸ”„", title: "Both link to license renewal", desc: "Failing to meet CME or CPD requirements means your license renewal application will be rejected. Both are mandatory, not optional." },
 ];
 
@@ -139,7 +139,7 @@ export default function CmeVsCpdPage() {
               href="/register"
               className="text-sm font-semibold text-white bg-[#1a56a0] px-4 py-2 rounded-lg hover:bg-[#154890] transition-colors"
             >
-              Start free â†’
+              Start free →
             </Link>
           </div>
         </header>
@@ -164,13 +164,13 @@ export default function CmeVsCpdPage() {
                 href="/register"
                 className="inline-flex items-center gap-2 bg-[#1a56a0] text-white font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#154890] transition-colors"
               >
-                Track my CME / CPD — free â†’
+                Track my CME / CPD — free →
               </Link>
               <Link
                 href="/countries"
                 className="inline-flex items-center gap-1 text-sm text-[#64748b] hover:text-[#1a56a0] transition-colors"
               >
-                Compare all GCC requirements â†’
+                Compare all GCC requirements →
               </Link>
             </div>
             <p className="text-xs text-[#94a3b8] mt-3">Works for both CME and CPD · All GCC authorities supported</p>
@@ -318,7 +318,7 @@ export default function CmeVsCpdPage() {
                   <p className="text-2xl mb-2">{p.icon}</p>
                   <p className="text-sm font-semibold text-[#111] mb-1">{p.title}</p>
                   <p className="text-xs text-[#64748b] leading-relaxed">{p.sub}</p>
-                  <p className="text-xs text-[#1a56a0] font-medium mt-2">Full guide â†’</p>
+                  <p className="text-xs text-[#1a56a0] font-medium mt-2">Full guide →</p>
                 </Link>
               ))}
             </div>
@@ -358,7 +358,7 @@ export default function CmeVsCpdPage() {
               href="/register"
               className="inline-flex items-center gap-2 bg-white text-[#1a56a0] font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-blue-50 transition-colors"
             >
-              Start tracking free â†’ 14-day Pro trial
+              Start tracking free → 14-day Pro trial
             </Link>
             <p className="text-[#475569] text-xs mt-3">No credit card required · Works for QCHP, SCFHS, DHA, DOH, NHRA, OMSB, MOH Kuwait</p>
           </div>

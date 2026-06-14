@@ -83,16 +83,16 @@ const faqLd = {
 };
 
 const COMPARISON_ROWS = [
-  ["QCHP / SCFHS / DHA rules built in", "âŒ Manual work", "âœ… Automatic"],
-  ["Annual minimum tracking (40/year QCHP)", "âŒ No", "âœ… Yes"],
-  ["Profession-specific rules (60 vs 30 SCFHS)", "âŒ No", "âœ… Yes"],
-  ["Staff compliance status at a glance", "âŒ No", "âœ… Yes"],
-  ["Bulk PDF for JCI / CBAHI audits", "âŒ Manual", "âœ… One click"],
-  ["Department grouping", "âŒ No", "âœ… Yes"],
-  ["Weekly digest email to admin", "âŒ No", "âœ… Automatic"],
-  ["Staff certificate storage", "âŒ No", "âœ… Encrypted"],
-  ["License expiry reminders to staff", "âŒ No", "âœ… Automated"],
-  ["Multi-authority (QCHP + SCFHS in one view)", "âŒ No", "âœ… Yes"],
+  ["QCHP / SCFHS / DHA rules built in", "âŒ Manual work", "✅ Automatic"],
+  ["Annual minimum tracking (40/year QCHP)", "âŒ No", "✅ Yes"],
+  ["Profession-specific rules (60 vs 30 SCFHS)", "âŒ No", "✅ Yes"],
+  ["Staff compliance status at a glance", "âŒ No", "✅ Yes"],
+  ["Bulk PDF for JCI / CBAHI audits", "âŒ Manual", "✅ One click"],
+  ["Department grouping", "âŒ No", "✅ Yes"],
+  ["Weekly digest email to admin", "âŒ No", "✅ Automatic"],
+  ["Staff certificate storage", "âŒ No", "✅ Encrypted"],
+  ["License expiry reminders to staff", "âŒ No", "✅ Automated"],
+  ["Multi-authority (QCHP + SCFHS in one view)", "âŒ No", "✅ Yes"],
 ];
 
 const FEATURES = [
@@ -208,7 +208,7 @@ export default function HealthcareComplianceSoftwarePage() {
                   href="/request-demo"
                   className="inline-block bg-[#1a56a0] text-white font-semibold px-8 py-3.5 rounded-xl hover:bg-[#1547a0] transition-colors text-sm"
                 >
-                  Request a demo â†’
+                  Request a demo →
                 </Link>
                 <Link
                   href="/pricing#employer"
@@ -319,7 +319,7 @@ export default function HealthcareComplianceSoftwarePage() {
                 <p className="text-xs text-[#64748b] mt-0.5">Unlimited staff · HRIS API integration · White-label · Custom SLA</p>
               </div>
               <Link href="/request-demo" className="flex-shrink-0 text-sm font-semibold bg-[#f1f5f9] text-[#1a56a0] px-5 py-2 rounded-xl hover:bg-[#e2e8f0] transition-colors">
-                Contact us for Enterprise â†’
+                Contact us for Enterprise →
               </Link>
             </div>
           </div>
@@ -363,7 +363,7 @@ export default function HealthcareComplianceSoftwarePage() {
                 href="/request-demo"
                 className="bg-white text-[#1a56a0] font-semibold px-8 py-3 rounded-lg hover:bg-[#f0f4f8] transition-colors text-sm"
               >
-                Request a demo â†’
+                Request a demo →
               </Link>
               <Link
                 href="/employers"

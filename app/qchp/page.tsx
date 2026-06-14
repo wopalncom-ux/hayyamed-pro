@@ -162,7 +162,7 @@ export default function QchpPage() {
               href="/register"
               className="text-sm font-semibold text-white bg-[#1a56a0] px-4 py-2 rounded-lg hover:bg-[#154890] transition-colors"
             >
-              Start free â†’
+              Start free →
             </Link>
           </div>
         </header>
@@ -186,7 +186,7 @@ export default function QchpPage() {
                 href="/register"
                 className="inline-flex items-center gap-2 bg-[#1a56a0] text-white font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#154890] transition-colors"
               >
-                Track my QCHP compliance — free â†’
+                Track my QCHP compliance — free →
               </Link>
               <Link
                 href="/pricing"
@@ -283,14 +283,14 @@ export default function QchpPage() {
                 </thead>
                 <tbody className="divide-y divide-[#f8fafc]">
                   {[
-                    ["Real-time compliance status", "âŒ", "âœ…"],
-                    ["Automatic credit calculation", "âŒ", "âœ…"],
-                    ["Category cap warnings", "âŒ", "âœ…"],
-                    ["License renewal reminders", "âŒ", "âœ…"],
-                    ["PDF report for QCHP submission", "âŒ", "âœ… Pro"],
-                    ["AI compliance gap analysis", "âŒ", "âœ… Pro"],
-                    ["Certificate storage", "âŒ", "âœ… Pro"],
-                    ["Employer compliance view", "âŒ", "âœ… Employer"],
+                    ["Real-time compliance status", "âŒ", "✅"],
+                    ["Automatic credit calculation", "âŒ", "✅"],
+                    ["Category cap warnings", "âŒ", "✅"],
+                    ["License renewal reminders", "âŒ", "✅"],
+                    ["PDF report for QCHP submission", "âŒ", "✅ Pro"],
+                    ["AI compliance gap analysis", "âŒ", "✅ Pro"],
+                    ["Certificate storage", "âŒ", "✅ Pro"],
+                    ["Employer compliance view", "âŒ", "✅ Employer"],
                   ].map(([feature, manual, platform]) => (
                     <tr key={feature}>
                       <td className="px-6 py-3 text-sm text-[#374151]">{feature}</td>
@@ -326,11 +326,11 @@ export default function QchpPage() {
           {/* Renewal guide link */}
           <div className="mb-10 bg-[#fef9c3] border border-[#fde68a] rounded-xl px-5 py-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <div className="flex-1">
-              <p className="text-sm font-semibold text-[#92400e]">Ready to renew? Step-by-step QCHP renewal guide â†’</p>
+              <p className="text-sm font-semibold text-[#92400e]">Ready to renew? Step-by-step QCHP renewal guide →</p>
               <p className="text-xs text-[#a16207] mt-0.5">Checklist, submission tips, and how to prepare your CPD portfolio for QCHP.</p>
             </div>
             <Link href="/qchp-renewal" className="flex-shrink-0 bg-[#d97706] text-white text-xs font-semibold px-4 py-2 rounded-lg hover:bg-[#b45309] transition-colors whitespace-nowrap">
-              QCHP Renewal Guide â†’
+              QCHP Renewal Guide →
             </Link>
           </div>
 
@@ -402,7 +402,7 @@ export default function QchpPage() {
               href="/register"
               className="inline-flex items-center gap-2 bg-white text-[#1a56a0] font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#f0f7ff] transition-colors"
             >
-              Track my QCHP compliance — free â†’
+              Track my QCHP compliance — free →
             </Link>
             <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">
               No credit card required · 14-day Pro trial included

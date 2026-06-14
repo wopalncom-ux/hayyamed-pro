@@ -148,7 +148,7 @@ export default function DohPage() {
               <span className="font-bold text-base text-[#111]">Hayya Med <span className="text-[#1a56a0]">Pro</span></span>
             </Link>
             <Link href="/register" className="text-sm font-semibold text-white bg-[#1a56a0] px-4 py-2 rounded-lg hover:bg-[#154890] transition-colors">
-              Start free â†’
+              Start free →
             </Link>
           </div>
         </header>
@@ -169,7 +169,7 @@ export default function DohPage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link href="/register" className="inline-flex items-center gap-2 bg-[#1a56a0] text-white font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#154890] transition-colors">
-                Track my DOH compliance — free â†’
+                Track my DOH compliance — free →
               </Link>
               <Link href="/pricing" className="inline-flex items-center gap-1 text-sm text-[#64748b] hover:text-[#1a56a0] transition-colors">
                 See what&apos;s free vs Pro
@@ -202,7 +202,7 @@ export default function DohPage() {
             </div>
             <div className="mt-4 p-3 bg-[#eff6ff] border border-[#bfdbfe] rounded-lg text-xs text-[#1e40af]">
               <strong>Note:</strong> DOH Abu Dhabi and DHA Dubai are separate licensing authorities with different requirements. Healthcare professionals licensed in both must track compliance for each independently.{" "}
-              <Link href="/dha" className="underline hover:no-underline">See DHA Dubai requirements â†’</Link>
+              <Link href="/dha" className="underline hover:no-underline">See DHA Dubai requirements →</Link>
             </div>
           </div>
 
@@ -257,15 +257,15 @@ export default function DohPage() {
                 </thead>
                 <tbody className="divide-y divide-[#f8fafc]">
                   {[
-                    ["Category tracking (accredited, online, self-directed)", "âŒ", "âœ…"],
-                    ["Online CPD cap enforcement (20 max)", "âŒ", "âœ…"],
-                    ["Self-directed cap enforcement (15 max)", "âŒ", "âœ…"],
-                    ["Real-time cycle progress", "âŒ", "âœ…"],
-                    ["License renewal reminders", "âŒ", "âœ…"],
-                    ["PDF report for DOH submission", "âŒ", "âœ… Pro"],
-                    ["AI CPD gap analysis", "âŒ", "âœ… Pro"],
-                    ["Certificate storage", "âŒ", "âœ… Pro"],
-                    ["Employer compliance dashboard", "âŒ", "âœ… Employer"],
+                    ["Category tracking (accredited, online, self-directed)", "âŒ", "✅"],
+                    ["Online CPD cap enforcement (20 max)", "âŒ", "✅"],
+                    ["Self-directed cap enforcement (15 max)", "âŒ", "✅"],
+                    ["Real-time cycle progress", "âŒ", "✅"],
+                    ["License renewal reminders", "âŒ", "✅"],
+                    ["PDF report for DOH submission", "âŒ", "✅ Pro"],
+                    ["AI CPD gap analysis", "âŒ", "✅ Pro"],
+                    ["Certificate storage", "âŒ", "✅ Pro"],
+                    ["Employer compliance dashboard", "âŒ", "✅ Employer"],
                   ].map(([feature, manual, platform]) => (
                     <tr key={feature}>
                       <td className="px-6 py-3 text-sm text-[#374151]">{feature}</td>
@@ -312,7 +312,7 @@ export default function DohPage() {
             </div>
             <div className="px-6 py-3 bg-[#f8fafc] border-t border-[#f1f5f9]">
               <Link href="/dha" className="text-xs font-semibold text-[#1a56a0] hover:underline">
-                See full DHA Dubai requirements guide â†’
+                See full DHA Dubai requirements guide →
               </Link>
             </div>
           </div>
@@ -340,11 +340,11 @@ export default function DohPage() {
           {/* Renewal guide link */}
           <div className="mb-10 bg-[#fef9c3] border border-[#fde68a] rounded-xl px-5 py-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <div className="flex-1">
-              <p className="text-sm font-semibold text-[#92400e]">Ready to renew? Step-by-step DOH renewal guide â†’</p>
+              <p className="text-sm font-semibold text-[#92400e]">Ready to renew? Step-by-step DOH renewal guide →</p>
               <p className="text-xs text-[#a16207] mt-0.5">Renewal checklist, DOH portal submission steps, and how to prepare your CPD portfolio for Abu Dhabi license renewal.</p>
             </div>
             <Link href="/doh-renewal" className="flex-shrink-0 bg-[#d97706] text-white text-xs font-semibold px-4 py-2 rounded-lg hover:bg-[#b45309] transition-colors whitespace-nowrap">
-              DOH Renewal Guide â†’
+              DOH Renewal Guide →
             </Link>
           </div>
 
@@ -413,7 +413,7 @@ export default function DohPage() {
               Hayya Med Pro applies DOH Abu Dhabi rules automatically — profession-specific credit targets, online and self-directed caps, and renewal reminders. Free to start.
             </p>
             <Link href="/register" className="inline-flex items-center gap-2 bg-white text-[#1a56a0] font-semibold text-sm px-7 py-3.5 rounded-xl hover:bg-[#f0f7ff] transition-colors">
-              Track my DOH CPD — free â†’
+              Track my DOH CPD — free →
             </Link>
             <p className="text-xs text-[rgba(255,255,255,0.4)] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>
