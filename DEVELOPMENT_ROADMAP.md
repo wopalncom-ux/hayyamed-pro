@@ -17,48 +17,66 @@ Hayya Med Pro is a global healthcare SaaS. Every phase must balance speed-to-rev
 ### Deliverables
 
 **Completed ✅**
-- Professional onboarding (3-step wizard)
-- CME activity tracking + verification workflow
-- Admin panel (verify/reject activities, manage link requests)
-- Employer linking (request → approve → compliance view)
-- Certificate storage (private, signed URLs, secure)
-- Subscription billing (Paddle — Free / Pro / Employer)
-- PDF compliance reports (Pro only)
-- Email notifications (Resend)
-- Security headers + CSP + HSTS
-- Audit logging (all admin actions)
-- GCC licensing authorities (8 authorities)
-- Subscriptions table + auto-provisioning
-- GCP Cloud Run deployment pipeline
+- Professional onboarding (7-step wizard)
+- CME activity tracking + verification workflow (wallet, compliance ring, status badges)
+- Admin panel — 18 admin pages covering all platform operations
+- Employer linking (request → approve → compliance grid view → department grouping)
+- Certificate storage (private Supabase bucket, signed URLs, 1-hour expiry)
+- Subscription billing (Paddle — Free / Pro / Employer Clinic/Growth/Dept/Hospital)
+- PDF compliance reports (Pro only, per-wallet + bulk employer export)
+- Email notifications (Postmark — 20+ transactional emails)
+- Security headers, CSP, HSTS, rate limiting (Upstash Redis)
+- Audit logging (all admin + AI actions, append-only, 7-year retention)
+- GCC licensing authorities — 7 countries, 7 authority pages (QCHP/SCFHS/DHA/DOH/NHRA/OMSB/MOH-Kuwait)
+- Country Rules Engine — all 7 GCC countries, 32 compliance rules, admin CRUD
+- 32 database migrations + COMBINED_RUN_ONCE.sql
+- GCP Cloud Run deployment pipeline (me-central1 / Doha) — live at hayyamed.pro
+- Coming-soon gate with env-var toggle (COMING_SOON=false to go live, no code deploy)
+- Waitlist email capture (DB-first, profession + country segmentation, admin view)
+- Demo requests pipeline (DB-first, status workflow, admin pipeline view, CSV export)
+- PWA (manifest, service worker, offline fallback, install prompt, push notifications)
+- Offline CME submission queue (localStorage → auto-sync on reconnect)
+- AI features — compliance chat, gap analysis, OCR, voice assistant, employer/provider analyzers
+- Vertex AI (ADC — no API key needed on Cloud Run)
+- SEO — 110+ public pages covering GCC CME requirements, specialties, authorities
+- Marketing pages — /employers, /for-providers, /for-universities, /pricing, /request-demo, /about
+- Referral program (30-day trial extension, /r/[code], ComplianceBadgeCard sharing)
+- Trial pipeline (14-day Free trial, 30-day referred trial, upgrade walls, trial emails)
+- Analytics — PostHog with 13 conversion events and user identity
+- Sentry error tracking, /monitoring tunnel endpoint
+- QPay Qatar integration (alternative payment for QAR)
+- NPS survey (30-day, annual, /admin/nps)
+- Email bounce/spam handling (Postmark webhook, suppression list)
+- Calendar export (.ics) for license renewals
+- One-click unsubscribe (HMAC tokens, RFC 8058 compliant)
+- Changelog at /changelog
+- Full legal pages — /terms, /privacy, /legal/dpa
+- RLS verified — 8/8 tests passed (supabase/tests/rls_run.sql)
 
-**In Progress 🔄**
-- GCP Cloud Run deployment (current session)
-- TypeScript clean build
-
-**Remaining in Phase 1 📋**
-- PWA setup (manifest, service worker, install prompt)
-- Country Rules Engine SQL migration (`country_compliance_rules` table)
-- Supabase Auth production URL update
-- Paddle account setup + pricing configuration
-- Resend domain verification (hayyamed.com)
-- Phase 1 UI polish (loading states, error boundaries, toasts)
+**Pending — user actions required (not code)**
+- Run 32 migrations (COMBINED_RUN_ONCE.sql → Supabase SQL Editor)
+- Paddle account approval + 10 price IDs created
+- Postmark sending domain approved
+- VAPID private key added to GCP Secret Manager
+- Enable Claude Haiku 4.5 in Vertex AI Model Garden
+- To go live: set `_COMING_SOON = false` in Cloud Build Trigger → trigger build
 
 ### Dependencies
 - GCP project: `project-38d955b0-84e7-44b6-8b5`
 - Supabase project: `ulevibytaxocdvdfmfaq`
-- Domain: `pro.hayyamed.com` — DNS configuration needed post-deployment
+- Domain: `hayyamed.pro` — live on Cloudflare + Cloud Run
 
 ### Risks
 - Paddle account approval timeline (7–14 days)
-- Resend domain verification (48 hours DNS propagation)
-- GCP Cloud Run deployment (currently unblocking)
+- Postmark sending approval (under review)
+- Haiku 4.5 Model Garden activation (user action, 5 minutes)
 
 ### Success Criteria
-- [ ] Live at `pro.hayyamed.com`
+- [x] Live infrastructure at `hayyamed.pro`
 - [ ] First paying Pro subscriber
 - [ ] First employer account linked
 - [ ] Lighthouse scores: Performance >90, Best Practices 100, PWA installable
-- [ ] Zero critical security findings
+- [x] Zero critical security findings (OWASP audit complete, RLS verified)
 - [ ] $0 → $1,000 ARR
 
 ---
@@ -69,93 +87,81 @@ Hayya Med Pro is a global healthcare SaaS. Every phase must balance speed-to-rev
 - 500 registered professionals
 - 20 paying Pro subscribers
 - 3 hospital/clinic employer contracts
-- First GCC country outside Qatar (Saudi or UAE)
+- First GCC country expansion (Saudi Arabia or UAE outreach)
 
 ### Deliverables
 
 **UI & UX**
-- Full shadcn/ui component library integration
-- Loading skeletons on all data tables
-- Toast notifications system
-- Error boundaries on all pages
-- Mobile-first responsive overhaul
-- Arabic language support (RTL layout)
+- Arabic language support (next-intl, RTL layout — Phase 2 gate: 50 paying users)
+- Dark mode (optional, low priority)
 
-**Country Rules Engine**
-- `country_compliance_rules` database table
-- `compliance_activity_categories` table
-- Saudi Arabia (SCFHS) rules configured
-- UAE (DHA + DOH) rules configured
-- Admin UI for rules management
+**Enterprise Sales**
+- QCHP partnership outreach (official CME tracking endorsement)
+- Hospital PoC framework (Hamad Medical Corporation, Sidra Medicine)
+- RFP response capability (technical + security + compliance sections)
 
-**Employer Dashboard**
-- Staff compliance overview (grid view)
-- Department grouping
-- Bulk compliance report (PDF, all staff)
-- Scheduled report delivery (weekly email)
-- Staff CME deficit alerts
+**Platform**
+- University admin portal (faculty + alumni CME tracking)
+- API v1 for HRIS integration (hospital HR systems)
+- Webhook events for enterprise customers
 
-**Notifications**
-- Push notification system (Web Push for PWA)
-- 30-day and 7-day license expiry alerts (automated cron)
-- CME cycle deadline alerts
-- Digest email (weekly compliance summary for employers)
-
-**Marketplace Foundation**
-- Training provider registration
-- Course listing (basic)
-- Course enrollment tracking
+**Marketplace Growth**
+- Course discovery improvements (hybrid search: pgvector + full-text)
 - CME credit issuance for marketplace completions
+- Provider analytics (enrollment trends, category demand)
+
+**Compliance Engine**
+- India NMC rules (NMC 5-year, 30 CME)
+- UK GMC/NMC CPD rules
+- Australia AHPRA CPD rules
+- Egypt / Jordan market rules
 
 ### Success Criteria
 - [ ] $1,000 → $25,000 ARR
-- [ ] Saudi and UAE compliance rules live
+- [ ] Saudi Arabia and UAE compliance routes launched
 - [ ] First hospital employer contract signed
 - [ ] Arabic language toggle functional
-- [ ] Push notifications live (PWA)
-- [ ] 3+ training providers listed in marketplace
+- [ ] 3+ training providers in marketplace
 
 ---
 
 ## Phase 3: Intelligence & Automation (Q1–Q2 2027)
 
 ### Objectives
-- AI-powered compliance assistant
+- AI-powered compliance assistant as competitive moat
 - Automated license renewal workflow
-- University partnerships
+- University partnerships (2+)
 - $100,000 ARR
 
 ### Deliverables
 
-**AI Features**
-- CME activity auto-categorization (AI suggests category + credits)
-- Compliance gap analysis ("You need 12 more credits in cardiology by June")
-- Smart activity recommendations based on specialty + gap
-- AI compliance chatbot (in-dashboard, answers "am I compliant?")
-- Certificate information extraction (OCR — auto-fill from uploaded certificate)
+**AI Features (already in Phase 1, expand in Phase 3)**
+- RAG pipeline for country-specific rules (pgvector + Supabase)
+- AI-generated renewal strategy ("Your QCHP renewal is in 90 days — here's your exact plan")
+- Confidence scoring + citations on every AI compliance answer
+- Arabic NLP optimization for Gulf dialect medical terminology
+- Hallucination prevention: "I don't know" responses with authority links
 
 **License Renewal Automation**
-- Direct integration with QCHP portal (API or scraping)
-- One-click renewal document package (all verified activities + PDF report)
-- License renewal deadline countdown on dashboard
+- QCHP portal integration (API or scraping — pending authority partnership)
+- One-click renewal document package
+- License renewal countdown on dashboard (already shipping in Phase 1)
 
 **University Module**
-- University admin portal
-- Student compliance tracking
-- Alumni CME issuance
-- Faculty development tracking
-- Accreditation reporting
+- University admin portal (student + faculty compliance tracking)
+- Alumni CME issuance via QR-verified certificates
+- Accreditation reporting for JCI/CBAHI
 
 **Analytics**
-- Professional: personal compliance trend charts
-- Employer: team compliance analytics, department breakdown, risk heatmap
-- Admin: platform-wide analytics dashboard, revenue reporting
+- Platform-wide workforce intelligence (anonymized)
+- Department compliance benchmarking
+- Churn prediction model
 
 ### Success Criteria
 - [ ] $25,000 → $100,000 ARR
 - [ ] 2 university partnerships signed
 - [ ] AI assistant used by >30% of active users
-- [ ] Average time-to-compliance-report < 30 seconds
+- [ ] QCHP endorsement or official partnership
 
 ---
 
@@ -170,34 +176,38 @@ Hayya Med Pro is a global healthcare SaaS. Every phase must balance speed-to-rev
 ### Deliverables
 
 **International Compliance**
-- UK: GMC, NMC, GPhC rules configured
-- India: NMC rules configured
-- Egypt: EMS rules configured
-- EU: EMA-adjacent CPD rules configured
-- GDPR compliance implementation
+- UK: GMC, NMC, GPhC rules
+- India: NMC rules
+- Egypt: EMS rules
+- EU: country-by-country CPD rules
+- GDPR compliance implementation (DPA templates, data residency per country)
 
 **White-Label Platform**
-- White-label configuration system (branding, domain, rules per deployment)
+- White-label configuration (branding, domain, rules per deployment)
 - First government white-label contract (target: QCHP official portal)
 - White-label admin panel
 
 **Enterprise API**
-- REST API for HRIS integration (Hospital HR systems)
-- Webhook events for enterprise customers
+- REST API v2 for HRIS integration
 - API documentation site
 - API key management portal
+- Webhook events + retry + audit
 
 **Payments Global**
-- Local payment processors per region
+- Local payment processors per region (Stripe for UK/EU/IN, local GCC gateways)
 - Local currency pricing
-- VAT/GST handling per jurisdiction
+- VAT/GST handling per jurisdiction (Saudi 15%, UAE 5%, UK 20%)
+
+**Security & Compliance Certifications**
+- SOC 2 Type II preparation (starts Year 2)
+- ISO 27001 gap analysis
 
 ### Success Criteria
 - [ ] $100,000 → $1,000,000 ARR
 - [ ] First white-label government contract
-- [ ] UK/India market live
+- [ ] UK / India market live
 - [ ] Enterprise API with 3+ HRIS integrations
-- [ ] Series A investment round initiated
+- [ ] Series A round initiated
 
 ---
 
@@ -211,23 +221,21 @@ Hayya Med Pro is a global healthcare SaaS. Every phase must balance speed-to-rev
 ### Deliverables
 
 **Platform Expansion**
-- Healthcare professional network (LinkedIn for healthcare)
+- Healthcare professional network (peer learning, specialty groups)
 - Job board integration (compliance score as hiring filter)
-- Employer verification badge system
-- Peer learning groups by specialty
-- Conference and events platform integration
+- Conference and events CME tracking
+- Sponsor/pharma CME funding platform
 
 **Data & Intelligence**
-- Anonymized workforce intelligence reports (sold to MoH, pharma, insurers)
+- Anonymized workforce intelligence (sold to MoH, pharma, insurers)
 - Predictive compliance risk scoring
-- Benchmarking (how does your compliance compare to peers in your country?)
+- Benchmarking (how does your compliance compare to peers in your specialty?)
 
 **Acquisition Readiness**
-- SOC 2 Type II certification
-- ISO 27001 certification
+- SOC 2 Type II certified
+- ISO 27001 certified
 - Investor-grade financial reporting
-- Clean cap table
-- Documented IP (country rules engine, AI models)
+- Clean cap table + documented IP (Country Rules Engine, AI models)
 - Multi-region GCP deployment (GCC + EU + Asia)
 
 ### Success Criteria
@@ -235,3 +243,7 @@ Hayya Med Pro is a global healthcare SaaS. Every phase must balance speed-to-rev
 - [ ] 500,000 registered professionals across 30+ countries
 - [ ] SOC 2 Type II certified
 - [ ] Strategic acquisition conversation or Series B
+
+---
+
+*Last updated: 2026-06-14 — Session 50. Phase 1 code complete. Pending: Paddle/Postmark approval, 32 migrations, Vertex AI Haiku activation, COMING_SOON=false deploy.*
