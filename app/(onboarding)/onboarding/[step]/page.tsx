@@ -9,16 +9,7 @@ import Step4Employer from "@/components/onboarding/Step4Employer";
 import Step5Cme from "@/components/onboarding/Step5Cme";
 import Step6Privacy from "@/components/onboarding/Step6Privacy";
 import Step7Activate from "@/components/onboarding/Step7Activate";
-
-const STEP_LABELS = [
-  "Account",
-  "Personal Info",
-  "Professional Info",
-  "Employer",
-  "CME Setup",
-  "Privacy",
-  "Activate",
-];
+import OnboardingProgress from "@/components/onboarding/OnboardingProgress";
 
 const STEP_COMPONENTS = [
   Step1Email,
@@ -90,26 +81,7 @@ export default async function OnboardingStepPage({
 
   return (
     <div>
-      {/* Progress bar */}
-      <div className="mb-6">
-        <div className="flex justify-between text-xs text-[#64748b] mb-2">
-          {STEP_LABELS.map((label, i) => (
-            <span
-              key={label}
-              className={i + 1 === stepNum ? "text-[#1a56a0] font-medium" : i + 1 < stepNum ? "text-[#16a34a]" : ""}
-            >
-              {i + 1 < stepNum ? "✓" : i + 1 === stepNum ? label : ""}
-            </span>
-          ))}
-        </div>
-        <div className="w-full bg-[#e2e8f0] rounded-full h-1.5">
-          <div
-            className="bg-[#1a56a0] h-1.5 rounded-full transition-all"
-            style={{ width: `${((stepNum - 1) / 6) * 100}%` }}
-          />
-        </div>
-        <p className="text-sm text-[#64748b] mt-2">Step {stepNum} of 7 — {STEP_LABELS[stepNum - 1]}</p>
-      </div>
+      <OnboardingProgress stepNum={stepNum} />
 
       <div className="bg-white rounded-xl shadow-sm border border-[#e2e8f0] p-8">
         {stepNum === 5 ? (
