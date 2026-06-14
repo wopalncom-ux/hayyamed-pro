@@ -5,30 +5,39 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const checks: Record<string, string> = {};
-  let healthy = true;
+  const critical: Record<string, string> = {};
+  const optional: Record<string, string> = {};
 
-  // DB connectivity check
+  // DB connectivity — critical: if this fails, platform is down
   try {
     const admin = createAdminClient();
     const { error } = await admin.from("professional_profiles").select("id").limit(1);
-    checks.database = error ? "error" : "ok";
-    if (error) healthy = false;
+    critical.database = error ? "error" : "ok";
   } catch {
-    checks.database = "error";
-    healthy = false;
+    critical.database = "error";
   }
 
-  // Required env vars present
-  checks.supabase_url = process.env.NEXT_PUBLIC_SUPABASE_URL ? "ok" : "missing";
-  checks.paddle = process.env.PADDLE_API_KEY ? "ok" : "missing";
-  checks.postmark = process.env.POSTMARK_API_TOKEN ? "ok" : "missing";
-  checks.anthropic = process.env.ANTHROPIC_API_KEY ? "ok" : "missing";
+  // Required env vars — critical: platform cannot function without these
+  critical.supabase_url = process.env.NEXT_PUBLIC_SUPABASE_URL ? "ok" : "missing";
 
-  if (Object.values(checks).some((v) => v !== "ok")) healthy = false;
+  // AI provider — Vertex AI via ADC (no API key needed on Cloud Run)
+  critical.vertex_ai = process.env.GOOGLE_CLOUD_PROJECT ? "ok" : "missing";
+
+  // Optional services — degraded if missing but not critical
+  optional.paddle   = process.env.PADDLE_API_KEY   ? "ok" : "missing";
+  optional.postmark = process.env.POSTMARK_API_TOKEN ? "ok" : "missing";
+  optional.cron     = process.env.CRON_SECRET       ? "ok" : "missing";
+  optional.push     = process.env.VAPID_PRIVATE_KEY  ? "ok" : "missing";
+
+  const healthy = Object.values(critical).every((v) => v === "ok");
 
   return NextResponse.json(
-    { status: healthy ? "ok" : "degraded", checks, ts: new Date().toISOString() },
-    { status: healthy ? 200 : 503 }
+    {
+      status: healthy ? "ok" : "degraded",
+      critical,
+      optional,
+      ts: new Date().toISOString(),
+    },
+    { status: healthy ? 200 : 503 },
   );
 }
