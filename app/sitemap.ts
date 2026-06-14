@@ -171,5 +171,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/blog/omsb-renewal-guide-oman-2026`,           lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/nhra-renewal-guide-bahrain-2026`,        lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/radiology-cpd-gcc-advanced`,             lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    // Blog posts — session 66
+    { url: `${BASE}/blog/general-surgeon-cme-gcc`,               lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/obgyn-cme-gcc`,                         lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/endocrinologist-cme-gcc`,               lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/gastroenterologist-cme-gcc`,            lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/anaesthesiologist-cme-gcc`,             lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
   ];
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import BlogList, { type BlogPost } from "@/components/blog/BlogList";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -7,16 +8,7 @@ export const metadata: Metadata = {
   title: "CME & CPD Guides for GCC Healthcare Professionals — Hayya Med Pro Blog",
   description:
     "In-depth guides on CME and CPD requirements for QCHP, SCFHS, DHA, and all GCC licensing authorities. Renewal guides, compliance tips, and healthcare workforce insights.",
-  keywords: [
-    "CME guide GCC",
-    "CPD requirements healthcare",
-    "QCHP renewal guide",
-    "SCFHS CME guide",
-    "healthcare compliance GCC",
-    "CME blog healthcare professionals",
-    "CPD tracker guide",
-    "GCC healthcare licensing",
-  ],
+  keywords: ["CME guide GCC", "CPD requirements healthcare", "QCHP renewal guide", "SCFHS CME guide", "healthcare compliance GCC", "CME blog healthcare professionals", "CPD tracker guide", "GCC healthcare licensing"],
   openGraph: {
     title: "CME & CPD Guides for GCC Healthcare Professionals",
     description: "In-depth guides on CME, CPD, and licensing requirements for QCHP, SCFHS, DHA, and all GCC health authorities.",
@@ -26,183 +18,86 @@ export const metadata: Metadata = {
   alternates: { canonical: `${APP_URL}/blog` },
 };
 
-const POSTS = [
-  {
-    slug: "cme-for-locum-doctors-gcc",
-    title: "CME Tracking for Locum & Agency Doctors in GCC 2026",
-    description: "Multi-license CME management for locum physicians — independent CPD strategies between postings, multi-authority compliance without employer support, and renewal deadline tracking for QCHP, SCFHS, and DHA simultaneously.",
-    publishedAt: "2026-06-14",
-    category: "guide",
-    readingMinutes: 9,
-    tag: "GCC · All Professions",
-  },
-  {
-    slug: "allied-health-cpd-requirements-gcc-2026",
-    title: "CPD Requirements for Allied Health Professionals in GCC 2026",
-    description: "CPD and CME requirements for physiotherapists, radiographers, occupational therapists, dietitians, medical lab scientists, and speech therapists in all 7 GCC countries — credit targets, profession-specific accreditors, and GCC clinical context.",
-    publishedAt: "2026-06-14",
-    category: "guide",
-    readingMinutes: 10,
-    tag: "GCC · All Professions",
-  },
-  {
-    slug: "dentist-cme-requirements-gcc-2026",
-    title: "CME & CPD Requirements for Dentists in GCC 2026",
-    description: "CPD and CME requirements for dentists in Qatar (QCHP), Saudi Arabia (SCFHS), Dubai (DHA), Abu Dhabi (DOH), Kuwait, Bahrain, and Oman — credit targets, ADA CERP and Royal College accreditors, specialty dental CPD.",
-    publishedAt: "2026-06-14",
-    category: "guide",
-    readingMinutes: 8,
-    tag: "GCC · All Professions",
-  },
-  {
-    slug: "cme-for-international-doctors-gcc",
-    title: "CME Requirements for International Doctors in GCC 2026",
-    description: "How home-country CME credits transfer in GCC, Dataflow verification explained, and what QCHP, SCFHS, and DHA require from internationally trained physicians.",
-    publishedAt: "2026-06-14",
-    category: "guide",
-    readingMinutes: 10,
-    tag: "GCC · All Authorities",
-  },
-  {
-    slug: "pharmacist-cme-requirements-gcc-2026",
-    title: "CME & CPD Requirements for Pharmacists in GCC 2026",
-    description: "Credit targets, accepted accreditors (ACPE, FIP, ASHP), and renewal guide for pharmacists licensed by QCHP, SCFHS, DHA, DOH, MOH Kuwait, NHRA, and OMSB.",
-    publishedAt: "2026-06-14",
-    category: "guide",
-    readingMinutes: 8,
-    tag: "GCC · All Professions",
-  },
-  {
-    slug: "nurse-cme-requirements-gcc-2026",
-    title: "CME & CPD Requirements for Nurses in GCC 2026",
-    description: "CPD and CME requirements for registered nurses in all 7 GCC countries — credit targets by authority, ANCC/RCN/ACCME-accredited sources, and specialty-specific CPD for ICU, oncology, and ED nurses.",
-    publishedAt: "2026-06-14",
-    category: "guide",
-    readingMinutes: 9,
-    tag: "GCC · All Professions",
-  },
-  {
-    slug: "best-cme-tracking-apps-gcc-2026",
-    title: "Best CME Tracking Apps for GCC Healthcare Professionals 2026",
-    description: "How to choose a CME or CPD tracker built for GCC licensing requirements — what features matter, what generic tools miss, and what purpose-built GCC CME software should include.",
-    publishedAt: "2026-06-14",
-    category: "guide",
-    readingMinutes: 8,
-    tag: "GCC · All Authorities",
-  },
-  {
-    slug: "what-happens-if-you-miss-cme-gcc",
-    title: "What Happens If You Miss Your CME Deadline in GCC?",
-    description: "Consequences of missing CME/CPD deadlines in Qatar, Saudi Arabia, Dubai, Abu Dhabi, Kuwait, Bahrain, and Oman — plus what to do right now if you are behind on credits.",
-    publishedAt: "2026-06-14",
-    category: "guide",
-    readingMinutes: 9,
-    tag: "GCC · All Authorities",
-  },
-  {
-    slug: "nhra-renewal-guide-2026",
-    title: "NHRA Bahrain License Renewal Guide 2026: CPD Requirements for Healthcare Professionals",
-    description: "Complete guide to NHRA Bahrain medical license renewal. 40 CPD credits per 2-year cycle, accepted accreditors, step-by-step renewal process, and what to do if you are behind.",
-    publishedAt: "2026-06-14",
-    category: "country",
-    readingMinutes: 8,
-    tag: "Bahrain · NHRA",
-  },
-  {
-    slug: "omsb-renewal-guide-2026",
-    title: "OMSB License Renewal Guide 2026: CME Requirements for Oman Healthcare Professionals",
-    description: "40 CME credits per 2-year cycle, accepted accreditors, step-by-step renewal process, and common mistakes to avoid for OMSB-licensed professionals in Oman.",
-    publishedAt: "2026-06-14",
-    category: "country",
-    readingMinutes: 8,
-    tag: "Oman · OMSB",
-  },
-  {
-    slug: "moh-kuwait-renewal-guide-2026",
-    title: "MOH Kuwait License Renewal Guide 2026: CME Requirements for Healthcare Professionals",
-    description: "30 CME credits per year on an annual renewal cycle — everything Kuwait-based healthcare professionals need to know about MOH Kuwait license renewal.",
-    publishedAt: "2026-06-14",
-    category: "country",
-    readingMinutes: 8,
-    tag: "Kuwait · MOH",
-  },
-  {
-    slug: "doh-renewal-guide-2026",
-    title: "DOH License Renewal Guide 2026: CPD Requirements for Abu Dhabi Healthcare Professionals",
-    description: "Complete guide to renewing your DOH license in Abu Dhabi. 30–50 CPD credits per 2-year cycle, how DOH differs from DHA, the Tasneef portal process, and common mistakes.",
-    publishedAt: "2026-06-14",
-    category: "country",
-    readingMinutes: 9,
-    tag: "UAE · DOH Abu Dhabi",
-  },
-  {
-    slug: "online-cme-recognition-gcc",
-    title: "Does Online CME Count in GCC? Authority-by-Authority Guide 2026",
-    description: "Online CME rules for every GCC licensing authority — percentage caps, which accreditors are recognized, which platforms to use, and what actually counts toward your license renewal.",
-    publishedAt: "2026-06-14",
-    category: "guide",
-    readingMinutes: 8,
-    tag: "GCC · All Authorities",
-  },
-  {
-    slug: "how-many-cme-credits-gcc",
-    title: "How Many CME Credits Do I Need? GCC Complete Guide 2026",
-    description: "Exact CME and CPD credit requirements for every GCC authority in 2026 — QCHP, SCFHS, DHA, DOH, MOH Kuwait, NHRA, and OMSB — compared in one place.",
-    publishedAt: "2026-06-13",
-    category: "guide",
-    readingMinutes: 7,
-    tag: "GCC · All Authorities",
-  },
-  {
-    slug: "dha-renewal-guide-2026",
-    title: "DHA License Renewal Guide 2026: CME Requirements for Dubai Healthcare Professionals",
-    description: "Complete guide to renewing your DHA healthcare license in Dubai. 40 CME credits per 2-year cycle, accepted accreditors, step-by-step renewal process, and common mistakes to avoid.",
-    publishedAt: "2026-06-12",
-    category: "country",
-    readingMinutes: 9,
-    tag: "UAE · DHA Dubai",
-  },
-  {
-    slug: "qchp-renewal-guide-2026",
-    title: "Complete QCHP License Renewal Guide 2026",
-    description: "Step-by-step guide to renewing your QCHP healthcare license in Qatar. 80 CPD requirements, accepted activities, submission timeline, and the most common mistakes that delay renewal.",
-    publishedAt: "2026-06-10",
-    category: "country",
-    readingMinutes: 8,
-    tag: "Qatar · QCHP",
-  },
-  {
-    slug: "scfhs-cme-requirements-2026",
-    title: "SCFHS CME Requirements 2026: Complete Guide",
-    description: "Everything healthcare professionals need to know about SCFHS CME in 2026. Credit hours by profession, accepted accreditors, category caps, and how to track your progress toward renewal.",
-    publishedAt: "2026-06-08",
-    category: "country",
-    readingMinutes: 10,
-    tag: "Saudi Arabia · SCFHS",
-  },
-  {
-    slug: "cme-vs-cpd-gcc",
-    title: "CME vs CPD in GCC: What Every Healthcare Professional Needs to Know",
-    description: "QCHP calls it CPD. SCFHS calls it CME. DHA says CME. DOH says CPD. A clear, practical guide to understanding the difference — and why it matters for your license renewal.",
-    publishedAt: "2026-06-05",
-    category: "guide",
-    readingMinutes: 6,
-    tag: "GCC · All Authorities",
-  },
+const POSTS: BlogPost[] = [
+  // ── Country / Authority guides ──
+  { slug: "qchp-renewal-guide-2026",            title: "Complete QCHP License Renewal Guide 2026",                                           description: "Step-by-step guide to renewing your QCHP healthcare license in Qatar. 80 CPD requirements, accepted activities, submission timeline, and the most common mistakes that delay renewal.",                                                                                                                                              publishedAt: "2026-06-10", category: "country",   readingMinutes: 8,  tag: "Qatar · QCHP" },
+  { slug: "scfhs-cme-requirements-2026",         title: "SCFHS CME Requirements 2026: Complete Guide",                                        description: "Everything healthcare professionals need to know about SCFHS CME in 2026. Credit hours by profession, accepted accreditors, category caps, and how to track your progress toward renewal.",                                                                                                                                                publishedAt: "2026-06-08", category: "country",   readingMinutes: 10, tag: "Saudi Arabia · SCFHS" },
+  { slug: "dha-renewal-guide-2026",              title: "DHA License Renewal Guide 2026: CME Requirements for Dubai Healthcare Professionals",  description: "Complete guide to renewing your DHA healthcare license in Dubai. 40 CME credits per 2-year cycle, accepted accreditors, step-by-step renewal process, and common mistakes to avoid.",                                                                                                                                              publishedAt: "2026-06-12", category: "country",   readingMinutes: 9,  tag: "UAE · DHA Dubai" },
+  { slug: "doh-renewal-guide-2026",              title: "DOH License Renewal Guide 2026: CPD Requirements for Abu Dhabi Healthcare Professionals", description: "Complete guide to renewing your DOH license in Abu Dhabi. 30–50 CPD credits per 2-year cycle, how DOH differs from DHA, the Tasneef portal process, and common mistakes.",                                                                                                                                          publishedAt: "2026-06-14", category: "country",   readingMinutes: 9,  tag: "UAE · DOH Abu Dhabi" },
+  { slug: "moh-kuwait-renewal-guide-2026",       title: "MOH Kuwait License Renewal Guide 2026: CME Requirements for Healthcare Professionals",  description: "30 CME credits per year on an annual renewal cycle — everything Kuwait-based healthcare professionals need to know about MOH Kuwait license renewal.",                                                                                                                                                              publishedAt: "2026-06-14", category: "country",   readingMinutes: 8,  tag: "Kuwait · MOH" },
+  { slug: "nhra-renewal-guide-2026",             title: "NHRA Bahrain License Renewal Guide 2026: CPD Requirements for Healthcare Professionals", description: "Complete guide to NHRA Bahrain medical license renewal. 40 CPD credits per 2-year cycle, accepted accreditors, step-by-step renewal process, and what to do if you are behind.",                                                                                                                                  publishedAt: "2026-06-14", category: "country",   readingMinutes: 8,  tag: "Bahrain · NHRA" },
+  { slug: "omsb-renewal-guide-2026",             title: "OMSB License Renewal Guide 2026: CME Requirements for Oman Healthcare Professionals",   description: "40 CME credits per 2-year cycle, accepted accreditors, step-by-step renewal process, and common mistakes to avoid for OMSB-licensed professionals in Oman.",                                                                                                                                                       publishedAt: "2026-06-14", category: "country",   readingMinutes: 8,  tag: "Oman · OMSB" },
+  { slug: "omsb-renewal-guide-oman-2026",        title: "OMSB License Renewal Guide Oman 2026 — Step-by-Step CME Submission Guide",             description: "Step-by-step guide to renewing your OMSB license in 2026: CME credit requirements, accepted accreditors, how to submit CME to the Oman Medical Specialty Board, common pitfalls, and multi-country license management.",                                                                                         publishedAt: "2026-06-15", category: "country",   readingMinutes: 7,  tag: "Oman · OMSB" },
+  { slug: "nhra-renewal-guide-bahrain-2026",     title: "NHRA License Renewal Guide Bahrain 2026 — CPD Requirements Deep Dive",                 description: "Complete guide to renewing your NHRA license in Bahrain in 2026: 40 CPD credits per 2-year cycle, accepted accreditors, the NHRA eServices renewal process, common rejection reasons, and how to manage Bahrain renewal alongside other GCC licenses.",                                                          publishedAt: "2026-06-15", category: "country",   readingMinutes: 7,  tag: "Bahrain · NHRA" },
+  { slug: "nhra-cpd-renewal-guide-bahrain",      title: "NHRA CPD Renewal Guide Bahrain — Healthcare Professionals Complete Guide",              description: "Complete guide to the NHRA CPD renewal process in Bahrain. What the National Health Regulatory Authority requires, how to submit CPD activities, and common mistakes.",                                                                                                                                           publishedAt: "2026-06-13", category: "country",   readingMinutes: 8,  tag: "Bahrain · NHRA" },
+  { slug: "omsb-cme-renewal-guide-2026",         title: "OMSB CME Renewal Guide 2026 — Oman Medical Specialty Board",                          description: "CME renewal guide for Oman Medical Specialty Board (OMSB) licensed professionals. Credit requirements, accepted accreditors, and how to navigate the OMSB renewal portal.",                                                                                                                                     publishedAt: "2026-06-13", category: "country",   readingMinutes: 8,  tag: "Oman · OMSB" },
+  { slug: "kuwait-moh-license-renewal-guide",    title: "Kuwait MOH License Renewal Guide — Complete CME Requirements",                         description: "Full guide to Kuwait Ministry of Health license renewal. Annual 30 CME credit requirement, accepted activities, and step-by-step process for healthcare professionals in Kuwait.",                                                                                                                              publishedAt: "2026-06-13", category: "country",   readingMinutes: 8,  tag: "Kuwait · MOH" },
+  { slug: "scfhs-mumaris-portal-guide",          title: "SCFHS Mumaris+ Portal Complete Guide 2026",                                           description: "Step-by-step guide to the SCFHS Mumaris+ portal: how to apply, track CME, manage your license, submit activities, and understand the SCFHS professional classification system.",                                                                                                                              publishedAt: "2026-06-14", category: "country",   readingMinutes: 8,  tag: "Saudi Arabia · SCFHS" },
+  { slug: "scfhs-eligibility-requirements-expats", title: "SCFHS Eligibility Requirements for Expatriate Healthcare Professionals 2026",        description: "How to qualify for Saudi Commission for Health Specialties (SCFHS) licensing as an expatriate physician, nurse, pharmacist, or allied health professional. Qualification assessment, Dataflow, and Mumaris+ steps.",                                                                                       publishedAt: "2026-06-13", category: "country",   readingMinutes: 8,  tag: "Saudi Arabia · SCFHS" },
+  { slug: "haad-to-dha-license-transfer",        title: "HAAD to DHA License Transfer Guide — Abu Dhabi to Dubai",                             description: "How to transfer your healthcare license from Abu Dhabi (DOH, formerly HAAD) to Dubai (DHA). Step-by-step process, fees, required documents, and typical timelines for the inter-emirate transfer.",                                                                                                         publishedAt: "2026-06-13", category: "country",   readingMinutes: 7,  tag: "UAE · DHA / DOH" },
+  { slug: "india-mbbs-licensing-gcc-2026",       title: "India MBBS Licensing in GCC 2026 — How to Get Your GCC Medical License",              description: "How Indian MBBS graduates and doctors get licensed in Qatar, UAE, Saudi Arabia, and other GCC countries. Dataflow verification, QCHP process, DHA/DOH Prometric, and SCFHS classification.",                                                                                                           publishedAt: "2026-06-13", category: "country",   readingMinutes: 9,  tag: "GCC · Expatriate Doctors" },
+  { slug: "india-nmc-cme-requirements-gcc-2026", title: "India NMC CME Requirements and GCC Recognition 2026",                                 description: "How Indian NMC CME credits transfer in GCC countries, what Indian doctors need for QCHP, SCFHS, and DHA renewal, and how to bridge Indian training with GCC licensing requirements.",                                                                                                                      publishedAt: "2026-06-13", category: "country",   readingMinutes: 8,  tag: "India · NMC / GCC" },
+  { slug: "pakistan-pmc-cpd-requirements-2026",  title: "Pakistan PMC CPD Requirements 2026 and GCC Recognition",                              description: "Pakistan Medical Commission CPD requirements and how they relate to GCC licensing. What Pakistani doctors need for QCHP, DHA, and SCFHS renewal alongside PMC registration.",                                                                                                                             publishedAt: "2026-06-13", category: "country",   readingMinutes: 7,  tag: "Pakistan · PMC / GCC" },
+  { slug: "ahpra-cpd-requirements-2026",         title: "AHPRA CPD Requirements 2026 — Australian Healthcare Professionals in GCC",            description: "How AHPRA CPD requirements interact with GCC licensing. What Australian-registered healthcare professionals need for QCHP, DHA, and SCFHS renewal, and how to manage dual Australian-GCC registration.",                                                                                                   publishedAt: "2026-06-13", category: "country",   readingMinutes: 7,  tag: "Australia · AHPRA / GCC" },
+
+  // ── Profession-wide guides ──
+  { slug: "nurse-cme-requirements-gcc-2026",          title: "CME & CPD Requirements for Nurses in GCC 2026",                                      description: "CPD and CME requirements for registered nurses in all 7 GCC countries — credit targets by authority, ANCC/RCN/ACCME-accredited sources, and specialty-specific CPD for ICU, oncology, and ED nurses.",                                                                                                                          publishedAt: "2026-06-14", category: "profession", readingMinutes: 9,  tag: "GCC · Nursing" },
+  { slug: "pharmacist-cme-requirements-gcc-2026",     title: "CME & CPD Requirements for Pharmacists in GCC 2026",                                  description: "Credit targets, accepted accreditors (ACPE, FIP, ASHP), and renewal guide for pharmacists licensed by QCHP, SCFHS, DHA, DOH, MOH Kuwait, NHRA, and OMSB.",                                                                                                                                                    publishedAt: "2026-06-14", category: "profession", readingMinutes: 8,  tag: "GCC · Pharmacy" },
+  { slug: "dentist-cme-requirements-gcc-2026",        title: "CME & CPD Requirements for Dentists in GCC 2026",                                     description: "CPD and CME requirements for dentists in Qatar (QCHP), Saudi Arabia (SCFHS), Dubai (DHA), Abu Dhabi (DOH), Kuwait, Bahrain, and Oman — credit targets, ADA CERP and Royal College accreditors, specialty dental CPD.",                                                                                                publishedAt: "2026-06-14", category: "profession", readingMinutes: 8,  tag: "GCC · Dentistry" },
+  { slug: "allied-health-cpd-requirements-gcc-2026",  title: "CPD Requirements for Allied Health Professionals in GCC 2026",                        description: "CPD and CME requirements for physiotherapists, radiographers, occupational therapists, dietitians, medical lab scientists, and speech therapists in all 7 GCC countries.",                                                                                                                                   publishedAt: "2026-06-14", category: "profession", readingMinutes: 10, tag: "GCC · Allied Health" },
+  { slug: "kuwait-nursing-cpd-requirements",          title: "Kuwait Nursing CPD Requirements — MOH Kuwait Nursing License Renewal Guide",           description: "CPD requirements for registered nurses licensed by Kuwait Ministry of Health. Annual 30 CME credit cycle, BLS/ACLS requirements, ANCC-accredited nursing CE sources, and step-by-step renewal.",                                                                                                           publishedAt: "2026-06-13", category: "profession", readingMinutes: 7,  tag: "Kuwait · Nursing" },
+  { slug: "oman-pharmacist-cme-requirements",         title: "Oman Pharmacist CME Requirements — OMSB Pharmacy License Renewal",                    description: "CME requirements for pharmacists licensed by the Oman Medical Specialty Board (OMSB). 40 CME credits per 2-year cycle, ACPE-accredited sources, and pharmacy-specific CPD topics for GCC pharmacists.",                                                                                                        publishedAt: "2026-06-13", category: "profession", readingMinutes: 7,  tag: "Oman · Pharmacy" },
+  { slug: "dental-hygienist-cme-gcc",                 title: "Dental Hygienist CME Requirements in GCC 2026",                                       description: "CME and CPD requirements for dental hygienists and dental therapists in GCC countries. Per-authority credit targets, accepted accreditors, and dental hygiene-specific CPD topics.",                                                                                                                                        publishedAt: "2026-06-13", category: "profession", readingMinutes: 6,  tag: "GCC · Dental Hygiene" },
+  { slug: "midwifery-cpd-requirements-gcc",           title: "Midwifery CPD Requirements in GCC 2026 — QCHP, DHA, SCFHS Guide",                    description: "CPD requirements for midwives in Qatar, UAE, Saudi Arabia, and other GCC countries. How to meet QCHP and DHA midwifery registration renewal requirements and which CPD activities count.",                                                                                                              publishedAt: "2026-06-13", category: "profession", readingMinutes: 7,  tag: "GCC · Midwifery" },
+  { slug: "paediatric-nurse-cpd-gcc",                 title: "Paediatric Nurse CPD Requirements in the GCC 2026 — QCHP, DHA, SCFHS Guide",         description: "CPD requirements for paediatric and children's nurses in Qatar, UAE, Saudi Arabia, Kuwait, Bahrain, and Oman: mandatory PALS/BLS certifications, neonatal and PICU nursing CPD, and best online CPD resources for paediatric nurses in the GCC.",                                              publishedAt: "2026-06-15", category: "profession", readingMinutes: 7,  tag: "GCC · Paediatric Nursing" },
+  { slug: "physician-vs-nurse-cme-requirements-gcc",  title: "Physician vs Nurse CME Requirements in GCC — Key Differences Explained",              description: "How CME and CPD requirements differ for physicians versus nurses across GCC countries. Credit targets, accepted activities, and how to manage renewal as a dual-registered professional.",                                                                                                                  publishedAt: "2026-06-13", category: "profession", readingMinutes: 7,  tag: "GCC · All Professions" },
+  { slug: "icu-nurse-cme-gcc",                        title: "ICU Nurse CME & CPD Requirements GCC 2026",                                           description: "CME and CPD requirements for intensive care and critical care nurses in GCC countries. CCRN and ACLS certification, AACN-accredited CE, and ICU-specific CPD topics for GCC nurses.",                                                                                                                             publishedAt: "2026-06-14", category: "profession", readingMinutes: 7,  tag: "GCC · Critical Care Nursing" },
+
+  // ── Specialty CME guides ──
+  { slug: "ophthalmologist-cme-requirements-gcc",  title: "Ophthalmologist CME Requirements in GCC — QCHP, DHA, SCFHS Guide",                 description: "CME requirements for ophthalmologists in GCC countries. Credit targets by authority, ophthalmic subspecialty CPD, AAO and ESCRS conference credits, and FRCOphth recognition.",                                                                                                                                publishedAt: "2026-06-13", category: "specialty",  readingMinutes: 8,  tag: "GCC · Ophthalmology" },
+  { slug: "ophthalmologist-cme-gcc-guide",         title: "Ophthalmologist CME GCC 2026 — QCHP, DHA, SCFHS Deep Guide",                       description: "Advanced CME guide for GCC ophthalmologists: vitreoretinal surgery, glaucoma MIGS, cornea DMEK, paediatric ophthalmology, AAO and ESCRS conference CME, FRCOphth and ABOphth recognition.",                                                                                                                    publishedAt: "2026-06-15", category: "specialty",  readingMinutes: 9,  tag: "GCC · Ophthalmology" },
+  { slug: "radiology-cme-requirements-gcc",        title: "Radiology CME Requirements in GCC 2026 — Diagnostic Radiology CPD Guide",           description: "CME requirements for radiologists in GCC countries. Credit targets, RSNA and ECR conference CME, FRCR recognition, and key CPD topics for diagnostic and interventional radiologists.",                                                                                                                    publishedAt: "2026-06-13", category: "specialty",  readingMinutes: 8,  tag: "GCC · Radiology" },
+  { slug: "radiology-cpd-gcc-advanced",            title: "Radiology CPD GCC 2026 — Diagnostic and Interventional Radiology Advanced Guide",  description: "Advanced CPD guide for GCC radiologists: AI in radiology, interventional radiology, neuroradiology, breast imaging, nuclear medicine/PSMA PET. RSNA/ECR/CIRSE conference CME and FRCR/ABR recognition.",                                                                                            publishedAt: "2026-06-15", category: "specialty",  readingMinutes: 9,  tag: "GCC · Radiology" },
+  { slug: "psychiatry-cpd-requirements-gcc",       title: "Psychiatry CPD Requirements in GCC 2026 — Mental Health CME Guide",                description: "CPD and CME requirements for psychiatrists in GCC countries. Credit targets, psychiatric subspecialty CPD, MRCPsych and Arab Board recognition, and GCC mental health landscape.",                                                                                                                           publishedAt: "2026-06-13", category: "specialty",  readingMinutes: 7,  tag: "GCC · Psychiatry" },
+  { slug: "emergency-medicine-cme-gcc",            title: "Emergency Medicine CME Requirements in GCC 2026 — QCHP, DHA, SCFHS EM Guide",     description: "CME requirements for emergency medicine physicians in GCC countries. Credit targets, FCEM/FRCEM and ABEM recognition, ACEP conference CME, and critical emergency medicine CPD topics for GCC EDs.",                                                                                                      publishedAt: "2026-06-14", category: "specialty",  readingMinutes: 8,  tag: "GCC · Emergency Medicine" },
+  { slug: "cardiothoracic-surgery-cpd-gcc",        title: "Cardiothoracic Surgery CPD Requirements in GCC 2026",                               description: "CPD requirements for cardiothoracic surgeons in GCC countries. Credit targets, structural heart disease updates, FRCS(CTh) and American Board of Thoracic Surgery recognition, and best CT surgery conferences.",                                                                                                           publishedAt: "2026-06-14", category: "specialty",  readingMinutes: 8,  tag: "GCC · Cardiothoracic Surgery" },
+  { slug: "dermatologist-cme-gcc",                 title: "Dermatologist CME Requirements in GCC 2026 — QCHP, DHA, SCFHS Guide",              description: "CME requirements for dermatologists in GCC countries. Credit targets, aesthetic and medical dermatology CPD, FRCP(Derm) and ABD recognition, and key conferences for GCC dermatology CME.",                                                                                                               publishedAt: "2026-06-14", category: "specialty",  readingMinutes: 7,  tag: "GCC · Dermatology" },
+  { slug: "physiotherapist-cpd-gcc",               title: "Physiotherapist CPD Requirements in GCC 2026 — QCHP, DHA, SCFHS Guide",            description: "CPD requirements for physiotherapists in GCC countries. Credit targets, musculoskeletal and neurological rehabilitation CPD, ACPT and MCSP recognition, and best physiotherapy CPD resources.",                                                                                                           publishedAt: "2026-06-14", category: "specialty",  readingMinutes: 7,  tag: "GCC · Physiotherapy" },
+  { slug: "aviation-medicine-cme-gcc",             title: "Aviation Medicine CME Requirements in GCC 2026",                                    description: "CME requirements for aviation medicine physicians and civil aviation medical examiners (AME) in GCC countries. ICAO standards, CAA requirements, and specialty aviation medicine CPD.",                                                                                                                              publishedAt: "2026-06-14", category: "specialty",  readingMinutes: 6,  tag: "GCC · Aviation Medicine" },
+  { slug: "hospital-pharmacy-cpd-gcc",             title: "Hospital Pharmacist CPD Requirements in GCC 2026",                                  description: "CPD and CME requirements for hospital and clinical pharmacists in GCC countries. Credit targets, clinical pharmacy subspecialty CPD (oncology, critical care, cardiology), ACPE-accredited CE.",                                                                                                            publishedAt: "2026-06-14", category: "specialty",  readingMinutes: 7,  tag: "GCC · Hospital Pharmacy" },
+  { slug: "general-surgeon-cme-gcc",              title: "General Surgeon CME Requirements in the GCC 2026 — QCHP, SCFHS, DHA Guide",        description: "CME guide for general surgeons in GCC countries: credit requirements, laparoscopic and robotic surgery CPD, bariatric and oncologic surgery updates, ACS conference CME, FRCS and ABS board recognition.",                                                                                              publishedAt: "2026-06-15", category: "specialty",  readingMinutes: 8,  tag: "GCC · General Surgery" },
+  { slug: "obgyn-cme-gcc",                        title: "OB/GYN CME Requirements in the GCC 2026 — QCHP, SCFHS, DHA Obstetrics Guide",     description: "CME guide for obstetricians and gynaecologists in GCC: per-authority credit requirements, high-risk obstetrics, IVF and reproductive endocrinology, laparoscopic gynaecology, MRCOG and ABOG recognition.",                                                                                                publishedAt: "2026-06-15", category: "specialty",  readingMinutes: 8,  tag: "GCC · OB/GYN" },
+  { slug: "endocrinologist-cme-gcc",              title: "Endocrinologist CME Requirements in the GCC 2026 — Diabetes and Metabolic Medicine", description: "CME guide for GCC endocrinologists: type 2 diabetes (GLP-1, SGLT2, CGM), thyroid disease, obesity medicine, adrenal disease. ENDO, EASD, ADA conference CME and MRCP/ABIM recognition.",                                                                                                          publishedAt: "2026-06-15", category: "specialty",  readingMinutes: 8,  tag: "GCC · Endocrinology" },
+  { slug: "gastroenterologist-cme-gcc",           title: "Gastroenterologist CME Requirements in the GCC 2026 — GI and Hepatology Guide",     description: "CME guide for GCC gastroenterologists: MASLD/MASH hepatology, viral hepatitis, advanced endoscopy (ERCP/EUS/ESD), IBD biologics, colorectal cancer screening. DDW, UEG Week, EASL conference CME.",                                                                                              publishedAt: "2026-06-15", category: "specialty",  readingMinutes: 8,  tag: "GCC · Gastroenterology" },
+  { slug: "anaesthesiologist-cme-gcc",            title: "Anaesthesiologist CME Requirements in the GCC 2026 — QCHP, SCFHS, DHA Guide",      description: "CME guide for GCC anaesthesiologists: regional anaesthesia and ultrasound-guided nerve blocks, ERAS protocols, perioperative medicine, cardiac anaesthesia. ASA and Euroanaesthesia conference CME, FRCA and ABA recognition.",                                                                       publishedAt: "2026-06-15", category: "specialty",  readingMinutes: 8,  tag: "GCC · Anaesthesiology" },
+
+  // ── General GCC-wide guides ──
+  { slug: "cme-vs-cpd-gcc",                        title: "CME vs CPD in GCC: What Every Healthcare Professional Needs to Know",                description: "QCHP calls it CPD. SCFHS calls it CME. DHA says CME. DOH says CPD. A clear, practical guide to understanding the difference — and why it matters for your license renewal.",                                                                                                                                               publishedAt: "2026-06-05", category: "guide",      readingMinutes: 6,  tag: "GCC · All Authorities" },
+  { slug: "how-many-cme-credits-gcc",               title: "How Many CME Credits Do I Need? GCC Complete Guide 2026",                           description: "Exact CME and CPD credit requirements for every GCC authority in 2026 — QCHP, SCFHS, DHA, DOH, MOH Kuwait, NHRA, and OMSB — compared in one place.",                                                                                                                                                            publishedAt: "2026-06-13", category: "guide",      readingMinutes: 7,  tag: "GCC · All Authorities" },
+  { slug: "online-cme-recognition-gcc",             title: "Does Online CME Count in GCC? Authority-by-Authority Guide 2026",                   description: "Online CME rules for every GCC licensing authority — percentage caps, which accreditors are recognized, which platforms to use, and what actually counts toward your license renewal.",                                                                                                                           publishedAt: "2026-06-14", category: "guide",      readingMinutes: 8,  tag: "GCC · All Authorities" },
+  { slug: "best-cme-tracking-apps-gcc-2026",        title: "Best CME Tracking Apps for GCC Healthcare Professionals 2026",                      description: "How to choose a CME or CPD tracker built for GCC licensing requirements — what features matter, what generic tools miss, and what purpose-built GCC CME software should include.",                                                                                                                             publishedAt: "2026-06-14", category: "guide",      readingMinutes: 8,  tag: "GCC · All Authorities" },
+  { slug: "what-happens-if-you-miss-cme-gcc",       title: "What Happens If You Miss Your CME Deadline in GCC?",                               description: "Consequences of missing CME/CPD deadlines in Qatar, Saudi Arabia, Dubai, Abu Dhabi, Kuwait, Bahrain, and Oman — plus what to do right now if you are behind on credits.",                                                                                                                                       publishedAt: "2026-06-14", category: "guide",      readingMinutes: 9,  tag: "GCC · All Authorities" },
+  { slug: "cme-for-locum-doctors-gcc",              title: "CME Tracking for Locum & Agency Doctors in GCC 2026",                              description: "Multi-license CME management for locum physicians — independent CPD strategies between postings, multi-authority compliance without employer support, and renewal deadline tracking for QCHP, SCFHS, and DHA simultaneously.",                                                                                publishedAt: "2026-06-14", category: "guide",      readingMinutes: 9,  tag: "GCC · All Professions" },
+  { slug: "cme-for-international-doctors-gcc",      title: "CME Requirements for International Doctors in GCC 2026",                           description: "How home-country CME credits transfer in GCC, Dataflow verification explained, and what QCHP, SCFHS, and DHA require from internationally trained physicians.",                                                                                                                                               publishedAt: "2026-06-14", category: "guide",      readingMinutes: 10, tag: "GCC · All Authorities" },
+  { slug: "conference-cme-credits-how-it-works",    title: "How Conference CME Credits Work in GCC — Complete Guide 2026",                     description: "How to claim CME credits from international and regional medical conferences in GCC countries. EACCME, AMA PRA Category 1, and accreditor recognition explained authority by authority.",                                                                                                                        publishedAt: "2026-06-13", category: "guide",      readingMinutes: 7,  tag: "GCC · All Authorities" },
+  { slug: "online-vs-inperson-cme-gcc",             title: "Online vs In-Person CME in GCC: Which Is Better for Your Renewal?",                description: "Comparing online and in-person CME for GCC license renewal. Which authorities cap online credits, when in-person attendance is required, and how to build a balanced CME portfolio.",                                                                                                                         publishedAt: "2026-06-13", category: "guide",      readingMinutes: 6,  tag: "GCC · All Authorities" },
+  { slug: "do-cme-credits-expire-gcc",              title: "Do CME Credits Expire in GCC? What Happens to Unused Credits",                     description: "Whether unused CME or CPD credits can be carried forward between renewal cycles in Qatar, Saudi Arabia, UAE, Kuwait, Bahrain, and Oman. Carryover rules, expiry, and how to maximise your credits.",                                                                                                     publishedAt: "2026-06-13", category: "guide",      readingMinutes: 6,  tag: "GCC · All Authorities" },
+  { slug: "cme-compliance-career-break-gcc",        title: "CME Compliance During Career Breaks in GCC — Maternity Leave, Sick Leave, Study",  description: "How to manage CME compliance during extended leave in GCC countries. Maternity leave, sick leave, study sabbaticals, and career breaks — what each authority allows, requires, or waives for healthcare professionals on extended leave.",                                                                    publishedAt: "2026-06-13", category: "guide",      readingMinutes: 7,  tag: "GCC · All Authorities" },
+  { slug: "managing-multiple-gcc-medical-licenses", title: "How to Manage Multiple GCC Medical Licenses — CME Across Authorities",             description: "Strategy guide for healthcare professionals licensed in multiple GCC countries simultaneously. How to track CME across QCHP, SCFHS, DHA, and other authorities using the same certificates, different portals.",                                                                                                  publishedAt: "2026-06-13", category: "guide",      readingMinutes: 8,  tag: "GCC · All Authorities" },
+  { slug: "dataflow-verification-guide-gcc",        title: "Dataflow Verification Guide for GCC Healthcare Licensing 2026",                    description: "Complete guide to the Dataflow primary source verification process required for GCC medical licensing. What it verifies, how long it takes, which GCC authorities require it, and how to avoid delays.",                                                                                                    publishedAt: "2026-06-13", category: "guide",      readingMinutes: 8,  tag: "GCC · All Authorities" },
+  { slug: "specialty-board-recognition-gcc",        title: "Specialty Board Recognition in GCC — Which Qualifications Are Accepted 2026",      description: "Which specialist qualifications (MRCP, FRCS, ABIM, Arab Board, German Board) are recognised by QCHP, SCFHS, DHA, and other GCC authorities for specialist licensing.",                                                                                                                                      publishedAt: "2026-06-13", category: "guide",      readingMinutes: 8,  tag: "GCC · All Authorities" },
+  { slug: "nursing-cpd-uk-vs-gcc",                  title: "UK NMC CPD vs GCC Nursing CPD — How They Compare",                                 description: "Comparing UK NMC revalidation CPD requirements with GCC nursing license renewal requirements. How UK-trained nurses can prepare for GCC licensing and what CPD hours transfer.",                                                                                                                                        publishedAt: "2026-06-13", category: "guide",      readingMinutes: 7,  tag: "GCC · Nursing" },
+  { slug: "how-to-read-cme-certificate-gcc",        title: "How to Read a CME Certificate for GCC License Renewal",                           description: "How to check if a CME certificate is valid for GCC license renewal. What accreditors to look for, how to count credits, and what to do if your certificate is missing required information.",                                                                                                                    publishedAt: "2026-06-13", category: "guide",      readingMinutes: 5,  tag: "GCC · All Authorities" },
+  { slug: "cme-portfolio-best-practices-gcc",       title: "CME Portfolio Best Practices for GCC Healthcare Professionals",                    description: "How to organise and maintain your CME portfolio for GCC license renewal. File management, certificate scanning, activity categorisation, and digital CME tracking strategies.",                                                                                                                       publishedAt: "2026-06-13", category: "guide",      readingMinutes: 6,  tag: "GCC · All Authorities" },
+  { slug: "saudi-vision-2030-healthcare-cme",       title: "Saudi Vision 2030 and Healthcare CME — What it Means for SCFHS Requirements",     description: "How Saudi Vision 2030 is reshaping SCFHS CME requirements and healthcare professional development in Saudi Arabia. Digital health, preventive care, and workforce nationalisation implications for CME.",                                                                                                publishedAt: "2026-06-13", category: "guide",      readingMinutes: 7,  tag: "Saudi Arabia · SCFHS" },
+
+  // ── Arabic content ──
+  { slug: "qchp-renewal-arabic",       title: "دليل تجديد ترخيص QCHP 2026 — كل ما يحتاجه المهني الصحي في قطر",  description: "دليل شامل لتجديد رخصة مزاولة المهنة الصحية في قطر (QCHP). متطلبات نقاط التطوير المهني المستمر، الأنشطة المقبولة، والجدول الزمني لعملية التجديد.",    publishedAt: "2026-06-13", category: "arabic", readingMinutes: 7, tag: "قطر · QCHP" },
+  { slug: "dha-cpd-arabic",            title: "دليل تجديد رخصة DHA دبي 2026 — متطلبات التطوير المهني المستمر",  description: "كل ما يحتاجه المهنيون الصحيون لتجديد رخصتهم من دائرة الصحة دبي. 40 ساعة تطوير مهني مستمر، المزودون المعتمدون، وخطوات التجديد.",              publishedAt: "2026-06-13", category: "arabic", readingMinutes: 6, tag: "الإمارات · DHA" },
+  { slug: "scfhs-cme-arabic",          title: "متطلبات التعليم الطبي المستمر SCFHS 2026 — دليل المهنيين الصحيين", description: "متطلبات التعليم الطبي المستمر للهيئة السعودية للتخصصات الصحية. عدد الساعات المطلوبة، الجهات المعتمدة، وكيفية التقديم عبر بوابة ممارس.",     publishedAt: "2026-06-13", category: "arabic", readingMinutes: 7, tag: "السعودية · SCFHS" },
+  { slug: "gcc-cme-comparison-arabic", title: "مقارنة متطلبات التعليم الطبي المستمر في دول الخليج 2026",         description: "مقارنة شاملة لمتطلبات التعليم الطبي المستمر في قطر والسعودية والإمارات والكويت والبحرين وعمان. الساعات المطلوبة، دورات التجديد، والجهات المختصة.", publishedAt: "2026-06-13", category: "arabic", readingMinutes: 6, tag: "الخليج · جميع الجهات" },
+  { slug: "cme-tracking-tips-arabic",  title: "نصائح لتتبع ساعات التعليم الطبي المستمر — دليل المهنيين الصحيين", description: "كيفية تتبع ساعات التعليم الطبي المستمر وتنظيم شهادات الحضور للتجديد في دول الخليج. أفضل الممارسات وأدوات التتبع الرقمية.",                      publishedAt: "2026-06-13", category: "arabic", readingMinutes: 5, tag: "الخليج · جميع الجهات" },
 ];
-
-const CATEGORY_STYLES: Record<string, string> = {
-  guide:   "bg-[#eff6ff] text-[#1e40af]",
-  country: "bg-[#f0fdf4] text-[#166534]",
-};
-const CATEGORY_LABELS: Record<string, string> = {
-  guide:   "Guide",
-  country: "Country Guide",
-};
-
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
-}
 
 export default function BlogIndexPage() {
   return (
@@ -223,26 +118,7 @@ export default function BlogIndexPage() {
           <p className="text-lg text-[#64748b]">In-depth guides on CME, CPD, and licensing requirements for GCC healthcare professionals.</p>
         </div>
 
-        <div className="space-y-5">
-          {POSTS.map(post => (
-            <Link key={post.slug} href={`/blog/${post.slug}`} className="block bg-white rounded-2xl border border-[#e2e8f0] p-6 hover:border-[#1a56a0] hover:shadow-sm transition-all group">
-              <div className="flex items-center gap-2.5 mb-3">
-                <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${CATEGORY_STYLES[post.category] ?? CATEGORY_STYLES.guide}`}>
-                  {CATEGORY_LABELS[post.category] ?? "Article"}
-                </span>
-                <span className="text-xs text-[#94a3b8]">{post.tag}</span>
-                <span className="text-xs text-[#94a3b8]">·</span>
-                <span className="text-xs text-[#94a3b8]">{post.readingMinutes} min read</span>
-              </div>
-              <h2 className="text-lg font-bold text-[#111] mb-2 group-hover:text-[#1a56a0] transition-colors leading-snug">{post.title}</h2>
-              <p className="text-sm text-[#64748b] leading-relaxed mb-3">{post.description}</p>
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-[#94a3b8]">{formatDate(post.publishedAt)}</span>
-                <span className="text-xs font-semibold text-[#1a56a0] group-hover:underline">Read article →</span>
-              </div>
-            </Link>
-          ))}
-        </div>
+        <BlogList posts={POSTS} />
 
         <div className="mt-12 bg-[#0f1f3d] rounded-2xl px-8 py-10 text-center">
           <h2 className="text-xl font-bold text-white mb-3">Track your CME while you read</h2>
