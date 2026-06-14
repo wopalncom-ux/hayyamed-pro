@@ -159,5 +159,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/blog/ophthalmologist-cme-requirements-gcc`,    lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/radiology-cme-requirements-gcc`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/psychiatry-cpd-requirements-gcc`,         lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    // Blog posts — session 64
+    { url: `${BASE}/blog/dermatologist-cme-gcc`,                  lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/cardiothoracic-surgery-cpd-gcc`,         lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/physiotherapist-cpd-gcc`,                lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/icu-nurse-cme-gcc`,                      lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/scfhs-mumaris-portal-guide`,             lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
   ];
 }
