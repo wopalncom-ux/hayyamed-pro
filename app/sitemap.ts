@@ -177,5 +177,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/blog/endocrinologist-cme-gcc`,               lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/gastroenterologist-cme-gcc`,            lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/anaesthesiologist-cme-gcc`,             lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/cardiologist-cme-gcc`,                 lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/nephrologist-cme-gcc`,                 lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/orthopaedic-surgeon-cme-gcc`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/critical-care-physician-cme-gcc`,      lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/infectious-disease-cme-gcc`,           lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
   ];
 }
