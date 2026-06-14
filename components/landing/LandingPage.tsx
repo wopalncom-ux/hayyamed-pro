@@ -550,9 +550,9 @@ function Hero() {
         </motion.p>
 
         {/* Authority pills */}
-        <div className="flex flex-wrap justify-center gap-x-5 gap-y-1 mb-10">
+        <div className="flex flex-wrap justify-center gap-x-5 gap-y-1.5 mb-10">
           {AUTHORITIES.map((auth) => (
-            <span key={auth} className="text-[11px] font-semibold text-white/22 tracking-widest uppercase">
+            <span key={auth} className="text-[11px] font-semibold text-white/40 tracking-widest uppercase">
               {auth}
             </span>
           ))}
@@ -635,6 +635,106 @@ function Hero() {
           </div>
         </div>
       </motion.div>
+    </section>
+  );
+}
+
+// ── Trust Signals ────────────────────────────────────────────────────────────
+const TRUST_AUTHORITIES = [
+  { flag: "🇶🇦", abbr: "QCHP", country: "Qatar", href: "/qchp" },
+  { flag: "🇸🇦", abbr: "SCFHS", country: "Saudi Arabia", href: "/scfhs" },
+  { flag: "🇦🇪", abbr: "DHA", country: "Dubai", href: "/dha" },
+  { flag: "🇦🇪", abbr: "DOH", country: "Abu Dhabi", href: "/doh" },
+  { flag: "🇰🇼", abbr: "MOH", country: "Kuwait", href: "/moh-kuwait" },
+  { flag: "🇧🇭", abbr: "NHRA", country: "Bahrain", href: "/nhra" },
+  { flag: "🇴🇲", abbr: "OMSB", country: "Oman", href: "/omsb" },
+];
+
+const TRUST_ITEMS = [
+  {
+    label: "Qatar PDPL compliant",
+    icon: (
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+    ),
+  },
+  {
+    label: "Data hosted in Doha, Qatar",
+    icon: (
+      <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 0 1-3-3m3 3a3 3 0 1 0 0 6h13.5a3 3 0 1 0 0-6m-16.5-3a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3m-19.5 0a4.5 4.5 0 0 1 .9-2.7L5.737 5.1a3.375 3.375 0 0 1 2.7-1.35h7.126c1.062 0 2.062.5 2.7 1.35l2.587 3.45a4.5 4.5 0 0 1 .9 2.7m0 0a3 3 0 0 1-3 3m0 3h.008v.008h-.008v-.008Zm0-6h.008v.008h-.008v-.008Zm-3 6h.008v.008h-.008v-.008Zm0-6h.008v.008h-.008v-.008Z" />
+    ),
+  },
+  {
+    label: "Powered by Claude AI",
+    icon: (
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z" />
+    ),
+  },
+  {
+    label: "14-day Pro trial · No card",
+    icon: (
+      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
+    ),
+  },
+];
+
+function TrustSignals() {
+  const reduced = useReducedMotion();
+
+  return (
+    <section
+      aria-label="Supported licensing authorities and platform trust signals"
+      className="bg-white border-b border-[#e2e8f0] px-6 py-10"
+    >
+      <div className="max-w-5xl mx-auto">
+        <FadeUp>
+          <p className="text-center text-[11px] font-semibold text-[#94a3b8] uppercase tracking-[0.18em] mb-7">
+            CME rules sourced directly from all 7 GCC licensing authorities
+          </p>
+
+          {/* Authority chips */}
+          <div className="flex flex-wrap justify-center gap-2.5 mb-8">
+            {TRUST_AUTHORITIES.map(({ flag, abbr, country, href }, i) => (
+              <motion.div
+                key={abbr}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: i * 0.055, ease: "easeOut" }}
+              >
+                <Link
+                  href={href}
+                  className="flex items-center gap-2 border border-[#e2e8f0] bg-[#f8fafc] hover:bg-white hover:border-[#1a56a0]/30 hover:shadow-sm transition-all rounded-full px-4 py-2"
+                >
+                  <span className="text-sm leading-none" aria-hidden="true">{flag}</span>
+                  <span className="text-xs font-bold text-[#1a56a0]">{abbr}</span>
+                  <span className="text-xs text-[#94a3b8] hidden sm:inline">{country}</span>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Trust divider + trust items */}
+          <div className="border-t border-[#f1f5f9] pt-7">
+            <div className="flex flex-wrap justify-center gap-x-8 gap-y-3">
+              {TRUST_ITEMS.map(({ label, icon }, i) => (
+                <motion.div
+                  key={label}
+                  initial={reduced ? false : { opacity: 0, y: 8 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.35, delay: 0.2 + i * 0.06 }}
+                  className="flex items-center gap-2 text-[#64748b]"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} className="w-4 h-4 text-[#1a56a0] flex-shrink-0" aria-hidden="true">
+                    {icon}
+                  </svg>
+                  <span className="text-xs font-medium">{label}</span>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </FadeUp>
+      </div>
     </section>
   );
 }
@@ -1208,7 +1308,7 @@ function FinalCTA() {
           Don&apos;t let your license lapse.
         </h2>
         <p className="text-white/40 text-lg mb-10 leading-relaxed">
-          Join healthcare professionals across Qatar and the GCC who track their CME compliance with Hayya Med Pro — powered by Hayya Med AI.
+          Track your CME credits, stay ahead of every renewal deadline, and generate a PDF compliance report in seconds — free to start, no credit card required.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <MagneticButton
@@ -1262,6 +1362,7 @@ export default function LandingPage() {
           <Nav />
           <main id="main-content">
             <Hero />
+            <TrustSignals />
             <Features />
             <VisionMission />
             <AIDemo />
