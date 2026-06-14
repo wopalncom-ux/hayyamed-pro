@@ -10,7 +10,7 @@ function getSetupChecks(): ServiceCheck[] {
   return [
     { label: "Supabase",           ok: !!process.env.NEXT_PUBLIC_SUPABASE_URL && !!process.env.SUPABASE_SERVICE_ROLE_KEY },
     { label: "Email (Postmark)",   ok: !!process.env.POSTMARK_API_TOKEN,       action: "Set POSTMARK_API_TOKEN in GCP Secret Manager" },
-    { label: "Anthropic AI",       ok: !!process.env.ANTHROPIC_API_KEY,         action: "Set ANTHROPIC_API_KEY in GCP Secret Manager" },
+    { label: "AI (Vertex AI)",     ok: !!process.env.GOOGLE_CLOUD_PROJECT,      action: "Vertex AI uses ADC — ensure GOOGLE_CLOUD_PROJECT env var is set" },
     { label: "Paddle (payments)",  ok: !!process.env.PADDLE_API_KEY,            action: "Create Paddle account → add PADDLE_API_KEY" },
     { label: "Cron jobs",          ok: !!process.env.CRON_SECRET,               action: "Set CRON_SECRET + run setup-cloud-scheduler.sh" },
     { label: "Push notifications", ok: !!process.env.VAPID_PRIVATE_KEY,         action: "Generate VAPID keys → set VAPID_PRIVATE_KEY" },

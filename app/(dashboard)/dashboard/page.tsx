@@ -34,7 +34,7 @@ export default async function DashboardPage({
   const [profileRes, walletRes, activitiesRes, plan, employerLinkRes, partnersRes, npsRes, employerRoleRes, referralCountRes, subscriptionRes] = await Promise.all([
     admin.from("professional_profiles").select("*").eq("auth_id", user.id).single(),
     admin.from("cme_wallets").select("*").eq("professional_id", user.id).order("created_at", { ascending: true }).limit(1).maybeSingle(),
-    admin.from("cme_activities").select("id").eq("professional_id", user.id),
+    admin.from("cme_activities").select("id, title, credits, activity_date, category, verification_status").eq("professional_id", user.id).order("activity_date", { ascending: false }),
     getUserPlan(user.id),
     admin.from("employer_link_requests").select("id").eq("professional_id", user.id).eq("status", "approved").maybeSingle(),
     admin.from("partners").select("id, name, logo_url, website_url, partner_type, tagline")
@@ -47,7 +47,9 @@ export default async function DashboardPage({
 
   const profile = profileRes.data;
   const wallet = walletRes.data;
-  const activityCount = activitiesRes.data?.length ?? 0;
+  const allActivities = activitiesRes.data ?? [];
+  const activityCount = allActivities.length;
+  const recentActivities = allActivities.slice(0, 5);
   const partners = (partnersRes.data ?? []) as Partner[];
   const referralCount = referralCountRes.count ?? 0;
   const subscriptionPlan = subscriptionRes.data?.plan ?? null;
@@ -233,6 +235,39 @@ export default async function DashboardPage({
                   {p.name}
                 </span>
               </a>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Recent CME activity feed */}
+      {recentActivities.length > 0 && (
+        <div className="bg-white rounded-xl border border-[#e2e8f0] mb-6">
+          <div className="px-6 py-4 border-b border-[#e2e8f0] flex items-center justify-between">
+            <h2 className="text-base font-semibold text-[#111]">Recent CME Activity</h2>
+            <a href="/dashboard/cme" className="text-xs text-[#1a56a0] font-medium hover:underline">View all →</a>
+          </div>
+          <div className="divide-y divide-[#f1f5f9]">
+            {recentActivities.map((a: { id: string; title: string; credits: number; activity_date: string; category: string | null; verification_status: string }) => (
+              <div key={a.id} className="px-6 py-3 flex items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="text-sm font-medium text-[#111] truncate">{a.title}</p>
+                  <p className="text-xs text-[#64748b] mt-0.5">
+                    {new Date(a.activity_date).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
+                    {a.category && <> · <span className="capitalize">{a.category.replace(/_/g, " ")}</span></>}
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  <span className="text-sm font-semibold text-[#111]">{a.credits} cr</span>
+                  <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+                    a.verification_status === "verified"  ? "bg-[#dcfce7] text-[#16a34a]" :
+                    a.verification_status === "rejected"  ? "bg-[#fef2f2] text-[#dc2626]" :
+                    "bg-[#fff7ed] text-[#d97706]"
+                  }`}>
+                    {a.verification_status}
+                  </span>
+                </div>
+              </div>
             ))}
           </div>
         </div>
