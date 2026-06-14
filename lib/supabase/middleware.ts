@@ -77,6 +77,7 @@ const COMING_SOON_BYPASS = [
   "/how-it-works",
   "/security",
   "/features",
+  "/mfa",
 ];
 
 export async function updateSession(request: NextRequest) {
@@ -138,6 +139,17 @@ export async function updateSession(request: NextRequest) {
     const next = pathname + request.nextUrl.search;
     url.search = `?next=${encodeURIComponent(next)}`;
     return NextResponse.redirect(url);
+  }
+
+  // Enforce AAL2 on /admin routes — admins with MFA enrolled must complete the challenge
+  if (user && pathname.startsWith("/admin")) {
+    const { data: aal } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+    if (aal?.nextLevel === "aal2" && aal.currentLevel !== "aal2") {
+      const url = request.nextUrl.clone();
+      url.pathname = "/mfa";
+      url.search = `?next=${encodeURIComponent(pathname + request.nextUrl.search)}`;
+      return NextResponse.redirect(url);
+    }
   }
 
   // Redirect authenticated users away from auth pages

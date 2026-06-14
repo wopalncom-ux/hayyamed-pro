@@ -55,6 +55,14 @@ export default function LoginForm() {
 
     if (data.user) identifyUser(data.user.id);
     track("login_completed");
+
+    // Check if MFA is required (user has an enrolled TOTP factor)
+    const { data: aal } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+    if (aal?.nextLevel === "aal2" && aal.currentLevel !== "aal2") {
+      router.push(`/mfa?next=${encodeURIComponent(next)}`);
+      return;
+    }
+
     router.push(next);
     router.refresh();
   }

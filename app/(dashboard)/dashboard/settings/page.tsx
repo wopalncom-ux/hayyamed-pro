@@ -11,6 +11,7 @@ import EmailPreferencesForm from "@/components/dashboard/EmailPreferencesForm";
 import ReferralSection from "@/components/dashboard/ReferralSection";
 import SoundToggle from "@/components/dashboard/SoundToggle";
 import MultiCountryWallet from "@/components/dashboard/MultiCountryWallet";
+import MFAManager from "@/components/dashboard/MFAManager";
 
 const STATUS_STYLES: Record<string, string> = {
   pending: "bg-[#fff7ed] text-[#d97706]",
@@ -331,6 +332,9 @@ export default async function SettingsPage() {
 
         {/* Referral */}
         <ReferralSection initialCode={profile?.referral_code ?? null} referralCount={referralCount} />
+
+        {/* Two-Factor Authentication */}
+        <MFAManager />
 
         {/* Change password */}
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-6">
