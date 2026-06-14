@@ -19,7 +19,7 @@ const COMING_SOON_BYPASS = [
   "/forgot-password",
   "/reset-password",
   "/verify-email",
-  "/verify/",
+  "/verify",
   "/auth/",
   "/monitoring",
   "/dashboard",
@@ -34,6 +34,17 @@ const COMING_SOON_BYPASS = [
   "/robots.txt",
   "/sitemap",
   "/opengraph-image",
+  // Public-facing routes that must work during soft launch
+  "/r/",         // referral landing pages (/r/[code])
+  "/p/",         // public professional profiles (/p/[id])
+  "/invite/",    // employer staff invite links
+  "/help",       // help & FAQ page
+  "/terms",      // terms of service
+  "/privacy",    // privacy policy
+  "/legal",      // DPA and legal docs
+  "/changelog",  // changelog
+  "/unsubscribe",// email unsubscribe (linked from every email)
+  "/pricing",    // pricing page (needed for upgrade flows)
 ];
 
 export async function updateSession(request: NextRequest) {
@@ -71,9 +82,11 @@ export async function updateSession(request: NextRequest) {
   // API routes handle their own auth — never redirect them
   if (pathname.startsWith("/api/")) return supabaseResponse;
 
-  // Coming soon mode — redirect all public marketing/SEO routes
+  // Coming soon gate — disabled when COMING_SOON=false in Cloud Run env vars.
+  // Default is true (safe) — set COMING_SOON=false to go live without a code deploy.
+  const comingSoonActive = process.env.COMING_SOON !== "false";
   const bypassComingSoon = COMING_SOON_BYPASS.some((p) => pathname.startsWith(p));
-  if (!bypassComingSoon) {
+  if (comingSoonActive && !bypassComingSoon) {
     const url = request.nextUrl.clone();
     url.pathname = user ? "/dashboard" : "/coming-soon";
     return NextResponse.redirect(url);

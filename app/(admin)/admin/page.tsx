@@ -20,9 +20,14 @@ function getSetupChecks(): ServiceCheck[] {
   ];
 }
 
+function getLaunchMode() {
+  return process.env.COMING_SOON !== "false";
+}
+
 export default async function AdminPage() {
   const admin = createAdminClient();
   const setupChecks = getSetupChecks();
+  const comingSoonActive = getLaunchMode();
   const now = new Date().toISOString();
   const soon = new Date(Date.now() + 3 * 86400000).toISOString();
 
@@ -64,6 +69,31 @@ export default async function AdminPage() {
   return (
     <div>
       <h1 className="text-2xl font-bold text-[#111] mb-6">Admin Overview</h1>
+
+      {/* Launch mode banner */}
+      <div className={`rounded-xl border px-5 py-4 mb-6 flex items-start gap-4 ${
+        comingSoonActive
+          ? "bg-[#fff7ed] border-[#fed7aa]"
+          : "bg-[#dcfce7] border-[#86efac]"
+      }`}>
+        <span className="text-2xl leading-none mt-0.5">{comingSoonActive ? "🔒" : "🚀"}</span>
+        <div className="min-w-0 flex-1">
+          <p className={`text-sm font-bold ${comingSoonActive ? "text-[#92400e]" : "text-[#15803d]"}`}>
+            {comingSoonActive ? "Coming Soon Mode — Platform is NOT live" : "Platform is LIVE — Coming soon gate is off"}
+          </p>
+          {comingSoonActive ? (
+            <p className="text-xs text-[#b45309] mt-1">
+              Public marketing pages redirect to /coming-soon. Logged-in users can access /dashboard.
+              <br />
+              <strong>To go live:</strong> set <code className="bg-[#fef3c7] px-1 py-0.5 rounded text-[10px]">_COMING_SOON = false</code> in Cloud Build Trigger substitution vars → trigger a new build. No code change needed.
+            </p>
+          ) : (
+            <p className="text-xs text-[#15803d] mt-1">
+              All public routes are accessible. To re-enable the gate, set <code className="bg-[#f0fdf4] px-1 py-0.5 rounded text-[10px]">_COMING_SOON = true</code> and redeploy.
+            </p>
+          )}
+        </div>
+      </div>
 
       {/* Platform stats */}
       <h2 className="text-xs font-semibold text-[#64748b] uppercase tracking-wide mb-3">Platform</h2>
