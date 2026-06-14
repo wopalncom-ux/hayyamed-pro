@@ -37,6 +37,7 @@ export default async function AdminPage() {
     partnerCount, discountCount,
     activeTrials, expiringTrials,
     npsRes, bouncedRes, spamRes,
+    waitlistCount,
   ] = await Promise.all([
     admin.from("professional_profiles").select("id", { count: "exact", head: true }),
     admin.from("organizations").select("id", { count: "exact", head: true }),
@@ -56,6 +57,7 @@ export default async function AdminPage() {
     admin.from("nps_responses").select("score"),
     admin.from("professional_profiles").select("id", { count: "exact", head: true }).eq("email_hard_bounced", true),
     admin.from("professional_profiles").select("id", { count: "exact", head: true }).eq("email_spam_reported", true),
+    admin.from("waitlist_signups").select("id", { count: "exact", head: true }),
   ]);
 
   // NPS score calculation
@@ -103,6 +105,20 @@ export default async function AdminPage() {
         <StatCard label="Pending Links"      value={pendingLinks.count ?? 0} color="orange" />
         <StatCard label="Pending CME"        value={pendingCme.count ?? 0}   color="orange" />
       </div>
+
+      {/* Waitlist — visible only during coming-soon mode */}
+      {comingSoonActive && (
+        <>
+          <h2 className="text-xs font-semibold text-[#64748b] uppercase tracking-wide mb-3">Waitlist</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+            <StatCard
+              label="Waitlist Signups"
+              value={waitlistCount.count ?? 0}
+              color={(waitlistCount.count ?? 0) > 0 ? "green" : "blue"}
+            />
+          </div>
+        </>
+      )}
 
       {/* Revenue stats */}
       <h2 className="text-xs font-semibold text-[#64748b] uppercase tracking-wide mb-3">Revenue</h2>
