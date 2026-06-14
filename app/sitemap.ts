@@ -70,5 +70,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/egypt-cme`,                     lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/jordan-cme`,                    lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/global-cme-requirements`,       lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
+    { url: `${BASE}/oncology-cme`,                 lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/gastroenterology-cme`,         lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/endocrinology-cme`,            lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/urology-cme`,                  lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/infectious-disease-cme`,       lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
   ];
 }
