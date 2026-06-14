@@ -5,6 +5,8 @@ const FOOTER_COLS = [
     heading: "Platform",
     links: [
       { label: "Features", href: "/#features" },
+      { label: "How it works", href: "/how-it-works" },
+      { label: "Security", href: "/security" },
       { label: "For Employers", href: "/employers" },
       { label: "For Training Providers", href: "/for-providers" },
       { label: "For Universities", href: "/for-universities" },

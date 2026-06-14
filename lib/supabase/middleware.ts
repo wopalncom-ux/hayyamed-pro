@@ -74,6 +74,8 @@ const COMING_SOON_BYPASS = [
   "/neonatology-cme",
   "/allergy-immunology-cme",
   "/nuclear-medicine-cme",
+  "/how-it-works",
+  "/security",
 ];
 
 export async function updateSession(request: NextRequest) {

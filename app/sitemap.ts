@@ -104,5 +104,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/blog/nhra-renewal-guide-2026`,             lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/what-happens-if-you-miss-cme-gcc`,   lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/best-cme-tracking-apps-gcc-2026`,    lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
+    { url: `${BASE}/how-it-works`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
+    { url: `${BASE}/security`,     lastModified: new Date(), changeFrequency: "yearly",  priority: 0.85 },
   ];
 }
