@@ -28,6 +28,33 @@ export const metadata: Metadata = {
 
 const POSTS = [
   {
+    slug: "cme-for-international-doctors-gcc",
+    title: "CME Requirements for International Doctors in GCC 2026",
+    description: "How home-country CME credits transfer in GCC, Dataflow verification explained, and what QCHP, SCFHS, and DHA require from internationally trained physicians.",
+    publishedAt: "2026-06-14",
+    category: "guide",
+    readingMinutes: 10,
+    tag: "GCC · All Authorities",
+  },
+  {
+    slug: "pharmacist-cme-requirements-gcc-2026",
+    title: "CME & CPD Requirements for Pharmacists in GCC 2026",
+    description: "Credit targets, accepted accreditors (ACPE, FIP, ASHP), and renewal guide for pharmacists licensed by QCHP, SCFHS, DHA, DOH, MOH Kuwait, NHRA, and OMSB.",
+    publishedAt: "2026-06-14",
+    category: "guide",
+    readingMinutes: 8,
+    tag: "GCC · All Professions",
+  },
+  {
+    slug: "nurse-cme-requirements-gcc-2026",
+    title: "CME & CPD Requirements for Nurses in GCC 2026",
+    description: "CPD and CME requirements for registered nurses in all 7 GCC countries — credit targets by authority, ANCC/RCN/ACCME-accredited sources, and specialty-specific CPD for ICU, oncology, and ED nurses.",
+    publishedAt: "2026-06-14",
+    category: "guide",
+    readingMinutes: 9,
+    tag: "GCC · All Professions",
+  },
+  {
     slug: "best-cme-tracking-apps-gcc-2026",
     title: "Best CME Tracking Apps for GCC Healthcare Professionals 2026",
     description: "How to choose a CME or CPD tracker built for GCC licensing requirements — what features matter, what generic tools miss, and what purpose-built GCC CME software should include.",
