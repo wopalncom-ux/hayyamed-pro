@@ -230,8 +230,11 @@ export default async function AdminPage() {
             <a href="/admin/link-requests" className="block text-sm text-[#1a56a0] hover:underline">
               Review Link Requests{(pendingLinks.count ?? 0) > 0 && ` (${pendingLinks.count} pending)`}
             </a>
+            <a href="/admin/cme-verification" className="block text-sm text-[#1a56a0] hover:underline">
+              CME Verification Queue{(pendingCme.count ?? 0) > 0 && ` (${pendingCme.count} pending)`}
+            </a>
             <a href="/admin/cme-activities" className="block text-sm text-[#1a56a0] hover:underline">
-              Verify CME Activities{(pendingCme.count ?? 0) > 0 && ` (${pendingCme.count} pending)`}
+              CME Activities (legacy)
             </a>
             <a href="/admin/professionals" className="block text-sm text-[#1a56a0] hover:underline">Manage Professionals</a>
             <a href="/admin/training-providers" className="block text-sm text-[#1a56a0] hover:underline">

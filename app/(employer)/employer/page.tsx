@@ -8,6 +8,7 @@ import AssignTaskButton from "@/components/employer/AssignTaskButton";
 import SendReminderButton from "@/components/employer/SendReminderButton";
 import InviteLinkButton from "@/components/employer/InviteLinkButton";
 import ComplianceHeatmap from "@/components/employer/ComplianceHeatmap";
+import EmployerSetupChecklist from "@/components/employer/EmployerSetupChecklist";
 
 type ComplianceStatus = "compliant" | "at_risk" | "non_compliant" | "unknown";
 
@@ -204,6 +205,14 @@ export default async function EmployerDashboardPage({
           {total > 0 && <BulkReportButton organizationId={orgId} orgName={orgName} />}
         </div>
       </div>
+
+      {/* Setup checklist — shown to new employer_admins with no staff yet */}
+      <EmployerSetupChecklist
+        organizationId={orgId}
+        orgName={orgName}
+        hasStaff={total > 0}
+        hasComplianceRules={false}
+      />
 
       {/* Summary Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-8">

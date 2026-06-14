@@ -13,9 +13,11 @@ const NAV_ITEMS = [
   { href: "/dashboard/ai", label: "✦ AI" },
   { href: "/dashboard/analytics", label: "Analytics" },
   { href: "/dashboard/licenses", label: "Licenses" },
+  { href: "/dashboard/certificates", label: "Certificates" },
   { href: "/dashboard/marketplace", label: "Marketplace" },
   { href: "/dashboard/marketplace/my-courses", label: "My Courses" },
   { href: "/dashboard/notifications", label: "Notifications" },
+  { href: "/dashboard/refer", label: "Refer" },
   { href: "/dashboard/billing", label: "Billing" },
   { href: "/dashboard/settings", label: "Settings" },
 ];

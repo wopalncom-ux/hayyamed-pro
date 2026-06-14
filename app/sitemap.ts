@@ -165,5 +165,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/blog/physiotherapist-cpd-gcc`,                lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/icu-nurse-cme-gcc`,                      lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/scfhs-mumaris-portal-guide`,             lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
+    // Blog posts — session 65
+    { url: `${BASE}/blog/ophthalmologist-cme-gcc-guide`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/paediatric-nurse-cpd-gcc`,               lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/omsb-renewal-guide-oman-2026`,           lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/nhra-renewal-guide-bahrain-2026`,        lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/radiology-cpd-gcc-advanced`,             lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
   ];
 }

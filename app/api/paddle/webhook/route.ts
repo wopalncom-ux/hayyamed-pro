@@ -110,6 +110,42 @@ export async function POST(request: NextRequest) {
       }).eq("professional_id", uid);
 
       await logAudit({ actorAuthId: uid, action: "subscription.activated_webhook", metadata: { paddle_subscription_id: paddleSubId } });
+
+      // Referral conversion: if this user was referred, mark converted and reward referrer
+      const { data: referral } = await admin
+        .from("referrals")
+        .update({ status: "converted", converted_at: new Date().toISOString() })
+        .eq("referred_auth_id", uid)
+        .eq("status", "signed_up")
+        .select("referrer_auth_id")
+        .maybeSingle();
+
+      if (referral?.referrer_auth_id) {
+        // Add 30 bonus Pro days to the referrer's trial end date
+        const { data: referrerProfile } = await admin
+          .from("professional_profiles")
+          .select("pro_trial_ends_at")
+          .eq("auth_id", referral.referrer_auth_id)
+          .maybeSingle();
+
+        const base = referrerProfile?.pro_trial_ends_at
+          ? new Date(referrerProfile.pro_trial_ends_at)
+          : new Date();
+        if (base < new Date()) base.setTime(Date.now());
+        base.setDate(base.getDate() + 30);
+
+        await admin
+          .from("professional_profiles")
+          .update({ pro_trial_ends_at: base.toISOString() })
+          .eq("auth_id", referral.referrer_auth_id);
+
+        await logAudit({
+          actorAuthId: referral.referrer_auth_id,
+          action: "referral.converted",
+          targetTable: "referrals",
+          metadata: { referred_auth_id: uid, bonus_days: 30 },
+        });
+      }
       break;
     }
 
