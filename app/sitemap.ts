@@ -81,9 +81,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/hematology-cme`,               lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/geriatrics-cme`,               lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/for-government`,              lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
-    { url: `${BASE}/blog`,                         lastModified: new Date(), changeFrequency: "weekly",  priority: 0.85 },
-    { url: `${BASE}/blog/qchp-renewal-guide-2026`,       lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/scfhs-cme-requirements-2026`,   lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/cme-vs-cpd-gcc`,                lastModified: new Date(), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${BASE}/blog`,                                    lastModified: new Date(), changeFrequency: "weekly",  priority: 0.85 },
+    { url: `${BASE}/blog/online-cme-recognition-gcc`,         lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/how-many-cme-credits-gcc`,           lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/dha-renewal-guide-2026`,             lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/qchp-renewal-guide-2026`,            lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/scfhs-cme-requirements-2026`,        lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/cme-vs-cpd-gcc`,                     lastModified: new Date(), changeFrequency: "monthly", priority: 0.85 },
   ];
 }

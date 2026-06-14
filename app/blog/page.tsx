@@ -28,6 +28,33 @@ export const metadata: Metadata = {
 
 const POSTS = [
   {
+    slug: "online-cme-recognition-gcc",
+    title: "Does Online CME Count in GCC? Authority-by-Authority Guide 2026",
+    description: "Online CME rules for every GCC licensing authority — percentage caps, which accreditors are recognized, which platforms to use, and what actually counts toward your license renewal.",
+    publishedAt: "2026-06-14",
+    category: "guide",
+    readingMinutes: 8,
+    tag: "GCC · All Authorities",
+  },
+  {
+    slug: "how-many-cme-credits-gcc",
+    title: "How Many CME Credits Do I Need? GCC Complete Guide 2026",
+    description: "Exact CME and CPD credit requirements for every GCC authority in 2026 — QCHP, SCFHS, DHA, DOH, MOH Kuwait, NHRA, and OMSB — compared in one place.",
+    publishedAt: "2026-06-13",
+    category: "guide",
+    readingMinutes: 7,
+    tag: "GCC · All Authorities",
+  },
+  {
+    slug: "dha-renewal-guide-2026",
+    title: "DHA License Renewal Guide 2026: CME Requirements for Dubai Healthcare Professionals",
+    description: "Complete guide to renewing your DHA healthcare license in Dubai. 40 CME credits per 2-year cycle, accepted accreditors, step-by-step renewal process, and common mistakes to avoid.",
+    publishedAt: "2026-06-12",
+    category: "country",
+    readingMinutes: 9,
+    tag: "UAE · DHA Dubai",
+  },
+  {
     slug: "qchp-renewal-guide-2026",
     title: "Complete QCHP License Renewal Guide 2026",
     description: "Step-by-step guide to renewing your QCHP healthcare license in Qatar. 80 CPD requirements, accepted activities, submission timeline, and the most common mistakes that delay renewal.",
