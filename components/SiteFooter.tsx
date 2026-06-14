@@ -75,6 +75,11 @@ const FOOTER_COLS = [
       { label: "ENT / Otolaryngology", href: "/ent-cme" },
       { label: "Hematology", href: "/hematology-cme" },
       { label: "Geriatrics", href: "/geriatrics-cme" },
+      { label: "Pathology", href: "/pathology-cme" },
+      { label: "Neurosurgery", href: "/neurosurgery-cme" },
+      { label: "Plastic Surgery", href: "/plastic-surgery-cme" },
+      { label: "Physical Medicine", href: "/physical-medicine-cme" },
+      { label: "Vascular Surgery", href: "/vascular-surgery-cme" },
     ],
   },
   {
