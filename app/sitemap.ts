@@ -106,6 +106,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/blog/best-cme-tracking-apps-gcc-2026`,    lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
     { url: `${BASE}/how-it-works`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
     { url: `${BASE}/security`,     lastModified: new Date(), changeFrequency: "yearly",  priority: 0.85 },
+    { url: `${BASE}/features`,                                        lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
     { url: `${BASE}/blog/nurse-cme-requirements-gcc-2026`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/pharmacist-cme-requirements-gcc-2026`,     lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/cme-for-international-doctors-gcc`,        lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },

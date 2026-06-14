@@ -76,6 +76,7 @@ const COMING_SOON_BYPASS = [
   "/nuclear-medicine-cme",
   "/how-it-works",
   "/security",
+  "/features",
 ];
 
 export async function updateSession(request: NextRequest) {
