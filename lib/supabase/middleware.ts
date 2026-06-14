@@ -57,6 +57,11 @@ const COMING_SOON_BYPASS = [
   "/endocrinology-cme",
   "/urology-cme",
   "/infectious-disease-cme",
+  "/pulmonology-cme",
+  "/rheumatology-cme",
+  "/ent-cme",
+  "/hematology-cme",
+  "/geriatrics-cme",
 ];
 
 export async function updateSession(request: NextRequest) {

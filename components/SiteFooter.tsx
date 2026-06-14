@@ -68,6 +68,11 @@ const FOOTER_COLS = [
       { label: "Endocrinology", href: "/endocrinology-cme" },
       { label: "Urology", href: "/urology-cme" },
       { label: "Infectious Disease", href: "/infectious-disease-cme" },
+      { label: "Pulmonology", href: "/pulmonology-cme" },
+      { label: "Rheumatology", href: "/rheumatology-cme" },
+      { label: "ENT / Otolaryngology", href: "/ent-cme" },
+      { label: "Hematology", href: "/hematology-cme" },
+      { label: "Geriatrics", href: "/geriatrics-cme" },
     ],
   },
   {

@@ -75,5 +75,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/endocrinology-cme`,            lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/urology-cme`,                  lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/infectious-disease-cme`,       lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/pulmonology-cme`,              lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/rheumatology-cme`,             lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/ent-cme`,                      lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/hematology-cme`,               lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/geriatrics-cme`,               lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
   ];
 }
