@@ -33,6 +33,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/allied-health-cpd`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/cme-tracker`,       lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
     { url: `${BASE}/cpd-tracker`,       lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
+    { url: `${BASE}/cme-calculator`,    lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
     { url: `${BASE}/request-demo`,      lastModified: new Date(), changeFrequency: "yearly",  priority: 0.7 },
     { url: `${BASE}/qchp-renewal`,      lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/scfhs-renewal`,                lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },

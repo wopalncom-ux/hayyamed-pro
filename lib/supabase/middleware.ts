@@ -50,7 +50,8 @@ const COMING_SOON_BYPASS = [
   "/contact",       // contact page
   "/about",         // about/team page
   "/status",        // public system status page
-  "/for-hospitals", // B2B hospital landing page (sales outreach)
+  "/for-hospitals",   // B2B hospital landing page (sales outreach)
+  "/cme-calculator",  // free public CME/CPD credit calculator (no login)
 ];
 
 export async function updateSession(request: NextRequest) {
