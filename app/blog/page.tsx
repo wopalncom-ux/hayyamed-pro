@@ -28,6 +28,33 @@ export const metadata: Metadata = {
 
 const POSTS = [
   {
+    slug: "omsb-renewal-guide-2026",
+    title: "OMSB License Renewal Guide 2026: CME Requirements for Oman Healthcare Professionals",
+    description: "40 CME credits per 2-year cycle, accepted accreditors, step-by-step renewal process, and common mistakes to avoid for OMSB-licensed professionals in Oman.",
+    publishedAt: "2026-06-14",
+    category: "country",
+    readingMinutes: 8,
+    tag: "Oman · OMSB",
+  },
+  {
+    slug: "moh-kuwait-renewal-guide-2026",
+    title: "MOH Kuwait License Renewal Guide 2026: CME Requirements for Healthcare Professionals",
+    description: "30 CME credits per year on an annual renewal cycle — everything Kuwait-based healthcare professionals need to know about MOH Kuwait license renewal.",
+    publishedAt: "2026-06-14",
+    category: "country",
+    readingMinutes: 8,
+    tag: "Kuwait · MOH",
+  },
+  {
+    slug: "doh-renewal-guide-2026",
+    title: "DOH License Renewal Guide 2026: CPD Requirements for Abu Dhabi Healthcare Professionals",
+    description: "Complete guide to renewing your DOH license in Abu Dhabi. 30–50 CPD credits per 2-year cycle, how DOH differs from DHA, the Tasneef portal process, and common mistakes.",
+    publishedAt: "2026-06-14",
+    category: "country",
+    readingMinutes: 9,
+    tag: "UAE · DOH Abu Dhabi",
+  },
+  {
     slug: "online-cme-recognition-gcc",
     title: "Does Online CME Count in GCC? Authority-by-Authority Guide 2026",
     description: "Online CME rules for every GCC licensing authority — percentage caps, which accreditors are recognized, which platforms to use, and what actually counts toward your license renewal.",
