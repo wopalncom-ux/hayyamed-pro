@@ -4,12 +4,14 @@ import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { track, identifyUser } from "@/lib/analytics";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "";
 
 export default function LoginForm() {
+  const t = useTranslations("auth.login");
   const router = useRouter();
   const searchParams = useSearchParams();
   // Reject any next= value that isn't a same-origin relative path to prevent open redirect.
@@ -82,12 +84,12 @@ export default function LoginForm() {
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-[#e2e8f0] p-8">
-      <h2 className="text-xl font-semibold text-[#111] mb-6">Sign in to your account</h2>
+      <h2 className="text-xl font-semibold text-[#111] mb-6">{t("title")}</h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-[#374151] mb-1">
-            Email address
+            {t("email")}
           </label>
           <input
             id="email"
@@ -103,10 +105,10 @@ export default function LoginForm() {
         <div>
           <div className="flex items-center justify-between mb-1">
             <label htmlFor="password" className="block text-sm font-medium text-[#374151]">
-              Password
+              {t("password")}
             </label>
             <Link href="/forgot-password" className="text-xs text-[#1a56a0] hover:underline">
-              Forgot password?
+              {t("forgot")}
             </Link>
           </div>
           <div className="relative">
@@ -159,14 +161,14 @@ export default function LoginForm() {
           disabled={loading}
           className="w-full bg-[#1a56a0] text-white py-2.5 px-4 rounded-lg text-sm font-medium hover:bg-[#1547a0] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
-          {loading ? "Signing in..." : "Sign in"}
+          {loading ? "Signing in…" : t("submit")}
         </button>
       </form>
 
       <p className="text-sm text-[#64748b] text-center mt-6">
-        Don&apos;t have an account?{" "}
+        {t("no_account")}{" "}
         <Link href="/register" className="text-[#1a56a0] font-medium hover:underline">
-          Create one
+          {t("register_link")}
         </Link>
       </p>
     </div>

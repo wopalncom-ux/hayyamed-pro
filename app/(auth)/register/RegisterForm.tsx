@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { track } from "@/lib/analytics";
 
@@ -22,6 +23,7 @@ function getPasswordStrength(pw: string): { score: number; label: string; color:
 }
 
 export default function RegisterForm() {
+  const t = useTranslations("auth.register");
   const router = useRouter();
   const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
@@ -127,13 +129,13 @@ export default function RegisterForm() {
           <span className="font-semibold">{inviteOrgName}</span> on Hayya Med Pro.
         </div>
       )}
-      <h2 className="text-xl font-semibold text-[#111] mb-2">Create your account</h2>
-      <p className="text-sm text-[#64748b] mb-6">Step 1 of 7 — you can save and continue later</p>
+      <h2 className="text-xl font-semibold text-[#111] mb-2">{t("title")}</h2>
+      <p className="text-sm text-[#64748b] mb-6">{t("subtitle")}</p>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-[#374151] mb-1">
-            Work email address
+            {t("email")}
           </label>
           <input
             id="email"
@@ -148,7 +150,7 @@ export default function RegisterForm() {
 
         <div>
           <label htmlFor="password" className="block text-sm font-medium text-[#374151] mb-1">
-            Password
+            {t("password")}
           </label>
           <div className="relative">
             <input
@@ -219,21 +221,21 @@ export default function RegisterForm() {
           disabled={loading}
           className="w-full bg-[#1a56a0] text-white py-2.5 px-4 rounded-lg text-sm font-medium hover:bg-[#1547a0] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
-          {loading ? "Creating account..." : "Create account"}
+          {loading ? "Creating account…" : t("submit")}
         </button>
       </form>
 
       <p className="text-xs text-[#64748b] text-center mt-4">
-        By creating an account, you agree to our{" "}
-        <Link href="/terms" className="text-[#1a56a0] hover:underline">Terms of Service</Link>{" "}
-        and{" "}
-        <Link href="/privacy" className="text-[#1a56a0] hover:underline">Privacy Policy</Link>.
+        {t("terms_prefix")}{" "}
+        <Link href="/terms" className="text-[#1a56a0] hover:underline">{t("terms_tos")}</Link>{" "}
+        {t("terms_and")}{" "}
+        <Link href="/privacy" className="text-[#1a56a0] hover:underline">{t("terms_privacy")}</Link>.
       </p>
 
       <p className="text-sm text-[#64748b] text-center mt-4">
-        Already have an account?{" "}
+        {t("have_account")}{" "}
         <Link href="/login" className="text-[#1a56a0] font-medium hover:underline">
-          Sign in
+          {t("login_link")}
         </Link>
       </p>
     </div>

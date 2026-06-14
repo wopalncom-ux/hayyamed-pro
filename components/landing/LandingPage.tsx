@@ -281,37 +281,6 @@ const MOB_NAV_LINKS = [
   { href: "/pricing", label: "Pricing" },
 ];
 
-const FAQ_ITEMS = [
-  {
-    q: "Is Hayya Med Pro free to use?",
-    a: "Yes. The Free plan is free forever — it includes CME activity tracking, a compliance dashboard, and analytics. The Pro plan ($6/month, or $61.20/year — 15% off) unlocks PDF compliance reports, Hayya AI gap analysis, unlimited activity entries, and license expiry alerts.",
-  },
-  {
-    q: "Is there a free trial for the Pro plan?",
-    a: "Yes — every new account automatically receives a 14-day Pro trial. No credit card required. You can explore every Pro feature before you pay anything.",
-  },
-  {
-    q: "Is this platform recognised by QCHP, SCFHS, or DHA?",
-    a: "Hayya Med Pro is a compliance tracking tool, not a licensing authority. Your official record lives with QCHP, SCFHS, DHA, or your local authority. Our PDF reports are formatted to match what these authorities require, making submission faster — but you must always verify final requirements directly with your authority.",
-  },
-  {
-    q: "Which countries and licensing authorities are supported?",
-    a: "Qatar (QCHP), Saudi Arabia (SCFHS), UAE Dubai (DHA), UAE Abu Dhabi (DOH), Kuwait (MOH), Bahrain (NHRA), and Oman (OMSB). Additional countries are added regularly.",
-  },
-  {
-    q: "Can my employer or hospital see my CME records?",
-    a: "Only if you explicitly approve the connection. Your profile is private by default. Privacy settings give you full control over what information — if any — is visible to your employer.",
-  },
-  {
-    q: "Is my healthcare data stored securely in the GCC?",
-    a: "Yes. All data is hosted on GCP infrastructure in Doha, Qatar, encrypted at rest and in transit, and processed under Qatar's Personal Data Protection Law (PDPL). Your data never leaves the GCC region.",
-  },
-  {
-    q: "How does Hayya AI work?",
-    a: "Hayya AI (Pro feature) answers questions about your country's CME requirements, identifies gaps in your compliance profile, and suggests activities to close those gaps. It is powered by Claude AI integrated with Hayya Med Pro's compliance rule database — and always recommends verifying final requirements with your licensing authority.",
-  },
-];
-
 // ── Nav ──────────────────────────────────────────────────────────────────────
 function Nav() {
   const t = useTranslations("nav");
@@ -686,7 +655,15 @@ const TRUST_ITEMS = [
 ];
 
 function TrustSignals() {
+  const t = useTranslations("trust");
   const reduced = useReducedMotion();
+
+  const trustItems = [
+    { label: t("pdpl"), icon: TRUST_ITEMS[0].icon },
+    { label: t("data_hosted"), icon: TRUST_ITEMS[1].icon },
+    { label: t("claude_ai"), icon: TRUST_ITEMS[2].icon },
+    { label: t("trial"), icon: TRUST_ITEMS[3].icon },
+  ];
 
   return (
     <section
@@ -696,7 +673,7 @@ function TrustSignals() {
       <div className="max-w-5xl mx-auto">
         <FadeUp>
           <p className="text-center text-[11px] font-semibold text-[#94a3b8] uppercase tracking-[0.18em] mb-7">
-            CME rules sourced directly from all 7 GCC licensing authorities
+            {t("authority_text")}
           </p>
 
           {/* Authority chips */}
@@ -724,7 +701,7 @@ function TrustSignals() {
           {/* Trust divider + trust items */}
           <div className="border-t border-[#f1f5f9] pt-7">
             <div className="flex flex-wrap justify-center gap-x-8 gap-y-3">
-              {TRUST_ITEMS.map(({ label, icon }, i) => (
+              {trustItems.map(({ label, icon }, i) => (
                 <motion.div
                   key={label}
                   initial={reduced ? false : { opacity: 0, y: 8 }}
@@ -749,23 +726,43 @@ function TrustSignals() {
 
 // ── Features ──────────────────────────────────────────────────────────────────
 function Features() {
+  const t = useTranslations("features");
+  const BADGE_KEYS = ["Core", "Core", "Pro", "Core", "Employer", "Pro"] as const;
+  const featureKeys = [
+    { titleKey: "cme_wallet_title", descKey: "cme_wallet_desc" },
+    { titleKey: "license_wallet_title", descKey: "license_wallet_desc" },
+    { titleKey: "hayya_ai_title", descKey: "hayya_ai_desc" },
+    { titleKey: "analytics_title", descKey: "analytics_desc" },
+    { titleKey: "employer_title", descKey: "employer_desc" },
+    { titleKey: "pdf_title", descKey: "pdf_desc" },
+  ];
+  const badgeLabel: Record<string, string> = {
+    Core: t("badge_core"),
+    Pro: t("badge_pro"),
+    Employer: t("badge_employer"),
+  };
+
   return (
     <section id="features" className="px-6 py-20 bg-white">
       <div className="max-w-6xl mx-auto">
         <FadeUp className="text-center mb-14">
-          <p className="text-xs font-semibold text-[#1a56a0] uppercase tracking-[0.2em] mb-3">Platform</p>
+          <p className="text-xs font-semibold text-[#1a56a0] uppercase tracking-[0.2em] mb-3">{t("section_label")}</p>
           <h2 className="text-3xl sm:text-[2.5rem] font-bold text-[#0f1f3d] tracking-tight mb-4 leading-tight">
-            Everything you need for renewal readiness
+            {t("section_title")}
           </h2>
           <p className="text-[#64748b] max-w-lg mx-auto text-lg leading-relaxed">
-            Purpose-built for GCC healthcare professionals who cannot afford to miss a renewal deadline.
+            {t("section_subtitle")}
           </p>
         </FadeUp>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {FEATURES.map(({ icon, title, desc, badge }, i) => (
+          {FEATURES.map(({ icon }, i) => {
+            const badge = BADGE_KEYS[i];
+            const title = t(featureKeys[i].titleKey as Parameters<typeof t>[0]);
+            const desc = t(featureKeys[i].descKey as Parameters<typeof t>[0]);
+            return (
             <motion.div
-              key={title}
+              key={featureKeys[i].titleKey}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
@@ -791,14 +788,15 @@ function Features() {
                         {icon}
                       </svg>
                     </motion.div>
-                    <span className={`text-[10px] font-semibold px-2.5 py-1 rounded-full ${BADGE_COLORS[badge]}`}>{badge}</span>
+                    <span className={`text-[10px] font-semibold px-2.5 py-1 rounded-full ${BADGE_COLORS[badge]}`}>{badgeLabel[badge]}</span>
                   </div>
                   <h3 className="text-base font-semibold text-[#0f1f3d] mb-2">{title}</h3>
                   <p className="text-sm text-[#64748b] leading-relaxed">{desc}</p>
                 </motion.div>
               </TiltCard>
             </motion.div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
@@ -807,18 +805,15 @@ function Features() {
 
 // ── Vision + Mission ──────────────────────────────────────────────────────────
 function VisionMission() {
+  const t = useTranslations("vision");
   const stats = [
-    { n: 7, suffix: "", label: "GCC Countries" },
-    { n: 8, suffix: "", label: "Licensing Authorities" },
-    { n: 3, suffix: " min", label: "Setup time" },
-    { n: 100, suffix: "%", label: "Free to start" },
+    { n: 7, suffix: "", label: t("stat_countries") },
+    { n: 8, suffix: "", label: t("stat_authorities") },
+    { n: 3, suffix: " min", label: t("stat_setup") },
+    { n: 100, suffix: "%", label: t("stat_free") },
   ];
 
-  const trust = [
-    "Rules sourced directly from QCHP, SCFHS, DHA, NHRA, OMSB and MOH Kuwait",
-    "Healthcare data stored in Doha, Qatar — never leaves the GCC",
-    "Every AI call is logged, audited, and validated against a Zod schema",
-  ];
+  const trust = [t("trust_1"), t("trust_2"), t("trust_3")];
 
   return (
     <section className="bg-[#0f1f3d] px-6 py-20 overflow-hidden relative">
@@ -837,22 +832,22 @@ function VisionMission() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           {/* Left: vision + mission */}
           <FadeUp>
-            <p className="text-xs font-semibold text-[#60a5fa] uppercase tracking-[0.2em] mb-6">Our Purpose</p>
+            <p className="text-xs font-semibold text-[#60a5fa] uppercase tracking-[0.2em] mb-6">{t("label")}</p>
             <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-8 leading-tight">
-              The AI infrastructure for healthcare compliance
+              {t("title")}
             </h2>
 
             <div className="mb-7">
-              <p className="text-[10px] font-bold text-[#60a5fa] uppercase tracking-widest mb-2">Vision</p>
+              <p className="text-[10px] font-bold text-[#60a5fa] uppercase tracking-widest mb-2">{t("vision_label")}</p>
               <p className="text-white/65 text-base leading-relaxed">
-                To become the AI infrastructure that powers healthcare workforce compliance across the GCC, MENA, and global markets.
+                {t("vision_text")}
               </p>
             </div>
 
             <div className="mb-8">
-              <p className="text-[10px] font-bold text-[#60a5fa] uppercase tracking-widest mb-2">Mission</p>
+              <p className="text-[10px] font-bold text-[#60a5fa] uppercase tracking-widest mb-2">{t("mission_label")}</p>
               <p className="text-white/65 text-base leading-relaxed">
-                We build AI-powered tools that eliminate compliance uncertainty for healthcare professionals. Built in Qatar, trusted across borders, powered by intelligence that understands local regulations, speaks Arabic, and never sleeps.
+                {t("mission_text")}
               </p>
             </div>
 
@@ -861,8 +856,8 @@ function VisionMission() {
                 <span className="text-white text-sm font-bold">H</span>
               </div>
               <div>
-                <p className="text-sm font-semibold text-white">Hayya Med AI</p>
-                <p className="text-xs text-white/30">Registered in Qatar&nbsp;🇶🇦 · Qatar PDPL Compliant · GCC Data Residency</p>
+                <p className="text-sm font-semibold text-white">{t("brand_name")}</p>
+                <p className="text-xs text-white/30">{t("brand_tagline")}</p>
               </div>
             </div>
           </FadeUp>
@@ -905,6 +900,13 @@ function VisionMission() {
 
 // ── AI Demo + Countries ───────────────────────────────────────────────────────
 function AIDemo() {
+  const t = useTranslations("ai_demo");
+  const chatMessages = [
+    { role: "user", text: t("chat_q1") },
+    { role: "ai",   text: t("chat_a1") },
+    { role: "user", text: t("chat_q2") },
+    { role: "ai",   text: t("chat_a2") },
+  ];
   const [visible, setVisible] = useState(0);
   const chatRef = useRef<HTMLDivElement>(null);
   const inView = useInView(chatRef, { once: true });
@@ -926,13 +928,12 @@ function AIDemo() {
 
       <div className="max-w-5xl mx-auto relative z-10">
         <FadeUp className="text-center mb-14">
-          <p className="text-xs font-semibold text-[#60a5fa] uppercase tracking-[0.2em] mb-3">Hayya AI</p>
+          <p className="text-xs font-semibold text-[#60a5fa] uppercase tracking-[0.2em] mb-3">{t("label")}</p>
           <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-4 leading-tight">
-            Ask anything about your compliance.<br className="hidden sm:block" /> Get a real answer.
+            {t("title")}<br className="hidden sm:block" /> {t("title_cont")}
           </h2>
           <p className="text-white/40 max-w-lg mx-auto text-base leading-relaxed">
-            Hayya AI knows your activity history, your authority&apos;s rules, and your remaining cycle time.
-            Grounded answers — not generic advice.
+            {t("subtitle")}
           </p>
         </FadeUp>
 
@@ -947,11 +948,11 @@ function AIDemo() {
             >
               <div className="flex items-center gap-2 pb-3 border-b border-white/6">
                 <span className="w-2 h-2 rounded-full bg-[#4ade80]" style={{ animation: "pulse 2s infinite" }} aria-hidden="true" />
-                <span className="text-xs text-white/30 font-medium">Hayya AI · Compliance Assistant</span>
+                <span className="text-xs text-white/30 font-medium">{t("assistant_label")}</span>
                 <span className="ml-auto text-[10px] text-white/20 bg-white/5 px-2 py-0.5 rounded-full border border-white/5">Claude Haiku</span>
               </div>
 
-              {CHAT_MESSAGES.map((msg, i) => (
+              {chatMessages.map((msg, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, y: 8 }}
@@ -969,7 +970,7 @@ function AIDemo() {
                 </motion.div>
               ))}
 
-              {visible < CHAT_MESSAGES.length && (
+              {visible < chatMessages.length && (
                 <div className="flex justify-start">
                   <div className="bg-white/7 border border-white/6 rounded-xl px-4 py-3 flex items-center gap-1.5">
                     {[0, 150, 300].map((d) => (
@@ -981,15 +982,15 @@ function AIDemo() {
 
               <div className="pt-2 border-t border-white/5">
                 <div className="bg-white/4 border border-white/8 rounded-xl px-3.5 py-2.5 flex items-center gap-2">
-                  <span className="text-sm text-white/18 flex-1">Ask about your compliance...</span>
-                  <span className="text-[10px] text-white/20 bg-white/5 border border-white/8 px-2 py-0.5 rounded-full">Pro</span>
+                  <span className="text-sm text-white/18 flex-1">{t("ask_placeholder")}</span>
+                  <span className="text-[10px] text-white/20 bg-white/5 border border-white/8 px-2 py-0.5 rounded-full">{t("pro_badge")}</span>
                 </div>
               </div>
             </motion.div>
 
             <div className="mt-4 flex items-center gap-2 text-xs text-white/25 px-1">
               <span className="w-1.5 h-1.5 rounded-full bg-[#60a5fa]/50" aria-hidden="true" />
-              Available on Pro plan · Powered by Claude AI · GCC rules database
+              {t("footer_text")}
             </div>
           </FadeUp>
 
@@ -1044,40 +1045,35 @@ function AIDemo() {
 
 // ── Employer section ──────────────────────────────────────────────────────────
 function EmployerSection() {
+  const t = useTranslations("employer");
+
   const capabilities = [
-    "Real-time staff compliance overview",
-    "Assign CME tasks with credit targets",
-    "Send compliance reminders to individuals",
-    "Export team compliance report as PDF",
-    "Professionals control their own privacy settings",
+    t("cap_1"), t("cap_2"), t("cap_3"), t("cap_4"), t("cap_5"),
   ];
 
   const staffRows = [
-    { name: "Dr. Sarah Al-Mansoori", role: "Cardiologist", pct: 82, status: "on_track" },
-    { name: "Dr. Ahmed Khalid", role: "Emergency Med.", pct: 45, status: "at_risk" },
-    { name: "Nurse Fatima Hassan", role: "ICU Nursing", pct: 100, status: "compliant" },
-    { name: "Dr. Omar Saleh", role: "Pediatrics", pct: 20, status: "non_compliant" },
+    { name: "Dr. Sarah Al-Mansoori", role: t("role_cardio"),     pct: 82,  status: "on_track" },
+    { name: "Dr. Ahmed Khalid",      role: t("role_emergency"),  pct: 45,  status: "at_risk" },
+    { name: "Nurse Fatima Hassan",   role: t("role_icu"),        pct: 100, status: "compliant" },
+    { name: "Dr. Omar Saleh",        role: t("role_pediatrics"), pct: 20,  status: "non_compliant" },
   ];
 
   const statusStyle: Record<string, { bar: string; badge: string; label: string }> = {
-    compliant:     { bar: "bg-[#16a34a]", badge: "bg-[#dcfce7] text-[#16a34a]", label: "Compliant" },
-    on_track:      { bar: "bg-[#1a56a0]", badge: "bg-[#e8f0fe] text-[#1a56a0]", label: "On Track" },
-    at_risk:       { bar: "bg-[#d97706]", badge: "bg-[#fff7ed] text-[#d97706]", label: "At Risk" },
-    non_compliant: { bar: "bg-[#dc2626]", badge: "bg-[#fef2f2] text-[#dc2626]", label: "Non-Compliant" },
+    compliant:     { bar: "bg-[#16a34a]", badge: "bg-[#dcfce7] text-[#16a34a]", label: t("status_compliant") },
+    on_track:      { bar: "bg-[#1a56a0]", badge: "bg-[#e8f0fe] text-[#1a56a0]", label: t("status_on_track") },
+    at_risk:       { bar: "bg-[#d97706]", badge: "bg-[#fff7ed] text-[#d97706]", label: t("status_at_risk") },
+    non_compliant: { bar: "bg-[#dc2626]", badge: "bg-[#fef2f2] text-[#dc2626]", label: t("status_non_compliant") },
   };
 
   return (
     <section className="bg-[#f0f6ff] border-y border-[#d0e4fa] px-6 py-20">
       <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
         <FadeUp>
-          <p className="text-xs font-semibold text-[#1a56a0] uppercase tracking-[0.2em] mb-4">For Employers</p>
+          <p className="text-xs font-semibold text-[#1a56a0] uppercase tracking-[0.2em] mb-4">{t("label")}</p>
           <h2 className="text-3xl sm:text-4xl font-bold text-[#0f1f3d] tracking-tight mb-5 leading-tight">
-            Compliance visibility for the whole team — without the spreadsheets.
+            {t("title")}
           </h2>
-          <p className="text-[#64748b] text-base leading-relaxed mb-6">
-            Hospitals, clinics, and health networks get a live view of staff renewal status
-            — with each professional keeping full control of their own data.
-          </p>
+          <p className="text-[#64748b] text-base leading-relaxed mb-6">{t("subtitle")}</p>
           <ul className="space-y-2.5 mb-7">
             {capabilities.map((c) => (
               <li key={c} className="flex items-center gap-3 text-sm text-[#374151]">
@@ -1092,13 +1088,13 @@ function EmployerSection() {
           </ul>
           <div className="flex flex-col sm:flex-row gap-3 flex-wrap">
             <Link href="/employers" className="inline-block bg-[#1a56a0] text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-[#1547a0] transition-colors shadow-md shadow-blue-900/20">
-              See employer features →
+              {t("cta_features")}
             </Link>
             <Link href="/pricing#employer" className="inline-block border border-[#c7daf7] text-[#1a56a0] bg-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-[#f0f7ff] transition-colors">
-              View employer pricing →
+              {t("cta_pricing")}
             </Link>
             <Link href="/request-demo" className="inline-block text-sm font-semibold text-[#1a56a0] hover:underline py-2.5">
-              Book a demo →
+              {t("cta_demo")}
             </Link>
           </div>
         </FadeUp>
@@ -1110,8 +1106,8 @@ function EmployerSection() {
             transition={{ duration: 0.3 }}
           >
             <div className="px-5 py-3.5 border-b border-[#e2e8f0] flex items-center justify-between">
-              <p className="text-sm font-semibold text-[#0f1f3d]">Staff Compliance Overview</p>
-              <span className="text-xs text-[#94a3b8]">Hamad General Hospital</span>
+              <p className="text-sm font-semibold text-[#0f1f3d]">{t("dashboard_title")}</p>
+              <span className="text-xs text-[#94a3b8]">{t("dashboard_org")}</span>
             </div>
             <div className="divide-y divide-[#f1f5f9]">
               {staffRows.map(({ name, role, pct, status }, i) => {
@@ -1151,21 +1147,23 @@ function EmployerSection() {
 
 // ── Pricing ───────────────────────────────────────────────────────────────────
 function Pricing() {
+  const t = useTranslations("landing_pricing");
+
   const plans = [
     {
-      name: "Free", price: "$0", period: "Forever free", highlight: false,
-      features: ["CME wallet & tracking", "Compliance dashboard", "Analytics & charts", "Employer linking", "License wallet"],
-      cta: "Get started free", href: "/register",
+      name: t("free_name"), price: t("free_price"), period: t("free_period"), highlight: false,
+      features: [t("free_f1"), t("free_f2"), t("free_f3"), t("free_f4"), t("free_f5")],
+      cta: t("free_cta"), href: "/register",
     },
     {
-      name: "Pro", price: "$6", period: "/month · $61.20/year", highlight: true,
-      features: ["Everything in Free", "PDF compliance reports", "Hayya AI chat", "License expiry alerts", "Priority support"],
-      cta: "Start 14-day free trial", href: "/register",
+      name: t("pro_name"), price: t("pro_price"), period: t("pro_period"), highlight: true,
+      features: [t("pro_f1"), t("pro_f2"), t("pro_f3"), t("pro_f4"), t("pro_f5")],
+      cta: t("pro_cta"), href: "/register",
     },
     {
-      name: "Employer", price: "From $50", period: "/month", highlight: false,
-      features: ["Everything in Pro (per staff)", "Staff compliance dashboard", "Task assignment & reminders", "Bulk PDF export", "Up to 200 staff"],
-      cta: "View employer plans", href: "/pricing",
+      name: t("employer_name"), price: t("employer_price"), period: t("employer_period"), highlight: false,
+      features: [t("employer_f1"), t("employer_f2"), t("employer_f3"), t("employer_f4"), t("employer_f5")],
+      cta: t("employer_cta"), href: "/pricing",
     },
   ];
 
@@ -1173,11 +1171,11 @@ function Pricing() {
     <section className="px-6 py-20 bg-white">
       <div className="max-w-5xl mx-auto">
         <FadeUp className="text-center mb-14">
-          <p className="text-xs font-semibold text-[#1a56a0] uppercase tracking-[0.2em] mb-3">Pricing</p>
+          <p className="text-xs font-semibold text-[#1a56a0] uppercase tracking-[0.2em] mb-3">{t("label")}</p>
           <h2 className="text-3xl sm:text-[2.5rem] font-bold text-[#0f1f3d] tracking-tight mb-4">
-            Start free. Upgrade when you need more.
+            {t("title")}
           </h2>
-          <p className="text-[#64748b] text-lg">CME tracking is free forever. Upgrade for PDF reports, Hayya AI, and employer features.</p>
+          <p className="text-[#64748b] text-lg">{t("subtitle")}</p>
         </FadeUp>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
           {plans.map(({ name, price, period, highlight, features, cta, href }, i) => (
@@ -1192,7 +1190,7 @@ function Pricing() {
                 <div className="mb-5">
                   {highlight && (
                     <span className="text-[10px] font-bold tracking-widest text-[#60a5fa] uppercase bg-white/10 px-2.5 py-1 rounded-full mb-3 inline-block">
-                      Most Popular
+                      {t("most_popular")}
                     </span>
                   )}
                   <p className={`text-sm font-medium mb-1 ${highlight ? "text-white/65" : "text-[#64748b]"}`}>{name}</p>
@@ -1232,20 +1230,31 @@ function Pricing() {
 
 // ── FAQ ───────────────────────────────────────────────────────────────────────
 function FAQ() {
+  const t = useTranslations("faq_items");
   const [open, setOpen] = useState<number | null>(null);
+
+  const faqItems = [
+    { q: t("q1"), a: t("a1") },
+    { q: t("q2"), a: t("a2") },
+    { q: t("q3"), a: t("a3") },
+    { q: t("q4"), a: t("a4") },
+    { q: t("q5"), a: t("a5") },
+    { q: t("q6"), a: t("a6") },
+    { q: t("q7"), a: t("a7") },
+  ];
 
   return (
     <section className="bg-[#f8fafc] px-6 py-20">
       <div className="max-w-3xl mx-auto">
         <FadeUp className="text-center mb-12">
-          <p className="text-xs font-semibold text-[#1a56a0] uppercase tracking-[0.2em] mb-3">FAQ</p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-[#0f1f3d] mb-3">Common questions</h2>
-          <p className="text-[#64748b] text-base max-w-lg mx-auto">From healthcare professionals across the GCC.</p>
+          <p className="text-xs font-semibold text-[#1a56a0] uppercase tracking-[0.2em] mb-3">{t("label")}</p>
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#0f1f3d] mb-3">{t("title")}</h2>
+          <p className="text-[#64748b] text-base max-w-lg mx-auto">{t("subtitle")}</p>
         </FadeUp>
 
         <div className="space-y-2">
-          {FAQ_ITEMS.map((item, i) => (
-            <FadeUp key={item.q} delay={Math.min(i * 0.04, 0.24)}>
+          {faqItems.map((item, i) => (
+            <FadeUp key={i} delay={Math.min(i * 0.04, 0.24)}>
               <div className="bg-white rounded-xl border border-[#e2e8f0] overflow-hidden">
                 <button
                   type="button"
@@ -1286,8 +1295,8 @@ function FAQ() {
 
         <FadeUp delay={0.28} className="mt-8 text-center">
           <p className="text-sm text-[#64748b]">
-            Still have questions?{" "}
-            <a href="/contact" className="text-[#1a56a0] font-medium hover:underline">Contact our team →</a>
+            {t("still_questions")}{" "}
+            <a href="/contact" className="text-[#1a56a0] font-medium hover:underline">{t("contact_link")}</a>
           </p>
         </FadeUp>
       </div>
@@ -1297,6 +1306,8 @@ function FAQ() {
 
 // ── Final CTA ─────────────────────────────────────────────────────────────────
 function FinalCTA() {
+  const t = useTranslations("final_cta");
+
   return (
     <section className="relative bg-[#060d1f] px-6 py-24 text-center overflow-hidden">
       <div
@@ -1311,26 +1322,24 @@ function FinalCTA() {
       />
 
       <FadeUp className="relative z-10 max-w-2xl mx-auto">
-        <p className="text-xs font-semibold text-[#60a5fa] uppercase tracking-[0.2em] mb-5">Get started today</p>
+        <p className="text-xs font-semibold text-[#60a5fa] uppercase tracking-[0.2em] mb-5">{t("label")}</p>
         <h2 className="text-4xl sm:text-5xl font-bold text-white tracking-tight mb-5 leading-tight">
-          Don&apos;t let your license lapse.
+          {t("title")}
         </h2>
-        <p className="text-white/40 text-lg mb-10 leading-relaxed">
-          Track your CME credits, stay ahead of every renewal deadline, and generate a PDF compliance report in seconds — free to start, no credit card required.
-        </p>
+        <p className="text-white/40 text-lg mb-10 leading-relaxed">{t("subtitle")}</p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <MagneticButton
             href="/register"
             className="bg-white text-[#1a56a0] px-10 py-4 rounded-xl font-bold text-base hover:bg-blue-50 transition-colors shadow-2xl shadow-black/35 cursor-pointer inline-block"
           >
-            Create your free account
+            {t("cta_primary")}
           </MagneticButton>
           <Link href="/pricing" className="text-white/50 text-sm hover:text-white/75 transition-colors">
-            See all plans →
+            {t("cta_secondary")}
           </Link>
         </div>
-        <p className="text-white/20 text-xs mt-5">No credit card · Free forever · Cancel anytime</p>
-        <p className="text-white/14 text-xs mt-1.5">Powered by Hayya Med AI · Registered in Qatar&nbsp;🇶🇦</p>
+        <p className="text-white/20 text-xs mt-5">{t("footer_1")}</p>
+        <p className="text-white/14 text-xs mt-1.5">{t("footer_2")}</p>
       </FadeUp>
     </section>
   );
