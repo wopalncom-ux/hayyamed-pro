@@ -11,7 +11,9 @@ import {
   MotionConfig,
 } from "framer-motion";
 import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
 import SiteFooter from "@/components/SiteFooter";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 // ── Reduced-motion hook ──────────────────────────────────────────────────────
 function useReducedMotion() {
@@ -312,6 +314,7 @@ const FAQ_ITEMS = [
 
 // ── Nav ──────────────────────────────────────────────────────────────────────
 function Nav() {
+  const t = useTranslations("nav");
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -360,36 +363,37 @@ function Nav() {
           className={`hidden sm:flex items-center gap-7 text-sm transition-colors duration-300 ${scrolled ? "text-[#64748b]" : "text-white/75"}`}
           aria-label="Main navigation"
         >
-          <a href="#features" className="hover:text-[#1a56a0] transition-colors">Features</a>
-          <a href="#ai" className="hover:text-[#1a56a0] transition-colors">Hayya AI</a>
-          <Link href="/employers" className="hover:text-[#1a56a0] transition-colors">For Employers</Link>
-          <Link href="/pricing" className="hover:text-[#1a56a0] transition-colors">Pricing</Link>
+          <a href="#features" className="hover:text-[#1a56a0] transition-colors">{t("features")}</a>
+          <a href="#ai" className="hover:text-[#1a56a0] transition-colors">{t("hayya_ai")}</a>
+          <Link href="/employers" className="hover:text-[#1a56a0] transition-colors">{t("for_employers")}</Link>
+          <Link href="/pricing" className="hover:text-[#1a56a0] transition-colors">{t("pricing")}</Link>
         </nav>
 
         <div className="hidden sm:flex items-center gap-3">
+          <LanguageSwitcher variant={scrolled ? "light" : "dark"} />
           <Link
             href="/login"
             className={`text-sm transition-colors duration-300 ${scrolled ? "text-[#64748b] hover:text-[#111]" : "text-white/75 hover:text-white"}`}
           >
-            Sign in
+            {t("sign_in")}
           </Link>
           <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
             <Link
               href="/register"
               className="text-sm bg-[#1a56a0] text-white px-4 py-2 rounded-lg font-semibold hover:bg-[#1547a0] transition-colors shadow-md shadow-blue-900/25"
             >
-              Get started free
+              {t("get_started_free")}
             </Link>
           </motion.div>
         </div>
 
         <div className="flex sm:hidden items-center gap-2">
           <Link href="/register" className="text-sm bg-[#1a56a0] text-white px-3 py-1.5 rounded-lg font-semibold hover:bg-[#1547a0] transition-colors">
-            Start free
+            {t("start_free")}
           </Link>
           <button
             type="button"
-            aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-label={mobileOpen ? t("close_menu") : t("open_menu")}
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen((v) => !v)}
             className="p-2 rounded-lg hover:bg-white/10 transition-colors"
@@ -434,15 +438,18 @@ function Nav() {
                   className="block text-center text-sm bg-[#1a56a0] text-white py-3 rounded-xl font-semibold hover:bg-[#1547a0] transition-colors"
                   onClick={() => setMobileOpen(false)}
                 >
-                  Get started free →
+                  {t("get_started_free")} →
                 </Link>
                 <Link
                   href="/login"
                   className="block text-center text-sm text-[#64748b] hover:text-[#111] py-2 transition-colors"
                   onClick={() => setMobileOpen(false)}
                 >
-                  Sign in
+                  {t("sign_in")}
                 </Link>
+                <div className="flex justify-center pt-1">
+                  <LanguageSwitcher variant="light" />
+                </div>
               </div>
             </nav>
           </motion.div>
@@ -454,6 +461,8 @@ function Nav() {
 
 // ── Hero ─────────────────────────────────────────────────────────────────────
 function Hero() {
+  const t = useTranslations("hero");
+  const locale = useLocale();
   const orb1 = useRef<HTMLDivElement>(null);
   const orb2 = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
@@ -493,7 +502,7 @@ function Hero() {
     };
   }, [reduced]);
 
-  const headline = ["Your", "CME", "compliance,", "powered", "by AI."];
+  const headline = t("headline").split(" ");
 
   return (
     <section id="hero" className="relative bg-[#060d1f] min-h-screen flex flex-col items-center justify-center px-6 pt-28 pb-16 overflow-hidden">
@@ -521,7 +530,7 @@ function Hero() {
           className="inline-flex items-center gap-2.5 border border-white/10 bg-white/5 backdrop-blur-sm text-[#93c5fd] text-xs font-semibold px-4 py-2.5 rounded-full mb-8"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-[#4ade80]" style={{ animation: reduced ? "none" : "pulse 2s cubic-bezier(0.4,0,0.6,1) infinite" }} aria-hidden="true" />
-          Powered by Hayya Med AI · Built in Qatar&nbsp;🇶🇦
+          {t("badge")}
         </motion.div>
 
         {/* Headline — rendered visible in SSR; y-only animation after hydration (LCP fix) */}
@@ -532,7 +541,7 @@ function Hero() {
               initial={{ y: 20 }}
               animate={{ y: 0 }}
               transition={{ duration: 0.6, delay: 0.08 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className={`inline-block mr-[0.27em] ${word === "AI." ? "text-[#60a5fa]" : ""}`}
+              className={`inline-block me-[0.27em] ${word === "AI." ? "text-[#60a5fa]" : ""}`}
             >
               {word}
             </motion.span>
@@ -545,8 +554,7 @@ function Hero() {
           transition={{ duration: 0.55, delay: 0.5, ease: "easeOut" }}
           className="text-lg sm:text-xl text-white/50 max-w-xl mx-auto mb-8 leading-relaxed"
         >
-          Track CME credits, manage license renewals, and generate compliance reports —
-          built for healthcare professionals across Qatar and the GCC.
+          {t("subheading")}
         </motion.p>
 
         {/* Authority pills */}
@@ -569,20 +577,20 @@ function Hero() {
             href="/register"
             className="bg-white text-[#1a56a0] px-8 py-4 rounded-xl font-bold text-base hover:bg-blue-50 transition-colors shadow-2xl shadow-black/30 cursor-pointer inline-block"
           >
-            Start tracking for free
+            {t("cta_primary")}
           </MagneticButton>
           <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
             <Link
               href="/pricing"
               className="border border-white/12 bg-white/5 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold text-base hover:border-white/25 hover:bg-white/8 transition-all inline-block"
             >
-              View pricing →
+              {t("cta_secondary")}
             </Link>
           </motion.div>
         </motion.div>
 
         <p className="text-white/22 text-sm mt-3">
-          Free forever · No credit card required · 14-day Pro trial
+          {t("trust_text")}
         </p>
       </div>
 
@@ -600,17 +608,17 @@ function Hero() {
         >
           <div className="flex items-center justify-between mb-4">
             <div>
-              <p className="text-[11px] text-white/30 mb-0.5">Hayya Med Pro · QCHP Compliance</p>
-              <p className="text-[11px] text-white/20">Medicine · Cardiology · Qatar</p>
+              <p className="text-[11px] text-white/30 mb-0.5">{t("dashboard_label")}</p>
+              <p className="text-[11px] text-white/20">{t("dashboard_specialty")}</p>
             </div>
             <div className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full bg-[#4ade80]/10 text-[#4ade80] border border-[#4ade80]/20">
               <span className="w-1.5 h-1.5 rounded-full bg-[#4ade80]" style={{ animation: reduced ? "none" : "pulse 2s infinite" }} aria-hidden="true" />
-              ON TRACK
+              {t("dashboard_status")}
             </div>
           </div>
           <div className="flex items-end gap-2 mb-2">
             <span className="text-4xl font-bold text-white tabular-nums">52</span>
-            <span className="text-xl text-white/30 mb-0.5">/ 80 CPD credits</span>
+            <span className="text-xl text-white/30 mb-0.5">{t("dashboard_credits")}</span>
             <span className="text-sm text-white/22 mb-0.5 ml-auto">65%</span>
           </div>
           <div className="w-full bg-white/8 rounded-full h-2 mb-4">
@@ -623,9 +631,9 @@ function Hero() {
           </div>
           <div className="grid grid-cols-3 gap-3">
             {[
-              { label: "Activities logged", val: "21" },
-              { label: "Avg / month", val: "5.2 crd" },
-              { label: "Days remaining", val: "274" },
+              { label: t("dashboard_stat_activities"), val: "21" },
+              { label: t("dashboard_stat_avg"), val: "5.2 crd" },
+              { label: t("dashboard_stat_days"), val: "274" },
             ].map(({ label, val }) => (
               <div key={label} className="bg-white/[0.04] rounded-lg p-3 border border-white/[0.05]">
                 <p className="text-[10px] text-white/22 uppercase tracking-wide mb-1">{label}</p>

@@ -1,4 +1,6 @@
-﻿import type { Metadata, Viewport } from "next";
+import type { Metadata, Viewport } from "next";
+import { cookies } from "next/headers";
+import { NextIntlClientProvider } from "next-intl";
 import { PWARegister } from "@/components/PWARegister";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import { PostHogProvider } from "@/components/PostHogProvider";
@@ -31,13 +33,27 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({
+async function resolveLocale() {
+  const cookieStore = await cookies();
+  return cookieStore.get("NEXT_LOCALE")?.value === "ar" ? "ar" : "en";
+}
+
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const locale = await resolveLocale();
+  // Explicit imports so bundler can statically analyse both files
+  const messages =
+    locale === "ar"
+      ? (await import("@/messages/ar.json")).default
+      : (await import("@/messages/en.json")).default;
+
+  const dir = locale === "ar" ? "rtl" : "ltr";
+
   return (
-    <html lang="en" className="h-full antialiased">
+    <html lang={locale} dir={dir} className="h-full antialiased">
       <body className="min-h-full bg-background text-foreground">
         <a
           href="#main-content"
@@ -46,7 +62,9 @@ export default function RootLayout({
           Skip to main content
         </a>
         <PostHogProvider>
-          {children}
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            {children}
+          </NextIntlClientProvider>
         </PostHogProvider>
         <ConditionalFooter />
         <CookieConsent />

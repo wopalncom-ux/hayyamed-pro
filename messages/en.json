@@ -1,0 +1,127 @@
+{
+  "nav": {
+    "features": "Features",
+    "hayya_ai": "Hayya AI",
+    "for_employers": "For Employers",
+    "pricing": "Pricing",
+    "sign_in": "Sign in",
+    "get_started_free": "Get started free",
+    "start_free": "Start free",
+    "open_menu": "Open navigation menu",
+    "close_menu": "Close navigation menu"
+  },
+  "hero": {
+    "badge": "Powered by Hayya Med AI · Built in Qatar",
+    "headline": "Your CME compliance, powered by AI.",
+    "subheading": "Track CME credits, manage license renewals, and generate compliance reports — built for healthcare professionals across Qatar and the GCC.",
+    "cta_primary": "Start tracking for free",
+    "cta_secondary": "View pricing →",
+    "trust_text": "Free forever · No credit card required · 14-day Pro trial",
+    "dashboard_label": "Hayya Med Pro · QCHP Compliance",
+    "dashboard_specialty": "Medicine · Cardiology · Qatar",
+    "dashboard_status": "ON TRACK",
+    "dashboard_credits": "/ 80 CPD credits",
+    "dashboard_stat_activities": "Activities logged",
+    "dashboard_stat_avg": "Avg / month",
+    "dashboard_stat_days": "Days remaining"
+  },
+  "features": {
+    "section_title": "Everything you need to stay compliant",
+    "section_subtitle": "Built for the CME rules of Qatar, Saudi Arabia, UAE, Kuwait, Bahrain, and Oman — not a generic global tool.",
+    "learn_more": "Learn more",
+    "badge_core": "Core",
+    "badge_pro": "Pro",
+    "badge_employer": "Employer",
+    "cme_wallet_title": "CME Wallet",
+    "cme_wallet_desc": "Log every conference, workshop, and online course. Auto-enforces category caps per authority.",
+    "license_wallet_title": "License Wallet",
+    "license_wallet_desc": "Visual countdown to expiry. Alerts at 90, 30, and 7 days — across every license you hold.",
+    "hayya_ai_title": "Hayya AI",
+    "hayya_ai_desc": "Ask \"Am I on track?\" and get a personalised answer grounded in your actual activity history and authority rules.",
+    "analytics_title": "Analytics",
+    "analytics_desc": "Monthly credit pace, projected completion, gap analysis by category — at a glance.",
+    "employer_title": "Employer Dashboard",
+    "employer_desc": "Hospitals view staff compliance in real time — with professionals in full control of their privacy.",
+    "pdf_title": "PDF Reports",
+    "pdf_desc": "One-click QCHP-ready compliance PDF. Attach to your renewal submission — no manual formatting."
+  },
+  "countries": {
+    "section_title": "Compliance rules for {count} GCC countries",
+    "section_subtitle": "Not one-size-fits-all. Every authority has different credit requirements, cycle lengths, and category caps. Hayya Med Pro knows them all.",
+    "explore_rules": "Explore rules →"
+  },
+  "ai": {
+    "section_title": "Meet Hayya AI",
+    "section_subtitle": "Ask any compliance question and get an accurate, personalised answer — grounded in your actual activity log and the official rules for your country.",
+    "ask_placeholder": "Ask Hayya AI…",
+    "badge": "Pro feature"
+  },
+  "faq": {
+    "section_title": "Frequently asked questions",
+    "section_subtitle": "Everything healthcare professionals ask before signing up."
+  },
+  "cta": {
+    "title": "Start your compliance journey today",
+    "subtitle": "Free forever. No credit card. 14-day Pro trial included.",
+    "button": "Create your free account →",
+    "disclaimer": "Hayya Med Pro supports CME tracking and licensing readiness. It does not issue licenses and does not replace official licensing authorities. Users must verify final requirements with their relevant regulatory body."
+  },
+  "auth": {
+    "login": {
+      "title": "Sign in to Hayya Med Pro",
+      "subtitle": "Welcome back",
+      "email": "Email address",
+      "password": "Password",
+      "forgot": "Forgot password?",
+      "submit": "Sign in",
+      "no_account": "Don't have an account?",
+      "register_link": "Create one free",
+      "error_invalid": "Invalid email or password"
+    },
+    "register": {
+      "title": "Create your account",
+      "subtitle": "Free forever. Start in seconds.",
+      "email": "Email address",
+      "password": "Password",
+      "submit": "Create account",
+      "have_account": "Already have an account?",
+      "login_link": "Sign in",
+      "terms": "By creating an account you agree to our Terms of Service and Privacy Policy."
+    },
+    "forgot": {
+      "title": "Reset your password",
+      "subtitle": "Enter your email and we'll send a reset link.",
+      "email": "Email address",
+      "submit": "Send reset link",
+      "back": "Back to sign in"
+    }
+  },
+  "dashboard": {
+    "welcome": "Welcome back",
+    "compliance_status": "Compliance Status",
+    "cme_wallet": "CME Wallet",
+    "licenses": "Licenses",
+    "analytics": "Analytics",
+    "settings": "Settings",
+    "sign_out": "Sign out"
+  },
+  "common": {
+    "loading": "Loading…",
+    "save": "Save",
+    "cancel": "Cancel",
+    "back": "Back",
+    "next": "Next",
+    "close": "Close",
+    "error": "Something went wrong. Please try again.",
+    "success": "Changes saved successfully.",
+    "required": "Required",
+    "optional": "Optional",
+    "free": "Free",
+    "pro": "Pro",
+    "employer": "Employer"
+  },
+  "language": {
+    "switch_to_arabic": "عربي",
+    "switch_to_english": "English"
+  }
+}

@@ -48,3 +48,26 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ── RTL / Arabic foundation ─────────────────────────────────────────────── */
+[dir="rtl"] {
+  font-family: var(--font-sans, "Segoe UI", -apple-system, BlinkMacSystemFont, Tahoma, Arial, sans-serif);
+}
+
+/* Flip marquee direction for RTL */
+[dir="rtl"] .animate-marquee {
+  animation-direction: reverse;
+}
+
+/* Logical property helpers — use me-/ms- in components, these are the fallbacks */
+[dir="rtl"] .rtl\:text-right {
+  text-align: right;
+}
+[dir="rtl"] .rtl\:text-left {
+  text-align: left;
+}
+
+/* Ensure RTL scrollbars appear on the correct side */
+[dir="rtl"] * {
+  direction: rtl;
+}
