@@ -16,6 +16,7 @@ const FOOTER_COLS = [
       { label: "CME Tracker", href: "/cme-tracker" },
       { label: "About", href: "/about" },
       { label: "Contact", href: "/contact" },
+      { label: "Blog", href: "/blog" },
       { label: "Help & FAQ", href: "/help" },
       { label: "System Status", href: "/status" },
     ],
