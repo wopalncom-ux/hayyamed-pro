@@ -87,6 +87,11 @@ const FOOTER_COLS = [
       { label: "Neonatology", href: "/neonatology-cme" },
       { label: "Allergy & Immunology", href: "/allergy-immunology-cme" },
       { label: "Nuclear Medicine", href: "/nuclear-medicine-cme" },
+      { label: "Sports Medicine", href: "/sports-medicine-cme" },
+      { label: "Interventional Radiology", href: "/interventional-radiology-cme" },
+      { label: "Aesthetic Medicine", href: "/aesthetic-medicine-cme" },
+      { label: "Palliative Care", href: "/palliative-care-cme" },
+      { label: "Cardiothoracic Surgery", href: "/cardiothoracic-surgery-cme" },
     ],
   },
   {

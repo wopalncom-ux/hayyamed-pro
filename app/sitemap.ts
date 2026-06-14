@@ -113,5 +113,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/blog/dentist-cme-requirements-gcc-2026`,        lastModified: new Date(), changeFrequency: "monthly", priority: 0.9  },
     { url: `${BASE}/blog/allied-health-cpd-requirements-gcc-2026`,  lastModified: new Date(), changeFrequency: "monthly", priority: 0.9  },
     { url: `${BASE}/blog/cme-for-locum-doctors-gcc`,                lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
+    { url: `${BASE}/sports-medicine-cme`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/interventional-radiology-cme`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/aesthetic-medicine-cme`,       lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/palliative-care-cme`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/cardiothoracic-surgery-cme`,   lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
   ];
 }
