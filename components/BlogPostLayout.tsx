@@ -15,6 +15,7 @@ interface BlogPostLayoutProps {
   readingMinutes: number;
   author?: string;
   relatedLinks?: RelatedLink[];
+  dir?: "ltr" | "rtl";
   children: ReactNode;
 }
 
@@ -45,13 +46,14 @@ export default function BlogPostLayout({
   readingMinutes,
   author = "Hayya Med Pro Editorial",
   relatedLinks = [],
+  dir,
   children,
 }: BlogPostLayoutProps) {
   const catStyle = CATEGORY_STYLES[category] ?? CATEGORY_STYLES.guide;
   const catLabel = CATEGORY_LABELS[category] ?? "Article";
 
   return (
-    <div className="min-h-screen bg-[#f8fafc]">
+    <div className="min-h-screen bg-[#f8fafc]" dir={dir} lang={dir === "rtl" ? "ar" : undefined}>
       {/* Header */}
       <header className="bg-white border-b border-[#e2e8f0] sticky top-0 z-10">
         <div className="max-w-4xl mx-auto px-6 h-14 flex items-center justify-between">

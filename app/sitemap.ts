@@ -147,5 +147,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/blog/online-vs-inperson-cme-gcc`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/cme-portfolio-best-practices-gcc`,    lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/specialty-board-recognition-gcc`,     lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    // Blog posts — session 62 (new English posts)
+    { url: `${BASE}/blog/india-mbbs-licensing-gcc-2026`,       lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/midwifery-cpd-requirements-gcc`,      lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/dental-hygienist-cme-gcc`,            lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/hospital-pharmacy-cpd-gcc`,           lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/aviation-medicine-cme-gcc`,           lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
   ];
 }
