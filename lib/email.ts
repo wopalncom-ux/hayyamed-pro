@@ -1180,6 +1180,40 @@ export async function sendTrainingProviderApprovedEmail({
   );
 }
 
+export async function sendWaitlistLaunchEmail({ to }: { to: string }) {
+  await send(
+    to,
+    "Hayya Med Pro is now live — your early access is ready",
+    baseLayout(`
+      <p style="font-size:20px;font-weight:700;color:#111;margin:0 0 6px">We're live. Welcome to Hayya Med Pro.</p>
+      <p style="color:#374151;margin:0 0 20px">
+        Thank you for joining our waitlist. Hayya Med Pro is now open — you can create your free account and start tracking your CME credits today.
+      </p>
+
+      <div style="text-align:center;margin:0 0 28px">
+        <a href="${APP_URL}/register"
+           style="display:inline-block;background:#1a56a0;color:white;padding:14px 32px;border-radius:10px;text-decoration:none;font-weight:700;font-size:15px;letter-spacing:-0.2px">
+          Create your free account &rarr;
+        </a>
+      </div>
+
+      <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:16px 20px;margin:0 0 24px">
+        <p style="margin:0 0 10px;font-weight:600;color:#0c4a6e;font-size:14px">What you get for free</p>
+        <ul style="margin:0;padding-left:20px;color:#374151;font-size:14px;line-height:2">
+          <li>CME / CPD credit tracking for QCHP, SCFHS, DHA, DOH, NHRA, and OMSB</li>
+          <li>Real-time compliance dashboard and license expiry countdown</li>
+          <li>AI compliance chat and gap analysis (14-day Pro trial included)</li>
+          <li>Works on web, mobile, and installable as a PWA</li>
+        </ul>
+      </div>
+
+      <p style="color:#64748b;font-size:13px;margin:0">
+        Questions? Reply to this email or visit <a href="${APP_URL}/help" style="color:#1a56a0">hayyamed.pro/help</a>.
+      </p>
+    `)
+  );
+}
+
 export async function sendDemoRequestConfirmationEmail({
   to, name, orgName,
 }: {

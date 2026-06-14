@@ -1,4 +1,5 @@
 import { createAdminClient } from "@/lib/supabase/server";
+import WaitlistNotifyButton from "./WaitlistNotifyButton";
 
 export const dynamic = "force-dynamic";
 
@@ -38,7 +39,10 @@ export default async function WaitlistPage() {
           <h1 className="text-2xl font-bold text-[#111]">Waitlist Signups</h1>
           <p className="text-sm text-[#64748b] mt-1">Pre-launch email leads from the coming-soon page.</p>
         </div>
-        <WaitlistCsvButton csv={csv} total={total} />
+        <div className="flex items-center gap-2">
+          {pending > 0 && <WaitlistNotifyButton pending={pending} />}
+          <WaitlistCsvButton csv={csv} total={total} />
+        </div>
       </div>
 
       {/* Stats row */}
