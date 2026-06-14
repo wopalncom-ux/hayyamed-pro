@@ -233,7 +233,7 @@
 - [ ] Beta feedback survey configured (Typeform or similar)
 
 ### ARR Tracking
-- [ ] MRR/ARR tracking spreadsheet or dashboard live
+- [x] MRR/ARR tracking dashboard live â€" /admin/revenue shows MRR, ARR, plan breakdown, trial pipeline, recent upgrades
 - [ ] Churn tracking defined
 - [ ] Revenue per plan tier tracked
 

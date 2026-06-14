@@ -1,8 +1,8 @@
 -- ============================================================
--- Hayya Med PRO — ALL 28 MIGRATIONS COMBINED
+-- Hayya Med PRO — ALL 32 MIGRATIONS COMBINED
 -- Paste this entire file into the Supabase SQL Editor and Run.
 -- Idempotent: safe to run on a fresh project.
--- Generated: 2026-06-13
+-- Generated: 2026-06-14
 -- ============================================================
 
 -- ════════════════════════════════════════════════════════════

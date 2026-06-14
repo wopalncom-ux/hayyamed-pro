@@ -50,6 +50,30 @@ async function updateStatus(formData: FormData) {
   revalidatePath("/admin/demo-requests");
 }
 
+async function updateNotes(formData: FormData) {
+  "use server";
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect("/login");
+
+  const admin = createAdminClient();
+  const { data: member } = await admin
+    .from("organization_members").select("role")
+    .eq("auth_id", user.id).in("role", ["master_admin", "super_admin"]).maybeSingle();
+  if (!member) redirect("/dashboard");
+
+  const id    = formData.get("id") as string;
+  const notes = (formData.get("notes") as string | null)?.trim() ?? "";
+  if (!id) return;
+
+  await admin.from("demo_requests").update({
+    notes: notes || null,
+    updated_at: new Date().toISOString(),
+  }).eq("id", id);
+
+  revalidatePath("/admin/demo-requests");
+}
+
 export default async function DemoRequestsPage() {
   const admin = createAdminClient();
 
@@ -163,6 +187,30 @@ export default async function DemoRequestsPage() {
                     </form>
                   </div>
                 </div>
+
+                {/* Internal notes */}
+                <form action={updateNotes} className="mt-3 pt-3 border-t border-[#f1f5f9]">
+                  <input type="hidden" name="id" value={r.id} />
+                  <label htmlFor={`notes-${r.id}`} className="block text-xs font-medium text-[#374151] mb-1">
+                    Internal notes
+                  </label>
+                  <div className="flex gap-2">
+                    <textarea
+                      id={`notes-${r.id}`}
+                      name="notes"
+                      defaultValue={r.notes ?? ""}
+                      rows={2}
+                      placeholder="Call notes, qualification details, next steps…"
+                      className="flex-1 text-xs border border-[#e2e8f0] rounded-lg px-3 py-2 focus:outline-none focus:border-[#1a56a0] resize-none text-[#374151] placeholder:text-[#94a3b8]"
+                    />
+                    <button
+                      type="submit"
+                      className="self-end text-xs text-white bg-[#64748b] hover:bg-[#475569] px-3 py-2 rounded-lg transition-colors font-medium flex-shrink-0"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </form>
               </div>
             );
           })}

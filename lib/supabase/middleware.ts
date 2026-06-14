@@ -49,6 +49,7 @@ const COMING_SOON_BYPASS = [
   "/request-demo", // demo request form (employer/hospital sales)
   "/contact",      // contact page
   "/about",        // about/team page
+  "/status",       // public system status page
 ];
 
 export async function updateSession(request: NextRequest) {
