@@ -69,6 +69,11 @@ const COMING_SOON_BYPASS = [
   "/plastic-surgery-cme",
   "/physical-medicine-cme",
   "/vascular-surgery-cme",
+  "/critical-care-cme",
+  "/occupational-medicine-cme",
+  "/neonatology-cme",
+  "/allergy-immunology-cme",
+  "/nuclear-medicine-cme",
 ];
 
 export async function updateSession(request: NextRequest) {

@@ -96,5 +96,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/blog/qchp-renewal-guide-2026`,            lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/scfhs-cme-requirements-2026`,        lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/cme-vs-cpd-gcc`,                     lastModified: new Date(), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${BASE}/critical-care-cme`,       lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/occupational-medicine-cme`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/neonatology-cme`,         lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/allergy-immunology-cme`,  lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/nuclear-medicine-cme`,    lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
   ];
 }
