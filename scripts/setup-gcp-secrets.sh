@@ -30,8 +30,8 @@ create_secret "hayyamed-pro-service-role-key"  "<PASTE_SUPABASE_SERVICE_ROLE_KEY
 # ✅ Already have — copy POSTMARK_API_TOKEN from .env.cloudrun.yaml
 create_secret "hayyamed-pro-postmark-key"       "<PASTE_POSTMARK_API_TOKEN>"
 
-# ⚠ Get from Anthropic console: console.anthropic.com → API Keys
-create_secret "hayyamed-pro-anthropic-key"      "<PASTE_ANTHROPIC_API_KEY>"
+# ℹ Anthropic API key NOT needed — AI uses Vertex AI (ADC on Cloud Run, no key required)
+# create_secret "hayyamed-pro-anthropic-key"  "<NOT_NEEDED>"
 
 # ✅ Already have — copy CRON_SECRET from .env.cloudrun.yaml
 create_secret "hayyamed-pro-cron-secret"        "<PASTE_CRON_SECRET>"
