@@ -1256,3 +1256,212 @@ export async function sendDemoRequestConfirmationEmail({
     `)
   );
 }
+
+// ── Admin NPS alert ───────────────────────────────────────────────────────────
+
+export async function sendAdminNpsAlertEmail({
+  to, score, comment, professionalName, profession, country,
+}: {
+  to: string;
+  score: number;
+  comment: string | null;
+  professionalName: string;
+  profession: string | null;
+  country: string | null;
+}) {
+  const tier = score >= 9 ? "Promoter" : score >= 7 ? "Passive" : "Detractor";
+  const color = score >= 9 ? "#16a34a" : score >= 7 ? "#d97706" : "#dc2626";
+  await send(
+    to,
+    `NPS ${tier} (${score}/10) — ${esc(professionalName)}`,
+    baseLayout(`
+      <p style="font-size:18px;font-weight:700;color:#111;margin:0 0 16px">New NPS Response</p>
+      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:16px 20px;margin:0 0 16px">
+        <p style="margin:0 0 8px;font-size:13px;color:#64748b">Score</p>
+        <p style="margin:0;font-size:36px;font-weight:800;color:${color}">${score}/10 — ${tier}</p>
+      </div>
+      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:16px 20px;margin:0 0 16px">
+        <p style="margin:0 0 4px;font-size:12px;color:#64748b;text-transform:uppercase;letter-spacing:0.5px">Professional</p>
+        <p style="margin:0;color:#111;font-weight:600">${esc(professionalName)}</p>
+        ${profession ? `<p style="margin:4px 0 0;color:#64748b;font-size:13px">${esc(profession)}${country ? " · " + esc(country) : ""}</p>` : ""}
+      </div>
+      ${comment ? `
+      <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:16px 20px;margin:0 0 16px">
+        <p style="margin:0 0 6px;font-size:12px;color:#92400e;text-transform:uppercase;letter-spacing:0.5px">Comment</p>
+        <p style="margin:0;color:#374151;font-size:14px;line-height:1.6">${esc(comment)}</p>
+      </div>` : ""}
+      <a href="${APP_URL}/admin/analytics" style="display:inline-block;background:#1a56a0;color:white;text-decoration:none;padding:10px 20px;border-radius:8px;font-weight:600;font-size:13px">
+        View NPS dashboard →
+      </a>
+    `)
+  );
+}
+
+// ── Onboarding drip sequence ──────────────────────────────────────────────────
+
+export async function sendDripDay1Email({
+  to, name, unsubscribeUrl,
+}: { to: string; name: string; unsubscribeUrl: string }) {
+  await send(
+    to,
+    "Log your first CME activity — takes 60 seconds",
+    baseLayout(`
+      <p style="font-size:20px;font-weight:700;color:#111;margin:0 0 6px">Hi ${esc(name)},</p>
+      <p style="color:#374151;margin:0 0 20px">
+        Your Hayya Med Pro account is ready. The fastest way to get value from it is to log your first CME activity today — it takes about 60 seconds.
+      </p>
+
+      <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:20px;margin:0 0 24px">
+        <p style="margin:0 0 12px;font-weight:700;color:#1e40af;font-size:15px">How to log a CME activity</p>
+        <ol style="margin:0;padding-left:20px;color:#374151;font-size:14px;line-height:2.2">
+          <li>Go to <strong>CME Activities</strong> in your dashboard</li>
+          <li>Click <strong>Add activity</strong></li>
+          <li>Enter the title, date, credit hours, and accrediting body</li>
+          <li>Upload your certificate (optional — required for verified status)</li>
+          <li>Hit save — your compliance ring updates instantly</li>
+        </ol>
+      </div>
+
+      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:16px 20px;margin:0 0 24px">
+        <p style="margin:0 0 6px;font-weight:600;color:#15803d;font-size:13px">Pro tip</p>
+        <p style="margin:0;color:#374151;font-size:14px">
+          Verified activities (with uploaded certificate) carry more weight during license renewal inspections. Use our OCR scanner to auto-extract details from your certificate — no manual typing needed.
+        </p>
+      </div>
+
+      <a href="${APP_URL}/dashboard/cme"
+         style="display:inline-block;background:#1a56a0;color:white;text-decoration:none;padding:13px 28px;border-radius:8px;font-weight:700;font-size:15px;margin-bottom:20px">
+        Log my first activity →
+      </a>
+
+      <p style="color:#64748b;font-size:13px;margin:0">
+        Need help? Reply to this email — we're a small team and read every message.
+      </p>
+    `, unsubscribeUrl),
+    unsubscribeUrl
+  );
+}
+
+export async function sendDripDay3Email({
+  to, name, unsubscribeUrl,
+}: { to: string; name: string; unsubscribeUrl: string }) {
+  await send(
+    to,
+    "3 CME credits most doctors forget to log",
+    baseLayout(`
+      <p style="font-size:20px;font-weight:700;color:#111;margin:0 0 6px">Hi ${esc(name)},</p>
+      <p style="color:#374151;margin:0 0 20px">
+        Most healthcare professionals undercount their CME credits. Here are three common activities that count toward your cycle — and are easy to miss.
+      </p>
+
+      <div style="margin:0 0 12px;padding:16px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px">
+        <p style="margin:0 0 4px;font-weight:700;color:#111;font-size:14px">1. Journal article reviews</p>
+        <p style="margin:0;color:#64748b;font-size:13px">Reading and reflecting on peer-reviewed articles qualifies in most GCC countries — typically 0.5–1 credit per hour with a self-assessment.</p>
+      </div>
+      <div style="margin:0 0 12px;padding:16px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px">
+        <p style="margin:0 0 4px;font-weight:700;color:#111;font-size:14px">2. Teaching and presenting</p>
+        <p style="margin:0;color:#64748b;font-size:13px">Grand rounds, case presentations, and lectures you give often earn 1–2× the credit of attending the same session.</p>
+      </div>
+      <div style="margin:0 0 24px;padding:16px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px">
+        <p style="margin:0 0 4px;font-weight:700;color:#111;font-size:14px">3. Hospital committee work</p>
+        <p style="margin:0;color:#64748b;font-size:13px">Quality improvement, accreditation, and clinical governance meetings qualify in several countries — check your authority's category guide.</p>
+      </div>
+
+      <p style="color:#374151;font-size:14px;margin:0 0 20px">
+        Your Hayya Med Pro gap analysis shows exactly which categories you still need to fill — and how many credits remain in your current cycle.
+      </p>
+
+      <a href="${APP_URL}/dashboard/analytics"
+         style="display:inline-block;background:#1a56a0;color:white;text-decoration:none;padding:13px 28px;border-radius:8px;font-weight:700;font-size:15px;margin-bottom:20px">
+        See my gap analysis →
+      </a>
+
+      <p style="color:#64748b;font-size:13px;margin:0">
+        Not sure if an activity qualifies? Reply to this email with the details — we'll check the rules for your country and profession.
+      </p>
+    `, unsubscribeUrl),
+    unsubscribeUrl
+  );
+}
+
+export async function sendDripDay7Email({
+  to, name, authority, unsubscribeUrl,
+}: { to: string; name: string; authority: string | null; unsubscribeUrl: string }) {
+  const authorityNote = authority ? ` for ${esc(authority)}` : "";
+  await send(
+    to,
+    "Your compliance report is ready to download",
+    baseLayout(`
+      <p style="font-size:20px;font-weight:700;color:#111;margin:0 0 6px">Hi ${esc(name)},</p>
+      <p style="color:#374151;margin:0 0 20px">
+        Your CME compliance report${authorityNote} is ready. It includes a full activity log, credit summary by category, compliance status, and a renewal readiness score.
+      </p>
+
+      <div style="background:#f8fafc;border:2px solid #1a56a0;border-radius:12px;padding:24px;margin:0 0 24px;position:relative">
+        <p style="margin:0 0 16px;font-weight:700;color:#111;font-size:16px">What's in your report</p>
+        <ul style="margin:0 0 20px;padding-left:20px;color:#374151;font-size:14px;line-height:2.2">
+          <li>Complete CME activity log with verification status</li>
+          <li>Credit breakdown by category and accreditor</li>
+          <li>Gap analysis — hours remaining to meet your cycle requirement</li>
+          <li>Renewal readiness score (0–100)</li>
+          <li>Official disclaimer formatted for submission to your authority</li>
+        </ul>
+        <div style="background:#fef9c3;border:1px solid #fde68a;border-radius:8px;padding:12px 16px;margin-bottom:20px">
+          <p style="margin:0;color:#92400e;font-size:13px;font-weight:600">Pro feature — upgrade to download</p>
+          <p style="margin:4px 0 0;color:#92400e;font-size:12px">PDF report download is available on the Pro plan. Your trial gives you full access — download now before it expires.</p>
+        </div>
+        <a href="${APP_URL}/dashboard/analytics"
+           style="display:inline-block;background:#1a56a0;color:white;text-decoration:none;padding:13px 28px;border-radius:8px;font-weight:700;font-size:15px">
+          Download my report (Pro) →
+        </a>
+      </div>
+
+      <p style="color:#64748b;font-size:13px;margin:0">
+        Questions about your compliance status? Reply here — our healthcare compliance team reads every message.
+      </p>
+    `, unsubscribeUrl),
+    unsubscribeUrl
+  );
+}
+
+export async function sendDripDay10Email({
+  to, name, unsubscribeUrl,
+}: { to: string; name: string; unsubscribeUrl: string }) {
+  await send(
+    to,
+    "Managing a team? See how employers use Hayya Med Pro",
+    baseLayout(`
+      <p style="font-size:20px;font-weight:700;color:#111;margin:0 0 6px">Hi ${esc(name)},</p>
+      <p style="color:#374151;margin:0 0 20px">
+        If you manage other healthcare professionals — a department, a clinic, or a hospital unit — Hayya Med Pro has a dedicated employer dashboard that makes compliance management much easier.
+      </p>
+
+      <div style="margin:0 0 12px;padding:16px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px">
+        <p style="margin:0 0 4px;font-weight:700;color:#111;font-size:14px">Staff compliance at a glance</p>
+        <p style="margin:0;color:#64748b;font-size:13px">See every staff member's CME status, credit balance, and upcoming renewal dates — all in one table.</p>
+      </div>
+      <div style="margin:0 0 12px;padding:16px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px">
+        <p style="margin:0 0 4px;font-weight:700;color:#111;font-size:14px">Automated renewal reminders</p>
+        <p style="margin:0;color:#64748b;font-size:13px">The system sends renewal alerts to staff automatically — you don't need to chase anyone.</p>
+      </div>
+      <div style="margin:0 0 24px;padding:16px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px">
+        <p style="margin:0 0 4px;font-weight:700;color:#111;font-size:14px">Audit-ready compliance reports</p>
+        <p style="margin:0;color:#64748b;font-size:13px">Generate a compliance summary for your entire organization — formatted for JCI and CBAHI audits.</p>
+      </div>
+
+      <p style="color:#374151;font-size:14px;margin:0 0 20px">
+        The Employer plan starts at <strong>$49/month</strong> for up to 10 staff. Most HR teams tell us it pays for itself within the first renewal cycle.
+      </p>
+
+      <a href="${APP_URL}/employer/register"
+         style="display:inline-block;background:#1a56a0;color:white;text-decoration:none;padding:13px 28px;border-radius:8px;font-weight:700;font-size:15px;margin-bottom:20px">
+        Set up my organization →
+      </a>
+
+      <p style="color:#64748b;font-size:13px;margin:0">
+        Not managing a team yet? You can ignore this email — your individual Pro features are unaffected.
+      </p>
+    `, unsubscribeUrl),
+    unsubscribeUrl
+  );
+}

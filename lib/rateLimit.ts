@@ -2,6 +2,26 @@ import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { createAdminClient } from "@/lib/supabase/server";
 
+// ── Middleware-level IP rate limiters ─────────────────────────────────────────
+// Created once at module load; null when Upstash env vars are not set (dev / CI).
+// Middleware checks these before any auth logic — fail open if Upstash unavailable.
+
+const _mwUrl   = process.env.UPSTASH_REDIS_REST_URL ?? "";
+const _mwToken = process.env.UPSTASH_REDIS_REST_TOKEN ?? "";
+const _mwRedis = _mwUrl && _mwToken ? new Redis({ url: _mwUrl, token: _mwToken }) : null;
+
+function makeMw(maxReqs: number, window: `${number} ${"s" | "m" | "h" | "d"}`, prefix: string) {
+  if (!_mwRedis) return null;
+  return new Ratelimit({ redis: _mwRedis, limiter: Ratelimit.slidingWindow(maxReqs, window), analytics: false, prefix });
+}
+
+/** 10 req / 60 s per IP — /api/auth/* endpoints */
+export const authLimiter    = makeMw(10,  "60 s",   "rl:auth");
+/** 20 req / hour per IP — /api/ai/* endpoints */
+export const aiLimiter      = makeMw(20,  "3600 s", "rl:ai");
+/** 100 req / 60 s per IP — /api/paddle/webhook, /api/push/webhook */
+export const webhookLimiter = makeMw(100, "60 s",   "rl:webhook");
+
 interface RateLimitConfig {
   action: string;
   userId: string;

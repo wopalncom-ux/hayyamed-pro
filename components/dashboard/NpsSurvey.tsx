@@ -42,10 +42,19 @@ export default function NpsSurvey({ createdAt }: { createdAt: string }) {
     track("nps_dismissed", { selected });
   }
 
-  function submit() {
+  async function submit() {
     if (selected === null) return;
-    localStorage.setItem(SUBMITTED_KEY, "1");
     track("nps_submitted", { score: selected, reason: reason.trim() || undefined });
+    try {
+      await fetch("/api/nps", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ score: selected, comment: reason.trim() || undefined }),
+      });
+    } catch {
+      // Non-critical — persist locally regardless of API outcome
+    }
+    localStorage.setItem(SUBMITTED_KEY, "1");
     setSubmitted(true);
     setTimeout(() => setVisible(false), 2500);
   }

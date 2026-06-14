@@ -19,6 +19,7 @@ export default async function AdminAnalyticsPage() {
   const day1  = new Date(now.getTime() -  1 * 86400000).toISOString();
   const day7  = new Date(now.getTime() -  7 * 86400000).toISOString();
   const day30 = new Date(now.getTime() - 30 * 86400000).toISOString();
+  const day90 = new Date(now.getTime() - 90 * 86400000).toISOString();
 
   // Signup cohort — 30 days
   const [
@@ -32,6 +33,7 @@ export default async function AdminAnalyticsPage() {
     trialingRes,
     totalRes,
     recentCmeRes,
+    npsRes,
   ] = await Promise.all([
     // All signups last 30 days with created_at
     admin
@@ -93,6 +95,13 @@ export default async function AdminAnalyticsPage() {
       .select("created_at")
       .gte("created_at", day30)
       .order("created_at", { ascending: true }),
+
+    // NPS responses — last 90 days
+    admin
+      .from("nps_responses")
+      .select("score, created_at")
+      .gte("created_at", day90)
+      .order("created_at", { ascending: false }),
   ]);
 
   const signups30 = signupsRes.data ?? [];
@@ -132,6 +141,19 @@ export default async function AdminAnalyticsPage() {
     const k = dayLabel(c.created_at);
     if (k in cmeByDay) cmeByDay[k]++;
   }
+
+  // NPS scoring
+  const npsData      = npsRes.data ?? [];
+  const npsPromoters = npsData.filter((r) => r.score >= 9).length;
+  const npsPassives  = npsData.filter((r) => r.score >= 7 && r.score <= 8).length;
+  const npsDetractors = npsData.filter((r) => r.score <= 6).length;
+  const npsTotal     = npsData.length;
+  const npsScore     = npsTotal > 0 ? Math.round(((npsPromoters - npsDetractors) / npsTotal) * 100) : null;
+  const npsDistribution = Array.from({ length: 11 }, (_, i) => ({
+    score: i,
+    count: npsData.filter((r) => r.score === i).length,
+  }));
+  const npsMaxBucket = Math.max(...npsDistribution.map((d) => d.count), 1);
 
   const signupDays = Object.entries(signupByDay);
   const cmeDays    = Object.entries(cmeByDay);
@@ -222,6 +244,53 @@ export default async function AdminAnalyticsPage() {
             );
           })}
         </div>
+      </div>
+
+      {/* NPS widget */}
+      <div className="bg-white rounded-xl border border-[#e2e8f0] p-6 mb-6">
+        <h2 className="text-sm font-semibold text-[#111] mb-1">Net Promoter Score (NPS) — Last 90 Days</h2>
+        <p className="text-xs text-[#64748b] mb-5">{npsTotal} responses · Promoters (9–10) minus Detractors (0–6) ÷ Total × 100</p>
+        {npsTotal === 0 ? (
+          <p className="text-sm text-[#94a3b8]">No responses yet.</p>
+        ) : (
+          <div className="flex gap-8 items-start flex-wrap">
+            <div className="text-center min-w-[80px]">
+              <p className={`text-4xl font-bold ${npsScore !== null && npsScore >= 50 ? "text-[#16a34a]" : npsScore !== null && npsScore >= 0 ? "text-[#d97706]" : "text-[#dc2626]"}`}>
+                {npsScore !== null ? (npsScore > 0 ? `+${npsScore}` : npsScore) : "—"}
+              </p>
+              <p className="text-xs text-[#64748b] mt-1">NPS Score</p>
+            </div>
+            <div className="flex gap-4 text-center text-sm flex-wrap">
+              <div>
+                <p className="text-xl font-bold text-[#16a34a]">{npsPromoters}</p>
+                <p className="text-xs text-[#64748b]">Promoters<br />(9–10)</p>
+              </div>
+              <div>
+                <p className="text-xl font-bold text-[#d97706]">{npsPassives}</p>
+                <p className="text-xs text-[#64748b]">Passives<br />(7–8)</p>
+              </div>
+              <div>
+                <p className="text-xl font-bold text-[#dc2626]">{npsDetractors}</p>
+                <p className="text-xs text-[#64748b]">Detractors<br />(0–6)</p>
+              </div>
+            </div>
+            <div className="flex-1 min-w-[180px]">
+              <p className="text-[11px] text-[#64748b] uppercase tracking-wide mb-2">Score distribution</p>
+              <div className="flex items-end gap-0.5 h-12">
+                {npsDistribution.map(({ score, count }) => {
+                  const h = npsMaxBucket > 0 ? Math.max(Math.round((count / npsMaxBucket) * 100), count > 0 ? 8 : 0) : 0;
+                  const color = score >= 9 ? "#16a34a" : score >= 7 ? "#d97706" : "#dc2626";
+                  return (
+                    <div key={score} className="flex-1 flex flex-col items-center gap-1 group relative">
+                      <div className="w-full rounded-t-sm" style={{ height: `${h}%`, backgroundColor: color, minHeight: count > 0 ? "3px" : "0" }} />
+                      <span className="text-[8px] text-[#94a3b8]">{score}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Conversion funnel */}

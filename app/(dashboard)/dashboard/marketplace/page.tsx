@@ -38,7 +38,15 @@ export default async function MarketplacePage({
   if (sp.category && sp.category !== "All") query = query.eq("category", sp.category);
   if (sp.mode) query = query.eq("delivery_mode", sp.mode);
   if (sp.free === "1") query = query.eq("is_free", true);
-  if (sp.q?.trim()) query = query.ilike("title", `%${sp.q.trim()}%`);
+  if (sp.q?.trim()) {
+    // Use full-text search when possible, fall back to ilike for very short queries (<3 chars)
+    const q = sp.q.trim();
+    if (q.length >= 3) {
+      query = query.textSearch("search_vector", q, { type: "websearch", config: "english" });
+    } else {
+      query = query.ilike("title", `%${q}%`);
+    }
+  }
 
   const [{ data: courses }, { data: myEnrollments }] = await Promise.all([
     query,
