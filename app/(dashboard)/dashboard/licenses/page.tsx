@@ -2,6 +2,7 @@ import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import LicenseCountdownCard from "@/components/dashboard/LicenseCountdownCard";
 import LicenseEditForm from "@/components/dashboard/LicenseEditForm";
+import CopyVerificationLinkButton from "@/components/dashboard/CopyVerificationLinkButton";
 import { getUserPlan, isPro } from "@/lib/subscription";
 import { toCountryCode } from "@/lib/countryCode";
 
@@ -238,21 +239,24 @@ export default async function LicensesPage() {
                 ? "All requirements are met. Download your renewal package to submit to your licensing authority."
                 : "Complete the gaps above, then download your renewal package."}
             </p>
-            {isPro(plan) ? (
-              <a
-                href="/api/pdf/cme-report"
-                className="flex-shrink-0 text-sm bg-[#1a56a0] text-white px-4 py-2 rounded-lg font-semibold hover:bg-[#1547a0] transition-colors"
-              >
-                Download Package
-              </a>
-            ) : (
-              <a
-                href="/pricing?source=renewal_package"
-                className="flex-shrink-0 text-sm bg-[#f8fafc] border border-[#e2e8f0] text-[#64748b] px-4 py-2 rounded-lg font-medium hover:border-[#1a56a0] hover:text-[#1a56a0] transition-colors"
-              >
-                Upgrade for PDF →
-              </a>
-            )}
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <CopyVerificationLinkButton />
+              {isPro(plan) ? (
+                <a
+                  href="/api/pdf/cme-report"
+                  className="flex-shrink-0 text-sm bg-[#1a56a0] text-white px-4 py-2 rounded-lg font-semibold hover:bg-[#1547a0] transition-colors"
+                >
+                  Download Package
+                </a>
+              ) : (
+                <a
+                  href="/pricing?source=renewal_package"
+                  className="flex-shrink-0 text-sm bg-[#f8fafc] border border-[#e2e8f0] text-[#64748b] px-4 py-2 rounded-lg font-medium hover:border-[#1a56a0] hover:text-[#1a56a0] transition-colors"
+                >
+                  Upgrade for PDF →
+                </a>
+              )}
+            </div>
           </div>
         </div>
       )}

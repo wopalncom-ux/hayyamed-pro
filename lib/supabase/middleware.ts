@@ -1,9 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
 
-// Routes that require authentication. Everything else is public by default.
-// This "allow-by-default" approach means new public pages (SEO, marketing,
-// legal) are automatically accessible without updating this list.
 const PROTECTED_PREFIXES = [
   "/dashboard",
   "/onboarding",
@@ -11,6 +8,32 @@ const PROTECTED_PREFIXES = [
   "/provider",
   "/admin",
   "/university",
+];
+
+// Routes that bypass the coming-soon redirect. Everything else is gated.
+const COMING_SOON_BYPASS = [
+  "/coming-soon",
+  "/api/",
+  "/login",
+  "/register",
+  "/forgot-password",
+  "/reset-password",
+  "/verify-email",
+  "/verify/",
+  "/auth/",
+  "/monitoring",
+  "/dashboard",
+  "/onboarding",
+  "/employer",
+  "/provider",
+  "/admin",
+  "/university",
+  "/_next/",
+  "/favicon",
+  "/icons/",
+  "/robots.txt",
+  "/sitemap",
+  "/opengraph-image",
 ];
 
 export async function updateSession(request: NextRequest) {
@@ -47,6 +70,14 @@ export async function updateSession(request: NextRequest) {
 
   // API routes handle their own auth — never redirect them
   if (pathname.startsWith("/api/")) return supabaseResponse;
+
+  // Coming soon mode — redirect all public marketing/SEO routes
+  const bypassComingSoon = COMING_SOON_BYPASS.some((p) => pathname.startsWith(p));
+  if (!bypassComingSoon) {
+    const url = request.nextUrl.clone();
+    url.pathname = user ? "/dashboard" : "/coming-soon";
+    return NextResponse.redirect(url);
+  }
 
   const isProtected = PROTECTED_PREFIXES.some((p) => pathname.startsWith(p));
 
