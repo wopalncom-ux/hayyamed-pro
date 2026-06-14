@@ -1,6 +1,7 @@
 "use server";
 
 import { sendDemoRequestEmail, sendDemoRequestConfirmationEmail } from "@/lib/email";
+import { createAdminClient } from "@/lib/supabase/server";
 
 const ORG_TYPES = [
   "Private clinic",
@@ -53,7 +54,16 @@ export async function submitDemoRequest(
   if (!COUNTRIES.includes(country)) return { error: "Please select your country." };
   if (message.length > 2000) return { error: "Message is too long (max 2000 characters)." };
 
-  await sendDemoRequestEmail({ name, email, jobTitle, orgName, orgType, staffCount, country, message });
+  // Persist to DB first — email is fire-and-forget; DB is the source of truth for pipeline
+  const admin = createAdminClient();
+  const { error: dbError } = await admin.from("demo_requests").insert({
+    name, email, job_title: jobTitle, org_name: orgName,
+    org_type: orgType, staff_count: staffCount, country,
+    message: message || null,
+  });
+  if (dbError) return { error: "Something went wrong. Please email us at support@hayyamed.pro." };
+
+  sendDemoRequestEmail({ name, email, jobTitle, orgName, orgType, staffCount, country, message }).catch(() => {});
   sendDemoRequestConfirmationEmail({ to: email, name, orgName }).catch(() => {});
   return { success: true };
 }

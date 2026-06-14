@@ -17,7 +17,7 @@
 
 ### Infrastructure
 - [x] Supabase project connected â€” URL + anon key + service role key in .env.local
-- [ ] All 28 database migrations run against production Supabase project (run all .sql files in supabase/migrations/ against production Supabase SQL editor)
+- [ ] All 32 database migrations run against production Supabase project — use `supabase/migrations/COMBINED_RUN_ONCE.sql` (paste into Supabase SQL Editor; covers all 32 migrations in sequence)
 - [x] GCP Cloud Run deployment tested end-to-end (revision 16 live)
 - [x] Domain `hayyamed.pro` DNS pointed to Cloud Run via Cloudflare Worker proxy
 - [x] SSL certificate active and verified (Cloudflare managed SSL)

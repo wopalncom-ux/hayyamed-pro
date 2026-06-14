@@ -43,7 +43,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             { href: "/admin/nps",              label: "NPS Survey" },
             { href: "/admin/audit-logs",       label: "Audit Log" },
             { href: "/admin/qpay-invoices",    label: "QPay Invoices" },
-            { href: "/admin/waitlist",         label: "Waitlist" },
+            { href: "/admin/waitlist",           label: "Waitlist" },
+            { href: "/admin/demo-requests",     label: "Demo Requests" },
             { href: "/admin/ai-modules",       label: "🤖 AI Modules" },
             { href: "/admin/settings",         label: "⚙ Settings" },
           ].map(({ href, label }) => (
