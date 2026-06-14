@@ -153,5 +153,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/blog/dental-hygienist-cme-gcc`,            lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/hospital-pharmacy-cpd-gcc`,           lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/aviation-medicine-cme-gcc`,           lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    // Blog posts — session 63 (new English posts)
+    { url: `${BASE}/blog/kuwait-nursing-cpd-requirements`,         lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/oman-pharmacist-cme-requirements`,        lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/ophthalmologist-cme-requirements-gcc`,    lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/radiology-cme-requirements-gcc`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/psychiatry-cpd-requirements-gcc`,         lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
   ];
 }

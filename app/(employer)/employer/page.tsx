@@ -7,6 +7,7 @@ import AssignDepartmentButton from "@/components/employer/AssignDepartmentButton
 import AssignTaskButton from "@/components/employer/AssignTaskButton";
 import SendReminderButton from "@/components/employer/SendReminderButton";
 import InviteLinkButton from "@/components/employer/InviteLinkButton";
+import ComplianceHeatmap from "@/components/employer/ComplianceHeatmap";
 
 type ComplianceStatus = "compliant" | "at_risk" | "non_compliant" | "unknown";
 
@@ -237,6 +238,9 @@ export default async function EmployerDashboardPage({
           </div>
         </div>
       )}
+
+      {/* Department compliance heatmap */}
+      <ComplianceHeatmap deptGroups={deptGroups} />
 
       {/* Pending requests */}
       {pending.length > 0 && (
