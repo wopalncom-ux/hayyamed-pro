@@ -7,6 +7,7 @@ import AssignDepartmentButton from "@/components/employer/AssignDepartmentButton
 import AssignTaskButton from "@/components/employer/AssignTaskButton";
 import SendReminderButton from "@/components/employer/SendReminderButton";
 import InviteLinkButton from "@/components/employer/InviteLinkButton";
+import QrCodeButton from "@/components/employer/QrCodeButton";
 import ComplianceHeatmap from "@/components/employer/ComplianceHeatmap";
 import EmployerSetupChecklist from "@/components/employer/EmployerSetupChecklist";
 import ComplianceReportButton from "@/components/employer/ComplianceReportButton";
@@ -202,6 +203,7 @@ export default async function EmployerDashboardPage({
             AI Analyzer
           </a>
           <InviteLinkButton organizationId={orgId} orgName={orgName} />
+          <QrCodeButton orgName={orgName} />
           {total > 0 && <ExportStaffCsvButton organizationId={orgId} orgName={orgName} />}
           {total > 0 && <ComplianceReportButton organizationId={orgId} orgName={orgName} />}
           {total > 0 && <BulkReportButton organizationId={orgId} orgName={orgName} />}

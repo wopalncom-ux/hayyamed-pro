@@ -85,6 +85,9 @@ export type AnalyticsEvent =
   | "employer_setup_started"
   | "employer_setup_completed"
   | "employer_invite_link_copied"
+  | "employer_qr_code_viewed"
+  | "employer_qr_code_downloaded"
+  | "employer_qr_code_downloaded_png"
   // Profile
   | "license_added"
   | "settings_updated"
