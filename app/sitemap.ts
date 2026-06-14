@@ -101,5 +101,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/neonatology-cme`,         lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/allergy-immunology-cme`,  lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/nuclear-medicine-cme`,    lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/nhra-renewal-guide-2026`,             lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/what-happens-if-you-miss-cme-gcc`,   lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/best-cme-tracking-apps-gcc-2026`,    lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
   ];
 }

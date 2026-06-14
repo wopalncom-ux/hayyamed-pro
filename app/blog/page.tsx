@@ -28,6 +28,33 @@ export const metadata: Metadata = {
 
 const POSTS = [
   {
+    slug: "best-cme-tracking-apps-gcc-2026",
+    title: "Best CME Tracking Apps for GCC Healthcare Professionals 2026",
+    description: "How to choose a CME or CPD tracker built for GCC licensing requirements — what features matter, what generic tools miss, and what purpose-built GCC CME software should include.",
+    publishedAt: "2026-06-14",
+    category: "guide",
+    readingMinutes: 8,
+    tag: "GCC · All Authorities",
+  },
+  {
+    slug: "what-happens-if-you-miss-cme-gcc",
+    title: "What Happens If You Miss Your CME Deadline in GCC?",
+    description: "Consequences of missing CME/CPD deadlines in Qatar, Saudi Arabia, Dubai, Abu Dhabi, Kuwait, Bahrain, and Oman — plus what to do right now if you are behind on credits.",
+    publishedAt: "2026-06-14",
+    category: "guide",
+    readingMinutes: 9,
+    tag: "GCC · All Authorities",
+  },
+  {
+    slug: "nhra-renewal-guide-2026",
+    title: "NHRA Bahrain License Renewal Guide 2026: CPD Requirements for Healthcare Professionals",
+    description: "Complete guide to NHRA Bahrain medical license renewal. 40 CPD credits per 2-year cycle, accepted accreditors, step-by-step renewal process, and what to do if you are behind.",
+    publishedAt: "2026-06-14",
+    category: "country",
+    readingMinutes: 8,
+    tag: "Bahrain · NHRA",
+  },
+  {
     slug: "omsb-renewal-guide-2026",
     title: "OMSB License Renewal Guide 2026: CME Requirements for Oman Healthcare Professionals",
     description: "40 CME credits per 2-year cycle, accepted accreditors, step-by-step renewal process, and common mistakes to avoid for OMSB-licensed professionals in Oman.",
