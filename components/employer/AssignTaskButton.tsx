@@ -79,7 +79,7 @@ export default function AssignTaskButton({
                 <h2 className="text-base font-semibold text-[#111]">Assign CPD Task</h2>
                 <p className="text-xs text-[#64748b] mt-0.5">{staffName}</p>
               </div>
-              <button onClick={close} className="text-[#94a3b8] hover:text-[#374151] text-xl leading-none">×</button>
+              <button onClick={close} aria-label="Close" className="text-[#94a3b8] hover:text-[#374151] text-xl leading-none">×</button>
             </div>
 
             {done ? (
@@ -89,8 +89,9 @@ export default function AssignTaskButton({
             ) : (
               <form onSubmit={submit} className="px-6 py-5 space-y-4">
                 <div>
-                  <label className="block text-xs font-medium text-[#374151] mb-1">Task Title *</label>
+                  <label htmlFor="assign-task-title" className="block text-xs font-medium text-[#374151] mb-1">Task Title *</label>
                   <input
+                    id="assign-task-title"
                     required
                     value={form.title}
                     onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
@@ -101,8 +102,9 @@ export default function AssignTaskButton({
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-medium text-[#374151] mb-1">Category</label>
+                    <label htmlFor="assign-task-category" className="block text-xs font-medium text-[#374151] mb-1">Category</label>
                     <select
+                      id="assign-task-category"
                       value={form.category}
                       onChange={e => setForm(f => ({ ...f, category: e.target.value }))}
                       className="w-full border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#1a56a0]"
@@ -112,8 +114,9 @@ export default function AssignTaskButton({
                     </select>
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-[#374151] mb-1">Credits Target</label>
+                    <label htmlFor="assign-task-credits" className="block text-xs font-medium text-[#374151] mb-1">Credits Target</label>
                     <input
+                      id="assign-task-credits"
                       type="number"
                       min="1"
                       max="200"
@@ -126,8 +129,9 @@ export default function AssignTaskButton({
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-[#374151] mb-1">Due Date</label>
+                  <label htmlFor="assign-task-due-date" className="block text-xs font-medium text-[#374151] mb-1">Due Date</label>
                   <input
+                    id="assign-task-due-date"
                     type="date"
                     value={form.due_date}
                     onChange={e => setForm(f => ({ ...f, due_date: e.target.value }))}
@@ -136,8 +140,9 @@ export default function AssignTaskButton({
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-[#374151] mb-1">Message (optional)</label>
+                  <label htmlFor="assign-task-message" className="block text-xs font-medium text-[#374151] mb-1">Message (optional)</label>
                   <textarea
+                    id="assign-task-message"
                     rows={3}
                     value={form.message}
                     onChange={e => setForm(f => ({ ...f, message: e.target.value }))}

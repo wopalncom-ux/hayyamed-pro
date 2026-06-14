@@ -66,7 +66,7 @@ export default function SendReminderButton({
                 <h2 className="text-base font-semibold text-[#111]">Send Compliance Reminder</h2>
                 <p className="text-xs text-[#64748b] mt-0.5">{staffName}</p>
               </div>
-              <button onClick={close} className="text-[#94a3b8] hover:text-[#374151] text-xl leading-none">×</button>
+              <button onClick={close} aria-label="Close" className="text-[#94a3b8] hover:text-[#374151] text-xl leading-none">×</button>
             </div>
 
             {done ? (
@@ -86,8 +86,9 @@ export default function SendReminderButton({
                 )}
 
                 <div>
-                  <label className="block text-xs font-medium text-[#374151] mb-1">Message</label>
+                  <label htmlFor="reminder-message" className="block text-xs font-medium text-[#374151] mb-1">Message</label>
                   <textarea
+                    id="reminder-message"
                     rows={4}
                     value={message}
                     onChange={e => setMessage(e.target.value)}

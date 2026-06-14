@@ -157,12 +157,12 @@
 - [ ] File upload works on Android Chrome
 
 ### Performance
-- [ ] Lighthouse Performance score: > 90 (mobile and desktop)
-- [ ] Lighthouse Best Practices: 100
-- [ ] Lighthouse Accessibility: > 90
+- [~] Lighthouse Performance score: > 90 (mobile and desktop) â€” hero LCP opacity fix, Geist font removed, AVIF/WebP images added (Sessions 51â€”52); run Lighthouse to verify score
+- [~] Lighthouse Best Practices: 100 â€” PostHog CSP fixed (eu â†' us), image formats added (Sessions 51â€”52); run to verify
+- [~] Lighthouse Accessibility: > 90 â€” skip nav, label/input a11y (20+ fields), aria-labels on close buttons, auth contrast fix (Sessions 51â€”52); run to verify
 - [ ] First Contentful Paint (FCP): < 2 seconds
-- [ ] Largest Contentful Paint (LCP): < 2.5 seconds
-- [x] No console errors in production build (clean build â€” 82+ routes, 0 TypeScript errors, 27 migrations; root app/error.tsx added)
+- [ ] Largest Contentful Paint (LCP): < 2.5 seconds â€” hero LCP fix applied (Session 51); measure in production
+- [x] No console errors in production build (clean build â€” 84+ routes, 0 TypeScript errors, 32 migrations; root app/error.tsx added)
 
 ---
 
@@ -197,8 +197,8 @@
   - [x] employer_link_approved
   - [x] PostHog user identity set on every dashboard load â€” PostHogIdentify component in DashboardLayout calls identifyUser(user.id); all events now linked to authenticated user (fix applied 2026-06-12)
   - [x] All 13 upgrade CTAs include ?source=X in pricing URL â€” pdf_report, ai_chat, ai_recommendations, add_activity_modal, multi_country_wallet, chat_widget, free_tier_banner, trial_banner, trial_expired_banner, billing_page, settings_trial, settings_billing, cme_activity_limit, ai_page (fix applied 2026-06-12)
-- [ ] Funnel: signup â†’ onboarding complete â†’ first CME activity â†’ PDF download â†’ upgrade
-- [ ] Dashboard: DAU, WAU, MAU, activation rate, conversion rate
+- [ ] Funnel: signup â†’ onboarding complete â†’ first CME activity â†’ PDF download â†’ upgrade (configure in PostHog UI â€" events already instrumented)
+- [x] Dashboard: DAU, WAU, MAU, activation rate, conversion rate â€" live at /admin/analytics (Session 51)
 
 ### Push Notifications
 - [x] VAPID keys generated â€” public key already baked into cloudbuild.yaml `--build-arg NEXT_PUBLIC_VAPID_PUBLIC_KEY=...`; VAPID_SUBJECT set in `--set-env-vars`; VAPID_PRIVATE_KEY slot in `--set-secrets`

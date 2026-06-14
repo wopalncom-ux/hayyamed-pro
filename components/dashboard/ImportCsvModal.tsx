@@ -199,7 +199,7 @@ export default function ImportCsvModal({
               {step === "done" && "Import complete"}
             </p>
           </div>
-          <button onClick={onClose} className="text-[#64748b] hover:text-[#111] text-lg leading-none p-1">✕</button>
+          <button onClick={onClose} aria-label="Close" className="text-[#64748b] hover:text-[#111] text-lg leading-none p-1">✕</button>
         </div>
 
         <div className="flex-1 overflow-y-auto px-6 py-5">

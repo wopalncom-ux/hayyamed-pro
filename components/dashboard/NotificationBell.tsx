@@ -65,7 +65,7 @@ export default function NotificationBell() {
     <button
       onClick={subscribe}
       disabled={loading || status === "denied"}
-      title={
+      aria-label={
         status === "granted" ? "Notifications enabled" :
         status === "denied" ? "Notifications blocked in browser settings" :
         "Enable notifications"

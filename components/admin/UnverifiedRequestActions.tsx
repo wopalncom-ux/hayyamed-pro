@@ -77,20 +77,22 @@ export default function UnverifiedRequestActions({
           <div className="bg-white rounded-xl shadow-xl w-full max-w-sm">
             <div className="flex items-center justify-between px-6 py-4 border-b border-[#e2e8f0]">
               <h2 className="text-sm font-semibold text-[#111]">Create Organization & Approve</h2>
-              <button onClick={() => setShowApproveModal(false)} className="text-[#64748b] hover:text-[#111]">✕</button>
+              <button onClick={() => setShowApproveModal(false)} aria-label="Close" className="text-[#64748b] hover:text-[#111]">✕</button>
             </div>
             <div className="px-6 py-5 space-y-4">
               <div>
-                <label className="block text-xs font-medium text-[#374151] mb-1">Organization Name</label>
+                <label htmlFor="unverified-org-name" className="block text-xs font-medium text-[#374151] mb-1">Organization Name</label>
                 <input
+                  id="unverified-org-name"
                   value={orgName}
                   onChange={(e) => setOrgName(e.target.value)}
                   className="w-full border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20"
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-[#374151] mb-1">Organization Type</label>
+                <label htmlFor="unverified-org-type" className="block text-xs font-medium text-[#374151] mb-1">Organization Type</label>
                 <select
+                  id="unverified-org-type"
                   value={orgType}
                   onChange={(e) => setOrgType(e.target.value)}
                   className="w-full border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20"
