@@ -28,6 +28,33 @@ export const metadata: Metadata = {
 
 const POSTS = [
   {
+    slug: "cme-for-locum-doctors-gcc",
+    title: "CME Tracking for Locum & Agency Doctors in GCC 2026",
+    description: "Multi-license CME management for locum physicians — independent CPD strategies between postings, multi-authority compliance without employer support, and renewal deadline tracking for QCHP, SCFHS, and DHA simultaneously.",
+    publishedAt: "2026-06-14",
+    category: "guide",
+    readingMinutes: 9,
+    tag: "GCC · All Professions",
+  },
+  {
+    slug: "allied-health-cpd-requirements-gcc-2026",
+    title: "CPD Requirements for Allied Health Professionals in GCC 2026",
+    description: "CPD and CME requirements for physiotherapists, radiographers, occupational therapists, dietitians, medical lab scientists, and speech therapists in all 7 GCC countries — credit targets, profession-specific accreditors, and GCC clinical context.",
+    publishedAt: "2026-06-14",
+    category: "guide",
+    readingMinutes: 10,
+    tag: "GCC · All Professions",
+  },
+  {
+    slug: "dentist-cme-requirements-gcc-2026",
+    title: "CME & CPD Requirements for Dentists in GCC 2026",
+    description: "CPD and CME requirements for dentists in Qatar (QCHP), Saudi Arabia (SCFHS), Dubai (DHA), Abu Dhabi (DOH), Kuwait, Bahrain, and Oman — credit targets, ADA CERP and Royal College accreditors, specialty dental CPD.",
+    publishedAt: "2026-06-14",
+    category: "guide",
+    readingMinutes: 8,
+    tag: "GCC · All Professions",
+  },
+  {
     slug: "cme-for-international-doctors-gcc",
     title: "CME Requirements for International Doctors in GCC 2026",
     description: "How home-country CME credits transfer in GCC, Dataflow verification explained, and what QCHP, SCFHS, and DHA require from internationally trained physicians.",

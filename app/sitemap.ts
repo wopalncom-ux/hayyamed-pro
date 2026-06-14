@@ -110,5 +110,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/blog/nurse-cme-requirements-gcc-2026`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/pharmacist-cme-requirements-gcc-2026`,     lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/cme-for-international-doctors-gcc`,        lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
+    { url: `${BASE}/blog/dentist-cme-requirements-gcc-2026`,        lastModified: new Date(), changeFrequency: "monthly", priority: 0.9  },
+    { url: `${BASE}/blog/allied-health-cpd-requirements-gcc-2026`,  lastModified: new Date(), changeFrequency: "monthly", priority: 0.9  },
+    { url: `${BASE}/blog/cme-for-locum-doctors-gcc`,                lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
   ];
 }
