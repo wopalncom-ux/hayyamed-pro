@@ -22,7 +22,7 @@
 - [x] Domain `hayyamed.pro` DNS pointed to Cloud Run via Cloudflare Worker proxy
 - [x] SSL certificate active and verified (Cloudflare managed SSL)
 - [x] All secrets stored in GCP Secret Manager (not .env files)
-- [ ] GCP Cloud Scheduler configured â€” run `./scripts/setup-cloud-scheduler.sh` once after first deploy (required for trial emails, license alerts, employer digest, engagement reminders â€” all 7 cron jobs are dead without this)
+- [x] GCP Cloud Scheduler configured â€” all 7 cron jobs created and ENABLED (Session 47)
 
 ### Authentication
 - [x] Supabase Auth production URL configured â€” Site URL: https://hayyamed.pro, Redirect URLs: https://hayyamed.pro/**, localhost:3000/**, localhost:3001/**
@@ -36,7 +36,7 @@
 - [ ] NEXT_PUBLIC_SUPABASE_ANON_KEY â€” set
 - [ ] SUPABASE_SERVICE_ROLE_KEY â€” set
 - [ ] NEXT_PUBLIC_APP_URL â€” set to https://hayyamed.pro
-- [ ] ANTHROPIC_API_KEY â€” set
+- [x] AI provider configured â€” **Vertex AI (ADC)** — no API key needed; GOOGLE_CLOUD_PROJECT + VERTEX_REGION set in cloudbuild.yaml; Claude Sonnet 4.6 enabled in Model Garden; Claude Haiku 4.5 still needs to be enabled in Model Garden (user action)
 - [ ] PADDLE_API_KEY â€” set
 - [ ] PADDLE_WEBHOOK_SECRET â€” set
 - [ ] PADDLE_PRO_MONTHLY_PRICE_ID â€” set (Pro $6/month)
@@ -60,7 +60,7 @@
 - [ ] UPSTASH_REDIS_REST_URL â€” set (Upstash Redis endpoint â€” rate limiting on AI + PDF routes)
 - [ ] UPSTASH_REDIS_REST_TOKEN â€” set (Upstash Redis token â€” if not set, falls back to DB-based limiting)
 - [ ] NEXT_PUBLIC_POSTHOG_KEY â€” **set as Cloud Build Trigger substitution variable `_POSTHOG_KEY`** (GCP Console â†’ Cloud Build â†’ Triggers â†’ Edit â†’ Substitution variables; baked into Next.js client bundle at build time; analytics silently disabled if missing â€” all 13 conversion events dead; graceful empty-string default so build does not fail if not yet set)
-- [ ] NEXT_PUBLIC_POSTHOG_HOST â€” hardcoded to `https://eu.i.posthog.com` in cloudbuild.yaml; no action required
+- [x] NEXT_PUBLIC_POSTHOG_HOST â€” fixed to `https://us.i.posthog.com` (US region matches account — Session 47)
 - [ ] Paddle price IDs (10 total) â€” **add to `--set-env-vars` in cloudbuild.yaml deploy step once Paddle account is active and products created**: PADDLE_PRO_MONTHLY_PRICE_ID, PADDLE_PRO_ANNUAL_PRICE_ID, PADDLE_EMPLOYER_CLINIC_MONTHLY_PRICE_ID, PADDLE_EMPLOYER_CLINIC_ANNUAL_PRICE_ID, PADDLE_EMPLOYER_GROWTH_MONTHLY_PRICE_ID, PADDLE_EMPLOYER_GROWTH_ANNUAL_PRICE_ID, PADDLE_EMPLOYER_DEPT_MONTHLY_PRICE_ID, PADDLE_EMPLOYER_DEPT_ANNUAL_PRICE_ID, PADDLE_EMPLOYER_HOSP_MONTHLY_PRICE_ID, PADDLE_EMPLOYER_HOSP_ANNUAL_PRICE_ID â€” checkout returns 500 until these are set
 - [ ] SENTRY_ORG â€” set (Sentry organisation slug)
 - [ ] SENTRY_PROJECT â€” set (Sentry project slug)
@@ -92,7 +92,7 @@
 - [x] Supabase session middleware active â€” `middleware.ts` created at project root; calls `updateSession` on every non-static request; refreshes access token and writes updated cookies so users aren't silently logged out after 1 hour; middleware uses protected-prefix approach so all new SEO/marketing pages are public by default (fix applied 2026-06-12)
 - [x] Employer registration gated by active employer subscription â€” page + server action both check subscriptions.plan === "employer" before granting employer_admin role; unauthenticated access redirects to /pricing (fix applied 2026-06-12)
 - [x] Employer staff limit enforced per tier â€” approveLinkRequest checks subscription employer_tier and current approved staff count against EMPLOYER_TIERS maxStaff before approving; returns clear error if limit reached (fix applied 2026-06-12)
-- [~] RLS policies tested â€” supabase/tests/rls_verification.sql written; run each block against live DB with two real user IDs to sign off
+- [x] RLS policies tested â€” 8/8 RLS tests passed (Session 47); supabase/tests/rls_run.sql available for re-verification
 - [x] CSP headers verified in production â€” content-security-policy present and correct in response headers
 - [x] HSTS active in production â€” strict-transport-security configured in next.config.ts + Cloudflare edge
 - [x] No secrets in client-side code or git history â€” all secrets behind process.env, server-side only

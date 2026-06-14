@@ -8,6 +8,7 @@ import { track } from "@/lib/analytics";
 import { isPro } from "@/lib/planUtils";
 import type { Plan } from "@/lib/planUtils";
 import { playSound } from "@/lib/sounds";
+import { enqueue } from "@/lib/cmeOfflineQueue";
 
 const CATEGORIES: { value: string; label: string }[] = [
   { value: "conference", label: "Conference / Seminar" },
@@ -148,6 +149,22 @@ export default function AddActivityModal({
     if (!title.trim()) { setError("Title is required"); return; }
     if (!activityDate) { setError("Date is required"); return; }
     if (!credits || isNaN(parseFloat(credits))) { setError("Valid credits required"); return; }
+
+    // Offline: queue metadata (certificate upload requires network — add when back online)
+    if (typeof navigator !== "undefined" && !navigator.onLine) {
+      enqueue({
+        walletId,
+        title: title.trim(),
+        provider: provider.trim() || null,
+        activityDate,
+        credits: parseFloat(credits),
+        category: selectedCategory || null,
+      });
+      track("cme_activity_queued_offline");
+      toast("Saved offline — will sync automatically when you reconnect", "success");
+      onClose();
+      return;
+    }
 
     setError(null);
     setLoading(true);

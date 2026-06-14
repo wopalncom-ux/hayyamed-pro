@@ -61,6 +61,7 @@ export type AnalyticsEvent =
   | "onboarding_completed"
   // Core product (activation signal)
   | "cme_activity_submitted"
+  | "cme_activity_queued_offline"
   | "cme_activity_verified"
   // AI features (engagement + value)
   | "ai_categorization_used"

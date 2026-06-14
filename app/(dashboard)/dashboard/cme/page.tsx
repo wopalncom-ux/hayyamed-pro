@@ -16,6 +16,7 @@ import WalletTabs from "@/components/dashboard/WalletTabs";
 import ImportCsvButton from "@/components/dashboard/ImportCsvButton";
 import ExportCsvButton from "@/components/dashboard/ExportCsvButton";
 import CalendarExportButton from "@/components/dashboard/CalendarExportButton";
+import CmeOfflineSyncBanner from "@/components/dashboard/CmeOfflineSyncBanner";
 import { getUserPlan, isPro } from "@/lib/subscription";
 import { FREE_ACTIVITY_LIMIT } from "@/lib/planLimits";
 import { toCountryCode } from "@/lib/countryCode";
@@ -118,6 +119,9 @@ export default async function CmePage({
 
   return (
     <div>
+      {/* Offline sync banner — client component, reads localStorage, auto-flushes on reconnect */}
+      <CmeOfflineSyncBanner />
+
       <h1 className="text-2xl font-bold text-[#111] mb-2">CME Wallet</h1>
       <p className="text-sm text-[#64748b] mb-6">
         Track your Continuing Medical Education credits for license renewal.
