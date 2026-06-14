@@ -88,7 +88,7 @@ const faqLd = {
 
 const DOMAINS = [
   {
-    icon: "ðŸŽ“",
+    icon: "🎓",
     title: "Educational Activities",
     min: "Min 12.5 hrs",
     desc: "Conferences, courses, workshops, online modules, journal clubs, grand rounds. Accredited and non-accredited activities both count.",
@@ -96,7 +96,7 @@ const DOMAINS = [
     textColor: "#1d4ed8",
   },
   {
-    icon: "ðŸªž",
+    icon: "🪞",
     title: "Reviewing Performance",
     min: "Min 12.5 hrs",
     desc: "Peer review, multi-source feedback (MSF), patient experience surveys, audit with external feedback on your own practice.",
@@ -104,7 +104,7 @@ const DOMAINS = [
     textColor: "#15803d",
   },
   {
-    icon: "ðŸ“Š",
+    icon: "📊",
     title: "Measuring Outcomes",
     min: "Min 12.5 hrs",
     desc: "Clinical audit against standards, quality improvement projects, morbidity and mortality review, structured data analysis of patient outcomes.",
@@ -112,7 +112,7 @@ const DOMAINS = [
     textColor: "#92400e",
   },
   {
-    icon: "ðŸ“š",
+    icon: "📚",
     title: "Other CPD Activities",
     min: "Remaining hrs",
     desc: "Teaching, supervision, mentoring, research, self-directed reading, case preparation, non-accredited e-learning. Flexible to meet 50-hour total.",
@@ -133,7 +133,7 @@ export default function AhpraCpdPage() {
       <section style={{ background: "#0f1f3d", color: "#fff", padding: "72px 24px 56px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontSize: 13, letterSpacing: "0.08em", textTransform: "uppercase", color: "#93c5fd", marginBottom: 16 }}>
-            ðŸ‡¦ðŸ‡º Authority Guide — Australia
+            🇦🇺 Authority Guide — Australia
           </p>
           <h1 style={{ fontSize: "clamp(28px,5vw,48px)", fontWeight: 800, lineHeight: 1.15, marginBottom: 20 }}>
             AHPRA CPD Requirements<br />for Australian Doctors — 2025
@@ -221,14 +221,14 @@ export default function AhpraCpdPage() {
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 12 }}>
             {[
-              { href: "/qchp", label: "ðŸ‡¶ðŸ‡¦ QCHP Qatar" },
-              { href: "/scfhs", label: "ðŸ‡¸ðŸ‡¦ SCFHS Saudi" },
-              { href: "/dha", label: "ðŸ‡¦ðŸ‡ª DHA Dubai" },
-              { href: "/doh", label: "ðŸ‡¦ðŸ‡ª DOH Abu Dhabi" },
-              { href: "/gmc-cpd", label: "ðŸ‡¬ðŸ‡§ GMC UK" },
-              { href: "/nmc-india-cme", label: "ðŸ‡®ðŸ‡³ NMC India" },
-              { href: "/gcc-cme-requirements", label: "ðŸŒ All GCC" },
-              { href: "/physician-cme", label: "ðŸ©º Physician CME" },
+              { href: "/qchp", label: "🇶🇦 QCHP Qatar" },
+              { href: "/scfhs", label: "🇸🇦 SCFHS Saudi" },
+              { href: "/dha", label: "🇦🇪 DHA Dubai" },
+              { href: "/doh", label: "🇦🇪 DOH Abu Dhabi" },
+              { href: "/gmc-cpd", label: "🇬🇧 GMC UK" },
+              { href: "/nmc-india-cme", label: "🇮🇳 NMC India" },
+              { href: "/gcc-cme-requirements", label: "🌍 All GCC" },
+              { href: "/physician-cme", label: "🩺 Physician CME" },
             ].map((l) => (
               <Link key={l.href} href={l.href} style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 8, padding: "12px 16px", textAlign: "center", textDecoration: "none", color: "#1a56a0", fontWeight: 600, fontSize: 13 }}>
                 {l.label}

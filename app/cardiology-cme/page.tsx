@@ -83,33 +83,33 @@ const faqLd = {
 };
 
 const AUTHORITIES = [
-  { flag: "ðŸ‡¶ðŸ‡¦", name: "QCHP", country: "Qatar", term: "CPD", credits: "80", cycle: "2 years", note: "40/yr min" },
-  { flag: "ðŸ‡¸ðŸ‡¦", name: "SCFHS", country: "Saudi Arabia", term: "CME", credits: "60", cycle: "1 year", note: "SHA events recognized" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DHA", country: "UAE (Dubai)", term: "CME", credits: "40", cycle: "2 years", note: "5 patient safety" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DOH", country: "UAE (Abu Dhabi)", term: "CPD", credits: "40", cycle: "2 years", note: "Mixed categories" },
-  { flag: "ðŸ‡°ðŸ‡¼", name: "MOH", country: "Kuwait", term: "CME", credits: "30", cycle: "1 year", note: "Annual renewal" },
-  { flag: "ðŸ‡§ðŸ‡­", name: "NHRA", country: "Bahrain", term: "CPD", credits: "40", cycle: "2 years", note: "Structured + unstr." },
-  { flag: "ðŸ‡´ðŸ‡²", name: "OMSB", country: "Oman", term: "CME", credits: "40", cycle: "2 years", note: "Category A & B" },
+  { flag: "🇶🇦", name: "QCHP", country: "Qatar", term: "CPD", credits: "80", cycle: "2 years", note: "40/yr min" },
+  { flag: "🇸🇦", name: "SCFHS", country: "Saudi Arabia", term: "CME", credits: "60", cycle: "1 year", note: "SHA events recognized" },
+  { flag: "🇦🇪", name: "DHA", country: "UAE (Dubai)", term: "CME", credits: "40", cycle: "2 years", note: "5 patient safety" },
+  { flag: "🇦🇪", name: "DOH", country: "UAE (Abu Dhabi)", term: "CPD", credits: "40", cycle: "2 years", note: "Mixed categories" },
+  { flag: "🇰🇼", name: "MOH", country: "Kuwait", term: "CME", credits: "30", cycle: "1 year", note: "Annual renewal" },
+  { flag: "🇧🇭", name: "NHRA", country: "Bahrain", term: "CPD", credits: "40", cycle: "2 years", note: "Structured + unstr." },
+  { flag: "🇴🇲", name: "OMSB", country: "Oman", term: "CME", credits: "40", cycle: "2 years", note: "Category A & B" },
 ];
 
 const SPECIALTY_NOTES = [
   {
-    icon: "â¤ï¸",
+    icon: "❤️",
     title: "Subspecialty societies recognized",
     body: "Saudi Heart Association (SHA), Gulf Heart Association, ACC, ESC, and Heart Rhythm Society events are recognized by SCFHS and QCHP when accredited by an approved body.",
   },
   {
-    icon: "ðŸ”¬",
+    icon: "🔬",
     title: "Procedural workshops count",
     body: "Cath lab simulation, echocardiography accreditation (ASE, EACVI), and cardiac imaging workshops count as CME. These typically earn more credits per hour than lecture-based activities.",
   },
   {
-    icon: "ðŸ’Š",
+    icon: "💊",
     title: "ACLS and BLS certification",
     body: "ACLS renewal (required every 2 years) counts as CME toward QCHP, SCFHS, and DHA requirements when from an AHA or equivalent accredited provider.",
   },
   {
-    icon: "ðŸ“Š",
+    icon: "📊",
     title: "Research and clinical guidelines",
     body: "Contributing to clinical practice guidelines, publishing cardiology research, and presenting at peer-reviewed conferences earns SCFHS Category B/C credits and QCHP academic CPD credits.",
   },
@@ -143,7 +143,7 @@ export default function CardiologyCmePage() {
         <main className="max-w-4xl mx-auto px-6 py-12">
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-2 bg-[#eff6ff] border border-[#bfdbfe] text-[#1e40af] text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
-              â¤ï¸ Cardiology · All GCC Licensing Authorities
+              ❤️ Cardiology · All GCC Licensing Authorities
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-[#111] tracking-tight mb-4 leading-tight">
               Cardiology CME requirements<br className="hidden sm:block" /> across the GCC
@@ -231,10 +231,10 @@ export default function CardiologyCmePage() {
             <h2 className="text-xl font-bold text-[#111] mb-5">Related CME guides</h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {[
-                { href: "/physician-cme", label: "All Physicians", icon: "ðŸ©º" },
-                { href: "/internal-medicine-cme", label: "Internal Medicine", icon: "ðŸ”¬" },
-                { href: "/qchp", label: "QCHP (Qatar)", icon: "ðŸ‡¶ðŸ‡¦" },
-                { href: "/scfhs", label: "SCFHS (Saudi)", icon: "ðŸ‡¸ðŸ‡¦" },
+                { href: "/physician-cme", label: "All Physicians", icon: "🩺" },
+                { href: "/internal-medicine-cme", label: "Internal Medicine", icon: "🔬" },
+                { href: "/qchp", label: "QCHP (Qatar)", icon: "🇶🇦" },
+                { href: "/scfhs", label: "SCFHS (Saudi)", icon: "🇸🇦" },
               ].map((l) => (
                 <Link key={l.href} href={l.href} className="bg-white rounded-xl border border-[#e2e8f0] p-4 text-center hover:border-[#1a56a0] hover:shadow-sm transition-all group">
                   <span className="text-2xl block mb-2">{l.icon}</span>
@@ -245,7 +245,7 @@ export default function CardiologyCmePage() {
           </div>
 
           <div className="bg-gradient-to-br from-[#0f1f3d] to-[#1a3563] rounded-2xl p-10 text-center">
-            <div className="text-3xl mb-3">â¤ï¸</div>
+            <div className="text-3xl mb-3">❤️</div>
             <h2 className="text-2xl font-bold text-white mb-2">Track your cardiology CME — free</h2>
             <p className="text-[rgba(255,255,255,0.65)] mb-6 max-w-md mx-auto text-sm">
               Set up wallets for QCHP, SCFHS, and DHA in under 2 minutes. Log conferences, workshops, and online courses. Never miss a renewal deadline.

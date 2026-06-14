@@ -86,25 +86,25 @@ const RENEWAL_STEPS = [
     step: "1",
     title: "Check your renewal date",
     body: "Your QCHP license has a 2-year validity period. Log in to the QCHP portal (qchp.org.qa) or check your license certificate to find your expiry date. Start tracking CPD at least 18 months before renewal.",
-    icon: "ðŸ“…",
+    icon: "📅",
   },
   {
     step: "2",
     title: "Accumulate 80 CPD credits",
     body: "You need 80 CPD credits across the 2-year cycle, with a minimum of 40 per year. Credits come from conferences, workshops, online modules, research, teaching, and self-directed learning. At least 2 credits must be patient safety activities.",
-    icon: "ðŸ“š",
+    icon: "📚",
   },
   {
     step: "3",
     title: "Keep your certificates",
     body: "For every activity, keep the official certificate showing: activity name, accrediting body, date, and credits awarded. QCHP may request evidence for any or all activities in your portfolio.",
-    icon: "ðŸ“œ",
+    icon: "📜",
   },
   {
     step: "4",
     title: "Prepare your CPD portfolio",
     body: "Your portfolio must show: total credits (80+), a minimum of 40 per year, at least 2 patient safety credits, activity categories, and dates. Hayya Med Pro generates this portfolio as a PDF automatically.",
-    icon: "ðŸ“‹",
+    icon: "📋",
   },
   {
     step: "5",
@@ -121,7 +121,7 @@ const CHECKLIST_ITEMS = [
   { check: true, item: "Valid certificates for every activity" },
   { check: true, item: "Activities from QCHP-accepted accreditors" },
   { check: true, item: "CPD portfolio PDF ready for submission" },
-  { check: false, item: "Application submitted â‰¥3 months before expiry" },
+  { check: false, item: "Application submitted ≥3 months before expiry" },
   { check: false, item: "Renewal fee paid" },
 ];
 
@@ -179,7 +179,7 @@ export default function QchpRenewalPage() {
         <section className="bg-white border-b border-[#e2e8f0] py-12 sm:py-16">
           <div className="max-w-4xl mx-auto px-4 sm:px-6">
             <div className="flex items-center gap-2 mb-4">
-              <span className="text-xl">ðŸ‡¶ðŸ‡¦</span>
+              <span className="text-xl">🇶🇦</span>
               <span className="text-xs font-semibold text-[#1a56a0] bg-[#eff6ff] px-2.5 py-1 rounded-full">
                 QCHP — Qatar Healthcare License Renewal
               </span>
@@ -398,7 +398,7 @@ export default function QchpRenewalPage() {
             <p className="text-xs text-[#94a3b8] text-center leading-relaxed">
               Hayya Med Pro supports CPD tracking and licensing readiness. It does not issue licenses and does not replace
               the official QCHP renewal process. Always verify final CPD requirements and renewal procedures with the
-              Department of Healthcare Professionals â€“ Accreditation Section (DHP-AS) at qchp.org.qa.
+              Department of Healthcare Professionals – Accreditation Section (DHP-AS) at qchp.org.qa.
             </p>
             <p className="text-xs text-[#94a3b8] text-center mt-2">
               <Link href="/qchp" className="hover:text-[#64748b]">QCHP Guide</Link>

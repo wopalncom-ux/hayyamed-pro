@@ -150,32 +150,32 @@ const countries = [
 
 const categories = [
   {
-    icon: "ðŸ¦·",
+    icon: "🦷",
     title: "Dental Clinical Practice",
     description: "Restorative, endodontics, periodontics, oral surgery — accredited clinical CPD",
   },
   {
-    icon: "ðŸ’»",
+    icon: "💻",
     title: "Online & E-Learning",
     description: "Accredited online modules (capped at 50% in Saudi Arabia, Kuwait)",
   },
   {
-    icon: "ðŸŽ“",
+    icon: "🎓",
     title: "Postgraduate Education",
     description: "Fellowship programs, specialist training, accredited short courses",
   },
   {
-    icon: "ðŸ“‹",
+    icon: "📋",
     title: "Research & Publications",
     description: "Dental research, peer-reviewed publications, case reports, audit",
   },
   {
-    icon: "ðŸ¥",
+    icon: "🏥",
     title: "Conferences & Workshops",
     description: "Dental symposia, hands-on workshops, accredited grand rounds",
   },
   {
-    icon: "ðŸ‘©â€ðŸ«",
+    icon: "👩‍🏫",
     title: "Teaching & Mentoring",
     description: "Clinical teaching, dental student supervision, peer training",
   },
@@ -247,7 +247,7 @@ export default function DentistCmePage() {
               Dentist CME Requirements by Country
             </h2>
             <p className="text-sm text-[#64748b] text-center mb-8">
-              Requirements as of 2025â€“2026. Verify final requirements with your licensing authority.
+              Requirements as of 2025–2026. Verify final requirements with your licensing authority.
             </p>
             <div className="overflow-x-auto rounded-xl border border-[#e2e8f0] bg-white">
               <table className="w-full text-sm">

@@ -97,35 +97,35 @@ const faqLd = {
 };
 
 const AUTHORITIES = [
-  { flag: "ðŸ‡¶ðŸ‡¦", name: "QCHP",  country: "Qatar",        cycle: "80 CPD / 2 yr",  note: "40/yr minimum, ethics mandatory" },
-  { flag: "ðŸ‡¸ðŸ‡¦", name: "SCFHS", country: "Saudi Arabia", cycle: "60 CME / yr",    note: "SDS & international societies recognised" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DHA",   country: "UAE (Dubai)",  cycle: "40 CME / 2 yr",  note: "5 patient safety credits mandatory" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DOH",   country: "UAE (Abu Dhabi)", cycle: "40 CPD / cycle", note: "Verify per licence category" },
-  { flag: "ðŸ‡°ðŸ‡¼", name: "MOH",   country: "Kuwait",       cycle: "30 CME / yr",    note: "Annual renewal, 30% online cap" },
-  { flag: "ðŸ‡§ðŸ‡­", name: "NHRA",  country: "Bahrain",      cycle: "40 CPD / 2 yr",  note: "Structured + unstructured split" },
-  { flag: "ðŸ‡´ðŸ‡²", name: "OMSB",  country: "Oman",         cycle: "40 CME / 2 yr",  note: "Category A & B framework" },
+  { flag: "🇶🇦", name: "QCHP",  country: "Qatar",        cycle: "80 CPD / 2 yr",  note: "40/yr minimum, ethics mandatory" },
+  { flag: "🇸🇦", name: "SCFHS", country: "Saudi Arabia", cycle: "60 CME / yr",    note: "SDS & international societies recognised" },
+  { flag: "🇦🇪", name: "DHA",   country: "UAE (Dubai)",  cycle: "40 CME / 2 yr",  note: "5 patient safety credits mandatory" },
+  { flag: "🇦🇪", name: "DOH",   country: "UAE (Abu Dhabi)", cycle: "40 CPD / cycle", note: "Verify per licence category" },
+  { flag: "🇰🇼", name: "MOH",   country: "Kuwait",       cycle: "30 CME / yr",    note: "Annual renewal, 30% online cap" },
+  { flag: "🇧🇭", name: "NHRA",  country: "Bahrain",      cycle: "40 CPD / 2 yr",  note: "Structured + unstructured split" },
+  { flag: "🇴🇲", name: "OMSB",  country: "Oman",         cycle: "40 CME / 2 yr",  note: "Category A & B framework" },
 ];
 
 const SPECIALTY_NOTES = [
   {
-    icon: "ðŸ’†",
+    icon: "💆",
     title: "Procedural workshops fully count",
     body: "Laser safety training, injectables masterclasses (botulinum toxin, fillers), chemical peel workshops, and dermatosurgery courses count as clinical CME across all 7 GCC authorities when from an accredited provider.",
   },
   {
-    icon: "ðŸ”¬",
+    icon: "🔬",
     title: "Dermoscopy certification",
-    body: "Accredited dermoscopy courses (Level 1/2 certificat programmes by the International Dermoscopy Society) are recognised by QCHP and SCFHS under the clinical skills category. They can contribute 5â€“15 CME credits per course.",
+    body: "Accredited dermoscopy courses (Level 1/2 certificat programmes by the International Dermoscopy Society) are recognised by QCHP and SCFHS under the clinical skills category. They can contribute 5–15 CME credits per course.",
   },
   {
-    icon: "ðŸ§¬",
+    icon: "🧬",
     title: "Dermatopathology & histopathology",
     body: "Dermatopathology review sessions, histopathology reporting workshops, and immunohistochemistry interpretation courses count toward SCFHS and QCHP clinical CME credits — particularly relevant for dermatologists with lab affiliations.",
   },
   {
-    icon: "ðŸŒ",
+    icon: "🌍",
     title: "Saudi Dermatology Society (SDS)",
-    body: "SDS-accredited events are the primary source of dermatology-specific CME recognised by SCFHS in Saudi Arabia. The annual SDS congress typically offers 15â€“25 CME credits and is highly recommended for SCFHS-registered dermatologists.",
+    body: "SDS-accredited events are the primary source of dermatology-specific CME recognised by SCFHS in Saudi Arabia. The annual SDS congress typically offers 15–25 CME credits and is highly recommended for SCFHS-registered dermatologists.",
   },
 ];
 
@@ -139,7 +139,7 @@ export default function DermatologyCmePage() {
       <section style={{ background: "#0f1f3d", color: "#fff", padding: "72px 24px 56px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontSize: 13, letterSpacing: "0.08em", textTransform: "uppercase", color: "#93c5fd", marginBottom: 16 }}>
-            ðŸ©º Specialty CME Guide
+            🩺 Specialty CME Guide
           </p>
           <h1 style={{ fontSize: "clamp(28px,5vw,48px)", fontWeight: 800, lineHeight: 1.15, marginBottom: 20 }}>
             Dermatology CME Requirements<br />Across GCC
@@ -235,14 +235,14 @@ export default function DermatologyCmePage() {
           </h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 12 }}>
             {[
-              { href: "/cardiology-cme",         label: "â¤ï¸ Cardiology" },
-              { href: "/neurology-cme",           label: "ðŸ§  Neurology" },
-              { href: "/internal-medicine-cme",   label: "ðŸ©º Internal Medicine" },
-              { href: "/emergency-medicine-cme",  label: "ðŸš‘ Emergency Med" },
-              { href: "/ophthalmology-cme",       label: "ðŸ‘ Ophthalmology" },
-              { href: "/nephrology-cme",          label: "ðŸ©» Nephrology" },
-              { href: "/psychiatry-cme",          label: "ðŸ§© Psychiatry" },
-              { href: "/physician-cme",           label: "ðŸ‘¨â€âš•ï¸ All Physicians" },
+              { href: "/cardiology-cme",         label: "❤️ Cardiology" },
+              { href: "/neurology-cme",           label: "🧠 Neurology" },
+              { href: "/internal-medicine-cme",   label: "🩺 Internal Medicine" },
+              { href: "/emergency-medicine-cme",  label: "🚑 Emergency Med" },
+              { href: "/ophthalmology-cme",       label: "👁 Ophthalmology" },
+              { href: "/nephrology-cme",          label: "🩻 Nephrology" },
+              { href: "/psychiatry-cme",          label: "🧩 Psychiatry" },
+              { href: "/physician-cme",           label: "👨‍⚕️ All Physicians" },
             ].map((l) => (
               <Link key={l.href} href={l.href} style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 8, padding: "12px 16px", textAlign: "center", textDecoration: "none", color: "#1a56a0", fontWeight: 600, fontSize: 14 }}>
                 {l.label}

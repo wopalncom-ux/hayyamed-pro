@@ -30,51 +30,51 @@ export const metadata: Metadata = {
 };
 
 const INSTITUTION_TYPES = [
-  { icon: "ðŸ¥", label: "Medical Schools" },
-  { icon: "ðŸ©º", label: "Nursing Colleges" },
-  { icon: "ðŸ’Š", label: "Pharmacy Colleges" },
-  { icon: "ðŸ”¬", label: "Health Sciences Faculties" },
-  { icon: "ðŸ¦·", label: "Dental Schools" },
-  { icon: "ðŸ§ª", label: "Allied Health Institutes" },
+  { icon: "🏥", label: "Medical Schools" },
+  { icon: "🩺", label: "Nursing Colleges" },
+  { icon: "💊", label: "Pharmacy Colleges" },
+  { icon: "🔬", label: "Health Sciences Faculties" },
+  { icon: "🦷", label: "Dental Schools" },
+  { icon: "🧪", label: "Allied Health Institutes" },
 ];
 
 const AUTHORITIES = [
-  { code: "ðŸ‡¶ðŸ‡¦", name: "QCHP",  country: "Qatar" },
-  { code: "ðŸ‡¸ðŸ‡¦", name: "SCFHS", country: "Saudi Arabia" },
-  { code: "ðŸ‡¦ðŸ‡ª", name: "DHA",   country: "UAE Dubai" },
-  { code: "ðŸ‡¦ðŸ‡ª", name: "DOH",   country: "UAE Abu Dhabi" },
-  { code: "ðŸ‡§ðŸ‡­", name: "NHRA",  country: "Bahrain" },
-  { code: "ðŸ‡´ðŸ‡²", name: "OMSB",  country: "Oman" },
+  { code: "🇶🇦", name: "QCHP",  country: "Qatar" },
+  { code: "🇸🇦", name: "SCFHS", country: "Saudi Arabia" },
+  { code: "🇦🇪", name: "DHA",   country: "UAE Dubai" },
+  { code: "🇦🇪", name: "DOH",   country: "UAE Abu Dhabi" },
+  { code: "🇧🇭", name: "NHRA",  country: "Bahrain" },
+  { code: "🇴🇲", name: "OMSB",  country: "Oman" },
 ];
 
 const BENEFITS = [
   {
-    icon: "ðŸ“Š",
+    icon: "📊",
     title: "Real-time faculty compliance dashboard",
     body: "See every faculty member's CME completion status, compliance rate, and license expiry at a glance — no spreadsheets, no chasing, no surprises before accreditation reviews.",
   },
   {
-    icon: "ðŸ¢",
+    icon: "🏢",
     title: "Department-level compliance breakdown",
     body: "Group faculty by department and see which units are falling behind. Target interventions before renewal deadlines rather than reacting after the fact.",
   },
   {
-    icon: "ðŸ“‹",
+    icon: "📋",
     title: "Required training management",
     body: "Assign mandatory training to your faculty directly from the dashboard. Set due dates, monitor completion, and link to courses on the marketplace.",
   },
   {
-    icon: "ðŸ””",
+    icon: "🔔",
     title: "Automated faculty alerts",
     body: "Faculty receive automated reminders when their CME deadline or license expiry is approaching — reducing the administrative burden on your compliance team.",
   },
   {
-    icon: "ðŸ”’",
+    icon: "🔒",
     title: "Privacy-first data model",
     body: "Faculty control exactly what their institution can see. Aggregate compliance reports are available to administrators without exposing individual health or credential details beyond what faculty consent to share.",
   },
   {
-    icon: "ðŸ“‘",
+    icon: "📑",
     title: "Bulk compliance reporting",
     body: "Generate PDF compliance reports for your entire faculty with a single click — ready for JCI, CBAHI, or national accreditation body submissions.",
   },
@@ -166,7 +166,7 @@ export default function ForUniversitiesPage() {
         <section className="bg-white border-b border-[#e2e8f0] px-6 py-20">
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-[#eff6ff] text-[#1a56a0] text-xs font-semibold px-3 py-1.5 rounded-full mb-6 border border-[#bfdbfe]">
-              ðŸŽ“ University & Academic Institution Portal
+              🎓 University & Academic Institution Portal
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-[#0f1f3d] mb-6 leading-tight">
               Full CME visibility<br className="hidden sm:block" /> across your entire faculty

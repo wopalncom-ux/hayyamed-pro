@@ -173,7 +173,7 @@ export default function MohKuwaitRenewalPage() {
           {/* Hero */}
           <div className="mb-10">
             <div className="inline-flex items-center gap-2 bg-[#f0f9ff] border border-[#bae6fd] text-[#0369a1] text-xs font-semibold px-3 py-1.5 rounded-full mb-4">
-              ðŸ‡°ðŸ‡¼ Kuwait · Ministry of Health Kuwait (MOH)
+              🇰🇼 Kuwait · Ministry of Health Kuwait (MOH)
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold text-[#111] mb-4 leading-tight">
               MOH Kuwait license renewal — complete guide for Kuwait healthcare professionals
@@ -204,13 +204,13 @@ export default function MohKuwaitRenewalPage() {
           {/* Info box */}
           <div className="mb-10 bg-[#fff7ed] border border-[#fed7aa] rounded-xl p-5">
             <div className="flex gap-3">
-              <span className="text-xl flex-shrink-0 mt-0.5">âš¡</span>
+              <span className="text-xl flex-shrink-0 mt-0.5">⚡</span>
               <div>
                 <p className="text-sm font-semibold text-[#c2410c] mb-1">
                   Kuwait uses annual renewal — not a 2-year cycle
                 </p>
                 <p className="text-sm text-[#9a3412] leading-relaxed">
-                  Unlike Qatar (2-year) and Saudi Arabia (1â€“3 year), Kuwait MOH licenses renew every year.
+                  Unlike Qatar (2-year) and Saudi Arabia (1–3 year), Kuwait MOH licenses renew every year.
                   This means you need to accumulate 30 CME credits and submit your renewal application annually.
                   Set a recurring reminder 60 days before your license expires each year. Hayya Med Pro sends
                   automatic license expiry reminders at 90, 60, and 30 days.
@@ -316,9 +316,9 @@ export default function MohKuwaitRenewalPage() {
             <h2 className="text-lg font-bold text-[#111] mb-4">Related guides</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {[
-                { href: "/moh-kuwait", label: "ðŸ‡°ðŸ‡¼ MOH Kuwait CME tracker", sub: "Track your Kuwait compliance" },
-                { href: "/nhra-renewal", label: "ðŸ‡§ðŸ‡­ NHRA renewal guide", sub: "Bahrain license renewal" },
-                { href: "/qchp-renewal", label: "ðŸ‡¶ðŸ‡¦ QCHP renewal guide", sub: "Qatar license renewal" },
+                { href: "/moh-kuwait", label: "🇰🇼 MOH Kuwait CME tracker", sub: "Track your Kuwait compliance" },
+                { href: "/nhra-renewal", label: "🇧🇭 NHRA renewal guide", sub: "Bahrain license renewal" },
+                { href: "/qchp-renewal", label: "🇶🇦 QCHP renewal guide", sub: "Qatar license renewal" },
               ].map((g) => (
                 <Link
                   key={g.href}
@@ -334,7 +334,7 @@ export default function MohKuwaitRenewalPage() {
 
           {/* Dark CTA */}
           <div className="bg-gradient-to-br from-[#0f1f3d] to-[#1a3563] rounded-2xl p-10 text-center mb-8">
-            <div className="inline-block text-3xl mb-3">ðŸ‡°ðŸ‡¼</div>
+            <div className="inline-block text-3xl mb-3">🇰🇼</div>
             <h2 className="text-2xl font-bold text-white mb-2">
               Start tracking your Kuwait CME today
             </h2>

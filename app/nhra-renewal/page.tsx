@@ -106,7 +106,7 @@ const RENEWAL_STEPS = [
   {
     step: "5",
     title: "Submit renewal through NHRA portal",
-    desc: "Log in to nhra.bh, complete the license renewal application, upload your CPD portfolio and any other required documents, pay the renewal fee, and submit. Begin the process at least 30â€“60 days before your license expires to account for processing time.",
+    desc: "Log in to nhra.bh, complete the license renewal application, upload your CPD portfolio and any other required documents, pay the renewal fee, and submit. Begin the process at least 30–60 days before your license expires to account for processing time.",
   },
 ];
 
@@ -173,7 +173,7 @@ export default function NhraRenewalPage() {
           {/* Hero */}
           <div className="mb-10">
             <div className="inline-flex items-center gap-2 bg-[#f0f9ff] border border-[#bae6fd] text-[#0369a1] text-xs font-semibold px-3 py-1.5 rounded-full mb-4">
-              ðŸ‡§ðŸ‡­ Bahrain · National Health Regulatory Authority (NHRA)
+              🇧🇭 Bahrain · National Health Regulatory Authority (NHRA)
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold text-[#111] mb-4 leading-tight">
               NHRA license renewal — complete guide for Bahrain healthcare professionals
@@ -204,7 +204,7 @@ export default function NhraRenewalPage() {
           {/* Info box */}
           <div className="mb-10 bg-[#f0f9ff] border border-[#bae6fd] rounded-xl p-5">
             <div className="flex gap-3">
-              <span className="text-xl flex-shrink-0 mt-0.5">â„¹ï¸</span>
+              <span className="text-xl flex-shrink-0 mt-0.5">ℹ️</span>
               <div>
                 <p className="text-sm font-semibold text-[#0369a1] mb-1">
                   NHRA is Bahrain&apos;s national healthcare licensing authority
@@ -320,9 +320,9 @@ export default function NhraRenewalPage() {
             <h2 className="text-lg font-bold text-[#111] mb-4">Related guides</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {[
-                { href: "/nhra", label: "ðŸ‡§ðŸ‡­ NHRA CPD tracker", sub: "Track your Bahrain compliance" },
-                { href: "/omsb-renewal", label: "ðŸ‡´ðŸ‡² OMSB renewal guide", sub: "Oman license renewal" },
-                { href: "/qchp-renewal", label: "ðŸ‡¶ðŸ‡¦ QCHP renewal guide", sub: "Qatar license renewal" },
+                { href: "/nhra", label: "🇧🇭 NHRA CPD tracker", sub: "Track your Bahrain compliance" },
+                { href: "/omsb-renewal", label: "🇴🇲 OMSB renewal guide", sub: "Oman license renewal" },
+                { href: "/qchp-renewal", label: "🇶🇦 QCHP renewal guide", sub: "Qatar license renewal" },
               ].map((g) => (
                 <Link
                   key={g.href}
@@ -338,7 +338,7 @@ export default function NhraRenewalPage() {
 
           {/* Dark CTA */}
           <div className="bg-gradient-to-br from-[#0f1f3d] to-[#1a3563] rounded-2xl p-10 text-center mb-8">
-            <div className="inline-block text-3xl mb-3">ðŸ‡§ðŸ‡­</div>
+            <div className="inline-block text-3xl mb-3">🇧🇭</div>
             <h2 className="text-2xl font-bold text-white mb-2">
               Start tracking your NHRA CPD today
             </h2>

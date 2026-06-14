@@ -83,11 +83,11 @@ const faqLd = {
 };
 
 const PROFESSION_REQUIREMENTS = [
-  { profession: "Physicians", icon: "ðŸ©º", credits: 60, cycle: "Annual", note: "Required every year" },
-  { profession: "Dentists", icon: "ðŸ¦·", credits: 60, cycle: "Annual", note: "Required every year" },
-  { profession: "Pharmacists", icon: "ðŸ’Š", credits: 60, cycle: "Annual", note: "Required every year" },
-  { profession: "Nurses", icon: "ðŸ‘©â€âš•ï¸", credits: 30, cycle: "Annual", note: "Required every year" },
-  { profession: "Allied Health", icon: "ðŸ¦¿", credits: 30, cycle: "Annual", note: "Physiotherapists, lab technicians, etc." },
+  { profession: "Physicians", icon: "🩺", credits: 60, cycle: "Annual", note: "Required every year" },
+  { profession: "Dentists", icon: "🦷", credits: 60, cycle: "Annual", note: "Required every year" },
+  { profession: "Pharmacists", icon: "💊", credits: 60, cycle: "Annual", note: "Required every year" },
+  { profession: "Nurses", icon: "👩‍⚕️", credits: 30, cycle: "Annual", note: "Required every year" },
+  { profession: "Allied Health", icon: "🦿", credits: 30, cycle: "Annual", note: "Physiotherapists, lab technicians, etc." },
 ];
 
 const RENEWAL_STEPS = [
@@ -95,25 +95,25 @@ const RENEWAL_STEPS = [
     step: "1",
     title: "Check your renewal date",
     body: "Log in to the SCFHS portal (mumaris.scfhs.org.sa) to find your license expiry date. Start accumulating CME from the first day of your new licensing cycle.",
-    icon: "ðŸ“…",
+    icon: "📅",
   },
   {
     step: "2",
     title: "Complete your annual CME requirement",
     body: "Physicians, dentists, and pharmacists need 60 CME credits per year. Nurses and allied health need 30. Attend accredited conferences, complete online modules, or participate in research activities.",
-    icon: "ðŸ“š",
+    icon: "📚",
   },
   {
     step: "3",
     title: "Collect all certificates",
     body: "For every CME activity, obtain an official certificate showing the activity name, accrediting body, date, and CME credits. SCFHS can request certificates for any activity in your portfolio.",
-    icon: "ðŸ“œ",
+    icon: "📜",
   },
   {
     step: "4",
     title: "Prepare your CME portfolio",
     body: "Your portfolio must show total annual credits, category breakdown, and all supporting certificates. Hayya Med Pro generates your SCFHS-ready CME report as a PDF automatically.",
-    icon: "ðŸ“‹",
+    icon: "📋",
   },
   {
     step: "5",
@@ -177,7 +177,7 @@ export default function ScfhsRenewalPage() {
         <section className="bg-white border-b border-[#e2e8f0] py-12 sm:py-16">
           <div className="max-w-4xl mx-auto px-4 sm:px-6">
             <div className="flex items-center gap-2 mb-4">
-              <span className="text-xl">ðŸ‡¸ðŸ‡¦</span>
+              <span className="text-xl">🇸🇦</span>
               <span className="text-xs font-semibold text-[#1a56a0] bg-[#eff6ff] px-2.5 py-1 rounded-full">
                 SCFHS — Saudi Arabia Healthcare License Renewal
               </span>
@@ -202,7 +202,7 @@ export default function ScfhsRenewalPage() {
                 <p className="text-[11px] text-[#475569]">Nurses · Allied Health</p>
               </div>
               <div className="bg-[#f8fafc] border border-[#e2e8f0] rounded-xl px-4 py-2.5 text-center">
-                <p className="text-base font-black text-[#111]">1â€“3 yr</p>
+                <p className="text-base font-black text-[#111]">1–3 yr</p>
                 <p className="text-[11px] text-[#475569]">License cycle (by specialty)</p>
               </div>
             </div>

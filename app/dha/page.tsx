@@ -138,7 +138,7 @@ export default function DhaPage() {
           {/* Hero */}
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-2 bg-[#eff6ff] border border-[#bfdbfe] text-[#1e40af] text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
-              ðŸ‡¦ðŸ‡ª UAE — Dubai · DHA · Dubai Health Authority
+              🇦🇪 UAE — Dubai · DHA · Dubai Health Authority
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-[#111] tracking-tight mb-4 leading-tight">
               Track your DHA CME<br className="hidden sm:block" /> requirements — automatically
@@ -251,11 +251,11 @@ export default function DhaPage() {
             <h2 className="text-xl font-bold text-[#111] mb-5">CME requirements by profession</h2>
             <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
               {[
-                { icon: "ðŸ©º", title: "Physicians", href: "/physician-cme" },
-                { icon: "ðŸ‘©â€âš•ï¸", title: "Nurses", href: "/nurse-cpd" },
-                { icon: "ðŸ’Š", title: "Pharmacists", href: "/pharmacist-cme" },
-                { icon: "ðŸ¦·", title: "Dentists", href: "/dentist-cme" },
-                { icon: "ðŸ¦¿", title: "Allied Health", href: "/allied-health-cpd" },
+                { icon: "🩺", title: "Physicians", href: "/physician-cme" },
+                { icon: "👩‍⚕️", title: "Nurses", href: "/nurse-cpd" },
+                { icon: "💊", title: "Pharmacists", href: "/pharmacist-cme" },
+                { icon: "🦷", title: "Dentists", href: "/dentist-cme" },
+                { icon: "🦿", title: "Allied Health", href: "/allied-health-cpd" },
               ].map((p) => (
                 <Link
                   key={p.href}
@@ -275,21 +275,21 @@ export default function DhaPage() {
             <p className="text-sm text-[#64748b] mb-5">Select your specialty for DHA-specific CME notes and mandatory activity types.</p>
             <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3">
               {[
-                { icon: "â¤ï¸", title: "Cardiology",      href: "/cardiology-cme" },
-                { icon: "ðŸ©º", title: "Internal Med",    href: "/internal-medicine-cme" },
-                { icon: "ðŸš‘", title: "Emergency Med",   href: "/emergency-medicine-cme" },
-                { icon: "ðŸ”ª", title: "Surgery",         href: "/surgery-cme" },
-                { icon: "ðŸ‘¶", title: "Pediatrics",      href: "/pediatrics-cme" },
-                { icon: "ðŸ©»", title: "Radiology",       href: "/radiology-cme" },
-                { icon: "ðŸ§ ", title: "Psychiatry",      href: "/psychiatry-cme" },
-                { icon: "ðŸ¤±", title: "OB / Gyn",       href: "/obstetrics-gynecology-cme" },
-                { icon: "ðŸ’‰", title: "Anesthesia",      href: "/anesthesia-cme" },
-                { icon: "ðŸ¦´", title: "Orthopedics",     href: "/orthopedics-cme" },
-                { icon: "ðŸ¡", title: "Family Medicine", href: "/family-medicine-cme" },
-                { icon: "ðŸ©º", title: "Dermatology",    href: "/dermatology-cme" },
-                { icon: "ðŸ§ ", title: "Neurology",      href: "/neurology-cme" },
-                { icon: "ðŸ«", title: "Nephrology",     href: "/nephrology-cme" },
-                { icon: "ðŸ‘", title: "Ophthalmology",  href: "/ophthalmology-cme" },
+                { icon: "❤️", title: "Cardiology",      href: "/cardiology-cme" },
+                { icon: "🩺", title: "Internal Med",    href: "/internal-medicine-cme" },
+                { icon: "🚑", title: "Emergency Med",   href: "/emergency-medicine-cme" },
+                { icon: "🔪", title: "Surgery",         href: "/surgery-cme" },
+                { icon: "👶", title: "Pediatrics",      href: "/pediatrics-cme" },
+                { icon: "🩻", title: "Radiology",       href: "/radiology-cme" },
+                { icon: "🧠", title: "Psychiatry",      href: "/psychiatry-cme" },
+                { icon: "🤱", title: "OB / Gyn",       href: "/obstetrics-gynecology-cme" },
+                { icon: "💉", title: "Anesthesia",      href: "/anesthesia-cme" },
+                { icon: "🦴", title: "Orthopedics",     href: "/orthopedics-cme" },
+                { icon: "🏡", title: "Family Medicine", href: "/family-medicine-cme" },
+                { icon: "🩺", title: "Dermatology",    href: "/dermatology-cme" },
+                { icon: "🧠", title: "Neurology",      href: "/neurology-cme" },
+                { icon: "🫁", title: "Nephrology",     href: "/nephrology-cme" },
+                { icon: "👁", title: "Ophthalmology",  href: "/ophthalmology-cme" },
               ].map((p) => (
                 <Link
                   key={p.href}
@@ -305,7 +305,7 @@ export default function DhaPage() {
 
           {/* CTA */}
           <div className="bg-gradient-to-br from-[#0f1f3d] to-[#1a3563] rounded-2xl p-10 text-center">
-            <div className="inline-block text-3xl mb-3">ðŸ‡¦ðŸ‡ª</div>
+            <div className="inline-block text-3xl mb-3">🇦🇪</div>
             <h2 className="text-2xl font-bold text-white mb-2">Start tracking your DHA compliance today</h2>
             <p className="text-[rgba(255,255,255,0.65)] mb-6 max-w-md mx-auto text-sm">
               Join Dubai healthcare professionals tracking their CME requirements with Hayya Med Pro. Free to start — upgrade for PDF reports and AI compliance tools.

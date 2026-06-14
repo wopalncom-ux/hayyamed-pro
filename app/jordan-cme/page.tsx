@@ -105,33 +105,33 @@ const KEY_FACTS = [
 ];
 
 const GCC_COMPARISON = [
-  { flag: "ðŸ‡¶ðŸ‡¦", name: "QCHP",  country: "Qatar",        cycle: "80 CPD / 2 yr",  note: "40/yr minimum" },
-  { flag: "ðŸ‡¸ðŸ‡¦", name: "SCFHS", country: "Saudi Arabia", cycle: "60 CME / yr",    note: "Physicians + dentists" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DHA",   country: "UAE (Dubai)",  cycle: "40 CME / 2 yr",  note: "5 patient safety mandatory" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DOH",   country: "UAE (Abu Dhabi)", cycle: "40 CPD / cycle", note: "Verify per category" },
-  { flag: "ðŸ‡°ðŸ‡¼", name: "MOH",   country: "Kuwait",       cycle: "30 CME / yr",    note: "Annual renewal" },
-  { flag: "ðŸ‡§ðŸ‡­", name: "NHRA",  country: "Bahrain",      cycle: "40 CPD / 2 yr",  note: "Structured + unstructured" },
-  { flag: "ðŸ‡´ðŸ‡²", name: "OMSB",  country: "Oman",         cycle: "40 CME / 2 yr",  note: "Category A & B" },
+  { flag: "🇶🇦", name: "QCHP",  country: "Qatar",        cycle: "80 CPD / 2 yr",  note: "40/yr minimum" },
+  { flag: "🇸🇦", name: "SCFHS", country: "Saudi Arabia", cycle: "60 CME / yr",    note: "Physicians + dentists" },
+  { flag: "🇦🇪", name: "DHA",   country: "UAE (Dubai)",  cycle: "40 CME / 2 yr",  note: "5 patient safety mandatory" },
+  { flag: "🇦🇪", name: "DOH",   country: "UAE (Abu Dhabi)", cycle: "40 CPD / cycle", note: "Verify per category" },
+  { flag: "🇰🇼", name: "MOH",   country: "Kuwait",       cycle: "30 CME / yr",    note: "Annual renewal" },
+  { flag: "🇧🇭", name: "NHRA",  country: "Bahrain",      cycle: "40 CPD / 2 yr",  note: "Structured + unstructured" },
+  { flag: "🇴🇲", name: "OMSB",  country: "Oman",         cycle: "40 CME / 2 yr",  note: "Category A & B" },
 ];
 
 const NOTES = [
   {
-    icon: "ðŸ¥",
+    icon: "🏥",
     title: "Jordan is a regional medical education hub",
     body: "Jordan has some of the highest physician-to-population ratios in the Arab world and trains doctors for the entire MENA region. Many Jordanian doctors pursue careers in GCC while maintaining their JMC registration — often holding simultaneous SCFHS, QCHP, or DHA licences.",
   },
   {
-    icon: "ðŸ“‹",
+    icon: "📋",
     title: "Track both licences in one app",
     body: "Hayya Med Pro lets you set up compliance wallets for Jordan Medical Council requirements (30 CME/yr) and your GCC licence (QCHP, SCFHS, DHA, etc.) simultaneously. Never let either licence lapse while managing a dual-country healthcare career.",
   },
   {
-    icon: "ðŸŒ",
+    icon: "🌍",
     title: "Dataflow and credential verification for GCC",
     body: "Jordanian healthcare professionals entering GCC typically need to complete Dataflow (primary source verification) for their Jordanian credentials before receiving a GCC licence. QCHP, SCFHS, and DHA all require this step. Hayya Med Pro tracks your CME while credential verification is in progress.",
   },
   {
-    icon: "ðŸ›",
+    icon: "🏛",
     title: "Major Jordanian academic centres",
     body: "University of Jordan Hospital, Jordan University of Science and Technology (JUST), King Abdullah University Hospital, and King Hussein Cancer Centre all host accredited CME activities. These are recognised by JMC and, when internationally accredited, by GCC authorities as well.",
   },
@@ -147,7 +147,7 @@ export default function JordanCmePage() {
       <section style={{ background: "#0f1f3d", color: "#fff", padding: "72px 24px 56px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontSize: 13, letterSpacing: "0.08em", textTransform: "uppercase", color: "#93c5fd", marginBottom: 16 }}>
-            ðŸ‡¯ðŸ‡´ Country CME Guide
+            🇯🇴 Country CME Guide
           </p>
           <h1 style={{ fontSize: "clamp(28px,5vw,48px)", fontWeight: 800, lineHeight: 1.15, marginBottom: 20 }}>
             Jordan CME Requirements<br />Jordan Medical Council
@@ -257,14 +257,14 @@ export default function JordanCmePage() {
           </h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 12 }}>
             {[
-              { href: "/qchp",                    label: "ðŸ‡¶ðŸ‡¦ QCHP Qatar" },
-              { href: "/scfhs",                   label: "ðŸ‡¸ðŸ‡¦ SCFHS Saudi" },
-              { href: "/dha",                     label: "ðŸ‡¦ðŸ‡ª DHA Dubai" },
-              { href: "/gcc-cme-requirements",    label: "ðŸŒ All GCC Requirements" },
-              { href: "/egypt-cme",               label: "ðŸ‡ªðŸ‡¬ Egypt CME" },
-              { href: "/global-cme-requirements", label: "ðŸŒ Global CME Hub" },
-              { href: "/physician-cme",           label: "ðŸ©º Physician CME" },
-              { href: "/cme-tracker",             label: "ðŸ“Š CME Tracker" },
+              { href: "/qchp",                    label: "🇶🇦 QCHP Qatar" },
+              { href: "/scfhs",                   label: "🇸🇦 SCFHS Saudi" },
+              { href: "/dha",                     label: "🇦🇪 DHA Dubai" },
+              { href: "/gcc-cme-requirements",    label: "🌍 All GCC Requirements" },
+              { href: "/egypt-cme",               label: "🇪🇬 Egypt CME" },
+              { href: "/global-cme-requirements", label: "🌐 Global CME Hub" },
+              { href: "/physician-cme",           label: "🩺 Physician CME" },
+              { href: "/cme-tracker",             label: "📊 CME Tracker" },
             ].map((l) => (
               <Link key={l.href} href={l.href} style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 8, padding: "12px 16px", textAlign: "center", textDecoration: "none", color: "#1a56a0", fontWeight: 600, fontSize: 14 }}>
                 {l.label}

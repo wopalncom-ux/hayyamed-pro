@@ -87,33 +87,33 @@ const faqLd = {
 };
 
 const AUTHORITIES = [
-  { flag: "ðŸ‡¶ðŸ‡¦", name: "QCHP",  country: "Qatar",        cycle: "80 CPD / 2 yr",   note: "Broadest scope · preventive care counts" },
-  { flag: "ðŸ‡¸ðŸ‡¦", name: "SCFHS", country: "Saudi Arabia",  cycle: "60 CME / yr",     note: "SSFCM & SBFM recognised" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DHA",   country: "Dubai",         cycle: "40 CME / 2 yr",   note: "50% online cap · patient safety required" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DOH",   country: "Abu Dhabi",     cycle: "40 CPD / cycle",  note: "Verify per licence category" },
-  { flag: "ðŸ‡°ðŸ‡¼", name: "MOH",   country: "Kuwait",        cycle: "30 CME / yr",     note: "Ministry of Health approved" },
-  { flag: "ðŸ‡§ðŸ‡­", name: "NHRA",  country: "Bahrain",       cycle: "40 CPD / 2 yr",   note: "NHRA accredited events" },
-  { flag: "ðŸ‡´ðŸ‡²", name: "OMSB",  country: "Oman",          cycle: "40 CME / 2 yr",   note: "Oman Medical Specialty Board" },
+  { flag: "🇶🇦", name: "QCHP",  country: "Qatar",        cycle: "80 CPD / 2 yr",   note: "Broadest scope · preventive care counts" },
+  { flag: "🇸🇦", name: "SCFHS", country: "Saudi Arabia",  cycle: "60 CME / yr",     note: "SSFCM & SBFM recognised" },
+  { flag: "🇦🇪", name: "DHA",   country: "Dubai",         cycle: "40 CME / 2 yr",   note: "50% online cap · patient safety required" },
+  { flag: "🇦🇪", name: "DOH",   country: "Abu Dhabi",     cycle: "40 CPD / cycle",  note: "Verify per licence category" },
+  { flag: "🇰🇼", name: "MOH",   country: "Kuwait",        cycle: "30 CME / yr",     note: "Ministry of Health approved" },
+  { flag: "🇧🇭", name: "NHRA",  country: "Bahrain",       cycle: "40 CPD / 2 yr",   note: "NHRA accredited events" },
+  { flag: "🇴🇲", name: "OMSB",  country: "Oman",          cycle: "40 CME / 2 yr",   note: "Oman Medical Specialty Board" },
 ];
 
 const SPECIALTY_NOTES = [
   {
-    icon: "ðŸŒ¿",
+    icon: "🌿",
     title: "Broadest CME Scope in Medicine",
     body: "Family medicine has the most flexible CME landscape of any specialty. Activities across most clinical domains count — from cardiology updates to paediatric screening, mental health first aid to dermatology workshops. This makes accumulating CME credits more achievable for busy GPs.",
   },
   {
-    icon: "ðŸŒ",
+    icon: "🌍",
     title: "WONCA, RCGP & GULFMENA-FCM",
     body: "WONCA World Conference, RCGP Annual Conference, and the Gulf and Middle East Association of Family and Community Medicine (GULFMENA-FCM) annual meeting are the premier events. SCFHS and DHA recognise credits from all three. The Saudi Society of Family and Community Medicine (SSFCM) annual congress is the top GCC-specific choice.",
   },
   {
-    icon: "ðŸ«€",
+    icon: "🫀",
     title: "Chronic Disease & NCD Management",
     body: "With GCC countries facing high rates of diabetes, hypertension, and obesity, CME in non-communicable disease management is highly valued by QCHP and SCFHS. Diabetes educator certifications, cardiovascular risk management courses, and obesity medicine training all earn recognised credits.",
   },
   {
-    icon: "ðŸ”¬",
+    icon: "🔬",
     title: "QI, Audit & Online CME",
     body: "Quality improvement projects, clinical audit cycles, and peer case review all earn CME credits for family physicians. Online e-learning is accepted up to 50% of total credits by DHA and SCFHS, making it practical for GPs in high-volume clinics to accumulate credits flexibly.",
   },
@@ -130,7 +130,7 @@ export default function FamilyMedicineCmePage() {
       <section style={{ background: "#0f1f3d", color: "#fff", padding: "72px 24px 56px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontSize: 13, letterSpacing: "0.08em", textTransform: "uppercase", color: "#93c5fd", marginBottom: 16 }}>
-            ðŸ¡ Specialty CME Guide
+            🏡 Specialty CME Guide
           </p>
           <h1 style={{ fontSize: "clamp(28px,5vw,48px)", fontWeight: 800, lineHeight: 1.15, marginBottom: 20 }}>
             Family Medicine CME Requirements<br />Across GCC
@@ -212,14 +212,14 @@ export default function FamilyMedicineCmePage() {
           <h2 style={{ fontSize: 24, fontWeight: 700, color: "#0f172a", textAlign: "center", marginBottom: 40 }}>More CME Specialty Guides</h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 12 }}>
             {[
-              { href: "/internal-medicine-cme", label: "ðŸ©º Internal Med" },
-              { href: "/cardiology-cme", label: "â¤ï¸ Cardiology" },
-              { href: "/pediatrics-cme", label: "ðŸ‘¶ Pediatrics" },
-              { href: "/psychiatry-cme", label: "ðŸ§  Psychiatry" },
-              { href: "/obstetrics-gynecology-cme", label: "ðŸ¤± OB/Gyn" },
-              { href: "/radiology-cme", label: "ðŸ©» Radiology" },
-              { href: "/physician-cme", label: "ðŸ‘¨â€âš•ï¸ All Physicians" },
-              { href: "/nurse-cpd", label: "ðŸ‘©â€âš•ï¸ Nursing CPD" },
+              { href: "/internal-medicine-cme", label: "🩺 Internal Med" },
+              { href: "/cardiology-cme", label: "❤️ Cardiology" },
+              { href: "/pediatrics-cme", label: "👶 Pediatrics" },
+              { href: "/psychiatry-cme", label: "🧠 Psychiatry" },
+              { href: "/obstetrics-gynecology-cme", label: "🤱 OB/Gyn" },
+              { href: "/radiology-cme", label: "🩻 Radiology" },
+              { href: "/physician-cme", label: "👨‍⚕️ All Physicians" },
+              { href: "/nurse-cpd", label: "👩‍⚕️ Nursing CPD" },
             ].map((l) => (
               <Link key={l.href} href={l.href} style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 8, padding: "12px 16px", textAlign: "center", textDecoration: "none", color: "#1a56a0", fontWeight: 600, fontSize: 14 }}>
                 {l.label}

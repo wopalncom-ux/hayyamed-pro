@@ -98,32 +98,32 @@ const faqLd = {
 const REGIONS = [
   {
     region: "GCC — Gulf Cooperation Council",
-    flag: "ðŸŒ",
+    flag: "🌍",
     countries: [
-      { flag: "ðŸ‡¶ðŸ‡¦", name: "Qatar — QCHP",         term: "CPD",  credits: "80",  cycle: "2 years",  link: "/qchp" },
-      { flag: "ðŸ‡¸ðŸ‡¦", name: "Saudi Arabia — SCFHS",  term: "CME",  credits: "60",  cycle: "1 year",   link: "/scfhs" },
-      { flag: "ðŸ‡¦ðŸ‡ª", name: "UAE Dubai — DHA",       term: "CME",  credits: "40",  cycle: "2 years",  link: "/dha" },
-      { flag: "ðŸ‡¦ðŸ‡ª", name: "UAE Abu Dhabi — DOH",   term: "CPD",  credits: "40",  cycle: "2 years",  link: "/doh" },
-      { flag: "ðŸ‡°ðŸ‡¼", name: "Kuwait — MOH",          term: "CME",  credits: "30",  cycle: "1 year",   link: "/moh-kuwait" },
-      { flag: "ðŸ‡§ðŸ‡­", name: "Bahrain — NHRA",        term: "CPD",  credits: "40",  cycle: "2 years",  link: "/nhra" },
-      { flag: "ðŸ‡´ðŸ‡²", name: "Oman — OMSB",           term: "CME",  credits: "40",  cycle: "2 years",  link: "/omsb" },
+      { flag: "🇶🇦", name: "Qatar — QCHP",         term: "CPD",  credits: "80",  cycle: "2 years",  link: "/qchp" },
+      { flag: "🇸🇦", name: "Saudi Arabia — SCFHS",  term: "CME",  credits: "60",  cycle: "1 year",   link: "/scfhs" },
+      { flag: "🇦🇪", name: "UAE Dubai — DHA",       term: "CME",  credits: "40",  cycle: "2 years",  link: "/dha" },
+      { flag: "🇦🇪", name: "UAE Abu Dhabi — DOH",   term: "CPD",  credits: "40",  cycle: "2 years",  link: "/doh" },
+      { flag: "🇰🇼", name: "Kuwait — MOH",          term: "CME",  credits: "30",  cycle: "1 year",   link: "/moh-kuwait" },
+      { flag: "🇧🇭", name: "Bahrain — NHRA",        term: "CPD",  credits: "40",  cycle: "2 years",  link: "/nhra" },
+      { flag: "🇴🇲", name: "Oman — OMSB",           term: "CME",  credits: "40",  cycle: "2 years",  link: "/omsb" },
     ],
   },
   {
     region: "Phase 2 — MENA Expansion",
-    flag: "ðŸŒ",
+    flag: "🌍",
     countries: [
-      { flag: "ðŸ‡ªðŸ‡¬", name: "Egypt — EMS",           term: "CME",  credits: "25",  cycle: "1 year",   link: "/egypt-cme" },
-      { flag: "ðŸ‡¯ðŸ‡´", name: "Jordan — JMC",          term: "CME",  credits: "30",  cycle: "1 year",   link: "/jordan-cme" },
+      { flag: "🇪🇬", name: "Egypt — EMS",           term: "CME",  credits: "25",  cycle: "1 year",   link: "/egypt-cme" },
+      { flag: "🇯🇴", name: "Jordan — JMC",          term: "CME",  credits: "30",  cycle: "1 year",   link: "/jordan-cme" },
     ],
   },
   {
     region: "International Markets",
-    flag: "ðŸŒ",
+    flag: "🌐",
     countries: [
-      { flag: "ðŸ‡¬ðŸ‡§", name: "UK — GMC (Physicians)", term: "CPD",  credits: "50",  cycle: "1 year",   link: "/gmc-cpd" },
-      { flag: "ðŸ‡¦ðŸ‡º", name: "Australia — AHPRA",     term: "CPD",  credits: "~50", cycle: "1 year",   link: "/ahpra-cpd" },
-      { flag: "ðŸ‡®ðŸ‡³", name: "India — NMC",           term: "CME",  credits: "30",  cycle: "5 years",  link: "/nmc-india-cme" },
+      { flag: "🇬🇧", name: "UK — GMC (Physicians)", term: "CPD",  credits: "50",  cycle: "1 year",   link: "/gmc-cpd" },
+      { flag: "🇦🇺", name: "Australia — AHPRA",     term: "CPD",  credits: "~50", cycle: "1 year",   link: "/ahpra-cpd" },
+      { flag: "🇮🇳", name: "India — NMC",           term: "CME",  credits: "30",  cycle: "5 years",  link: "/nmc-india-cme" },
     ],
   },
 ];
@@ -147,7 +147,7 @@ export default function GlobalCmeRequirementsPage() {
       <section style={{ background: "#0f1f3d", color: "#fff", padding: "72px 24px 56px" }}>
         <div style={{ maxWidth: 860, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontSize: 13, letterSpacing: "0.08em", textTransform: "uppercase", color: "#93c5fd", marginBottom: 16 }}>
-            ðŸŒ International CME Hub
+            🌐 International CME Hub
           </p>
           <h1 style={{ fontSize: "clamp(28px,5vw,52px)", fontWeight: 800, lineHeight: 1.1, marginBottom: 20 }}>
             Global CME Requirements 2025
@@ -274,42 +274,42 @@ export default function GlobalCmeRequirementsPage() {
             {[
               {
                 title: "GCC — All 7 Countries",
-                icon: "ðŸŒ",
+                icon: "🌍",
                 desc: "Complete requirements for QCHP, SCFHS, DHA, DOH, MOH Kuwait, NHRA, and OMSB in one comparison table.",
                 href: "/gcc-cme-requirements",
                 cta: "View GCC guide →",
               },
               {
                 title: "UK — GMC CPD",
-                icon: "ðŸ‡¬ðŸ‡§",
+                icon: "🇬🇧",
                 desc: "GMC revalidation — 50 CPD hours/year, 250 over 5 years. Annual appraisal + enhanced portfolio review.",
                 href: "/gmc-cpd",
                 cta: "View UK GMC guide →",
               },
               {
                 title: "Australia — AHPRA CPD",
-                icon: "ðŸ‡¦ðŸ‡º",
+                icon: "🇦🇺",
                 desc: "2023 AHPRA framework — 50 CPD hours/year across 4 mandatory domains including Practice Review.",
                 href: "/ahpra-cpd",
                 cta: "View AHPRA guide →",
               },
               {
                 title: "India — NMC CME",
-                icon: "ðŸ‡®ðŸ‡³",
+                icon: "🇮🇳",
                 desc: "NMC Medical Education Regulations — 30 CME credits per 5-year cycle. 1.2M+ Indian doctors in GCC.",
                 href: "/nmc-india-cme",
                 cta: "View NMC guide →",
               },
               {
                 title: "Egypt — EMS CME",
-                icon: "ðŸ‡ªðŸ‡¬",
+                icon: "🇪🇬",
                 desc: "Egyptian Medical Syndicate — 25 CME credits/year. 600K+ Egyptian healthcare professionals in GCC.",
                 href: "/egypt-cme",
                 cta: "View Egypt guide →",
               },
               {
                 title: "Jordan — JMC CME",
-                icon: "ðŸ‡¯ðŸ‡´",
+                icon: "🇯🇴",
                 desc: "Jordan Medical Council — 30 CME credits/year. Arab world's medical education hub — large GCC diaspora.",
                 href: "/jordan-cme",
                 cta: "View Jordan guide →",

@@ -83,33 +83,33 @@ const faqLd = {
 };
 
 const AUTHORITIES = [
-  { flag: "ðŸ‡¶ðŸ‡¦", name: "QCHP", country: "Qatar", term: "CPD", credits: "80", cycle: "2 years", note: "40/yr min" },
-  { flag: "ðŸ‡¸ðŸ‡¦", name: "SCFHS", country: "Saudi Arabia", term: "CME", credits: "60", cycle: "1 year", note: "SRS events recognized" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DHA", country: "UAE (Dubai)", term: "CME", credits: "40", cycle: "2 years", note: "5 patient safety" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DOH", country: "UAE (Abu Dhabi)", term: "CPD", credits: "40", cycle: "2 years", note: "Mixed categories" },
-  { flag: "ðŸ‡°ðŸ‡¼", name: "MOH", country: "Kuwait", term: "CME", credits: "30", cycle: "1 year", note: "Annual renewal" },
-  { flag: "ðŸ‡§ðŸ‡­", name: "NHRA", country: "Bahrain", term: "CPD", credits: "40", cycle: "2 years", note: "Structured + unstr." },
-  { flag: "ðŸ‡´ðŸ‡²", name: "OMSB", country: "Oman", term: "CME", credits: "40", cycle: "2 years", note: "Category A & B" },
+  { flag: "🇶🇦", name: "QCHP", country: "Qatar", term: "CPD", credits: "80", cycle: "2 years", note: "40/yr min" },
+  { flag: "🇸🇦", name: "SCFHS", country: "Saudi Arabia", term: "CME", credits: "60", cycle: "1 year", note: "SRS events recognized" },
+  { flag: "🇦🇪", name: "DHA", country: "UAE (Dubai)", term: "CME", credits: "40", cycle: "2 years", note: "5 patient safety" },
+  { flag: "🇦🇪", name: "DOH", country: "UAE (Abu Dhabi)", term: "CPD", credits: "40", cycle: "2 years", note: "Mixed categories" },
+  { flag: "🇰🇼", name: "MOH", country: "Kuwait", term: "CME", credits: "30", cycle: "1 year", note: "Annual renewal" },
+  { flag: "🇧🇭", name: "NHRA", country: "Bahrain", term: "CPD", credits: "40", cycle: "2 years", note: "Structured + unstr." },
+  { flag: "🇴🇲", name: "OMSB", country: "Oman", term: "CME", credits: "40", cycle: "2 years", note: "Category A & B" },
 ];
 
 const SPECIALTY_NOTES = [
   {
-    icon: "â˜¢ï¸",
+    icon: "☢️",
     title: "Radiation safety is mandatory",
     body: "Annual radiation safety and protection updates count as CME in all GCC authorities and are required as a condition of hospital radiation-use privileges. These typically earn 2-4 CME credits per session.",
   },
   {
-    icon: "ðŸ¤–",
+    icon: "🤖",
     title: "AI imaging courses count",
     body: "RSNA AI courses, ACR AI programs, and European School of Radiology AI modules count as CME toward SCFHS and QCHP requirements as new modality / professional development activities.",
   },
   {
-    icon: "ðŸ†",
+    icon: "🏆",
     title: "RSNA, ECR, ACR recognized",
     body: "RSNA Annual Meeting, ECR, and ACR events are accepted by SCFHS and QCHP when ACCME/EACCME accredited. Saudi Radiology Society events are directly recognized by SCFHS.",
   },
   {
-    icon: "ðŸ“¡",
+    icon: "📡",
     title: "Teleradiology and reporting quality",
     body: "Teleradiology governance, structured reporting, and radiology quality improvement programs count as CPD in QCHP and other GCC authorities under the quality improvement category.",
   },
@@ -143,7 +143,7 @@ export default function RadiologyCmePage() {
         <main className="max-w-4xl mx-auto px-6 py-12">
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-2 bg-[#eff6ff] border border-[#bfdbfe] text-[#1e40af] text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
-              ðŸ©» Radiology · All GCC Licensing Authorities
+              🩻 Radiology · All GCC Licensing Authorities
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-[#111] tracking-tight mb-4 leading-tight">
               Radiology CME requirements<br className="hidden sm:block" /> across the GCC
@@ -231,10 +231,10 @@ export default function RadiologyCmePage() {
             <h2 className="text-xl font-bold text-[#111] mb-5">Related CME guides</h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {[
-                { href: "/physician-cme", label: "All Physicians", icon: "ðŸ©º" },
-                { href: "/allied-health-cpd", label: "Allied Health", icon: "ðŸ¦¿" },
-                { href: "/qchp", label: "QCHP (Qatar)", icon: "ðŸ‡¶ðŸ‡¦" },
-                { href: "/scfhs", label: "SCFHS (Saudi)", icon: "ðŸ‡¸ðŸ‡¦" },
+                { href: "/physician-cme", label: "All Physicians", icon: "🩺" },
+                { href: "/allied-health-cpd", label: "Allied Health", icon: "🦿" },
+                { href: "/qchp", label: "QCHP (Qatar)", icon: "🇶🇦" },
+                { href: "/scfhs", label: "SCFHS (Saudi)", icon: "🇸🇦" },
               ].map((l) => (
                 <Link key={l.href} href={l.href} className="bg-white rounded-xl border border-[#e2e8f0] p-4 text-center hover:border-[#1a56a0] hover:shadow-sm transition-all group">
                   <span className="text-2xl block mb-2">{l.icon}</span>
@@ -245,7 +245,7 @@ export default function RadiologyCmePage() {
           </div>
 
           <div className="bg-gradient-to-br from-[#0f1f3d] to-[#1a3563] rounded-2xl p-10 text-center">
-            <div className="text-3xl mb-3">ðŸ©»</div>
+            <div className="text-3xl mb-3">🩻</div>
             <h2 className="text-2xl font-bold text-white mb-2">Track your radiology CME — free</h2>
             <p className="text-[rgba(255,255,255,0.65)] mb-6 max-w-md mx-auto text-sm">
               Log RSNA credits, radiation safety courses, AI imaging modules, and online CME all in one wallet. Set up your QCHP or SCFHS wallet in under 2 minutes.

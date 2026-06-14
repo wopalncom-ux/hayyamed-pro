@@ -52,7 +52,7 @@ const faqLd = {
       name: "How do I renew my DHA license online?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "DHA license renewal is completed through the Salama system (salama.ae). You will need your CME portfolio with all activity certificates, provider names, accreditation numbers, and credit values. Log in to Salama, go to license renewal, upload your CME documentation, and submit. Processing typically takes 5â€“15 working days.",
+        text: "DHA license renewal is completed through the Salama system (salama.ae). You will need your CME portfolio with all activity certificates, provider names, accreditation numbers, and credit values. Log in to Salama, go to license renewal, upload your CME documentation, and submit. Processing typically takes 5–15 working days.",
       },
     },
     {
@@ -175,7 +175,7 @@ export default function DhaRenewalPage() {
           {/* Hero */}
           <div className="mb-10">
             <div className="inline-flex items-center gap-2 bg-[#f0f9ff] border border-[#bae6fd] text-[#0369a1] text-xs font-semibold px-3 py-1.5 rounded-full mb-4">
-              ðŸ‡¦ðŸ‡ª Dubai · Dubai Health Authority (DHA)
+              🇦🇪 Dubai · Dubai Health Authority (DHA)
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold text-[#111] mb-4 leading-tight">
               DHA license renewal — complete guide for Dubai healthcare professionals
@@ -206,7 +206,7 @@ export default function DhaRenewalPage() {
           {/* CME requirement callout */}
           <div className="mb-10 bg-[#fffbeb] border border-[#fcd34d] rounded-xl p-5">
             <div className="flex gap-3">
-              <span className="text-xl flex-shrink-0 mt-0.5">⚠ï¸</span>
+              <span className="text-xl flex-shrink-0 mt-0.5">⚠️</span>
               <div>
                 <p className="text-sm font-semibold text-[#92400e] mb-1">Important: DHA CME category caps</p>
                 <p className="text-sm text-[#78350f] leading-relaxed">
@@ -316,9 +316,9 @@ export default function DhaRenewalPage() {
             <h2 className="text-lg font-bold text-[#111] mb-4">Related guides</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {[
-                { href: "/dha", label: "ðŸ‡¦ðŸ‡ª DHA CME tracker", sub: "Track your DHA compliance" },
-                { href: "/qchp-renewal", label: "ðŸ‡¶ðŸ‡¦ QCHP renewal guide", sub: "Qatar license renewal" },
-                { href: "/scfhs-renewal", label: "ðŸ‡¸ðŸ‡¦ SCFHS renewal guide", sub: "Saudi license renewal" },
+                { href: "/dha", label: "🇦🇪 DHA CME tracker", sub: "Track your DHA compliance" },
+                { href: "/qchp-renewal", label: "🇶🇦 QCHP renewal guide", sub: "Qatar license renewal" },
+                { href: "/scfhs-renewal", label: "🇸🇦 SCFHS renewal guide", sub: "Saudi license renewal" },
               ].map((g) => (
                 <Link
                   key={g.href}
@@ -334,7 +334,7 @@ export default function DhaRenewalPage() {
 
           {/* Dark CTA */}
           <div className="bg-gradient-to-br from-[#0f1f3d] to-[#1a3563] rounded-2xl p-10 text-center mb-8">
-            <div className="inline-block text-3xl mb-3">ðŸ‡¦ðŸ‡ª</div>
+            <div className="inline-block text-3xl mb-3">🇦🇪</div>
             <h2 className="text-2xl font-bold text-white mb-2">
               Start tracking your DHA CME today
             </h2>

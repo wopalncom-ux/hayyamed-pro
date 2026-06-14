@@ -87,12 +87,12 @@ const faqLd = {
 };
 
 const CPD_CATEGORIES = [
-  { icon: "ðŸŽ“", title: "Educational Events", desc: "Conferences, courses, workshops, grand rounds, e-learning modules. Typically earn 1 credit per hour. Most flexible category." },
-  { icon: "ðŸ”¬", title: "Clinical Experience", desc: "Case reviews, ward rounds, clinical simulation, procedures. Documents active clinical engagement. Up to 20% of annual CPD." },
-  { icon: "ðŸ“Š", title: "Reviewing Performance", desc: "360-degree feedback (MSF), patient surveys, colleague feedback. Required for revalidation portfolio." },
-  { icon: "ðŸ“ˆ", title: "Measuring Outcomes", desc: "Clinical audit, quality improvement projects, significant event analysis. Demonstrates impact on patient care." },
-  { icon: "ðŸ“š", title: "Self-Directed Learning", desc: "Journal reading, research, guided self-reflection. Must include evidence of learning — not just reading time." },
-  { icon: "ðŸ‘¨â€ðŸ«", title: "Teaching & Supervision", desc: "Supervising trainees, developing educational material, examiner roles. Recognised by all major UK royal colleges." },
+  { icon: "🎓", title: "Educational Events", desc: "Conferences, courses, workshops, grand rounds, e-learning modules. Typically earn 1 credit per hour. Most flexible category." },
+  { icon: "🔬", title: "Clinical Experience", desc: "Case reviews, ward rounds, clinical simulation, procedures. Documents active clinical engagement. Up to 20% of annual CPD." },
+  { icon: "📊", title: "Reviewing Performance", desc: "360-degree feedback (MSF), patient surveys, colleague feedback. Required for revalidation portfolio." },
+  { icon: "📈", title: "Measuring Outcomes", desc: "Clinical audit, quality improvement projects, significant event analysis. Demonstrates impact on patient care." },
+  { icon: "📚", title: "Self-Directed Learning", desc: "Journal reading, research, guided self-reflection. Must include evidence of learning — not just reading time." },
+  { icon: "👨‍🏫", title: "Teaching & Supervision", desc: "Supervising trainees, developing educational material, examiner roles. Recognised by all major UK royal colleges." },
 ];
 
 const KEY_DATES = [
@@ -116,7 +116,7 @@ export default function GmcCpdPage() {
       <section style={{ background: "#0f1f3d", color: "#fff", padding: "72px 24px 56px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontSize: 13, letterSpacing: "0.08em", textTransform: "uppercase", color: "#93c5fd", marginBottom: 16 }}>
-            ðŸ‡¬ðŸ‡§ Authority Guide — United Kingdom
+            🇬🇧 Authority Guide — United Kingdom
           </p>
           <h1 style={{ fontSize: "clamp(28px,5vw,48px)", fontWeight: 800, lineHeight: 1.15, marginBottom: 20 }}>
             GMC CPD Requirements<br />for UK Doctors — 2025
@@ -225,14 +225,14 @@ export default function GmcCpdPage() {
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 12 }}>
             {[
-              { href: "/qchp", label: "ðŸ‡¶ðŸ‡¦ QCHP Qatar" },
-              { href: "/scfhs", label: "ðŸ‡¸ðŸ‡¦ SCFHS Saudi" },
-              { href: "/dha", label: "ðŸ‡¦ðŸ‡ª DHA Dubai" },
-              { href: "/doh", label: "ðŸ‡¦ðŸ‡ª DOH Abu Dhabi" },
-              { href: "/nhra", label: "ðŸ‡§ðŸ‡­ NHRA Bahrain" },
-              { href: "/omsb", label: "ðŸ‡´ðŸ‡² OMSB Oman" },
-              { href: "/ahpra-cpd", label: "ðŸ‡¦ðŸ‡º AHPRA Australia" },
-              { href: "/gcc-cme-requirements", label: "ðŸŒ All GCC" },
+              { href: "/qchp", label: "🇶🇦 QCHP Qatar" },
+              { href: "/scfhs", label: "🇸🇦 SCFHS Saudi" },
+              { href: "/dha", label: "🇦🇪 DHA Dubai" },
+              { href: "/doh", label: "🇦🇪 DOH Abu Dhabi" },
+              { href: "/nhra", label: "🇧🇭 NHRA Bahrain" },
+              { href: "/omsb", label: "🇴🇲 OMSB Oman" },
+              { href: "/ahpra-cpd", label: "🇦🇺 AHPRA Australia" },
+              { href: "/gcc-cme-requirements", label: "🌍 All GCC" },
             ].map((l) => (
               <Link key={l.href} href={l.href} style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 8, padding: "12px 16px", textAlign: "center", textDecoration: "none", color: "#1a56a0", fontWeight: 600, fontSize: 13 }}>
                 {l.label}

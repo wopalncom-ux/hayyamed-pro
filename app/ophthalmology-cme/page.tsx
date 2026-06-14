@@ -66,7 +66,7 @@ const faqLd = {
       name: "Does phacoemulsification (cataract surgery) training count as CME in GCC?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. Accredited phacoemulsification courses, wet lab surgical simulation, and cataract surgery masterclasses count as clinical CME across QCHP, SCFHS, and DHA under the procedural competency category. Courses from the International Council of Ophthalmology (ICO) and AAO Skills Transfer Laboratory are widely recognised. Wet lab courses typically earn 1.5â€“3.0 CME credits per session.",
+        text: "Yes. Accredited phacoemulsification courses, wet lab surgical simulation, and cataract surgery masterclasses count as clinical CME across QCHP, SCFHS, and DHA under the procedural competency category. Courses from the International Council of Ophthalmology (ICO) and AAO Skills Transfer Laboratory are widely recognised. Wet lab courses typically earn 1.5–3.0 CME credits per session.",
       },
     },
     {
@@ -97,33 +97,33 @@ const faqLd = {
 };
 
 const AUTHORITIES = [
-  { flag: "ðŸ‡¶ðŸ‡¦", name: "QCHP",  country: "Qatar",        cycle: "80 CPD / 2 yr",  note: "Ethics CPD mandatory (â‰¥5 credits)" },
-  { flag: "ðŸ‡¸ðŸ‡¦", name: "SCFHS", country: "Saudi Arabia", cycle: "60 CME / yr",    note: "SOS, ICO, AAO, SOE recognised" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DHA",   country: "UAE (Dubai)",  cycle: "40 CME / 2 yr",  note: "5 patient safety credits mandatory" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DOH",   country: "UAE (Abu Dhabi)", cycle: "40 CPD / cycle", note: "Verify per licence category" },
-  { flag: "ðŸ‡°ðŸ‡¼", name: "MOH",   country: "Kuwait",       cycle: "30 CME / yr",    note: "Annual renewal, 30% online cap" },
-  { flag: "ðŸ‡§ðŸ‡­", name: "NHRA",  country: "Bahrain",      cycle: "40 CPD / 2 yr",  note: "Structured + unstructured split" },
-  { flag: "ðŸ‡´ðŸ‡²", name: "OMSB",  country: "Oman",         cycle: "40 CME / 2 yr",  note: "Category A & B framework" },
+  { flag: "🇶🇦", name: "QCHP",  country: "Qatar",        cycle: "80 CPD / 2 yr",  note: "Ethics CPD mandatory (≥5 credits)" },
+  { flag: "🇸🇦", name: "SCFHS", country: "Saudi Arabia", cycle: "60 CME / yr",    note: "SOS, ICO, AAO, SOE recognised" },
+  { flag: "🇦🇪", name: "DHA",   country: "UAE (Dubai)",  cycle: "40 CME / 2 yr",  note: "5 patient safety credits mandatory" },
+  { flag: "🇦🇪", name: "DOH",   country: "UAE (Abu Dhabi)", cycle: "40 CPD / cycle", note: "Verify per licence category" },
+  { flag: "🇰🇼", name: "MOH",   country: "Kuwait",       cycle: "30 CME / yr",    note: "Annual renewal, 30% online cap" },
+  { flag: "🇧🇭", name: "NHRA",  country: "Bahrain",      cycle: "40 CPD / 2 yr",  note: "Structured + unstructured split" },
+  { flag: "🇴🇲", name: "OMSB",  country: "Oman",         cycle: "40 CME / 2 yr",  note: "Category A & B framework" },
 ];
 
 const SPECIALTY_NOTES = [
   {
-    icon: "ðŸ”­",
+    icon: "🔭",
     title: "Surgical simulation counts",
     body: "Phacoemulsification wet labs, vitreoretinal simulation courses, LASIK and SMILE training programmes, and corneal transplant workshops all count as clinical CME across GCC authorities. Wet lab sessions often earn the highest credit weights.",
   },
   {
-    icon: "ðŸ©º",
+    icon: "🩺",
     title: "OCT & imaging workshops",
     body: "Accredited optical coherence tomography (OCT) interpretation courses, fundus photography workshops, fluorescein angiography training, and retinal imaging CME count as clinical CME in QCHP and SCFHS — increasingly relevant as imaging platforms advance.",
   },
   {
-    icon: "ðŸ‘",
+    icon: "👁",
     title: "Saudi Ophthalmological Society (SOS)",
-    body: "SOS-accredited events are the primary SCFHS-recognised CME source for ophthalmologists in Saudi Arabia. The annual SOS meeting typically offers 15â€“25 CME credits. SOS membership provides access to additional CME activities throughout the year.",
+    body: "SOS-accredited events are the primary SCFHS-recognised CME source for ophthalmologists in Saudi Arabia. The annual SOS meeting typically offers 15–25 CME credits. SOS membership provides access to additional CME activities throughout the year.",
   },
   {
-    icon: "ðŸŒ",
+    icon: "🌐",
     title: "Paediatric ophthalmology & strabismus",
     body: "Paediatric ophthalmology workshops, strabismus surgery simulation, and amblyopia management CME count as specialty clinical CME and are increasingly required for ophthalmologists with paediatric practice in GCC hospitals.",
   },
@@ -139,7 +139,7 @@ export default function OphthalmologyCmePage() {
       <section style={{ background: "#0f1f3d", color: "#fff", padding: "72px 24px 56px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontSize: 13, letterSpacing: "0.08em", textTransform: "uppercase", color: "#93c5fd", marginBottom: 16 }}>
-            ðŸ‘ Specialty CME Guide
+            👁 Specialty CME Guide
           </p>
           <h1 style={{ fontSize: "clamp(28px,5vw,48px)", fontWeight: 800, lineHeight: 1.15, marginBottom: 20 }}>
             Ophthalmology CME Requirements<br />Across GCC
@@ -235,14 +235,14 @@ export default function OphthalmologyCmePage() {
           </h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 12 }}>
             {[
-              { href: "/cardiology-cme",        label: "â¤ï¸ Cardiology" },
-              { href: "/surgery-cme",           label: "ðŸ”ª Surgery" },
-              { href: "/dermatology-cme",       label: "ðŸ©º Dermatology" },
-              { href: "/neurology-cme",         label: "ðŸ§  Neurology" },
-              { href: "/nephrology-cme",        label: "ðŸ« Nephrology" },
-              { href: "/orthopedics-cme",       label: "ðŸ¦´ Orthopedics" },
-              { href: "/radiology-cme",         label: "ðŸ©» Radiology" },
-              { href: "/physician-cme",         label: "ðŸ‘¨â€âš•ï¸ All Physicians" },
+              { href: "/cardiology-cme",        label: "❤️ Cardiology" },
+              { href: "/surgery-cme",           label: "🔪 Surgery" },
+              { href: "/dermatology-cme",       label: "🩺 Dermatology" },
+              { href: "/neurology-cme",         label: "🧠 Neurology" },
+              { href: "/nephrology-cme",        label: "🫁 Nephrology" },
+              { href: "/orthopedics-cme",       label: "🦴 Orthopedics" },
+              { href: "/radiology-cme",         label: "🩻 Radiology" },
+              { href: "/physician-cme",         label: "👨‍⚕️ All Physicians" },
             ].map((l) => (
               <Link key={l.href} href={l.href} style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 8, padding: "12px 16px", textAlign: "center", textDecoration: "none", color: "#1a56a0", fontWeight: 600, fontSize: 14 }}>
                 {l.label}

@@ -83,19 +83,19 @@ const faqLd = {
 };
 
 const cpdAuthorities = [
-  { flag: "ðŸ‡¶ðŸ‡¦", name: "QCHP Qatar", credits: "80 CPD / 2yr", href: "/qchp" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DOH Abu Dhabi", credits: "30â€“40 CPD / 2yr", href: "/doh" },
-  { flag: "ðŸ‡§ðŸ‡­", name: "NHRA Bahrain", credits: "40 CPD / 2yr", href: "/nhra" },
+  { flag: "🇶🇦", name: "QCHP Qatar", credits: "80 CPD / 2yr", href: "/qchp" },
+  { flag: "🇦🇪", name: "DOH Abu Dhabi", credits: "30–40 CPD / 2yr", href: "/doh" },
+  { flag: "🇧🇭", name: "NHRA Bahrain", credits: "40 CPD / 2yr", href: "/nhra" },
 ];
 
 const allAuthorities = [
-  { flag: "ðŸ‡¶ðŸ‡¦", name: "QCHP — Qatar", href: "/qchp", term: "CPD" },
-  { flag: "ðŸ‡¸ðŸ‡¦", name: "SCFHS — Saudi Arabia", href: "/scfhs", term: "CME" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DHA — Dubai", href: "/dha", term: "CME" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DOH — Abu Dhabi", href: "/doh", term: "CPD" },
-  { flag: "ðŸ‡°ðŸ‡¼", name: "MOH — Kuwait", href: "/moh-kuwait", term: "CME" },
-  { flag: "ðŸ‡§ðŸ‡­", name: "NHRA — Bahrain", href: "/nhra", term: "CPD" },
-  { flag: "ðŸ‡´ðŸ‡²", name: "OMSB — Oman", href: "/omsb", term: "CME" },
+  { flag: "🇶🇦", name: "QCHP — Qatar", href: "/qchp", term: "CPD" },
+  { flag: "🇸🇦", name: "SCFHS — Saudi Arabia", href: "/scfhs", term: "CME" },
+  { flag: "🇦🇪", name: "DHA — Dubai", href: "/dha", term: "CME" },
+  { flag: "🇦🇪", name: "DOH — Abu Dhabi", href: "/doh", term: "CPD" },
+  { flag: "🇰🇼", name: "MOH — Kuwait", href: "/moh-kuwait", term: "CME" },
+  { flag: "🇧🇭", name: "NHRA — Bahrain", href: "/nhra", term: "CPD" },
+  { flag: "🇴🇲", name: "OMSB — Oman", href: "/omsb", term: "CME" },
 ];
 
 export default function CpdTrackerPage() {
@@ -284,11 +284,11 @@ export default function CpdTrackerPage() {
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
               {[
-                { icon: "ðŸ©º", title: "Physicians", href: "/physician-cme" },
-                { icon: "ðŸ‘©â€âš•ï¸", title: "Nurses", href: "/nurse-cpd" },
-                { icon: "ðŸ’Š", title: "Pharmacists", href: "/pharmacist-cme" },
-                { icon: "ðŸ¦·", title: "Dentists", href: "/dentist-cme" },
-                { icon: "ðŸ¦¿", title: "Allied Health", href: "/allied-health-cpd" },
+                { icon: "🩺", title: "Physicians", href: "/physician-cme" },
+                { icon: "👩‍⚕️", title: "Nurses", href: "/nurse-cpd" },
+                { icon: "💊", title: "Pharmacists", href: "/pharmacist-cme" },
+                { icon: "🦷", title: "Dentists", href: "/dentist-cme" },
+                { icon: "🦿", title: "Allied Health", href: "/allied-health-cpd" },
               ].map((p) => (
                 <Link
                   key={p.href}
@@ -332,12 +332,12 @@ export default function CpdTrackerPage() {
             <h2 className="text-lg font-bold text-[#111] mb-4">CPD renewal guides for GCC healthcare professionals</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {[
-                { href: "/qchp-renewal", label: "ðŸ‡¶ðŸ‡¦ QCHP renewal guide", sub: "80 CPD, 2-year cycle" },
-                { href: "/doh-renewal", label: "ðŸ‡¦ðŸ‡ª DOH renewal guide — Abu Dhabi", sub: "30â€“50 CPD per cycle" },
-                { href: "/scfhs-renewal", label: "ðŸ‡¸ðŸ‡¦ SCFHS renewal guide", sub: "30â€“60 CME per year" },
-                { href: "/dha-renewal", label: "ðŸ‡¦ðŸ‡ª DHA renewal guide — Dubai", sub: "40 CME, 2-year cycle" },
-                { href: "/gcc-medical-license-renewal", label: "ðŸŒ All GCC renewal guides", sub: "All 7 authorities" },
-                { href: "/cme-compliance-report", label: "ðŸ“„ Generate CPD compliance report", sub: "Download PDF for renewal" },
+                { href: "/qchp-renewal", label: "🇶🇦 QCHP renewal guide", sub: "80 CPD, 2-year cycle" },
+                { href: "/doh-renewal", label: "🇦🇪 DOH renewal guide — Abu Dhabi", sub: "30–50 CPD per cycle" },
+                { href: "/scfhs-renewal", label: "🇸🇦 SCFHS renewal guide", sub: "30–60 CME per year" },
+                { href: "/dha-renewal", label: "🇦🇪 DHA renewal guide — Dubai", sub: "40 CME, 2-year cycle" },
+                { href: "/gcc-medical-license-renewal", label: "🌍 All GCC renewal guides", sub: "All 7 authorities" },
+                { href: "/cme-compliance-report", label: "📄 Generate CPD compliance report", sub: "Download PDF for renewal" },
               ].map((g) => (
                 <Link
                   key={g.href}

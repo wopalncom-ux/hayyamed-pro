@@ -48,7 +48,7 @@ const faqLd = {
       name: "How many CME credits do GCC healthcare professionals need?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "CME/CPD requirements vary by country and authority: QCHP Qatar requires 80 CPD credits per 2-year cycle (minimum 40/year); SCFHS Saudi Arabia requires 60 CME credits per year; DHA Dubai requires 40 CME credits per 2-year cycle; DOH Abu Dhabi requires 30â€“50 CPD credits per cycle (by profession); MOH Kuwait requires 30 CME credits per year for physicians; NHRA Bahrain requires 40 CPD credits per 2-year cycle; OMSB Oman requires 40 CME credits per 2-year cycle for physicians.",
+        text: "CME/CPD requirements vary by country and authority: QCHP Qatar requires 80 CPD credits per 2-year cycle (minimum 40/year); SCFHS Saudi Arabia requires 60 CME credits per year; DHA Dubai requires 40 CME credits per 2-year cycle; DOH Abu Dhabi requires 30–50 CPD credits per cycle (by profession); MOH Kuwait requires 30 CME credits per year for physicians; NHRA Bahrain requires 40 CPD credits per 2-year cycle; OMSB Oman requires 40 CME credits per 2-year cycle for physicians.",
       },
     },
     {
@@ -88,7 +88,7 @@ const faqLd = {
 
 const COUNTRIES = [
   {
-    flag: "ðŸ‡¶ðŸ‡¦",
+    flag: "🇶🇦",
     name: "Qatar",
     authority: "QCHP",
     term: "CPD",
@@ -100,7 +100,7 @@ const COUNTRIES = [
     href: "/qchp",
   },
   {
-    flag: "ðŸ‡¸ðŸ‡¦",
+    flag: "🇸🇦",
     name: "Saudi Arabia",
     authority: "SCFHS",
     term: "CME",
@@ -112,7 +112,7 @@ const COUNTRIES = [
     href: "/scfhs",
   },
   {
-    flag: "ðŸ‡¦ðŸ‡ª",
+    flag: "🇦🇪",
     name: "Dubai, UAE",
     authority: "DHA",
     term: "CME",
@@ -124,19 +124,19 @@ const COUNTRIES = [
     href: "/dha",
   },
   {
-    flag: "ðŸ‡¦ðŸ‡ª",
+    flag: "🇦🇪",
     name: "Abu Dhabi, UAE",
     authority: "DOH",
     term: "CPD",
-    credits: "30â€“50",
-    cycle: "1â€“2 years",
+    credits: "30–50",
+    cycle: "1–2 years",
     minPerYear: "Varies",
     onlineCap: "Varies",
     mandatory: "Profession-specific",
     href: "/doh",
   },
   {
-    flag: "ðŸ‡°ðŸ‡¼",
+    flag: "🇰🇼",
     name: "Kuwait",
     authority: "MOH",
     term: "CME",
@@ -148,7 +148,7 @@ const COUNTRIES = [
     href: "/moh-kuwait",
   },
   {
-    flag: "ðŸ‡§ðŸ‡­",
+    flag: "🇧🇭",
     name: "Bahrain",
     authority: "NHRA",
     term: "CPD",
@@ -160,7 +160,7 @@ const COUNTRIES = [
     href: "/nhra",
   },
   {
-    flag: "ðŸ‡´ðŸ‡²",
+    flag: "🇴🇲",
     name: "Oman",
     authority: "OMSB",
     term: "CME",
@@ -174,25 +174,25 @@ const COUNTRIES = [
 ];
 
 const SPECIALTIES = [
-  { icon: "â¤ï¸", title: "Cardiology",        href: "/cardiology-cme" },
-  { icon: "ðŸ©º", title: "Internal Medicine",  href: "/internal-medicine-cme" },
-  { icon: "ðŸš‘", title: "Emergency Med",      href: "/emergency-medicine-cme" },
-  { icon: "ðŸ”ª", title: "Surgery",            href: "/surgery-cme" },
-  { icon: "ðŸ‘¶", title: "Pediatrics",         href: "/pediatrics-cme" },
-  { icon: "ðŸ©»", title: "Radiology",          href: "/radiology-cme" },
-  { icon: "ðŸ§ ", title: "Psychiatry",         href: "/psychiatry-cme" },
-  { icon: "ðŸ¤±", title: "OB / Gyn",          href: "/obstetrics-gynecology-cme" },
-  { icon: "ðŸ’‰", title: "Anesthesia",         href: "/anesthesia-cme" },
-  { icon: "ðŸ¦´", title: "Orthopedics",        href: "/orthopedics-cme" },
-  { icon: "ðŸ¡", title: "Family Medicine",    href: "/family-medicine-cme" },
+  { icon: "❤️", title: "Cardiology",        href: "/cardiology-cme" },
+  { icon: "🩺", title: "Internal Medicine",  href: "/internal-medicine-cme" },
+  { icon: "🚑", title: "Emergency Med",      href: "/emergency-medicine-cme" },
+  { icon: "🔪", title: "Surgery",            href: "/surgery-cme" },
+  { icon: "👶", title: "Pediatrics",         href: "/pediatrics-cme" },
+  { icon: "🩻", title: "Radiology",          href: "/radiology-cme" },
+  { icon: "🧠", title: "Psychiatry",         href: "/psychiatry-cme" },
+  { icon: "🤱", title: "OB / Gyn",          href: "/obstetrics-gynecology-cme" },
+  { icon: "💉", title: "Anesthesia",         href: "/anesthesia-cme" },
+  { icon: "🦴", title: "Orthopedics",        href: "/orthopedics-cme" },
+  { icon: "🏡", title: "Family Medicine",    href: "/family-medicine-cme" },
 ];
 
 const PROFESSIONS = [
-  { icon: "ðŸ©º", title: "Physicians",    href: "/physician-cme" },
-  { icon: "ðŸ‘©â€âš•ï¸", title: "Nurses",       href: "/nurse-cpd" },
-  { icon: "ðŸ’Š", title: "Pharmacists",   href: "/pharmacist-cme" },
-  { icon: "ðŸ¦·", title: "Dentists",      href: "/dentist-cme" },
-  { icon: "ðŸ¦¿", title: "Allied Health", href: "/allied-health-cpd" },
+  { icon: "🩺", title: "Physicians",    href: "/physician-cme" },
+  { icon: "👩‍⚕️", title: "Nurses",       href: "/nurse-cpd" },
+  { icon: "💊", title: "Pharmacists",   href: "/pharmacist-cme" },
+  { icon: "🦷", title: "Dentists",      href: "/dentist-cme" },
+  { icon: "🦿", title: "Allied Health", href: "/allied-health-cpd" },
 ];
 
 export default function GccCmeRequirementsPage() {
@@ -207,7 +207,7 @@ export default function GccCmeRequirementsPage() {
       <section style={{ background: "#0f1f3d", color: "#fff", padding: "72px 24px 56px" }}>
         <div style={{ maxWidth: 860, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontSize: 13, letterSpacing: "0.08em", textTransform: "uppercase", color: "#93c5fd", marginBottom: 16 }}>
-            ðŸŒ GCC CME Requirements — Complete Guide
+            🌍 GCC CME Requirements — Complete Guide
           </p>
           <h1 style={{ fontSize: "clamp(30px,5vw,52px)", fontWeight: 800, lineHeight: 1.12, marginBottom: 20 }}>
             CME & CPD Requirements Across<br />All 7 GCC Countries

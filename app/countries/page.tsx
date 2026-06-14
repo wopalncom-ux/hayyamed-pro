@@ -44,7 +44,7 @@ const faqLd = {
       name: "Which GCC country has the highest CME credit requirement?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Saudi Arabia (SCFHS) has the highest requirement for physicians, pharmacists, and dentists at 60 CME credits per year. Qatar (QCHP) requires 80 CPD credits over a 2-year cycle (40 per year minimum). Most other GCC countries require 30â€“40 credits per year or per 2-year cycle.",
+        text: "Saudi Arabia (SCFHS) has the highest requirement for physicians, pharmacists, and dentists at 60 CME credits per year. Qatar (QCHP) requires 80 CPD credits over a 2-year cycle (40 per year minimum). Most other GCC countries require 30–40 credits per year or per 2-year cycle.",
       },
     },
     {
@@ -85,7 +85,7 @@ const faqLd = {
 const COUNTRIES_DATA = [
   {
     name: "Qatar",
-    flag: "ðŸ‡¶ðŸ‡¦",
+    flag: "🇶🇦",
     authority: "QCHP",
     authorityFull: "Qatar Council for Healthcare Practitioners",
     term: "CPD",
@@ -104,13 +104,13 @@ const COUNTRIES_DATA = [
   },
   {
     name: "Saudi Arabia",
-    flag: "ðŸ‡¸ðŸ‡¦",
+    flag: "🇸🇦",
     authority: "SCFHS",
     authorityFull: "Saudi Commission for Health Specialties",
     term: "CME",
     cycle: "1 year",
     credits: 60,
-    creditsLabel: "30â€“60 credits / year",
+    creditsLabel: "30–60 credits / year",
     minPerYear: "Profession-specific",
     onlineCap: "50% max online",
     patientSafety: "5 credits mandatory",
@@ -123,7 +123,7 @@ const COUNTRIES_DATA = [
   },
   {
     name: "UAE — Dubai",
-    flag: "ðŸ‡¦ðŸ‡ª",
+    flag: "🇦🇪",
     authority: "DHA",
     authorityFull: "Dubai Health Authority",
     term: "CME",
@@ -142,13 +142,13 @@ const COUNTRIES_DATA = [
   },
   {
     name: "UAE — Abu Dhabi",
-    flag: "ðŸ‡¦ðŸ‡ª",
+    flag: "🇦🇪",
     authority: "DOH",
-    authorityFull: "Department of Health â€“ Abu Dhabi",
+    authorityFull: "Department of Health – Abu Dhabi",
     term: "CPD",
-    cycle: "1â€“2 years",
+    cycle: "1–2 years",
     credits: 50,
-    creditsLabel: "30â€“50 CPD credits",
+    creditsLabel: "30–50 CPD credits",
     minPerYear: "Profession-specific",
     onlineCap: "Max 20 online",
     patientSafety: "Included in accredited CPD",
@@ -161,7 +161,7 @@ const COUNTRIES_DATA = [
   },
   {
     name: "Kuwait",
-    flag: "ðŸ‡°ðŸ‡¼",
+    flag: "🇰🇼",
     authority: "MOH Kuwait",
     authorityFull: "Ministry of Health — Kuwait",
     term: "CME",
@@ -180,7 +180,7 @@ const COUNTRIES_DATA = [
   },
   {
     name: "Bahrain",
-    flag: "ðŸ‡§ðŸ‡­",
+    flag: "🇧🇭",
     authority: "NHRA",
     authorityFull: "National Health Regulatory Authority",
     term: "CPD",
@@ -199,7 +199,7 @@ const COUNTRIES_DATA = [
   },
   {
     name: "Oman",
-    flag: "ðŸ‡´ðŸ‡²",
+    flag: "🇴🇲",
     authority: "OMSB",
     authorityFull: "Oman Medical Specialty Board",
     term: "CME",
@@ -390,7 +390,7 @@ export default function CountriesPage() {
 
           {/* Multi-country professionals callout */}
           <div className="bg-[#fff7ed] border border-[#fed7aa] rounded-2xl p-6 mb-14 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            <div className="flex-shrink-0 text-3xl">ðŸŒ</div>
+            <div className="flex-shrink-0 text-3xl">🌍</div>
             <div className="flex-1">
               <h2 className="text-base font-bold text-[#92400e] mb-1">Licensed in more than one GCC country?</h2>
               <p className="text-sm text-[#92400e] leading-relaxed">
@@ -500,11 +500,11 @@ export default function CountriesPage() {
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {[
-                { href: "/physician-cme",    icon: "ðŸ©º",  title: "Physicians",    sub: "Doctor CME requirements across all GCC authorities" },
-                { href: "/nurse-cpd",        icon: "ðŸ‘©â€âš•ï¸", title: "Nurses",        sub: "Nursing CPD — lower in Saudi (30/yr) and Kuwait (20/yr)" },
-                { href: "/pharmacist-cme",   icon: "ðŸ’Š",  title: "Pharmacists",   sub: "Pharmacy CME — same as physicians in most GCC countries" },
-                { href: "/dentist-cme",      icon: "ðŸ¦·",  title: "Dentists",      sub: "Dental CME requirements across SCFHS, QCHP, DHA, and more" },
-                { href: "/allied-health-cpd",icon: "ðŸ¦¿",  title: "Allied Health", sub: "Physiotherapists, radiographers, lab techs, OTs — 30/yr SCFHS" },
+                { href: "/physician-cme",    icon: "🩺",  title: "Physicians",    sub: "Doctor CME requirements across all GCC authorities" },
+                { href: "/nurse-cpd",        icon: "👩‍⚕️", title: "Nurses",        sub: "Nursing CPD — lower in Saudi (30/yr) and Kuwait (20/yr)" },
+                { href: "/pharmacist-cme",   icon: "💊",  title: "Pharmacists",   sub: "Pharmacy CME — same as physicians in most GCC countries" },
+                { href: "/dentist-cme",      icon: "🦷",  title: "Dentists",      sub: "Dental CME requirements across SCFHS, QCHP, DHA, and more" },
+                { href: "/allied-health-cpd",icon: "🦿",  title: "Allied Health", sub: "Physiotherapists, radiographers, lab techs, OTs — 30/yr SCFHS" },
               ].map((p) => (
                 <Link
                   key={p.href}

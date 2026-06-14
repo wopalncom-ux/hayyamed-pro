@@ -167,7 +167,7 @@ export async function sendLicenseExpiryEmail({
   const urgent = daysLeft <= 7;
   const color = urgent ? "#dc2626" : "#d97706";
   const unsub = authId ? unsubUrl(authId, "license") : undefined;
-  await send(to, `${urgent ? "⚠ï¸ Urgent: " : ""}License Expiring in ${daysLeft} Days`, baseLayout(`
+  await send(to, `${urgent ? "⚠️ Urgent: " : ""}License Expiring in ${daysLeft} Days`, baseLayout(`
     <p style="color:#374151;font-size:16px;margin:0 0 8px">Hi ${esc(name)},</p>
     <p style="color:#374151;margin:0 0 24px">Your license expires in <strong style="color:${color}">${daysLeft} days</strong> (${expiryDate}). Ensure your CME credits are complete before renewal.</p>
     <a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Check CME Status →</a>
@@ -307,7 +307,7 @@ export async function sendCmeDeadlineEmail({
   const urgent = daysLeft <= 7;
   const color = urgent ? "#dc2626" : "#d97706";
   const unsub = authId ? unsubUrl(authId, "cme") : undefined;
-  await send(to, `${urgent ? "⚠ï¸ " : ""}CME Cycle Ends in ${daysLeft} Days — ${creditsNeeded} Credits Still Needed`, baseLayout(`
+  await send(to, `${urgent ? "⚠️ " : ""}CME Cycle Ends in ${daysLeft} Days — ${creditsNeeded} Credits Still Needed`, baseLayout(`
     <p style="color:#374151;font-size:16px;margin:0 0 8px">Hi ${esc(name)},</p>
     <p style="color:#374151;margin:0 0 20px">Your CME cycle ends on <strong style="color:${color}">${cycleEndDate}</strong> — only <strong style="color:${color}">${daysLeft} days away</strong>.</p>
     <div style="background:${urgent ? "#fef2f2" : "#fff7ed"};border:1px solid ${urgent ? "#fecaca" : "#fed7aa"};border-radius:8px;padding:16px 20px;margin:0 0 24px">
@@ -363,7 +363,7 @@ export async function sendTrialEndingSoonEmail({
   const urgent = daysLeft <= 1;
   const color = urgent ? "#dc2626" : "#d97706";
   const unsub = authId ? unsubUrl(authId, "reminders") : undefined;
-  await send(to, `${urgent ? "⚠ï¸ " : ""}Your Pro trial ends ${daysLeft === 1 ? "tomorrow" : `in ${daysLeft} days`} — don't lose access`, baseLayout(`
+  await send(to, `${urgent ? "⚠️ " : ""}Your Pro trial ends ${daysLeft === 1 ? "tomorrow" : `in ${daysLeft} days`} — don't lose access`, baseLayout(`
     <p style="color:#374151;font-size:16px;margin:0 0 8px">Hi ${esc(name)},</p>
     <p style="color:#374151;margin:0 0 20px">Your Pro trial expires on <strong style="color:${color}">${expiryDate}</strong> — <strong style="color:${color}">${daysLeft === 1 ? "tomorrow" : `in ${daysLeft} days`}</strong>.</p>
     <div style="background:${urgent ? "#fef2f2" : "#fff7ed"};border:1px solid ${urgent ? "#fecaca" : "#fed7aa"};border-radius:8px;padding:16px 20px;margin:0 0 24px">
@@ -749,7 +749,7 @@ export async function sendReferralRewardEmail({
 
   await send(
     to,
-    `ðŸŽ‰ Your referral joined — you've earned ${bonusDays} free Pro days`,
+    `🎉 Your referral joined — you've earned ${bonusDays} free Pro days`,
     baseLayout(`
       <p style="color:#374151;font-size:16px;margin:0 0 8px">Hi ${esc(referrerName)},</p>
       <p style="color:#374151;margin:0 0 24px">
@@ -1065,7 +1065,7 @@ export async function sendUniversityRegistrationAdminEmail({
       <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:20px 24px;margin:0 0 24px">
         <p style="margin:0 0 4px;font-size:12px;font-weight:600;color:#16a34a;text-transform:uppercase;letter-spacing:0.05em">Institution Details</p>
         <p style="margin:6px 0 4px;font-size:18px;font-weight:700;color:#111">${esc(universityName)}</p>
-        <p style="margin:0 0 4px;color:#374151;font-size:14px">ðŸ“ ${esc(city)}, ${esc(country)}</p>
+        <p style="margin:0 0 4px;color:#374151;font-size:14px">📍 ${esc(city)}, ${esc(country)}</p>
         ${facultyCount ? `<p style="margin:0 0 4px;color:#374151;font-size:14px">Faculty size: ${esc(facultyCount)}</p>` : ""}
         ${contactName ? `<p style="margin:0 0 4px;color:#374151;font-size:14px">Contact: ${esc(contactName)}${contactRole ? ` (${esc(contactRole)})` : ""}</p>` : ""}
         <p style="margin:0 0 4px;color:#374151;font-size:14px">Registered by: ${esc(adminName)}</p>

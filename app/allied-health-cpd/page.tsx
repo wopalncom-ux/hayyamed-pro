@@ -83,14 +83,14 @@ const faqLd = {
 };
 
 const professions = [
-  { icon: "ðŸ¦¿", name: "Physiotherapists" },
-  { icon: "â˜¢ï¸", name: "Radiographers" },
-  { icon: "ðŸ”¬", name: "Lab Technicians" },
-  { icon: "ðŸ§ ", name: "Occupational Therapists" },
-  { icon: "ðŸ—£ï¸", name: "Speech Therapists" },
-  { icon: "ðŸ«", name: "Respiratory Therapists" },
-  { icon: "ðŸ¥—", name: "Dietitians / Nutritionists" },
-  { icon: "ðŸ‘ï¸", name: "Optometrists" },
+  { icon: "🦿", name: "Physiotherapists" },
+  { icon: "☢️", name: "Radiographers" },
+  { icon: "🔬", name: "Lab Technicians" },
+  { icon: "🧠", name: "Occupational Therapists" },
+  { icon: "🗣️", name: "Speech Therapists" },
+  { icon: "🫁", name: "Respiratory Therapists" },
+  { icon: "🥗", name: "Dietitians / Nutritionists" },
+  { icon: "👁️", name: "Optometrists" },
 ];
 
 const countries = [
@@ -124,8 +124,8 @@ const countries = [
   {
     country: "UAE (Abu Dhabi)",
     authority: "DOH",
-    credits: "30â€“40 CPD",
-    cycle: "1â€“2 years",
+    credits: "30–40 CPD",
+    cycle: "1–2 years",
     minPerYear: "Profession-specific",
     onlineCap: "Max 20 online",
     terminology: "CPD",
@@ -161,32 +161,32 @@ const countries = [
 
 const categories = [
   {
-    icon: "ðŸŽ“",
+    icon: "🎓",
     title: "Accredited Training Courses",
     description: "Short courses and workshops accredited by the relevant licensing authority",
   },
   {
-    icon: "ðŸ’»",
+    icon: "💻",
     title: "Online & E-Learning",
     description: "Accredited online modules — capped at 50% in Saudi Arabia and Kuwait",
   },
   {
-    icon: "ðŸ¥",
+    icon: "🏥",
     title: "Conferences & Symposia",
     description: "National and international allied health conferences with accreditation",
   },
   {
-    icon: "ðŸ“‹",
+    icon: "📋",
     title: "Research & Publications",
     description: "Peer-reviewed papers, case reports, audit, and research presentations",
   },
   {
-    icon: "ðŸ‘©â€ðŸ«",
+    icon: "👩‍🏫",
     title: "Teaching & Supervision",
     description: "Student supervision, peer education, and clinical mentoring",
   },
   {
-    icon: "ðŸ›ï¸",
+    icon: "🏛️",
     title: "Postgraduate Study",
     description: "Masters, clinical fellowships, and advanced specialist training",
   },
@@ -269,7 +269,7 @@ export default function AlliedHealthCpdPage() {
         <section className="py-8 bg-[#f0fdf4] border-b border-[#bbf7d0]">
           <div className="max-w-4xl mx-auto px-4 sm:px-6">
             <div className="bg-white border border-[#bbf7d0] rounded-xl px-5 py-4 flex items-start gap-4">
-              <span className="text-2xl flex-shrink-0">ðŸ‡¸ðŸ‡¦</span>
+              <span className="text-2xl flex-shrink-0">🇸🇦</span>
               <div>
                 <p className="text-sm font-semibold text-[#111] mb-1">
                   SCFHS (Saudi Arabia): Allied health professionals require <strong>30 CME credits per year</strong> — half the physician requirement
@@ -289,7 +289,7 @@ export default function AlliedHealthCpdPage() {
               Allied Health CPD Requirements by Country
             </h2>
             <p className="text-sm text-[#64748b] text-center mb-8">
-              Requirements as of 2025â€“2026. Verify final requirements with your licensing authority.
+              Requirements as of 2025–2026. Verify final requirements with your licensing authority.
             </p>
             <div className="overflow-x-auto rounded-xl border border-[#e2e8f0] bg-white">
               <table className="w-full text-sm">

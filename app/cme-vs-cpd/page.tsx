@@ -52,7 +52,7 @@ const faqLd = {
       name: "Does QCHP use CME or CPD?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "QCHP (Qatar Council for Healthcare Practitioners), now known as DHP-AS (Department of Healthcare Professionals â€“ Accreditation Section) under the Ministry of Public Health Qatar, uses the term CPD (Continuing Professional Development). Qatar requires all licensed healthcare professionals to complete 80 CPD credits per 2-year renewal cycle.",
+        text: "QCHP (Qatar Council for Healthcare Practitioners), now known as DHP-AS (Department of Healthcare Professionals – Accreditation Section) under the Ministry of Public Health Qatar, uses the term CPD (Continuing Professional Development). Qatar requires all licensed healthcare professionals to complete 80 CPD credits per 2-year renewal cycle.",
       },
     },
     {
@@ -91,20 +91,20 @@ const faqLd = {
 };
 
 const AUTHORITY_TERMS = [
-  { country: "ðŸ‡¶ðŸ‡¦ Qatar", authority: "QCHP / DHP-AS", term: "CPD", credits: "80 / 2yr", href: "/qchp" },
-  { country: "ðŸ‡¸ðŸ‡¦ Saudi Arabia", authority: "SCFHS", term: "CME", credits: "60 / yr (physicians)", href: "/scfhs" },
-  { country: "ðŸ‡¦ðŸ‡ª UAE — Dubai", authority: "DHA", term: "CME", credits: "40 / 2yr", href: "/dha" },
-  { country: "ðŸ‡¦ðŸ‡ª UAE — Abu Dhabi", authority: "DOH", term: "CPD", credits: "40 / 2yr", href: "/doh" },
-  { country: "ðŸ‡°ðŸ‡¼ Kuwait", authority: "MOH Kuwait", term: "CME", credits: "30 / yr (physicians)", href: "/moh-kuwait" },
-  { country: "ðŸ‡§ðŸ‡­ Bahrain", authority: "NHRA", term: "CPD", credits: "40 / 2yr", href: "/nhra" },
-  { country: "ðŸ‡´ðŸ‡² Oman", authority: "OMSB", term: "CME", credits: "40 / 2yr (physicians)", href: "/omsb" },
+  { country: "🇶🇦 Qatar", authority: "QCHP / DHP-AS", term: "CPD", credits: "80 / 2yr", href: "/qchp" },
+  { country: "🇸🇦 Saudi Arabia", authority: "SCFHS", term: "CME", credits: "60 / yr (physicians)", href: "/scfhs" },
+  { country: "🇦🇪 UAE — Dubai", authority: "DHA", term: "CME", credits: "40 / 2yr", href: "/dha" },
+  { country: "🇦🇪 UAE — Abu Dhabi", authority: "DOH", term: "CPD", credits: "40 / 2yr", href: "/doh" },
+  { country: "🇰🇼 Kuwait", authority: "MOH Kuwait", term: "CME", credits: "30 / yr (physicians)", href: "/moh-kuwait" },
+  { country: "🇧🇭 Bahrain", authority: "NHRA", term: "CPD", credits: "40 / 2yr", href: "/nhra" },
+  { country: "🇴🇲 Oman", authority: "OMSB", term: "CME", credits: "40 / 2yr (physicians)", href: "/omsb" },
 ];
 
 const SIMILARITIES = [
-  { icon: "ðŸŽ¯", title: "Both require credit accumulation", desc: "Whether called CME or CPD, healthcare professionals must earn a set number of credits per renewal cycle through approved educational activities." },
-  { icon: "ðŸ“‹", title: "Both use activity logs", desc: "Every authority requires you to maintain a portfolio or log of activities — provider name, date, credit value, and often a certificate of attendance." },
+  { icon: "🎯", title: "Both require credit accumulation", desc: "Whether called CME or CPD, healthcare professionals must earn a set number of credits per renewal cycle through approved educational activities." },
+  { icon: "📋", title: "Both use activity logs", desc: "Every authority requires you to maintain a portfolio or log of activities — provider name, date, credit value, and often a certificate of attendance." },
   { icon: "✅", title: "Both accept similar activity types", desc: "Conferences, workshops, online courses, research, and teaching activities are accepted by virtually every GCC authority under both frameworks." },
-  { icon: "ðŸ”„", title: "Both link to license renewal", desc: "Failing to meet CME or CPD requirements means your license renewal application will be rejected. Both are mandatory, not optional." },
+  { icon: "🔄", title: "Both link to license renewal", desc: "Failing to meet CME or CPD requirements means your license renewal application will be rejected. Both are mandatory, not optional." },
 ];
 
 const DIFFERENCES = [
@@ -112,7 +112,7 @@ const DIFFERENCES = [
   { aspect: "Scope", cme: "Primarily clinical and medical knowledge", cpd: "Broader: clinical + management, communication, leadership" },
   { aspect: "Portfolio style", cme: "Credit-based log with certificates", cpd: "Reflective portfolio — learning needs, outcomes, and reflection" },
   { aspect: "Who uses it", cme: "SCFHS, DHA, MOH Kuwait, OMSB", cpd: "QCHP, DOH, NHRA" },
-  { aspect: "Online cap", cme: "Typically 30â€“50% of total credits", cpd: "Typically 30â€“50% of total credits (same in practice)" },
+  { aspect: "Online cap", cme: "Typically 30–50% of total credits", cpd: "Typically 30–50% of total credits (same in practice)" },
 ];
 
 export default function CmeVsCpdPage() {
@@ -149,7 +149,7 @@ export default function CmeVsCpdPage() {
           {/* Hero */}
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-2 bg-[#eff6ff] border border-[#bfdbfe] text-[#1a56a0] text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
-              ðŸ“š CME vs CPD · GCC Healthcare Professionals · Complete Guide
+              📚 CME vs CPD · GCC Healthcare Professionals · Complete Guide
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-[#111] tracking-tight mb-4 leading-tight">
               CME vs CPD — what&apos;s the difference<br className="hidden sm:block" /> for GCC healthcare professionals?
@@ -306,9 +306,9 @@ export default function CmeVsCpdPage() {
             <h2 className="text-xl font-bold text-[#111] mb-4">Requirements by profession</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {[
-                { href: "/physician-cme",  icon: "ðŸ©º", title: "Physicians",   sub: "60 CME/yr in Saudi · 80 CPD/2yr in Qatar · 40/2yr in UAE" },
-                { href: "/nurse-cpd",      icon: "ðŸ‘©â€âš•ï¸", title: "Nurses",      sub: "30 CME/yr in Saudi · 20/yr in Kuwait · 80 CPD/2yr in Qatar" },
-                { href: "/pharmacist-cme", icon: "ðŸ’Š", title: "Pharmacists",  sub: "60 CME/yr in Saudi · 80 CPD/2yr in Qatar · 40/2yr in UAE" },
+                { href: "/physician-cme",  icon: "🩺", title: "Physicians",   sub: "60 CME/yr in Saudi · 80 CPD/2yr in Qatar · 40/2yr in UAE" },
+                { href: "/nurse-cpd",      icon: "👩‍⚕️", title: "Nurses",      sub: "30 CME/yr in Saudi · 20/yr in Kuwait · 80 CPD/2yr in Qatar" },
+                { href: "/pharmacist-cme", icon: "💊", title: "Pharmacists",  sub: "60 CME/yr in Saudi · 80 CPD/2yr in Qatar · 40/2yr in UAE" },
               ].map((p) => (
                 <Link
                   key={p.href}

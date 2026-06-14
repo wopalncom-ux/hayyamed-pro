@@ -83,7 +83,7 @@ const faqLd = {
 const CATEGORIES = [
   {
     name: "Clinical Practice",
-    icon: "ðŸ¥",
+    icon: "🏥",
     description: "Conferences, workshops, clinical training, case presentations",
     bg: "#eff6ff",
     border: "#bfdbfe",
@@ -91,7 +91,7 @@ const CATEGORIES = [
   },
   {
     name: "Professional Development",
-    icon: "ðŸ“ˆ",
+    icon: "📈",
     description: "Leadership, management, communication, ethics",
     bg: "#f0fdf4",
     border: "#bbf7d0",
@@ -99,7 +99,7 @@ const CATEGORIES = [
   },
   {
     name: "Research & Publications",
-    icon: "ðŸ“„",
+    icon: "📄",
     description: "Authoring papers, presentations, research participation",
     bg: "#fff7ed",
     border: "#fed7aa",
@@ -107,7 +107,7 @@ const CATEGORIES = [
   },
   {
     name: "Self-Directed Learning",
-    icon: "ðŸ“š",
+    icon: "📚",
     description: "E-learning modules, journal reading, online courses",
     bg: "#faf5ff",
     border: "#e9d5ff",
@@ -172,7 +172,7 @@ export default function QchpPage() {
           {/* Hero */}
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-2 bg-[#eff6ff] border border-[#bfdbfe] text-[#1a56a0] text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
-              ðŸ‡¶ðŸ‡¦ Qatar · QCHP / DHP-AS · Ministry of Public Health
+              🇶🇦 Qatar · QCHP / DHP-AS · Ministry of Public Health
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-[#111] tracking-tight mb-4 leading-tight">
               Track your QCHP CPD<br className="hidden sm:block" /> requirements — automatically
@@ -217,7 +217,7 @@ export default function QchpPage() {
             </div>
 
             <div className="mt-6 pt-6 border-t border-[#f1f5f9] flex flex-wrap gap-4 text-xs text-[#64748b]">
-              <span><strong className="text-[#374151]">Authority:</strong> Department of Healthcare Professionals â€“ Accreditation Section (DHP-AS)</span>
+              <span><strong className="text-[#374151]">Authority:</strong> Department of Healthcare Professionals – Accreditation Section (DHP-AS)</span>
               <span><strong className="text-[#374151]">Under:</strong> Ministry of Public Health Qatar (MOPH)</span>
               <span><strong className="text-[#374151]">Terminology:</strong> CPD (Continuing Professional Development)</span>
             </div>
@@ -283,14 +283,14 @@ export default function QchpPage() {
                 </thead>
                 <tbody className="divide-y divide-[#f8fafc]">
                   {[
-                    ["Real-time compliance status", "âŒ", "✅"],
-                    ["Automatic credit calculation", "âŒ", "✅"],
-                    ["Category cap warnings", "âŒ", "✅"],
-                    ["License renewal reminders", "âŒ", "✅"],
-                    ["PDF report for QCHP submission", "âŒ", "✅ Pro"],
-                    ["AI compliance gap analysis", "âŒ", "✅ Pro"],
-                    ["Certificate storage", "âŒ", "✅ Pro"],
-                    ["Employer compliance view", "âŒ", "✅ Employer"],
+                    ["Real-time compliance status", "❌", "✅"],
+                    ["Automatic credit calculation", "❌", "✅"],
+                    ["Category cap warnings", "❌", "✅"],
+                    ["License renewal reminders", "❌", "✅"],
+                    ["PDF report for QCHP submission", "❌", "✅ Pro"],
+                    ["AI compliance gap analysis", "❌", "✅ Pro"],
+                    ["Certificate storage", "❌", "✅ Pro"],
+                    ["Employer compliance view", "❌", "✅ Employer"],
                   ].map(([feature, manual, platform]) => (
                     <tr key={feature}>
                       <td className="px-6 py-3 text-sm text-[#374151]">{feature}</td>
@@ -339,11 +339,11 @@ export default function QchpPage() {
             <h2 className="text-xl font-bold text-[#111] mb-5">CPD requirements by profession</h2>
             <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
               {[
-                { icon: "ðŸ©º", title: "Physicians", href: "/physician-cme" },
-                { icon: "ðŸ‘©â€âš•ï¸", title: "Nurses", href: "/nurse-cpd" },
-                { icon: "ðŸ’Š", title: "Pharmacists", href: "/pharmacist-cme" },
-                { icon: "ðŸ¦·", title: "Dentists", href: "/dentist-cme" },
-                { icon: "ðŸ¦¿", title: "Allied Health", href: "/allied-health-cpd" },
+                { icon: "🩺", title: "Physicians", href: "/physician-cme" },
+                { icon: "👩‍⚕️", title: "Nurses", href: "/nurse-cpd" },
+                { icon: "💊", title: "Pharmacists", href: "/pharmacist-cme" },
+                { icon: "🦷", title: "Dentists", href: "/dentist-cme" },
+                { icon: "🦿", title: "Allied Health", href: "/allied-health-cpd" },
               ].map((p) => (
                 <Link
                   key={p.href}
@@ -363,21 +363,21 @@ export default function QchpPage() {
             <p className="text-sm text-[#64748b] mb-5">Select your specialty for Qatar-specific CPD notes and mandatory activity types.</p>
             <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3">
               {[
-                { icon: "â¤ï¸", title: "Cardiology",      href: "/cardiology-cme" },
-                { icon: "ðŸ©º", title: "Internal Med",    href: "/internal-medicine-cme" },
-                { icon: "ðŸš‘", title: "Emergency Med",   href: "/emergency-medicine-cme" },
-                { icon: "ðŸ”ª", title: "Surgery",         href: "/surgery-cme" },
-                { icon: "ðŸ‘¶", title: "Pediatrics",      href: "/pediatrics-cme" },
-                { icon: "ðŸ©»", title: "Radiology",       href: "/radiology-cme" },
-                { icon: "ðŸ§ ", title: "Psychiatry",      href: "/psychiatry-cme" },
-                { icon: "ðŸ¤±", title: "OB / Gyn",       href: "/obstetrics-gynecology-cme" },
-                { icon: "ðŸ’‰", title: "Anesthesia",      href: "/anesthesia-cme" },
-                { icon: "ðŸ¦´", title: "Orthopedics",     href: "/orthopedics-cme" },
-                { icon: "ðŸ¡", title: "Family Medicine", href: "/family-medicine-cme" },
-                { icon: "ðŸ©º", title: "Dermatology",    href: "/dermatology-cme" },
-                { icon: "ðŸ§ ", title: "Neurology",      href: "/neurology-cme" },
-                { icon: "ðŸ«", title: "Nephrology",     href: "/nephrology-cme" },
-                { icon: "ðŸ‘", title: "Ophthalmology",  href: "/ophthalmology-cme" },
+                { icon: "❤️", title: "Cardiology",      href: "/cardiology-cme" },
+                { icon: "🩺", title: "Internal Med",    href: "/internal-medicine-cme" },
+                { icon: "🚑", title: "Emergency Med",   href: "/emergency-medicine-cme" },
+                { icon: "🔪", title: "Surgery",         href: "/surgery-cme" },
+                { icon: "👶", title: "Pediatrics",      href: "/pediatrics-cme" },
+                { icon: "🩻", title: "Radiology",       href: "/radiology-cme" },
+                { icon: "🧠", title: "Psychiatry",      href: "/psychiatry-cme" },
+                { icon: "🤱", title: "OB / Gyn",       href: "/obstetrics-gynecology-cme" },
+                { icon: "💉", title: "Anesthesia",      href: "/anesthesia-cme" },
+                { icon: "🦴", title: "Orthopedics",     href: "/orthopedics-cme" },
+                { icon: "🏡", title: "Family Medicine", href: "/family-medicine-cme" },
+                { icon: "🩺", title: "Dermatology",    href: "/dermatology-cme" },
+                { icon: "🧠", title: "Neurology",      href: "/neurology-cme" },
+                { icon: "🫁", title: "Nephrology",     href: "/nephrology-cme" },
+                { icon: "👁", title: "Ophthalmology",  href: "/ophthalmology-cme" },
               ].map((p) => (
                 <Link
                   key={p.href}
@@ -393,7 +393,7 @@ export default function QchpPage() {
 
           {/* CTA */}
           <div className="bg-gradient-to-br from-[#0f1f3d] to-[#1a3563] rounded-2xl p-10 text-center">
-            <div className="inline-block text-3xl mb-3">ðŸ‡¶ðŸ‡¦</div>
+            <div className="inline-block text-3xl mb-3">🇶🇦</div>
             <h2 className="text-2xl font-bold text-white mb-2">Start tracking your QCHP compliance today</h2>
             <p className="text-[rgba(255,255,255,0.65)] mb-6 max-w-md mx-auto text-sm">
               Join Qatar healthcare professionals who track their 80-credit CPD requirement with Hayya Med Pro. Free to start — upgrade for PDF reports and AI compliance tools.
@@ -411,7 +411,7 @@ export default function QchpPage() {
 
           {/* Disclaimer */}
           <div className="mt-6 bg-[#fef9c3] border border-[#fde68a] rounded-lg px-4 py-3 text-xs text-[#92400e] text-center">
-            Hayya Med Pro supports CPD tracking and licensing readiness. It does not issue licenses and does not replace official QCHP or MOPH requirements. Always verify final requirements with the Department of Healthcare Professionals â€“ Accreditation Section (DHP-AS).
+            Hayya Med Pro supports CPD tracking and licensing readiness. It does not issue licenses and does not replace official QCHP or MOPH requirements. Always verify final requirements with the Department of Healthcare Professionals – Accreditation Section (DHP-AS).
           </div>
         </main>
       </div>

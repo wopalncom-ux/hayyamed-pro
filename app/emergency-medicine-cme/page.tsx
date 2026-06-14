@@ -83,33 +83,33 @@ const faqLd = {
 };
 
 const AUTHORITIES = [
-  { flag: "ðŸ‡¶ðŸ‡¦", name: "QCHP", country: "Qatar", term: "CPD", credits: "80", cycle: "2 years", note: "40/yr min" },
-  { flag: "ðŸ‡¸ðŸ‡¦", name: "SCFHS", country: "Saudi Arabia", term: "CME", credits: "60", cycle: "1 year", note: "Simulation recognized" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DHA", country: "UAE (Dubai)", term: "CME", credits: "40", cycle: "2 years", note: "5 patient safety" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DOH", country: "UAE (Abu Dhabi)", term: "CPD", credits: "40", cycle: "2 years", note: "Mixed categories" },
-  { flag: "ðŸ‡°ðŸ‡¼", name: "MOH", country: "Kuwait", term: "CME", credits: "30", cycle: "1 year", note: "Annual renewal" },
-  { flag: "ðŸ‡§ðŸ‡­", name: "NHRA", country: "Bahrain", term: "CPD", credits: "40", cycle: "2 years", note: "Structured + unstr." },
-  { flag: "ðŸ‡´ðŸ‡²", name: "OMSB", country: "Oman", term: "CME", credits: "40", cycle: "2 years", note: "Category A & B" },
+  { flag: "🇶🇦", name: "QCHP", country: "Qatar", term: "CPD", credits: "80", cycle: "2 years", note: "40/yr min" },
+  { flag: "🇸🇦", name: "SCFHS", country: "Saudi Arabia", term: "CME", credits: "60", cycle: "1 year", note: "Simulation recognized" },
+  { flag: "🇦🇪", name: "DHA", country: "UAE (Dubai)", term: "CME", credits: "40", cycle: "2 years", note: "5 patient safety" },
+  { flag: "🇦🇪", name: "DOH", country: "UAE (Abu Dhabi)", term: "CPD", credits: "40", cycle: "2 years", note: "Mixed categories" },
+  { flag: "🇰🇼", name: "MOH", country: "Kuwait", term: "CME", credits: "30", cycle: "1 year", note: "Annual renewal" },
+  { flag: "🇧🇭", name: "NHRA", country: "Bahrain", term: "CPD", credits: "40", cycle: "2 years", note: "Structured + unstr." },
+  { flag: "🇴🇲", name: "OMSB", country: "Oman", term: "CME", credits: "40", cycle: "2 years", note: "Category A & B" },
 ];
 
 const SPECIALTY_NOTES = [
   {
-    icon: "ðŸš‘",
+    icon: "🚑",
     title: "ACLS + ATLS + PALS count as CME",
     body: "Life support certifications renewed through accredited training centers count toward CME/CPD across all GCC authorities. ACLS = 8 hrs, ATLS = 14 hrs, PALS = 14 hrs per renewal cycle.",
   },
   {
-    icon: "ðŸŽ¯",
+    icon: "🎯",
     title: "Simulation training recognized",
     body: "High-fidelity simulation from SSIH-affiliated centers is recognized by QCHP and SCFHS. Simulation courses typically earn more credits per contact hour than lecture-based CME.",
   },
   {
-    icon: "ðŸ¥",
+    icon: "🏥",
     title: "Point-of-care ultrasound (POCUS) courses",
     body: "POCUS training and credentialing courses count as procedural CME. Many GCC hospitals now require POCUS credentialing for EM privileges, making this double-value CME.",
   },
   {
-    icon: "ðŸ“‹",
+    icon: "📋",
     title: "EM quality improvement counts",
     body: "Participating in departmental QI projects, triage audits, and mortality/morbidity reviews counts toward CPD in most GCC authorities. QCHP specifically recognizes quality improvement activities.",
   },
@@ -143,7 +143,7 @@ export default function EmergencyMedicineCmePage() {
         <main className="max-w-4xl mx-auto px-6 py-12">
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-2 bg-[#eff6ff] border border-[#bfdbfe] text-[#1e40af] text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
-              ðŸš‘ Emergency Medicine · All GCC Licensing Authorities
+              🚑 Emergency Medicine · All GCC Licensing Authorities
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-[#111] tracking-tight mb-4 leading-tight">
               Emergency medicine CME<br className="hidden sm:block" /> requirements in GCC
@@ -231,10 +231,10 @@ export default function EmergencyMedicineCmePage() {
             <h2 className="text-xl font-bold text-[#111] mb-5">Related CME guides</h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {[
-                { href: "/physician-cme", label: "All Physicians", icon: "ðŸ©º" },
-                { href: "/surgery-cme", label: "Surgery CME", icon: "ðŸ”ª" },
-                { href: "/qchp", label: "QCHP (Qatar)", icon: "ðŸ‡¶ðŸ‡¦" },
-                { href: "/scfhs", label: "SCFHS (Saudi)", icon: "ðŸ‡¸ðŸ‡¦" },
+                { href: "/physician-cme", label: "All Physicians", icon: "🩺" },
+                { href: "/surgery-cme", label: "Surgery CME", icon: "🔪" },
+                { href: "/qchp", label: "QCHP (Qatar)", icon: "🇶🇦" },
+                { href: "/scfhs", label: "SCFHS (Saudi)", icon: "🇸🇦" },
               ].map((l) => (
                 <Link key={l.href} href={l.href} className="bg-white rounded-xl border border-[#e2e8f0] p-4 text-center hover:border-[#1a56a0] hover:shadow-sm transition-all group">
                   <span className="text-2xl block mb-2">{l.icon}</span>
@@ -245,7 +245,7 @@ export default function EmergencyMedicineCmePage() {
           </div>
 
           <div className="bg-gradient-to-br from-[#0f1f3d] to-[#1a3563] rounded-2xl p-10 text-center">
-            <div className="text-3xl mb-3">ðŸš‘</div>
+            <div className="text-3xl mb-3">🚑</div>
             <h2 className="text-2xl font-bold text-white mb-2">Track your EM CME — free</h2>
             <p className="text-[rgba(255,255,255,0.65)] mb-6 max-w-md mx-auto text-sm">
               Log ACLS, ATLS, PALS, simulation courses, and conferences all in one place. Set up your QCHP or SCFHS wallet in under 2 minutes.

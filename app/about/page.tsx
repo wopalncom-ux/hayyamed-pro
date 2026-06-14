@@ -23,33 +23,33 @@ const stats = [
 ];
 
 const authorities = [
-  { name: "QCHP", full: "Qatar Council for Healthcare Practitioners", country: "Qatar", flag: "ðŸ‡¶ðŸ‡¦" },
-  { name: "SCFHS", full: "Saudi Commission for Health Specialties", country: "Saudi Arabia", flag: "ðŸ‡¸ðŸ‡¦" },
-  { name: "DHA", full: "Dubai Health Authority", country: "UAE (Dubai)", flag: "ðŸ‡¦ðŸ‡ª" },
-  { name: "DOH", full: "Department of Health Abu Dhabi", country: "UAE (Abu Dhabi)", flag: "ðŸ‡¦ðŸ‡ª" },
-  { name: "MOH", full: "Ministry of Health Kuwait", country: "Kuwait", flag: "ðŸ‡°ðŸ‡¼" },
-  { name: "NHRA", full: "National Health Regulatory Authority", country: "Bahrain", flag: "ðŸ‡§ðŸ‡­" },
-  { name: "OMSB", full: "Oman Medical Specialty Board", country: "Oman", flag: "ðŸ‡´ðŸ‡²" },
+  { name: "QCHP", full: "Qatar Council for Healthcare Practitioners", country: "Qatar", flag: "🇶🇦" },
+  { name: "SCFHS", full: "Saudi Commission for Health Specialties", country: "Saudi Arabia", flag: "🇸🇦" },
+  { name: "DHA", full: "Dubai Health Authority", country: "UAE (Dubai)", flag: "🇦🇪" },
+  { name: "DOH", full: "Department of Health Abu Dhabi", country: "UAE (Abu Dhabi)", flag: "🇦🇪" },
+  { name: "MOH", full: "Ministry of Health Kuwait", country: "Kuwait", flag: "🇰🇼" },
+  { name: "NHRA", full: "National Health Regulatory Authority", country: "Bahrain", flag: "🇧🇭" },
+  { name: "OMSB", full: "Oman Medical Specialty Board", country: "Oman", flag: "🇴🇲" },
 ];
 
 const principles = [
   {
-    icon: "ðŸŽ¯",
+    icon: "🎯",
     title: "Accuracy over convenience",
     body: "Every compliance rule is sourced from official authority publications — not estimates. Wrong compliance advice is a liability, not just an inconvenience.",
   },
   {
-    icon: "ðŸ”’",
+    icon: "🔒",
     title: "Privacy by design",
     body: "Professionals control exactly what their employer can see. Compliance visibility doesn't require surrendering personal health data.",
   },
   {
-    icon: "ðŸŒ",
+    icon: "🌍",
     title: "Built for scale, not one country",
     body: "The platform has no hardcoded country logic. Every rule lives in a configurable engine — adding a new country or authority requires no code deployment.",
   },
   {
-    icon: "ðŸ“±",
+    icon: "📱",
     title: "Mobile-first, always",
     body: "The platform is designed for a doctor who has 90 seconds between patients. Every feature works on mobile, and critical actions are offline-capable.",
   },
@@ -152,7 +152,7 @@ export default function AboutPage() {
                 </div>
               ))}
               <div className="bg-[#f0f9ff] rounded-xl border border-dashed border-[#bae6fd] px-4 py-3 flex items-center gap-3">
-                <span className="text-xl flex-shrink-0">ðŸŒ</span>
+                <span className="text-xl flex-shrink-0">🌐</span>
                 <div>
                   <p className="text-sm font-semibold text-[#0369a1]">More coming</p>
                   <p className="text-[11px] text-[#0369a1] leading-tight">UK · India · Australia · EU</p>
@@ -176,11 +176,11 @@ export default function AboutPage() {
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
               {[
-                { icon: "ðŸ©º", title: "Physicians", href: "/physician-cme" },
-                { icon: "ðŸ‘©â€âš•ï¸", title: "Nurses", href: "/nurse-cpd" },
-                { icon: "ðŸ’Š", title: "Pharmacists", href: "/pharmacist-cme" },
-                { icon: "ðŸ¦·", title: "Dentists", href: "/dentist-cme" },
-                { icon: "ðŸ¦¿", title: "Allied Health", href: "/allied-health-cpd" },
+                { icon: "🩺", title: "Physicians", href: "/physician-cme" },
+                { icon: "👩‍⚕️", title: "Nurses", href: "/nurse-cpd" },
+                { icon: "💊", title: "Pharmacists", href: "/pharmacist-cme" },
+                { icon: "🦷", title: "Dentists", href: "/dentist-cme" },
+                { icon: "🦿", title: "Allied Health", href: "/allied-health-cpd" },
               ].map((p) => (
                 <Link
                   key={p.href}
@@ -266,17 +266,17 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {[
                 {
-                  icon: "ðŸ”",
+                  icon: "🔐",
                   title: "Row-Level Security",
                   body: "Every database table uses Supabase RLS — professionals can only ever access their own data. No exceptions.",
                 },
                 {
-                  icon: "ðŸŒ",
+                  icon: "🌍",
                   title: "GCC data residency",
                   body: "Platform deployed on GCP in me-central1 (Doha, Qatar). Healthcare data stays in the region.",
                 },
                 {
-                  icon: "ðŸ“‹",
+                  icon: "📋",
                   title: "Qatar PDPL compliant",
                   body: "Privacy Policy, Terms of Service, and DPA designed for Qatar Law No. 13 of 2016 (PDPL) and GDPR alignment.",
                 },

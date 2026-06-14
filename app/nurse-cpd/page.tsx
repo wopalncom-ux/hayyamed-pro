@@ -84,7 +84,7 @@ const faqLd = {
 
 const GCC_REQUIREMENTS = [
   {
-    country: "ðŸ‡¶ðŸ‡¦ Qatar",
+    country: "🇶🇦 Qatar",
     authority: "QCHP / DHP-AS",
     credits: "80 credits",
     cycle: "2 years",
@@ -94,7 +94,7 @@ const GCC_REQUIREMENTS = [
     href: "/qchp",
   },
   {
-    country: "ðŸ‡¸ðŸ‡¦ Saudi Arabia",
+    country: "🇸🇦 Saudi Arabia",
     authority: "SCFHS",
     credits: "30 credits",
     cycle: "Per year",
@@ -104,7 +104,7 @@ const GCC_REQUIREMENTS = [
     href: "/scfhs",
   },
   {
-    country: "ðŸ‡¦ðŸ‡ª UAE — Dubai",
+    country: "🇦🇪 UAE — Dubai",
     authority: "DHA",
     credits: "40 credits",
     cycle: "2 years",
@@ -114,7 +114,7 @@ const GCC_REQUIREMENTS = [
     href: "/dha",
   },
   {
-    country: "ðŸ‡¦ðŸ‡ª UAE — Abu Dhabi",
+    country: "🇦🇪 UAE — Abu Dhabi",
     authority: "DOH",
     credits: "40 credits",
     cycle: "2 years",
@@ -124,7 +124,7 @@ const GCC_REQUIREMENTS = [
     href: "/doh",
   },
   {
-    country: "ðŸ‡°ðŸ‡¼ Kuwait",
+    country: "🇰🇼 Kuwait",
     authority: "MOH Kuwait",
     credits: "20 credits",
     cycle: "Per year",
@@ -134,7 +134,7 @@ const GCC_REQUIREMENTS = [
     href: "/moh-kuwait",
   },
   {
-    country: "ðŸ‡§ðŸ‡­ Bahrain",
+    country: "🇧🇭 Bahrain",
     authority: "NHRA",
     credits: "40 credits",
     cycle: "2 years",
@@ -144,7 +144,7 @@ const GCC_REQUIREMENTS = [
     href: "/nhra",
   },
   {
-    country: "ðŸ‡´ðŸ‡² Oman",
+    country: "🇴🇲 Oman",
     authority: "OMSB",
     credits: "30 credits",
     cycle: "2 years",
@@ -156,12 +156,12 @@ const GCC_REQUIREMENTS = [
 ];
 
 const CATEGORIES = [
-  { icon: "ðŸ¥", name: "Clinical Practice", desc: "Ward-based learning, clinical workshops, simulation, skills labs, case-based discussions" },
-  { icon: "ðŸ’»", name: "Online / E-Learning", desc: "Accredited nursing e-learning modules, webinars, virtual nursing conferences (capped per country)" },
-  { icon: "ðŸŽ“", name: "Formal Education", desc: "Postgraduate nursing diplomas, specialist certifications (BLS/ACLS/PALS), university coursework" },
-  { icon: "ðŸ“„", name: "Research & Publications", desc: "Authoring nursing research papers, quality improvement projects, presenting clinical findings" },
-  { icon: "ðŸ«", name: "Teaching & Mentorship", desc: "Clinical nursing mentorship, preceptoring student nurses, developing nursing education materials" },
-  { icon: "ðŸ›¡ï¸", name: "Patient Safety", desc: "Mandatory in Qatar (2 credits/cycle) and UAE Dubai (5 credits/cycle). Includes adverse events, infection control, medication safety" },
+  { icon: "🏥", name: "Clinical Practice", desc: "Ward-based learning, clinical workshops, simulation, skills labs, case-based discussions" },
+  { icon: "💻", name: "Online / E-Learning", desc: "Accredited nursing e-learning modules, webinars, virtual nursing conferences (capped per country)" },
+  { icon: "🎓", name: "Formal Education", desc: "Postgraduate nursing diplomas, specialist certifications (BLS/ACLS/PALS), university coursework" },
+  { icon: "📄", name: "Research & Publications", desc: "Authoring nursing research papers, quality improvement projects, presenting clinical findings" },
+  { icon: "🏫", name: "Teaching & Mentorship", desc: "Clinical nursing mentorship, preceptoring student nurses, developing nursing education materials" },
+  { icon: "🛡️", name: "Patient Safety", desc: "Mandatory in Qatar (2 credits/cycle) and UAE Dubai (5 credits/cycle). Includes adverse events, infection control, medication safety" },
 ];
 
 const HOW_IT_WORKS = [
@@ -205,7 +205,7 @@ export default function NurseCpdPage() {
           {/* Hero */}
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-2 bg-[#eff6ff] border border-[#bfdbfe] text-[#1a56a0] text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
-              ðŸ‘©â€âš•ï¸ Nurses · All GCC Countries · CPD & CME
+              👩‍⚕️ Nurses · All GCC Countries · CPD & CME
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-[#111] tracking-tight mb-4 leading-tight">
               Nursing CPD requirements<br className="hidden sm:block" /> across the GCC — one tracker
@@ -267,7 +267,7 @@ export default function NurseCpdPage() {
             </div>
             <div className="px-6 py-4 bg-[#f0fdf4] border-t border-[#f1f5f9]">
               <p className="text-xs text-[#15803d] font-medium">
-                ðŸ’¡ Working across borders? Hayya Med Pro tracks your nursing CPD progress against multiple GCC authorities simultaneously — no spreadsheets.
+                💡 Working across borders? Hayya Med Pro tracks your nursing CPD progress against multiple GCC authorities simultaneously — no spreadsheets.
               </p>
             </div>
           </div>
@@ -356,10 +356,10 @@ export default function NurseCpdPage() {
             <h2 className="text-xl font-bold text-[#111] mb-4">CME requirements by profession</h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {[
-                { icon: "ðŸ©º", title: "Physicians", href: "/physician-cme" },
-                { icon: "ðŸ’Š", title: "Pharmacists", href: "/pharmacist-cme" },
-                { icon: "ðŸ¦·", title: "Dentists", href: "/dentist-cme" },
-                { icon: "ðŸ¦¿", title: "Allied Health", href: "/allied-health-cpd" },
+                { icon: "🩺", title: "Physicians", href: "/physician-cme" },
+                { icon: "💊", title: "Pharmacists", href: "/pharmacist-cme" },
+                { icon: "🦷", title: "Dentists", href: "/dentist-cme" },
+                { icon: "🦿", title: "Allied Health", href: "/allied-health-cpd" },
               ].map((p) => (
                 <Link
                   key={p.href}

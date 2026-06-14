@@ -6,7 +6,7 @@ const APP_URL = "https://hayyamed.pro";
 export const metadata: Metadata = {
   title: "DOH License Renewal — CPD Requirements for Abu Dhabi Healthcare Professionals",
   description:
-    "Complete guide to renewing your DOH license in Abu Dhabi. 30â€“50 CPD credits per renewal cycle depending on profession. Step-by-step DOH renewal process for physicians, nurses, pharmacists, and all Abu Dhabi healthcare professionals.",
+    "Complete guide to renewing your DOH license in Abu Dhabi. 30–50 CPD credits per renewal cycle depending on profession. Step-by-step DOH renewal process for physicians, nurses, pharmacists, and all Abu Dhabi healthcare professionals.",
   keywords: [
     "DOH license renewal",
     "DOH CPD renewal Abu Dhabi",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "DOH License Renewal — Complete Guide for Abu Dhabi Healthcare Professionals",
     description:
-      "30â€“50 CPD credits per cycle. Step-by-step DOH renewal process, checklist, and how Hayya Med Pro tracks your CPD progress automatically.",
+      "30–50 CPD credits per cycle. Step-by-step DOH renewal process, checklist, and how Hayya Med Pro tracks your CPD progress automatically.",
     url: `${APP_URL}/doh-renewal`,
     type: "website",
     images: [{ url: `${APP_URL}/api/og?t=DOH+License+Renewal+%E2%80%94+Abu+Dhabi&s=30%E2%80%9350+CPD+credits+%C2%B7+Malaffi+portal+%C2%B7+step-by-step+renewal+guide&a=%F0%9F%87%A6%F0%9F%87%AA+DOH&k=Renewal+Guide`, width: 1200, height: 630 }],
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "DOH License Renewal Guide — Abu Dhabi Healthcare CPD",
-    description: "30â€“50 CPD credits per cycle. Complete DOH renewal checklist, step-by-step process, and CPD compliance tracking for Abu Dhabi healthcare professionals.",
+    description: "30–50 CPD credits per cycle. Complete DOH renewal checklist, step-by-step process, and CPD compliance tracking for Abu Dhabi healthcare professionals.",
   },
   alternates: { canonical: `${APP_URL}/doh-renewal` },
 };
@@ -44,7 +44,7 @@ const faqLd = {
       name: "How many CPD credits do I need to renew my DOH license in Abu Dhabi?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "DOH (Department of Health Abu Dhabi) requires 30â€“50 CPD credits per renewal cycle depending on your profession and registration type. Most physicians and senior clinicians need 50 CPD credits per 2-year cycle. Nurses and allied health professionals typically need 30 CPD credits. Always verify your specific requirement via the DOH portal as requirements may vary by specialty.",
+        text: "DOH (Department of Health Abu Dhabi) requires 30–50 CPD credits per renewal cycle depending on your profession and registration type. Most physicians and senior clinicians need 50 CPD credits per 2-year cycle. Nurses and allied health professionals typically need 30 CPD credits. Always verify your specific requirement via the DOH portal as requirements may vary by specialty.",
       },
     },
     {
@@ -111,7 +111,7 @@ const RENEWAL_STEPS = [
 ];
 
 const CHECKLIST_ITEMS = [
-  "CPD credits completed (30â€“50 depending on profession)",
+  "CPD credits completed (30–50 depending on profession)",
   "Patient safety CPD included (check your license category requirement)",
   "All activities from DOH-recognised providers",
   "CPD certificates collected with accreditation details",
@@ -174,13 +174,13 @@ export default function DohRenewalPage() {
           {/* Hero */}
           <div className="mb-10">
             <div className="inline-flex items-center gap-2 bg-[#f0f9ff] border border-[#bae6fd] text-[#0369a1] text-xs font-semibold px-3 py-1.5 rounded-full mb-4">
-              ðŸ‡¦ðŸ‡ª Abu Dhabi · Department of Health — Abu Dhabi (DOH)
+              🇦🇪 Abu Dhabi · Department of Health — Abu Dhabi (DOH)
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold text-[#111] mb-4 leading-tight">
               DOH license renewal — complete guide for Abu Dhabi healthcare professionals
             </h1>
             <p className="text-base text-[#475569] max-w-2xl leading-relaxed">
-              DOH (Department of Health Abu Dhabi) requires <strong className="text-[#111]">30â€“50 CPD credits
+              DOH (Department of Health Abu Dhabi) requires <strong className="text-[#111]">30–50 CPD credits
               per renewal cycle</strong> depending on your profession. This guide walks you through the
               full renewal process, a downloadable-ready checklist, and how to prepare your CPD portfolio
               for DOH submission.
@@ -190,8 +190,8 @@ export default function DohRenewalPage() {
           {/* Quick stats */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
             {[
-              { value: "30â€“50", label: "CPD credits", sub: "per renewal cycle" },
-              { value: "1â€“2", label: "Year cycle", sub: "by profession" },
+              { value: "30–50", label: "CPD credits", sub: "per renewal cycle" },
+              { value: "1–2", label: "Year cycle", sub: "by profession" },
               { value: "DOH", label: "Terminology", sub: "CPD (not CME)" },
               { value: "60", label: "Days before", sub: "start renewal process" },
             ].map((s) => (
@@ -206,7 +206,7 @@ export default function DohRenewalPage() {
           {/* DOH vs DHA clarification */}
           <div className="mb-10 bg-[#f0f9ff] border border-[#bae6fd] rounded-xl p-5">
             <div className="flex gap-3">
-              <span className="text-xl flex-shrink-0 mt-0.5">â„¹ï¸</span>
+              <span className="text-xl flex-shrink-0 mt-0.5">ℹ️</span>
               <div>
                 <p className="text-sm font-semibold text-[#0369a1] mb-1">
                   DOH (Abu Dhabi) and DHA (Dubai) are separate licensing authorities
@@ -321,9 +321,9 @@ export default function DohRenewalPage() {
             <h2 className="text-lg font-bold text-[#111] mb-4">Related guides</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {[
-                { href: "/doh", label: "ðŸ‡¦ðŸ‡ª DOH CPD tracker", sub: "Track your DOH compliance" },
-                { href: "/dha-renewal", label: "ðŸ‡¦ðŸ‡ª DHA renewal guide", sub: "Dubai license renewal" },
-                { href: "/qchp-renewal", label: "ðŸ‡¶ðŸ‡¦ QCHP renewal guide", sub: "Qatar license renewal" },
+                { href: "/doh", label: "🇦🇪 DOH CPD tracker", sub: "Track your DOH compliance" },
+                { href: "/dha-renewal", label: "🇦🇪 DHA renewal guide", sub: "Dubai license renewal" },
+                { href: "/qchp-renewal", label: "🇶🇦 QCHP renewal guide", sub: "Qatar license renewal" },
               ].map((g) => (
                 <Link
                   key={g.href}
@@ -339,7 +339,7 @@ export default function DohRenewalPage() {
 
           {/* Dark CTA */}
           <div className="bg-gradient-to-br from-[#0f1f3d] to-[#1a3563] rounded-2xl p-10 text-center mb-8">
-            <div className="inline-block text-3xl mb-3">ðŸ‡¦ðŸ‡ª</div>
+            <div className="inline-block text-3xl mb-3">🇦🇪</div>
             <h2 className="text-2xl font-bold text-white mb-2">
               Start tracking your DOH CPD today
             </h2>

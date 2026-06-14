@@ -87,33 +87,33 @@ const faqLd = {
 };
 
 const AUTHORITIES = [
-  { flag: "ðŸ‡¶ðŸ‡¦", name: "QCHP", country: "Qatar",        term: "2 years",  credits: 80,  cycle: "80 CPD / 2 yr",  note: "Ethics CPD mandatory (â‰¥5 credits)" },
-  { flag: "ðŸ‡¸ðŸ‡¦", name: "SCFHS", country: "Saudi Arabia", term: "Annual",   credits: 60,  cycle: "60 CME / yr",    note: "SBP & SMHA recognised" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DHA",   country: "Dubai",        term: "2 years",  credits: 40,  cycle: "40 CME / 2 yr",  note: "Ethics CME recommended" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DOH",   country: "Abu Dhabi",    term: "1â€“2 years",credits: 40,  cycle: "40 CPD / cycle", note: "Verify per licence category" },
-  { flag: "ðŸ‡°ðŸ‡¼", name: "MOH",   country: "Kuwait",       term: "Annual",   credits: 30,  cycle: "30 CME / yr",    note: "Ministry of Health approved" },
-  { flag: "ðŸ‡§ðŸ‡­", name: "NHRA",  country: "Bahrain",      term: "2 years",  credits: 40,  cycle: "40 CPD / 2 yr",  note: "NHRA accredited events" },
-  { flag: "ðŸ‡´ðŸ‡²", name: "OMSB",  country: "Oman",         term: "2 years",  credits: 40,  cycle: "40 CME / 2 yr",  note: "Oman Medical Specialty Board" },
+  { flag: "🇶🇦", name: "QCHP", country: "Qatar",        term: "2 years",  credits: 80,  cycle: "80 CPD / 2 yr",  note: "Ethics CPD mandatory (≥5 credits)" },
+  { flag: "🇸🇦", name: "SCFHS", country: "Saudi Arabia", term: "Annual",   credits: 60,  cycle: "60 CME / yr",    note: "SBP & SMHA recognised" },
+  { flag: "🇦🇪", name: "DHA",   country: "Dubai",        term: "2 years",  credits: 40,  cycle: "40 CME / 2 yr",  note: "Ethics CME recommended" },
+  { flag: "🇦🇪", name: "DOH",   country: "Abu Dhabi",    term: "1–2 years",credits: 40,  cycle: "40 CPD / cycle", note: "Verify per licence category" },
+  { flag: "🇰🇼", name: "MOH",   country: "Kuwait",       term: "Annual",   credits: 30,  cycle: "30 CME / yr",    note: "Ministry of Health approved" },
+  { flag: "🇧🇭", name: "NHRA",  country: "Bahrain",      term: "2 years",  credits: 40,  cycle: "40 CPD / 2 yr",  note: "NHRA accredited events" },
+  { flag: "🇴🇲", name: "OMSB",  country: "Oman",         term: "2 years",  credits: 40,  cycle: "40 CME / 2 yr",  note: "Oman Medical Specialty Board" },
 ];
 
 const SPECIALTY_NOTES = [
   {
-    icon: "âš–ï¸",
+    icon: "⚖️",
     title: "Ethics & Law — Non-Negotiable",
     body: "Ethics and patient rights credits are required (not optional) for QCHP renewal. Mental health law workshops covering Qatar Law No. 2 (2016) count toward CPD. DHA and SCFHS strongly recommend ethics credits each cycle.",
   },
   {
-    icon: "ðŸ§ ",
+    icon: "🧠",
     title: "Saudi Mental Health Association (SMHA)",
-    body: "SMHA-accredited events are recognised by SCFHS and are the primary source of psychiatry-specific CME in Saudi Arabia. The annual SMHA congress typically offers 15â€“20 CME credits.",
+    body: "SMHA-accredited events are recognised by SCFHS and are the primary source of psychiatry-specific CME in Saudi Arabia. The annual SMHA congress typically offers 15–20 CME credits.",
   },
   {
-    icon: "ðŸŒ",
+    icon: "🌍",
     title: "Cultural Psychiatry & GCC Context",
     body: "Workshops addressing cultural competency, Arabic-language mental health communication, and GCC-specific patient presentations are increasingly recognised by QCHP and SCFHS. These distinguish GCC-trained psychiatrists internationally.",
   },
   {
-    icon: "ðŸ“‹",
+    icon: "📋",
     title: "Quality Improvement & Clinical Audit",
     body: "Quality improvement projects, morbidity and mortality reviews, and clinical audit activities are accepted by QCHP and DHA for up to 10 CPD credits per cycle — valuable for psychiatrists in academic or hospital settings.",
   },
@@ -131,7 +131,7 @@ export default function PsychiatryCmePage() {
       <section style={{ background: "#0f1f3d", color: "#fff", padding: "72px 24px 56px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontSize: 13, letterSpacing: "0.08em", textTransform: "uppercase", color: "#93c5fd", marginBottom: 16 }}>
-            ðŸ§  Specialty CME Guide
+            🧠 Specialty CME Guide
           </p>
           <h1 style={{ fontSize: "clamp(28px,5vw,48px)", fontWeight: 800, lineHeight: 1.15, marginBottom: 20 }}>
             Psychiatry CME Requirements<br />Across GCC
@@ -233,14 +233,14 @@ export default function PsychiatryCmePage() {
           </h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 12 }}>
             {[
-              { href: "/cardiology-cme", label: "â¤ï¸ Cardiology" },
-              { href: "/internal-medicine-cme", label: "ðŸ©º Internal Medicine" },
-              { href: "/emergency-medicine-cme", label: "ðŸš‘ Emergency Med" },
-              { href: "/surgery-cme", label: "ðŸ”ª Surgery" },
-              { href: "/pediatrics-cme", label: "ðŸ‘¶ Pediatrics" },
-              { href: "/radiology-cme", label: "ðŸ©» Radiology" },
-              { href: "/physician-cme", label: "ðŸ‘¨â€âš•ï¸ All Physicians" },
-              { href: "/nurse-cpd", label: "ðŸ‘©â€âš•ï¸ Nursing CPD" },
+              { href: "/cardiology-cme", label: "❤️ Cardiology" },
+              { href: "/internal-medicine-cme", label: "🩺 Internal Medicine" },
+              { href: "/emergency-medicine-cme", label: "🚑 Emergency Med" },
+              { href: "/surgery-cme", label: "🔪 Surgery" },
+              { href: "/pediatrics-cme", label: "👶 Pediatrics" },
+              { href: "/radiology-cme", label: "🩻 Radiology" },
+              { href: "/physician-cme", label: "👨‍⚕️ All Physicians" },
+              { href: "/nurse-cpd", label: "👩‍⚕️ Nursing CPD" },
             ].map((l) => (
               <Link
                 key={l.href}

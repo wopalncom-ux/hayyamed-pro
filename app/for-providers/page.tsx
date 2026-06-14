@@ -18,17 +18,17 @@ export const metadata: Metadata = {
 };
 
 const AUTHORITIES = [
-  { code: "ðŸ‡¶ðŸ‡¦", name: "QCHP", country: "Qatar" },
-  { code: "ðŸ‡¸ðŸ‡¦", name: "SCFHS", country: "Saudi Arabia" },
-  { code: "ðŸ‡¦ðŸ‡ª", name: "DHA", country: "UAE Dubai" },
-  { code: "ðŸ‡¦ðŸ‡ª", name: "DOH", country: "UAE Abu Dhabi" },
-  { code: "ðŸ‡§ðŸ‡­", name: "NHRA", country: "Bahrain" },
-  { code: "ðŸ‡´ðŸ‡²", name: "OMSB", country: "Oman" },
+  { code: "🇶🇦", name: "QCHP", country: "Qatar" },
+  { code: "🇸🇦", name: "SCFHS", country: "Saudi Arabia" },
+  { code: "🇦🇪", name: "DHA", country: "UAE Dubai" },
+  { code: "🇦🇪", name: "DOH", country: "UAE Abu Dhabi" },
+  { code: "🇧🇭", name: "NHRA", country: "Bahrain" },
+  { code: "🇴🇲", name: "OMSB", country: "Oman" },
 ];
 
 const BENEFITS = [
   {
-    icon: "ðŸ‘¥",
+    icon: "👥",
     title: "Reach verified GCC professionals",
     body: "Your courses appear in front of physicians, nurses, pharmacists, and dentists actively tracking their CME deadlines — the highest-intent audience in GCC healthcare.",
   },
@@ -38,22 +38,22 @@ const BENEFITS = [
     body: "When a professional completes your course, CME credits are automatically added to their compliance wallet. Zero manual paperwork for you or them.",
   },
   {
-    icon: "ðŸ“Š",
+    icon: "📊",
     title: "Real-time enrollment analytics",
     body: "See who enrolled, completion rates, weekly growth, and estimated revenue — all in your provider dashboard, updated in real time.",
   },
   {
-    icon: "ðŸ”’",
+    icon: "🔒",
     title: "Verified accreditation badge",
     body: "Accredited providers display a verified badge on their courses. We verify your accreditation with QCHP, SCFHS, DHA, or other GCC authorities.",
   },
   {
-    icon: "ðŸŒ",
+    icon: "🌐",
     title: "All delivery modes supported",
     body: "Live conferences, workshops, online modules, hybrid events, and on-demand videos — all listed and searchable in one marketplace.",
   },
   {
-    icon: "ðŸ’°",
+    icon: "💰",
     title: "Free and paid courses",
     body: "List free courses to build your audience, or sell paid courses and keep the revenue. No upfront listing fees — we only succeed when you succeed.",
   },
@@ -101,7 +101,7 @@ const FAQS = [
   },
   {
     q: "How quickly are my courses reviewed?",
-    a: "New courses are reviewed by our admin team within 2â€“3 business days. You'll receive email notification when your course goes live.",
+    a: "New courses are reviewed by our admin team within 2–3 business days. You'll receive email notification when your course goes live.",
   },
 ];
 
@@ -141,7 +141,7 @@ export default function ForProvidersPage() {
         <section className="bg-white border-b border-[#e2e8f0] px-6 py-20">
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-[#eff6ff] text-[#1a56a0] text-xs font-semibold px-3 py-1.5 rounded-full mb-6 border border-[#bfdbfe]">
-              ðŸŽ“ Training Provider Marketplace
+              🎓 Training Provider Marketplace
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-[#0f1f3d] mb-6 leading-tight">
               Reach GCC healthcare<br className="hidden sm:block" /> professionals who need your CME

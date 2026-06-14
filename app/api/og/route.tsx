@@ -9,7 +9,7 @@ const SIZE = { width: 1200, height: 630 };
 // Params:
 //   t  = title (main headline)
 //   s  = subtitle (credits/cycle summary or value proposition)
-//   a  = authority badge (e.g. "ðŸ‡¶ðŸ‡¦ QCHP")
+//   a  = authority badge (e.g. "🇶🇦 QCHP")
 //   k  = kind tag shown top-right (e.g. "Authority Guide", "Renewal Guide")
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);

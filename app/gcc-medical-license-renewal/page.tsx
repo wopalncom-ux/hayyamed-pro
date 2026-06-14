@@ -44,7 +44,7 @@ const faqLd = {
       name: "How does medical license renewal work in GCC countries?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Each GCC country has its own healthcare licensing authority with separate CME/CPD requirements and renewal processes. Qatar uses QCHP (80 CPD per 2 years), Saudi Arabia uses SCFHS (30â€“60 CME per year), Dubai uses DHA (40 CME per 2 years), Abu Dhabi uses DOH (30â€“50 CPD per cycle), Bahrain uses NHRA (40 CPD per 2 years), Oman uses OMSB (40 CME per 2 years), and Kuwait uses MOH (30 CME per year). You must maintain a valid license with each authority where you practise.",
+        text: "Each GCC country has its own healthcare licensing authority with separate CME/CPD requirements and renewal processes. Qatar uses QCHP (80 CPD per 2 years), Saudi Arabia uses SCFHS (30–60 CME per year), Dubai uses DHA (40 CME per 2 years), Abu Dhabi uses DOH (30–50 CPD per cycle), Bahrain uses NHRA (40 CPD per 2 years), Oman uses OMSB (40 CME per 2 years), and Kuwait uses MOH (30 CME per year). You must maintain a valid license with each authority where you practise.",
       },
     },
     {
@@ -68,7 +68,7 @@ const faqLd = {
       name: "What happens if I let my GCC medical license expire?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Practising healthcare with an expired license is illegal in all GCC countries and can result in serious professional and legal consequences. If your license has lapsed, contact the relevant authority immediately. Reinstatement may require completing all outstanding CME/CPD credits, paying reinstatement fees, and in some cases undergoing a fitness-to-practise review. Do not delay — most GCC authorities send renewal reminders 60â€“90 days before expiry.",
+        text: "Practising healthcare with an expired license is illegal in all GCC countries and can result in serious professional and legal consequences. If your license has lapsed, contact the relevant authority immediately. Reinstatement may require completing all outstanding CME/CPD credits, paying reinstatement fees, and in some cases undergoing a fitness-to-practise review. Do not delay — most GCC authorities send renewal reminders 60–90 days before expiry.",
       },
     },
     {
@@ -84,7 +84,7 @@ const faqLd = {
 
 const GCC_AUTHORITIES = [
   {
-    flag: "ðŸ‡¶ðŸ‡¦",
+    flag: "🇶🇦",
     country: "Qatar",
     authority: "QCHP",
     fullName: "Qatar Council for Healthcare Practitioners",
@@ -96,11 +96,11 @@ const GCC_AUTHORITIES = [
     trackerHref: "/qchp",
   },
   {
-    flag: "ðŸ‡¸ðŸ‡¦",
+    flag: "🇸🇦",
     country: "Saudi Arabia",
     authority: "SCFHS",
     fullName: "Saudi Commission for Health Specialties",
-    credits: "30â€“60 CME",
+    credits: "30–60 CME",
     cycle: "1-year cycle (profession-specific)",
     term: "CME",
     urgency: "High",
@@ -108,7 +108,7 @@ const GCC_AUTHORITIES = [
     trackerHref: "/scfhs",
   },
   {
-    flag: "ðŸ‡¦ðŸ‡ª",
+    flag: "🇦🇪",
     country: "UAE — Dubai",
     authority: "DHA",
     fullName: "Dubai Health Authority",
@@ -120,19 +120,19 @@ const GCC_AUTHORITIES = [
     trackerHref: "/dha",
   },
   {
-    flag: "ðŸ‡¦ðŸ‡ª",
+    flag: "🇦🇪",
     country: "UAE — Abu Dhabi",
     authority: "DOH",
     fullName: "Department of Health Abu Dhabi",
-    credits: "30â€“50 CPD",
-    cycle: "1â€“2 year cycle",
+    credits: "30–50 CPD",
+    cycle: "1–2 year cycle",
     term: "CPD",
     urgency: "Medium",
     renewalHref: "/doh-renewal",
     trackerHref: "/doh",
   },
   {
-    flag: "ðŸ‡§ðŸ‡­",
+    flag: "🇧🇭",
     country: "Bahrain",
     authority: "NHRA",
     fullName: "National Health Regulatory Authority",
@@ -144,7 +144,7 @@ const GCC_AUTHORITIES = [
     trackerHref: "/nhra",
   },
   {
-    flag: "ðŸ‡´ðŸ‡²",
+    flag: "🇴🇲",
     country: "Oman",
     authority: "OMSB",
     fullName: "Oman Medical Specialty Board",
@@ -156,7 +156,7 @@ const GCC_AUTHORITIES = [
     trackerHref: "/omsb",
   },
   {
-    flag: "ðŸ‡°ðŸ‡¼",
+    flag: "🇰🇼",
     country: "Kuwait",
     authority: "MOH Kuwait",
     fullName: "Ministry of Health Kuwait",
@@ -173,7 +173,7 @@ const COMMON_STEPS = [
   {
     step: "1",
     title: "Find your license expiry date",
-    desc: "Log in to your licensing authority portal. Most GCC authorities send renewal reminders 60â€“90 days before expiry — don't wait for the reminder. Set your own 90-day alert in Hayya Med Pro.",
+    desc: "Log in to your licensing authority portal. Most GCC authorities send renewal reminders 60–90 days before expiry — don't wait for the reminder. Set your own 90-day alert in Hayya Med Pro.",
   },
   {
     step: "2",

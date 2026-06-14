@@ -64,7 +64,7 @@ const faqLd = {
       name: "Does simulation-based anaesthesia training count as CME for DHA?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. DHA recognises simulation-based CME for anaesthesiologists, including high-fidelity simulator training, crisis resource management (CRM) workshops, and regional anaesthesia simulation courses. These typically earn 2â€“8 CME credits per session depending on duration and accreditor.",
+        text: "Yes. DHA recognises simulation-based CME for anaesthesiologists, including high-fidelity simulator training, crisis resource management (CRM) workshops, and regional anaesthesia simulation courses. These typically earn 2–8 CME credits per session depending on duration and accreditor.",
       },
     },
     {
@@ -87,33 +87,33 @@ const faqLd = {
 };
 
 const AUTHORITIES = [
-  { flag: "ðŸ‡¶ðŸ‡¦", name: "QCHP",  country: "Qatar",        cycle: "80 CPD / 2 yr",   note: "ACLS required · simulation credits accepted" },
-  { flag: "ðŸ‡¸ðŸ‡¦", name: "SCFHS", country: "Saudi Arabia",  cycle: "60 CME / yr",     note: "SBA & SSA recognised" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DHA",   country: "Dubai",         cycle: "40 CME / 2 yr",   note: "Simulation CME recognised" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DOH",   country: "Abu Dhabi",     cycle: "40 CPD / cycle",  note: "Verify per licence category" },
-  { flag: "ðŸ‡°ðŸ‡¼", name: "MOH",   country: "Kuwait",        cycle: "30 CME / yr",     note: "Ministry of Health approved" },
-  { flag: "ðŸ‡§ðŸ‡­", name: "NHRA",  country: "Bahrain",       cycle: "40 CPD / 2 yr",   note: "NHRA accredited events" },
-  { flag: "ðŸ‡´ðŸ‡²", name: "OMSB",  country: "Oman",          cycle: "40 CME / 2 yr",   note: "Oman Medical Specialty Board" },
+  { flag: "🇶🇦", name: "QCHP",  country: "Qatar",        cycle: "80 CPD / 2 yr",   note: "ACLS required · simulation credits accepted" },
+  { flag: "🇸🇦", name: "SCFHS", country: "Saudi Arabia",  cycle: "60 CME / yr",     note: "SBA & SSA recognised" },
+  { flag: "🇦🇪", name: "DHA",   country: "Dubai",         cycle: "40 CME / 2 yr",   note: "Simulation CME recognised" },
+  { flag: "🇦🇪", name: "DOH",   country: "Abu Dhabi",     cycle: "40 CPD / cycle",  note: "Verify per licence category" },
+  { flag: "🇰🇼", name: "MOH",   country: "Kuwait",        cycle: "30 CME / yr",     note: "Ministry of Health approved" },
+  { flag: "🇧🇭", name: "NHRA",  country: "Bahrain",       cycle: "40 CPD / 2 yr",   note: "NHRA accredited events" },
+  { flag: "🇴🇲", name: "OMSB",  country: "Oman",          cycle: "40 CME / 2 yr",   note: "Oman Medical Specialty Board" },
 ];
 
 const SPECIALTY_NOTES = [
   {
-    icon: "ðŸ’“",
+    icon: "💓",
     title: "ACLS — Required, Not Optional",
     body: "ACLS certification is a prerequisite for anaesthesiology licence renewal with QCHP and is strongly recommended by SCFHS. Each ACLS renewal course earns CPD/CME credits. Providers include AHA-certified centres across all GCC countries.",
   },
   {
-    icon: "ðŸŽ®",
+    icon: "🎮",
     title: "Simulation & PBLD Recognised",
     body: "Problem-Based Learning Discussions (PBLDs) and high-fidelity simulation workshops are accepted by SCFHS and DHA for CME credits. Crisis resource management (CRM) courses, regional anaesthesia workshops, and airway management simulation count as hands-on CME.",
   },
   {
-    icon: "ðŸŒ",
+    icon: "🌍",
     title: "WFSA, ESA & ASA Events",
     body: "Major international anaesthesia society conferences (WFSA World Congress, ESAIC Euroanaesthesia, ASA Annual Meeting) are recognised by SCFHS and DHA. The Arab Society of Regional Anaesthesia (ASRA-Arabia) annual meeting is the premier GCC-focused event.",
   },
   {
-    icon: "ðŸ›¡ï¸",
+    icon: "🛡️",
     title: "Patient Safety — Mandatory Category",
     body: "QCHP requires at least 5 CPD credits in patient safety per 2-year cycle. For anaesthesiologists, this includes adverse event reporting, critical incident reviews, difficult airway management training, and malignant hyperthermia management courses.",
   },
@@ -130,7 +130,7 @@ export default function AnesthesiaCmePage() {
       <section style={{ background: "#0f1f3d", color: "#fff", padding: "72px 24px 56px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontSize: 13, letterSpacing: "0.08em", textTransform: "uppercase", color: "#93c5fd", marginBottom: 16 }}>
-            ðŸ’‰ Specialty CME Guide
+            💉 Specialty CME Guide
           </p>
           <h1 style={{ fontSize: "clamp(28px,5vw,48px)", fontWeight: 800, lineHeight: 1.15, marginBottom: 20 }}>
             Anaesthesia CME Requirements<br />Across GCC
@@ -212,14 +212,14 @@ export default function AnesthesiaCmePage() {
           <h2 style={{ fontSize: 24, fontWeight: 700, color: "#0f172a", textAlign: "center", marginBottom: 40 }}>More CME Specialty Guides</h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 12 }}>
             {[
-              { href: "/cardiology-cme", label: "â¤ï¸ Cardiology" },
-              { href: "/surgery-cme", label: "ðŸ”ª Surgery" },
-              { href: "/emergency-medicine-cme", label: "ðŸš‘ Emergency Med" },
-              { href: "/obstetrics-gynecology-cme", label: "ðŸ¤± OB/Gyn" },
-              { href: "/orthopedics-cme", label: "ðŸ¦´ Orthopedics" },
-              { href: "/radiology-cme", label: "ðŸ©» Radiology" },
-              { href: "/physician-cme", label: "ðŸ‘¨â€âš•ï¸ All Physicians" },
-              { href: "/nurse-cpd", label: "ðŸ‘©â€âš•ï¸ Nursing CPD" },
+              { href: "/cardiology-cme", label: "❤️ Cardiology" },
+              { href: "/surgery-cme", label: "🔪 Surgery" },
+              { href: "/emergency-medicine-cme", label: "🚑 Emergency Med" },
+              { href: "/obstetrics-gynecology-cme", label: "🤱 OB/Gyn" },
+              { href: "/orthopedics-cme", label: "🦴 Orthopedics" },
+              { href: "/radiology-cme", label: "🩻 Radiology" },
+              { href: "/physician-cme", label: "👨‍⚕️ All Physicians" },
+              { href: "/nurse-cpd", label: "👩‍⚕️ Nursing CPD" },
             ].map((l) => (
               <Link key={l.href} href={l.href} style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 8, padding: "12px 16px", textAlign: "center", textDecoration: "none", color: "#1a56a0", fontWeight: 600, fontSize: 14 }}>
                 {l.label}

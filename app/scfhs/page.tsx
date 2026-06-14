@@ -6,7 +6,7 @@ const APP_URL = "https://hayyamed.pro";
 export const metadata: Metadata = {
   title: "SCFHS CME Tracker — Track Saudi Arabia CPD Requirements | Hayya Med Pro",
   description:
-    "Track your SCFHS CME requirements automatically. Saudi healthcare professionals need 40â€“60 CME credits per year depending on profession. Hayya Med Pro tracks your progress and generates your SCFHS-ready compliance report.",
+    "Track your SCFHS CME requirements automatically. Saudi healthcare professionals need 40–60 CME credits per year depending on profession. Hayya Med Pro tracks your progress and generates your SCFHS-ready compliance report.",
   keywords: [
     "SCFHS CME tracker",
     "Saudi Arabia CME requirements",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "SCFHS CME Tracker — Track Saudi Arabia Healthcare CME",
     description:
-      "40â€“60 CME credits per year. Hayya Med Pro tracks your SCFHS progress, flags gaps, and generates your compliance report. Free to start.",
+      "40–60 CME credits per year. Hayya Med Pro tracks your SCFHS progress, flags gaps, and generates your compliance report. Free to start.",
     url: `${APP_URL}/scfhs`,
     type: "website",
     images: [{ url: `${APP_URL}/api/og?t=SCFHS+CME+Tracker+%E2%80%94+Saudi+Arabia&s=60+CME+credits%2Fyear+%28physicians%29+%C2%B7+30%2Fyear+%28nurses%2FAHP%29&a=%F0%9F%87%B8%F0%9F%87%A6+SCFHS&k=Authority+Guide`, width: 1200, height: 630 }],
@@ -81,11 +81,11 @@ const faqLd = {
 };
 
 const PROFESSIONS = [
-  { label: "Physician", credits: 60, cycle: "1 year", icon: "ðŸ©º" },
-  { label: "Pharmacist", credits: 60, cycle: "1 year", icon: "ðŸ’Š" },
-  { label: "Dentist", credits: 60, cycle: "1 year", icon: "ðŸ¦·" },
-  { label: "Nurse", credits: 30, cycle: "1 year", icon: "ðŸ‘©â€âš•ï¸" },
-  { label: "Allied Health", credits: 30, cycle: "1 year", icon: "ðŸ¥" },
+  { label: "Physician", credits: 60, cycle: "1 year", icon: "🩺" },
+  { label: "Pharmacist", credits: 60, cycle: "1 year", icon: "💊" },
+  { label: "Dentist", credits: 60, cycle: "1 year", icon: "🦷" },
+  { label: "Nurse", credits: 30, cycle: "1 year", icon: "👩‍⚕️" },
+  { label: "Allied Health", credits: 30, cycle: "1 year", icon: "🏥" },
 ];
 
 const HOW_IT_WORKS = [
@@ -145,14 +145,14 @@ export default function ScfhsPage() {
           {/* Hero */}
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-2 bg-[#f0fdf4] border border-[#bbf7d0] text-[#15803d] text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
-              ðŸ‡¸ðŸ‡¦ Saudi Arabia · SCFHS · Saudi Commission for Health Specialties
+              🇸🇦 Saudi Arabia · SCFHS · Saudi Commission for Health Specialties
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-[#111] tracking-tight mb-4 leading-tight">
               Track your SCFHS CME<br className="hidden sm:block" /> requirements — automatically
             </h1>
             <p className="text-lg text-[#64748b] max-w-2xl mx-auto mb-8">
               Saudi Arabia healthcare professionals must complete{" "}
-              <strong className="text-[#111]">30â€“60 CME credits per year</strong> depending on their profession.
+              <strong className="text-[#111]">30–60 CME credits per year</strong> depending on their profession.
               Hayya Med Pro tracks your progress, flags gaps, and generates your SCFHS-ready report.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -259,11 +259,11 @@ export default function ScfhsPage() {
             <h2 className="text-xl font-bold text-[#111] mb-5">CME requirements by profession</h2>
             <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
               {[
-                { icon: "ðŸ©º", title: "Physicians", href: "/physician-cme" },
-                { icon: "ðŸ‘©â€âš•ï¸", title: "Nurses", href: "/nurse-cpd" },
-                { icon: "ðŸ’Š", title: "Pharmacists", href: "/pharmacist-cme" },
-                { icon: "ðŸ¦·", title: "Dentists", href: "/dentist-cme" },
-                { icon: "ðŸ¦¿", title: "Allied Health", href: "/allied-health-cpd" },
+                { icon: "🩺", title: "Physicians", href: "/physician-cme" },
+                { icon: "👩‍⚕️", title: "Nurses", href: "/nurse-cpd" },
+                { icon: "💊", title: "Pharmacists", href: "/pharmacist-cme" },
+                { icon: "🦷", title: "Dentists", href: "/dentist-cme" },
+                { icon: "🦿", title: "Allied Health", href: "/allied-health-cpd" },
               ].map((p) => (
                 <Link
                   key={p.href}
@@ -283,21 +283,21 @@ export default function ScfhsPage() {
             <p className="text-sm text-[#64748b] mb-5">Select your specialty for SCFHS-specific CME notes and recognised accreditors.</p>
             <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3">
               {[
-                { icon: "â¤ï¸", title: "Cardiology",      href: "/cardiology-cme" },
-                { icon: "ðŸ©º", title: "Internal Med",    href: "/internal-medicine-cme" },
-                { icon: "ðŸš‘", title: "Emergency Med",   href: "/emergency-medicine-cme" },
-                { icon: "ðŸ”ª", title: "Surgery",         href: "/surgery-cme" },
-                { icon: "ðŸ‘¶", title: "Pediatrics",      href: "/pediatrics-cme" },
-                { icon: "ðŸ©»", title: "Radiology",       href: "/radiology-cme" },
-                { icon: "ðŸ§ ", title: "Psychiatry",      href: "/psychiatry-cme" },
-                { icon: "ðŸ¤±", title: "OB / Gyn",       href: "/obstetrics-gynecology-cme" },
-                { icon: "ðŸ’‰", title: "Anesthesia",      href: "/anesthesia-cme" },
-                { icon: "ðŸ¦´", title: "Orthopedics",     href: "/orthopedics-cme" },
-                { icon: "ðŸ¡", title: "Family Medicine", href: "/family-medicine-cme" },
-                { icon: "ðŸ©º", title: "Dermatology",    href: "/dermatology-cme" },
-                { icon: "ðŸ§ ", title: "Neurology",      href: "/neurology-cme" },
-                { icon: "ðŸ«", title: "Nephrology",     href: "/nephrology-cme" },
-                { icon: "ðŸ‘", title: "Ophthalmology",  href: "/ophthalmology-cme" },
+                { icon: "❤️", title: "Cardiology",      href: "/cardiology-cme" },
+                { icon: "🩺", title: "Internal Med",    href: "/internal-medicine-cme" },
+                { icon: "🚑", title: "Emergency Med",   href: "/emergency-medicine-cme" },
+                { icon: "🔪", title: "Surgery",         href: "/surgery-cme" },
+                { icon: "👶", title: "Pediatrics",      href: "/pediatrics-cme" },
+                { icon: "🩻", title: "Radiology",       href: "/radiology-cme" },
+                { icon: "🧠", title: "Psychiatry",      href: "/psychiatry-cme" },
+                { icon: "🤱", title: "OB / Gyn",       href: "/obstetrics-gynecology-cme" },
+                { icon: "💉", title: "Anesthesia",      href: "/anesthesia-cme" },
+                { icon: "🦴", title: "Orthopedics",     href: "/orthopedics-cme" },
+                { icon: "🏡", title: "Family Medicine", href: "/family-medicine-cme" },
+                { icon: "🩺", title: "Dermatology",    href: "/dermatology-cme" },
+                { icon: "🧠", title: "Neurology",      href: "/neurology-cme" },
+                { icon: "🫁", title: "Nephrology",     href: "/nephrology-cme" },
+                { icon: "👁", title: "Ophthalmology",  href: "/ophthalmology-cme" },
               ].map((p) => (
                 <Link
                   key={p.href}
@@ -313,7 +313,7 @@ export default function ScfhsPage() {
 
           {/* CTA */}
           <div className="bg-gradient-to-br from-[#0f1f3d] to-[#1a3563] rounded-2xl p-10 text-center">
-            <div className="inline-block text-3xl mb-3">ðŸ‡¸ðŸ‡¦</div>
+            <div className="inline-block text-3xl mb-3">🇸🇦</div>
             <h2 className="text-2xl font-bold text-white mb-2">Start tracking your SCFHS CME today</h2>
             <p className="text-[rgba(255,255,255,0.65)] mb-6 max-w-md mx-auto text-sm">
               Join Saudi Arabia healthcare professionals tracking their annual CME requirements with Hayya Med Pro. Free to start — upgrade for PDF reports and AI compliance tools.

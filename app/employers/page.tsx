@@ -352,17 +352,17 @@ export default function EmployersPage() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
               {[
                 {
-                  icon: "ðŸ¥",
+                  icon: "🏥",
                   title: "Private clinics",
-                  desc: "Clinic medical directors and administrators managing 5â€“50 professionals. Keep every licence renewal on track without spreadsheets.",
+                  desc: "Clinic medical directors and administrators managing 5–50 professionals. Keep every licence renewal on track without spreadsheets.",
                 },
                 {
-                  icon: "ðŸ¢",
+                  icon: "🏢",
                   title: "Hospital departments",
                   desc: "Department heads and HR managers at hospitals who need to evidence staff compliance for JCI or CBAHI accreditation.",
                 },
                 {
-                  icon: "ðŸ›ï¸",
+                  icon: "🏛️",
                   title: "Healthcare groups",
                   desc: "Multi-site healthcare groups managing compliance across several clinics or hospitals with different licensing authorities.",
                 },

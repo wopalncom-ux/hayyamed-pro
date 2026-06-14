@@ -84,7 +84,7 @@ const faqLd = {
 
 const GCC_REQUIREMENTS = [
   {
-    country: "ðŸ‡¶ðŸ‡¦ Qatar",
+    country: "🇶🇦 Qatar",
     authority: "QCHP / DHP-AS",
     credits: "80 credits",
     cycle: "2 years",
@@ -94,7 +94,7 @@ const GCC_REQUIREMENTS = [
     href: "/qchp",
   },
   {
-    country: "ðŸ‡¸ðŸ‡¦ Saudi Arabia",
+    country: "🇸🇦 Saudi Arabia",
     authority: "SCFHS",
     credits: "60 credits",
     cycle: "Per year",
@@ -104,7 +104,7 @@ const GCC_REQUIREMENTS = [
     href: "/scfhs",
   },
   {
-    country: "ðŸ‡¦ðŸ‡ª UAE — Dubai",
+    country: "🇦🇪 UAE — Dubai",
     authority: "DHA",
     credits: "40 credits",
     cycle: "2 years",
@@ -114,7 +114,7 @@ const GCC_REQUIREMENTS = [
     href: "/dha",
   },
   {
-    country: "ðŸ‡¦ðŸ‡ª UAE — Abu Dhabi",
+    country: "🇦🇪 UAE — Abu Dhabi",
     authority: "DOH",
     credits: "40 credits",
     cycle: "2 years",
@@ -124,7 +124,7 @@ const GCC_REQUIREMENTS = [
     href: "/doh",
   },
   {
-    country: "ðŸ‡°ðŸ‡¼ Kuwait",
+    country: "🇰🇼 Kuwait",
     authority: "MOH Kuwait",
     credits: "30 credits",
     cycle: "Per year",
@@ -134,7 +134,7 @@ const GCC_REQUIREMENTS = [
     href: "/moh-kuwait",
   },
   {
-    country: "ðŸ‡§ðŸ‡­ Bahrain",
+    country: "🇧🇭 Bahrain",
     authority: "NHRA",
     credits: "40 credits",
     cycle: "2 years",
@@ -144,7 +144,7 @@ const GCC_REQUIREMENTS = [
     href: "/nhra",
   },
   {
-    country: "ðŸ‡´ðŸ‡² Oman",
+    country: "🇴🇲 Oman",
     authority: "OMSB",
     credits: "40 credits",
     cycle: "2 years",
@@ -156,12 +156,12 @@ const GCC_REQUIREMENTS = [
 ];
 
 const CATEGORIES = [
-  { icon: "ðŸ’Š", name: "Pharmacy Practice", desc: "Clinical pharmacy conferences, medication management workshops, drug interaction seminars, pharmacovigilance training" },
-  { icon: "ðŸ’»", name: "Online / E-Learning", desc: "Accredited pharmacy e-learning modules, virtual conferences, online drug information courses (capped at 30â€“50% depending on country)" },
-  { icon: "ðŸ“„", name: "Research & Publications", desc: "Authoring pharmacy journal articles, presenting at professional conferences, contributing to drug utilization reviews" },
-  { icon: "ðŸŽ“", name: "Postgraduate Education", desc: "Clinical pharmacy specialty diplomas, fellowship programs, MSc or PharmD coursework (typically 10â€“25 credits per semester)" },
-  { icon: "ðŸ«", name: "Teaching", desc: "Lecturing at pharmacy schools, supervising pharmacy students or interns, developing clinical training programs" },
-  { icon: "ðŸ›¡ï¸", name: "Patient Safety", desc: "Mandatory in Qatar (2 credits/cycle) and UAE Dubai (5 credits/cycle). Covers medication errors, adverse drug reactions, safe dispensing practices" },
+  { icon: "💊", name: "Pharmacy Practice", desc: "Clinical pharmacy conferences, medication management workshops, drug interaction seminars, pharmacovigilance training" },
+  { icon: "💻", name: "Online / E-Learning", desc: "Accredited pharmacy e-learning modules, virtual conferences, online drug information courses (capped at 30–50% depending on country)" },
+  { icon: "📄", name: "Research & Publications", desc: "Authoring pharmacy journal articles, presenting at professional conferences, contributing to drug utilization reviews" },
+  { icon: "🎓", name: "Postgraduate Education", desc: "Clinical pharmacy specialty diplomas, fellowship programs, MSc or PharmD coursework (typically 10–25 credits per semester)" },
+  { icon: "🏫", name: "Teaching", desc: "Lecturing at pharmacy schools, supervising pharmacy students or interns, developing clinical training programs" },
+  { icon: "🛡️", name: "Patient Safety", desc: "Mandatory in Qatar (2 credits/cycle) and UAE Dubai (5 credits/cycle). Covers medication errors, adverse drug reactions, safe dispensing practices" },
 ];
 
 const HOW_IT_WORKS = [
@@ -205,7 +205,7 @@ export default function PharmacistCmePage() {
           {/* Hero */}
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-2 bg-[#eff6ff] border border-[#bfdbfe] text-[#1a56a0] text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
-              ðŸ’Š Pharmacists · All GCC Countries · CME & CPD
+              💊 Pharmacists · All GCC Countries · CME & CPD
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-[#111] tracking-tight mb-4 leading-tight">
               Pharmacist CME requirements<br className="hidden sm:block" /> across the GCC — one tracker
@@ -360,10 +360,10 @@ export default function PharmacistCmePage() {
             <h2 className="text-xl font-bold text-[#111] mb-4">CME requirements by profession</h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {[
-                { icon: "ðŸ©º", title: "Physicians", href: "/physician-cme" },
-                { icon: "ðŸ‘©â€âš•ï¸", title: "Nurses", href: "/nurse-cpd" },
-                { icon: "ðŸ¦·", title: "Dentists", href: "/dentist-cme" },
-                { icon: "ðŸ¦¿", title: "Allied Health", href: "/allied-health-cpd" },
+                { icon: "🩺", title: "Physicians", href: "/physician-cme" },
+                { icon: "👩‍⚕️", title: "Nurses", href: "/nurse-cpd" },
+                { icon: "🦷", title: "Dentists", href: "/dentist-cme" },
+                { icon: "🦿", title: "Allied Health", href: "/allied-health-cpd" },
               ].map((p) => (
                 <Link
                   key={p.href}

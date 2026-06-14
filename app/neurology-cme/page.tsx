@@ -66,7 +66,7 @@ const faqLd = {
       name: "Does EEG or EMG certification count as CME for GCC-licensed neurologists?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. Accredited EEG interpretation workshops, EMG and nerve conduction study training programmes, and neurosonology (TCD/carotid duplex) certification courses count as clinical CME across QCHP, SCFHS, and DHA. These are typically awarded under the clinical skills or procedural competency category and often earn 1.5â€“2.0 CME credits per contact hour.",
+        text: "Yes. Accredited EEG interpretation workshops, EMG and nerve conduction study training programmes, and neurosonology (TCD/carotid duplex) certification courses count as clinical CME across QCHP, SCFHS, and DHA. These are typically awarded under the clinical skills or procedural competency category and often earn 1.5–2.0 CME credits per contact hour.",
       },
     },
     {
@@ -97,33 +97,33 @@ const faqLd = {
 };
 
 const AUTHORITIES = [
-  { flag: "ðŸ‡¶ðŸ‡¦", name: "QCHP",  country: "Qatar",        cycle: "80 CPD / 2 yr",  note: "Ethics CPD mandatory (â‰¥5 credits)" },
-  { flag: "ðŸ‡¸ðŸ‡¦", name: "SCFHS", country: "Saudi Arabia", cycle: "60 CME / yr",    note: "SNS & WFN/AAN/EAN recognised" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DHA",   country: "UAE (Dubai)",  cycle: "40 CME / 2 yr",  note: "5 patient safety credits mandatory" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DOH",   country: "UAE (Abu Dhabi)", cycle: "40 CPD / cycle", note: "Verify per licence category" },
-  { flag: "ðŸ‡°ðŸ‡¼", name: "MOH",   country: "Kuwait",       cycle: "30 CME / yr",    note: "Annual renewal, 30% online cap" },
-  { flag: "ðŸ‡§ðŸ‡­", name: "NHRA",  country: "Bahrain",      cycle: "40 CPD / 2 yr",  note: "Structured + unstructured split" },
-  { flag: "ðŸ‡´ðŸ‡²", name: "OMSB",  country: "Oman",         cycle: "40 CME / 2 yr",  note: "Category A & B framework" },
+  { flag: "🇶🇦", name: "QCHP",  country: "Qatar",        cycle: "80 CPD / 2 yr",  note: "Ethics CPD mandatory (≥5 credits)" },
+  { flag: "🇸🇦", name: "SCFHS", country: "Saudi Arabia", cycle: "60 CME / yr",    note: "SNS & WFN/AAN/EAN recognised" },
+  { flag: "🇦🇪", name: "DHA",   country: "UAE (Dubai)",  cycle: "40 CME / 2 yr",  note: "5 patient safety credits mandatory" },
+  { flag: "🇦🇪", name: "DOH",   country: "UAE (Abu Dhabi)", cycle: "40 CPD / cycle", note: "Verify per licence category" },
+  { flag: "🇰🇼", name: "MOH",   country: "Kuwait",       cycle: "30 CME / yr",    note: "Annual renewal, 30% online cap" },
+  { flag: "🇧🇭", name: "NHRA",  country: "Bahrain",      cycle: "40 CPD / 2 yr",  note: "Structured + unstructured split" },
+  { flag: "🇴🇲", name: "OMSB",  country: "Oman",         cycle: "40 CME / 2 yr",  note: "Category A & B framework" },
 ];
 
 const SPECIALTY_NOTES = [
   {
-    icon: "âš¡",
+    icon: "⚡",
     title: "EEG, EMG & neurosonology count",
     body: "Accredited EEG interpretation workshops, EMG training programmes, nerve conduction studies, and transcranial Doppler (TCD) courses count as clinical CME across all 7 GCC authorities under the procedural competency category.",
   },
   {
-    icon: "ðŸ¥",
+    icon: "🏥",
     title: "Stroke simulation & NIHSS",
     body: "NIHSS certification and accredited stroke simulation courses count as clinical CME in QCHP and SCFHS. Most GCC hospitals require these for credentialing — combining CME and hospital privilege maintenance.",
   },
   {
-    icon: "ðŸ§¬",
+    icon: "🧬",
     title: "Saudi Neurological Society (SNS)",
-    body: "SNS-accredited events are the primary source of neurology-specific CME recognised by SCFHS. The annual SNS convention offers 15â€“25 CME credits and is the most efficient single-event route to SCFHS compliance.",
+    body: "SNS-accredited events are the primary source of neurology-specific CME recognised by SCFHS. The annual SNS convention offers 15–25 CME credits and is the most efficient single-event route to SCFHS compliance.",
   },
   {
-    icon: "ðŸ“‹",
+    icon: "📋",
     title: "Epilepsy & headache specialisation",
     body: "Accredited epilepsy management workshops, EEG interpretation for epilepsy, and headache medicine CME courses (migraine, cluster) all count as clinical CME. The International League Against Epilepsy (ILAE) runs recognised GCC courses.",
   },
@@ -139,7 +139,7 @@ export default function NeurologyCmePage() {
       <section style={{ background: "#0f1f3d", color: "#fff", padding: "72px 24px 56px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontSize: 13, letterSpacing: "0.08em", textTransform: "uppercase", color: "#93c5fd", marginBottom: 16 }}>
-            ðŸ§  Specialty CME Guide
+            🧠 Specialty CME Guide
           </p>
           <h1 style={{ fontSize: "clamp(28px,5vw,48px)", fontWeight: 800, lineHeight: 1.15, marginBottom: 20 }}>
             Neurology CME Requirements<br />Across GCC
@@ -235,14 +235,14 @@ export default function NeurologyCmePage() {
           </h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 12 }}>
             {[
-              { href: "/cardiology-cme",        label: "â¤ï¸ Cardiology" },
-              { href: "/dermatology-cme",       label: "ðŸ©º Dermatology" },
-              { href: "/internal-medicine-cme", label: "ðŸ”¬ Internal Medicine" },
-              { href: "/emergency-medicine-cme",label: "ðŸš‘ Emergency Med" },
-              { href: "/ophthalmology-cme",     label: "ðŸ‘ Ophthalmology" },
-              { href: "/nephrology-cme",        label: "ðŸ« Nephrology" },
-              { href: "/psychiatry-cme",        label: "ðŸ§© Psychiatry" },
-              { href: "/physician-cme",         label: "ðŸ‘¨â€âš•ï¸ All Physicians" },
+              { href: "/cardiology-cme",        label: "❤️ Cardiology" },
+              { href: "/dermatology-cme",       label: "🩺 Dermatology" },
+              { href: "/internal-medicine-cme", label: "🔬 Internal Medicine" },
+              { href: "/emergency-medicine-cme",label: "🚑 Emergency Med" },
+              { href: "/ophthalmology-cme",     label: "👁 Ophthalmology" },
+              { href: "/nephrology-cme",        label: "🫁 Nephrology" },
+              { href: "/psychiatry-cme",        label: "🧩 Psychiatry" },
+              { href: "/physician-cme",         label: "👨‍⚕️ All Physicians" },
             ].map((l) => (
               <Link key={l.href} href={l.href} style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 8, padding: "12px 16px", textAlign: "center", textDecoration: "none", color: "#1a56a0", fontWeight: 600, fontSize: 14 }}>
                 {l.label}

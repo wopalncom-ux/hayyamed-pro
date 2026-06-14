@@ -64,7 +64,7 @@ const faqLd = {
       name: "Do surgical skills workshops count as CME for DHA-licensed orthopedic surgeons?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. DHA recognises hands-on surgical skills workshops for orthopedic surgeons, including arthroscopy, joint replacement techniques, spinal surgery workshops, and fracture fixation courses. These typically earn 4â€“16 CME credits depending on duration and the accrediting body.",
+        text: "Yes. DHA recognises hands-on surgical skills workshops for orthopedic surgeons, including arthroscopy, joint replacement techniques, spinal surgery workshops, and fracture fixation courses. These typically earn 4–16 CME credits depending on duration and the accrediting body.",
       },
     },
     {
@@ -87,33 +87,33 @@ const faqLd = {
 };
 
 const AUTHORITIES = [
-  { flag: "ðŸ‡¶ðŸ‡¦", name: "QCHP",  country: "Qatar",        cycle: "80 CPD / 2 yr",   note: "ATLS recommended · trauma CME counts" },
-  { flag: "ðŸ‡¸ðŸ‡¦", name: "SCFHS", country: "Saudi Arabia",  cycle: "60 CME / yr",     note: "SOS recognised · surgical skills count" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DHA",   country: "Dubai",         cycle: "40 CME / 2 yr",   note: "Hands-on workshops recognised" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DOH",   country: "Abu Dhabi",     cycle: "40 CPD / cycle",  note: "Verify per licence category" },
-  { flag: "ðŸ‡°ðŸ‡¼", name: "MOH",   country: "Kuwait",        cycle: "30 CME / yr",     note: "Ministry of Health approved" },
-  { flag: "ðŸ‡§ðŸ‡­", name: "NHRA",  country: "Bahrain",       cycle: "40 CPD / 2 yr",   note: "NHRA accredited events" },
-  { flag: "ðŸ‡´ðŸ‡²", name: "OMSB",  country: "Oman",          cycle: "40 CME / 2 yr",   note: "Oman Medical Specialty Board" },
+  { flag: "🇶🇦", name: "QCHP",  country: "Qatar",        cycle: "80 CPD / 2 yr",   note: "ATLS recommended · trauma CME counts" },
+  { flag: "🇸🇦", name: "SCFHS", country: "Saudi Arabia",  cycle: "60 CME / yr",     note: "SOS recognised · surgical skills count" },
+  { flag: "🇦🇪", name: "DHA",   country: "Dubai",         cycle: "40 CME / 2 yr",   note: "Hands-on workshops recognised" },
+  { flag: "🇦🇪", name: "DOH",   country: "Abu Dhabi",     cycle: "40 CPD / cycle",  note: "Verify per licence category" },
+  { flag: "🇰🇼", name: "MOH",   country: "Kuwait",        cycle: "30 CME / yr",     note: "Ministry of Health approved" },
+  { flag: "🇧🇭", name: "NHRA",  country: "Bahrain",       cycle: "40 CPD / 2 yr",   note: "NHRA accredited events" },
+  { flag: "🇴🇲", name: "OMSB",  country: "Oman",          cycle: "40 CME / 2 yr",   note: "Oman Medical Specialty Board" },
 ];
 
 const SPECIALTY_NOTES = [
   {
-    icon: "ðŸ†˜",
+    icon: "🆘",
     title: "ATLS — Trauma Standard",
     body: "Advanced Trauma Life Support (ATLS) certification is the global standard for trauma surgeons and earns CPD credits across all GCC authorities. ATLS renewal every 4 years is recommended. Courses are available at accredited trauma centres across Qatar, Saudi Arabia, and UAE.",
   },
   {
-    icon: "ðŸ”§",
+    icon: "🔧",
     title: "Surgical Skills Workshops Count",
     body: "Arthroscopy, joint replacement, spinal instrumentation, and fracture fixation workshops earn hands-on CME credits. SCFHS and DHA both recognise laboratory-based surgical skills courses run by industry and academic medical centres, provided they are accredited.",
   },
   {
-    icon: "ðŸŒ",
+    icon: "🌍",
     title: "SICOT, AAOS & Arab Orthopaedic Association",
     body: "SICOT World Congress, AAOS Annual Meeting, and Arab Orthopaedic Association (AOA) events generate internationally recognised CME credits. SCFHS and DHA recognise credits from these events. The Saudi Orthopaedic Society (SOS) annual meeting is the premier GCC-focused event.",
   },
   {
-    icon: "ðŸ“",
+    icon: "📐",
     title: "Biomechanics & Implant Training",
     body: "Industry-sponsored courses on implant biomechanics, surgical technique, and new fixation systems can earn CME credits when offered through accredited providers. QCHP and SCFHS limit commercially sponsored credits to a percentage of total CME — check your authority's cap before claiming.",
   },
@@ -130,7 +130,7 @@ export default function OrthopedicsCmePage() {
       <section style={{ background: "#0f1f3d", color: "#fff", padding: "72px 24px 56px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontSize: 13, letterSpacing: "0.08em", textTransform: "uppercase", color: "#93c5fd", marginBottom: 16 }}>
-            ðŸ¦´ Specialty CME Guide
+            🦴 Specialty CME Guide
           </p>
           <h1 style={{ fontSize: "clamp(28px,5vw,48px)", fontWeight: 800, lineHeight: 1.15, marginBottom: 20 }}>
             Orthopedic Surgery CME<br />Requirements Across GCC
@@ -212,14 +212,14 @@ export default function OrthopedicsCmePage() {
           <h2 style={{ fontSize: 24, fontWeight: 700, color: "#0f172a", textAlign: "center", marginBottom: 40 }}>More CME Specialty Guides</h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 12 }}>
             {[
-              { href: "/surgery-cme", label: "ðŸ”ª Surgery" },
-              { href: "/cardiology-cme", label: "â¤ï¸ Cardiology" },
-              { href: "/emergency-medicine-cme", label: "ðŸš‘ Emergency Med" },
-              { href: "/anesthesia-cme", label: "ðŸ’‰ Anesthesia" },
-              { href: "/radiology-cme", label: "ðŸ©» Radiology" },
-              { href: "/internal-medicine-cme", label: "ðŸ©º Internal Med" },
-              { href: "/physician-cme", label: "ðŸ‘¨â€âš•ï¸ All Physicians" },
-              { href: "/nurse-cpd", label: "ðŸ‘©â€âš•ï¸ Nursing CPD" },
+              { href: "/surgery-cme", label: "🔪 Surgery" },
+              { href: "/cardiology-cme", label: "❤️ Cardiology" },
+              { href: "/emergency-medicine-cme", label: "🚑 Emergency Med" },
+              { href: "/anesthesia-cme", label: "💉 Anesthesia" },
+              { href: "/radiology-cme", label: "🩻 Radiology" },
+              { href: "/internal-medicine-cme", label: "🩺 Internal Med" },
+              { href: "/physician-cme", label: "👨‍⚕️ All Physicians" },
+              { href: "/nurse-cpd", label: "👩‍⚕️ Nursing CPD" },
             ].map((l) => (
               <Link key={l.href} href={l.href} style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 8, padding: "12px 16px", textAlign: "center", textDecoration: "none", color: "#1a56a0", fontWeight: 600, fontSize: 14 }}>
                 {l.label}

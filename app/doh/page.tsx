@@ -6,7 +6,7 @@ const APP_URL = "https://hayyamed.pro";
 export const metadata: Metadata = {
   title: "UAE Abu Dhabi CPD Tracker — DOH CPD Requirements | Hayya Med Pro",
   description:
-    "Track your DOH Abu Dhabi CPD requirements automatically. UAE Abu Dhabi healthcare professionals must complete 30â€“50 CPD credits per cycle depending on profession. Hayya Med Pro tracks accredited, online, and self-directed CPD and generates your DOH-ready compliance report.",
+    "Track your DOH Abu Dhabi CPD requirements automatically. UAE Abu Dhabi healthcare professionals must complete 30–50 CPD credits per cycle depending on profession. Hayya Med Pro tracks accredited, online, and self-directed CPD and generates your DOH-ready compliance report.",
   keywords: [
     "DOH CPD tracker",
     "UAE Abu Dhabi CPD requirements",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "DOH Abu Dhabi CPD Tracker — UAE Healthcare Compliance",
     description:
-      "30â€“50 CPD credits per cycle for UAE Abu Dhabi healthcare professionals. Track accredited and self-directed CPD, enforce caps, and generate your DOH compliance report — free to start.",
+      "30–50 CPD credits per cycle for UAE Abu Dhabi healthcare professionals. Track accredited and self-directed CPD, enforce caps, and generate your DOH compliance report — free to start.",
     url: `${APP_URL}/doh`,
     type: "website",
     images: [{ url: `${APP_URL}/api/og?t=DOH+CPD+Tracker+%E2%80%94+Abu+Dhabi&s=40+CPD+credits+%C2%B7+2-year+cycle+%C2%B7+Accredited+%2B+self-directed+categories&a=%F0%9F%87%A6%F0%9F%87%AA+DOH&k=Authority+Guide`, width: 1200, height: 630 }],
@@ -42,7 +42,7 @@ const faqLd = {
       name: "How many CPD credits do I need for DOH Abu Dhabi license renewal?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "The Department of Health â€“ Abu Dhabi (DOH) requires healthcare professionals to complete 30â€“50 CPD credits per renewal cycle, depending on profession and specialty. Requirements are reviewed periodically. Hayya Med Pro applies the correct target based on your registered profession and country selection.",
+        text: "The Department of Health – Abu Dhabi (DOH) requires healthcare professionals to complete 30–50 CPD credits per renewal cycle, depending on profession and specialty. Requirements are reviewed periodically. Hayya Med Pro applies the correct target based on your registered profession and country selection.",
       },
     },
     {
@@ -83,25 +83,25 @@ const faqLd = {
 const CATEGORIES = [
   {
     name: "Accredited Educational",
-    icon: "ðŸ›ï¸",
+    icon: "🏛️",
     description: "Conferences, workshops, symposia, and certified training courses accredited by DOH or recognized bodies",
     bg: "#eff6ff", border: "#bfdbfe", text: "#1e40af",
   },
   {
     name: "Online (Accredited, max 20)",
-    icon: "ðŸ’»",
+    icon: "💻",
     description: "Accredited e-learning from DOH-recognized providers (maximum 20 credits per cycle)",
     bg: "#fff7ed", border: "#fed7aa", text: "#c2410c",
   },
   {
     name: "Self-Directed (max 15)",
-    icon: "ðŸ“š",
+    icon: "📚",
     description: "Journal reading, clinical guidelines review, and independent self-study (maximum 15 per cycle)",
     bg: "#faf5ff", border: "#e9d5ff", text: "#7e22ce",
   },
   {
     name: "Postgraduate / Research / Teaching",
-    icon: "ðŸ”¬",
+    icon: "🔬",
     description: "Postgraduate study (per semester), research & publications, and clinical teaching activities",
     bg: "#f0fdf4", border: "#bbf7d0", text: "#15803d",
   },
@@ -158,13 +158,13 @@ export default function DohPage() {
           {/* Hero */}
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-2 bg-[#eff6ff] border border-[#bfdbfe] text-[#1a56a0] text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
-              ðŸ‡¦ðŸ‡ª UAE — Abu Dhabi · Department of Health (DOH)
+              🇦🇪 UAE — Abu Dhabi · Department of Health (DOH)
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-[#111] tracking-tight mb-4 leading-tight">
               Track your DOH Abu Dhabi CPD<br className="hidden sm:block" /> requirements — automatically
             </h1>
             <p className="text-lg text-[#64748b] max-w-2xl mx-auto mb-8">
-              UAE Abu Dhabi healthcare professionals need <strong className="text-[#111]">30â€“50 CPD credits</strong> per renewal cycle.
+              UAE Abu Dhabi healthcare professionals need <strong className="text-[#111]">30–50 CPD credits</strong> per renewal cycle.
               Hayya Med Pro tracks all DOH-accepted categories, enforces online and self-directed caps, and generates your DOH-ready compliance report.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -183,10 +183,10 @@ export default function DohPage() {
             <h2 className="text-lg font-bold text-[#111] mb-6">DOH Abu Dhabi CPD requirements at a glance</h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
               {[
-                { label: "Credits required", value: "30â€“50", sub: "varies by profession", color: "#1a56a0" },
+                { label: "Credits required", value: "30–50", sub: "varies by profession", color: "#1a56a0" },
                 { label: "Online CPD cap", value: "20", sub: "credits max online", color: "#d97706" },
                 { label: "Self-directed cap", value: "15", sub: "credits max self-directed", color: "#7e22ce" },
-                { label: "Renewal cycle", value: "1â€“2 yrs", sub: "profession-specific", color: "#16a34a" },
+                { label: "Renewal cycle", value: "1–2 yrs", sub: "profession-specific", color: "#16a34a" },
               ].map((s) => (
                 <div key={s.label} className="text-center">
                   <p className="text-3xl font-black mb-1" style={{ color: s.color }}>{s.value}</p>
@@ -196,7 +196,7 @@ export default function DohPage() {
               ))}
             </div>
             <div className="mt-6 pt-6 border-t border-[#f1f5f9] flex flex-wrap gap-4 text-xs text-[#64748b]">
-              <span><strong className="text-[#374151]">Authority:</strong> Department of Health â€“ Abu Dhabi (DOH)</span>
+              <span><strong className="text-[#374151]">Authority:</strong> Department of Health – Abu Dhabi (DOH)</span>
               <span><strong className="text-[#374151]">Website:</strong> doh.gov.ae</span>
               <span><strong className="text-[#374151]">Terminology:</strong> CPD (Continuing Professional Development)</span>
             </div>
@@ -257,15 +257,15 @@ export default function DohPage() {
                 </thead>
                 <tbody className="divide-y divide-[#f8fafc]">
                   {[
-                    ["Category tracking (accredited, online, self-directed)", "âŒ", "✅"],
-                    ["Online CPD cap enforcement (20 max)", "âŒ", "✅"],
-                    ["Self-directed cap enforcement (15 max)", "âŒ", "✅"],
-                    ["Real-time cycle progress", "âŒ", "✅"],
-                    ["License renewal reminders", "âŒ", "✅"],
-                    ["PDF report for DOH submission", "âŒ", "✅ Pro"],
-                    ["AI CPD gap analysis", "âŒ", "✅ Pro"],
-                    ["Certificate storage", "âŒ", "✅ Pro"],
-                    ["Employer compliance dashboard", "âŒ", "✅ Employer"],
+                    ["Category tracking (accredited, online, self-directed)", "❌", "✅"],
+                    ["Online CPD cap enforcement (20 max)", "❌", "✅"],
+                    ["Self-directed cap enforcement (15 max)", "❌", "✅"],
+                    ["Real-time cycle progress", "❌", "✅"],
+                    ["License renewal reminders", "❌", "✅"],
+                    ["PDF report for DOH submission", "❌", "✅ Pro"],
+                    ["AI CPD gap analysis", "❌", "✅ Pro"],
+                    ["Certificate storage", "❌", "✅ Pro"],
+                    ["Employer compliance dashboard", "❌", "✅ Employer"],
                   ].map(([feature, manual, platform]) => (
                     <tr key={feature}>
                       <td className="px-6 py-3 text-sm text-[#374151]">{feature}</td>
@@ -296,7 +296,7 @@ export default function DohPage() {
                   {[
                     ["Emirate covered", "Abu Dhabi", "Dubai"],
                     ["Terminology", "CPD", "CME"],
-                    ["Credits required", "30â€“50 (by profession)", "40 per 2-year cycle"],
+                    ["Credits required", "30–50 (by profession)", "40 per 2-year cycle"],
                     ["Mandatory patient safety", "Not specified", "5 credits mandatory"],
                     ["Online cap", "Max 20 per cycle", "Max 20 per cycle"],
                     ["Self-directed cap", "Max 15 per cycle", "Max 10 per cycle"],
@@ -353,11 +353,11 @@ export default function DohPage() {
             <h2 className="text-xl font-bold text-[#111] mb-5">CPD requirements by profession</h2>
             <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
               {[
-                { icon: "ðŸ©º", title: "Physicians", href: "/physician-cme" },
-                { icon: "ðŸ‘©â€âš•ï¸", title: "Nurses", href: "/nurse-cpd" },
-                { icon: "ðŸ’Š", title: "Pharmacists", href: "/pharmacist-cme" },
-                { icon: "ðŸ¦·", title: "Dentists", href: "/dentist-cme" },
-                { icon: "ðŸ¦¿", title: "Allied Health", href: "/allied-health-cpd" },
+                { icon: "🩺", title: "Physicians", href: "/physician-cme" },
+                { icon: "👩‍⚕️", title: "Nurses", href: "/nurse-cpd" },
+                { icon: "💊", title: "Pharmacists", href: "/pharmacist-cme" },
+                { icon: "🦷", title: "Dentists", href: "/dentist-cme" },
+                { icon: "🦿", title: "Allied Health", href: "/allied-health-cpd" },
               ].map((p) => (
                 <Link
                   key={p.href}
@@ -377,21 +377,21 @@ export default function DohPage() {
             <p className="text-sm text-[#64748b] mb-5">Select your specialty for DOH Abu Dhabi-specific CPD notes and recognised providers.</p>
             <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3">
               {[
-                { icon: "â¤ï¸", title: "Cardiology",      href: "/cardiology-cme" },
-                { icon: "ðŸ©º", title: "Internal Med",    href: "/internal-medicine-cme" },
-                { icon: "ðŸš‘", title: "Emergency Med",   href: "/emergency-medicine-cme" },
-                { icon: "ðŸ”ª", title: "Surgery",         href: "/surgery-cme" },
-                { icon: "ðŸ‘¶", title: "Pediatrics",      href: "/pediatrics-cme" },
-                { icon: "ðŸ©»", title: "Radiology",       href: "/radiology-cme" },
-                { icon: "ðŸ§ ", title: "Psychiatry",      href: "/psychiatry-cme" },
-                { icon: "ðŸ¤±", title: "OB / Gyn",       href: "/obstetrics-gynecology-cme" },
-                { icon: "ðŸ’‰", title: "Anesthesia",      href: "/anesthesia-cme" },
-                { icon: "ðŸ¦´", title: "Orthopedics",     href: "/orthopedics-cme" },
-                { icon: "ðŸ¡", title: "Family Medicine", href: "/family-medicine-cme" },
-                { icon: "ðŸ©º", title: "Dermatology",    href: "/dermatology-cme" },
-                { icon: "ðŸ§ ", title: "Neurology",      href: "/neurology-cme" },
-                { icon: "ðŸ«", title: "Nephrology",     href: "/nephrology-cme" },
-                { icon: "ðŸ‘", title: "Ophthalmology",  href: "/ophthalmology-cme" },
+                { icon: "❤️", title: "Cardiology",      href: "/cardiology-cme" },
+                { icon: "🩺", title: "Internal Med",    href: "/internal-medicine-cme" },
+                { icon: "🚑", title: "Emergency Med",   href: "/emergency-medicine-cme" },
+                { icon: "🔪", title: "Surgery",         href: "/surgery-cme" },
+                { icon: "👶", title: "Pediatrics",      href: "/pediatrics-cme" },
+                { icon: "🩻", title: "Radiology",       href: "/radiology-cme" },
+                { icon: "🧠", title: "Psychiatry",      href: "/psychiatry-cme" },
+                { icon: "🤱", title: "OB / Gyn",       href: "/obstetrics-gynecology-cme" },
+                { icon: "💉", title: "Anesthesia",      href: "/anesthesia-cme" },
+                { icon: "🦴", title: "Orthopedics",     href: "/orthopedics-cme" },
+                { icon: "🏡", title: "Family Medicine", href: "/family-medicine-cme" },
+                { icon: "🩺", title: "Dermatology",    href: "/dermatology-cme" },
+                { icon: "🧠", title: "Neurology",      href: "/neurology-cme" },
+                { icon: "🫁", title: "Nephrology",     href: "/nephrology-cme" },
+                { icon: "👁", title: "Ophthalmology",  href: "/ophthalmology-cme" },
               ].map((p) => (
                 <Link
                   key={p.href}
@@ -407,7 +407,7 @@ export default function DohPage() {
 
           {/* CTA */}
           <div className="bg-gradient-to-br from-[#0f1f3d] to-[#1a3563] rounded-2xl p-10 text-center">
-            <div className="inline-block text-3xl mb-3">ðŸ‡¦ðŸ‡ª</div>
+            <div className="inline-block text-3xl mb-3">🇦🇪</div>
             <h2 className="text-2xl font-bold text-white mb-2">Start tracking your DOH Abu Dhabi CPD today</h2>
             <p className="text-[rgba(255,255,255,0.65)] mb-6 max-w-md mx-auto text-sm">
               Hayya Med Pro applies DOH Abu Dhabi rules automatically — profession-specific credit targets, online and self-directed caps, and renewal reminders. Free to start.
@@ -419,7 +419,7 @@ export default function DohPage() {
           </div>
 
           <div className="mt-6 bg-[#fef9c3] border border-[#fde68a] rounded-lg px-4 py-3 text-xs text-[#92400e] text-center">
-            Hayya Med Pro supports CPD tracking and licensing readiness. It does not issue licenses and does not replace official DOH requirements. Always verify final requirements with the Department of Health â€“ Abu Dhabi (doh.gov.ae).
+            Hayya Med Pro supports CPD tracking and licensing readiness. It does not issue licenses and does not replace official DOH requirements. Always verify final requirements with the Department of Health – Abu Dhabi (doh.gov.ae).
           </div>
         </main>
       </div>

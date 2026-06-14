@@ -83,51 +83,51 @@ const faqLd = {
 };
 
 const COMPARISON_ROWS = [
-  ["QCHP / SCFHS / DHA rules built in", "âŒ Manual work", "✅ Automatic"],
-  ["Annual minimum tracking (40/year QCHP)", "âŒ No", "✅ Yes"],
-  ["Profession-specific rules (60 vs 30 SCFHS)", "âŒ No", "✅ Yes"],
-  ["Staff compliance status at a glance", "âŒ No", "✅ Yes"],
-  ["Bulk PDF for JCI / CBAHI audits", "âŒ Manual", "✅ One click"],
-  ["Department grouping", "âŒ No", "✅ Yes"],
-  ["Weekly digest email to admin", "âŒ No", "✅ Automatic"],
-  ["Staff certificate storage", "âŒ No", "✅ Encrypted"],
-  ["License expiry reminders to staff", "âŒ No", "✅ Automated"],
-  ["Multi-authority (QCHP + SCFHS in one view)", "âŒ No", "✅ Yes"],
+  ["QCHP / SCFHS / DHA rules built in", "❌ Manual work", "✅ Automatic"],
+  ["Annual minimum tracking (40/year QCHP)", "❌ No", "✅ Yes"],
+  ["Profession-specific rules (60 vs 30 SCFHS)", "❌ No", "✅ Yes"],
+  ["Staff compliance status at a glance", "❌ No", "✅ Yes"],
+  ["Bulk PDF for JCI / CBAHI audits", "❌ Manual", "✅ One click"],
+  ["Department grouping", "❌ No", "✅ Yes"],
+  ["Weekly digest email to admin", "❌ No", "✅ Automatic"],
+  ["Staff certificate storage", "❌ No", "✅ Encrypted"],
+  ["License expiry reminders to staff", "❌ No", "✅ Automated"],
+  ["Multi-authority (QCHP + SCFHS in one view)", "❌ No", "✅ Yes"],
 ];
 
 const FEATURES = [
   {
-    icon: "ðŸ“Š",
+    icon: "📊",
     title: "Real-time compliance grid",
     body: "See every staff member's CME progress, compliance status, and license expiry at a glance. Filterable by department, profession, or compliance status.",
     color: "#1a56a0",
   },
   {
-    icon: "ðŸ“„",
+    icon: "📄",
     title: "One-click bulk PDF reports",
     body: "Generate a PDF compliance report for your entire team in seconds — formatted for QCHP, JCI, and CBAHI audit requirements.",
     color: "#16a34a",
   },
   {
-    icon: "ðŸ“§",
+    icon: "📧",
     title: "Weekly compliance digest",
     body: "Every Monday, receive an automated email showing compliance changes, at-risk staff, and upcoming license renewals across your team.",
     color: "#7c3aed",
   },
   {
-    icon: "ðŸ¥",
+    icon: "🏥",
     title: "Department grouping",
     body: "Organise staff by department, ward, or specialty. See per-department compliance rates and identify which teams need immediate attention.",
     color: "#d97706",
   },
   {
-    icon: "ðŸŒ",
+    icon: "🌍",
     title: "All GCC authorities",
     body: "QCHP, SCFHS, DHA, DOH, NHRA, OMSB, and MOH Kuwait — all in one dashboard. Staff licensed in multiple countries are tracked separately per jurisdiction.",
     color: "#0891b2",
   },
   {
-    icon: "ðŸ”’",
+    icon: "🔒",
     title: "Privacy-first staff linking",
     body: "Staff link their own accounts. They control what compliance data is visible to you via privacy settings. Certificates are never accessed by the employer directly.",
     color: "#dc2626",
@@ -191,10 +191,10 @@ export default function HealthcareComplianceSoftwarePage() {
 
               <div className="flex flex-wrap gap-4 mb-8">
                 {[
-                  "ðŸ‡¶ðŸ‡¦ QCHP — Qatar",
-                  "ðŸ‡¸ðŸ‡¦ SCFHS — Saudi Arabia",
-                  "ðŸ‡¦ðŸ‡ª DHA — Dubai",
-                  "ðŸ‡¦ðŸ‡ª DOH — Abu Dhabi",
+                  "🇶🇦 QCHP — Qatar",
+                  "🇸🇦 SCFHS — Saudi Arabia",
+                  "🇦🇪 DHA — Dubai",
+                  "🇦🇪 DOH — Abu Dhabi",
                   "+ 3 more GCC authorities",
                 ].map((item) => (
                   <span key={item} className="text-xs font-medium text-[#374151] bg-[#f8fafc] border border-[#e2e8f0] px-3 py-1.5 rounded-full">

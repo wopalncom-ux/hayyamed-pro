@@ -43,7 +43,7 @@ const faqLd = {
       name: "What should a CME compliance report include for QCHP renewal?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "A QCHP CPD compliance report should include: (1) Professional name, license number, and renewal cycle dates, (2) Total CPD credits (must be â‰¥80 for the 2-year cycle, â‰¥40 per year), (3) Category breakdown — structured activities, self-directed learning, patient safety (minimum 2 credits), (4) A list of all activities with provider name, accreditation body, activity date, and credit value for each, (5) Copies or references to certificates for each activity.",
+        text: "A QCHP CPD compliance report should include: (1) Professional name, license number, and renewal cycle dates, (2) Total CPD credits (must be ≥80 for the 2-year cycle, ≥40 per year), (3) Category breakdown — structured activities, self-directed learning, patient safety (minimum 2 credits), (4) A list of all activities with provider name, accreditation body, activity date, and credit value for each, (5) Copies or references to certificates for each activity.",
       },
     },
     {
@@ -111,30 +111,30 @@ const REPORT_SECTIONS = [
 
 const AUTHORITY_FORMATS = [
   {
-    flag: "ðŸ‡¶ðŸ‡¦",
+    flag: "🇶🇦",
     authority: "QCHP",
     requirement: "80 CPD / 2yr (40/yr min)",
     mandatory: "2 patient safety",
     reportUse: "Attach to QCHP portal renewal application",
   },
   {
-    flag: "ðŸ‡¸ðŸ‡¦",
+    flag: "🇸🇦",
     authority: "SCFHS",
-    requirement: "30â€“60 CME / yr (profession-specific)",
+    requirement: "30–60 CME / yr (profession-specific)",
     mandatory: "5 patient safety",
     reportUse: "Upload to SCFHS/Mumaris portal",
   },
   {
-    flag: "ðŸ‡¦ðŸ‡ª",
+    flag: "🇦🇪",
     authority: "DHA",
     requirement: "40 CME / 2yr",
     mandatory: "5 patient safety (online cap: 20)",
     reportUse: "Upload to Salama (salama.ae)",
   },
   {
-    flag: "ðŸ‡¦ðŸ‡ª",
+    flag: "🇦🇪",
     authority: "DOH",
-    requirement: "30â€“50 CPD / cycle",
+    requirement: "30–50 CPD / cycle",
     mandatory: "Patient safety required",
     reportUse: "Upload to DOH portal / Tamm",
   },
@@ -177,7 +177,7 @@ export default function CmeComplianceReportPage() {
           {/* Hero */}
           <div className="mb-12">
             <div className="inline-flex items-center gap-2 bg-[#fdf4ff] border border-[#e9d5ff] text-[#7c3aed] text-xs font-semibold px-3 py-1.5 rounded-full mb-4">
-              âœ¦ Pro feature
+              ✦ Pro feature
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold text-[#111] mb-4 leading-tight">
               CME compliance report — generate your renewal-ready portfolio PDF
@@ -296,10 +296,10 @@ export default function CmeComplianceReportPage() {
             <h2 className="text-lg font-bold text-[#111] mb-4">Related renewal guides</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
-                { href: "/qchp-renewal", label: "ðŸ‡¶ðŸ‡¦ QCHP renewal guide", sub: "80 CPD credits, 2-year cycle" },
-                { href: "/scfhs-renewal", label: "ðŸ‡¸ðŸ‡¦ SCFHS renewal guide", sub: "30â€“60 CME per year" },
-                { href: "/dha-renewal", label: "ðŸ‡¦ðŸ‡ª DHA renewal guide", sub: "40 CME, 2-year cycle" },
-                { href: "/doh-renewal", label: "ðŸ‡¦ðŸ‡ª DOH renewal guide", sub: "30â€“50 CPD per cycle" },
+                { href: "/qchp-renewal", label: "🇶🇦 QCHP renewal guide", sub: "80 CPD credits, 2-year cycle" },
+                { href: "/scfhs-renewal", label: "🇸🇦 SCFHS renewal guide", sub: "30–60 CME per year" },
+                { href: "/dha-renewal", label: "🇦🇪 DHA renewal guide", sub: "40 CME, 2-year cycle" },
+                { href: "/doh-renewal", label: "🇦🇪 DOH renewal guide", sub: "30–50 CPD per cycle" },
               ].map((g) => (
                 <Link
                   key={g.href}

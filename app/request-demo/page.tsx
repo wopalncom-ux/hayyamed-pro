@@ -21,22 +21,22 @@ export const metadata: Metadata = {
 
 const TRUST_POINTS = [
   {
-    icon: "ðŸ“‹",
+    icon: "📋",
     title: "Real-time compliance grid",
     body: "See every staff member's CME progress, compliance status, and license expiry at a glance.",
   },
   {
-    icon: "ðŸ“„",
+    icon: "📄",
     title: "Bulk PDF reports",
     body: "One-click PDF showing full team compliance — ready for QCHP, JCI, and CBAHI audits.",
   },
   {
-    icon: "ðŸ“§",
+    icon: "📧",
     title: "Weekly digest emails",
     body: "Automated Monday morning report with compliance changes and upcoming renewal deadlines.",
   },
   {
-    icon: "ðŸ¥",
+    icon: "🏥",
     title: "All GCC authorities",
     body: "QCHP, SCFHS, DHA, DOH, NHRA, OMSB, and MOH Kuwait — all in one dashboard.",
   },

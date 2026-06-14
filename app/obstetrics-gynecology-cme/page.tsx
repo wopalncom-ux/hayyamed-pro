@@ -87,33 +87,33 @@ const faqLd = {
 };
 
 const AUTHORITIES = [
-  { flag: "ðŸ‡¶ðŸ‡¦", name: "QCHP",  country: "Qatar",        cycle: "80 CPD / 2 yr",   note: "ALSO + NRP highly recommended" },
-  { flag: "ðŸ‡¸ðŸ‡¦", name: "SCFHS", country: "Saudi Arabia",  cycle: "60 CME / yr",     note: "SBOG & SSOG recognised" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DHA",   country: "Dubai",         cycle: "40 CME / 2 yr",   note: "Surgical skills credits accepted" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DOH",   country: "Abu Dhabi",     cycle: "40 CPD / cycle",  note: "Verify per licence category" },
-  { flag: "ðŸ‡°ðŸ‡¼", name: "MOH",   country: "Kuwait",        cycle: "30 CME / yr",     note: "Ministry of Health approved" },
-  { flag: "ðŸ‡§ðŸ‡­", name: "NHRA",  country: "Bahrain",       cycle: "40 CPD / 2 yr",   note: "NHRA accredited events" },
-  { flag: "ðŸ‡´ðŸ‡²", name: "OMSB",  country: "Oman",          cycle: "40 CME / 2 yr",   note: "Oman Medical Specialty Board" },
+  { flag: "🇶🇦", name: "QCHP",  country: "Qatar",        cycle: "80 CPD / 2 yr",   note: "ALSO + NRP highly recommended" },
+  { flag: "🇸🇦", name: "SCFHS", country: "Saudi Arabia",  cycle: "60 CME / yr",     note: "SBOG & SSOG recognised" },
+  { flag: "🇦🇪", name: "DHA",   country: "Dubai",         cycle: "40 CME / 2 yr",   note: "Surgical skills credits accepted" },
+  { flag: "🇦🇪", name: "DOH",   country: "Abu Dhabi",     cycle: "40 CPD / cycle",  note: "Verify per licence category" },
+  { flag: "🇰🇼", name: "MOH",   country: "Kuwait",        cycle: "30 CME / yr",     note: "Ministry of Health approved" },
+  { flag: "🇧🇭", name: "NHRA",  country: "Bahrain",       cycle: "40 CPD / 2 yr",   note: "NHRA accredited events" },
+  { flag: "🇴🇲", name: "OMSB",  country: "Oman",          cycle: "40 CME / 2 yr",   note: "Oman Medical Specialty Board" },
 ];
 
 const SPECIALTY_NOTES = [
   {
-    icon: "ðŸ†˜",
+    icon: "🆘",
     title: "ALSO & NRP — Safety Essentials",
-    body: "Advanced Life Support in Obstetrics (ALSO) and Neonatal Resuscitation Program (NRP) courses are recognised across all GCC authorities. Both earn CME/CPD credits and demonstrate clinical readiness. QCHP recommends renewal every 2â€“4 years.",
+    body: "Advanced Life Support in Obstetrics (ALSO) and Neonatal Resuscitation Program (NRP) courses are recognised across all GCC authorities. Both earn CME/CPD credits and demonstrate clinical readiness. QCHP recommends renewal every 2–4 years.",
   },
   {
-    icon: "ðŸ¥",
+    icon: "🏥",
     title: "ACOG, FIGO & RCOG Recognition",
     body: "The ACOG Annual Clinical and Scientific Meeting, FIGO World Congress, and RCOG World Congress generate CME credits widely recognised by SCFHS and DHA. GCC-based events such as the Middle East Fertility Society (MEFS) annual congress are also accepted.",
   },
   {
-    icon: "ðŸ”¬",
+    icon: "🔬",
     title: "Minimally Invasive & Subspecialty CME",
     body: "Laparoscopic and hysteroscopic surgery workshops earn hands-on CME credits. Maternal-fetal medicine, reproductive endocrinology, and gynaecologic oncology subspecialty CME counts toward the annual requirement and demonstrates advanced practice development.",
   },
   {
-    icon: "ðŸ“‹",
+    icon: "📋",
     title: "Audit, QI & Perinatal Review",
     body: "Perinatal mortality review, clinical audit of caesarean rates, and quality improvement projects are accepted by QCHP and DHA for up to 10 CPD/CME credits per cycle — valuable for OB/GYN specialists in academic hospital settings.",
   },
@@ -130,7 +130,7 @@ export default function ObstetricsGynecologyCmePage() {
       <section style={{ background: "#0f1f3d", color: "#fff", padding: "72px 24px 56px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontSize: 13, letterSpacing: "0.08em", textTransform: "uppercase", color: "#93c5fd", marginBottom: 16 }}>
-            ðŸ¤± Specialty CME Guide
+            🤱 Specialty CME Guide
           </p>
           <h1 style={{ fontSize: "clamp(28px,5vw,48px)", fontWeight: 800, lineHeight: 1.15, marginBottom: 20 }}>
             Obstetrics &amp; Gynecology CME<br />Requirements Across GCC
@@ -212,14 +212,14 @@ export default function ObstetricsGynecologyCmePage() {
           <h2 style={{ fontSize: 24, fontWeight: 700, color: "#0f172a", textAlign: "center", marginBottom: 40 }}>More CME Specialty Guides</h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 12 }}>
             {[
-              { href: "/cardiology-cme", label: "â¤ï¸ Cardiology" },
-              { href: "/surgery-cme", label: "ðŸ”ª Surgery" },
-              { href: "/pediatrics-cme", label: "ðŸ‘¶ Pediatrics" },
-              { href: "/anesthesia-cme", label: "ðŸ’‰ Anesthesia" },
-              { href: "/emergency-medicine-cme", label: "ðŸš‘ Emergency Med" },
-              { href: "/psychiatry-cme", label: "ðŸ§  Psychiatry" },
-              { href: "/physician-cme", label: "ðŸ‘¨â€âš•ï¸ All Physicians" },
-              { href: "/nurse-cpd", label: "ðŸ‘©â€âš•ï¸ Nursing CPD" },
+              { href: "/cardiology-cme", label: "❤️ Cardiology" },
+              { href: "/surgery-cme", label: "🔪 Surgery" },
+              { href: "/pediatrics-cme", label: "👶 Pediatrics" },
+              { href: "/anesthesia-cme", label: "💉 Anesthesia" },
+              { href: "/emergency-medicine-cme", label: "🚑 Emergency Med" },
+              { href: "/psychiatry-cme", label: "🧠 Psychiatry" },
+              { href: "/physician-cme", label: "👨‍⚕️ All Physicians" },
+              { href: "/nurse-cpd", label: "👩‍⚕️ Nursing CPD" },
             ].map((l) => (
               <Link key={l.href} href={l.href} style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 8, padding: "12px 16px", textAlign: "center", textDecoration: "none", color: "#1a56a0", fontWeight: 600, fontSize: 14 }}>
                 {l.label}

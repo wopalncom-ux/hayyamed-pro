@@ -87,12 +87,12 @@ const faqLd = {
 };
 
 const CME_TYPES = [
-  { icon: "ðŸ›ï¸", title: "In-Person CME Events",      desc: "Conferences, symposia, workshops run by NMC-accredited medical colleges, professional societies (IMA, API, FOGSI, etc.), and hospitals. Most credits per activity." },
-  { icon: "ðŸ’»", title: "Online / E-Learning CME",    desc: "Accredited e-learning platforms, webinars, and virtual conferences. Capped at 15 credits per 5-year cycle (50% of total). Must be from NMC-registered providers." },
-  { icon: "ðŸ“–", title: "CME at Medical Colleges",    desc: "Grand rounds, case presentations, departmental seminars at NMC-recognised medical colleges. Commonly 1â€“2 credits per session, submitted by the institution." },
-  { icon: "ðŸ”¬", title: "Research & Publications",    desc: "Presenting at peer-reviewed conferences, authoring published research. Credits vary — check with your State Medical Council for accepted research CME rules." },
-  { icon: "ðŸŒ", title: "International Conferences",  desc: "International CME events from AHPRA, GMC, or GCC-accredited providers may count if the provider is on the NMC approved list. Verify before attending." },
-  { icon: "ðŸ“‹", title: "State Medical Council CME",  desc: "Some State Medical Councils (Maharashtra, Karnataka, etc.) have additional CME requirements for state licence renewal. Check your state council's rules separately." },
+  { icon: "🏛️", title: "In-Person CME Events",      desc: "Conferences, symposia, workshops run by NMC-accredited medical colleges, professional societies (IMA, API, FOGSI, etc.), and hospitals. Most credits per activity." },
+  { icon: "💻", title: "Online / E-Learning CME",    desc: "Accredited e-learning platforms, webinars, and virtual conferences. Capped at 15 credits per 5-year cycle (50% of total). Must be from NMC-registered providers." },
+  { icon: "📖", title: "CME at Medical Colleges",    desc: "Grand rounds, case presentations, departmental seminars at NMC-recognised medical colleges. Commonly 1–2 credits per session, submitted by the institution." },
+  { icon: "🔬", title: "Research & Publications",    desc: "Presenting at peer-reviewed conferences, authoring published research. Credits vary — check with your State Medical Council for accepted research CME rules." },
+  { icon: "🌍", title: "International Conferences",  desc: "International CME events from AHPRA, GMC, or GCC-accredited providers may count if the provider is on the NMC approved list. Verify before attending." },
+  { icon: "📋", title: "State Medical Council CME",  desc: "Some State Medical Councils (Maharashtra, Karnataka, etc.) have additional CME requirements for state licence renewal. Check your state council's rules separately." },
 ];
 
 export default function NmcIndiaCmePage() {
@@ -107,7 +107,7 @@ export default function NmcIndiaCmePage() {
       <section style={{ background: "#0f1f3d", color: "#fff", padding: "72px 24px 56px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontSize: 13, letterSpacing: "0.08em", textTransform: "uppercase", color: "#93c5fd", marginBottom: 16 }}>
-            ðŸ‡®ðŸ‡³ Authority Guide — India
+            🇮🇳 Authority Guide — India
           </p>
           <h1 style={{ fontSize: "clamp(28px,5vw,48px)", fontWeight: 800, lineHeight: 1.15, marginBottom: 20 }}>
             NMC India CME Requirements<br />for Indian Doctors — 2025
@@ -228,14 +228,14 @@ export default function NmcIndiaCmePage() {
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 12 }}>
             {[
-              { href: "/qchp", label: "ðŸ‡¶ðŸ‡¦ QCHP Qatar" },
-              { href: "/scfhs", label: "ðŸ‡¸ðŸ‡¦ SCFHS Saudi" },
-              { href: "/dha", label: "ðŸ‡¦ðŸ‡ª DHA Dubai" },
-              { href: "/doh", label: "ðŸ‡¦ðŸ‡ª DOH Abu Dhabi" },
-              { href: "/moh-kuwait", label: "ðŸ‡°ðŸ‡¼ MOH Kuwait" },
-              { href: "/omsb", label: "ðŸ‡´ðŸ‡² OMSB Oman" },
-              { href: "/gmc-cpd", label: "ðŸ‡¬ðŸ‡§ GMC UK" },
-              { href: "/gcc-cme-requirements", label: "ðŸŒ All GCC" },
+              { href: "/qchp", label: "🇶🇦 QCHP Qatar" },
+              { href: "/scfhs", label: "🇸🇦 SCFHS Saudi" },
+              { href: "/dha", label: "🇦🇪 DHA Dubai" },
+              { href: "/doh", label: "🇦🇪 DOH Abu Dhabi" },
+              { href: "/moh-kuwait", label: "🇰🇼 MOH Kuwait" },
+              { href: "/omsb", label: "🇴🇲 OMSB Oman" },
+              { href: "/gmc-cpd", label: "🇬🇧 GMC UK" },
+              { href: "/gcc-cme-requirements", label: "🌍 All GCC" },
             ].map((l) => (
               <Link key={l.href} href={l.href} style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 8, padding: "12px 16px", textAlign: "center", textDecoration: "none", color: "#1a56a0", fontWeight: 600, fontSize: 13 }}>
                 {l.label}

@@ -173,7 +173,7 @@ export default function OmsbRenewalPage() {
           {/* Hero */}
           <div className="mb-10">
             <div className="inline-flex items-center gap-2 bg-[#f0f9ff] border border-[#bae6fd] text-[#0369a1] text-xs font-semibold px-3 py-1.5 rounded-full mb-4">
-              ðŸ‡´ðŸ‡² Oman · Oman Medical Specialty Board (OMSB)
+              🇴🇲 Oman · Oman Medical Specialty Board (OMSB)
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold text-[#111] mb-4 leading-tight">
               OMSB license renewal — complete guide for Oman healthcare professionals
@@ -204,7 +204,7 @@ export default function OmsbRenewalPage() {
           {/* Info box */}
           <div className="mb-10 bg-[#f0f9ff] border border-[#bae6fd] rounded-xl p-5">
             <div className="flex gap-3">
-              <span className="text-xl flex-shrink-0 mt-0.5">â„¹ï¸</span>
+              <span className="text-xl flex-shrink-0 mt-0.5">ℹ️</span>
               <div>
                 <p className="text-sm font-semibold text-[#0369a1] mb-1">
                   OMSB is Oman&apos;s primary medical licensing and specialty board
@@ -320,9 +320,9 @@ export default function OmsbRenewalPage() {
             <h2 className="text-lg font-bold text-[#111] mb-4">Related guides</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {[
-                { href: "/omsb", label: "ðŸ‡´ðŸ‡² OMSB CME tracker", sub: "Track your Oman compliance" },
-                { href: "/nhra-renewal", label: "ðŸ‡§ðŸ‡­ NHRA renewal guide", sub: "Bahrain license renewal" },
-                { href: "/scfhs-renewal", label: "ðŸ‡¸ðŸ‡¦ SCFHS renewal guide", sub: "Saudi Arabia license renewal" },
+                { href: "/omsb", label: "🇴🇲 OMSB CME tracker", sub: "Track your Oman compliance" },
+                { href: "/nhra-renewal", label: "🇧🇭 NHRA renewal guide", sub: "Bahrain license renewal" },
+                { href: "/scfhs-renewal", label: "🇸🇦 SCFHS renewal guide", sub: "Saudi Arabia license renewal" },
               ].map((g) => (
                 <Link
                   key={g.href}
@@ -338,7 +338,7 @@ export default function OmsbRenewalPage() {
 
           {/* Dark CTA */}
           <div className="bg-gradient-to-br from-[#0f1f3d] to-[#1a3563] rounded-2xl p-10 text-center mb-8">
-            <div className="inline-block text-3xl mb-3">ðŸ‡´ðŸ‡²</div>
+            <div className="inline-block text-3xl mb-3">🇴🇲</div>
             <h2 className="text-2xl font-bold text-white mb-2">
               Start tracking your OMSB CME today
             </h2>

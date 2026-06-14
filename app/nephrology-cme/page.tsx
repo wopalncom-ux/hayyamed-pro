@@ -66,7 +66,7 @@ const faqLd = {
       name: "Does haemodialysis and peritoneal dialysis training count as CME in GCC?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. Accredited HD machine training, PD catheter insertion workshops, dialysis adequacy assessment courses, and vascular access management programmes all count as clinical CME in QCHP, SCFHS, and DHA. These are recognised under the procedural competency or clinical skills category and typically earn 1.0â€“2.0 CME credits per contact hour.",
+        text: "Yes. Accredited HD machine training, PD catheter insertion workshops, dialysis adequacy assessment courses, and vascular access management programmes all count as clinical CME in QCHP, SCFHS, and DHA. These are recognised under the procedural competency or clinical skills category and typically earn 1.0–2.0 CME credits per contact hour.",
       },
     },
     {
@@ -97,35 +97,35 @@ const faqLd = {
 };
 
 const AUTHORITIES = [
-  { flag: "ðŸ‡¶ðŸ‡¦", name: "QCHP",  country: "Qatar",        cycle: "80 CPD / 2 yr",  note: "Ethics CPD mandatory (â‰¥5 credits)" },
-  { flag: "ðŸ‡¸ðŸ‡¦", name: "SCFHS", country: "Saudi Arabia", cycle: "60 CME / yr",    note: "SSNT & ERA-EDTA/ISN/ASN recognised" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DHA",   country: "UAE (Dubai)",  cycle: "40 CME / 2 yr",  note: "5 patient safety credits mandatory" },
-  { flag: "ðŸ‡¦ðŸ‡ª", name: "DOH",   country: "UAE (Abu Dhabi)", cycle: "40 CPD / cycle", note: "Verify per licence category" },
-  { flag: "ðŸ‡°ðŸ‡¼", name: "MOH",   country: "Kuwait",       cycle: "30 CME / yr",    note: "Annual renewal, 30% online cap" },
-  { flag: "ðŸ‡§ðŸ‡­", name: "NHRA",  country: "Bahrain",      cycle: "40 CPD / 2 yr",  note: "Structured + unstructured split" },
-  { flag: "ðŸ‡´ðŸ‡²", name: "OMSB",  country: "Oman",         cycle: "40 CME / 2 yr",  note: "Category A & B framework" },
+  { flag: "🇶🇦", name: "QCHP",  country: "Qatar",        cycle: "80 CPD / 2 yr",  note: "Ethics CPD mandatory (≥5 credits)" },
+  { flag: "🇸🇦", name: "SCFHS", country: "Saudi Arabia", cycle: "60 CME / yr",    note: "SSNT & ERA-EDTA/ISN/ASN recognised" },
+  { flag: "🇦🇪", name: "DHA",   country: "UAE (Dubai)",  cycle: "40 CME / 2 yr",  note: "5 patient safety credits mandatory" },
+  { flag: "🇦🇪", name: "DOH",   country: "UAE (Abu Dhabi)", cycle: "40 CPD / cycle", note: "Verify per licence category" },
+  { flag: "🇰🇼", name: "MOH",   country: "Kuwait",       cycle: "30 CME / yr",    note: "Annual renewal, 30% online cap" },
+  { flag: "🇧🇭", name: "NHRA",  country: "Bahrain",      cycle: "40 CPD / 2 yr",  note: "Structured + unstructured split" },
+  { flag: "🇴🇲", name: "OMSB",  country: "Oman",         cycle: "40 CME / 2 yr",  note: "Category A & B framework" },
 ];
 
 const SPECIALTY_NOTES = [
   {
-    icon: "ðŸ«",
+    icon: "🫁",
     title: "Dialysis training counts",
     body: "HD machine training, PD catheter insertion workshops, dialysis adequacy courses, and vascular access management programmes all count as clinical CME across GCC authorities under procedural competency.",
   },
   {
-    icon: "ðŸ”¬",
+    icon: "🔬",
     title: "Renal biopsy & histopathology",
     body: "Accredited renal biopsy workshops (ultrasound-guided technique, complication management) and histopathology interpretation sessions count as clinical CME at QCHP, SCFHS, and DHA — and are often required for hospital credentialing.",
   },
   {
-    icon: "ðŸ’Š",
+    icon: "💊",
     title: "Transplant medicine CME",
     body: "Kidney transplant medicine courses — immunosuppression protocols, rejection management, post-transplant monitoring — count as specialty CME and are recognised by SSNT, ISN, and major GCC authorities. Highly valued for nephrologists in transplant centres.",
   },
   {
-    icon: "ðŸ“Š",
+    icon: "📊",
     title: "Saudi Society of Nephrology (SSNT)",
-    body: "SSNT-accredited events are the primary source of nephrology-specific CME recognised by SCFHS. The annual SSNT congress typically offers 15â€“20 CME credits. Active SSNT membership also provides CME credit opportunities through scientific committee activities.",
+    body: "SSNT-accredited events are the primary source of nephrology-specific CME recognised by SCFHS. The annual SSNT congress typically offers 15–20 CME credits. Active SSNT membership also provides CME credit opportunities through scientific committee activities.",
   },
 ];
 
@@ -139,7 +139,7 @@ export default function NephrologyCmePage() {
       <section style={{ background: "#0f1f3d", color: "#fff", padding: "72px 24px 56px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontSize: 13, letterSpacing: "0.08em", textTransform: "uppercase", color: "#93c5fd", marginBottom: 16 }}>
-            ðŸ« Specialty CME Guide
+            🫁 Specialty CME Guide
           </p>
           <h1 style={{ fontSize: "clamp(28px,5vw,48px)", fontWeight: 800, lineHeight: 1.15, marginBottom: 20 }}>
             Nephrology CME Requirements<br />Across GCC
@@ -235,14 +235,14 @@ export default function NephrologyCmePage() {
           </h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 12 }}>
             {[
-              { href: "/cardiology-cme",        label: "â¤ï¸ Cardiology" },
-              { href: "/internal-medicine-cme", label: "ðŸ©º Internal Medicine" },
-              { href: "/dermatology-cme",       label: "ðŸ©º Dermatology" },
-              { href: "/neurology-cme",         label: "ðŸ§  Neurology" },
-              { href: "/ophthalmology-cme",     label: "ðŸ‘ Ophthalmology" },
-              { href: "/surgery-cme",           label: "ðŸ”ª Surgery" },
-              { href: "/psychiatry-cme",        label: "ðŸ§© Psychiatry" },
-              { href: "/physician-cme",         label: "ðŸ‘¨â€âš•ï¸ All Physicians" },
+              { href: "/cardiology-cme",        label: "❤️ Cardiology" },
+              { href: "/internal-medicine-cme", label: "🩺 Internal Medicine" },
+              { href: "/dermatology-cme",       label: "🩺 Dermatology" },
+              { href: "/neurology-cme",         label: "🧠 Neurology" },
+              { href: "/ophthalmology-cme",     label: "👁 Ophthalmology" },
+              { href: "/surgery-cme",           label: "🔪 Surgery" },
+              { href: "/psychiatry-cme",        label: "🧩 Psychiatry" },
+              { href: "/physician-cme",         label: "👨‍⚕️ All Physicians" },
             ].map((l) => (
               <Link key={l.href} href={l.href} style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 8, padding: "12px 16px", textAlign: "center", textDecoration: "none", color: "#1a56a0", fontWeight: 600, fontSize: 14 }}>
                 {l.label}

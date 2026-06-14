@@ -84,32 +84,32 @@ const faqLd = {
 
 const features = [
   {
-    icon: "ðŸ“Š",
+    icon: "📊",
     title: "Real-time compliance dashboard",
     body: "See your credit progress toward your renewal deadline at a glance. Separate wallets for each jurisdiction.",
   },
   {
-    icon: "ðŸ“",
+    icon: "📁",
     title: "Certificate storage",
     body: "Upload CME certificates (PDF or image). Stored securely in a private bucket with signed URL access.",
   },
   {
-    icon: "ðŸ¤–",
+    icon: "🤖",
     title: "AI certificate reading",
     body: "Take a photo of your certificate — AI reads the title, date, credits, and accreditor automatically.",
   },
   {
-    icon: "ðŸ“…",
+    icon: "📅",
     title: "Deadline reminders",
     body: "Automated alerts at 90, 30, and 7 days before your renewal deadline. Never miss a deadline.",
   },
   {
-    icon: "ðŸ“„",
+    icon: "📄",
     title: "PDF compliance report",
     body: "Download a formatted report for QCHP, SCFHS, DHA, or any GCC authority. Ready for submission.",
   },
   {
-    icon: "ðŸŒ",
+    icon: "🌍",
     title: "Multi-country tracking",
     body: "Licensed in Qatar and Saudi Arabia? Add both — separate wallets, separate credit counters, separate deadlines.",
   },
@@ -125,11 +125,11 @@ const vsSpreadsheet = [
 ];
 
 const professions = [
-  { icon: "ðŸ©º", title: "Physicians", href: "/physician-cme" },
-  { icon: "ðŸ‘©â€âš•ï¸", title: "Nurses", href: "/nurse-cpd" },
-  { icon: "ðŸ’Š", title: "Pharmacists", href: "/pharmacist-cme" },
-  { icon: "ðŸ¦·", title: "Dentists", href: "/dentist-cme" },
-  { icon: "ðŸ¦¿", title: "Allied Health", href: "/allied-health-cpd" },
+  { icon: "🩺", title: "Physicians", href: "/physician-cme" },
+  { icon: "👩‍⚕️", title: "Nurses", href: "/nurse-cpd" },
+  { icon: "💊", title: "Pharmacists", href: "/pharmacist-cme" },
+  { icon: "🦷", title: "Dentists", href: "/dentist-cme" },
+  { icon: "🦿", title: "Allied Health", href: "/allied-health-cpd" },
 ];
 
 export default function CmeTrackerPage() {
@@ -336,14 +336,14 @@ export default function CmeTrackerPage() {
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
               {[
-                { label: "QCHP Qatar", href: "/qchp", flag: "ðŸ‡¶ðŸ‡¦" },
-                { label: "SCFHS Saudi Arabia", href: "/scfhs", flag: "ðŸ‡¸ðŸ‡¦" },
-                { label: "DHA Dubai", href: "/dha", flag: "ðŸ‡¦ðŸ‡ª" },
-                { label: "DOH Abu Dhabi", href: "/doh", flag: "ðŸ‡¦ðŸ‡ª" },
-                { label: "MOH Kuwait", href: "/moh-kuwait", flag: "ðŸ‡°ðŸ‡¼" },
-                { label: "NHRA Bahrain", href: "/nhra", flag: "ðŸ‡§ðŸ‡­" },
-                { label: "OMSB Oman", href: "/omsb", flag: "ðŸ‡´ðŸ‡²" },
-                { label: "Compare all GCC", href: "/countries", flag: "ðŸŒ" },
+                { label: "QCHP Qatar", href: "/qchp", flag: "🇶🇦" },
+                { label: "SCFHS Saudi Arabia", href: "/scfhs", flag: "🇸🇦" },
+                { label: "DHA Dubai", href: "/dha", flag: "🇦🇪" },
+                { label: "DOH Abu Dhabi", href: "/doh", flag: "🇦🇪" },
+                { label: "MOH Kuwait", href: "/moh-kuwait", flag: "🇰🇼" },
+                { label: "NHRA Bahrain", href: "/nhra", flag: "🇧🇭" },
+                { label: "OMSB Oman", href: "/omsb", flag: "🇴🇲" },
+                { label: "Compare all GCC", href: "/countries", flag: "🌍" },
               ].map((l) => (
                 <Link
                   key={l.href}
@@ -386,12 +386,12 @@ export default function CmeTrackerPage() {
             <h2 className="text-lg font-bold text-[#111] mb-4">Renewal guides for GCC healthcare professionals</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {[
-                { href: "/qchp-renewal", label: "ðŸ‡¶ðŸ‡¦ QCHP renewal guide", sub: "80 CPD, 2-year cycle" },
-                { href: "/scfhs-renewal", label: "ðŸ‡¸ðŸ‡¦ SCFHS renewal guide", sub: "30â€“60 CME per year" },
-                { href: "/dha-renewal", label: "ðŸ‡¦ðŸ‡ª DHA renewal guide", sub: "40 CME, 2-year cycle" },
-                { href: "/doh-renewal", label: "ðŸ‡¦ðŸ‡ª DOH renewal guide", sub: "30â€“50 CPD per cycle" },
-                { href: "/gcc-medical-license-renewal", label: "ðŸŒ All GCC renewal guides", sub: "All 7 authorities covered" },
-                { href: "/cme-compliance-report", label: "ðŸ“„ CME compliance report", sub: "Download PDF for renewal submission" },
+                { href: "/qchp-renewal", label: "🇶🇦 QCHP renewal guide", sub: "80 CPD, 2-year cycle" },
+                { href: "/scfhs-renewal", label: "🇸🇦 SCFHS renewal guide", sub: "30–60 CME per year" },
+                { href: "/dha-renewal", label: "🇦🇪 DHA renewal guide", sub: "40 CME, 2-year cycle" },
+                { href: "/doh-renewal", label: "🇦🇪 DOH renewal guide", sub: "30–50 CPD per cycle" },
+                { href: "/gcc-medical-license-renewal", label: "🌍 All GCC renewal guides", sub: "All 7 authorities covered" },
+                { href: "/cme-compliance-report", label: "📄 CME compliance report", sub: "Download PDF for renewal submission" },
               ].map((g) => (
                 <Link
                   key={g.href}
