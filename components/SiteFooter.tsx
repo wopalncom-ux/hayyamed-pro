@@ -9,6 +9,7 @@ const FOOTER_COLS = [
       { label: "For Training Providers", href: "/for-providers" },
       { label: "For Universities", href: "/for-universities" },
       { label: "Compliance Software", href: "/healthcare-compliance-software" },
+      { label: "For Government", href: "/for-government" },
       { label: "CME Report PDF", href: "/cme-compliance-report" },
       { label: "CME Calculator", href: "/cme-calculator" },
       { label: "Pricing", href: "/pricing" },

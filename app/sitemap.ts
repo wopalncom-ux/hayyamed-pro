@@ -80,5 +80,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/ent-cme`,                      lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/hematology-cme`,               lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/geriatrics-cme`,               lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/for-government`,              lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
   ];
 }

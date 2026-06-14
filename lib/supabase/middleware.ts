@@ -62,6 +62,7 @@ const COMING_SOON_BYPASS = [
   "/ent-cme",
   "/hematology-cme",
   "/geriatrics-cme",
+  "/for-government",    // B2B government authority white-label licensing page
 ];
 
 export async function updateSession(request: NextRequest) {
