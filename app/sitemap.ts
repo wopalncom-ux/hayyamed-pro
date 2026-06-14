@@ -46,6 +46,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/cme-compliance-report`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/for-providers`,                  lastModified: new Date(), changeFrequency: "monthly", priority: 0.85 },
     { url: `${BASE}/for-universities`,               lastModified: new Date(), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${BASE}/for-hospitals`,                  lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
     { url: `${BASE}/cardiology-cme`,                 lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/internal-medicine-cme`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/emergency-medicine-cme`,         lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
