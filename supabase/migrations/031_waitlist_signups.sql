@@ -1,4 +1,4 @@
--- Migration 029: Waitlist signups
+-- Migration 031: Waitlist signups
 -- Captures pre-launch email leads from the coming-soon page.
 -- Table is insert-only for anon users; admin reads via service role.
 -- ─────────────────────────────────────────────────────────────────────────────

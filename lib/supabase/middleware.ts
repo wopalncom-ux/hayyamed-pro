@@ -45,6 +45,10 @@ const COMING_SOON_BYPASS = [
   "/changelog",  // changelog
   "/unsubscribe",// email unsubscribe (linked from every email)
   "/pricing",    // pricing page (needed for upgrade flows)
+  // B2B marketing pages — must work during soft launch for outreach
+  "/request-demo", // demo request form (employer/hospital sales)
+  "/contact",      // contact page
+  "/about",        // about/team page
 ];
 
 export async function updateSession(request: NextRequest) {

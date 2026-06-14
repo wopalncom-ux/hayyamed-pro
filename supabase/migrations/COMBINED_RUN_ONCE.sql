@@ -1620,6 +1620,37 @@ CREATE TRIGGER licensing_authorities_updated_at
   FOR EACH ROW EXECUTE FUNCTION public.set_updated_at();
 
 -- ════════════════════════════════════════════════════════════
+-- MIGRATION 031 — Waitlist signups (pre-launch lead capture)
+-- ════════════════════════════════════════════════════════════
+
+CREATE TABLE IF NOT EXISTS waitlist_signups (
+  id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  email           text NOT NULL,
+  profession      text,
+  country         text,
+  source          text DEFAULT 'coming_soon',
+  created_at      timestamptz NOT NULL DEFAULT now(),
+  notified        boolean NOT NULL DEFAULT false,
+  CONSTRAINT waitlist_email_unique UNIQUE (email)
+);
+
+ALTER TABLE waitlist_signups ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "waitlist_insert_anon" ON waitlist_signups;
+CREATE POLICY "waitlist_insert_anon"
+  ON waitlist_signups FOR INSERT
+  TO anon, authenticated
+  WITH CHECK (true);
+
+DROP POLICY IF EXISTS "waitlist_select_none" ON waitlist_signups;
+CREATE POLICY "waitlist_select_none"
+  ON waitlist_signups FOR SELECT
+  USING (false);
+
+CREATE INDEX IF NOT EXISTS idx_waitlist_created_at ON waitlist_signups (created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_waitlist_notified   ON waitlist_signups (notified) WHERE notified = false;
+
+-- ════════════════════════════════════════════════════════════
 -- POST-RUN VERIFICATION QUERIES
 -- Run these after the script completes to confirm success.
 -- ════════════════════════════════════════════════════════════
