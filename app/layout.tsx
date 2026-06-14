@@ -3,6 +3,7 @@ import { PWARegister } from "@/components/PWARegister";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import { PostHogProvider } from "@/components/PostHogProvider";
 import CookieConsent from "@/components/CookieConsent";
+import ConditionalFooter from "@/components/ConditionalFooter";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -47,6 +48,7 @@ export default function RootLayout({
         <PostHogProvider>
           {children}
         </PostHogProvider>
+        <ConditionalFooter />
         <CookieConsent />
         <PWARegister />
         <PWAInstallPrompt />
