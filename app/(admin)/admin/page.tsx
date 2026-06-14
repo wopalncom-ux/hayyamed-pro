@@ -38,6 +38,8 @@ export default async function AdminPage() {
     activeTrials, expiringTrials,
     npsRes, bouncedRes, spamRes,
     waitlistCount,
+    demoNewCount,
+    demoTotalCount,
   ] = await Promise.all([
     admin.from("professional_profiles").select("id", { count: "exact", head: true }),
     admin.from("organizations").select("id", { count: "exact", head: true }),
@@ -58,6 +60,8 @@ export default async function AdminPage() {
     admin.from("professional_profiles").select("id", { count: "exact", head: true }).eq("email_hard_bounced", true),
     admin.from("professional_profiles").select("id", { count: "exact", head: true }).eq("email_spam_reported", true),
     admin.from("waitlist_signups").select("id", { count: "exact", head: true }),
+    admin.from("demo_requests").select("id", { count: "exact", head: true }).eq("status", "new"),
+    admin.from("demo_requests").select("id", { count: "exact", head: true }),
   ]);
 
   // NPS score calculation
@@ -106,15 +110,27 @@ export default async function AdminPage() {
         <StatCard label="Pending CME"        value={pendingCme.count ?? 0}   color="orange" />
       </div>
 
-      {/* Waitlist — visible only during coming-soon mode */}
-      {comingSoonActive && (
+      {/* Pre-launch pipeline — waitlist + demo requests */}
+      {(comingSoonActive || (demoTotalCount.count ?? 0) > 0) && (
         <>
-          <h2 className="text-xs font-semibold text-[#64748b] uppercase tracking-wide mb-3">Waitlist</h2>
+          <h2 className="text-xs font-semibold text-[#64748b] uppercase tracking-wide mb-3">Lead Pipeline</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+            {comingSoonActive && (
+              <StatCard
+                label="Waitlist Signups"
+                value={waitlistCount.count ?? 0}
+                color={(waitlistCount.count ?? 0) > 0 ? "green" : "blue"}
+              />
+            )}
             <StatCard
-              label="Waitlist Signups"
-              value={waitlistCount.count ?? 0}
-              color={(waitlistCount.count ?? 0) > 0 ? "green" : "blue"}
+              label="Demo Requests"
+              value={demoTotalCount.count ?? 0}
+              color={(demoTotalCount.count ?? 0) > 0 ? "green" : "blue"}
+            />
+            <StatCard
+              label="Demos — Needs Follow-up"
+              value={demoNewCount.count ?? 0}
+              color={(demoNewCount.count ?? 0) > 0 ? "orange" : "green"}
             />
           </div>
         </>
@@ -203,6 +219,12 @@ export default async function AdminPage() {
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-6">
           <h2 className="text-base font-semibold text-[#111] mb-4">Operations</h2>
           <div className="space-y-2">
+            <a href="/admin/demo-requests" className="block text-sm font-semibold text-[#1a56a0] hover:underline">
+              Demo Requests{(demoNewCount.count ?? 0) > 0 && ` — ${demoNewCount.count} need follow-up`}
+            </a>
+            <a href="/admin/waitlist" className="block text-sm text-[#1a56a0] hover:underline">
+              Waitlist — {waitlistCount.count ?? 0} signups
+            </a>
             <a href="/admin/organizations" className="block text-sm text-[#1a56a0] hover:underline">Manage Organizations</a>
             <a href="/admin/link-requests" className="block text-sm text-[#1a56a0] hover:underline">
               Review Link Requests{(pendingLinks.count ?? 0) > 0 && ` (${pendingLinks.count} pending)`}
