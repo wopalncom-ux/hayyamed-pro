@@ -84,7 +84,20 @@ export default async function RequiredTrainingPage() {
             Assign mandatory courses for your {staffCount ?? 0} staff members.
           </p>
         </div>
-        <a href="/employer" className="text-sm text-[#1a56a0] hover:underline">← Dashboard</a>
+        <div className="flex items-center gap-3">
+          {reqs.length > 0 && (
+            <a
+              href="/api/employer/training-completion-report"
+              className="text-sm font-semibold border border-[#e2e8f0] bg-white text-[#374151] px-4 py-2 rounded-lg hover:bg-[#f8fafc] transition-colors flex items-center gap-2"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              Completion report (CSV)
+            </a>
+          )}
+          <a href="/employer" className="text-sm text-[#1a56a0] hover:underline">← Dashboard</a>
+        </div>
       </div>
 
       {/* Currently required courses */}

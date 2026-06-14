@@ -14,6 +14,7 @@ import MultiCountryWallet from "@/components/dashboard/MultiCountryWallet";
 import MFAManager from "@/components/dashboard/MFAManager";
 import PasskeyManager from "@/components/dashboard/PasskeyManager";
 import NotificationsEnableButton from "@/components/dashboard/NotificationsEnableButton";
+import CancelSubscriptionButton from "@/components/dashboard/CancelSubscriptionButton";
 
 const STATUS_STYLES: Record<string, string> = {
   pending: "bg-[#fff7ed] text-[#d97706]",
@@ -266,7 +267,12 @@ export default async function SettingsPage() {
                 )}
               </div>
               {isPaidPlan && sub.paddle_customer_id ? (
-                <ManageBillingButton />
+                <div className="flex items-center gap-3">
+                  <ManageBillingButton />
+                  {!sub.cancel_at_period_end && (
+                    <CancelSubscriptionButton currentPeriodEnd={sub.current_period_end ?? null} />
+                  )}
+                </div>
               ) : (
                 <a
                   href="/pricing?source=settings_billing"

@@ -182,5 +182,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/blog/orthopaedic-surgeon-cme-gcc`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/critical-care-physician-cme-gcc`,      lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/infectious-disease-cme-gcc`,           lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/pulmonologist-cme-gcc`,                lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/neurologist-cme-gcc`,                  lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/haematologist-cme-gcc`,                lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/rheumatologist-cme-gcc`,               lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/paediatric-physician-cme-gcc`,         lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
   ];
 }
