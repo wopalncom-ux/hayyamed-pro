@@ -40,10 +40,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Unsupported file type" }, { status: 400 });
   }
 
-  if (!process.env.ANTHROPIC_API_KEY) {
-    return NextResponse.json({ error: "AI features not configured" }, { status: 503 });
-  }
-
   if (file.size > MAX_BYTES) {
     return NextResponse.json({ error: "File too large (max 8 MB)" }, { status: 413 });
   }

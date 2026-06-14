@@ -95,10 +95,6 @@ Rank by urgency: largest deficit first. Urgency: high (gap > 5 or < 60 days), me
     urgency: "high" | "medium" | "low";
   }[] = [];
 
-  if (!process.env.ANTHROPIC_API_KEY) {
-    return NextResponse.json({ error: "AI features not configured" }, { status: 503 });
-  }
-
   const startTime = Date.now();
   try {
     const client = getAnthropicClient();

@@ -72,10 +72,6 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  if (!process.env.ANTHROPIC_API_KEY) {
-    return Response.json({ error: "AI not configured." }, { status: 503 });
-  }
-
   // Resolve training_provider row (provider is linked via created_by)
   const { data: provider } = await admin
     .from("training_providers")
@@ -193,7 +189,7 @@ Use GCC context: QCHP, DHA, SCFHS requirements. Focus on practical opportunities
   try {
     const claude = getAnthropicClient();
     const response = await claude.messages.create({
-      model: "claude-sonnet-4-6-20250514",
+      model: "claude-sonnet-4-6",
       max_tokens: 1200,
       system: systemPrompt,
       messages: [
@@ -225,7 +221,7 @@ Use GCC context: QCHP, DHA, SCFHS requirements. Focus on practical opportunities
       targetTable: "organizations",
       targetId: organizationId,
       metadata: {
-        model: "claude-sonnet-4-6-20250514",
+        model: "claude-sonnet-4-6",
         input_tokens: response.usage?.input_tokens ?? 0,
         output_tokens: response.usage?.output_tokens ?? 0,
         latency_ms: Date.now() - startTime,

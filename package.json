@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.102.0",
+    "@anthropic-ai/vertex-sdk": "^0.17.1",
     "@hookform/resolvers": "^5.4.0",
     "@paddle/paddle-node-sdk": "^3.8.0",
     "@radix-ui/react-avatar": "^1.1.12",

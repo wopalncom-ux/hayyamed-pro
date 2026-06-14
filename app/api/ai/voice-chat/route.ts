@@ -59,10 +59,6 @@ export async function POST(req: NextRequest) {
 
   const { message } = parsed.data;
 
-  if (!process.env.ANTHROPIC_API_KEY) {
-    return Response.json({ error: "AI not configured." }, { status: 503 });
-  }
-
   const startTime = Date.now();
   const admin = createAdminClient();
 

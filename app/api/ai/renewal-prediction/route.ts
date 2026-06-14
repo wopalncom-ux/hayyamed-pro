@@ -98,9 +98,6 @@ export async function POST(req: NextRequest) {
     ? Math.max(0, Math.ceil((new Date(wallet.cycle_end_date).getTime() - Date.now()) / 86400000))
     : null;
 
-  if (!process.env.ANTHROPIC_API_KEY)
-    return NextResponse.json({ error: "AI features not configured" }, { status: 503 });
-
   const prompt = buildRenewalPredictionPrompt({
     profession: wallet.profession,
     specialty: wallet.specialty ?? null,

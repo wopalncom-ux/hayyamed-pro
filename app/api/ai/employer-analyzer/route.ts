@@ -75,10 +75,6 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  if (!process.env.ANTHROPIC_API_KEY) {
-    return Response.json({ error: "AI not configured." }, { status: 503 });
-  }
-
   // Fetch org staff compliance data (no PII — use IDs and aggregate counts only)
   const { data: links } = await admin
     .from("employer_link_requests")
@@ -178,7 +174,7 @@ Always end with practical, specific recommendations relevant to GCC healthcare c
   try {
     const claude = getAnthropicClient();
     const response = await claude.messages.create({
-      model: "claude-sonnet-4-6-20250514",
+      model: "claude-sonnet-4-6",
       max_tokens: 1024,
       system: systemPrompt,
       messages: [
@@ -211,7 +207,7 @@ Always end with practical, specific recommendations relevant to GCC healthcare c
       targetTable: "organizations",
       targetId: organizationId,
       metadata: {
-        model: "claude-sonnet-4-6-20250514",
+        model: "claude-sonnet-4-6",
         input_tokens: response.usage?.input_tokens ?? 0,
         output_tokens: response.usage?.output_tokens ?? 0,
         latency_ms: Date.now() - startTime,
