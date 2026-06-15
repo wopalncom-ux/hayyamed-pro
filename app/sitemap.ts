@@ -217,5 +217,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/blog/hepatologist-cme-gcc`,                  lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/clinical-pharmacologist-cme-gcc`,       lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/geriatric-psychiatrist-cme-gcc`,        lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    // Session 74 — pricing comparison matrix + CME heatmap + 5 specialty blog posts
+    { url: `${BASE}/blog/endoscopist-gastroenterologist-cme-gcc`,  lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/neuroradiologist-cme-gcc`,                lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/clinical-immunologist-cme-gcc`,           lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/palliative-care-physician-cme-gcc`,       lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/addiction-psychiatrist-cme-gcc`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
   ];
 }

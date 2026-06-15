@@ -239,6 +239,55 @@ export default function PricingClient({
           </div>
         </div>
 
+        {/* Feature comparison matrix */}
+        <div className="mb-14 overflow-x-auto">
+          <h2 className="text-xl font-bold text-[#111] mb-6 text-center">Full feature comparison</h2>
+          <table className="w-full min-w-[600px] border-collapse bg-white rounded-2xl overflow-hidden border border-[#e2e8f0]">
+            <thead>
+              <tr className="border-b border-[#e2e8f0]">
+                <th className="text-left px-6 py-4 text-sm font-semibold text-[#111] w-1/2">Feature</th>
+                <th className="text-center px-4 py-4 text-sm font-semibold text-[#64748b] w-1/6">Free</th>
+                <th className="text-center px-4 py-4 text-sm font-semibold text-[#1a56a0] w-1/6 bg-[#eff6ff]">Pro</th>
+                <th className="text-center px-4 py-4 text-sm font-semibold text-[#111] w-1/6">Employer</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                ["CME activity tracking", "Up to 10", "Unlimited", "Unlimited"],
+                ["Compliance dashboard", true, true, true],
+                ["License wallet", "1 license", "Unlimited", "Unlimited"],
+                ["GCC authority support (QCHP, DHA, SCFHS…)", true, true, true],
+                ["Employer linking", true, true, true],
+                ["PDF compliance reports", false, true, true],
+                ["AI compliance chatbot", false, true, true],
+                ["AI gap analysis & recommendations", false, true, true],
+                ["Certificate storage (signed URLs)", false, true, true],
+                ["Email & license expiry reminders", false, true, true],
+                ["CSV import / export", false, true, true],
+                ["Calendar (.ics) export", false, true, true],
+                ["Team compliance dashboard", false, false, true],
+                ["Staff link management & approvals", false, false, true],
+                ["Department grouping & analytics", false, false, true],
+                ["Bulk staff PDF export", false, false, true],
+                ["Dedicated account manager", false, false, "Growth+"],
+              ].map(([feature, free, pro, employer], i) => (
+                <tr key={i} className={`border-b border-[#f1f5f9] ${i % 2 === 1 ? "bg-[#fafbfc]" : ""}`}>
+                  <td className="px-6 py-3 text-sm text-[#374151]">{feature}</td>
+                  <td className="text-center px-4 py-3">
+                    <ComparisonCell value={free} />
+                  </td>
+                  <td className="text-center px-4 py-3 bg-[#eff6ff]/40">
+                    <ComparisonCell value={pro} />
+                  </td>
+                  <td className="text-center px-4 py-3">
+                    <ComparisonCell value={employer} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
         {/* Employer plans */}
         <h2 id="employer" className="text-xs font-semibold text-[#64748b] uppercase tracking-wide mb-2 scroll-mt-8">{t("section_employer")}</h2>
         <p className="text-sm text-[#64748b] mb-6">
@@ -396,6 +445,18 @@ export default function PricingClient({
       </div>
     </div>
   );
+}
+
+function ComparisonCell({ value }: { value: string | boolean }) {
+  if (value === true)
+    return (
+      <svg className="w-4 h-4 text-[#16a34a] mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+      </svg>
+    );
+  if (value === false)
+    return <span className="text-[#cbd5e1] text-lg leading-none">—</span>;
+  return <span className="text-xs font-medium text-[#374151]">{value}</span>;
 }
 
 function FaqItem({ q, a }: { q: string; a: string }) {

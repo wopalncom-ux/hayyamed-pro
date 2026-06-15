@@ -17,6 +17,7 @@ import ImportCsvButton from "@/components/dashboard/ImportCsvButton";
 import ExportCsvButton from "@/components/dashboard/ExportCsvButton";
 import CalendarExportButton from "@/components/dashboard/CalendarExportButton";
 import CmeOfflineSyncBanner from "@/components/dashboard/CmeOfflineSyncBanner";
+import CmeHeatmap from "@/components/dashboard/CmeHeatmap";
 import { getUserPlan, isPro } from "@/lib/subscription";
 import { FREE_ACTIVITY_LIMIT } from "@/lib/planLimits";
 import { toCountryCode } from "@/lib/countryCode";
@@ -340,6 +341,13 @@ export default async function CmePage({
               </div>
             )}
           </div>
+
+          {/* Activity heatmap — 52-week GitHub-style grid */}
+          {activities.length > 0 && (
+            <CmeHeatmap
+              activities={activities.map((a) => ({ activity_date: a.activity_date, credits: a.credits }))}
+            />
+          )}
 
           {/* PDF report card — paywall for Free users, download card for Pro */}
           <PdfReportCard plan={plan} walletCountry={wallet.country ?? null} />
