@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+import { headers } from "next/headers";
+import { createAdminClient } from "@/lib/supabase/server";
+import { getRequestUser } from "@/lib/auth/getRequestUser";
 import { awardPortfolioBadge } from "@/lib/badges";
 import { getUserPlan, isPro } from "@/lib/subscription";
 import { renderToBuffer } from "@react-pdf/renderer";
@@ -11,8 +13,7 @@ import React from "react";
 export const runtime = "nodejs";
 
 export async function GET() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getRequestUser(await headers());
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const plan = await getUserPlan(user.id);

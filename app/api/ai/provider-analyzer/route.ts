@@ -1,5 +1,7 @@
 import { NextRequest } from "next/server";
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+import { headers } from "next/headers";
+import { createAdminClient } from "@/lib/supabase/server";
+import { getRequestUser } from "@/lib/auth/getRequestUser";
 import { getAnthropicClient } from "@/lib/anthropic";
 import { checkAndLogRateLimit } from "@/lib/rateLimit";
 import { logAudit } from "@/lib/audit";
@@ -36,10 +38,7 @@ const ResponseSchema = z.object({
 export type ProviderAnalysisResult = z.infer<typeof ResponseSchema>;
 
 export async function POST(req: NextRequest) {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getRequestUser(await headers());
   if (!user) return new Response("Unauthorized", { status: 401 });
 
   const raw = await req.json().catch(() => null);

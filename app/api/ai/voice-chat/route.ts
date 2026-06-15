@@ -1,5 +1,7 @@
 import { NextRequest } from "next/server";
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+import { headers } from "next/headers";
+import { createAdminClient } from "@/lib/supabase/server";
+import { getRequestUser } from "@/lib/auth/getRequestUser";
 import { getAnthropicClient } from "@/lib/anthropic";
 import { checkAndLogRateLimit } from "@/lib/rateLimit";
 import { getUserPlan, isPro } from "@/lib/subscription";
@@ -31,8 +33,7 @@ Always end answers to regulatory questions with: "I recommend verifying the exac
 If asked about topics outside healthcare compliance, politely redirect to your area of expertise.`;
 
 export async function POST(req: NextRequest) {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getRequestUser(await headers());
   if (!user) return new Response("Unauthorized", { status: 401 });
 
   const plan = await getUserPlan(user.id);
