@@ -16,6 +16,8 @@ import TrialExpiredBanner from "@/components/dashboard/TrialExpiredBanner";
 import EmployerSetupBanner from "@/components/dashboard/EmployerSetupBanner";
 import ComplianceChatWidget from "@/components/dashboard/ComplianceChatWidget";
 import AchievementBadges from "@/components/dashboard/AchievementBadges";
+import CmeDashboardQuickAddButton from "@/components/dashboard/CmeDashboardQuickAddButton";
+import CmeFirstActivityPrompt from "@/components/dashboard/CmeFirstActivityPrompt";
 import Image from "next/image";
 import type { Partner } from "@/lib/types";
 
@@ -101,14 +103,23 @@ export default async function DashboardPage({
         <EmployerSetupBanner employerTier={subscriptionEmployerTier} />
       )}
 
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-[#111]">
-          Welcome back, {profile?.full_name?.split(" ")[0] ?? "Professional"}
-        </h1>
-        {(profile?.profession || profile?.specialty) && (
-          <p className="text-[#64748b] text-sm mt-1">
-            {[profile.profession, profile.specialty].filter(Boolean).join(" • ")}
-          </p>
+      <div className="flex items-start justify-between gap-4 mb-6">
+        <div>
+          <h1 className="text-2xl font-bold text-[#111]">
+            Welcome back, {profile?.full_name?.split(" ")[0] ?? "Professional"}
+          </h1>
+          {(profile?.profession || profile?.specialty) && (
+            <p className="text-[#64748b] text-sm mt-1">
+              {[profile.profession, profile.specialty].filter(Boolean).join(" • ")}
+            </p>
+          )}
+        </div>
+        {wallet && (
+          <CmeDashboardQuickAddButton
+            walletId={wallet.id}
+            plan={plan}
+            countryCode={wallet.country ?? "QA"}
+          />
         )}
       </div>
 
@@ -174,6 +185,15 @@ export default async function DashboardPage({
           color="blue"
         />
       </div>
+
+      {/* First-activity activation prompt — shown when wallet exists but no activities yet */}
+      {activityCount === 0 && wallet && (
+        <CmeFirstActivityPrompt
+          walletId={wallet.id}
+          plan={plan}
+          countryCode={wallet.country ?? "QA"}
+        />
+      )}
 
       {/* Compliance badge — show when user has a wallet */}
       {wallet && user && (

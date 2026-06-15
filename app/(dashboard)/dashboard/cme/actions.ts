@@ -113,6 +113,7 @@ export async function addCmeActivity({
   checkAndAwardBadges(user.id).catch(() => {});
 
   revalidatePath("/dashboard/cme");
+  revalidatePath("/dashboard");
   return { error: null };
 }
 
