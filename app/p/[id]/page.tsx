@@ -2,6 +2,7 @@ import { createAdminClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
+import ShareProfileButtons from "@/components/ShareProfileButtons";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://hayyamed.pro";
 
@@ -275,6 +276,22 @@ export default async function PublicProfilePage({
               Verified by Hayya Med Pro · {issuedDate}
             </p>
             <p className="text-xs text-[#94a3b8]">hayyamed.pro</p>
+          </div>
+        </div>
+
+        {/* Share this profile */}
+        <div className="bg-white rounded-2xl border border-[#e2e8f0] p-5 mb-6 shadow-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div>
+              <p className="text-sm font-semibold text-[#111]">Share this compliance profile</p>
+              <p className="text-xs text-[#64748b] mt-0.5">
+                Share your verified CME compliance status with employers, colleagues, and licensing authorities.
+              </p>
+            </div>
+            <ShareProfileButtons
+              profileUrl={`${APP_URL}/p/${profileId}`}
+              name={name}
+            />
           </div>
         </div>
 

@@ -210,5 +210,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/blog/oral-maxillofacial-surgeon-cme-gcc`,    lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/sports-medicine-physician-cme-gcc`,     lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/transplant-surgeon-cme-gcc`,            lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    // Session 73 — public course catalog + share + 5 specialty blog posts
+    { url: `${BASE}/courses`,                                     lastModified: new Date(), changeFrequency: "weekly",  priority: 0.95 },
+    { url: `${BASE}/blog/interventional-cardiologist-cme-gcc`,   lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/paediatric-surgeon-cme-gcc`,            lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/hepatologist-cme-gcc`,                  lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/clinical-pharmacologist-cme-gcc`,       lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/geriatric-psychiatrist-cme-gcc`,        lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
   ];
 }
