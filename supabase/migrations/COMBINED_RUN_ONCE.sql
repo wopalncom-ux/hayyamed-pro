@@ -1,8 +1,8 @@
 -- ============================================================
--- Hayya Med PRO — ALL 32 MIGRATIONS COMBINED
+-- Hayya Med PRO — ALL 48 MIGRATIONS COMBINED
 -- Paste this entire file into the Supabase SQL Editor and Run.
 -- Idempotent: safe to run on a fresh project.
--- Generated: 2026-06-14
+-- Generated: 2026-06-15
 -- ============================================================
 
 -- ════════════════════════════════════════════════════════════
@@ -1902,6 +1902,350 @@ CREATE POLICY "admin reads all licenses" ON professional_licenses
       WHERE auth_id = auth.uid() AND role IN ('master_admin', 'super_admin')
     )
   );
+
+-- ════════════════════════════════════════════════════════════
+-- MIGRATION 041 — AI Call Logs
+-- ════════════════════════════════════════════════════════════
+
+CREATE TABLE IF NOT EXISTS ai_call_logs (
+  id              uuid        PRIMARY KEY DEFAULT gen_random_uuid(),
+  professional_id uuid        NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  action          text        NOT NULL,
+  model           text        NOT NULL,
+  input_tokens    integer,
+  output_tokens   integer,
+  latency_ms      integer,
+  cost_usd        numeric(10, 6),
+  prompt_version  text,
+  success         boolean     NOT NULL DEFAULT true,
+  error_message   text,
+  created_at      timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS idx_ai_call_logs_professional ON ai_call_logs (professional_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_ai_call_logs_action       ON ai_call_logs (action);
+CREATE INDEX IF NOT EXISTS idx_ai_call_logs_created_at   ON ai_call_logs (created_at DESC);
+
+ALTER TABLE ai_call_logs ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "no direct access to ai_call_logs" ON ai_call_logs;
+CREATE POLICY "no direct access to ai_call_logs" ON ai_call_logs FOR ALL USING (false);
+
+-- ════════════════════════════════════════════════════════════
+-- MIGRATION 042 — Certificate Storage Records
+-- ════════════════════════════════════════════════════════════
+
+CREATE TABLE IF NOT EXISTS certificate_storage_records (
+  id              uuid        PRIMARY KEY DEFAULT gen_random_uuid(),
+  professional_id uuid        NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  cme_activity_id uuid        REFERENCES cme_activities(id) ON DELETE SET NULL,
+  storage_path    text        NOT NULL,
+  file_name       text,
+  file_size_bytes integer,
+  mime_type       text,
+  uploaded_at     timestamptz NOT NULL DEFAULT now(),
+  deleted_at      timestamptz,
+  is_deleted      boolean     NOT NULL DEFAULT false,
+  created_at      timestamptz NOT NULL DEFAULT now(),
+  updated_at      timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS idx_cert_storage_path       ON certificate_storage_records (storage_path) WHERE NOT is_deleted;
+CREATE INDEX IF NOT EXISTS idx_cert_storage_professional      ON certificate_storage_records (professional_id);
+CREATE INDEX IF NOT EXISTS idx_cert_storage_activity          ON certificate_storage_records (cme_activity_id);
+CREATE INDEX IF NOT EXISTS idx_cert_storage_orphans           ON certificate_storage_records (uploaded_at) WHERE cme_activity_id IS NULL AND NOT is_deleted;
+
+CREATE OR REPLACE FUNCTION cert_storage_set_updated_at()
+RETURNS TRIGGER LANGUAGE plpgsql AS $$
+BEGIN NEW.updated_at = now(); RETURN NEW; END;
+$$;
+
+DROP TRIGGER IF EXISTS cert_storage_updated_at ON certificate_storage_records;
+CREATE TRIGGER cert_storage_updated_at
+  BEFORE UPDATE ON certificate_storage_records
+  FOR EACH ROW EXECUTE FUNCTION cert_storage_set_updated_at();
+
+ALTER TABLE certificate_storage_records ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "professional reads own certificate records" ON certificate_storage_records;
+CREATE POLICY "professional reads own certificate records" ON certificate_storage_records FOR SELECT USING (auth.uid() = professional_id AND NOT is_deleted);
+
+DROP POLICY IF EXISTS "professional inserts own certificate records" ON certificate_storage_records;
+CREATE POLICY "professional inserts own certificate records" ON certificate_storage_records FOR INSERT WITH CHECK (auth.uid() = professional_id);
+
+DROP POLICY IF EXISTS "professional soft-deletes own certificate records" ON certificate_storage_records;
+CREATE POLICY "professional soft-deletes own certificate records" ON certificate_storage_records FOR UPDATE USING (auth.uid() = professional_id) WITH CHECK (auth.uid() = professional_id);
+
+DROP POLICY IF EXISTS "admin reads all certificate records" ON certificate_storage_records;
+CREATE POLICY "admin reads all certificate records" ON certificate_storage_records FOR SELECT USING (EXISTS (SELECT 1 FROM organization_members WHERE auth_id = auth.uid() AND role IN ('master_admin', 'super_admin')));
+
+-- ════════════════════════════════════════════════════════════
+-- MIGRATION 043 — Mobile Device Registrations
+-- ════════════════════════════════════════════════════════════
+
+CREATE TABLE IF NOT EXISTS mobile_device_registrations (
+  id              uuid        PRIMARY KEY DEFAULT gen_random_uuid(),
+  professional_id uuid        NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  device_token    text        NOT NULL,
+  platform        text        NOT NULL CHECK (platform IN ('ios', 'android')),
+  app_version     text,
+  os_version      text,
+  device_model    text,
+  is_active       boolean     NOT NULL DEFAULT true,
+  last_active_at  timestamptz NOT NULL DEFAULT now(),
+  created_at      timestamptz NOT NULL DEFAULT now(),
+  updated_at      timestamptz NOT NULL DEFAULT now(),
+  UNIQUE (professional_id, device_token)
+);
+
+CREATE INDEX IF NOT EXISTS idx_mobile_devices_professional ON mobile_device_registrations (professional_id);
+CREATE INDEX IF NOT EXISTS idx_mobile_devices_active       ON mobile_device_registrations (is_active) WHERE is_active = true;
+CREATE INDEX IF NOT EXISTS idx_mobile_devices_platform     ON mobile_device_registrations (platform);
+
+CREATE OR REPLACE FUNCTION mobile_devices_set_updated_at()
+RETURNS TRIGGER LANGUAGE plpgsql AS $$
+BEGIN NEW.updated_at = now(); RETURN NEW; END;
+$$;
+
+DROP TRIGGER IF EXISTS mobile_devices_updated_at ON mobile_device_registrations;
+CREATE TRIGGER mobile_devices_updated_at
+  BEFORE UPDATE ON mobile_device_registrations
+  FOR EACH ROW EXECUTE FUNCTION mobile_devices_set_updated_at();
+
+ALTER TABLE mobile_device_registrations ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "professional manages own devices" ON mobile_device_registrations;
+CREATE POLICY "professional manages own devices" ON mobile_device_registrations FOR ALL USING (auth.uid() = professional_id) WITH CHECK (auth.uid() = professional_id);
+
+DROP POLICY IF EXISTS "admin reads all device registrations" ON mobile_device_registrations;
+CREATE POLICY "admin reads all device registrations" ON mobile_device_registrations FOR SELECT USING (EXISTS (SELECT 1 FROM organization_members WHERE auth_id = auth.uid() AND role IN ('master_admin', 'super_admin')));
+
+-- ════════════════════════════════════════════════════════════
+-- MIGRATION 044 — Notification Queue
+-- ════════════════════════════════════════════════════════════
+
+CREATE TABLE IF NOT EXISTS notification_queue (
+  id              uuid        PRIMARY KEY DEFAULT gen_random_uuid(),
+  professional_id uuid        REFERENCES auth.users(id) ON DELETE CASCADE,
+  channel         text        NOT NULL CHECK (channel IN ('email', 'push', 'sms')),
+  template_id     text        NOT NULL,
+  payload         jsonb       NOT NULL,
+  status          text        NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'sent', 'failed', 'cancelled')),
+  attempts        integer     NOT NULL DEFAULT 0,
+  max_attempts    integer     NOT NULL DEFAULT 3,
+  scheduled_at    timestamptz NOT NULL DEFAULT now(),
+  sent_at         timestamptz,
+  error_message   text,
+  created_at      timestamptz NOT NULL DEFAULT now(),
+  updated_at      timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS idx_notification_queue_pending      ON notification_queue (scheduled_at) WHERE status = 'pending';
+CREATE INDEX IF NOT EXISTS idx_notification_queue_professional ON notification_queue (professional_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_notification_queue_template     ON notification_queue (template_id, status);
+
+CREATE OR REPLACE FUNCTION notification_queue_set_updated_at()
+RETURNS TRIGGER LANGUAGE plpgsql AS $$
+BEGIN NEW.updated_at = now(); RETURN NEW; END;
+$$;
+
+DROP TRIGGER IF EXISTS notification_queue_updated_at ON notification_queue;
+CREATE TRIGGER notification_queue_updated_at
+  BEFORE UPDATE ON notification_queue
+  FOR EACH ROW EXECUTE FUNCTION notification_queue_set_updated_at();
+
+ALTER TABLE notification_queue ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "no direct access to notification_queue" ON notification_queue;
+CREATE POLICY "no direct access to notification_queue" ON notification_queue FOR ALL USING (false);
+
+-- ════════════════════════════════════════════════════════════
+-- MIGRATION 045 — Feature Flags
+-- ════════════════════════════════════════════════════════════
+
+CREATE TABLE IF NOT EXISTS feature_flags (
+  key             text        PRIMARY KEY,
+  enabled         boolean     NOT NULL DEFAULT false,
+  enabled_plans   text[]      DEFAULT NULL,
+  rollout_pct     smallint    NOT NULL DEFAULT 100 CHECK (rollout_pct BETWEEN 0 AND 100),
+  description     text,
+  updated_at      timestamptz NOT NULL DEFAULT now(),
+  updated_by      uuid        REFERENCES auth.users(id) ON DELETE SET NULL
+);
+
+INSERT INTO feature_flags (key, enabled, enabled_plans, rollout_pct, description) VALUES
+  ('ai_compliance_chat',     true,  ARRAY['pro', 'employer', 'master_admin', 'super_admin'], 100, 'AI compliance chatbot — Pro+ feature'),
+  ('ai_gap_analysis',        true,  ARRAY['pro', 'employer', 'master_admin', 'super_admin'], 100, 'AI CME gap analysis — Pro+ feature'),
+  ('ai_certificate_ocr',     true,  ARRAY['pro', 'employer', 'master_admin', 'super_admin'], 100, 'AI certificate OCR extraction — Pro+ feature'),
+  ('ai_renewal_prediction',  true,  ARRAY['pro', 'employer', 'master_admin', 'super_admin'], 100, 'AI renewal risk prediction — Pro+ feature'),
+  ('ai_learning_pathway',    true,  ARRAY['pro', 'employer', 'master_admin', 'super_admin'], 100, 'AI 12-month learning pathway — Pro+ feature'),
+  ('ai_voice_chat',          true,  ARRAY['pro', 'employer', 'master_admin', 'super_admin'], 100, 'HayyaVoice AI orb — Pro+ feature'),
+  ('offline_cme_queue',      true,  NULL, 100, 'Offline CME submission queue — all users'),
+  ('referral_programme',     true,  NULL, 100, 'Referral code generation + tracking'),
+  ('achievement_badges',     true,  NULL, 100, 'Gamification badges'),
+  ('compliance_certificate', true,  ARRAY['pro', 'employer', 'master_admin', 'super_admin'], 100, 'PDF compliance certificate download — Pro+ feature'),
+  ('marketplace',            true,  NULL, 100, 'Training marketplace browsing'),
+  ('coming_soon_mode',       false, NULL, 100, 'Show coming-soon page instead of app')
+ON CONFLICT (key) DO NOTHING;
+
+ALTER TABLE feature_flags ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "authenticated users read feature flags" ON feature_flags;
+CREATE POLICY "authenticated users read feature flags" ON feature_flags FOR SELECT USING (auth.role() = 'authenticated');
+
+DROP POLICY IF EXISTS "admin manages feature flags" ON feature_flags;
+CREATE POLICY "admin manages feature flags" ON feature_flags FOR ALL
+  USING (EXISTS (SELECT 1 FROM organization_members WHERE auth_id = auth.uid() AND role IN ('master_admin', 'super_admin')))
+  WITH CHECK (EXISTS (SELECT 1 FROM organization_members WHERE auth_id = auth.uid() AND role IN ('master_admin', 'super_admin')));
+
+-- ════════════════════════════════════════════════════════════
+-- MIGRATION 046 — Webhook Management
+-- ════════════════════════════════════════════════════════════
+
+CREATE TABLE IF NOT EXISTS webhook_endpoints (
+  id              uuid        PRIMARY KEY DEFAULT gen_random_uuid(),
+  organization_id uuid        NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
+  url             text        NOT NULL,
+  secret          text        NOT NULL,
+  events          text[]      NOT NULL,
+  description     text,
+  is_active       boolean     NOT NULL DEFAULT true,
+  created_by      uuid        REFERENCES auth.users(id) ON DELETE SET NULL,
+  created_at      timestamptz NOT NULL DEFAULT now(),
+  updated_at      timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS idx_webhook_endpoints_org ON webhook_endpoints (organization_id) WHERE is_active = true;
+
+CREATE TABLE IF NOT EXISTS webhook_deliveries (
+  id              uuid        PRIMARY KEY DEFAULT gen_random_uuid(),
+  endpoint_id     uuid        NOT NULL REFERENCES webhook_endpoints(id) ON DELETE CASCADE,
+  event_type      text        NOT NULL,
+  payload         jsonb       NOT NULL,
+  status          text        NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'delivered', 'failed')),
+  response_status integer,
+  response_body   text,
+  attempts        integer     NOT NULL DEFAULT 0,
+  delivered_at    timestamptz,
+  next_retry_at   timestamptz,
+  created_at      timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS idx_webhook_deliveries_endpoint   ON webhook_deliveries (endpoint_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_webhook_deliveries_pending    ON webhook_deliveries (next_retry_at) WHERE status = 'pending';
+CREATE INDEX IF NOT EXISTS idx_webhook_deliveries_event_type ON webhook_deliveries (event_type);
+
+CREATE OR REPLACE FUNCTION webhook_endpoints_set_updated_at()
+RETURNS TRIGGER LANGUAGE plpgsql AS $$
+BEGIN NEW.updated_at = now(); RETURN NEW; END;
+$$;
+
+DROP TRIGGER IF EXISTS webhook_endpoints_updated_at ON webhook_endpoints;
+CREATE TRIGGER webhook_endpoints_updated_at
+  BEFORE UPDATE ON webhook_endpoints
+  FOR EACH ROW EXECUTE FUNCTION webhook_endpoints_set_updated_at();
+
+ALTER TABLE webhook_endpoints ENABLE ROW LEVEL SECURITY;
+ALTER TABLE webhook_deliveries ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "employer admin manages org webhooks" ON webhook_endpoints;
+CREATE POLICY "employer admin manages org webhooks" ON webhook_endpoints FOR ALL
+  USING (EXISTS (SELECT 1 FROM organization_members WHERE organization_id = webhook_endpoints.organization_id AND auth_id = auth.uid() AND role = 'employer_admin'))
+  WITH CHECK (EXISTS (SELECT 1 FROM organization_members WHERE organization_id = webhook_endpoints.organization_id AND auth_id = auth.uid() AND role = 'employer_admin'));
+
+DROP POLICY IF EXISTS "admin reads all webhooks" ON webhook_endpoints;
+CREATE POLICY "admin reads all webhooks" ON webhook_endpoints FOR SELECT USING (EXISTS (SELECT 1 FROM organization_members WHERE auth_id = auth.uid() AND role IN ('master_admin', 'super_admin')));
+
+DROP POLICY IF EXISTS "employer admin reads own deliveries" ON webhook_deliveries;
+CREATE POLICY "employer admin reads own deliveries" ON webhook_deliveries FOR SELECT USING (
+  EXISTS (SELECT 1 FROM webhook_endpoints we JOIN organization_members om ON om.organization_id = we.organization_id WHERE we.id = webhook_deliveries.endpoint_id AND om.auth_id = auth.uid() AND om.role = 'employer_admin')
+);
+
+DROP POLICY IF EXISTS "admin reads all deliveries" ON webhook_deliveries;
+CREATE POLICY "admin reads all deliveries" ON webhook_deliveries FOR SELECT USING (EXISTS (SELECT 1 FROM organization_members WHERE auth_id = auth.uid() AND role IN ('master_admin', 'super_admin')));
+
+-- ════════════════════════════════════════════════════════════
+-- MIGRATION 047 — Performance Indexes
+-- Note: CONCURRENTLY not supported in transactions; run individually if needed.
+-- ════════════════════════════════════════════════════════════
+
+CREATE INDEX IF NOT EXISTS idx_cme_activities_professional_date ON cme_activities (professional_id, activity_date DESC);
+CREATE INDEX IF NOT EXISTS idx_cme_activities_verification_status ON cme_activities (verification_status) WHERE verification_status = 'pending';
+CREATE INDEX IF NOT EXISTS idx_employer_link_requests_org_status ON employer_link_requests (organization_id, status);
+CREATE INDEX IF NOT EXISTS idx_professional_profiles_country ON professional_profiles (country_of_residence);
+CREATE INDEX IF NOT EXISTS idx_subscriptions_plan_status ON subscriptions (plan, status);
+CREATE INDEX IF NOT EXISTS idx_audit_logs_actor_date ON audit_logs (actor_auth_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_cme_wallets_compliance_status ON cme_wallets (compliance_status);
+CREATE INDEX IF NOT EXISTS idx_professional_licenses_country_expiry ON professional_licenses (country_code, expiry_date) WHERE expiry_date IS NOT NULL;
+
+-- ════════════════════════════════════════════════════════════
+-- MIGRATION 048 — Employer RLS Policies
+-- ════════════════════════════════════════════════════════════
+
+DROP POLICY IF EXISTS "employer reads approved staff activities" ON cme_activities;
+CREATE POLICY "employer reads approved staff activities" ON cme_activities FOR SELECT
+USING (
+  EXISTS (
+    SELECT 1
+      FROM employer_link_requests elr
+      JOIN organization_members   om  ON om.organization_id = elr.organization_id
+      JOIN profile_privacy_settings pps ON pps.professional_id = cme_activities.professional_id
+     WHERE elr.professional_id = cme_activities.professional_id
+       AND elr.status          = 'approved'
+       AND om.auth_id          = auth.uid()
+       AND om.role             = 'employer_admin'
+       AND pps.employer_can_view_detailed_cme_activities = true
+  )
+);
+
+DROP POLICY IF EXISTS "employer reads approved staff cme summary" ON cme_activities;
+CREATE POLICY "employer reads approved staff cme summary" ON cme_activities FOR SELECT
+USING (
+  EXISTS (
+    SELECT 1
+      FROM employer_link_requests elr
+      JOIN organization_members   om  ON om.organization_id = elr.organization_id
+      JOIN profile_privacy_settings pps ON pps.professional_id = cme_activities.professional_id
+     WHERE elr.professional_id = cme_activities.professional_id
+       AND elr.status          = 'approved'
+       AND om.auth_id          = auth.uid()
+       AND om.role             = 'employer_admin'
+       AND pps.employer_can_view_cme_summary = true
+       AND cme_activities.employer_visible    = true
+  )
+);
+
+DROP POLICY IF EXISTS "employer reads approved staff profiles" ON professional_profiles;
+CREATE POLICY "employer reads approved staff profiles" ON professional_profiles FOR SELECT
+USING (
+  EXISTS (
+    SELECT 1
+      FROM employer_link_requests elr
+      JOIN organization_members   om  ON om.organization_id = elr.organization_id
+      JOIN profile_privacy_settings pps ON pps.professional_id = professional_profiles.auth_id
+     WHERE elr.professional_id = professional_profiles.auth_id
+       AND elr.status          = 'approved'
+       AND om.auth_id          = auth.uid()
+       AND om.role             = 'employer_admin'
+       AND pps.employer_can_view_profile_details = true
+  )
+);
+
+DROP POLICY IF EXISTS "employer reads approved staff wallets" ON cme_wallets;
+CREATE POLICY "employer reads approved staff wallets" ON cme_wallets FOR SELECT
+USING (
+  EXISTS (
+    SELECT 1
+      FROM employer_link_requests elr
+      JOIN organization_members   om  ON om.organization_id = elr.organization_id
+      JOIN profile_privacy_settings pps ON pps.professional_id = cme_wallets.professional_id
+     WHERE elr.professional_id = cme_wallets.professional_id
+       AND elr.status          = 'approved'
+       AND om.auth_id          = auth.uid()
+       AND om.role             = 'employer_admin'
+       AND pps.employer_can_view_cme_summary = true
+  )
+);
 
 -- ════════════════════════════════════════════════════════════
 -- POST-RUN VERIFICATION QUERIES

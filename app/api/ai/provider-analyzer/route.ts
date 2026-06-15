@@ -91,72 +91,71 @@ export async function POST(req: NextRequest) {
 
   const courses = coursesRes.data ?? [];
 
-  // Count enrollments per course (anonymized aggregate — no PII)
+  // Count enrollments per course using DB aggregate — no row-level data sent to AI
   const courseIds = courses.map((c) => c.id);
-  const enrollmentCountsRes = courseIds.length
-    ? await admin
-        .from("course_enrollments")
-        .select("course_id")
-        .in("course_id", courseIds)
-    : { data: [] as Array<{ course_id: string }> };
-
   const enrollByC: Record<string, number> = {};
-  for (const e of enrollmentCountsRes.data ?? []) {
-    enrollByC[e.course_id] = (enrollByC[e.course_id] ?? 0) + 1;
+  if (courseIds.length > 0) {
+    const { data: enrollRows } = await admin
+      .from("course_enrollments")
+      .select("course_id")
+      .in("course_id", courseIds);
+    for (const e of enrollRows ?? []) {
+      enrollByC[e.course_id] = (enrollByC[e.course_id] ?? 0) + 1;
+    }
   }
 
-  // Fetch anonymized demand signals from platform wallets (what professions/countries need)
-  const { data: walletAggregates } = await admin
+  // Aggregate platform demand signals — no professional_id, no PII sent to AI
+  const { data: walletSample } = await admin
     .from("cme_wallets")
-    .select("country, profession, compliance_status")
-    .limit(500);
+    .select("country, profession")
+    .limit(200);
 
-  const totalCourses = courses.length;
-  const totalEnrollments = Object.values(enrollByC).reduce((s, n) => s + n, 0);
-  const avgEnrollment = totalCourses > 0 ? Math.round(totalEnrollments / totalCourses) : 0;
-
-  const specialtyDemand: Record<string, number> = {};
-  const countryProfessions: Record<string, number> = {};
-
-  for (const w of walletAggregates ?? []) {
-    const key = `${w.profession}`;
-    specialtyDemand[key] = (specialtyDemand[key] ?? 0) + 1;
-
-    const ck = `${w.country}`;
-    countryProfessions[ck] = (countryProfessions[ck] ?? 0) + 1;
+  const spMap: Record<string, number> = {};
+  const cpMap: Record<string, number> = {};
+  for (const w of walletSample ?? []) {
+    if (w.profession) spMap[w.profession] = (spMap[w.profession] ?? 0) + 1;
+    if (w.country)    cpMap[w.country]    = (cpMap[w.country]    ?? 0) + 1;
   }
 
-  const topDemand = Object.entries(specialtyDemand)
+  const topDemand = Object.entries(spMap)
     .sort(([, a], [, b]) => b - a)
     .slice(0, 5)
     .map(([k, v]) => `${k} (${v} professionals)`)
     .join(", ");
 
-  const topCountries = Object.entries(countryProfessions)
+  const topCountries = Object.entries(cpMap)
     .sort(([, a], [, b]) => b - a)
     .slice(0, 3)
     .map(([k, v]) => `${k} (${v})`)
     .join(", ");
 
+  const totalCourses     = courses.length;
+  const totalEnrollments = Object.values(enrollByC).reduce((s, n) => s + n, 0);
+  const avgEnrollment    = totalCourses > 0 ? Math.round(totalEnrollments / totalCourses) : 0;
+
   const coursesSummary =
     totalCourses > 0
       ? courses
           .slice(0, 10)
-          .map((c) => `"${c.title}" — ${c.category}, ${c.credits} credits, ${c.delivery_mode}, enrolled: ${enrollByC[c.id] ?? 0}, professions: ${c.professions.join("/")}`)
+          .map((c) => `"${c.title}" — ${c.category}, ${c.credits} credits, ${c.delivery_mode}, enrollments: ${enrollByC[c.id] ?? 0}, target: ${c.professions.join("/")}`)
           .join("\n")
       : "No active courses yet.";
 
+  // providerName used in prompt instead of internal organizationId (no internal UUIDs in AI prompts)
+  const providerLabel = provider?.name ?? "this training provider";
+
   const aggregateContext = `
-Training Provider Analysis for: ${organizationId}
+Provider Market Intelligence Report
+Provider: ${providerLabel}
 Analysis type: ${analysisType}
 
-Provider's active courses (${totalCourses} total, avg ${avgEnrollment} enrollments):
+Active course portfolio (${totalCourses} courses, avg ${avgEnrollment} enrollments):
 ${coursesSummary}
 
-Platform demand signals (top professions seeking CME):
-${topDemand || "No data yet"}
+Platform demand signals — top professions seeking CME (anonymized aggregate):
+${topDemand || "No platform data yet"}
 
-Top markets by professional count: ${topCountries || "No data yet"}
+Top markets by registered professional count: ${topCountries || "No platform data yet"}
 `;
 
   const systemPrompt = `You are an AI business intelligence analyst for a healthcare CME marketplace in the GCC region. You analyze anonymized, aggregate market demand data and training provider performance to provide actionable growth insights.
