@@ -2590,3 +2590,13 @@ DROP INDEX IF EXISTS idx_notification_queue_pending;
 CREATE INDEX IF NOT EXISTS idx_notification_queue_pending
   ON notification_queue (scheduled_at, next_retry_at)
   WHERE status = 'pending';
+
+-- ════════════════════════════════════════════════════════════
+-- MIGRATION 054 — Per-category push notification preferences
+-- ════════════════════════════════════════════════════════════
+
+ALTER TABLE professional_profiles
+  ADD COLUMN IF NOT EXISTS push_license_expiry     boolean NOT NULL DEFAULT true,
+  ADD COLUMN IF NOT EXISTS push_cme_deadline       boolean NOT NULL DEFAULT true,
+  ADD COLUMN IF NOT EXISTS push_employer_tasks     boolean NOT NULL DEFAULT true,
+  ADD COLUMN IF NOT EXISTS push_compliance_alerts  boolean NOT NULL DEFAULT true;

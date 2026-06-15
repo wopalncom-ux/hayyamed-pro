@@ -41,6 +41,39 @@ export async function verifyOrganization(orgId: string): Promise<{ error?: strin
   return {};
 }
 
+export async function createOrganization(formData: FormData): Promise<{ error?: string; id?: string }> {
+  const actor = await getAdminUser();
+  if (!actor) return { error: "Not authorized" };
+
+  const name = (formData.get("name") as string | null)?.trim();
+  const type = (formData.get("type") as string | null) ?? "other";
+  const city = (formData.get("city") as string | null)?.trim() || null;
+  const country = (formData.get("country") as string | null)?.trim() || null;
+  const verified = formData.get("verified") === "true";
+
+  if (!name) return { error: "Name is required" };
+
+  const admin = createAdminClient();
+  const { data, error } = await admin
+    .from("organizations")
+    .insert({ name, type, city, country, verified })
+    .select("id")
+    .single();
+
+  if (error) return { error: error.message };
+
+  await logAudit({
+    actorAuthId: actor.id,
+    action: "organization.created",
+    targetTable: "organizations",
+    targetId: data.id,
+    metadata: { name, type, city, country, verified },
+  });
+
+  revalidatePath("/admin/organizations");
+  return { id: data.id };
+}
+
 export async function unverifyOrganization(orgId: string): Promise<{ error?: string }> {
   const actor = await getAdminUser();
   if (!actor) return { error: "Not authorized" };

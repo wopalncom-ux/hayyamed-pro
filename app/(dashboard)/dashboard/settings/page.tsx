@@ -15,6 +15,8 @@ import MFAManager from "@/components/dashboard/MFAManager";
 import PasskeyManager from "@/components/dashboard/PasskeyManager";
 import NotificationsEnableButton from "@/components/dashboard/NotificationsEnableButton";
 import CancelSubscriptionButton from "@/components/dashboard/CancelSubscriptionButton";
+import DownloadMyDataButton from "@/components/dashboard/DownloadMyDataButton";
+import PushPreferencesForm from "@/components/dashboard/PushPreferencesForm";
 
 const STATUS_STYLES: Record<string, string> = {
   pending: "bg-[#fff7ed] text-[#d97706]",
@@ -31,7 +33,7 @@ export default async function SettingsPage() {
 
   const [profileRes, linkRequestsRes, privacyRes, subRes, employerMemberRes, walletsRes, referralCountRes] = await Promise.all([
     admin.from("professional_profiles")
-      .select("full_name, mobile, date_of_birth, nationality, country_of_residence, profession, specialty, license_number, licensing_authority, license_expiry, pro_trial_ends_at, email_cme_verified, email_cme_deadline, email_license_expiry, email_trial_reminders, email_employer_tasks, referral_code, email_hard_bounced, email_spam_reported")
+      .select("full_name, mobile, date_of_birth, nationality, country_of_residence, profession, specialty, license_number, licensing_authority, license_expiry, pro_trial_ends_at, email_cme_verified, email_cme_deadline, email_license_expiry, email_trial_reminders, email_employer_tasks, referral_code, email_hard_bounced, email_spam_reported, push_license_expiry, push_cme_deadline, push_employer_tasks, push_compliance_alerts")
       .eq("auth_id", user.id)
       .single(),
     admin.from("employer_link_requests")
@@ -330,6 +332,17 @@ export default async function SettingsPage() {
             Get instant alerts for license expiry, CME deadlines, and compliance status — even when the app is closed.
           </p>
           <NotificationsEnableButton />
+          <div className="mt-5 pt-5 border-t border-[#f1f5f9]">
+            <p className="text-xs font-medium text-[#374151] mb-3">Notification categories</p>
+            <PushPreferencesForm
+              initial={{
+                push_license_expiry:    profile?.push_license_expiry    ?? true,
+                push_cme_deadline:      profile?.push_cme_deadline      ?? true,
+                push_employer_tasks:    profile?.push_employer_tasks     ?? true,
+                push_compliance_alerts: profile?.push_compliance_alerts  ?? true,
+              }}
+            />
+          </div>
         </div>
 
         {/* Email notification preferences */}
@@ -368,11 +381,21 @@ export default async function SettingsPage() {
           <h2 className="text-base font-semibold text-[#111] mb-4">Account</h2>
           <div className="flex flex-col gap-4">
             <SignOutButton />
-            <div className="border-t border-[#f1f5f9] pt-4">
-              <p className="text-xs text-[#64748b] mb-2">
-                Under PDPL and GDPR, you have the right to request deletion of your personal data.
-              </p>
-              <DeleteAccountButton />
+            <div className="border-t border-[#f1f5f9] pt-4 space-y-4">
+              <div>
+                <p className="text-xs font-medium text-[#374151] mb-1">Data portability</p>
+                <p className="text-xs text-[#64748b] mb-2">
+                  Under Qatar PDPL (Article 12) and GDPR (Article 20), you have the right to receive a copy of all personal data we hold about you.
+                </p>
+                <DownloadMyDataButton />
+              </div>
+              <div>
+                <p className="text-xs font-medium text-[#374151] mb-1">Delete account</p>
+                <p className="text-xs text-[#64748b] mb-2">
+                  Permanently deletes your profile, CME records, licenses, and all associated data.
+                </p>
+                <DeleteAccountButton />
+              </div>
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import { createAdminClient } from "@/lib/supabase/server";
 import OrgVerifyButton from "@/components/admin/OrgVerifyButton";
+import CreateOrgForm from "@/components/admin/CreateOrgForm";
 
 export default async function AdminOrganizationsPage({
   searchParams,
@@ -29,6 +30,8 @@ export default async function AdminOrganizationsPage({
         </div>
         <a href="/admin" className="text-sm text-[#1a56a0] hover:underline">← Back to admin</a>
       </div>
+
+      <CreateOrgForm />
 
       <form method="GET" action="/admin/organizations" className="mb-4 flex gap-2">
         <input
