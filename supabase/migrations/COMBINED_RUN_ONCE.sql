@@ -2578,3 +2578,15 @@ UPDATE professional_profiles SET updated_at = now() WHERE true;
 -- ════════════════════════════════════════════════════════════
 
 ALTER TYPE link_status ADD VALUE IF NOT EXISTS 'removed';
+
+-- ════════════════════════════════════════════════════════════
+-- MIGRATION 053 — Notification Queue Retry Column
+-- ════════════════════════════════════════════════════════════
+
+ALTER TABLE notification_queue
+  ADD COLUMN IF NOT EXISTS next_retry_at timestamptz;
+
+DROP INDEX IF EXISTS idx_notification_queue_pending;
+CREATE INDEX IF NOT EXISTS idx_notification_queue_pending
+  ON notification_queue (scheduled_at, next_retry_at)
+  WHERE status = 'pending';

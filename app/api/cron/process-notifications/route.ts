@@ -87,26 +87,15 @@ export async function GET(request: NextRequest) {
   const admin = createAdminClient();
   const now = new Date().toISOString();
 
-  // Fetch pending notifications due for sending
-  const { data: queue, error: fetchError } = await admin
+  // Fetch pending notifications due for sending, respecting retry backoff
+  const { data: pendingItems } = await admin
     .from("notification_queue")
-    .select("id, professional_id, channel, template_id, payload, attempts, max_attempts, scheduled_at")
+    .select("id, professional_id, channel, template_id, payload, attempts, max_attempts")
     .eq("status", "pending")
     .lte("scheduled_at", now)
-    .lt("attempts", admin.from("notification_queue").select("max_attempts") as unknown as number)
+    .or(`next_retry_at.is.null,next_retry_at.lte.${now}`)
     .order("scheduled_at", { ascending: true })
     .limit(BATCH_SIZE);
-
-  // Simpler query without the self-referential subquery
-  const { data: pendingItems } = fetchError
-    ? await admin
-        .from("notification_queue")
-        .select("id, professional_id, channel, template_id, payload, attempts, max_attempts")
-        .eq("status", "pending")
-        .lte("scheduled_at", now)
-        .order("scheduled_at", { ascending: true })
-        .limit(BATCH_SIZE)
-    : { data: queue };
 
   const items = pendingItems ?? [];
   let processed = 0;

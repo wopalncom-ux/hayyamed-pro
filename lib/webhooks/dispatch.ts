@@ -117,14 +117,15 @@ export async function sendWebhookDelivery(deliveryId: string): Promise<{ ok: boo
     }
 
     const errBody = (await res.text()).slice(0, 500);
+    const newAttempts = delivery.attempts + 1;
     await admin
       .from("webhook_deliveries")
       .update({
-        status: "failed",
+        status: "pending",  // Keep pending so cron retries with backoff
         response_status: res.status,
         response_body: errBody,
-        attempts: delivery.attempts + 1,
-        next_retry_at: new Date(Date.now() + Math.pow(2, delivery.attempts + 1) * 60_000).toISOString(),
+        attempts: newAttempts,
+        next_retry_at: new Date(Date.now() + Math.pow(2, newAttempts) * 60_000).toISOString(),
       })
       .eq("id", deliveryId);
 

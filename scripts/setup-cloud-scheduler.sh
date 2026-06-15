@@ -1,8 +1,9 @@
 ﻿#!/bin/bash
-# Hayya Med Pro â€” GCP Cloud Scheduler Setup
+# Hayya Med Pro — GCP Cloud Scheduler Setup
 #
-# Run once after initial deployment to activate all 7 automated cron jobs.
-# Without this, no trial emails, license alerts, or engagement emails will fire.
+# Run once after initial deployment to activate all 12 automated cron jobs.
+# Without this, no trial emails, license alerts, engagement emails, webhook
+# deliveries, or notification queue processing will fire.
 #
 # Prerequisites:
 #   gcloud auth login
@@ -52,6 +53,11 @@ if [ "${DELETE_MODE}" = "true" ]; then
     hayyamed-onboarding-reminder
     hayyamed-employer-digest
     hayyamed-professional-digest
+    hayyamed-process-notifications
+    hayyamed-process-webhooks
+    hayyamed-onboarding-drip
+    hayyamed-training-deadline
+    hayyamed-compliance-alerts
   )
   for JOB in "${JOBS[@]}"; do
     if gcloud scheduler jobs describe "${JOB}" \
@@ -184,13 +190,58 @@ create_or_update_job \
   "Professional weekly CME digest: compliance %, credits logged, renewal countdown"
 
 echo ""
-echo "=== All 7 Cloud Scheduler jobs configured ==="
+echo "--- Configuring high-frequency jobs (every 5 minutes) ---"
+
+# Every 5 min -- drain notification_queue (email + push)
+create_or_update_job \
+  "hayyamed-process-notifications" \
+  "*/5 * * * *" \
+  "/api/cron/process-notifications" \
+  "Drain notification_queue: send pending emails and push notifications with exponential backoff"
+
+# Every 5 min -- send queued webhook deliveries to employer endpoints
+create_or_update_job \
+  "hayyamed-process-webhooks" \
+  "*/5 * * * *" \
+  "/api/cron/process-webhooks" \
+  "Send pending webhook deliveries to employer endpoints with exponential backoff retry"
+
+echo ""
+echo "--- Configuring remaining daily jobs ---"
+
+# 09:15 GST (06:15 UTC) -- onboarding drip email sequence (D+1/3/7/10)
+create_or_update_job \
+  "hayyamed-onboarding-drip" \
+  "15 9 * * *" \
+  "/api/cron/onboarding-drip" \
+  "Onboarding drip email sequence: sends D+1, D+3, D+7, D+10 activation emails"
+
+# 09:30 GST (06:30 UTC) -- employer training deadline notifications (7d and 1d)
+create_or_update_job \
+  "hayyamed-training-deadline" \
+  "30 9 * * *" \
+  "/api/cron/training-deadline" \
+  "Notify staff about approaching training deadlines (7d and 1d warnings)"
+
+# 10:00 GST (07:00 UTC) -- compliance alerts to employer admins
+create_or_update_job \
+  "hayyamed-compliance-alerts" \
+  "0 10 * * *" \
+  "/api/cron/compliance-alerts" \
+  "Send compliance alert webhooks + notifications to employer admins for non-compliant staff"
+
+echo ""
+echo "=== All 12 Cloud Scheduler jobs configured ==="
 echo ""
 echo "Verify:"
 echo "  gcloud scheduler jobs list --location=${SCHEDULER_REGION} --project=${PROJECT_ID}"
 echo ""
 echo "Trigger a job manually to test:"
 echo "  gcloud scheduler jobs run hayyamed-trial-reminders --location=${SCHEDULER_REGION} --project=${PROJECT_ID}"
+echo ""
+echo "Test the 5-minute jobs:"
+echo "  gcloud scheduler jobs run hayyamed-process-notifications --location=${SCHEDULER_REGION} --project=${PROJECT_ID}"
+echo "  gcloud scheduler jobs run hayyamed-process-webhooks --location=${SCHEDULER_REGION} --project=${PROJECT_ID}"
 echo ""
 echo "View job execution history in GCP Console:"
 echo "  https://console.cloud.google.com/cloudscheduler?project=${PROJECT_ID}"
