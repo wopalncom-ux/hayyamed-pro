@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import LicenseCountdownCard from "@/components/dashboard/LicenseCountdownCard";
 import LicenseEditForm from "@/components/dashboard/LicenseEditForm";
 import CopyVerificationLinkButton from "@/components/dashboard/CopyVerificationLinkButton";
+import MultiLicenseSection from "@/components/dashboard/MultiLicenseSection";
 import { getUserPlan, isPro } from "@/lib/subscription";
 import { toCountryCode } from "@/lib/countryCode";
 
@@ -15,7 +16,7 @@ export default async function LicensesPage() {
 
   const admin = createAdminClient();
 
-  const [profileRes, walletRes, plan] = await Promise.all([
+  const [profileRes, walletRes, plan, licensesRes] = await Promise.all([
     admin
       .from("professional_profiles")
       .select("license_number, licensing_authority, license_expiry, profession, specialty, country_of_residence")
@@ -29,10 +30,17 @@ export default async function LicensesPage() {
       .limit(1)
       .maybeSingle(),
     getUserPlan(user.id),
+    admin
+      .from("professional_licenses")
+      .select("*")
+      .eq("professional_id", user.id)
+      .order("is_primary", { ascending: false })
+      .order("expiry_date", { ascending: true }),
   ]);
 
   const profile = profileRes.data;
   const wallet = walletRes.data;
+  const multiLicenses = licensesRes.data ?? [];
 
   // Fetch activities + category rules for the primary wallet in parallel
   type CatRule = { category_name: string; min_credits_per_cycle: number; max_credits_per_cycle: number | null };
@@ -153,7 +161,10 @@ export default async function LicensesPage() {
         Track your professional license and renewal status.
       </p>
 
-      {/* Visual countdown */}
+      {/* Multi-license wallet */}
+      <MultiLicenseSection initialLicenses={multiLicenses} />
+
+      {/* Visual countdown — primary license from profile (legacy) */}
       <div className="mb-6">
         <LicenseCountdownCard
           licenseExpiry={profile?.license_expiry ?? null}

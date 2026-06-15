@@ -1,9 +1,6 @@
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import AddActivityButton from "@/components/dashboard/AddActivityButton";
-import CmeActivitiesEmptyState from "@/components/dashboard/CmeActivitiesEmptyState";
-import CertificateLink from "@/components/dashboard/CertificateLink";
-import CmeActivityActions from "@/components/dashboard/CmeActivityActions";
 import DownloadReportButton from "@/components/dashboard/DownloadReportButton";
 import PdfReportCard from "@/components/dashboard/PdfReportCard";
 import ComplianceGapCard from "@/components/dashboard/ComplianceGapCard";
@@ -18,6 +15,7 @@ import ExportCsvButton from "@/components/dashboard/ExportCsvButton";
 import CalendarExportButton from "@/components/dashboard/CalendarExportButton";
 import CmeOfflineSyncBanner from "@/components/dashboard/CmeOfflineSyncBanner";
 import CmeHeatmap from "@/components/dashboard/CmeHeatmap";
+import CmeActivityList from "@/components/dashboard/CmeActivityList";
 import { getUserPlan, isPro } from "@/lib/subscription";
 import { FREE_ACTIVITY_LIMIT } from "@/lib/planLimits";
 import { toCountryCode } from "@/lib/countryCode";
@@ -284,62 +282,11 @@ export default async function CmePage({
               </div>
             </div>
 
-            {activities.length === 0 ? (
-              <CmeActivitiesEmptyState walletId={wallet.id} plan={plan} />
-            ) : (
-              <div className="divide-y divide-[#e2e8f0]">
-                {activities.map((a) => (
-                  <div key={a.id} className="px-6 py-4">
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <p className="text-sm font-medium text-[#111]">{a.title}</p>
-                        <p className="text-xs text-[#64748b] mt-0.5">
-                          {a.provider ?? "—"} • {a.activity_date}
-                          {a.category && (
-                            <span className="ml-2 bg-[#f1f5f9] text-[#374151] rounded px-1.5 py-0.5 text-[10px] capitalize">
-                              {a.category.replace("_", " ")}
-                            </span>
-                          )}
-                        </p>
-                        {a.certificate_url && (
-                          <div className="mt-0.5">
-                            <CertificateLink certificatePath={a.certificate_url} />
-                          </div>
-                        )}
-                      </div>
-                      <div className="flex flex-col items-end gap-1">
-                        <span className="text-sm font-semibold text-[#1a56a0]">+{a.credits} credits</span>
-                        <span className={`text-xs px-2 py-0.5 rounded-full ${
-                          a.verification_status === "verified"
-                            ? "bg-[#dcfce7] text-[#16a34a]"
-                            : a.verification_status === "rejected"
-                            ? "bg-[#fef2f2] text-[#dc2626]"
-                            : "bg-[#f1f5f9] text-[#64748b]"
-                        }`}>
-                          {a.verification_status}
-                        </span>
-                        {a.verification_status === "rejected" && a.rejection_reason && (
-                          <p className="text-[10px] text-[#dc2626] max-w-[160px] text-right leading-tight">
-                            {a.rejection_reason}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                    {(a.verification_status === "pending" || a.verification_status === "rejected") && (
-                      <CmeActivityActions
-                        id={a.id}
-                        status={a.verification_status}
-                        title={a.title}
-                        provider={a.provider ?? null}
-                        activityDate={a.activity_date}
-                        credits={a.credits}
-                        category={a.category ?? null}
-                      />
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
+            <CmeActivityList
+              activities={activities}
+              walletId={wallet.id}
+              plan={plan}
+            />
           </div>
 
           {/* Activity heatmap — 52-week GitHub-style grid */}

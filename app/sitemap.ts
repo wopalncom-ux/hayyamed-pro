@@ -223,5 +223,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/blog/clinical-immunologist-cme-gcc`,           lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/palliative-care-physician-cme-gcc`,       lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/addiction-psychiatrist-cme-gcc`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    // Session 75 — multi-license wallet + CME filter + 5 specialty blog posts
+    { url: `${BASE}/blog/endocrinologist-cme-gcc`,                 lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/rheumatologist-cme-gcc`,                  lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/haematologist-cme-gcc`,                   lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/medical-oncologist-cme-gcc`,              lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/anaesthesiologist-cme-gcc`,               lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
   ];
 }
