@@ -10,8 +10,9 @@ import NotificationBell from "./NotificationBell";
 const NAV_ITEMS = [
   { href: "/dashboard", label: "Overview" },
   { href: "/dashboard/cme", label: "CME Wallet" },
-  { href: "/dashboard/cme/history", label: "History" },
+  { href: "/dashboard/cme/reflections", label: "Reflections" },
   { href: "/dashboard/ai", label: "✦ AI" },
+  { href: "/dashboard/ai/learning-pathway", label: "Learning Plan" },
   { href: "/dashboard/analytics", label: "Analytics" },
   { href: "/dashboard/licenses", label: "Licenses" },
   { href: "/dashboard/certificates", label: "Certificates" },

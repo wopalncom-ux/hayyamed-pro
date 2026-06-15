@@ -192,5 +192,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/blog/geriatrician-cme-gcc`,                 lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/vascular-surgeon-cme-gcc`,             lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/neurosurgeon-cme-gcc`,                 lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    // Blog posts — session 70
+    { url: `${BASE}/blog/addiction-medicine-cme-gcc`,           lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/sleep-medicine-cme-gcc`,               lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/forensic-medicine-cme-gcc`,            lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/medical-genetics-cme-gcc`,             lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/clinical-toxicology-cme-gcc`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
   ];
 }
