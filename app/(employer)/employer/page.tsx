@@ -81,7 +81,7 @@ export default async function EmployerDashboardPage({
   const staffIds = approved.map((r) => r.professional_id);
 
   const pendingIds = pending.map((r) => r.professional_id);
-  const [profilesRes, pendingProfilesRes, privacyRes, walletsRes] = await Promise.all([
+  const [profilesRes, pendingProfilesRes, privacyRes, walletsRes, secLicensesRes] = await Promise.all([
     staffIds.length
       ? admin.from("professional_profiles")
           .select("auth_id, full_name, profession, specialty, license_expiry")
@@ -102,12 +102,29 @@ export default async function EmployerDashboardPage({
           .select("professional_id, completed_credits, required_credits, compliance_status")
           .in("professional_id", staffIds)
       : Promise.resolve({ data: [] }),
+    // Multi-license wallet — find the soonest-expiring secondary license per professional
+    staffIds.length
+      ? admin.from("professional_licenses")
+          .select("professional_id, expiry_date")
+          .in("professional_id", staffIds)
+          .not("expiry_date", "is", null)
+      : Promise.resolve({ data: [] }),
   ]);
 
   const profileMap = Object.fromEntries((profilesRes.data ?? []).map((p) => [p.auth_id, p]));
   const pendingProfileMap = Object.fromEntries((pendingProfilesRes.data ?? []).map((p) => [p.auth_id, p]));
   const privacyMap = Object.fromEntries((privacyRes.data ?? []).map((p) => [p.professional_id, p]));
   const walletMap = Object.fromEntries((walletsRes.data ?? []).map((w) => [w.professional_id, w]));
+
+  // Build soonest secondary license expiry per professional
+  const secExpiryMap: Record<string, string> = {};
+  for (const sl of secLicensesRes.data ?? []) {
+    const pid = sl.professional_id as string;
+    const exp = sl.expiry_date as string;
+    if (!secExpiryMap[pid] || exp < secExpiryMap[pid]) {
+      secExpiryMap[pid] = exp;
+    }
+  }
 
   const staff: StaffMember[] = approved.map((link) => {
     const profile = profileMap[link.professional_id];
@@ -116,7 +133,14 @@ export default async function EmployerDashboardPage({
     const cmeVisible = privacy?.employer_can_view_cme_summary !== false;
     const licenseVisible = privacy?.employer_can_view_license_expiry !== false;
 
-    const licenseExpiry = licenseVisible ? (profile?.license_expiry ?? null) : null;
+    // Use the soonest-expiring license from either professional_profiles
+    // or the multi-license wallet (professional_licenses table)
+    const primaryExpiry = licenseVisible ? (profile?.license_expiry ?? null) : null;
+    const secondaryExpiry = licenseVisible ? (secExpiryMap[link.professional_id] ?? null) : null;
+    const licenseExpiry =
+      primaryExpiry && secondaryExpiry
+        ? primaryExpiry < secondaryExpiry ? primaryExpiry : secondaryExpiry
+        : primaryExpiry ?? secondaryExpiry;
     const daysToExpiry = licenseExpiry
       ? Math.ceil((new Date(licenseExpiry).getTime() - Date.now()) / 86400000)
       : null;

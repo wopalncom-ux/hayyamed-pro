@@ -298,8 +298,10 @@ curl -X POST .../api/v1/staff/sync \\
             <p className="text-xs font-semibold text-[#374151] mb-2">Available endpoints</p>
             <div className="space-y-2.5">
               {[
-                { method: "GET",  path: "/api/v1/staff/compliance", scope: "read:compliance", desc: "Staff compliance status, credits, gaps" },
-                { method: "GET",  path: "/api/v1/staff/licenses",   scope: "read:licenses",   desc: "License records + expiry dates for HRIS sync" },
+                { method: "GET",  path: "/api/v1/staff",            scope: "read:staff",      desc: "Staff directory: name, profession, department, compliance status" },
+                { method: "GET",  path: "/api/v1/staff/compliance", scope: "read:compliance", desc: "Per-staff CME compliance status, credits, gaps" },
+                { method: "GET",  path: "/api/v1/staff/licenses",   scope: "read:licenses",   desc: "License records + expiry dates (all wallets) for HRIS sync" },
+                { method: "GET",  path: "/api/v1/staff/departments", scope: "read:compliance", desc: "Compliance summary grouped by department" },
                 { method: "POST", path: "/api/v1/staff/sync",       scope: "read:staff",      desc: "Bulk-create link requests from employee email list" },
               ].map(({ method, path, scope, desc }) => (
                 <div key={path} className="flex items-start gap-2">

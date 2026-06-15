@@ -1,14 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/server";
-import { sendPushNotification } from "@/lib/push";
-import { sendLicenseExpiryEmail } from "@/lib/email";
 import { pingCronMonitor } from "@/lib/cronMonitor";
 import { dispatchWebhook } from "@/lib/webhooks/dispatch";
 
 export const runtime = "nodejs";
 
-// Called daily by GCP Cloud Scheduler or cron service
-// Authorization: Bearer $CRON_SECRET
+/**
+ * GET /api/cron/license-expiry
+ *
+ * Runs daily at 08:45 GST. Dispatches `license.expiring` webhooks to employer
+ * organizations when a linked professional's license is 30 or 7 days from expiry.
+ *
+ * Email and push notifications for license expiry are handled by the
+ * `license-reminders` cron (08:15 GST) which covers 90/60/30/14/7-day thresholds,
+ * respects user preferences, and supports the multi-license wallet — keeping
+ * this cron focused solely on the employer-facing webhook signal.
+ *
+ * Covers:
+ *   - professional_profiles.license_expiry   (primary license)
+ *   - professional_licenses.expiry_date      (multi-license wallet)
+ */
 export async function GET(request: NextRequest) {
   const auth = request.headers.get("authorization");
   if (auth !== `Bearer ${process.env.CRON_SECRET}`) {
@@ -17,77 +28,89 @@ export async function GET(request: NextRequest) {
 
   const admin = createAdminClient();
   const today = new Date();
-
-  // Find professionals with license expiring in 30 or 7 days
   const targets = [30, 7];
-  let notified = 0;
+  let webhooksDispatched = 0;
 
   for (const days of targets) {
     const targetDate = new Date(today);
     targetDate.setDate(targetDate.getDate() + days);
     const dateStr = targetDate.toISOString().slice(0, 10);
 
+    // ── Source 1: professional_profiles.license_expiry ───────────────────────
     const { data: profiles } = await admin
       .from("professional_profiles")
-      .select("auth_id, email, full_name, license_expiry")
+      .select("auth_id, license_expiry")
       .eq("license_expiry", dateStr);
 
-    if (!profiles?.length) continue;
+    if (profiles?.length) {
+      const profIds = profiles.map((p) => p.auth_id);
 
-    // Batch-fetch employer links for all professionals in this batch
-    const profIds = profiles.map((p) => p.auth_id);
-    const { data: links } = await admin
-      .from("employer_link_requests")
-      .select("professional_id, organization_id")
-      .in("professional_id", profIds)
-      .eq("status", "approved");
-    const linkMap: Record<string, string[]> = {};
-    for (const l of links ?? []) {
-      linkMap[l.professional_id] = linkMap[l.professional_id] ?? [];
-      linkMap[l.professional_id].push(l.organization_id);
-    }
+      // Batch-fetch all approved employer links for these professionals
+      const { data: links } = await admin
+        .from("employer_link_requests")
+        .select("professional_id, organization_id")
+        .in("professional_id", profIds)
+        .eq("status", "approved");
 
-    for (const profile of profiles) {
-      if (profile.email) {
-        await sendLicenseExpiryEmail({
-          to: profile.email,
-          name: profile.full_name ?? "Professional",
-          expiryDate: profile.license_expiry,
-          daysLeft: days,
-        });
+      // Group organization_ids per professional
+      const linkMap: Record<string, string[]> = {};
+      for (const l of links ?? []) {
+        linkMap[l.professional_id] = linkMap[l.professional_id] ?? [];
+        linkMap[l.professional_id].push(l.organization_id);
       }
 
-      // Send push notification
-      const { data: subs } = await admin
-        .from("push_subscriptions")
-        .select("endpoint, p256dh, auth")
-        .eq("professional_id", profile.auth_id);
-
-      for (const sub of subs ?? []) {
-        const result = await sendPushNotification(sub, {
-          title: `License Expiring in ${days} Days`,
-          body: `Your license expires on ${profile.license_expiry}. Check your CME status now.`,
-          url: "/dashboard/licenses",
-        });
-        if (result.expired) {
-          await admin.from("push_subscriptions").delete()
-            .eq("professional_id", profile.auth_id).eq("endpoint", sub.endpoint);
+      for (const profile of profiles) {
+        for (const orgId of linkMap[profile.auth_id] ?? []) {
+          dispatchWebhook(orgId, "license.expiring", {
+            professional_id: profile.auth_id,
+            license_expiry: profile.license_expiry as string,
+            days_remaining: days,
+            source: "profile",
+          }).catch(() => {});
+          webhooksDispatched++;
         }
       }
+    }
 
-      // Dispatch license.expiring webhook to every employer org this professional is linked to
-      for (const orgId of linkMap[profile.auth_id] ?? []) {
-        dispatchWebhook(orgId, "license.expiring", {
-          professional_id: profile.auth_id,
-          license_expiry: profile.license_expiry,
-          days_remaining: days,
-        }).catch(() => {});
+    // ── Source 2: professional_licenses.expiry_date (multi-license wallet) ───
+    const { data: secLicenses } = await admin
+      .from("professional_licenses")
+      .select("professional_id, license_number, licensing_authority, country_code, expiry_date")
+      .eq("expiry_date", dateStr);
+
+    if (secLicenses?.length) {
+      const secProfIds = [...new Set(secLicenses.map((l) => l.professional_id as string))];
+
+      const { data: secLinks } = await admin
+        .from("employer_link_requests")
+        .select("professional_id, organization_id")
+        .in("professional_id", secProfIds)
+        .eq("status", "approved");
+
+      const secLinkMap: Record<string, string[]> = {};
+      for (const l of secLinks ?? []) {
+        secLinkMap[l.professional_id] = secLinkMap[l.professional_id] ?? [];
+        secLinkMap[l.professional_id].push(l.organization_id);
       }
 
-      notified++;
+      for (const license of secLicenses) {
+        const pid = license.professional_id as string;
+        for (const orgId of secLinkMap[pid] ?? []) {
+          dispatchWebhook(orgId, "license.expiring", {
+            professional_id: pid,
+            license_number: license.license_number as string,
+            licensing_authority: license.licensing_authority as string,
+            country_code: license.country_code as string,
+            license_expiry: license.expiry_date as string,
+            days_remaining: days,
+            source: "multi_license_wallet",
+          }).catch(() => {});
+          webhooksDispatched++;
+        }
+      }
     }
   }
 
   await pingCronMonitor("license-expiry");
-  return NextResponse.json({ ok: true, notified });
+  return NextResponse.json({ ok: true, webhooks_dispatched: webhooksDispatched });
 }
