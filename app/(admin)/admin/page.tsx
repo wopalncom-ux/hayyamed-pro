@@ -268,6 +268,18 @@ export default async function AdminPage() {
             <a href="/admin/audit-logs" className="block text-sm text-[#1a56a0] hover:underline">
               Audit Log — append-only, 7-year retention
             </a>
+            <a href="/admin/feature-flags" className="block text-sm font-semibold text-[#1a56a0] hover:underline">
+              🚦 Feature Flags — Kill switches &amp; plan gates
+            </a>
+            <a href="/admin/ai-costs" className="block text-sm font-semibold text-[#1a56a0] hover:underline">
+              🤖 AI Costs — Spend by model &amp; feature
+            </a>
+            <a href="/admin/ai-modules" className="block text-sm text-[#1a56a0] hover:underline">
+              AI Module Control Center
+            </a>
+            <a href="/admin/webhooks" className="block text-sm text-[#1a56a0] hover:underline">
+              Webhook Log
+            </a>
             <a href="/admin/monitoring" className="block text-sm font-semibold text-[#1a56a0] hover:underline">
               🔍 Monitoring — Health, Crons, Infra Links
             </a>

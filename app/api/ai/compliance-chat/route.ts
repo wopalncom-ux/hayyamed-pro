@@ -4,6 +4,7 @@ import { getAnthropicClient } from "@/lib/anthropic";
 import { checkAndLogRateLimit } from "@/lib/rateLimit";
 import { toCountryCode } from "@/lib/countryCode";
 import { getUserPlan, isPro } from "@/lib/subscription";
+import { isFeatureEnabled } from "@/lib/featureFlags";
 import { logAudit } from "@/lib/audit";
 import { logAiCall } from "@/lib/ai/logAiCall";
 
@@ -18,6 +19,7 @@ export async function POST(req: NextRequest) {
 
   const plan = await getUserPlan(user.id);
   if (!isPro(plan)) return new Response("Pro plan required", { status: 403 });
+  if (!await isFeatureEnabled("ai_compliance_chat", plan)) return new Response("Feature unavailable", { status: 403 });
 
   const rl = await checkAndLogRateLimit({ action: "ai_compliance_chat", userId: user.id, maxPerHour: 30 });
   if (!rl.allowed) return new Response("Rate limit exceeded", { status: 429, headers: { "Retry-After": String(rl.retryAfterSeconds) } });

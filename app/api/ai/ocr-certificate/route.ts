@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getAnthropicClient } from "@/lib/anthropic";
 import { checkAndLogRateLimit } from "@/lib/rateLimit";
 import { getUserPlan, isPro } from "@/lib/subscription";
+import { isFeatureEnabled } from "@/lib/featureFlags";
 import { logAudit } from "@/lib/audit";
 import { logAiCall } from "@/lib/ai/logAiCall";
 
@@ -28,6 +29,7 @@ export async function POST(req: NextRequest) {
 
   const plan = await getUserPlan(user.id);
   if (!isPro(plan)) return NextResponse.json({ error: "Pro plan required" }, { status: 403 });
+  if (!await isFeatureEnabled("ai_certificate_ocr", plan)) return NextResponse.json({ error: "Feature unavailable" }, { status: 403 });
 
   const rl = await checkAndLogRateLimit({ action: "ai_ocr_certificate", userId: user.id, maxPerHour: 20 });
   if (!rl.allowed) return NextResponse.json({ error: "Rate limit exceeded" }, { status: 429, headers: { "Retry-After": String(rl.retryAfterSeconds) } });

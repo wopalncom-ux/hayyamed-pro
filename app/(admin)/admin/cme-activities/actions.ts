@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { logAudit } from "@/lib/audit";
 import { sendCmeVerifiedEmail, sendCmeRejectedEmail } from "@/lib/email";
 import { getUserPlan, isPro } from "@/lib/subscription";
+import { dispatchWebhook } from "@/lib/webhooks/dispatch";
 
 async function getAdminUser() {
   const supabase = await createClient();
@@ -50,9 +51,10 @@ export async function verifyCmeActivity(activityId: string) {
   });
 
   if (activity) {
-    const [profileRes, plan] = await Promise.all([
+    const [profileRes, plan, linksRes] = await Promise.all([
       admin.from("professional_profiles").select("email, full_name").eq("auth_id", activity.professional_id).single(),
       getUserPlan(activity.professional_id),
+      admin.from("employer_link_requests").select("organization_id").eq("professional_id", activity.professional_id).eq("status", "approved"),
     ]);
     if (profileRes.data?.email) {
       await sendCmeVerifiedEmail({
@@ -62,6 +64,13 @@ export async function verifyCmeActivity(activityId: string) {
         credits: activity.credits,
         isPro: isPro(plan),
       });
+    }
+    for (const link of linksRes.data ?? []) {
+      dispatchWebhook(link.organization_id, "cme.verified", {
+        professional_id: activity.professional_id,
+        activity_title: activity.title,
+        credits: activity.credits,
+      }).catch(() => {});
     }
   }
 

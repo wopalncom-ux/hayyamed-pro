@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getAnthropicClient } from "@/lib/anthropic";
 import { checkAndLogRateLimit } from "@/lib/rateLimit";
 import { getUserPlan, isPro } from "@/lib/subscription";
+import { isFeatureEnabled } from "@/lib/featureFlags";
 import { logAudit } from "@/lib/audit";
 import { logAiCall } from "@/lib/ai/logAiCall";
 import { buildGapAnalysisPrompt } from "@/lib/ai/prompts/gap-analysis";
@@ -44,6 +45,7 @@ export async function POST(req: NextRequest) {
 
   const plan = await getUserPlan(user.id);
   if (!isPro(plan)) return NextResponse.json({ error: "Pro plan required" }, { status: 403 });
+  if (!await isFeatureEnabled("ai_gap_analysis", plan)) return NextResponse.json({ error: "Feature unavailable" }, { status: 403 });
 
   const rl = await checkAndLogRateLimit({ action: "ai_gap_analysis", userId: user.id, maxPerHour: 5 });
   if (!rl.allowed) {

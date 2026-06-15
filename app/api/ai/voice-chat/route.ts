@@ -3,6 +3,7 @@ import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { getAnthropicClient } from "@/lib/anthropic";
 import { checkAndLogRateLimit } from "@/lib/rateLimit";
 import { getUserPlan, isPro } from "@/lib/subscription";
+import { isFeatureEnabled } from "@/lib/featureFlags";
 import { logAudit } from "@/lib/audit";
 import { logAiCall } from "@/lib/ai/logAiCall";
 import { z } from "zod";
@@ -39,6 +40,10 @@ export async function POST(req: NextRequest) {
     return Response.json(
       { error: "Voice assistant requires a Pro plan.", upgrade: true },
       { status: 403 }
+    );
+  }
+  if (!await isFeatureEnabled("ai_voice_chat", plan)) {
+    return Response.json({ error: "Feature unavailable." }, { status: 403 }
     );
   }
 
