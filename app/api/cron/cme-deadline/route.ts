@@ -34,14 +34,18 @@ export async function GET(request: NextRequest) {
     // Batch-fetch email preferences and paid status for all professionals in this batch
     // Requires migration 022: email_cme_deadline column with DEFAULT true
     const professionalIds = wallets.map((w) => w.professional_id);
-    const [prefRes, subRes] = await Promise.all([
+    const [prefRes, subRes, pushSubsRes] = await Promise.all([
       admin
         .from("professional_profiles")
-        .select("auth_id, email, full_name, email_cme_deadline, pro_trial_ends_at")
+        .select("auth_id, email, full_name, email_cme_deadline, push_cme_deadline, pro_trial_ends_at")
         .in("auth_id", professionalIds),
       admin
         .from("subscriptions")
         .select("professional_id, plan, status")
+        .in("professional_id", professionalIds),
+      admin
+        .from("push_subscriptions")
+        .select("professional_id, endpoint, p256dh, auth")
         .in("professional_id", professionalIds),
     ]);
     const prefMap = Object.fromEntries(
@@ -50,6 +54,11 @@ export async function GET(request: NextRequest) {
     const subMap = Object.fromEntries(
       (subRes.data ?? []).map((s) => [s.professional_id, s])
     );
+    const pushMap = new Map<string, { endpoint: string; p256dh: string; auth: string }[]>();
+    for (const ps of pushSubsRes.data ?? []) {
+      if (!pushMap.has(ps.professional_id)) pushMap.set(ps.professional_id, []);
+      pushMap.get(ps.professional_id)!.push(ps);
+    }
 
     for (const wallet of wallets) {
       const deficit = wallet.required_credits - wallet.completed_credits;
@@ -80,21 +89,22 @@ export async function GET(request: NextRequest) {
         });
       }
 
-      // Push notification for all users with a subscription
-      const { data: subs } = await admin
-        .from("push_subscriptions")
-        .select("endpoint, p256dh, auth")
-        .eq("professional_id", wallet.professional_id);
-
-      for (const pushSub of subs ?? []) {
-        const result = await sendPushNotification(pushSub, {
-          title: `CME Deadline in ${days} Days`,
-          body: `You need ${deficit} more credits before your cycle ends on ${wallet.cycle_end_date}.`,
-          url: "/dashboard/cme",
-        });
-        if (result.expired) {
-          await admin.from("push_subscriptions").delete()
-            .eq("professional_id", wallet.professional_id).eq("endpoint", pushSub.endpoint);
+      // Push notification — respect push_cme_deadline preference
+      if (profileData?.push_cme_deadline !== false) {
+        const pushSubs = pushMap.get(wallet.professional_id) ?? [];
+        for (const pushSub of pushSubs) {
+          const result = await sendPushNotification(pushSub, {
+            title: `CME Deadline in ${days} Days`,
+            body: `You need ${deficit} more credits before your cycle ends on ${wallet.cycle_end_date}.`,
+            url: "/dashboard/cme",
+          });
+          if (result.expired) {
+            void Promise.resolve(
+              admin.from("push_subscriptions").delete()
+                .eq("professional_id", wallet.professional_id)
+                .eq("endpoint", pushSub.endpoint)
+            ).catch(() => {});
+          }
         }
       }
 

@@ -27,7 +27,7 @@ export async function GET(req: NextRequest) {
   // Requires migration 022: email_license_expiry column with DEFAULT true
   const { data: profiles, error } = await admin
     .from("professional_profiles")
-    .select("auth_id, email, full_name, license_expiry")
+    .select("auth_id, email, full_name, license_expiry, push_license_expiry")
     .in("license_expiry", targetDates)
     .not("email", "is", null)
     .eq("email_license_expiry", true);
@@ -79,7 +79,8 @@ export async function GET(req: NextRequest) {
       results.push({ email: p.email, daysLeft, ok: false });
     }
 
-    // Fire-and-forget push notifications
+    // Fire-and-forget push notifications — respect push_license_expiry preference
+    if (p.push_license_expiry === false) continue;
     const subs = pushMap.get(p.auth_id) ?? [];
     for (const sub of subs) {
       sendPushNotification(sub, {

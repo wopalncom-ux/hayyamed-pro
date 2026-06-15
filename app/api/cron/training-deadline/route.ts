@@ -3,6 +3,7 @@ import { createAdminClient } from "@/lib/supabase/server";
 import { sendTaskDeadlineReminderEmail } from "@/lib/email";
 import { pingCronMonitor } from "@/lib/cronMonitor";
 import { logAudit } from "@/lib/audit";
+import { sendPushNotification } from "@/lib/push";
 
 export const runtime = "nodejs";
 
@@ -59,14 +60,18 @@ export async function GET(req: NextRequest) {
   // Get unique assignees
   const assigneeIds = [...new Set(tasks.map((t) => t.assigned_to))];
 
-  const [profilesRes, orgsRes] = await Promise.all([
+  const [profilesRes, orgsRes, pushSubsRes] = await Promise.all([
     admin
       .from("professional_profiles")
-      .select("auth_id, full_name, email, email_employer_tasks")
+      .select("auth_id, full_name, email, email_employer_tasks, push_employer_tasks")
       .in("auth_id", assigneeIds),
     admin
       .from("organizations")
       .select("id, name"),
+    admin
+      .from("push_subscriptions")
+      .select("professional_id, endpoint, p256dh, auth")
+      .in("professional_id", assigneeIds),
   ]);
 
   const profileMap = Object.fromEntries(
@@ -75,6 +80,11 @@ export async function GET(req: NextRequest) {
   const orgMap = Object.fromEntries(
     (orgsRes.data ?? []).map((o) => [o.id, o.name as string])
   );
+  const pushMap = new Map<string, { endpoint: string; p256dh: string; auth: string }[]>();
+  for (const ps of pushSubsRes.data ?? []) {
+    if (!pushMap.has(ps.professional_id)) pushMap.set(ps.professional_id, []);
+    pushMap.get(ps.professional_id)!.push(ps);
+  }
 
   let remindersSent = 0;
 
@@ -116,6 +126,27 @@ export async function GET(req: NextRequest) {
       }).catch(() => {});
     } catch {
       // Email failure is non-fatal — continue processing other tasks
+    }
+
+    // Push notification — respect push_employer_tasks preference
+    if (profile.push_employer_tasks !== false) {
+      const pushSubs = pushMap.get(task.assigned_to) ?? [];
+      for (const pushSub of pushSubs) {
+        ;(async () => {
+          try {
+            const { expired } = await sendPushNotification(pushSub, {
+              title: `Task due in ${daysLeft} day${daysLeft === 1 ? "" : "s"}`,
+              body: `"${task.title}" from ${orgMap[task.organization_id] ?? "your employer"} is due on ${task.due_date}.`,
+              url: "/dashboard/tasks",
+            });
+            if (expired) {
+              await admin.from("push_subscriptions").delete()
+                .eq("professional_id", task.assigned_to)
+                .eq("endpoint", pushSub.endpoint);
+            }
+          } catch {}
+        })();
+      }
     }
   }
 

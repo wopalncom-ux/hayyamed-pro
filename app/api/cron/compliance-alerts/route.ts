@@ -3,6 +3,7 @@ import { createAdminClient } from "@/lib/supabase/server";
 import { sendComplianceAlertEmail } from "@/lib/email";
 import { pingCronMonitor } from "@/lib/cronMonitor";
 import { dispatchWebhook } from "@/lib/webhooks/dispatch";
+import { sendPushNotification } from "@/lib/push";
 
 export const runtime = "nodejs";
 
@@ -42,18 +43,22 @@ export async function GET(req: NextRequest) {
     const staffIds = links.map((l) => l.professional_id);
 
     // Fetch wallets + privacy settings for these staff
-    const [walletsRes, profilesRes, privacyRes] = await Promise.all([
+    const [walletsRes, profilesRes, privacyRes, pushSubsRes] = await Promise.all([
       admin
         .from("cme_wallets")
         .select("professional_id, completed_credits, required_credits")
         .in("professional_id", staffIds),
       admin
         .from("professional_profiles")
-        .select("auth_id, full_name, profession")
+        .select("auth_id, full_name, profession, push_compliance_alerts")
         .in("auth_id", staffIds),
       admin
         .from("profile_privacy_settings")
         .select("professional_id, employer_can_view_cme_summary")
+        .in("professional_id", staffIds),
+      admin
+        .from("push_subscriptions")
+        .select("professional_id, endpoint, p256dh, auth")
         .in("professional_id", staffIds),
     ]);
 
@@ -66,6 +71,11 @@ export async function GET(req: NextRequest) {
     const privacyMap = Object.fromEntries(
       (privacyRes.data ?? []).map((p) => [p.professional_id, p])
     );
+    const pushMap = new Map<string, { endpoint: string; p256dh: string; auth: string }[]>();
+    for (const ps of pushSubsRes.data ?? []) {
+      if (!pushMap.has(ps.professional_id)) pushMap.set(ps.professional_id, []);
+      pushMap.get(ps.professional_id)!.push(ps);
+    }
 
     // Also get org name
     const { data: org } = await admin
@@ -116,7 +126,7 @@ export async function GET(req: NextRequest) {
       });
       alertsSent++;
 
-      // Dispatch staff.compliance_changed per below-threshold staff member
+      // Dispatch webhook + push notifications per below-threshold staff member.
       // Must respect the same privacy gate as the email loop above.
       for (let i = 0; i < staffIds.length; i++) {
         const staffId = staffIds[i];
@@ -137,6 +147,28 @@ export async function GET(req: NextRequest) {
             required_credits: wallet.required_credits,
             threshold_pct: thresholdPct,
           }).catch(() => {});
+
+          // Push to the individual staff member — respect push_compliance_alerts preference
+          const staffProfile = profileMap[staffId];
+          if (staffProfile?.push_compliance_alerts !== false) {
+            const pushSubs = pushMap.get(staffId) ?? [];
+            for (const pushSub of pushSubs) {
+              ;(async () => {
+                try {
+                  const { expired } = await sendPushNotification(pushSub, {
+                    title: "Compliance alert from your employer",
+                    body: `Your CME completion is at ${pct}% — below your employer's ${thresholdPct}% threshold.`,
+                    url: "/dashboard/cme",
+                  });
+                  if (expired) {
+                    await admin.from("push_subscriptions").delete()
+                      .eq("professional_id", staffId)
+                      .eq("endpoint", pushSub.endpoint);
+                  }
+                } catch {}
+              })();
+            }
+          }
         }
       }
     }
