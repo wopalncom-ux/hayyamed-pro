@@ -121,16 +121,26 @@ export default async function CmePage({
       {/* Offline sync banner — client component, reads localStorage, auto-flushes on reconnect */}
       <CmeOfflineSyncBanner />
 
-      <div className="flex items-center justify-between mb-2">
+      <div className="flex items-center justify-between mb-2 flex-wrap gap-2">
         <h1 className="text-2xl font-bold text-[#111]">CME Wallet</h1>
-        {isPro(plan) && (
-          <a
-            href="/dashboard/cme/gap-analysis"
-            className="text-xs font-semibold text-[#1a56a0] border border-[#1a56a0] px-3 py-1.5 rounded-lg hover:bg-[#f0f4f8] transition-colors"
-          >
-            AI Gap Analysis →
-          </a>
-        )}
+        <div className="flex items-center gap-2">
+          {isPro(plan) && (
+            <a
+              href="/dashboard/cme/pathway"
+              className="text-xs font-semibold text-[#1a56a0] border border-[#1a56a0] px-3 py-1.5 rounded-lg hover:bg-[#f0f4f8] transition-colors"
+            >
+              🗺️ Learning Pathway
+            </a>
+          )}
+          {isPro(plan) && (
+            <a
+              href="/dashboard/cme/gap-analysis"
+              className="text-xs font-semibold text-[#1a56a0] border border-[#1a56a0] px-3 py-1.5 rounded-lg hover:bg-[#f0f4f8] transition-colors"
+            >
+              AI Gap Analysis →
+            </a>
+          )}
+        </div>
       </div>
       <p className="text-sm text-[#64748b] mb-6">
         Track your Continuing Medical Education credits for license renewal.

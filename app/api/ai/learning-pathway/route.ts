@@ -92,6 +92,20 @@ export async function POST(req: NextRequest) {
     const validated = LearningPathwaySchema.safeParse(JSON.parse(match[0]));
     if (!validated.success) return NextResponse.json({ error: "AI response schema mismatch" }, { status: 502 });
 
+    // Persist pathway (fire-and-forget — table may not exist yet pre-migration)
+    const admin = createAdminClient();
+    admin.from("learning_pathways").insert({
+      professional_id: user.id,
+      country,
+      profession,
+      model: "claude-sonnet-4-6",
+      prompt_version: "v1",
+      pathway_json: validated.data,
+      credits_gap: Math.max(0, requiredCredits - completedCredits),
+      cycle_end_date: cycleEndDate ?? null,
+      is_current: true,
+    }).then(undefined, () => {});
+
     return NextResponse.json(validated.data);
   } catch {
     return NextResponse.json({ error: "AI unavailable" }, { status: 503 });

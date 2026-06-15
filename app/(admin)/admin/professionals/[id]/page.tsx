@@ -23,7 +23,7 @@ export default async function AdminProfessionalDetailPage({
       .order("country"),
     admin.from("subscriptions")
       .select("*")
-      .eq("user_id", id)
+      .eq("professional_id", id)
       .order("created_at", { ascending: false }),
     admin.from("cme_activities")
       .select("id, title, provider, provider_name, activity_date, credits, verification_status, activity_category, created_at")
