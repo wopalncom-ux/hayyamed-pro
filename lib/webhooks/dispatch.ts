@@ -81,7 +81,7 @@ export async function sendWebhookDelivery(deliveryId: string): Promise<{ ok: boo
 
     const { data: delivery } = await admin
       .from("webhook_deliveries")
-      .select("id, endpoint_id, payload, attempts")
+      .select("id, endpoint_id, event_type, payload, attempts")
       .eq("id", deliveryId)
       .maybeSingle();
 
@@ -93,8 +93,8 @@ export async function sendWebhookDelivery(deliveryId: string): Promise<{ ok: boo
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "X-Hayya-Signature": p.signature,
-        "X-Hayya-Event": "webhook",
+        "X-HMP-Signature": p.signature,
+        "X-HMP-Event": delivery.event_type ?? "webhook",
         "User-Agent": "HayyaMed-Webhooks/1.0",
       },
       body: p.body,

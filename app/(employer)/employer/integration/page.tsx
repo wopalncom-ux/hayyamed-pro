@@ -352,6 +352,62 @@ X-HMP-Signature: sha256=...
         />
       </Section>
 
+      <Section title="Webhook signature verification">
+        <p className="text-sm text-[#475569] mb-4">
+          Every webhook delivery includes an{" "}
+          <code className="bg-[#f1f5f9] px-1 py-0.5 rounded text-xs font-mono">X-HMP-Signature</code> header
+          containing <code className="bg-[#f1f5f9] px-1 py-0.5 rounded text-xs font-mono">sha256=HMAC_HEX</code>.
+          Always verify this before processing the payload to prevent replay attacks.
+          Your webhook secret is shown when you register the endpoint at{" "}
+          <a href="/employer/webhooks" className="text-[#1a56a0] hover:underline">Webhooks</a>.
+        </p>
+        <div className="space-y-4">
+          <div>
+            <p className="text-xs font-semibold text-[#64748b] uppercase tracking-wide mb-2">Node.js / TypeScript</p>
+            <Code>{`import { createHmac } from "crypto";
+
+function verifyWebhookSignature(
+  rawBody: string,
+  signatureHeader: string,
+  secret: string
+): boolean {
+  const expected = "sha256=" + createHmac("sha256", secret)
+    .update(rawBody)
+    .digest("hex");
+  // Constant-time comparison prevents timing attacks
+  return expected.length === signatureHeader.length &&
+    Buffer.from(expected).equals(Buffer.from(signatureHeader));
+}
+
+// In your webhook handler (Express / Next.js API route):
+const rawBody = await req.text();
+const signature = req.headers.get("x-hmp-signature") ?? "";
+if (!verifyWebhookSignature(rawBody, signature, process.env.WEBHOOK_SECRET!)) {
+  return new Response("Invalid signature", { status: 401 });
+}
+const event = JSON.parse(rawBody);
+console.log("Event type:", req.headers.get("x-hmp-event"));`}</Code>
+          </div>
+          <div>
+            <p className="text-xs font-semibold text-[#64748b] uppercase tracking-wide mb-2">Python</p>
+            <Code>{`import hmac, hashlib
+
+def verify_webhook_signature(raw_body: bytes, signature_header: str, secret: str) -> bool:
+    expected = "sha256=" + hmac.new(
+        secret.encode(), raw_body, hashlib.sha256
+    ).hexdigest()
+    return hmac.compare_digest(expected, signature_header)
+
+# In your Flask / FastAPI handler:
+raw_body = request.get_data()
+signature = request.headers.get("X-HMP-Signature", "")
+if not verify_webhook_signature(raw_body, signature, os.environ["WEBHOOK_SECRET"]):
+    return {"error": "Invalid signature"}, 401
+event = request.get_json(force=True)`}</Code>
+          </div>
+        </div>
+      </Section>
+
       <Section title="Compliance & privacy">
         <div className="space-y-3 text-sm text-[#475569]">
           <p>
