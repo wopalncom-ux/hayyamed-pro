@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+import { headers } from "next/headers";
+import { createAdminClient } from "@/lib/supabase/server";
+import { getRequestUser } from "@/lib/auth/getRequestUser";
 
 export const runtime = "nodejs";
 
@@ -12,8 +14,7 @@ function csvCell(val: string | null | undefined): string {
 }
 
 export async function GET(request: NextRequest) {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getRequestUser(await headers());
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const orgId = request.nextUrl.searchParams.get("orgId");
@@ -64,7 +65,7 @@ export async function GET(request: NextRequest) {
   const privacyMap = Object.fromEntries((privacyRes.data ?? []).map((p) => [p.professional_id, p]));
   const walletMap = Object.fromEntries((walletsRes.data ?? []).map((w) => [w.professional_id, w]));
 
-  const headers = [
+  const csvCols = [
     "Name",
     "Profession",
     "Specialty",
@@ -116,7 +117,7 @@ export async function GET(request: NextRequest) {
   });
 
   const csv = [
-    headers.map(csvCell).join(","),
+    csvCols.map(csvCell).join(","),
     ...rows.map((r) => r.join(",")),
   ].join("\r\n");
 

@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+import { headers } from "next/headers";
+import { createAdminClient } from "@/lib/supabase/server";
+import { getRequestUser } from "@/lib/auth/getRequestUser";
 import { sendComplianceReminderEmail } from "@/lib/email";
 import { logAudit } from "@/lib/audit";
 import { z } from "zod";
@@ -12,8 +14,7 @@ const ReminderSchema = z.object({
 });
 
 export async function POST(req: NextRequest) {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getRequestUser(await headers());
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const admin = createAdminClient();

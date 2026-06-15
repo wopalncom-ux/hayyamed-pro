@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+import { headers } from "next/headers";
+import { createAdminClient } from "@/lib/supabase/server";
+import { getRequestUser } from "@/lib/auth/getRequestUser";
 import { generateApiKey } from "@/lib/apiKeyAuth";
 import { logAudit } from "@/lib/audit";
 
@@ -21,8 +23,7 @@ async function getEmployerOrg(userId: string) {
 
 // GET — list API keys for this org (never returns hashes or full keys)
 export async function GET() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getRequestUser(await headers());
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const orgId = await getEmployerOrg(user.id);
@@ -46,8 +47,7 @@ const CreateSchema = z.object({
 
 // POST — generate new API key (full key returned ONCE)
 export async function POST(req: NextRequest) {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getRequestUser(await headers());
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const orgId = await getEmployerOrg(user.id);
@@ -105,8 +105,7 @@ export async function POST(req: NextRequest) {
 
 // DELETE — revoke key
 export async function DELETE(req: NextRequest) {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getRequestUser(await headers());
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const orgId = await getEmployerOrg(user.id);

@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+import { headers } from "next/headers";
+import { createAdminClient } from "@/lib/supabase/server";
+import { getRequestUser } from "@/lib/auth/getRequestUser";
 
 export async function GET(req: Request) {
-  const supabase = await createClient();
-  const { data: { user }, error: authError } = await supabase.auth.getUser();
-  if (authError || !user) {
+  const user = await getRequestUser(await headers());
+  if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -95,7 +96,7 @@ export async function GET(req: Request) {
     return `"${(title + due).replace(/"/g, '""')}"`;
   });
 
-  const headers = [
+  const csvCols = [
     "Name",
     "Profession",
     "Authority",
@@ -147,7 +148,7 @@ export async function GET(req: Request) {
   }
 
   const dateStr = new Date().toISOString().slice(0, 10);
-  const csv = [headers.join(","), ...rows].join("\n");
+  const csv = [csvCols.join(","), ...rows].join("\n");
 
   return new NextResponse(csv, {
     headers: {

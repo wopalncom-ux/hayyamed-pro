@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+import { headers } from "next/headers";
+import { createAdminClient } from "@/lib/supabase/server";
+import { getRequestUser } from "@/lib/auth/getRequestUser";
 import { randomBytes } from "crypto";
 import { logAudit } from "@/lib/audit";
 
@@ -28,8 +30,7 @@ async function getEmployerOrg(userId: string) {
 
 // GET — list endpoints for this employer org
 export async function GET() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getRequestUser(await headers());
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const orgId = await getEmployerOrg(user.id);
@@ -75,8 +76,7 @@ const CreateSchema = z.object({
 
 // POST — create endpoint with auto-generated secret (returned once)
 export async function POST(req: NextRequest) {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getRequestUser(await headers());
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const orgId = await getEmployerOrg(user.id);
@@ -135,8 +135,7 @@ const UpdateSchema = z.object({
 
 // PATCH — toggle active / update events
 export async function PATCH(req: NextRequest) {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getRequestUser(await headers());
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const orgId = await getEmployerOrg(user.id);
@@ -180,8 +179,7 @@ export async function PATCH(req: NextRequest) {
 
 // DELETE — remove endpoint
 export async function DELETE(req: NextRequest) {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getRequestUser(await headers());
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const orgId = await getEmployerOrg(user.id);
