@@ -1,8 +1,32 @@
 ﻿import { MetadataRoute } from "next";
+import fs from "fs";
+import path from "path";
 
 const BASE = "https://hayyamed.pro";
 
+function getBlogSlugs(): string[] {
+  try {
+    const blogDir = path.join(process.cwd(), "app", "blog");
+    return fs
+      .readdirSync(blogDir)
+      .filter((name) => {
+        if (name.endsWith(".tsx") || name.endsWith(".ts")) return false;
+        const pagePath = path.join(blogDir, name, "page.tsx");
+        return fs.existsSync(pagePath);
+      });
+  } catch {
+    return [];
+  }
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
+  const blogEntries: MetadataRoute.Sitemap = getBlogSlugs().map((slug) => ({
+    url: `${BASE}/blog/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly",
+    priority: 0.9,
+  }));
+
   return [
     { url: BASE,                      lastModified: new Date(), changeFrequency: "weekly",  priority: 1.0 },
     { url: `${BASE}/pricing`,         lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
@@ -87,152 +111,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/physical-medicine-cme`,      lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/vascular-surgery-cme`,       lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog`,                                    lastModified: new Date(), changeFrequency: "weekly",  priority: 0.85 },
-    { url: `${BASE}/blog/online-cme-recognition-gcc`,         lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/how-many-cme-credits-gcc`,           lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/dha-renewal-guide-2026`,             lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/doh-renewal-guide-2026`,              lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/moh-kuwait-renewal-guide-2026`,      lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/omsb-renewal-guide-2026`,            lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/qchp-renewal-guide-2026`,            lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/scfhs-cme-requirements-2026`,        lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/cme-vs-cpd-gcc`,                     lastModified: new Date(), changeFrequency: "monthly", priority: 0.85 },
+    ...blogEntries,
     { url: `${BASE}/critical-care-cme`,       lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/occupational-medicine-cme`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/neonatology-cme`,         lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/allergy-immunology-cme`,  lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/nuclear-medicine-cme`,    lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/nhra-renewal-guide-2026`,             lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/what-happens-if-you-miss-cme-gcc`,   lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/best-cme-tracking-apps-gcc-2026`,    lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
     { url: `${BASE}/how-it-works`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
     { url: `${BASE}/security`,     lastModified: new Date(), changeFrequency: "yearly",  priority: 0.85 },
-    { url: `${BASE}/features`,                                        lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
-    { url: `${BASE}/blog/nurse-cme-requirements-gcc-2026`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/pharmacist-cme-requirements-gcc-2026`,     lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/cme-for-international-doctors-gcc`,        lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
-    { url: `${BASE}/blog/dentist-cme-requirements-gcc-2026`,        lastModified: new Date(), changeFrequency: "monthly", priority: 0.9  },
-    { url: `${BASE}/blog/allied-health-cpd-requirements-gcc-2026`,  lastModified: new Date(), changeFrequency: "monthly", priority: 0.9  },
-    { url: `${BASE}/blog/cme-for-locum-doctors-gcc`,                lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
+    { url: `${BASE}/features`,     lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
     { url: `${BASE}/sports-medicine-cme`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/interventional-radiology-cme`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/aesthetic-medicine-cme`,       lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/palliative-care-cme`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/cardiothoracic-surgery-cme`,   lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    // Blog posts — sessions 55–59 (Arabic + new English posts)
-    { url: `${BASE}/blog/qchp-renewal-arabic`,                   lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/scfhs-cme-arabic`,                      lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/dha-cpd-arabic`,                        lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/gcc-cme-comparison-arabic`,             lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/cme-tracking-tips-arabic`,              lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/saudi-vision-2030-healthcare-cme`,      lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/haad-to-dha-license-transfer`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/scfhs-eligibility-requirements-expats`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/kuwait-moh-license-renewal-guide`,      lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/nursing-cpd-uk-vs-gcc`,                 lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/omsb-cme-renewal-guide-2026`,           lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/nhra-cpd-renewal-guide-bahrain`,        lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/physician-vs-nurse-cme-requirements-gcc`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/dataflow-verification-guide-gcc`,       lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/conference-cme-credits-how-it-works`,   lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    // Blog posts — session 60 (new English posts)
-    { url: `${BASE}/blog/india-nmc-cme-requirements-gcc-2026`,   lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/do-cme-credits-expire-gcc`,             lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/cme-compliance-career-break-gcc`,       lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/pakistan-pmc-cpd-requirements-2026`,    lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/managing-multiple-gcc-medical-licenses`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/how-to-read-cme-certificate-gcc`,       lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    // Blog posts — session 61 (new English posts)
-    { url: `${BASE}/blog/ahpra-cpd-requirements-2026`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/emergency-medicine-cme-gcc`,           lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/online-vs-inperson-cme-gcc`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/cme-portfolio-best-practices-gcc`,    lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/specialty-board-recognition-gcc`,     lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    // Blog posts — session 62 (new English posts)
-    { url: `${BASE}/blog/india-mbbs-licensing-gcc-2026`,       lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/midwifery-cpd-requirements-gcc`,      lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/dental-hygienist-cme-gcc`,            lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/hospital-pharmacy-cpd-gcc`,           lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/aviation-medicine-cme-gcc`,           lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    // Blog posts — session 63 (new English posts)
-    { url: `${BASE}/blog/kuwait-nursing-cpd-requirements`,         lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/oman-pharmacist-cme-requirements`,        lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/ophthalmologist-cme-requirements-gcc`,    lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/radiology-cme-requirements-gcc`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/psychiatry-cpd-requirements-gcc`,         lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    // Blog posts — session 64
-    { url: `${BASE}/blog/dermatologist-cme-gcc`,                  lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/cardiothoracic-surgery-cpd-gcc`,         lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/physiotherapist-cpd-gcc`,                lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/icu-nurse-cme-gcc`,                      lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/scfhs-mumaris-portal-guide`,             lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
-    // Blog posts — session 65
-    { url: `${BASE}/blog/ophthalmologist-cme-gcc-guide`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/paediatric-nurse-cpd-gcc`,               lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/omsb-renewal-guide-oman-2026`,           lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/nhra-renewal-guide-bahrain-2026`,        lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/radiology-cpd-gcc-advanced`,             lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    // Blog posts — session 66
-    { url: `${BASE}/blog/general-surgeon-cme-gcc`,               lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/obgyn-cme-gcc`,                         lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/endocrinologist-cme-gcc`,               lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/gastroenterologist-cme-gcc`,            lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/anaesthesiologist-cme-gcc`,             lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/cardiologist-cme-gcc`,                 lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/nephrologist-cme-gcc`,                 lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/orthopaedic-surgeon-cme-gcc`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/critical-care-physician-cme-gcc`,      lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/infectious-disease-cme-gcc`,           lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/pulmonologist-cme-gcc`,                lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/neurologist-cme-gcc`,                  lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/haematologist-cme-gcc`,                lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/rheumatologist-cme-gcc`,               lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/paediatric-physician-cme-gcc`,         lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/urologist-cme-gcc`,                    lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/medical-oncologist-cme-gcc`,           lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/geriatrician-cme-gcc`,                 lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/vascular-surgeon-cme-gcc`,             lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/neurosurgeon-cme-gcc`,                 lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    // Blog posts — session 70
-    { url: `${BASE}/blog/addiction-medicine-cme-gcc`,           lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/sleep-medicine-cme-gcc`,               lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/forensic-medicine-cme-gcc`,            lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/medical-genetics-cme-gcc`,             lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/clinical-toxicology-cme-gcc`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    // Blog posts — session 71
-    { url: `${BASE}/blog/plastic-surgeon-cme-gcc`,              lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/ent-surgeon-cme-gcc`,                  lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/reproductive-medicine-cme-gcc`,        lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/occupational-medicine-physician-cme-gcc`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/neonatologist-cme-gcc`,                lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    // Session 72 — tools + specialty blog posts
-    { url: `${BASE}/tools/compare-cme`,                          lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
-    { url: `${BASE}/blog/colorectal-surgeon-cme-gcc`,            lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/oral-maxillofacial-surgeon-cme-gcc`,    lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/sports-medicine-physician-cme-gcc`,     lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/transplant-surgeon-cme-gcc`,            lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    // Session 73 — public course catalog + share + 5 specialty blog posts
-    { url: `${BASE}/courses`,                                     lastModified: new Date(), changeFrequency: "weekly",  priority: 0.95 },
-    { url: `${BASE}/blog/interventional-cardiologist-cme-gcc`,   lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/paediatric-surgeon-cme-gcc`,            lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/hepatologist-cme-gcc`,                  lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/clinical-pharmacologist-cme-gcc`,       lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/geriatric-psychiatrist-cme-gcc`,        lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    // Session 74 — pricing comparison matrix + CME heatmap + 5 specialty blog posts
-    { url: `${BASE}/blog/endoscopist-gastroenterologist-cme-gcc`,  lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/neuroradiologist-cme-gcc`,                lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/clinical-immunologist-cme-gcc`,           lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/palliative-care-physician-cme-gcc`,       lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/addiction-psychiatrist-cme-gcc`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    // Session 75 — multi-license wallet + CME filter + 5 specialty blog posts
-    { url: `${BASE}/blog/endocrinologist-cme-gcc`,                 lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/rheumatologist-cme-gcc`,                  lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/haematologist-cme-gcc`,                   lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/medical-oncologist-cme-gcc`,              lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/anaesthesiologist-cme-gcc`,               lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    // Session 76 — compliance certificate PDF + admin analytics + 4 specialty blog posts
-    { url: `${BASE}/blog/pulmonologist-respirologist-cme-gcc`,     lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/family-medicine-gp-cme-gcc`,              lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/sleep-medicine-physician-cme-gcc`,        lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blog/dermatopathologist-cme-gcc`,              lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    // Session 72 — tools
+    { url: `${BASE}/tools/compare-cme`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
+    // Session 73 — public course catalog
+    { url: `${BASE}/courses`,           lastModified: new Date(), changeFrequency: "weekly",  priority: 0.95 },
   ];
 }
