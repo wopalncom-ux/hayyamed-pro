@@ -68,6 +68,41 @@ function getLimiter(action: string, maxPerHour: number): Ratelimit | null {
   return _limiters.get(key)!;
 }
 
+/**
+ * Rate limit by API key ID — used for /api/v1/* endpoints.
+ * Sliding window: maxPerMinute requests per 60 seconds per key.
+ * Fail open (allowed) if Upstash is not configured.
+ */
+export async function checkApiKeyRateLimit(
+  keyId: string,
+  maxPerMinute: number = 100
+): Promise<RateLimitResult> {
+  const redis = getRedis();
+  if (!redis) return { allowed: true };
+
+  const limiterKey = `apikey:${maxPerMinute}`;
+  if (!_limiters.has(limiterKey)) {
+    _limiters.set(
+      limiterKey,
+      new Ratelimit({
+        redis,
+        limiter: Ratelimit.slidingWindow(maxPerMinute, "60 s"),
+        prefix: "hayyamed:rl:v1",
+        analytics: false,
+      })
+    );
+  }
+
+  const result = await _limiters.get(limiterKey)!.limit(keyId);
+  if (!result.success) {
+    const retryAfter = result.reset
+      ? Math.ceil((result.reset - Date.now()) / 1000)
+      : 60;
+    return { allowed: false, retryAfterSeconds: retryAfter, remaining: 0 };
+  }
+  return { allowed: true, remaining: result.remaining };
+}
+
 export async function checkAndLogRateLimit({
   action,
   userId,

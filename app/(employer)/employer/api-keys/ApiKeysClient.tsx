@@ -279,32 +279,42 @@ export default function ApiKeysClient({ initialKeys }: { initialKeys: ApiKey[] }
           <div className="bg-[#f0f7ff] border border-[#bfdbfe] rounded-xl px-5 py-4">
             <p className="text-xs font-semibold text-[#1e40af] mb-2">Quick start</p>
             <pre className="text-[10px] text-[#1e40af] bg-[#dbeafe] rounded-lg p-3 overflow-x-auto whitespace-pre-wrap leading-relaxed">
-{`# Query all staff compliance status
+{`# Staff compliance status
 curl https://hayyamed.pro/api/v1/staff/compliance \\
   -H "X-Api-Key: hmp_live_YOUR_KEY"
 
-# Filter by status
-curl ".../api/v1/staff/compliance?status=non_compliant"
+# License expiry (expiring within 90 days)
+curl ".../api/v1/staff/licenses?expiring_within_days=90"
 
-# Paginate
-curl ".../api/v1/staff/compliance?page=2&per_page=50"`}
+# Bulk sync employees from HRIS
+curl -X POST .../api/v1/staff/sync \\
+  -H "X-Api-Key: hmp_live_YOUR_KEY" \\
+  -H "Content-Type: application/json" \\
+  -d '{"staff":[{"email":"dr@hosp.qa","department":"Cardiology"}]}'`}
             </pre>
           </div>
 
           <div className="bg-[#f8fafc] border border-[#e2e8f0] rounded-xl px-5 py-4">
             <p className="text-xs font-semibold text-[#374151] mb-2">Available endpoints</p>
-            <div className="space-y-2">
-              <div className="flex items-start gap-2">
-                <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-[#dcfce7] text-[#15803d] flex-shrink-0 mt-0.5">GET</span>
-                <div>
-                  <code className="text-[10px] text-[#374151]">/api/v1/staff/compliance</code>
-                  <p className="text-[10px] text-[#94a3b8]">All staff compliance status, credits, gaps</p>
+            <div className="space-y-2.5">
+              {[
+                { method: "GET",  path: "/api/v1/staff/compliance", scope: "read:compliance", desc: "Staff compliance status, credits, gaps" },
+                { method: "GET",  path: "/api/v1/staff/licenses",   scope: "read:licenses",   desc: "License records + expiry dates for HRIS sync" },
+                { method: "POST", path: "/api/v1/staff/sync",       scope: "read:staff",      desc: "Bulk-create link requests from employee email list" },
+              ].map(({ method, path, scope, desc }) => (
+                <div key={path} className="flex items-start gap-2">
+                  <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded flex-shrink-0 mt-0.5 ${method === "GET" ? "bg-[#dcfce7] text-[#15803d]" : "bg-[#dbeafe] text-[#1d4ed8]"}`}>
+                    {method}
+                  </span>
+                  <div>
+                    <code className="text-[10px] text-[#374151]">{path}</code>
+                    <p className="text-[10px] text-[#94a3b8]">{desc}</p>
+                    <span className="text-[9px] font-medium px-1 py-0.5 rounded bg-[#f0f7ff] text-[#1a56a0]">{scope}</span>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
-            <p className="text-[10px] text-[#94a3b8] mt-3">
-              More endpoints (POST staff sync, license updates) coming in the next API version.
-            </p>
+            <p className="text-[10px] text-[#94a3b8] mt-3">Rate limit: 100 req/min (20 req/min for sync). All endpoints return JSON.</p>
           </div>
         </div>
       </div>

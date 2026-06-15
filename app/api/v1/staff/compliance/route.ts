@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyApiKey, requireScope } from "@/lib/apiKeyAuth";
 import { createAdminClient } from "@/lib/supabase/server";
+import { checkApiKeyRateLimit } from "@/lib/rateLimit";
 
 export const runtime = "nodejs";
 
@@ -34,6 +35,14 @@ export async function GET(req: NextRequest) {
 
   if (!requireScope(ctx, "read:compliance")) {
     return NextResponse.json({ error: "Insufficient scope — requires read:compliance" }, { status: 403 });
+  }
+
+  const rl = await checkApiKeyRateLimit(ctx.keyId);
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: "Rate limit exceeded — 100 requests per minute per API key" },
+      { status: 429, headers: { "Retry-After": String(rl.retryAfterSeconds) } }
+    );
   }
 
   const { searchParams } = new URL(req.url);
