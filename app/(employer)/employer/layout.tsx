@@ -58,9 +58,10 @@ export default async function EmployerLayout({ children }: { children: React.Rea
         <div className="max-w-5xl mx-auto flex gap-6 text-sm overflow-x-auto">
           {[
             { href: "/employer",                   label: "Dashboard" },
+            { href: "/employer/staff/import",      label: "Import Staff" },
             { href: "/employer/required-training", label: "Required Training" },
             { href: "/employer/analytics",         label: "Analytics" },
-            { href: "/employer/webhooks",            label: "Webhooks" },
+            { href: "/employer/webhooks",          label: "Webhooks" },
             { href: "/employer/api-keys",          label: "API Keys" },
             { href: "/employer/integration",       label: "Integration" },
           ].map(({ href, label }) => (

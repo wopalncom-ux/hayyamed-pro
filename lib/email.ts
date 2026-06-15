@@ -1529,3 +1529,51 @@ export async function sendComplianceAlertEmail({
     `)
   );
 }
+
+export async function sendTaskDeadlineReminderEmail({
+  to, staffName, orgName, taskTitle, dueDate, daysLeft, category, creditsTarget, message,
+}: {
+  to: string;
+  staffName: string;
+  orgName: string;
+  taskTitle: string;
+  dueDate: string;
+  daysLeft: number;
+  category: string | null;
+  creditsTarget: number | null;
+  message: string | null;
+}) {
+  const urgent = daysLeft <= 1;
+  const color = urgent ? "#dc2626" : daysLeft <= 3 ? "#d97706" : "#1a56a0";
+  const urgencyLabel = urgent ? "Due Tomorrow!" : daysLeft === 0 ? "Due Today!" : `${daysLeft} Days Left`;
+
+  const meta = [
+    category ? `<span style="font-size:12px;color:#374151;background:#e0f2fe;padding:2px 8px;border-radius:4px;text-transform:capitalize">${esc(category.replace(/_/g, " "))}</span>` : "",
+    creditsTarget ? `<span style="font-size:12px;color:#1a56a0;font-weight:600">${creditsTarget} credits target</span>` : "",
+  ].filter(Boolean).join("&nbsp;&nbsp;");
+
+  await send(
+    to,
+    `${urgent ? "⚠️ " : ""}CPD Task Due in ${urgencyLabel} — ${esc(taskTitle)}`,
+    baseLayout(`
+      <p style="color:#374151;font-size:16px;margin:0 0 8px">Hi ${esc(staffName)},</p>
+      <p style="color:#374151;margin:0 0 16px">
+        You have a CPD task assigned by <strong>${esc(orgName)}</strong> due soon:
+      </p>
+      <div style="background:#fff7ed;border:2px solid ${color};border-radius:10px;padding:16px 20px;margin:0 0 20px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px">
+          <p style="margin:0;color:#111;font-weight:700;font-size:16px;flex:1">${esc(taskTitle)}</p>
+          <span style="background:${color};color:white;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap">${esc(urgencyLabel)}</span>
+        </div>
+        <p style="margin:0 0 8px;color:#92400e;font-size:13px">Due: <strong>${new Date(dueDate).toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}</strong></p>
+        ${meta ? `<div style="margin:8px 0 0;display:flex;gap:12px;flex-wrap:wrap">${meta}</div>` : ""}
+        ${message ? `<p style="margin:10px 0 0;color:#374151;font-size:13px;border-top:1px solid #fed7aa;padding-top:10px">${esc(message)}</p>` : ""}
+      </div>
+      <a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">View &amp; Complete Task →</a>
+      <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">
+        This reminder was sent because this task has an upcoming due date.
+        You can manage your email preferences in your <a href="${APP_URL}/dashboard/settings" style="color:#1a56a0">Hayya Med Pro settings</a>.
+      </p>
+    `)
+  );
+}

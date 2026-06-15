@@ -1,5 +1,7 @@
 import { NextRequest } from "next/server";
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+import { headers } from "next/headers";
+import { createAdminClient } from "@/lib/supabase/server";
+import { getRequestUser } from "@/lib/auth/getRequestUser";
 import { getUserPlan, isPro } from "@/lib/subscription";
 import { FREE_ACTIVITY_LIMIT } from "@/lib/planLimits";
 import { z } from "zod";
@@ -16,8 +18,7 @@ const BodySchema = z.object({
 });
 
 export async function POST(req: NextRequest) {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getRequestUser(await headers());
   if (!user) return new Response("Unauthorized", { status: 401 });
 
   const raw = await req.json().catch(() => null);
@@ -28,7 +29,6 @@ export async function POST(req: NextRequest) {
 
   const admin = createAdminClient();
 
-  // Enforce Free tier cap server-side
   const plan = await getUserPlan(user.id);
   if (!isPro(plan)) {
     const { count } = await admin

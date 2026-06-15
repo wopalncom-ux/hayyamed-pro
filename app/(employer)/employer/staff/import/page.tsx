@@ -12,7 +12,7 @@ export default async function StaffImportPage() {
   const admin = createAdminClient();
   const { data: member } = await admin
     .from("organization_members")
-    .select("org_id, organizations(name)")
+    .select("organization_id, organizations(name)")
     .eq("auth_id", user.id)
     .eq("role", "employer_admin")
     .maybeSingle();
