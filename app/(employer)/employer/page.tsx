@@ -42,9 +42,11 @@ const STATUS_CONFIG: Record<ComplianceStatus, { label: string; classes: string }
 export default async function EmployerDashboardPage({
   searchParams,
 }: {
-  searchParams: Promise<{ setup?: string }>;
+  searchParams: Promise<{ setup?: string; q?: string; status?: string }>;
 }) {
   const sp = await searchParams;
+  const searchQuery = sp.q?.trim().toLowerCase() ?? "";
+  const statusFilter = sp.status ?? "";
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
@@ -140,7 +142,7 @@ export default async function EmployerDashboardPage({
     };
   });
 
-  // Summary stats
+  // Summary stats — always based on full staff (not filtered view)
   const total = staff.length;
   const compliant = staff.filter((s) => s.complianceStatus === "compliant").length;
   const atRisk = staff.filter((s) => s.complianceStatus === "at_risk").length;
@@ -152,16 +154,31 @@ export default async function EmployerDashboardPage({
            (s.daysToExpiry !== null && s.daysToExpiry <= 30)
   );
 
-  // Group by department
-  const deptMap = new Map<string, StaffMember[]>();
-  for (const s of staff) {
+  // Apply search + status filter for the table view
+  const displayStaff = staff.filter((s) => {
+    if (statusFilter && s.complianceStatus !== statusFilter) return false;
+    if (searchQuery) {
+      const q = searchQuery;
+      return (
+        s.name.toLowerCase().includes(q) ||
+        s.profession.toLowerCase().includes(q) ||
+        (s.specialty ?? "").toLowerCase().includes(q) ||
+        (s.department ?? "").toLowerCase().includes(q)
+      );
+    }
+    return true;
+  });
+
+  // Group by department — based on displayStaff
+  const deptMapDisplay = new Map<string, StaffMember[]>();
+  for (const s of displayStaff) {
     const key = s.department ?? "";
-    if (!deptMap.has(key)) deptMap.set(key, []);
-    deptMap.get(key)!.push(s);
+    if (!deptMapDisplay.has(key)) deptMapDisplay.set(key, []);
+    deptMapDisplay.get(key)!.push(s);
   }
-  const hasDepartments = [...deptMap.keys()].some((k) => k !== "");
+  const hasDepartments = [...deptMapDisplay.keys()].some((k) => k !== "");
   const deptGroups: Array<{ name: string; members: StaffMember[] }> = [];
-  for (const [key, members] of deptMap) {
+  for (const [key, members] of deptMapDisplay) {
     deptGroups.push({ name: key || "Unassigned", members });
   }
   deptGroups.sort((a, b) => {
@@ -230,6 +247,59 @@ export default async function EmployerDashboardPage({
         <StatCard label="License ≤30d" value={expiringSoon} color={expiringSoon > 0 ? "red" : "green"} />
       </div>
 
+      {/* Search + status filter */}
+      {total > 0 && (
+        <div className="flex flex-col sm:flex-row gap-3 mb-6">
+          {/* Search form */}
+          <form method="GET" className="flex-1">
+            {sp.setup && <input type="hidden" name="setup" value={sp.setup} />}
+            {statusFilter && <input type="hidden" name="status" value={statusFilter} />}
+            <div className="relative">
+              <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#94a3b8]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+              </svg>
+              <input
+                name="q"
+                defaultValue={sp.q ?? ""}
+                placeholder="Search by name, profession, department…"
+                className="w-full pl-9 pr-4 py-2 text-sm border border-[#e2e8f0] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#1a56a0] focus:border-transparent"
+              />
+            </div>
+          </form>
+          {/* Status filter pills */}
+          <div className="flex items-center gap-2 flex-wrap">
+            {[
+              { key: "", label: "All" },
+              { key: "compliant",     label: "Compliant",     badge: "bg-[#dcfce7] text-[#16a34a]" },
+              { key: "at_risk",       label: "At Risk",       badge: "bg-[#fff7ed] text-[#d97706]" },
+              { key: "non_compliant", label: "Non-Compliant", badge: "bg-[#fef2f2] text-[#dc2626]" },
+            ].map(({ key, label, badge }) => {
+              const active = statusFilter === key;
+              const params = new URLSearchParams();
+              if (sp.q) params.set("q", sp.q);
+              if (key) params.set("status", key);
+              return (
+                <a
+                  key={key}
+                  href={`/employer${params.toString() ? `?${params.toString()}` : ""}`}
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-full border transition-colors ${
+                    active
+                      ? (badge ?? "bg-[#1a56a0] text-white border-[#1a56a0]")
+                      : "border-[#e2e8f0] text-[#64748b] hover:border-[#1a56a0] hover:text-[#1a56a0]"
+                  }`}
+                >
+                  {label}
+                  {key === ""     && ` (${total})`}
+                  {key === "compliant"     && ` (${compliant})`}
+                  {key === "at_risk"       && ` (${atRisk})`}
+                  {key === "non_compliant" && ` (${nonCompliant})`}
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       {/* Alerts */}
       {needsAttention.length > 0 && (
         <div className="bg-[#fef9c3] border border-[#fde68a] rounded-xl p-4 mb-6">
@@ -293,7 +363,14 @@ export default async function EmployerDashboardPage({
       <div className="bg-white rounded-xl border border-[#e2e8f0]">
         <div className="px-6 py-4 border-b border-[#e2e8f0] flex items-center justify-between">
           <div>
-            <h2 className="text-base font-semibold text-[#111]">Staff Compliance</h2>
+            <h2 className="text-base font-semibold text-[#111]">
+              Staff Compliance
+              {(searchQuery || statusFilter) && (
+                <span className="ml-2 text-sm font-normal text-[#64748b]">
+                  — {displayStaff.length} of {total} shown
+                </span>
+              )}
+            </h2>
             <p className="text-xs text-[#64748b] mt-0.5">
               CME and license data shown only where staff have given consent.
               {hasDepartments && " Click the department tag on any row to reassign."}
@@ -301,7 +378,13 @@ export default async function EmployerDashboardPage({
           </div>
         </div>
 
-        {staff.length === 0 ? (
+        {displayStaff.length === 0 && total > 0 ? (
+          <div className="px-6 py-10 text-center">
+            <p className="text-sm font-semibold text-[#374151] mb-1">No staff match your filter</p>
+            <p className="text-xs text-[#64748b] mb-4">Try a different search term or status.</p>
+            <a href="/employer" className="text-xs text-[#1a56a0] hover:underline">Clear filters</a>
+          </div>
+        ) : total === 0 ? (
           <div className="px-6 py-10">
             <div className="text-center mb-8">
               <div className="w-16 h-16 rounded-2xl bg-[#e8f0fe] flex items-center justify-center mx-auto mb-4">

@@ -17,7 +17,10 @@ export const runtime = "nodejs";
  * Query params:
  *   ?page=1&per_page=100
  *   ?status=compliant|non_compliant|at_risk
- *   ?profession=physician|nurse|...
+ *   ?department=Cardiology
+ *
+ * Privacy: staff who have set employer_can_view_cme_summary=false are
+ * included in the response with data_visible=false and null credit fields.
  */
 export async function GET(req: NextRequest) {
   const apiKey = req.headers.get("x-api-key") ?? req.headers.get("authorization")?.replace("Bearer ", "");
@@ -50,104 +53,122 @@ export async function GET(req: NextRequest) {
   const perPage = Math.min(200, Math.max(1, parseInt(searchParams.get("per_page") ?? "100")));
   const statusFilter = searchParams.get("status");
   const professionFilter = searchParams.get("profession");
+  const departmentFilter = searchParams.get("department");
 
   const admin = createAdminClient();
 
-  // Get linked professionals for this org
-  let query = admin
+  // Get approved staff links for this org
+  const { data: links, error: linksErr } = await admin
     .from("employer_link_requests")
-    .select(`
-      professional_id,
-      professional_profiles!inner(
-        auth_id, full_name, profession, specialty,
-        cme_wallets(
-          country, profession, compliance_status,
-          completed_credits, required_credits, cycle_end_date
-        )
-      )
-    `)
-    .eq("organization_id", ctx.organizationId)
-    .eq("status", "approved")
-    .range((page - 1) * perPage, page * perPage - 1);
-
-  const { data: links, error, count } = await admin
-    .from("employer_link_requests")
-    .select("professional_id", { count: "exact", head: true })
+    .select("professional_id, department")
     .eq("organization_id", ctx.organizationId)
     .eq("status", "approved");
 
-  const totalCount = count ?? 0;
+  if (linksErr) return NextResponse.json({ error: linksErr.message }, { status: 500 });
+  if (!links?.length) {
+    return NextResponse.json({
+      data: [],
+      pagination: { page, per_page: perPage, total: 0, total_pages: 0 },
+      meta: { organization_id: ctx.organizationId, generated_at: new Date().toISOString(), api_version: "v1" },
+    });
+  }
 
-  const { data: staffLinks } = await query;
+  // Apply department filter before fetching (reduces downstream queries)
+  let filteredLinks = links;
+  if (departmentFilter) {
+    filteredLinks = filteredLinks.filter(
+      (l) => (l.department ?? "unassigned").toLowerCase() === departmentFilter.toLowerCase()
+    );
+  }
 
-  type ProfileRow = {
-    auth_id: string;
-    full_name: string | null;
-    profession: string | null;
-    specialty: string | null;
-    cme_wallets: {
-      country: string;
-      profession: string;
-      compliance_status: string;
-      completed_credits: number;
-      required_credits: number;
-      cycle_end_date: string | null;
-    }[];
-  };
+  const staffIds = filteredLinks.map((l) => l.professional_id);
+  const deptMap = Object.fromEntries(filteredLinks.map((l) => [l.professional_id, l.department]));
 
-  type LinkRow = {
-    professional_id: string;
-    professional_profiles: ProfileRow | ProfileRow[];
-  };
+  // Parallel fetch: profiles + wallets + privacy settings
+  const [profilesRes, walletsRes, privacyRes] = await Promise.all([
+    admin
+      .from("professional_profiles")
+      .select("auth_id, full_name, profession, specialty")
+      .in("auth_id", staffIds),
+    admin
+      .from("cme_wallets")
+      .select("professional_id, country, profession, compliance_status, completed_credits, required_credits, cycle_end_date")
+      .in("professional_id", staffIds),
+    admin
+      .from("profile_privacy_settings")
+      .select("professional_id, employer_can_view_cme_summary")
+      .in("professional_id", staffIds),
+  ]);
 
-  const staff = (staffLinks as unknown as LinkRow[] ?? []).map((link) => {
-    const profile = Array.isArray(link.professional_profiles)
-      ? link.professional_profiles[0]
-      : link.professional_profiles;
+  const profileMap = Object.fromEntries((profilesRes.data ?? []).map((p) => [p.auth_id, p]));
+  const privacyMap = Object.fromEntries(
+    (privacyRes.data ?? []).map((p) => [p.professional_id, p.employer_can_view_cme_summary])
+  );
 
-    const wallets = profile?.cme_wallets ?? [];
+  // Group wallets by professional_id
+  const walletsByProf = new Map<string, typeof walletsRes.data>();
+  for (const w of walletsRes.data ?? []) {
+    if (!walletsByProf.has(w.professional_id)) walletsByProf.set(w.professional_id, []);
+    walletsByProf.get(w.professional_id)!.push(w);
+  }
 
-    return {
-      professional_id: link.professional_id,
-      full_name: profile?.full_name ?? null,
-      profession: profile?.profession ?? null,
-      specialty: profile?.specialty ?? null,
-      compliance: wallets.map((w) => ({
-        country: w.country,
-        profession: w.profession,
-        status: w.compliance_status,
-        completed_credits: w.completed_credits,
-        required_credits: w.required_credits,
-        cycle_end_date: w.cycle_end_date,
-        gap: Math.max(0, w.required_credits - w.completed_credits),
-        pct_complete: w.required_credits > 0
-          ? Math.round((w.completed_credits / w.required_credits) * 100)
-          : 100,
-      })),
-      overall_status: wallets.length === 0
+  // Build rows
+  let rows = staffIds.map((pid) => {
+    const profile = profileMap[pid];
+    const cmeVisible = privacyMap[pid] !== false;
+    const wallets = cmeVisible ? (walletsByProf.get(pid) ?? []) : [];
+
+    const overallStatus = !cmeVisible
+      ? "private"
+      : wallets.length === 0
         ? "unknown"
         : wallets.every((w) => w.compliance_status === "compliant")
           ? "compliant"
           : wallets.some((w) => w.compliance_status === "non_compliant")
             ? "non_compliant"
-            : "at_risk",
+            : "at_risk";
+
+    return {
+      professional_id: pid,
+      department: deptMap[pid] ?? null,
+      full_name: profile?.full_name ?? null,
+      profession: profile?.profession ?? null,
+      specialty: profile?.specialty ?? null,
+      overall_status: overallStatus,
+      data_visible: cmeVisible,
+      compliance: cmeVisible
+        ? wallets.map((w) => ({
+            country: w.country,
+            profession: w.profession,
+            status: w.compliance_status,
+            completed_credits: w.completed_credits,
+            required_credits: w.required_credits,
+            gap: Math.max(0, (w.required_credits ?? 0) - (w.completed_credits ?? 0)),
+            pct_complete:
+              (w.required_credits ?? 0) > 0
+                ? Math.round(((w.completed_credits ?? 0) / w.required_credits) * 100)
+                : 100,
+            cycle_end_date: w.cycle_end_date,
+          }))
+        : null,
     };
   });
 
-  // Apply filters after fetch (wallet filters)
-  const filtered = staff.filter((s) => {
-    if (statusFilter && s.overall_status !== statusFilter) return false;
-    if (professionFilter && s.profession !== professionFilter) return false;
-    return true;
-  });
+  // Apply status and profession filters
+  if (statusFilter) rows = rows.filter((r) => r.overall_status === statusFilter);
+  if (professionFilter) rows = rows.filter((r) => r.profession === professionFilter);
+
+  const total = rows.length;
+  const start = (page - 1) * perPage;
+  const pageRows = rows.slice(start, start + perPage);
 
   return NextResponse.json({
-    data: filtered,
+    data: pageRows,
     pagination: {
       page,
       per_page: perPage,
-      total: totalCount,
-      total_pages: Math.ceil(totalCount / perPage),
+      total,
+      total_pages: Math.ceil(total / perPage),
     },
     meta: {
       organization_id: ctx.organizationId,
