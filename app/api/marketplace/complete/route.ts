@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { logAudit } from "@/lib/audit";
+import { dispatchWebhook } from "@/lib/webhooks/dispatch";
 
 const VALID_CATEGORIES = [
   "conference", "online", "workshop", "journal", "teaching",
@@ -114,6 +115,22 @@ export async function POST(req: NextRequest) {
     targetId: enrollmentId,
     metadata: { courseId: enrollment.course_id, credits: course.credits, activityId: activity.id },
   });
+
+  // Dispatch course.completed webhook to employer orgs this professional is linked to
+  const { data: links } = await admin
+    .from("employer_link_requests")
+    .select("organization_id")
+    .eq("professional_id", user.id)
+    .eq("status", "approved");
+  for (const link of links ?? []) {
+    dispatchWebhook(link.organization_id, "course.completed", {
+      professional_id: user.id,
+      course_id: enrollment.course_id,
+      course_title: course.title,
+      credits: course.credits,
+      enrollment_id: enrollmentId,
+    }).catch(() => {});
+  }
 
   return NextResponse.json({ ok: true, creditsIssued: course.credits });
 }

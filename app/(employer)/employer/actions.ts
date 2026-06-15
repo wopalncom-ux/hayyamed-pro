@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { logAudit } from "@/lib/audit";
 import { sendLinkApprovedEmail, sendLinkRejectedEmail } from "@/lib/email";
 import { EMPLOYER_TIERS, type EmployerTierKey } from "@/lib/paddle";
+import { dispatchWebhook } from "@/lib/webhooks/dispatch";
 
 export async function approveLinkRequest(requestId: string, organizationId: string) {
   const supabase = await createClient();
@@ -69,7 +70,7 @@ export async function approveLinkRequest(requestId: string, organizationId: stri
     metadata: { organizationId, resolvedBy: user.id },
   });
 
-  // Fire-and-forget: notify the professional their link was approved
+  // Fire-and-forget: notify the professional + dispatch staff.linked webhook
   if (request?.professional_id) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const orgs = (request as any).organizations;
@@ -87,6 +88,11 @@ export async function approveLinkRequest(requestId: string, organizationId: stri
           orgName,
         }).catch(() => {});
       }
+    }).catch(() => {});
+
+    dispatchWebhook(organizationId, "staff.linked", {
+      professional_id: request.professional_id,
+      link_request_id: requestId,
     }).catch(() => {});
   }
 
@@ -150,6 +156,57 @@ export async function rejectLinkRequest(requestId: string, organizationId: strin
       }
     }).catch(() => {});
   }
+
+  revalidatePath("/employer");
+  return { error: null };
+}
+
+export async function removeStaffLink(linkId: string) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "Not authenticated" };
+
+  const admin = createAdminClient();
+
+  // Verify the link exists and belongs to an org this user admins
+  const { data: link } = await admin
+    .from("employer_link_requests")
+    .select("id, professional_id, organization_id, status")
+    .eq("id", linkId)
+    .maybeSingle();
+
+  if (!link) return { error: "Not found" };
+  if (link.status !== "approved") return { error: "Only approved links can be removed" };
+
+  const { data: member } = await admin
+    .from("organization_members")
+    .select("id")
+    .eq("auth_id", user.id)
+    .eq("organization_id", link.organization_id)
+    .eq("role", "employer_admin")
+    .maybeSingle();
+
+  if (!member) return { error: "Not authorized" };
+
+  const { error } = await admin
+    .from("employer_link_requests")
+    .update({ status: "removed", resolved_at: new Date().toISOString(), resolved_by: user.id })
+    .eq("id", linkId);
+
+  if (error) return { error: error.message };
+
+  await logAudit({
+    actorAuthId: user.id,
+    action: "link_request.removed",
+    targetTable: "employer_link_requests",
+    targetId: linkId,
+    metadata: { organizationId: link.organization_id, professionalId: link.professional_id },
+  });
+
+  dispatchWebhook(link.organization_id, "staff.unlinked", {
+    professional_id: link.professional_id,
+    link_request_id: linkId,
+  }).catch(() => {});
 
   revalidatePath("/employer");
   return { error: null };

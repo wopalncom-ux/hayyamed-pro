@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/server";
 import { sendComplianceAlertEmail } from "@/lib/email";
 import { pingCronMonitor } from "@/lib/cronMonitor";
+import { dispatchWebhook } from "@/lib/webhooks/dispatch";
 
 export const runtime = "nodejs";
 
@@ -114,6 +115,26 @@ export async function GET(req: NextRequest) {
         belowThreshold,
       });
       alertsSent++;
+
+      // Dispatch staff.compliance_changed per below-threshold staff member
+      for (let i = 0; i < staffIds.length; i++) {
+        const staffId = staffIds[i];
+        const wallet = walletMap[staffId];
+        if (!wallet || !wallet.required_credits) continue;
+        const pct = Math.min(
+          Math.round((wallet.completed_credits / wallet.required_credits) * 100),
+          100
+        );
+        if (pct < thresholdPct) {
+          dispatchWebhook(orgId, "staff.compliance_changed", {
+            professional_id: staffId,
+            compliance_pct: pct,
+            completed_credits: wallet.completed_credits,
+            required_credits: wallet.required_credits,
+            threshold_pct: thresholdPct,
+          }).catch(() => {});
+        }
+      }
     }
   }
 

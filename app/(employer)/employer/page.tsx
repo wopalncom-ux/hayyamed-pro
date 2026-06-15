@@ -12,6 +12,7 @@ import ComplianceHeatmap from "@/components/employer/ComplianceHeatmap";
 import EmployerSetupChecklist from "@/components/employer/EmployerSetupChecklist";
 import ComplianceReportButton from "@/components/employer/ComplianceReportButton";
 import ComplianceAlertSettings from "@/components/employer/ComplianceAlertSettings";
+import RemoveStaffButton from "@/components/employer/RemoveStaffButton";
 
 type ComplianceStatus = "compliant" | "at_risk" | "non_compliant" | "unknown";
 
@@ -435,7 +436,7 @@ export default async function EmployerDashboardPage({
                               )}
                             </td>
                             <td className="px-6 py-4">
-                              <div className="flex items-center gap-2">
+                              <div className="flex items-center gap-2 flex-wrap">
                                 <AssignTaskButton professionalId={s.professionalId} staffName={s.name} />
                                 <SendReminderButton
                                   professionalId={s.professionalId}
@@ -443,6 +444,7 @@ export default async function EmployerDashboardPage({
                                   completedCredits={s.completedCredits}
                                   requiredCredits={s.requiredCredits}
                                 />
+                                <RemoveStaffButton linkId={s.linkId} staffName={s.name} />
                               </div>
                             </td>
                           </tr>
@@ -477,7 +479,7 @@ export default async function EmployerDashboardPage({
                           </span>
                         </div>
                         <AssignDepartmentButton linkId={s.linkId} initialDepartment={s.department} />
-                        <div className="flex gap-2 mt-2">
+                        <div className="flex gap-2 mt-2 flex-wrap">
                           <AssignTaskButton professionalId={s.professionalId} staffName={s.name} />
                           <SendReminderButton
                             professionalId={s.professionalId}
@@ -485,6 +487,7 @@ export default async function EmployerDashboardPage({
                             completedCredits={s.completedCredits}
                             requiredCredits={s.requiredCredits}
                           />
+                          <RemoveStaffButton linkId={s.linkId} staffName={s.name} />
                         </div>
                       </div>
                     ))}

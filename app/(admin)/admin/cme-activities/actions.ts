@@ -51,10 +51,15 @@ export async function verifyCmeActivity(activityId: string) {
   });
 
   if (activity) {
-    const [profileRes, plan, linksRes] = await Promise.all([
+    const [profileRes, plan, linksRes, walletRes] = await Promise.all([
       admin.from("professional_profiles").select("email, full_name").eq("auth_id", activity.professional_id).single(),
       getUserPlan(activity.professional_id),
       admin.from("employer_link_requests").select("organization_id").eq("professional_id", activity.professional_id).eq("status", "approved"),
+      admin.from("cme_wallets").select("compliance_status, completed_credits, required_credits")
+        .eq("professional_id", activity.professional_id)
+        .order("created_at", { ascending: true })
+        .limit(1)
+        .maybeSingle(),
     ]);
     if (profileRes.data?.email) {
       await sendCmeVerifiedEmail({
@@ -71,6 +76,15 @@ export async function verifyCmeActivity(activityId: string) {
         activity_title: activity.title,
         credits: activity.credits,
       }).catch(() => {});
+      // Also dispatch compliance status change so employer HRIS knows the new standing
+      if (walletRes.data) {
+        dispatchWebhook(link.organization_id, "staff.compliance_changed", {
+          professional_id: activity.professional_id,
+          compliance_status: walletRes.data.compliance_status ?? "unknown",
+          completed_credits: walletRes.data.completed_credits ?? 0,
+          required_credits: walletRes.data.required_credits ?? 0,
+        }).catch(() => {});
+      }
     }
   }
 

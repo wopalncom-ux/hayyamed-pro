@@ -1,5 +1,5 @@
 -- ============================================================
--- Hayya Med PRO — ALL 51 MIGRATIONS COMBINED
+-- Hayya Med PRO — ALL 52 MIGRATIONS COMBINED
 -- Paste this entire file into the Supabase SQL Editor and Run.
 -- Idempotent: safe to run on a fresh project.
 -- Generated: 2026-06-15
@@ -2449,3 +2449,9 @@ CREATE TRIGGER profile_completion_pct_trigger
 
 -- Back-fill existing rows by touching updated_at (fires the BEFORE UPDATE trigger on each row)
 UPDATE professional_profiles SET updated_at = now() WHERE true;
+
+-- ════════════════════════════════════════════════════════════
+-- MIGRATION 052 — Add 'removed' to link_status enum
+-- ════════════════════════════════════════════════════════════
+
+ALTER TYPE link_status ADD VALUE IF NOT EXISTS 'removed';

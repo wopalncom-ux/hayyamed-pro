@@ -96,8 +96,7 @@ export default async function AdminProfessionalDetailPage({
               <Field label="Full name" value={profile.full_name} />
               <Field label="Profession" value={profile.profession} />
               <Field label="Specialty" value={profile.specialty} />
-              <Field label="Country" value={profile.country} />
-              <Field label="City" value={profile.city} />
+              <Field label="Country" value={profile.country_of_residence} />
               <Field label="Licensing authority" value={profile.licensing_authority} />
               <Field label="License number" value={profile.license_number} />
               <Field

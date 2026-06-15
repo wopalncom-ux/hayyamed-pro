@@ -3,6 +3,7 @@ import { createAdminClient } from "@/lib/supabase/server";
 import { sendPushNotification } from "@/lib/push";
 import { sendLicenseExpiryEmail } from "@/lib/email";
 import { pingCronMonitor } from "@/lib/cronMonitor";
+import { dispatchWebhook } from "@/lib/webhooks/dispatch";
 
 export const runtime = "nodejs";
 
@@ -33,6 +34,19 @@ export async function GET(request: NextRequest) {
 
     if (!profiles?.length) continue;
 
+    // Batch-fetch employer links for all professionals in this batch
+    const profIds = profiles.map((p) => p.auth_id);
+    const { data: links } = await admin
+      .from("employer_link_requests")
+      .select("professional_id, organization_id")
+      .in("professional_id", profIds)
+      .eq("status", "approved");
+    const linkMap: Record<string, string[]> = {};
+    for (const l of links ?? []) {
+      linkMap[l.professional_id] = linkMap[l.professional_id] ?? [];
+      linkMap[l.professional_id].push(l.organization_id);
+    }
+
     for (const profile of profiles) {
       if (profile.email) {
         await sendLicenseExpiryEmail({
@@ -59,6 +73,15 @@ export async function GET(request: NextRequest) {
           await admin.from("push_subscriptions").delete()
             .eq("professional_id", profile.auth_id).eq("endpoint", sub.endpoint);
         }
+      }
+
+      // Dispatch license.expiring webhook to every employer org this professional is linked to
+      for (const orgId of linkMap[profile.auth_id] ?? []) {
+        dispatchWebhook(orgId, "license.expiring", {
+          professional_id: profile.auth_id,
+          license_expiry: profile.license_expiry,
+          days_remaining: days,
+        }).catch(() => {});
       }
 
       notified++;
