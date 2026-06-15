@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+import { headers } from "next/headers";
+import { createAdminClient } from "@/lib/supabase/server";
+import { getRequestUser } from "@/lib/auth/getRequestUser";
 import { getUserPlan, isPro } from "@/lib/subscription";
 import { checkAndLogRateLimit } from "@/lib/rateLimit";
 
@@ -18,8 +20,7 @@ function toCsvRow(values: unknown[]): string {
 }
 
 export async function GET(request: NextRequest) {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getRequestUser(await headers());
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const plan = await getUserPlan(user.id);
@@ -61,8 +62,8 @@ export async function GET(request: NextRequest) {
 
   const rows = activities ?? [];
 
-  const headers = ["title", "date", "credits", "provider", "category", "status"];
-  const lines: string[] = [headers.join(",")];
+  const csvCols = ["title", "date", "credits", "provider", "category", "status"];
+  const lines: string[] = [csvCols.join(",")];
 
   for (const a of rows) {
     lines.push(

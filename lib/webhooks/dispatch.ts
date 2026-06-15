@@ -7,7 +7,8 @@ export type WebhookEventType =
   | "course.completed"
   | "cme.verified"
   | "staff.linked"
-  | "staff.unlinked";
+  | "staff.unlinked"
+  | "staff.task_completed";
 
 type WebhookPayload = Record<string, unknown>;
 

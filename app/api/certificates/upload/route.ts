@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+import { headers } from "next/headers";
+import { createAdminClient } from "@/lib/supabase/server";
+import { getRequestUser } from "@/lib/auth/getRequestUser";
 import { getUserPlan, isPro } from "@/lib/subscription";
 
 export const runtime = "nodejs";
@@ -12,8 +14,7 @@ const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "application/pdf
 // certificate_storage_records for audit trail (SOC 2 / storage cost control).
 // Returns the storage path — caller links it to a cme_activity via PATCH.
 export async function POST(req: NextRequest) {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getRequestUser(await headers());
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   // Only Pro users may store certificates
@@ -81,8 +82,7 @@ export async function POST(req: NextRequest) {
 // PATCH /api/certificates/upload
 // Links an uploaded certificate (storage_path) to a CME activity after it is created.
 export async function PATCH(req: NextRequest) {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getRequestUser(await headers());
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const { storage_path, cme_activity_id } = await req.json().catch(() => ({}));

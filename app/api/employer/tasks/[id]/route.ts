@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { createAdminClient } from "@/lib/supabase/server";
 import { getRequestUser } from "@/lib/auth/getRequestUser";
+import { dispatchWebhook } from "@/lib/webhooks/dispatch";
 import { z } from "zod";
 
 export const runtime = "nodejs";
@@ -37,13 +38,24 @@ export async function PATCH(
     update.completed_at = now;
   }
 
-  const { error } = await admin
+  const { data: updated, error } = await admin
     .from("employer_tasks")
     .update(update)
     .eq("id", id)
-    .eq("assigned_to", user.id);
+    .eq("assigned_to", user.id)
+    .select("organization_id, title")
+    .maybeSingle();
 
-  if (error) return NextResponse.json({ error: "Failed to update task" }, { status: 500 });
+  if (error || !updated) return NextResponse.json({ error: "Failed to update task" }, { status: 500 });
+
+  if (parsed.data.status === "completed") {
+    dispatchWebhook(updated.organization_id, "staff.task_completed", {
+      professional_id: user.id,
+      task_id: id,
+      task_title: updated.title,
+      completed_at: now,
+    }).catch(() => {});
+  }
 
   return NextResponse.json({ success: true });
 }

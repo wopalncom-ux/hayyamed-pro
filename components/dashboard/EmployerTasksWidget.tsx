@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import Link from "next/link";
 
 export type EmployerTask = {
   id: string;
@@ -141,11 +142,16 @@ export default function EmployerTasksWidget({ initialTasks }: { initialTasks: Em
               : "All tasks complete"}
           </p>
         </div>
-        {pending.length > 0 && (
-          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#dc2626] text-white text-[10px] font-bold">
-            {pending.length}
-          </span>
-        )}
+        <div className="flex items-center gap-3">
+          {pending.length > 0 && (
+            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#dc2626] text-white text-[10px] font-bold">
+              {pending.length}
+            </span>
+          )}
+          <Link href="/dashboard/tasks" className="text-xs font-medium text-[#1a56a0] hover:underline">
+            View all
+          </Link>
+        </div>
       </div>
 
       <div className="divide-y divide-[#f8fafc]">
