@@ -2,14 +2,16 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import MarkCourseCompleteButton from "./MarkCourseCompleteButton";
 
 interface Props {
   courseId: string;
   enrolled: boolean;
   completed: boolean;
+  enrollmentId?: string;
 }
 
-export default function EnrollButton({ courseId, enrolled, completed }: Props) {
+export default function EnrollButton({ courseId, enrolled, completed, enrollmentId }: Props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
@@ -49,16 +51,20 @@ export default function EnrollButton({ courseId, enrolled, completed }: Props) {
 
   if (enrolled) {
     return (
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 flex-wrap">
         <span className="text-xs bg-[#eff6ff] text-[#1a56a0] font-medium px-3 py-1.5 rounded-lg border border-blue-100">
           Enrolled
         </span>
-        <a
-          href="/dashboard/marketplace/my-courses"
-          className="text-xs text-[#1a56a0] hover:underline"
-        >
-          View my courses →
-        </a>
+        {enrollmentId ? (
+          <MarkCourseCompleteButton enrollmentId={enrollmentId} />
+        ) : (
+          <a
+            href="/dashboard/marketplace/my-courses"
+            className="text-xs text-[#1a56a0] hover:underline"
+          >
+            View my courses →
+          </a>
+        )}
       </div>
     );
   }

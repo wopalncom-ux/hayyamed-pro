@@ -126,8 +126,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/palliative-care-cme`,          lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/cardiothoracic-surgery-cme`,   lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     // Session 72 — tools
-    { url: `${BASE}/tools/compare-cme`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
+    { url: `${BASE}/tools/compare-cme`,  lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
     // Session 73 — public course catalog
-    { url: `${BASE}/courses`,           lastModified: new Date(), changeFrequency: "weekly",  priority: 0.95 },
+    { url: `${BASE}/courses`,            lastModified: new Date(), changeFrequency: "weekly",  priority: 0.95 },
+    // Session 80 — GCC CME events calendar
+    { url: `${BASE}/tools/cme-events`,   lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
   ];
 }

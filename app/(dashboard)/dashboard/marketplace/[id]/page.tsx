@@ -148,7 +148,12 @@ export default async function CourseDetailPage({
           {deadlinePassed && !enrolled ? (
             <p className="text-sm text-[#dc2626]">Enrollment deadline has passed.</p>
           ) : (
-            <EnrollButton courseId={course.id} enrolled={enrolled} completed={completed} />
+            <EnrollButton
+              courseId={course.id}
+              enrolled={enrolled}
+              completed={completed}
+              enrollmentId={enrollment?.id}
+            />
           )}
         </div>
       </div>
