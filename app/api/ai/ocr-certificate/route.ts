@@ -5,6 +5,7 @@ import { getAnthropicClient } from "@/lib/anthropic";
 import { checkAndLogRateLimit } from "@/lib/rateLimit";
 import { getUserPlan, isPro } from "@/lib/subscription";
 import { logAudit } from "@/lib/audit";
+import { logAiCall } from "@/lib/ai/logAiCall";
 
 const OcrResponseSchema = z.object({
   title: z.string(),
@@ -109,6 +110,14 @@ Use null for any field not visible in the certificate.`,
         file_type: file.type,
         file_size_bytes: file.size,
       },
+    }).catch(() => {});
+    logAiCall({
+      professionalId: user.id,
+      action: "ai.ocr_certificate",
+      model: "claude-sonnet-4-6",
+      inputTokens: response.usage?.input_tokens ?? 0,
+      outputTokens: response.usage?.output_tokens ?? 0,
+      latencyMs: Date.now() - startTime,
     }).catch(() => {});
 
     const text = response.content.find((b) => b.type === "text");

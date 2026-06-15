@@ -5,6 +5,7 @@ import { getAnthropicClient } from "@/lib/anthropic";
 import { checkAndLogRateLimit } from "@/lib/rateLimit";
 import { getUserPlan, isPro } from "@/lib/subscription";
 import { logAudit } from "@/lib/audit";
+import { logAiCall } from "@/lib/ai/logAiCall";
 import { buildRenewalPredictionPrompt } from "@/lib/ai/prompts/renewal-prediction";
 
 export const runtime = "nodejs";
@@ -130,6 +131,14 @@ export async function POST(req: NextRequest) {
         output_tokens: res.usage?.output_tokens ?? 0,
         latency_ms: Date.now() - startTime,
       },
+    }).catch(() => {});
+    logAiCall({
+      professionalId: user.id,
+      action: "ai.renewal_prediction",
+      model: "claude-sonnet-4-6",
+      inputTokens: res.usage?.input_tokens ?? 0,
+      outputTokens: res.usage?.output_tokens ?? 0,
+      latencyMs: Date.now() - startTime,
     }).catch(() => {});
 
     const text = (res.content[0] as { type: string; text: string }).text.trim();

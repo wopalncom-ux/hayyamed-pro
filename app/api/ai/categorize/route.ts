@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getAnthropicClient } from "@/lib/anthropic";
 import { checkAndLogRateLimit } from "@/lib/rateLimit";
 import { logAudit } from "@/lib/audit";
+import { logAiCall } from "@/lib/ai/logAiCall";
 
 const CategorizeResponseSchema = z.object({
   category: z.enum(["conference", "online", "workshop", "journal", "teaching", "simulation", "mandatory", "patient_safety", "other"]),
@@ -79,6 +80,14 @@ Set creditSuggestion to null if entered credits seem reasonable, or suggest a be
         output_tokens: response.usage?.output_tokens ?? 0,
         latency_ms: Date.now() - startTime,
       },
+    }).catch(() => {});
+    logAiCall({
+      professionalId: user.id,
+      action: "ai.categorize",
+      model: "claude-haiku-4-5-20251001",
+      inputTokens: response.usage?.input_tokens ?? 0,
+      outputTokens: response.usage?.output_tokens ?? 0,
+      latencyMs: Date.now() - startTime,
     }).catch(() => {});
 
     const textBlock = response.content.find((b) => b.type === "text");

@@ -3,6 +3,7 @@ import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { getAnthropicClient } from "@/lib/anthropic";
 import { checkAndLogRateLimit } from "@/lib/rateLimit";
 import { logAudit } from "@/lib/audit";
+import { logAiCall } from "@/lib/ai/logAiCall";
 import { z } from "zod";
 
 export const runtime = "nodejs";
@@ -227,6 +228,14 @@ Use GCC context: QCHP, DHA, SCFHS requirements. Focus on practical opportunities
         analysis_type: analysisType,
         course_count: totalCourses,
       },
+    }).catch(() => {});
+    logAiCall({
+      professionalId: user.id,
+      action: "ai.provider_analysis",
+      model: "claude-sonnet-4-6",
+      inputTokens: response.usage?.input_tokens ?? 0,
+      outputTokens: response.usage?.output_tokens ?? 0,
+      latencyMs: Date.now() - startTime,
     }).catch(() => {});
 
     return Response.json(validated.data);

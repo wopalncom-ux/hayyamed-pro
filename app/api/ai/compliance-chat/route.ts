@@ -5,6 +5,7 @@ import { checkAndLogRateLimit } from "@/lib/rateLimit";
 import { toCountryCode } from "@/lib/countryCode";
 import { getUserPlan, isPro } from "@/lib/subscription";
 import { logAudit } from "@/lib/audit";
+import { logAiCall } from "@/lib/ai/logAiCall";
 
 export const runtime = "nodejs";
 
@@ -159,6 +160,7 @@ GUIDELINES:
 
         // Fire-and-forget audit log after stream completes
         stream.finalMessage().then((finalMsg) => {
+          const latencyMs = Date.now() - startTime;
           logAudit({
             actorAuthId: user.id,
             action: "ai.compliance_chat",
@@ -167,8 +169,16 @@ GUIDELINES:
               model: "claude-haiku-4-5-20251001",
               input_tokens: finalMsg.usage?.input_tokens ?? 0,
               output_tokens: finalMsg.usage?.output_tokens ?? 0,
-              latency_ms: Date.now() - startTime,
+              latency_ms: latencyMs,
             },
+          }).catch(() => {});
+          logAiCall({
+            professionalId: user.id,
+            action: "ai.compliance_chat",
+            model: "claude-haiku-4-5-20251001",
+            inputTokens: finalMsg.usage?.input_tokens ?? 0,
+            outputTokens: finalMsg.usage?.output_tokens ?? 0,
+            latencyMs,
           }).catch(() => {});
         }).catch(() => {});
       } catch {
