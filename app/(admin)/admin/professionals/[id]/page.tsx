@@ -26,7 +26,7 @@ export default async function AdminProfessionalDetailPage({
       .eq("professional_id", id)
       .order("created_at", { ascending: false }),
     admin.from("cme_activities")
-      .select("id, title, provider, provider_name, activity_date, credits, verification_status, activity_category, created_at")
+      .select("id, title, provider, activity_date, credits, category, verification_status, created_at")
       .eq("professional_id", id)
       .order("created_at", { ascending: false })
       .limit(50),
