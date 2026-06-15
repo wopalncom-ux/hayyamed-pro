@@ -211,3 +211,86 @@ export async function removeStaffLink(linkId: string) {
   revalidatePath("/employer");
   return { error: null };
 }
+
+export async function approveAllLinkRequests(organizationId: string) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "Not authenticated", approved: 0 };
+
+  const admin = createAdminClient();
+
+  const { data: member } = await admin
+    .from("organization_members")
+    .select("id")
+    .eq("auth_id", user.id)
+    .eq("organization_id", organizationId)
+    .eq("role", "employer_admin")
+    .maybeSingle();
+
+  if (!member) return { error: "Not authorized", approved: 0 };
+
+  const [subRes, staffCountRes, pendingRes] = await Promise.all([
+    admin
+      .from("subscriptions")
+      .select("employer_tier")
+      .eq("professional_id", user.id)
+      .in("status", ["active", "trialing"])
+      .maybeSingle(),
+    admin
+      .from("employer_link_requests")
+      .select("id", { count: "exact", head: true })
+      .eq("organization_id", organizationId)
+      .eq("status", "approved"),
+    admin
+      .from("employer_link_requests")
+      .select("id, professional_id")
+      .eq("organization_id", organizationId)
+      .eq("status", "pending"),
+  ]);
+
+  const tierKey = (subRes.data?.employer_tier ?? "clinic") as EmployerTierKey;
+  const maxStaff = EMPLOYER_TIERS[tierKey]?.maxStaff ?? 10;
+  const currentStaff = staffCountRes.count ?? 0;
+  const pending = pendingRes.data ?? [];
+  const canApprove = Math.max(0, maxStaff - currentStaff);
+
+  if (canApprove === 0) {
+    return {
+      error: `Staff limit reached (${maxStaff}). Upgrade your plan to add more staff.`,
+      approved: 0,
+    };
+  }
+
+  const toApprove = pending.slice(0, canApprove);
+  const now = new Date().toISOString();
+  let approved = 0;
+
+  for (const req of toApprove) {
+    const { error: updateError } = await admin
+      .from("employer_link_requests")
+      .update({ status: "approved", resolved_at: now, resolved_by: user.id })
+      .eq("id", req.id);
+
+    if (!updateError) {
+      approved++;
+      logAudit({
+        actorAuthId: user.id,
+        action: "link_request.approved",
+        targetTable: "employer_link_requests",
+        targetId: req.id,
+        metadata: { organizationId, professionalId: req.professional_id, bulk: true },
+      }).catch(() => {});
+      dispatchWebhook(organizationId, "staff.linked", {
+        professional_id: req.professional_id,
+        link_request_id: req.id,
+      }).catch(() => {});
+    }
+  }
+
+  revalidatePath("/employer");
+  return {
+    error: approved === 0 ? "No requests could be approved." : null,
+    approved,
+    skipped: pending.length - toApprove.length,
+  };
+}

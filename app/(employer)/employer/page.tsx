@@ -13,6 +13,7 @@ import EmployerSetupChecklist from "@/components/employer/EmployerSetupChecklist
 import ComplianceReportButton from "@/components/employer/ComplianceReportButton";
 import ComplianceAlertSettings from "@/components/employer/ComplianceAlertSettings";
 import RemoveStaffButton from "@/components/employer/RemoveStaffButton";
+import { BulkApproveButton } from "@/components/employer/BulkApproveButton";
 
 type ComplianceStatus = "compliant" | "at_risk" | "non_compliant" | "unknown";
 
@@ -260,9 +261,14 @@ export default async function EmployerDashboardPage({
       {/* Pending requests */}
       {pending.length > 0 && (
         <div className="bg-white rounded-xl border border-[#e2e8f0] mb-6">
-          <div className="px-6 py-4 border-b border-[#e2e8f0]">
-            <h2 className="text-base font-semibold text-[#111]">Pending Link Requests</h2>
-            <p className="text-xs text-[#64748b] mt-0.5">Professionals requesting to link to your organization</p>
+          <div className="px-6 py-4 border-b border-[#e2e8f0] flex items-center justify-between gap-4">
+            <div>
+              <h2 className="text-base font-semibold text-[#111]">Pending Link Requests</h2>
+              <p className="text-xs text-[#64748b] mt-0.5">Professionals requesting to link to your organization</p>
+            </div>
+            {pending.length > 1 && (
+              <BulkApproveButton organizationId={orgId} pendingCount={pending.length} />
+            )}
           </div>
           <div className="divide-y divide-[#e2e8f0]">
             {pending.map((req) => {
@@ -394,7 +400,9 @@ export default async function EmployerDashboardPage({
                         {group.members.map((s) => (
                           <tr key={s.professionalId} className="hover:bg-[#f8fafc] transition-colors">
                             <td className="px-6 py-4">
-                              <p className="font-medium text-[#111]">{s.name}</p>
+                              <a href={`/employer/staff/${s.professionalId}`} className="font-medium text-[#1a56a0] hover:underline">
+                                {s.name}
+                              </a>
                               <p className="text-xs text-[#64748b]">{s.specialty}</p>
                             </td>
                             <td className="px-6 py-4 text-[#374151]">{s.profession}</td>
@@ -459,7 +467,9 @@ export default async function EmployerDashboardPage({
                       <div key={s.professionalId} className="px-4 py-4">
                         <div className="flex items-start justify-between mb-2">
                           <div>
-                            <p className="text-sm font-medium text-[#111]">{s.name}</p>
+                            <a href={`/employer/staff/${s.professionalId}`} className="text-sm font-medium text-[#1a56a0] hover:underline">
+                              {s.name}
+                            </a>
                             <p className="text-xs text-[#64748b]">{s.profession} · {s.specialty}</p>
                           </div>
                           <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${STATUS_CONFIG[s.complianceStatus].classes}`}>
