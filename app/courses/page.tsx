@@ -313,7 +313,7 @@ export default async function PublicCoursesPage({
                     return (
                       <Link
                         key={course.id}
-                        href={`/register?from=/dashboard/marketplace/${course.id}`}
+                        href={`/courses/${course.id}`}
                         className="bg-white rounded-xl border border-[#e2e8f0] p-5 hover:shadow-md hover:border-[#1a56a0]/30 transition-all block group"
                       >
                         <div className="flex items-start justify-between gap-2 mb-3">

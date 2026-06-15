@@ -157,7 +157,15 @@ export default async function LicensesPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-[#111] mb-2">License Management</h1>
+      <div className="flex items-center justify-between mb-2">
+        <h1 className="text-2xl font-bold text-[#111]">License Management</h1>
+        <a
+          href="/dashboard/renewal-calendar"
+          className="text-xs font-semibold text-[#1a56a0] border border-[#1a56a0] px-3 py-1.5 rounded-lg hover:bg-[#f0f4f8] transition-colors"
+        >
+          Renewal Calendar →
+        </a>
+      </div>
       <p className="text-sm text-[#64748b] mb-6">
         Track your professional license and renewal status.
       </p>
