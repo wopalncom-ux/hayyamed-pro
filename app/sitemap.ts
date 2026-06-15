@@ -204,5 +204,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/blog/reproductive-medicine-cme-gcc`,        lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/occupational-medicine-physician-cme-gcc`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/neonatologist-cme-gcc`,                lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    // Session 72 — tools + specialty blog posts
+    { url: `${BASE}/tools/compare-cme`,                          lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
+    { url: `${BASE}/blog/colorectal-surgeon-cme-gcc`,            lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/oral-maxillofacial-surgeon-cme-gcc`,    lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/sports-medicine-physician-cme-gcc`,     lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/transplant-surgeon-cme-gcc`,            lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
   ];
 }

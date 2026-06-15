@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
+import { awardPortfolioBadge } from "@/lib/badges";
 import { getUserPlan, isPro } from "@/lib/subscription";
 import { renderToBuffer } from "@react-pdf/renderer";
 import { CpdPortfolioDocument } from "@/components/pdf/CpdPortfolioDocument";
@@ -88,6 +89,8 @@ export async function GET() {
       activity_count: activitiesRes.data?.length ?? 0,
     },
   }).catch(() => {});
+
+  awardPortfolioBadge(user.id).catch(() => {});
 
   return new NextResponse(new Uint8Array(buffer), {
     headers: {

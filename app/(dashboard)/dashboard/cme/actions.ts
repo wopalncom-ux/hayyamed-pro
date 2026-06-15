@@ -6,6 +6,7 @@ import { logAudit } from "@/lib/audit";
 import { getUserPlan, isPro } from "@/lib/subscription";
 import { FREE_ACTIVITY_LIMIT } from "@/lib/planLimits";
 import { sendAdminActivityPendingEmail, sendFirstActivityEmail } from "@/lib/email";
+import { checkAndAwardBadges } from "@/lib/badges";
 
 export async function addCmeActivity({
   walletId,
@@ -107,6 +108,9 @@ export async function addCmeActivity({
     targetId: data?.id,
     metadata: { title, credits, provider, category, hasCertificate: !!certificateUrl, plan },
   });
+
+  // Fire-and-forget badge check — never block the user on badge evaluation
+  checkAndAwardBadges(user.id).catch(() => {});
 
   revalidatePath("/dashboard/cme");
   return { error: null };

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { logAudit } from "@/lib/audit";
+import { checkAndAwardBadges } from "@/lib/badges";
 
 export const runtime = "nodejs";
 
@@ -71,6 +72,8 @@ export async function POST(req: NextRequest) {
     targetId: data.id,
     metadata: { reflection_type: parsed.data.reflection_type },
   }).catch(() => {});
+
+  checkAndAwardBadges(user.id).catch(() => {});
 
   return NextResponse.json({ id: data.id }, { status: 201 });
 }

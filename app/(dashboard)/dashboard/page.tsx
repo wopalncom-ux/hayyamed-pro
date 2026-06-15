@@ -15,6 +15,7 @@ import EmployerTeaserCard from "@/components/dashboard/EmployerTeaserCard";
 import TrialExpiredBanner from "@/components/dashboard/TrialExpiredBanner";
 import EmployerSetupBanner from "@/components/dashboard/EmployerSetupBanner";
 import ComplianceChatWidget from "@/components/dashboard/ComplianceChatWidget";
+import AchievementBadges from "@/components/dashboard/AchievementBadges";
 import Image from "next/image";
 import type { Partner } from "@/lib/types";
 
@@ -272,6 +273,11 @@ export default async function DashboardPage({
           </div>
         </div>
       )}
+
+      {/* Achievement Badges */}
+      <div className="mb-6">
+        <AchievementBadges />
+      </div>
 
       {/* Disclaimer */}
       <div className="bg-[#fef9c3] border border-[#fde68a] rounded-lg px-4 py-3 text-xs text-[#92400e]">
