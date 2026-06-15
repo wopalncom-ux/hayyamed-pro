@@ -59,15 +59,11 @@ export async function GET(req: NextRequest) {
   // Get unique assignees
   const assigneeIds = [...new Set(tasks.map((t) => t.assigned_to))];
 
-  const [profilesRes, prefsRes, orgsRes] = await Promise.all([
+  const [profilesRes, orgsRes] = await Promise.all([
     admin
       .from("professional_profiles")
-      .select("auth_id, full_name, email")
+      .select("auth_id, full_name, email, email_employer_tasks")
       .in("auth_id", assigneeIds),
-    admin
-      .from("notification_preferences")
-      .select("professional_id, email_employer_tasks")
-      .in("professional_id", assigneeIds),
     admin
       .from("organizations")
       .select("id, name"),
@@ -75,9 +71,6 @@ export async function GET(req: NextRequest) {
 
   const profileMap = Object.fromEntries(
     (profilesRes.data ?? []).map((p) => [p.auth_id, p])
-  );
-  const prefsMap = Object.fromEntries(
-    (prefsRes.data ?? []).map((p) => [p.professional_id, p])
   );
   const orgMap = Object.fromEntries(
     (orgsRes.data ?? []).map((o) => [o.id, o.name as string])
@@ -91,9 +84,8 @@ export async function GET(req: NextRequest) {
     const profile = profileMap[task.assigned_to];
     if (!profile?.email) continue;
 
-    // Respect email preferences (default: true when no row exists)
-    const prefs = prefsMap[task.assigned_to];
-    if (prefs?.email_employer_tasks === false) continue;
+    // Respect email preferences (column on professional_profiles, default true)
+    if (profile.email_employer_tasks === false) continue;
 
     const dueDate = task.due_date as string;
     const daysLeft = Math.ceil(

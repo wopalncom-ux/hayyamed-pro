@@ -18,6 +18,8 @@ import ComplianceChatWidget from "@/components/dashboard/ComplianceChatWidget";
 import AchievementBadges from "@/components/dashboard/AchievementBadges";
 import CmeDashboardQuickAddButton from "@/components/dashboard/CmeDashboardQuickAddButton";
 import CmeFirstActivityPrompt from "@/components/dashboard/CmeFirstActivityPrompt";
+import EmployerTasksWidget from "@/components/dashboard/EmployerTasksWidget";
+import type { EmployerTask } from "@/components/dashboard/EmployerTasksWidget";
 import Image from "next/image";
 import type { Partner } from "@/lib/types";
 
@@ -34,7 +36,7 @@ export default async function DashboardPage({
   const admin = createAdminClient();
 
   const npsLookback = new Date(Date.now() - 365 * 86400000).toISOString();
-  const [profileRes, walletRes, activitiesRes, plan, employerLinkRes, partnersRes, npsRes, employerRoleRes, referralCountRes, subscriptionRes] = await Promise.all([
+  const [profileRes, walletRes, activitiesRes, plan, employerLinkRes, partnersRes, npsRes, employerRoleRes, referralCountRes, subscriptionRes, tasksRes] = await Promise.all([
     admin.from("professional_profiles").select("*").eq("auth_id", user.id).single(),
     admin.from("cme_wallets").select("*").eq("professional_id", user.id).order("created_at", { ascending: true }).limit(1).maybeSingle(),
     admin.from("cme_activities").select("id, title, credits, activity_date, category, verification_status").eq("professional_id", user.id).order("activity_date", { ascending: false }),
@@ -46,6 +48,12 @@ export default async function DashboardPage({
     admin.from("organization_members").select("role").eq("auth_id", user.id).eq("role", "employer_admin").maybeSingle(),
     admin.from("audit_logs").select("*", { count: "exact", head: true }).eq("actor_auth_id", user.id).eq("action", "referral.signup"),
     admin.from("subscriptions").select("plan, employer_tier").eq("professional_id", user.id).eq("status", "active").maybeSingle(),
+    admin.from("employer_tasks")
+      .select("id, organization_id, title, message, category, credits_target, due_date, status, organizations(name)")
+      .eq("assigned_to", user.id)
+      .in("status", ["pending", "acknowledged"])
+      .order("due_date", { ascending: true, nullsFirst: false })
+      .limit(10),
   ]);
 
   const profile = profileRes.data;
@@ -57,6 +65,23 @@ export default async function DashboardPage({
   const referralCount = referralCountRes.count ?? 0;
   const subscriptionPlan = subscriptionRes.data?.plan ?? null;
   const subscriptionEmployerTier = subscriptionRes.data?.employer_tier ?? null;
+
+  const rawTasks = tasksRes.data ?? [];
+  const employerTasks: EmployerTask[] = rawTasks.map((t) => {
+    const orgRaw = t.organizations as { name: string }[] | { name: string } | null;
+    const orgName = (Array.isArray(orgRaw) ? orgRaw[0]?.name : (orgRaw as { name: string } | null)?.name) ?? "Your employer";
+    return {
+      id: t.id,
+      organization_id: t.organization_id,
+      title: t.title,
+      message: t.message ?? null,
+      category: t.category ?? null,
+      credits_target: t.credits_target ?? null,
+      due_date: t.due_date ?? null,
+      status: t.status as "pending" | "acknowledged" | "completed",
+      orgName,
+    };
+  });
 
   // NPS eligibility: account >= 30 days old, no submission in the last 365 days
   const accountAgeMs = profile?.created_at
@@ -217,6 +242,11 @@ export default async function DashboardPage({
         plan={plan}
         referralCount={referralCount}
       />
+
+      {/* Employer-assigned tasks — shown when staff member has pending/acknowledged tasks */}
+      {employerTasks.length > 0 && (
+        <EmployerTasksWidget initialTasks={employerTasks} />
+      )}
 
       {/* Employer teaser — shown to Pro users who are not yet employer_admin */}
       {showEmployerTeaser && <EmployerTeaserCard plan={plan} />}
