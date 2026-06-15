@@ -1688,6 +1688,129 @@ CREATE INDEX IF NOT EXISTS idx_demo_requests_status     ON demo_requests (status
 CREATE INDEX IF NOT EXISTS idx_demo_requests_country    ON demo_requests (country);
 
 -- ════════════════════════════════════════════════════════════
+-- MIGRATION 033 — Onboarding drip email log
+-- ════════════════════════════════════════════════════════════
+
+CREATE TABLE IF NOT EXISTS drip_email_log (
+  id              uuid        NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id         uuid        NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  sequence_day    integer     NOT NULL,
+  sent_at         timestamptz NOT NULL DEFAULT now(),
+  created_at      timestamptz NOT NULL DEFAULT now(),
+  updated_at      timestamptz NOT NULL DEFAULT now(),
+  UNIQUE (user_id, sequence_day)
+);
+
+CREATE INDEX IF NOT EXISTS idx_drip_email_log_user_id ON drip_email_log(user_id);
+CREATE INDEX IF NOT EXISTS idx_drip_email_log_sent_at  ON drip_email_log(sent_at);
+
+CREATE OR REPLACE TRIGGER drip_email_log_updated_at
+  BEFORE UPDATE ON drip_email_log
+  FOR EACH ROW EXECUTE FUNCTION public.set_updated_at();
+
+ALTER TABLE drip_email_log ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "drip_email_log_admin_select" ON drip_email_log;
+CREATE POLICY "drip_email_log_admin_select"
+  ON drip_email_log FOR SELECT
+  USING (
+    EXISTS (
+      SELECT 1 FROM organization_members
+      WHERE auth_id = auth.uid()
+        AND role IN ('master_admin', 'super_admin')
+    )
+  );
+
+-- ════════════════════════════════════════════════════════════
+-- MIGRATION 034 — MFA recovery codes
+-- ════════════════════════════════════════════════════════════
+
+CREATE TABLE IF NOT EXISTS mfa_recovery_codes (
+  id              uuid        DEFAULT gen_random_uuid() PRIMARY KEY,
+  professional_id uuid        NOT NULL,
+  code_hash       text        NOT NULL,
+  used_at         timestamptz,
+  created_at      timestamptz DEFAULT now() NOT NULL,
+  updated_at      timestamptz DEFAULT now() NOT NULL,
+  CONSTRAINT mfa_recovery_codes_professional_id_fkey
+    FOREIGN KEY (professional_id) REFERENCES auth.users(id) ON DELETE CASCADE
+);
+
+CREATE INDEX IF NOT EXISTS idx_mfa_recovery_codes_professional_id
+  ON mfa_recovery_codes(professional_id);
+
+ALTER TABLE mfa_recovery_codes ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Users read own recovery codes" ON mfa_recovery_codes;
+CREATE POLICY "Users read own recovery codes" ON mfa_recovery_codes
+  FOR SELECT USING (professional_id = auth.uid());
+
+-- ════════════════════════════════════════════════════════════
+-- MIGRATION 035 — Marketplace full-text search
+-- ════════════════════════════════════════════════════════════
+
+ALTER TABLE courses
+  ADD COLUMN IF NOT EXISTS search_vector tsvector
+    GENERATED ALWAYS AS (
+      setweight(to_tsvector('english', coalesce(title, '')), 'A') ||
+      setweight(to_tsvector('english', coalesce(description, '')), 'B')
+    ) STORED;
+
+CREATE INDEX IF NOT EXISTS idx_courses_search_vector
+  ON courses USING GIN (search_vector);
+
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
+CREATE INDEX IF NOT EXISTS idx_courses_title_trgm
+  ON courses USING GIN (title gin_trgm_ops);
+
+-- ════════════════════════════════════════════════════════════
+-- MIGRATION 036 — Referrals
+-- ════════════════════════════════════════════════════════════
+
+CREATE TABLE IF NOT EXISTS referrals (
+  id                uuid        PRIMARY KEY DEFAULT gen_random_uuid(),
+  referrer_auth_id  uuid        NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  referred_auth_id  uuid        NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  referral_code     text        NOT NULL,
+  status            text        NOT NULL DEFAULT 'signed_up'
+                    CHECK (status IN ('signed_up', 'converted')),
+  created_at        timestamptz NOT NULL DEFAULT now(),
+  converted_at      timestamptz,
+  updated_at        timestamptz NOT NULL DEFAULT now(),
+  UNIQUE (referred_auth_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_referrals_referrer ON referrals (referrer_auth_id);
+CREATE INDEX IF NOT EXISTS idx_referrals_code     ON referrals (referral_code);
+
+CREATE OR REPLACE FUNCTION referrals_set_updated_at()
+RETURNS TRIGGER LANGUAGE plpgsql AS $$
+BEGIN NEW.updated_at = now(); RETURN NEW; END;
+$$;
+
+DROP TRIGGER IF EXISTS referrals_updated_at ON referrals;
+CREATE TRIGGER referrals_updated_at
+  BEFORE UPDATE ON referrals
+  FOR EACH ROW EXECUTE FUNCTION referrals_set_updated_at();
+
+ALTER TABLE referrals ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "referrer reads own referrals" ON referrals;
+CREATE POLICY "referrer reads own referrals" ON referrals
+  FOR SELECT USING (referrer_auth_id = auth.uid());
+
+DROP POLICY IF EXISTS "admin reads all referrals" ON referrals;
+CREATE POLICY "admin reads all referrals" ON referrals
+  FOR SELECT USING (
+    EXISTS (
+      SELECT 1 FROM organization_members
+      WHERE auth_id = auth.uid()
+        AND role IN ('master_admin', 'super_admin')
+    )
+  );
+
+-- ════════════════════════════════════════════════════════════
 -- MIGRATION 037 — CPD Reflection Journal
 -- ════════════════════════════════════════════════════════════
 

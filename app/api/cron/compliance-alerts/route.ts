@@ -117,8 +117,12 @@ export async function GET(req: NextRequest) {
       alertsSent++;
 
       // Dispatch staff.compliance_changed per below-threshold staff member
+      // Must respect the same privacy gate as the email loop above.
       for (let i = 0; i < staffIds.length; i++) {
         const staffId = staffIds[i];
+        const privacy = privacyMap[staffId];
+        if (privacy?.employer_can_view_cme_summary === false) continue;
+
         const wallet = walletMap[staffId];
         if (!wallet || !wallet.required_credits) continue;
         const pct = Math.min(
