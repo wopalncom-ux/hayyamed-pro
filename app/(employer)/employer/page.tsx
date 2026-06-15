@@ -11,6 +11,7 @@ import QrCodeButton from "@/components/employer/QrCodeButton";
 import ComplianceHeatmap from "@/components/employer/ComplianceHeatmap";
 import EmployerSetupChecklist from "@/components/employer/EmployerSetupChecklist";
 import ComplianceReportButton from "@/components/employer/ComplianceReportButton";
+import ComplianceAlertSettings from "@/components/employer/ComplianceAlertSettings";
 
 type ComplianceStatus = "compliant" | "at_risk" | "non_compliant" | "unknown";
 
@@ -493,6 +494,11 @@ export default async function EmployerDashboardPage({
             })}
           </>
         )}
+      </div>
+
+      {/* Compliance Alert Settings */}
+      <div className="mt-6">
+        <ComplianceAlertSettings />
       </div>
 
       {/* Disclaimer */}

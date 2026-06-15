@@ -1465,3 +1465,67 @@ export async function sendDripDay10Email({
     unsubscribeUrl
   );
 }
+
+export type ComplianceAlertStaff = {
+  name: string;
+  profession: string;
+  completedCredits: number;
+  requiredCredits: number;
+  pct: number;
+};
+
+export async function sendComplianceAlertEmail({
+  to,
+  orgName,
+  thresholdPct,
+  belowThreshold,
+}: {
+  to: string;
+  orgName: string;
+  thresholdPct: number;
+  belowThreshold: ComplianceAlertStaff[];
+}) {
+  const rows = belowThreshold
+    .map(
+      (s) =>
+        `<tr>
+          <td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;font-size:13px">${esc(s.name)}</td>
+          <td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;font-size:13px">${esc(s.profession)}</td>
+          <td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;font-size:13px;text-align:center">${s.completedCredits}/${s.requiredCredits}</td>
+          <td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;font-size:13px;text-align:center;color:${s.pct < 50 ? "#dc2626" : "#d97706"};font-weight:600">${s.pct}%</td>
+        </tr>`
+    )
+    .join("");
+
+  await send(
+    to,
+    `Compliance Alert — ${belowThreshold.length} staff below ${thresholdPct}% threshold · ${esc(orgName)}`,
+    baseLayout(`
+      <p style="color:#374151;font-size:16px;margin:0 0 8px">Compliance Alert — ${esc(orgName)}</p>
+      <p style="color:#374151;margin:0 0 20px">
+        <strong>${belowThreshold.length} staff member${belowThreshold.length !== 1 ? "s are" : " is"} currently below your configured compliance threshold of ${thresholdPct}%.</strong>
+        Review their progress and send reminders from your employer dashboard.
+      </p>
+      <div style="border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;margin:0 0 24px">
+        <table style="width:100%;border-collapse:collapse">
+          <thead>
+            <tr style="background:#f8fafc">
+              <th style="padding:8px 10px;text-align:left;font-size:11px;color:#64748b;font-weight:600;text-transform:uppercase">NAME</th>
+              <th style="padding:8px 10px;text-align:left;font-size:11px;color:#64748b;font-weight:600;text-transform:uppercase">PROFESSION</th>
+              <th style="padding:8px 10px;text-align:center;font-size:11px;color:#64748b;font-weight:600;text-transform:uppercase">CREDITS</th>
+              <th style="padding:8px 10px;text-align:center;font-size:11px;color:#64748b;font-weight:600;text-transform:uppercase">PROGRESS</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+      <a href="${APP_URL}/employer" style="display:inline-block;background:#1a56a0;color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px">
+        Open Employer Dashboard →
+      </a>
+      <p style="color:#94a3b8;font-size:12px;margin:20px 0 0">
+        This alert was triggered because ${belowThreshold.length} staff member${belowThreshold.length !== 1 ? "s are" : " is"} below your ${thresholdPct}% compliance threshold.
+        You can update or disable this alert in your employer settings.
+      </p>
+    `)
+  );
+}
