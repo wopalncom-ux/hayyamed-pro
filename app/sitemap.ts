@@ -229,5 +229,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/blog/haematologist-cme-gcc`,                   lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/medical-oncologist-cme-gcc`,              lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/blog/anaesthesiologist-cme-gcc`,               lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    // Session 76 — compliance certificate PDF + admin analytics + 4 specialty blog posts
+    { url: `${BASE}/blog/pulmonologist-respirologist-cme-gcc`,     lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/family-medicine-gp-cme-gcc`,              lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/sleep-medicine-physician-cme-gcc`,        lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/dermatopathologist-cme-gcc`,              lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
   ];
 }

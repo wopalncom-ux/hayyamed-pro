@@ -4,6 +4,7 @@ import LicenseCountdownCard from "@/components/dashboard/LicenseCountdownCard";
 import LicenseEditForm from "@/components/dashboard/LicenseEditForm";
 import CopyVerificationLinkButton from "@/components/dashboard/CopyVerificationLinkButton";
 import MultiLicenseSection from "@/components/dashboard/MultiLicenseSection";
+import DownloadComplianceCertButton from "@/components/dashboard/DownloadComplianceCertButton";
 import { getUserPlan, isPro } from "@/lib/subscription";
 import { toCountryCode } from "@/lib/countryCode";
 
@@ -250,21 +251,24 @@ export default async function LicensesPage() {
                 ? "All requirements are met. Download your renewal package to submit to your licensing authority."
                 : "Complete the gaps above, then download your renewal package."}
             </p>
-            <div className="flex items-center gap-2 flex-shrink-0">
+            <div className="flex items-center gap-2 flex-shrink-0 flex-wrap">
               <CopyVerificationLinkButton />
               {isPro(plan) ? (
-                <a
-                  href="/api/pdf/cme-report"
-                  className="flex-shrink-0 text-sm bg-[#1a56a0] text-white px-4 py-2 rounded-lg font-semibold hover:bg-[#1547a0] transition-colors"
-                >
-                  Download Package
-                </a>
+                <>
+                  <a
+                    href="/api/pdf/cme-report"
+                    className="flex-shrink-0 text-sm bg-white border border-[#1a56a0] text-[#1a56a0] px-4 py-2 rounded-lg font-semibold hover:bg-[#eff6ff] transition-colors"
+                  >
+                    CME Report
+                  </a>
+                  <DownloadComplianceCertButton />
+                </>
               ) : (
                 <a
-                  href="/pricing?source=renewal_package"
+                  href="/pricing?source=compliance_certificate"
                   className="flex-shrink-0 text-sm bg-[#f8fafc] border border-[#e2e8f0] text-[#64748b] px-4 py-2 rounded-lg font-medium hover:border-[#1a56a0] hover:text-[#1a56a0] transition-colors"
                 >
-                  Upgrade for PDF →
+                  Upgrade for Certificate →
                 </a>
               )}
             </div>

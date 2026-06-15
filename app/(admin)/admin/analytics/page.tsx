@@ -34,6 +34,8 @@ export default async function AdminAnalyticsPage() {
     totalRes,
     recentCmeRes,
     npsRes,
+    countryRes,
+    professionRes,
   ] = await Promise.all([
     // All signups last 30 days with created_at
     admin
@@ -102,6 +104,16 @@ export default async function AdminAnalyticsPage() {
       .select("score, created_at")
       .gte("created_at", day90)
       .order("created_at", { ascending: false }),
+
+    // Country distribution
+    admin
+      .from("professional_profiles")
+      .select("country_of_residence"),
+
+    // Profession distribution
+    admin
+      .from("professional_profiles")
+      .select("profession"),
   ]);
 
   const signups30 = signupsRes.data ?? [];
@@ -154,6 +166,28 @@ export default async function AdminAnalyticsPage() {
     count: npsData.filter((r) => r.score === i).length,
   }));
   const npsMaxBucket = Math.max(...npsDistribution.map((d) => d.count), 1);
+
+  // Top countries
+  const countryCount: Record<string, number> = {};
+  for (const r of countryRes.data ?? []) {
+    const c = r.country_of_residence ?? "Unknown";
+    countryCount[c] = (countryCount[c] ?? 0) + 1;
+  }
+  const topCountries = Object.entries(countryCount)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 7);
+  const maxCountry = topCountries[0]?.[1] ?? 1;
+
+  // Top professions
+  const profCount: Record<string, number> = {};
+  for (const r of professionRes.data ?? []) {
+    const p = r.profession ?? "Not set";
+    profCount[p] = (profCount[p] ?? 0) + 1;
+  }
+  const topProfessions = Object.entries(profCount)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 7);
+  const maxProf = topProfessions[0]?.[1] ?? 1;
 
   const signupDays = Object.entries(signupByDay);
   const cmeDays    = Object.entries(cmeByDay);
@@ -294,7 +328,7 @@ export default async function AdminAnalyticsPage() {
       </div>
 
       {/* Conversion funnel */}
-      <div className="bg-white rounded-xl border border-[#e2e8f0] p-6">
+      <div className="bg-white rounded-xl border border-[#e2e8f0] p-6 mb-6">
         <h2 className="text-sm font-semibold text-[#111] mb-1">All-Time Conversion Funnel</h2>
         <p className="text-xs text-[#64748b] mb-5">Signup → activation → paying</p>
         <div className="space-y-3">
@@ -317,6 +351,57 @@ export default async function AdminAnalyticsPage() {
               </span>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* Geographic + profession breakdown */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        {/* Top countries */}
+        <div className="bg-white rounded-xl border border-[#e2e8f0] p-6">
+          <h2 className="text-sm font-semibold text-[#111] mb-1">Top Countries</h2>
+          <p className="text-xs text-[#64748b] mb-5">Users by country of residence (all-time)</p>
+          {topCountries.length === 0 ? (
+            <p className="text-sm text-[#94a3b8]">No data yet.</p>
+          ) : (
+            <div className="space-y-3">
+              {topCountries.map(([country, count]) => (
+                <div key={country} className="flex items-center gap-3">
+                  <span className="text-xs text-[#374151] w-20 flex-shrink-0 truncate capitalize">{country}</span>
+                  <div className="flex-1 bg-[#f1f5f9] rounded-full h-2 min-w-0">
+                    <div
+                      className="h-2 rounded-full bg-[#1a56a0] transition-all"
+                      style={{ width: `${Math.round((count / maxCountry) * 100)}%` }}
+                    />
+                  </div>
+                  <span className="text-xs font-semibold text-[#374151] w-8 text-right flex-shrink-0">{count}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Top professions */}
+        <div className="bg-white rounded-xl border border-[#e2e8f0] p-6">
+          <h2 className="text-sm font-semibold text-[#111] mb-1">Top Professions</h2>
+          <p className="text-xs text-[#64748b] mb-5">Users by profession (all-time)</p>
+          {topProfessions.length === 0 ? (
+            <p className="text-sm text-[#94a3b8]">No data yet.</p>
+          ) : (
+            <div className="space-y-3">
+              {topProfessions.map(([profession, count]) => (
+                <div key={profession} className="flex items-center gap-3">
+                  <span className="text-xs text-[#374151] w-20 flex-shrink-0 truncate capitalize">{profession}</span>
+                  <div className="flex-1 bg-[#f1f5f9] rounded-full h-2 min-w-0">
+                    <div
+                      className="h-2 rounded-full bg-[#16a34a] transition-all"
+                      style={{ width: `${Math.round((count / maxProf) * 100)}%` }}
+                    />
+                  </div>
+                  <span className="text-xs font-semibold text-[#374151] w-8 text-right flex-shrink-0">{count}</span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
