@@ -12,7 +12,7 @@ export default async function AdminProfessionalDetailPage({
   const { id } = await params;
   const admin = createAdminClient();
 
-  const [profileRes, walletRes, subsRes, activitiesRes, auditRes] = await Promise.all([
+  const [profileRes, walletsRes, subsRes, activitiesRes, auditRes, licensesRes, orgLinksRes] = await Promise.all([
     admin.from("professional_profiles")
       .select("*")
       .eq("auth_id", id)
@@ -20,31 +20,42 @@ export default async function AdminProfessionalDetailPage({
     admin.from("cme_wallets")
       .select("*")
       .eq("professional_id", id)
-      .maybeSingle(),
+      .order("country"),
     admin.from("subscriptions")
       .select("*")
-      .eq("professional_id", id)
+      .eq("user_id", id)
       .order("created_at", { ascending: false }),
     admin.from("cme_activities")
-      .select("id, title, provider, activity_date, credits, verification_status, created_at")
+      .select("id, title, provider, provider_name, activity_date, credits, verification_status, activity_category, created_at")
       .eq("professional_id", id)
       .order("created_at", { ascending: false })
-      .limit(20),
+      .limit(50),
     admin.from("audit_logs")
       .select("id, action, metadata, created_at")
-      .eq("actor_auth_id", id)
+      .or(`actor_auth_id.eq.${id},target_id.eq.${id}`)
       .order("created_at", { ascending: false })
-      .limit(10),
+      .limit(20),
+    admin.from("professional_licenses")
+      .select("id, license_number, licensing_authority, country_code, profession, specialty, expiry_date, is_primary")
+      .eq("professional_id", id)
+      .order("is_primary", { ascending: false }),
+    admin.from("employer_link_requests")
+      .select("id, status, department, organizations(name, type)")
+      .eq("professional_id", id)
+      .order("created_at", { ascending: false }),
   ]);
 
   if (profileRes.error || !profileRes.data) notFound();
 
   const profile = profileRes.data;
   const email = profile.email ?? "—";
-  const wallet = walletRes.data;
+  const wallets = walletsRes.data ?? [];
+  const wallet = wallets[0] ?? null; // primary wallet for legacy progress bar
   const subs = subsRes.data ?? [];
   const activities = activitiesRes.data ?? [];
   const auditLogs = auditRes.data ?? [];
+  const licenses = licensesRes.data ?? [];
+  const orgLinks = orgLinksRes.data ?? [];
   const activeSub = subs.find((s) => s.status === "active" || s.status === "trialing");
 
   const daysToExpiry = profile.license_expiry
@@ -116,33 +127,111 @@ export default async function AdminProfessionalDetailPage({
             </div>
           </div>
 
-          {/* CME wallet */}
-          {wallet && (
+          {/* CME wallets — all countries */}
+          {wallets.length > 0 && (
             <div className="bg-white rounded-xl border border-[#e2e8f0] p-6">
-              <h2 className="text-sm font-semibold text-[#111] uppercase tracking-wide mb-4">CME Wallet</h2>
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <Field label="Status" value={wallet.compliance_status} />
-                <Field label="Country" value={wallet.country_code} />
-                <Field label="Credits completed" value={String(wallet.completed_credits ?? 0)} />
-                <Field label="Credits required" value={String(wallet.required_credits ?? 0)} />
-                <Field label="Cycle start" value={wallet.cycle_start_date ? new Date(wallet.cycle_start_date).toLocaleDateString("en-GB") : null} />
-                <Field label="Cycle end" value={wallet.cycle_end_date ? new Date(wallet.cycle_end_date).toLocaleDateString("en-GB") : null} />
+              <h2 className="text-sm font-semibold text-[#111] uppercase tracking-wide mb-4">CME Wallets ({wallets.length})</h2>
+              <div className="space-y-4">
+                {wallets.map((w) => {
+                  const pct = (w.required_credits ?? 0) > 0
+                    ? Math.min(100, Math.round(((w.completed_credits ?? 0) / w.required_credits) * 100))
+                    : 100;
+                  const gap = Math.max(0, (w.required_credits ?? 0) - (w.completed_credits ?? 0));
+                  return (
+                    <div key={w.id} className="border border-[#f1f5f9] rounded-xl p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <div>
+                          <p className="text-sm font-semibold text-[#111]">{w.country}</p>
+                          <p className="text-xs text-[#64748b] capitalize">{(w.profession ?? "").replace(/_/g, " ")}</p>
+                        </div>
+                        <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
+                          w.compliance_status === "compliant"     ? "bg-[#dcfce7] text-[#15803d]" :
+                          w.compliance_status === "at_risk"       ? "bg-[#fef9c3] text-[#a16207]" :
+                          w.compliance_status === "non_compliant" ? "bg-[#fee2e2] text-[#dc2626]" :
+                          "bg-[#f1f5f9] text-[#64748b]"
+                        }`}>
+                          {(w.compliance_status ?? "unknown").replace(/_/g, " ")}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <div className="flex-1 h-2 bg-[#f1f5f9] rounded-full overflow-hidden">
+                          <div
+                            className={`h-full rounded-full ${pct >= 80 ? "bg-[#16a34a]" : pct >= 50 ? "bg-[#d97706]" : "bg-[#dc2626]"}`}
+                            style={{ width: `${pct}%` }}
+                          />
+                        </div>
+                        <span className="text-xs font-bold text-[#374151] w-10 text-right">{pct}%</span>
+                      </div>
+                      <p className="text-xs text-[#94a3b8] mt-1.5">
+                        {w.completed_credits ?? 0}/{w.required_credits ?? 0} credits
+                        {gap > 0 && <span className="text-[#dc2626]"> · {gap} gap</span>}
+                        {w.cycle_end_date && <span> · ends {new Date(w.cycle_end_date).toLocaleDateString("en-GB")}</span>}
+                      </p>
+                    </div>
+                  );
+                })}
               </div>
-              {/* Progress bar */}
-              {wallet.required_credits > 0 && (
-                <div className="mt-4">
-                  <div className="flex justify-between text-xs text-[#64748b] mb-1">
-                    <span>Progress</span>
-                    <span>{Math.min(100, Math.round(((wallet.completed_credits ?? 0) / wallet.required_credits) * 100))}%</span>
-                  </div>
-                  <div className="h-2 bg-[#f1f5f9] rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-[#1a56a0] rounded-full transition-all"
-                      style={{ width: `${Math.min(100, ((wallet.completed_credits ?? 0) / wallet.required_credits) * 100)}%` }}
-                    />
-                  </div>
-                </div>
-              )}
+            </div>
+          )}
+
+          {/* Licenses */}
+          {licenses.length > 0 && (
+            <div className="bg-white rounded-xl border border-[#e2e8f0] p-6">
+              <h2 className="text-sm font-semibold text-[#111] uppercase tracking-wide mb-4">Licenses ({licenses.length})</h2>
+              <div className="space-y-3">
+                {licenses.map((l) => {
+                  const daysLeft = l.expiry_date ? Math.ceil((new Date(l.expiry_date).getTime() - Date.now()) / 86400_000) : null;
+                  return (
+                    <div key={l.id} className="flex items-start justify-between gap-3 border border-[#f1f5f9] rounded-xl p-3">
+                      <div>
+                        <div className="flex items-center gap-2 mb-0.5">
+                          <p className="text-sm font-semibold text-[#111]">{l.license_number}</p>
+                          {l.is_primary && <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded-full bg-[#dbeafe] text-[#1d4ed8]">Primary</span>}
+                        </div>
+                        <p className="text-xs text-[#64748b]">{l.licensing_authority} · {l.country_code}</p>
+                        <p className="text-xs text-[#94a3b8] capitalize">{(l.profession ?? "").replace(/_/g, " ")}{l.specialty ? ` · ${l.specialty}` : ""}</p>
+                      </div>
+                      {l.expiry_date && (
+                        <div className="text-right flex-shrink-0">
+                          <p className="text-xs text-[#374151]">{new Date(l.expiry_date).toLocaleDateString("en-GB")}</p>
+                          {daysLeft !== null && (
+                            <p className={`text-[10px] font-semibold ${daysLeft < 0 ? "text-[#dc2626]" : daysLeft <= 30 ? "text-[#d97706]" : "text-[#94a3b8]"}`}>
+                              {daysLeft < 0 ? "EXPIRED" : `${daysLeft}d left`}
+                            </p>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Employer links */}
+          {orgLinks.length > 0 && (
+            <div className="bg-white rounded-xl border border-[#e2e8f0] p-6">
+              <h2 className="text-sm font-semibold text-[#111] uppercase tracking-wide mb-4">Employer Links</h2>
+              <div className="divide-y divide-[#f8fafc]">
+                {orgLinks.map((link) => {
+                  const org = link.organizations as unknown as { name: string; type: string } | null;
+                  return (
+                    <div key={link.id} className="flex items-center justify-between py-2.5">
+                      <div>
+                        <p className="text-sm font-medium text-[#111]">{org?.name ?? "—"}</p>
+                        <p className="text-xs text-[#64748b] capitalize">{(org?.type ?? "").replace(/_/g, " ")}{link.department ? ` · ${link.department}` : ""}</p>
+                      </div>
+                      <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
+                        link.status === "approved" ? "bg-[#dcfce7] text-[#15803d]" :
+                        link.status === "pending"  ? "bg-[#fef9c3] text-[#a16207]" :
+                        "bg-[#fee2e2] text-[#dc2626]"
+                      }`}>
+                        {link.status}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           )}
 

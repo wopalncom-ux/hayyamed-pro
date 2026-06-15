@@ -237,6 +237,9 @@ export default async function AdminPage() {
               CME Activities (legacy)
             </a>
             <a href="/admin/professionals" className="block text-sm text-[#1a56a0] hover:underline">Manage Professionals</a>
+            <a href="/admin/compliance" className="block text-sm font-semibold text-[#1a56a0] hover:underline">
+              🌍 Global Compliance — Country × status heatmap + QCHP export
+            </a>
             <a href="/admin/training-providers" className="block text-sm text-[#1a56a0] hover:underline">
               Training Providers{(pendingProviders.count ?? 0) > 0 && ` (${pendingProviders.count} pending)`}
             </a>
