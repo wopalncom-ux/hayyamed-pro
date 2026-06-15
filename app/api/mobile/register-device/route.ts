@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
+import { headers } from "next/headers";
 import { z } from "zod";
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/server";
+import { getRequestUser } from "@/lib/auth/getRequestUser";
 
 export const runtime = "nodejs";
 
@@ -16,8 +18,7 @@ const RegisterSchema = z.object({
 // Upserts a device token for push notifications (FCM for Android, APNs for iOS).
 // Called by the React Native app on launch after requesting push permission.
 export async function POST(req: NextRequest) {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getRequestUser(await headers());
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const raw = await req.json().catch(() => null);
@@ -58,8 +59,7 @@ export async function POST(req: NextRequest) {
 // DELETE /api/mobile/register-device
 // Marks a device token inactive on logout or when the user revokes push permission.
 export async function DELETE(req: NextRequest) {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getRequestUser(await headers());
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const raw = await req.json().catch(() => null);
