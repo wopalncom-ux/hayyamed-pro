@@ -113,7 +113,7 @@ export default function ProviderAIAnalyzerPage() {
       const res = await fetch("/api/ai/provider-analyzer", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ organizationId: orgId, analysisType }),
+        body: JSON.stringify({ analysisType }),
       });
       const data = await res.json();
       if (!res.ok) { setError(data.error ?? "Analysis failed."); return; }

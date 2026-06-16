@@ -34,33 +34,15 @@ export default async function ProviderAnalyticsPage() {
   const sixtyDaysAgo  = new Date(Date.now() - 60 * 86400_000).toISOString();
   const ninetyDaysAgo = new Date(Date.now() - 90 * 86400_000).toISOString();
 
-  // Fetch all data in parallel
-  const [coursesRes, allEnrollmentsRes, recentEnrollmentsRes] = await Promise.all([
-    admin
-      .from("courses")
-      .select("id, title, status, credits, category, price_usd, created_at")
-      .eq("provider_id", provider.id)
-      .order("created_at", { ascending: false }),
+  const { data: coursesRaw } = await admin
+    .from("courses")
+    .select("id, title, status, credits, category, price_usd, created_at")
+    .eq("provider_id", provider.id)
+    .order("created_at", { ascending: false });
 
-    admin
-      .from("course_enrollments")
-      .select("id, course_id, status, enrolled_at, completed_at, professional_id")
-      .eq("courses.provider_id", provider.id)
-      .order("enrolled_at", { ascending: false })
-      // Supabase requires join filter differently — use RPC or filter by course IDs below
-    ,
-
-    admin
-      .from("course_enrollments")
-      .select("id, course_id, status, enrolled_at, completed_at, professional_id")
-      .gte("enrolled_at", ninetyDaysAgo)
-      .order("enrolled_at", { ascending: false }),
-  ]);
-
-  const courses = coursesRes.data ?? [];
+  const courses = coursesRaw ?? [];
   const courseIds = courses.map((c) => c.id);
 
-  // Filter enrollments to only this provider's courses
   const allEnrollments = courseIds.length
     ? (await admin
         .from("course_enrollments")

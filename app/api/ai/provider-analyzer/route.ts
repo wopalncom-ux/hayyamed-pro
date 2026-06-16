@@ -12,7 +12,6 @@ import { z } from "zod";
 export const runtime = "nodejs";
 
 const BodySchema = z.object({
-  organizationId: z.string().uuid(),
   analysisType: z.enum(["demand_prediction", "gap_analysis", "revenue_report", "full_report"]),
 });
 
@@ -46,7 +45,7 @@ export async function POST(req: NextRequest) {
   const parsed = BodySchema.safeParse(raw);
   if (!parsed.success) return new Response("Invalid request", { status: 400 });
 
-  const { organizationId, analysisType } = parsed.data;
+  const { analysisType } = parsed.data;
 
   const admin = createAdminClient();
 
@@ -193,8 +192,8 @@ Top markets by registered professional count: ${topCountries || "No platform dat
     logAudit({
       actorAuthId: user.id,
       action: "ai.provider_analysis",
-      targetTable: "organizations",
-      targetId: organizationId,
+      targetTable: "training_providers",
+      targetId: providerCheck.id,
       metadata: {
         model: "claude-sonnet-4-6",
         input_tokens: response.usage?.input_tokens ?? 0,
