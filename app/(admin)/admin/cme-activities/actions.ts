@@ -52,7 +52,7 @@ export async function verifyCmeActivity(activityId: string) {
 
   if (activity) {
     const [profileRes, plan, linksRes, walletRes] = await Promise.all([
-      admin.from("professional_profiles").select("email, full_name").eq("auth_id", activity.professional_id).single(),
+      admin.from("professional_profiles").select("email, full_name, email_cme_verified").eq("auth_id", activity.professional_id).single(),
       getUserPlan(activity.professional_id),
       admin.from("employer_link_requests").select("organization_id").eq("professional_id", activity.professional_id).eq("status", "approved"),
       admin.from("cme_wallets").select("compliance_status, completed_credits, required_credits")
@@ -61,7 +61,7 @@ export async function verifyCmeActivity(activityId: string) {
         .limit(1)
         .maybeSingle(),
     ]);
-    if (profileRes.data?.email) {
+    if (profileRes.data?.email && profileRes.data.email_cme_verified !== false) {
       await sendCmeVerifiedEmail({
         to: profileRes.data.email,
         name: profileRes.data.full_name ?? "Doctor",
@@ -122,10 +122,10 @@ export async function rejectCmeActivity(activityId: string, reason: string) {
   if (activity) {
     const { data: profileRes } = await admin
       .from("professional_profiles")
-      .select("email, full_name")
+      .select("email, full_name, email_cme_verified")
       .eq("auth_id", activity.professional_id)
       .single();
-    if (profileRes?.email) {
+    if (profileRes?.email && profileRes.email_cme_verified !== false) {
       await sendCmeRejectedEmail({
         to: profileRes.email,
         name: profileRes.full_name ?? "Doctor",
