@@ -15,18 +15,28 @@ export async function POST(req: NextRequest) {
 
   const admin = createAdminClient();
 
-  // Verify caller is admin or training_provider_admin
-  const { data: member } = await admin
-    .from("organization_members")
-    .select("role")
-    .eq("auth_id", user.id)
-    .in("role", ["master_admin", "super_admin", "training_provider_admin"])
-    .maybeSingle();
+  // Verify caller is a platform admin or an active training provider
+  const [{ data: adminMember }, { data: providerAccount }] = await Promise.all([
+    admin
+      .from("organization_members")
+      .select("role")
+      .eq("auth_id", user.id)
+      .in("role", ["master_admin", "super_admin"])
+      .maybeSingle(),
+    admin
+      .from("training_providers")
+      .select("id")
+      .eq("created_by", user.id)
+      .eq("status", "active")
+      .maybeSingle(),
+  ]);
 
-  if (!member) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  if (!adminMember && !providerAccount) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
 
   const body = await req.json().catch(() => ({})) as { courseId?: string; all?: boolean };
-  const isAdmin = member.role === "master_admin" || member.role === "super_admin";
+  const isAdmin = adminMember?.role === "master_admin" || adminMember?.role === "super_admin";
 
   if (body.all && isAdmin) {
     // Batch embed all courses missing embeddings
@@ -65,14 +75,9 @@ export async function POST(req: NextRequest) {
   if (!course) return NextResponse.json({ error: "Course not found" }, { status: 404 });
 
   if (!isAdmin) {
-    // Provider must own the course
-    const { data: provider } = await admin
-      .from("training_providers")
-      .select("id")
-      .eq("created_by", user.id)
-      .eq("id", course.provider_id)
-      .maybeSingle();
-    if (!provider) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    if (!providerAccount || providerAccount.id !== course.provider_id) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
   }
 
   const text = buildCourseEmbeddingText(course as Parameters<typeof buildCourseEmbeddingText>[0]);

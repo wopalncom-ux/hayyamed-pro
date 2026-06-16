@@ -9,17 +9,14 @@ export async function GET() {
   if (!user) return new Response("Unauthorized", { status: 401 });
 
   const admin = createAdminClient();
-  const { data: member } = await admin
-    .from("organization_members")
-    .select("organization_id, organizations(name)")
-    .eq("auth_id", user.id)
-    .eq("role", "training_provider_admin")
+  const { data: provider } = await admin
+    .from("training_providers")
+    .select("id, name")
+    .eq("created_by", user.id)
+    .eq("status", "active")
     .maybeSingle();
 
-  if (!member) return Response.json({ error: "Not a training provider admin" }, { status: 403 });
+  if (!provider) return Response.json({ error: "No active provider account" }, { status: 403 });
 
-  const orgName =
-    (member.organizations as unknown as { name: string } | null)?.name ?? "Organization";
-
-  return Response.json({ organizationId: member.organization_id, name: orgName });
+  return Response.json({ organizationId: provider.id, name: provider.name });
 }

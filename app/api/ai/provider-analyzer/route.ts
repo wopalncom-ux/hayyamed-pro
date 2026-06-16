@@ -50,16 +50,15 @@ export async function POST(req: NextRequest) {
 
   const admin = createAdminClient();
 
-  // Verify caller is training_provider_admin for this org
-  const { data: member } = await admin
-    .from("organization_members")
-    .select("role")
-    .eq("auth_id", user.id)
-    .eq("organization_id", organizationId)
-    .eq("role", "training_provider_admin")
+  // Verify caller owns an active training provider
+  const { data: providerCheck } = await admin
+    .from("training_providers")
+    .select("id")
+    .eq("created_by", user.id)
+    .eq("status", "active")
     .maybeSingle();
 
-  if (!member) return new Response("Forbidden", { status: 403 });
+  if (!providerCheck) return new Response("Forbidden", { status: 403 });
 
   const rl = await checkAndLogRateLimit({
     action: "ai_provider_analyzer",
