@@ -1,6 +1,7 @@
 "use server";
 
 import { createAdminClient, createClient } from "@/lib/supabase/server";
+import { logAudit } from "@/lib/audit";
 import { revalidatePath } from "next/cache";
 
 async function requireAdmin() {
@@ -25,13 +26,12 @@ export async function activateCourse(courseId: string) {
 
   await admin.from("courses").update({ status: "active" }).eq("id", courseId);
 
-  await admin.from("audit_logs").insert({
-    actor_id: user.id,
+  logAudit({
+    actorAuthId: user.id,
     action: "admin.course.activate",
-    target_type: "course",
-    target_id: courseId,
-    metadata: {},
-  });
+    targetTable: "courses",
+    targetId: courseId,
+  }).catch(() => {});
 
   revalidatePath("/admin/courses");
 }
@@ -41,13 +41,13 @@ export async function draftCourse(courseId: string, reason?: string) {
 
   await admin.from("courses").update({ status: "draft" }).eq("id", courseId);
 
-  await admin.from("audit_logs").insert({
-    actor_id: user.id,
+  logAudit({
+    actorAuthId: user.id,
     action: "admin.course.draft",
-    target_type: "course",
-    target_id: courseId,
+    targetTable: "courses",
+    targetId: courseId,
     metadata: { reason: reason ?? null },
-  });
+  }).catch(() => {});
 
   revalidatePath("/admin/courses");
 }
@@ -57,13 +57,12 @@ export async function closeCourse(courseId: string) {
 
   await admin.from("courses").update({ status: "closed" }).eq("id", courseId);
 
-  await admin.from("audit_logs").insert({
-    actor_id: user.id,
+  logAudit({
+    actorAuthId: user.id,
     action: "admin.course.close",
-    target_type: "course",
-    target_id: courseId,
-    metadata: {},
-  });
+    targetTable: "courses",
+    targetId: courseId,
+  }).catch(() => {});
 
   revalidatePath("/admin/courses");
 }

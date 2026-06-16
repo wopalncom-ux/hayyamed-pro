@@ -1,7 +1,7 @@
 "use server";
 
-import { createAdminClient } from "@/lib/supabase/server";
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient, createClient } from "@/lib/supabase/server";
+import { logAudit } from "@/lib/audit";
 import { redirect } from "next/navigation";
 
 async function assertAdmin() {
@@ -36,13 +36,13 @@ export async function saveAIModuleSettings(
       );
   }
 
-  // Audit log
-  await admin.from("audit_logs").insert({
-    actor_id: user.id,
-    action: "ai_module_settings_updated",
-    target_type: "platform_settings",
+  // Audit log — fire-and-forget, never throw
+  logAudit({
+    actorAuthId: user.id,
+    action: "admin.ai_module_settings_updated",
+    targetTable: "platform_settings",
     metadata: { keys: entries.map((e) => e.key) },
-  });
+  }).catch(() => {});
 }
 
 export async function getAIModuleSettings(): Promise<Record<string, string>> {
