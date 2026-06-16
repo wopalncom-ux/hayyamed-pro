@@ -1,5 +1,5 @@
 -- ============================================================
--- Hayya Med PRO — ALL 61 MIGRATIONS COMBINED
+-- Hayya Med PRO — ALL 62 MIGRATIONS COMBINED
 -- Paste this entire file into the Supabase SQL Editor and Run.
 -- Idempotent: safe to run on a fresh project.
 -- Generated: 2026-06-16
@@ -2896,3 +2896,31 @@ VALUES
   ('IN', 'postgraduate_degree', 0, NULL, 15.0, false,
    'NMC India — Completion of postgraduate degree, diploma, or fellowship (DNB, MD, MS, DM, MCh, fellowship from recognized body). 15 CME credits for completion of any postgraduate degree or specialty certification during the 5-year cycle. Documentation: Degree certificate or statement of passing from issuing institution.')
 ;
+
+-- ════════════════════════════════════════════════════════════
+-- MIGRATION 062: Privacy Settings Auto-Create Trigger + Backfill
+-- ════════════════════════════════════════════════════════════
+
+CREATE OR REPLACE FUNCTION public.create_default_privacy_settings()
+RETURNS TRIGGER LANGUAGE plpgsql SECURITY DEFINER SET search_path = public AS $$
+BEGIN
+  INSERT INTO public.profile_privacy_settings (professional_id)
+  VALUES (NEW.auth_id)
+  ON CONFLICT (professional_id) DO NOTHING;
+  RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS trg_create_default_privacy_settings ON public.professional_profiles;
+CREATE TRIGGER trg_create_default_privacy_settings
+  AFTER INSERT ON public.professional_profiles
+  FOR EACH ROW EXECUTE FUNCTION public.create_default_privacy_settings();
+
+INSERT INTO public.profile_privacy_settings (professional_id)
+SELECT pp.auth_id
+FROM   public.professional_profiles pp
+WHERE  NOT EXISTS (
+  SELECT 1 FROM public.profile_privacy_settings pps
+  WHERE pps.professional_id = pp.auth_id
+)
+ON CONFLICT (professional_id) DO NOTHING;
