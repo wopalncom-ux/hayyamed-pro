@@ -120,6 +120,6 @@ export async function GET(request: NextRequest) {
     }).catch(() => {});
   }
 
-  await pingCronMonitor("cycle-renewal");
+  await pingCronMonitor("cycle-renewal", { sent: renewed, processed: expiredWallets.length });
   return NextResponse.json({ ok: true, renewed, checked: expiredWallets.length, date: today });
 }

@@ -42,7 +42,7 @@ export async function GET(req: NextRequest) {
     .lte("due_date", sevenDaysStr);
 
   if (tasksErr || !tasks?.length) {
-    await pingCronMonitor("CRON_MONITOR_TRAINING_DEADLINE");
+    await pingCronMonitor("training-deadline");
     return NextResponse.json({ checked: 0, reminders_sent: 0 });
   }
 
@@ -150,6 +150,6 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  await pingCronMonitor("CRON_MONITOR_TRAINING_DEADLINE");
+  await pingCronMonitor("training-deadline");
   return NextResponse.json({ checked: tasks.length, reminders_sent: remindersSent });
 }

@@ -1,8 +1,8 @@
 -- ============================================================
--- Hayya Med PRO — ALL 56 MIGRATIONS COMBINED
+-- Hayya Med PRO — ALL 57 MIGRATIONS COMBINED
 -- Paste this entire file into the Supabase SQL Editor and Run.
 -- Idempotent: safe to run on a fresh project.
--- Generated: 2026-06-15
+-- Generated: 2026-06-16
 -- ============================================================
 
 -- ════════════════════════════════════════════════════════════
@@ -2672,3 +2672,33 @@ BEGIN
   RETURN NULL;
 END;
 $$;
+
+
+-- ════════════════════════════════════════════════════════════
+-- MIGRATION 057 — Auth Email Sync Trigger
+-- ════════════════════════════════════════════════════════════
+
+CREATE OR REPLACE FUNCTION public.sync_user_email()
+RETURNS TRIGGER LANGUAGE plpgsql SECURITY DEFINER SET search_path = public AS $$
+BEGIN
+  IF NEW.email IS DISTINCT FROM OLD.email THEN
+    UPDATE public.professional_profiles
+    SET email      = NEW.email,
+        updated_at = now()
+    WHERE auth_id = NEW.id;
+  END IF;
+  RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS on_auth_user_email_updated ON auth.users;
+CREATE TRIGGER on_auth_user_email_updated
+  AFTER UPDATE OF email ON auth.users
+  FOR EACH ROW EXECUTE FUNCTION public.sync_user_email();
+
+UPDATE public.professional_profiles pp
+SET    email      = u.email,
+       updated_at = now()
+FROM   auth.users u
+WHERE  pp.auth_id = u.id
+  AND  pp.email IS DISTINCT FROM u.email;

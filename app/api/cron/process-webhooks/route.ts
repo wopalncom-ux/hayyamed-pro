@@ -54,7 +54,7 @@ export async function GET(req: NextRequest) {
     .eq("status", "pending")
     .gte("attempts", MAX_ATTEMPTS);
 
-  await pingCronMonitor("process-webhooks");
+  await pingCronMonitor("process-webhooks", { sent: delivered, processed: deliveries.length, skipped: failed });
 
   return NextResponse.json({
     processed: deliveries.length,

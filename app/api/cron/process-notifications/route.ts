@@ -154,7 +154,7 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  await pingCronMonitor("process-notifications");
+  await pingCronMonitor("process-notifications", { sent: processed, processed: items.length, skipped: failed });
 
   return NextResponse.json({
     processed,

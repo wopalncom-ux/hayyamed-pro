@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
     .eq("enabled", true);
 
   if (thErr || !thresholds?.length) {
-    await pingCronMonitor("CRON_MONITOR_COMPLIANCE_ALERTS");
+    await pingCronMonitor("compliance-alerts");
     return NextResponse.json({ checked: 0, alerts_sent: 0 });
   }
 
@@ -174,6 +174,6 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  await pingCronMonitor("CRON_MONITOR_COMPLIANCE_ALERTS");
+  await pingCronMonitor("compliance-alerts");
   return NextResponse.json({ checked: thresholds.length, alerts_sent: alertsSent });
 }
