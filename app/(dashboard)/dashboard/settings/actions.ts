@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 import { logAudit } from "@/lib/audit";
 import { getUserPlan, isPro } from "@/lib/subscription";
 import { sendEmployerLinkRequestNotificationEmail, sendAdminUnverifiedLinkRequestEmail } from "@/lib/email";
+import { toCountryCode } from "@/lib/countryCode";
 
 export async function deleteAccount() {
   const supabase = await createClient();
@@ -259,6 +260,20 @@ export async function addCountryWallet(payload: {
 
   if (walletCount >= 5) return { error: "Maximum 5 compliance countries allowed." };
 
+  // Look up cycle length from the rules engine — never hardcode per-country values
+  const countryCode = toCountryCode(payload.country);
+  const { data: rules } = await admin
+    .from("country_compliance_rules")
+    .select("profession_code, cycle_years")
+    .eq("country_code", countryCode)
+    .in("profession_code", [payload.profession.toLowerCase(), "all"]);
+
+  // Prefer profession-specific rule; fall back to 'all'; default 2 if no rule found
+  const rule =
+    rules?.find((r) => r.profession_code !== "all") ??
+    rules?.find((r) => r.profession_code === "all");
+  const renewal_cycle_years = rule?.cycle_years ?? 2;
+
   const { error } = await admin.from("cme_wallets").insert({
     professional_id: user.id,
     country: payload.country,
@@ -266,7 +281,7 @@ export async function addCountryWallet(payload: {
     specialty: payload.specialty,
     required_credits: payload.required_credits,
     completed_credits: 0,
-    renewal_cycle_years: 1,
+    renewal_cycle_years,
     cycle_start_date: payload.cycle_start_date,
     cycle_end_date: payload.cycle_end_date,
     compliance_status: "non_compliant",

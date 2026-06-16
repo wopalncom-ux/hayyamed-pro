@@ -1214,6 +1214,39 @@ export async function sendWaitlistLaunchEmail({ to }: { to: string }) {
   );
 }
 
+export async function sendCycleRenewedEmail({
+  to, name, country, profession, newCycleStart, newCycleEnd, requiredCredits, terminology,
+}: {
+  to: string;
+  name: string;
+  country: string;
+  profession: string;
+  newCycleStart: string;
+  newCycleEnd: string;
+  requiredCredits: number;
+  terminology: string;
+}) {
+  const fmt = (d: string) =>
+    new Date(d).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+  await send(
+    to,
+    `Your ${country} ${terminology} cycle has renewed — new deadline ${fmt(newCycleEnd)}`,
+    baseLayout(`
+      <p style="font-size:20px;font-weight:700;color:#111;margin:0 0 8px">Your CME cycle has renewed ✓</p>
+      <p style="color:#374151;margin:0 0 20px">Hi ${esc(name)}, your renewal cycle for <strong>${esc(country)}</strong> has automatically advanced. Your completed credits have been reset for the new cycle — time to start logging this period's activities.</p>
+      <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:20px 24px;margin:0 0 24px">
+        <p style="margin:0 0 4px;font-size:12px;font-weight:600;color:#1a56a0;text-transform:uppercase;letter-spacing:0.05em">New Renewal Cycle</p>
+        <p style="margin:0 0 4px;font-size:15px;color:#374151"><strong>From:</strong> ${fmt(newCycleStart)}</p>
+        <p style="margin:0 0 4px;font-size:15px;color:#374151"><strong>Deadline:</strong> ${fmt(newCycleEnd)}</p>
+        <p style="margin:0 0 4px;font-size:15px;color:#374151"><strong>Required:</strong> ${requiredCredits} ${esc(terminology)} credits</p>
+        <p style="margin:0;font-size:15px;color:#374151"><strong>Profession:</strong> ${esc(profession)}</p>
+      </div>
+      <a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Go to CME Dashboard →</a>
+      <p style="color:#64748b;font-size:12px;margin:24px 0 0">Verify your specific requirements with your regulatory authority. Hayya Med Pro tracks compliance but does not issue licenses.</p>
+    `)
+  );
+}
+
 export async function sendDemoRequestConfirmationEmail({
   to, name, orgName,
 }: {

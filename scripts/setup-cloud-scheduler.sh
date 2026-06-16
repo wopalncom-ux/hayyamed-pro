@@ -1,7 +1,7 @@
 ﻿#!/bin/bash
 # Hayya Med Pro — GCP Cloud Scheduler Setup
 #
-# Run once after initial deployment to activate all 14 automated cron jobs.
+# Run once after initial deployment to activate all 15 automated cron jobs.
 # Without this, no trial emails, license alerts, engagement emails, webhook
 # deliveries, or notification queue processing will fire.
 #
@@ -60,6 +60,7 @@ if [ "${DELETE_MODE}" = "true" ]; then
     hayyamed-compliance-alerts
     hayyamed-storage-cleanup
     hayyamed-compliance-snapshot
+    hayyamed-cycle-renewal
   )
   for JOB in "${JOBS[@]}"; do
     if gcloud scheduler jobs describe "${JOB}" \
@@ -246,12 +247,19 @@ create_or_update_job \
   "/api/cron/compliance-snapshot" \
   "Daily compliance state snapshot per org — powers 30-day trend in employer analytics"
 
+# 00:30 GST (21:30 UTC previous day) -- CME cycle renewal (advance expired wallet cycles)
+create_or_update_job \
+  "hayyamed-cycle-renewal" \
+  "30 0 * * *" \
+  "/api/cron/cycle-renewal" \
+  "Advance expired CME wallet cycles; reset credits for new cycle; notify professionals"
+
 echo ""
-echo "=== All 14 Cloud Scheduler jobs configured ==="
+echo "=== All 15 Cloud Scheduler jobs configured ==="
 echo ""
 echo "Verify:"
 echo "  gcloud scheduler jobs list --location=${SCHEDULER_REGION} --project=${PROJECT_ID}"
-echo "  (expected: 14 jobs)"
+echo "  (expected: 15 jobs)"
 echo ""
 echo "Trigger a job manually to test:"
 echo "  gcloud scheduler jobs run hayyamed-trial-reminders --location=${SCHEDULER_REGION} --project=${PROJECT_ID}"

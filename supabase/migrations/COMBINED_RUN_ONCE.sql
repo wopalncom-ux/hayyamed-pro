@@ -1,5 +1,5 @@
 -- ============================================================
--- Hayya Med PRO — ALL 55 MIGRATIONS COMBINED
+-- Hayya Med PRO — ALL 56 MIGRATIONS COMBINED
 -- Paste this entire file into the Supabase SQL Editor and Run.
 -- Idempotent: safe to run on a fresh project.
 -- Generated: 2026-06-15
@@ -2644,3 +2644,31 @@ CREATE POLICY "admin reads all snapshots" ON organization_compliance_snapshots
          AND role IN ('master_admin', 'super_admin')
     )
   );
+
+
+-- ════════════════════════════════════════════════════════════
+-- MIGRATION 056 — Cycle-Scoped Credit Sync
+-- ════════════════════════════════════════════════════════════
+
+CREATE OR REPLACE FUNCTION public.sync_cme_wallet_credits()
+RETURNS TRIGGER LANGUAGE plpgsql SECURITY DEFINER SET search_path = public AS $$
+DECLARE
+  v_wallet_id    uuid := COALESCE(NEW.wallet_id, OLD.wallet_id);
+  v_cycle_start  date;
+BEGIN
+  SELECT cycle_start_date INTO v_cycle_start
+  FROM cme_wallets WHERE id = v_wallet_id;
+
+  UPDATE cme_wallets
+  SET completed_credits = (
+    SELECT COALESCE(SUM(credits), 0)
+    FROM cme_activities
+    WHERE wallet_id           = v_wallet_id
+      AND verification_status = 'verified'
+      AND activity_date       >= COALESCE(v_cycle_start, '-infinity'::date)
+  )
+  WHERE id = v_wallet_id;
+
+  RETURN NULL;
+END;
+$$;
