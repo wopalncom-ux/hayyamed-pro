@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { createAdminClient } from "@/lib/supabase/server";
 import { getRequestUser } from "@/lib/auth/getRequestUser";
+import { checkAndLogRateLimit } from "@/lib/rateLimit";
 import { renderToBuffer } from "@react-pdf/renderer";
 import { OrgReportDocument } from "@/components/pdf/OrgReportDocument";
 import React from "react";
@@ -27,6 +28,14 @@ export async function GET(request: NextRequest) {
     .maybeSingle();
 
   if (!member) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+
+  const rl = await checkAndLogRateLimit({ action: "pdf.org_report", userId: user.id, maxPerHour: 10 });
+  if (!rl.allowed) {
+    return NextResponse.json({ error: "Too many requests" }, {
+      status: 429,
+      headers: { "Retry-After": String(rl.retryAfterSeconds ?? 3600) },
+    });
+  }
 
   const _orgs = member.organizations as { name: string }[] | { name: string } | null;
   const orgName = (Array.isArray(_orgs) ? _orgs[0]?.name : (_orgs as { name: string } | null)?.name) ?? "Organization";
@@ -89,10 +98,13 @@ export async function GET(request: NextRequest) {
     }) as any
   );
 
+  // Sanitize org name for use in header — remove control characters and quotes
+  const safeOrgName = orgName.replace(/[\r\n\t"]/g, "").replace(/\s+/g, "-").slice(0, 60) || "Organization";
+
   return new NextResponse(new Uint8Array(buffer), {
     headers: {
       "Content-Type": "application/pdf",
-      "Content-Disposition": `attachment; filename="${orgName.replace(/\s+/g, "-")}-Compliance-${new Date().toISOString().slice(0, 10)}.pdf"`,
+      "Content-Disposition": `attachment; filename="${safeOrgName}-Compliance-${new Date().toISOString().slice(0, 10)}.pdf"`,
     },
   });
 }
