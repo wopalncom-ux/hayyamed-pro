@@ -5,6 +5,15 @@ import { getRequestUser } from "@/lib/auth/getRequestUser";
 
 export const runtime = "nodejs";
 
+function esc(s: string | null | undefined): string {
+  return (s ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 export async function GET(request: NextRequest) {
   const user = await getRequestUser(await headers());
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -116,9 +125,9 @@ export async function GET(request: NextRequest) {
 
   const rows = staff.map((s) => `
     <tr>
-      <td>${s.name}</td>
-      <td>${s.profession}${s.specialty ? ` — ${s.specialty}` : ""}</td>
-      <td>${s.department || "—"}</td>
+      <td>${esc(s.name)}</td>
+      <td>${esc(s.profession)}${s.specialty ? ` — ${esc(s.specialty)}` : ""}</td>
+      <td>${esc(s.department) || "—"}</td>
       <td>${s.licenseExpiry ? new Date(s.licenseExpiry).toLocaleDateString("en-GB") : (s.licenseVisible ? "—" : "Private")}</td>
       <td>${s.daysToExpiry !== null ? `${s.daysToExpiry}d` : "—"}</td>
       <td>${s.completed !== null ? `${s.completed}/${s.required}` : "—"}</td>
@@ -132,7 +141,7 @@ export async function GET(request: NextRequest) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${orgName} — Staff Compliance Report</title>
+<title>${esc(orgName)} — Staff Compliance Report</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #111; background: #fff; padding: 32px; font-size: 13px; }
@@ -173,7 +182,7 @@ export async function GET(request: NextRequest) {
   </div>
   <div class="report-meta">
     <h1>Staff Compliance Report</h1>
-    <div>${orgName}</div>
+    <div>${esc(orgName)}</div>
     <div>Generated: ${generatedAt}</div>
   </div>
 </div>
