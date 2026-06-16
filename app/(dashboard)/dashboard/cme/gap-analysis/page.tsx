@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { getUserPlan, isPro } from "@/lib/subscription";
 import { toCountryCode } from "@/lib/countryCode";
 import GapAnalysisClient from "@/components/dashboard/GapAnalysisClient";
+import type { GapAnalysis } from "@/app/api/ai/gap-analysis/route";
 
 export const metadata = {
   title: "AI CME Gap Analysis — Hayya Med Pro",
@@ -107,6 +108,28 @@ export default async function GapAnalysisPage() {
       }
     : null;
 
+  // Fetch cached analysis — valid if is_current=true, not expired, and credits unchanged
+  let cachedResult: GapAnalysis | null = null;
+  let cachedAt: string | null = null;
+
+  if (wallet) {
+    const { data: cacheRow } = await admin
+      .from("gap_analysis_cache")
+      .select("result_json, created_at")
+      .eq("professional_id", user.id)
+      .eq("is_current", true)
+      .eq("completed_credits", wallet.completed_credits ?? 0)
+      .gt("expires_at", new Date().toISOString())
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (cacheRow) {
+      cachedResult = cacheRow.result_json as GapAnalysis;
+      cachedAt = cacheRow.created_at as string;
+    }
+  }
+
   return (
     <div>
       <div className="mb-6">
@@ -116,7 +139,11 @@ export default async function GapAnalysisPage() {
         </p>
       </div>
 
-      <GapAnalysisClient initialData={initialData} />
+      <GapAnalysisClient
+        initialData={initialData}
+        cachedResult={cachedResult}
+        cachedAt={cachedAt}
+      />
     </div>
   );
 }

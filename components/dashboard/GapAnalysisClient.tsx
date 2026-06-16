@@ -26,22 +26,31 @@ const PRIORITY_CONFIG = {
   low:    { dot: "bg-green-500", label: "Low"    },
 };
 
-export default function GapAnalysisClient({ initialData }: { initialData: InitialData }) {
-  const [result, setResult] = useState<GapAnalysis | null>(null);
+export default function GapAnalysisClient({
+  initialData,
+  cachedResult,
+  cachedAt,
+}: {
+  initialData: InitialData;
+  cachedResult?: GapAnalysis | null;
+  cachedAt?: string | null;
+}) {
+  const [result, setResult] = useState<GapAnalysis | null>(cachedResult ?? null);
+  const [isCached, setIsCached] = useState<boolean>(!!cachedResult);
+  const [cachedAtState, setCachedAtState] = useState<string | null>(cachedAt ?? null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  async function runAnalysis() {
+  async function runAnalysis(forceRefresh = false) {
     if (!initialData) return;
     setLoading(true);
     setError(null);
-    setResult(null);
 
     try {
       const res = await fetch("/api/ai/gap-analysis", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(initialData),
+        body: JSON.stringify({ ...initialData, forceRefresh }),
       });
 
       if (!res.ok) {
@@ -49,8 +58,10 @@ export default function GapAnalysisClient({ initialData }: { initialData: Initia
         throw new Error((data as { error?: string }).error ?? `Error ${res.status}`);
       }
 
-      const data: GapAnalysis = await res.json();
+      const data = await res.json() as GapAnalysis & { cached?: boolean; cached_at?: string };
       setResult(data);
+      setIsCached(data.cached === true);
+      setCachedAtState(data.cached_at ?? new Date().toISOString());
     } catch (e) {
       setError(e instanceof Error ? e.message : "Something went wrong");
     } finally {
@@ -68,6 +79,10 @@ export default function GapAnalysisClient({ initialData }: { initialData: Initia
 
   const { profession, specialty, country, requiredCredits, completedCredits, cycleEndDate } = initialData;
   const pct = requiredCredits > 0 ? Math.min(100, Math.round((completedCredits / requiredCredits) * 100)) : 0;
+
+  const cachedLabel = cachedAtState
+    ? new Date(cachedAtState).toLocaleString("en-GB", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })
+    : null;
 
   return (
     <div className="space-y-6">
@@ -96,21 +111,26 @@ export default function GapAnalysisClient({ initialData }: { initialData: Initia
               </p>
             )}
           </div>
-          <button
-            onClick={runAnalysis}
-            disabled={loading}
-            className="shrink-0 bg-[#1a56a0] text-white text-sm font-semibold px-5 py-2.5 rounded-lg disabled:opacity-60 hover:bg-[#1547a0] transition-colors"
-          >
-            {loading ? (
-              <span className="flex items-center gap-2">
-                <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                </svg>
-                Analysing…
-              </span>
-            ) : result ? "Re-run Analysis" : "Run AI Gap Analysis"}
-          </button>
+          <div className="flex flex-col items-end gap-1.5">
+            <button
+              onClick={() => runAnalysis(!!result)}
+              disabled={loading}
+              className="shrink-0 bg-[#1a56a0] text-white text-sm font-semibold px-5 py-2.5 rounded-lg disabled:opacity-60 hover:bg-[#1547a0] transition-colors"
+            >
+              {loading ? (
+                <span className="flex items-center gap-2">
+                  <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  </svg>
+                  Analysing…
+                </span>
+              ) : result ? "Refresh Analysis" : "Run AI Gap Analysis"}
+            </button>
+            {isCached && cachedLabel && !loading && (
+              <span className="text-xs text-[#64748b]">Cached · {cachedLabel}</span>
+            )}
+          </div>
         </div>
       </div>
 

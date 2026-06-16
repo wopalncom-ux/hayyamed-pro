@@ -9,6 +9,7 @@ const AI_CALL_LOG_DAYS          = 90;
 const NOTIFICATION_QUEUE_DAYS   = 30;
 const WEBHOOK_DELIVERY_DAYS     = 90;
 const DRIP_EMAIL_LOG_DAYS       = 90;
+const GAP_ANALYSIS_CACHE_DAYS   = 7;  // prune non-current rows older than 7 days (current rows expire via expires_at)
 
 /**
  * GET /api/cron/data-retention
@@ -86,16 +87,29 @@ export async function GET(request: NextRequest) {
     else console.error("data-retention: drip_email_log cleanup error:", error.message);
   }
 
+  // ── 5. gap_analysis_cache — non-current rows older than 7 days ───────────
+  {
+    const { data, error } = await admin
+      .from("gap_analysis_cache")
+      .delete()
+      .eq("is_current", false)
+      .lt("created_at", cutoff(GAP_ANALYSIS_CACHE_DAYS))
+      .select("id");
+    if (!error) deleted += data?.length ?? 0;
+    else console.error("data-retention: gap_analysis_cache cleanup error:", error.message);
+  }
+
   await pingCronMonitor("data-retention", { processed: deleted });
 
   return NextResponse.json({
     ok: true,
     rows_deleted: deleted,
     retention_windows: {
-      ai_call_logs:       `${AI_CALL_LOG_DAYS}d`,
-      notification_queue: `${NOTIFICATION_QUEUE_DAYS}d (terminal only)`,
-      webhook_deliveries: `${WEBHOOK_DELIVERY_DAYS}d (terminal only)`,
-      drip_email_log:     `${DRIP_EMAIL_LOG_DAYS}d`,
+      ai_call_logs:        `${AI_CALL_LOG_DAYS}d`,
+      notification_queue:  `${NOTIFICATION_QUEUE_DAYS}d (terminal only)`,
+      webhook_deliveries:  `${WEBHOOK_DELIVERY_DAYS}d (terminal only)`,
+      drip_email_log:      `${DRIP_EMAIL_LOG_DAYS}d`,
+      gap_analysis_cache:  `${GAP_ANALYSIS_CACHE_DAYS}d (non-current only)`,
     },
   });
 }

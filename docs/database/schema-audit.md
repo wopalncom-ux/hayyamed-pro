@@ -1,5 +1,5 @@
 # Hayya Med Pro — Database Schema Audit
-_Generated: 2026-06-15 | Updated: 2026-06-16 | Migrations: 001–062 | Reviewer: Foundation Review Sprint_
+_Generated: 2026-06-15 | Updated: 2026-06-16 | Migrations: 001–063 | Reviewer: Foundation Review Sprint_
 
 ---
 
