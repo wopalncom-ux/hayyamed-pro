@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/server";
+import { logAudit } from "@/lib/audit";
 
 export const runtime = "nodejs";
 
@@ -47,13 +48,12 @@ export async function POST(request: NextRequest) {
       .update({ email_hard_bounced: true, updated_at: new Date().toISOString() })
       .eq("email", email);
 
-    await admin.from("audit_logs").insert({
-      actor_auth_id: null,
-      action: "email_hard_bounce",
-      target_table: "professional_profiles",
-      target_id: null,
+    logAudit({
+      actorAuthId: null,
+      action: "email.hard_bounce",
+      targetTable: "professional_profiles",
       metadata: { email, bounce_type: Type, record_type: RecordType },
-    });
+    }).catch(() => {});
 
     return NextResponse.json({ ok: true, action: "marked_hard_bounced", email });
   }
@@ -64,13 +64,12 @@ export async function POST(request: NextRequest) {
       .update({ email_spam_reported: true, updated_at: new Date().toISOString() })
       .eq("email", email);
 
-    await admin.from("audit_logs").insert({
-      actor_auth_id: null,
-      action: "email_spam_complaint",
-      target_table: "professional_profiles",
-      target_id: null,
+    logAudit({
+      actorAuthId: null,
+      action: "email.spam_complaint",
+      targetTable: "professional_profiles",
       metadata: { email, record_type: RecordType },
-    });
+    }).catch(() => {});
 
     return NextResponse.json({ ok: true, action: "marked_spam_reported", email });
   }
