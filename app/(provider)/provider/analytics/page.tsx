@@ -38,7 +38,7 @@ export default async function ProviderAnalyticsPage() {
   const [coursesRes, allEnrollmentsRes, recentEnrollmentsRes] = await Promise.all([
     admin
       .from("courses")
-      .select("id, title, status, cme_credits, category, created_at")
+      .select("id, title, status, credits, category, price_usd, created_at")
       .eq("provider_id", provider.id)
       .order("created_at", { ascending: false }),
 
@@ -97,10 +97,19 @@ export default async function ProviderAnalyticsPage() {
     : null;
 
   // Credit hours delivered (completions × credits)
-  const courseCreditsMap = Object.fromEntries(courses.map((c) => [c.id, c.cme_credits ?? 0]));
+  const courseCreditsMap = Object.fromEntries(courses.map((c) => [c.id, c.credits ?? 0]));
   const creditHoursDelivered = allEnrollments
     .filter((e) => e.status === "completed")
     .reduce((sum, e) => sum + (courseCreditsMap[e.course_id] ?? 0), 0);
+
+  // Revenue estimate (paid completions × price_usd)
+  const coursePriceMap = Object.fromEntries(courses.map((c) => [c.id, (c as { id: string; price_usd?: number }).price_usd ?? 0]));
+  const estimatedRevenue = allEnrollments
+    .filter((e) => e.status === "completed")
+    .reduce((sum, e) => sum + (coursePriceMap[e.course_id] ?? 0), 0);
+  const thisMonthRevenue = allEnrollments
+    .filter((e) => e.status === "completed" && e.enrolled_at >= monthStart)
+    .reduce((sum, e) => sum + (coursePriceMap[e.course_id] ?? 0), 0);
 
   // ── 4-week enrollment trend ───────────────────────────────────────────────────
   const weekBuckets: WeekBucket[] = [];
@@ -133,12 +142,12 @@ export default async function ProviderAnalyticsPage() {
     const enrolled = allEnrollments.filter((e) => e.course_id === c.id);
     const completed = enrolled.filter((e) => e.status === "completed").length;
     const thisMonth = enrolled.filter((e) => e.enrolled_at >= monthStart).length;
-    const credits = (c.cme_credits ?? 0) * completed;
+    const credits = (c.credits ?? 0) * completed;
     return {
       id: c.id,
       title: c.title,
       status: c.status,
-      cme_credits: c.cme_credits ?? 0,
+      credits: c.credits ?? 0,
       enrolled: enrolled.length,
       completed,
       completionRate: pct(completed, enrolled.length),
@@ -186,8 +195,8 @@ export default async function ProviderAnalyticsPage() {
       </div>
 
       {/* Summary cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-        <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+        <div className="bg-white rounded-xl border border-[#e2e8f0] p-5 sm:col-span-1 lg:col-span-1">
           <p className="text-xs text-[#64748b] font-medium uppercase tracking-wide mb-1">Total Enrollments</p>
           <p className="text-3xl font-bold text-[#1a56a0]">{totalEnrollments.toLocaleString()}</p>
           <p className="text-xs text-[#94a3b8] mt-1">all time</p>
@@ -209,9 +218,19 @@ export default async function ProviderAnalyticsPage() {
           <p className="text-xs text-[#94a3b8] mt-1">{totalCompletions} completions</p>
         </div>
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
-          <p className="text-xs text-[#64748b] font-medium uppercase tracking-wide mb-1">CME Credits Delivered</p>
+          <p className="text-xs text-[#64748b] font-medium uppercase tracking-wide mb-1">CME Credits</p>
           <p className="text-3xl font-bold text-[#0f1f3d]">{creditHoursDelivered.toLocaleString()}</p>
-          <p className="text-xs text-[#94a3b8] mt-1">via completed courses</p>
+          <p className="text-xs text-[#94a3b8] mt-1">delivered</p>
+        </div>
+        <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
+          <p className="text-xs text-[#64748b] font-medium uppercase tracking-wide mb-1">Est. Revenue</p>
+          <p className="text-3xl font-bold text-[#16a34a]">${estimatedRevenue.toLocaleString()}</p>
+          <p className="text-xs text-[#94a3b8] mt-1">all time (paid)</p>
+        </div>
+        <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
+          <p className="text-xs text-[#64748b] font-medium uppercase tracking-wide mb-1">This Month Rev.</p>
+          <p className="text-3xl font-bold text-[#0f1f3d]">${thisMonthRevenue.toLocaleString()}</p>
+          <p className="text-xs text-[#94a3b8] mt-1">estimated</p>
         </div>
       </div>
 
@@ -268,7 +287,7 @@ export default async function ProviderAnalyticsPage() {
                   <tr key={c.id} className="hover:bg-[#f8fafc] transition-colors">
                     <td className="px-6 py-3">
                       <p className="font-medium text-[#0f1f3d] truncate max-w-[220px]">{c.title}</p>
-                      <p className="text-xs text-[#94a3b8]">{c.cme_credits} credits · {c.status}</p>
+                      <p className="text-xs text-[#94a3b8]">{c.credits} credits · {c.status}</p>
                     </td>
                     <td className="px-4 py-3 text-right font-semibold text-[#0f1f3d]">{c.enrolled}</td>
                     <td className="px-4 py-3 text-right text-[#16a34a] font-medium">{c.completed}</td>

@@ -9,6 +9,7 @@ import SendReminderButton from "@/components/employer/SendReminderButton";
 import InviteLinkButton from "@/components/employer/InviteLinkButton";
 import QrCodeButton from "@/components/employer/QrCodeButton";
 import ComplianceHeatmap from "@/components/employer/ComplianceHeatmap";
+import RealtimeComplianceSummary from "@/components/employer/RealtimeComplianceSummary";
 import EmployerSetupChecklist from "@/components/employer/EmployerSetupChecklist";
 import ComplianceReportButton from "@/components/employer/ComplianceReportButton";
 import ComplianceAlertSettings from "@/components/employer/ComplianceAlertSettings";
@@ -287,13 +288,24 @@ export default async function EmployerDashboardPage({
       />
 
       {/* Summary Stats */}
-      <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-4">
         <StatCard label="Total Staff" value={total} color="blue" />
         <StatCard label="Compliant" value={compliant} color="green" />
         <StatCard label="At Risk" value={atRisk} color="orange" />
         <StatCard label="Non-Compliant" value={nonCompliant} color="red" />
         <StatCard label="License ≤30d" value={expiringSoon} color={expiringSoon > 0 ? "red" : "green"} />
       </div>
+
+      {/* Live compliance breakdown */}
+      {total > 0 && (
+        <div className="mb-8">
+          <RealtimeComplianceSummary
+            organizationId={orgId}
+            initial={{ compliant, at_risk: atRisk, non_compliant: nonCompliant }}
+            total={total}
+          />
+        </div>
+      )}
 
       {/* Search + status filter */}
       {total > 0 && (

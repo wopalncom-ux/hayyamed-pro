@@ -24,7 +24,7 @@ export default async function ProviderDashboardPage() {
   const [coursesRes, enrollmentsRes] = await Promise.all([
     admin
       .from("courses")
-      .select("id, title, status, cme_credits, created_at")
+      .select("id, title, status, credits, created_at")
       .eq("provider_id", provider.id)
       .order("created_at", { ascending: false }),
     admin
@@ -152,7 +152,7 @@ export default async function ProviderDashboardPage() {
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-medium text-[#111] truncate">{course.title}</p>
                     <p className="text-xs text-[#64748b] mt-0.5">
-                      {course.cme_credits} credits · {course.status}
+                      {course.credits} credits · {course.status}
                     </p>
                   </div>
                   <div className="text-right flex-shrink-0">

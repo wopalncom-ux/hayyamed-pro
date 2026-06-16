@@ -1,7 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import type { GapAnalysis } from "@/app/api/ai/gap-analysis/route";
+
+type CourseResult = {
+  id: string;
+  title: string;
+  category: string;
+  credits: number;
+  is_free: boolean;
+  price_usd: number | null;
+  provider_name: string;
+  similarity: number;
+};
 
 type InitialData = {
   profession: string;
@@ -40,11 +52,13 @@ export default function GapAnalysisClient({
   const [cachedAtState, setCachedAtState] = useState<string | null>(cachedAt ?? null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [courses, setCourses] = useState<CourseResult[]>([]);
 
   async function runAnalysis(forceRefresh = false) {
     if (!initialData) return;
     setLoading(true);
     setError(null);
+    setCourses([]);
 
     try {
       const res = await fetch("/api/ai/gap-analysis", {
@@ -62,6 +76,24 @@ export default function GapAnalysisClient({
       setResult(data);
       setIsCached(data.cached === true);
       setCachedAtState(data.cached_at ?? new Date().toISOString());
+
+      // Fire semantic course search from gap context (non-blocking)
+      const gaps = data.category_gaps ?? [];
+      if (gaps.length > 0) {
+        const query = [
+          `${initialData.profession}${initialData.specialty ? ` ${initialData.specialty}` : ""} CME courses`,
+          ...gaps.slice(0, 3).map((g) => g.category.replace(/_/g, " ")),
+        ].join(", ");
+
+        fetch("/api/marketplace/semantic-search", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query, limit: 4 }),
+        })
+          .then((r) => r.json())
+          .then((d: { results?: CourseResult[] }) => { if (d.results?.length) setCourses(d.results); })
+          .catch(() => {});
+      }
     } catch (e) {
       setError(e instanceof Error ? e.message : "Something went wrong");
     } finally {
@@ -238,6 +270,40 @@ export default function GapAnalysisClient({
             <h2 className="text-sm font-bold text-[#111] mb-2">{country} Authority Tip</h2>
             <p className="text-sm text-[#374151]">{result.authority_specific_tip}</p>
           </div>
+
+          {/* Semantic course recommendations */}
+          {courses.length > 0 && (
+            <div className="bg-white border border-[#e2e8f0] rounded-xl p-5">
+              <div className="flex items-center justify-between mb-3">
+                <h2 className="text-sm font-bold text-[#111]">Marketplace Courses for Your Gaps</h2>
+                <Link href="/courses" className="text-xs text-[#1a56a0] hover:underline">
+                  Browse all →
+                </Link>
+              </div>
+              <div className="grid sm:grid-cols-2 gap-3">
+                {courses.map((c) => (
+                  <Link
+                    key={c.id}
+                    href={`/courses/${c.id}`}
+                    className="block border border-[#e2e8f0] rounded-lg p-4 hover:border-[#1a56a0] hover:bg-[#f8fafc] transition-all group"
+                  >
+                    <p className="text-sm font-semibold text-[#0f1f3d] group-hover:text-[#1a56a0] line-clamp-2 mb-1">
+                      {c.title}
+                    </p>
+                    <p className="text-xs text-[#64748b] mb-2">{c.provider_name}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs bg-[#eff6ff] text-[#1a56a0] px-2 py-0.5 rounded-full font-medium">
+                        {c.credits} credits
+                      </span>
+                      <span className={`text-xs font-semibold ${c.is_free ? "text-[#16a34a]" : "text-[#0f1f3d]"}`}>
+                        {c.is_free ? "Free" : c.price_usd ? `$${c.price_usd}` : "—"}
+                      </span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
 
           <p className="text-xs text-[#64748b] text-center pt-2">
             AI analysis is for guidance only. Always verify requirements with your licensing authority.
