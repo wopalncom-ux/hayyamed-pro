@@ -2,6 +2,7 @@ import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect, notFound } from "next/navigation";
 import Link from "next/link";
 import EnrollButton from "@/components/marketplace/EnrollButton";
+import CourseReviews from "@/components/courses/CourseReviews";
 
 export default async function CourseDetailPage({
   params,
@@ -16,7 +17,7 @@ export default async function CourseDetailPage({
 
   const admin = createAdminClient();
 
-  const [{ data: course }, { data: enrollment }] = await Promise.all([
+  const [{ data: course }, { data: enrollment }, reviewsRes] = await Promise.all([
     admin
       .from("courses")
       .select("*, training_providers(name, description, is_accredited, accreditor, website_url, logo_url)")
@@ -29,6 +30,12 @@ export default async function CourseDetailPage({
       .eq("course_id", id)
       .eq("professional_id", user.id)
       .maybeSingle(),
+    admin
+      .from("course_reviews")
+      .select("id, rating, review_text, created_at, reviewer_id, professional_profiles(full_name, profession)")
+      .eq("course_id", id)
+      .order("created_at", { ascending: false })
+      .limit(50),
   ]);
 
   if (!course) notFound();
@@ -42,6 +49,26 @@ export default async function CourseDetailPage({
 
   const enrolled = !!enrollment && enrollment.status !== "cancelled";
   const completed = enrollment?.status === "completed";
+
+  type ReviewRow = {
+    id: string; rating: number; review_text: string | null; created_at: string; reviewer_id: string;
+    professional_profiles: { full_name: string | null; profession: string | null } | { full_name: string | null; profession: string | null }[] | null;
+  };
+  const rawReviews = (reviewsRes.data ?? []) as ReviewRow[];
+  const reviews = rawReviews.map((r) => {
+    const prof = Array.isArray(r.professional_profiles) ? r.professional_profiles[0] : r.professional_profiles;
+    return {
+      id: r.id,
+      rating: r.rating,
+      review_text: r.review_text,
+      created_at: r.created_at,
+      reviewer_name: prof?.full_name ? prof.full_name.split(" ")[0] + " " + (prof.full_name.split(" ").slice(-1)[0]?.charAt(0) ?? "") + "." : "Anonymous",
+      reviewer_profession: prof?.profession ?? null,
+    };
+  });
+  const totalReviews = reviews.length;
+  const averageRating = totalReviews > 0 ? Math.round((reviews.reduce((s, r) => s + r.rating, 0) / totalReviews) * 10) / 10 : 0;
+  const existingReview = rawReviews.find((r) => r.reviewer_id === user.id);
 
   const deadlinePassed = course.enrollment_deadline && new Date(course.enrollment_deadline) < new Date();
 
@@ -156,6 +183,26 @@ export default async function CourseDetailPage({
             />
           )}
         </div>
+      </div>
+
+      {/* Reviews */}
+      <div className="mt-6 bg-white rounded-xl border border-[#e2e8f0] p-6">
+        <h2 className="text-base font-semibold text-[#111] mb-5">
+          Reviews {totalReviews > 0 && <span className="text-[#64748b] font-normal text-sm">({totalReviews})</span>}
+        </h2>
+        <CourseReviews
+          courseId={id}
+          reviews={reviews}
+          averageRating={averageRating}
+          totalCount={totalReviews}
+          completed={completed}
+          existingReview={existingReview ? { rating: existingReview.rating, review_text: existingReview.review_text } : null}
+        />
+        {!completed && enrolled && (
+          <p className="text-xs text-[#94a3b8] mt-4">
+            Complete this course to unlock reviews.
+          </p>
+        )}
       </div>
     </div>
   );

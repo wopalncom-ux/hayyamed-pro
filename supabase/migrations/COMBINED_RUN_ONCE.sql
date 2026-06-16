@@ -1,5 +1,5 @@
 -- ============================================================
--- Hayya Med PRO — ALL 64 MIGRATIONS COMBINED
+-- Hayya Med PRO — ALL 67 MIGRATIONS COMBINED
 -- Paste this entire file into the Supabase SQL Editor and Run.
 -- Idempotent: safe to run on a fresh project.
 -- Generated: 2026-06-16
@@ -3057,3 +3057,54 @@ CREATE OR REPLACE TRIGGER set_updated_at_government_settings
   BEFORE UPDATE ON public.government_settings
   FOR EACH ROW EXECUTE FUNCTION public.set_updated_at();
 
+
+
+-- =============================================================
+-- Migration 066: Add government_admin to user_role enum
+-- =============================================================
+-- Migration 066: Add government_admin to user_role enum
+-- The government portal (Session 126) uses role='government_admin' in organization_members.
+-- PostgreSQL enums require explicit ALTER TYPE to add new values.
+
+ALTER TYPE user_role ADD VALUE IF NOT EXISTS 'government_admin';
+
+
+
+
+-- =============================================================
+-- Migration 067: Course reviews and star ratings
+-- =============================================================
+CREATE TABLE IF NOT EXISTS course_reviews (
+  id          uuid        PRIMARY KEY DEFAULT gen_random_uuid(),
+  course_id   uuid        NOT NULL REFERENCES courses(id) ON DELETE CASCADE,
+  reviewer_id uuid        NOT NULL REFERENCES professional_profiles(auth_id) ON DELETE CASCADE,
+  rating      integer     NOT NULL CHECK (rating >= 1 AND rating <= 5),
+  review_text text,
+  created_at  timestamptz NOT NULL DEFAULT now(),
+  updated_at  timestamptz NOT NULL DEFAULT now(),
+  UNIQUE (course_id, reviewer_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_course_reviews_course_id   ON course_reviews(course_id);
+CREATE INDEX IF NOT EXISTS idx_course_reviews_reviewer_id ON course_reviews(reviewer_id);
+
+ALTER TABLE course_reviews ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "course_reviews_select" ON course_reviews;
+CREATE POLICY "course_reviews_select" ON course_reviews FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "course_reviews_insert" ON course_reviews;
+CREATE POLICY "course_reviews_insert" ON course_reviews FOR INSERT WITH CHECK (auth.uid() = reviewer_id);
+
+DROP POLICY IF EXISTS "course_reviews_update" ON course_reviews;
+CREATE POLICY "course_reviews_update" ON course_reviews FOR UPDATE USING (auth.uid() = reviewer_id);
+
+DROP POLICY IF EXISTS "course_reviews_delete" ON course_reviews;
+CREATE POLICY "course_reviews_delete" ON course_reviews FOR DELETE USING (auth.uid() = reviewer_id);
+
+DROP POLICY IF EXISTS "course_reviews_service" ON course_reviews;
+CREATE POLICY "course_reviews_service" ON course_reviews FOR ALL USING (auth.role() = 'service_role');
+
+CREATE TRIGGER set_updated_at_course_reviews
+  BEFORE UPDATE ON course_reviews
+  FOR EACH ROW EXECUTE PROCEDURE set_updated_at();

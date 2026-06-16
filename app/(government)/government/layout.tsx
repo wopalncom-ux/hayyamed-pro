@@ -46,9 +46,10 @@ export default async function GovernmentLayout({ children }: { children: React.R
       <nav className="bg-white border-b border-[#e2e8f0] px-6">
         <div className="max-w-6xl mx-auto flex gap-6 text-sm overflow-x-auto">
           {[
-            { href: "/government",           label: "Dashboard" },
-            { href: "/government/registry",  label: "Registry" },
-            { href: "/government/reports",   label: "Reports" },
+            { href: "/government",            label: "Dashboard" },
+            { href: "/government/registry",   label: "Registry" },
+            { href: "/government/reports",    label: "Reports" },
+            { href: "/government/settings",   label: "Settings" },
           ].map(({ href, label }) => (
             <a
               key={href}

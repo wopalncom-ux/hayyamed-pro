@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import SiteFooter from "@/components/SiteFooter";
 import EnrollButton from "@/components/courses/EnrollButton";
+import CourseReviews from "@/components/courses/CourseReviews";
 
 const AUTHORITY_MAP: Record<string, { label: string; flag: string }> = {
   QA: { label: "QCHP", flag: "🇶🇦" },
@@ -89,19 +90,47 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ i
   const isAuthenticated = !!user;
 
   let isEnrolled = false;
+  let isCompleted = false;
   let enrollmentCount = 0;
 
-  const [enrollCountRes, userEnrollRes] = await Promise.all([
+  const [enrollCountRes, userEnrollRes, reviewsRes] = await Promise.all([
     course.max_enrollments
       ? admin.from("course_enrollments").select("id", { count: "exact", head: true }).eq("course_id", id).neq("status", "cancelled")
       : Promise.resolve({ count: 0 }),
     user
-      ? admin.from("course_enrollments").select("id").eq("course_id", id).eq("professional_id", user.id).neq("status", "cancelled").maybeSingle()
+      ? admin.from("course_enrollments").select("id, status").eq("course_id", id).eq("professional_id", user.id).neq("status", "cancelled").maybeSingle()
       : Promise.resolve({ data: null }),
+    admin
+      .from("course_reviews")
+      .select("id, rating, review_text, created_at, reviewer_id, professional_profiles(full_name, profession)")
+      .eq("course_id", id)
+      .order("created_at", { ascending: false })
+      .limit(50),
   ]);
 
   enrollmentCount = enrollCountRes.count ?? 0;
   isEnrolled = !!userEnrollRes.data;
+  isCompleted = (userEnrollRes.data as { status?: string } | null)?.status === "completed";
+
+  type ReviewRow = {
+    id: string; rating: number; review_text: string | null; created_at: string; reviewer_id: string;
+    professional_profiles: { full_name: string | null; profession: string | null } | { full_name: string | null; profession: string | null }[] | null;
+  };
+  const rawReviews = (reviewsRes.data ?? []) as ReviewRow[];
+  const reviews = rawReviews.map((r) => {
+    const prof = Array.isArray(r.professional_profiles) ? r.professional_profiles[0] : r.professional_profiles;
+    return {
+      id: r.id,
+      rating: r.rating,
+      review_text: r.review_text,
+      created_at: r.created_at,
+      reviewer_name: prof?.full_name ? prof.full_name.split(" ")[0] + " " + (prof.full_name.split(" ").slice(-1)[0]?.charAt(0) ?? "") + "." : "Anonymous",
+      reviewer_profession: prof?.profession ?? null,
+    };
+  });
+  const totalReviews = reviews.length;
+  const averageRating = totalReviews > 0 ? Math.round((reviews.reduce((s, r) => s + r.rating, 0) / totalReviews) * 10) / 10 : 0;
+  const existingReview = user ? rawReviews.find((r) => r.reviewer_id === user.id) : null;
 
   const deadlinePassed = course.enrollment_deadline ? new Date(course.enrollment_deadline) < new Date() : false;
   const isFull = course.max_enrollments ? enrollmentCount >= course.max_enrollments : false;
@@ -194,6 +223,25 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ i
               <h1 className="text-2xl sm:text-3xl font-extrabold text-[#111] leading-tight">
                 {course.title}
               </h1>
+
+              {totalReviews > 0 && (
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-0.5">
+                    {[1, 2, 3, 4, 5].map((s) => (
+                      <svg key={s} width={14} height={14} viewBox="0 0 24 24"
+                        fill={s <= Math.round(averageRating) ? "#f59e0b" : "none"}
+                        stroke={s <= Math.round(averageRating) ? "#f59e0b" : "#d1d5db"}
+                        strokeWidth={1.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <span className="text-sm font-semibold text-[#111]">{averageRating.toFixed(1)}</span>
+                  <a href="#reviews" className="text-xs text-[#1a56a0] hover:underline">
+                    ({totalReviews} {totalReviews === 1 ? "review" : "reviews"})
+                  </a>
+                </div>
+              )}
 
               {provider && (
                 <div className="flex items-center gap-2">
@@ -309,6 +357,27 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ i
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* Reviews section */}
+          <div id="reviews" className="mt-10 bg-white rounded-2xl border border-[#e2e8f0] p-6">
+            <h2 className="text-base font-bold text-[#111] mb-5">
+              Reviews {totalReviews > 0 && <span className="text-[#64748b] font-normal">({totalReviews})</span>}
+            </h2>
+            <CourseReviews
+              courseId={id}
+              reviews={reviews}
+              averageRating={averageRating}
+              totalCount={totalReviews}
+              completed={isCompleted}
+              existingReview={existingReview ? { rating: existingReview.rating, review_text: existingReview.review_text } : null}
+            />
+            {!isCompleted && !user && (
+              <p className="text-xs text-[#94a3b8] mt-4">
+                <a href="/register" className="text-[#1a56a0] hover:underline font-medium">Create a free account</a>
+                {" "}to enroll and review this course.
+              </p>
+            )}
           </div>
         </main>
 

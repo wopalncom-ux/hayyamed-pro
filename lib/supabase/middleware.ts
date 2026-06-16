@@ -65,6 +65,10 @@ const COMING_SOON_BYPASS = [
   "/hematology-cme",
   "/geriatrics-cme",
   "/government/register",     // government authority registration page (pre-auth)
+  "/government/settings",     // government settings page
+  "/government/registry",
+  "/government/reports",
+  "/government",
   "/for-government",          // B2B government authority white-label licensing page
   "/blog",                    // blog index and all posts — public SEO content
   "/pathology-cme",           // specialty CME pages — public SEO
