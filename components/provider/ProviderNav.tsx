@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { href: "/provider/analytics",    label: "Analytics" },
   { href: "/provider/ai-analyzer",  label: "AI Insights" },
   { href: "/provider/api-keys",     label: "API Keys" },
+  { href: "/provider/webhooks",     label: "Webhooks" },
   { href: "/provider/integration",  label: "Integration" },
   { href: "/provider/settings",     label: "Settings" },
 ];

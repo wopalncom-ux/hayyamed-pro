@@ -59,6 +59,7 @@ const ALLOWED_PRIVACY_FIELDS = new Set([
   "employer_can_view_certificates",
   "employer_can_view_license_expiry",
   "employer_can_view_detailed_cme_activities",
+  "public_directory_opt_in",
 ]);
 
 export async function updatePrivacySetting(field: string, value: boolean) {

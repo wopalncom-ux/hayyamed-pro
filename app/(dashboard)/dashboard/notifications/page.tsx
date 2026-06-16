@@ -5,6 +5,31 @@ import NotificationsEnableButton from "@/components/dashboard/NotificationsEnabl
 const LICENSE_REMINDER_DAYS = [90, 60, 30, 14, 7];
 const CME_REMINDER_DAYS = [30, 14, 7];
 
+const TEMPLATE_LABELS: Record<string, string> = {
+  license_expiry_90d:    "License expiry in 90 days",
+  license_expiry_60d:    "License expiry in 60 days",
+  license_expiry_30d:    "License expiry in 30 days",
+  license_expiry_14d:    "License expiry in 14 days",
+  license_expiry_7d:     "License expiry in 7 days",
+  cme_deadline_reminder: "CME cycle deadline reminder",
+  cme_deadline_30d:      "CME deadline in 30 days",
+  cme_deadline_14d:      "CME deadline in 14 days",
+  cme_deadline_7d:       "CME deadline in 7 days",
+  compliance_alert:      "Compliance status alert",
+  cme_verified:          "CME activity verified",
+  cme_rejected:          "CME activity rejected",
+  training_deadline:     "Training deadline reminder",
+  cycle_renewed:         "CME cycle renewed",
+  account_suspended:     "Account suspended",
+  account_unsuspended:   "Account reinstated",
+  drip_d1:               "Getting started with Hayya Med Pro",
+  drip_d3:               "Track your first CME activity",
+  drip_d7:               "Download your compliance report",
+  drip_d10:              "Invite your team",
+  trial_reminder:        "Trial period reminder",
+  trial_ending:          "Your trial is ending soon",
+};
+
 function subtractDays(date: Date, days: number) {
   return new Date(date.getTime() - days * 86400000);
 }
@@ -13,13 +38,23 @@ function fmt(date: Date) {
   return date.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
 }
 
+function timeAgo(dateStr: string): string {
+  const diff = Date.now() - new Date(dateStr).getTime();
+  const mins = Math.floor(diff / 60000);
+  if (mins < 60) return `${Math.max(1, mins)}m ago`;
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return `${hrs}h ago`;
+  const days = Math.floor(hrs / 24);
+  return days === 1 ? "Yesterday" : `${days} days ago`;
+}
+
 export default async function NotificationsPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
   const admin = createAdminClient();
-  const [profileRes, walletRes] = await Promise.all([
+  const [profileRes, walletRes, recentRes] = await Promise.all([
     admin.from("professional_profiles")
       .select("full_name, license_expiry")
       .eq("auth_id", user.id)
@@ -28,37 +63,34 @@ export default async function NotificationsPage() {
       .select("cycle_end_date, required_credits, completed_credits")
       .eq("professional_id", user.id)
       .maybeSingle(),
+    admin.from("notification_queue")
+      .select("id, channel, template_id, status, created_at, sent_at")
+      .eq("professional_id", user.id)
+      .in("status", ["sent", "pending", "failed"])
+      .order("created_at", { ascending: false })
+      .limit(20),
   ]);
 
   const profile = profileRes.data;
   const wallet = walletRes.data;
+  const recent = recentRes.data ?? [];
   const now = new Date();
 
-  // Build upcoming license reminder schedule
   const licenseReminders: { label: string; date: Date; fired: boolean }[] = [];
   if (profile?.license_expiry) {
     const expiry = new Date(profile.license_expiry);
     for (const days of LICENSE_REMINDER_DAYS) {
       const reminderDate = subtractDays(expiry, days);
-      licenseReminders.push({
-        label: `${days} days before expiry`,
-        date: reminderDate,
-        fired: reminderDate < now,
-      });
+      licenseReminders.push({ label: `${days} days before expiry`, date: reminderDate, fired: reminderDate < now });
     }
   }
 
-  // Build upcoming CME deadline reminder schedule
   const cmeReminders: { label: string; date: Date; fired: boolean }[] = [];
   if (wallet?.cycle_end_date) {
     const cycleEnd = new Date(wallet.cycle_end_date);
     for (const days of CME_REMINDER_DAYS) {
       const reminderDate = subtractDays(cycleEnd, days);
-      cmeReminders.push({
-        label: `${days} days before cycle ends`,
-        date: reminderDate,
-        fired: reminderDate < now,
-      });
+      cmeReminders.push({ label: `${days} days before cycle ends`, date: reminderDate, fired: reminderDate < now });
     }
   }
 
@@ -72,6 +104,40 @@ export default async function NotificationsPage() {
       </p>
 
       <div className="space-y-4">
+        {/* Recent activity inbox */}
+        <div className="bg-white rounded-xl border border-[#e2e8f0] p-6">
+          <h2 className="text-base font-semibold text-[#111] mb-4">Recent Activity</h2>
+          {recent.length === 0 ? (
+            <p className="text-sm text-[#94a3b8]">No notifications sent yet. Reminders and alerts will appear here once your profile is set up.</p>
+          ) : (
+            <div className="divide-y divide-[#f8fafc]">
+              {recent.map((item) => {
+                const label = TEMPLATE_LABELS[item.template_id] ?? item.template_id.replace(/_/g, " ");
+                return (
+                  <div key={item.id} className="flex items-center gap-3 py-3">
+                    <div className={`w-2 h-2 rounded-full flex-shrink-0 ${
+                      item.status === "sent" ? "bg-[#16a34a]" :
+                      item.status === "pending" ? "bg-[#d97706]" :
+                      "bg-[#dc2626]"
+                    }`} />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm text-[#111] leading-snug">{label}</p>
+                      <p className="text-xs text-[#94a3b8] mt-0.5">{timeAgo(item.created_at)}</p>
+                    </div>
+                    <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full flex-shrink-0 ${
+                      item.channel === "email" ? "bg-[#f0f7ff] text-[#1a56a0]" :
+                      item.channel === "push"  ? "bg-[#f0fdf4] text-[#15803d]" :
+                                                 "bg-[#f1f5f9] text-[#64748b]"
+                    }`}>
+                      {item.channel}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+
         {/* Push notifications */}
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-6">
           <h2 className="text-base font-semibold text-[#111] mb-1">Push Notifications</h2>
@@ -150,11 +216,11 @@ export default async function NotificationsPage() {
           <h2 className="text-base font-semibold text-[#111] mb-3">Active Alert Types</h2>
           <div className="space-y-2.5">
             {[
-              { label: "License expiry reminders", sub: "Email at 90, 60, 30, 14 and 7 days before expiry", active: !!profile?.license_expiry },
-              { label: "CME cycle deadline alerts", sub: "Email at 30, 14 and 7 days before cycle end date", active: !!wallet?.cycle_end_date },
-              { label: "Compliance status changes", sub: "Notified when your status changes between compliant, at risk, and non-compliant", active: !!wallet },
-              { label: "CME activity verified", sub: "Email confirmation when admin verifies your activity and credits are added", active: true },
-              { label: "Employer compliance reminders", sub: "Email when your employer sends a compliance task or reminder", active: true },
+              { label: "License expiry reminders",  sub: "Email at 90, 60, 30, 14 and 7 days before expiry",                           active: !!profile?.license_expiry },
+              { label: "CME cycle deadline alerts",  sub: "Email at 30, 14 and 7 days before cycle end date",                           active: !!wallet?.cycle_end_date },
+              { label: "Compliance status changes",  sub: "Notified when status changes between compliant, at risk, and non-compliant", active: !!wallet },
+              { label: "CME activity verified",      sub: "Email confirmation when admin verifies your activity and credits are added",  active: true },
+              { label: "Employer compliance tasks",  sub: "Email when your employer sends a compliance task or reminder",               active: true },
             ].map(({ label, sub, active }) => (
               <div key={label} className="flex items-start gap-3 py-2 border-b border-[#f8fafc] last:border-0">
                 <span className={`mt-0.5 w-4 h-4 rounded-full flex-shrink-0 flex items-center justify-center text-xs ${active ? "bg-[#dcfce7] text-[#16a34a]" : "bg-[#f1f5f9] text-[#94a3b8]"}`}>

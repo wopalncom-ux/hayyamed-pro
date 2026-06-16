@@ -3108,3 +3108,13 @@ CREATE POLICY "course_reviews_service" ON course_reviews FOR ALL USING (auth.rol
 CREATE TRIGGER set_updated_at_course_reviews
   BEFORE UPDATE ON course_reviews
   FOR EACH ROW EXECUTE PROCEDURE set_updated_at();
+
+-- ════════════════════════════════════════════════════════════
+-- MIGRATION 068: Public Directory Opt-In
+-- ════════════════════════════════════════════════════════════
+ALTER TABLE profile_privacy_settings
+  ADD COLUMN IF NOT EXISTS public_directory_opt_in boolean NOT NULL DEFAULT false;
+
+CREATE INDEX IF NOT EXISTS idx_privacy_public_directory
+  ON profile_privacy_settings (public_directory_opt_in)
+  WHERE public_directory_opt_in = true;

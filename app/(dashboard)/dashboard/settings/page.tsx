@@ -17,6 +17,7 @@ import NotificationsEnableButton from "@/components/dashboard/NotificationsEnabl
 import CancelSubscriptionButton from "@/components/dashboard/CancelSubscriptionButton";
 import DownloadMyDataButton from "@/components/dashboard/DownloadMyDataButton";
 import PushPreferencesForm from "@/components/dashboard/PushPreferencesForm";
+import PublicDirectoryToggle from "@/components/dashboard/PublicDirectoryToggle";
 
 const STATUS_STYLES: Record<string, string> = {
   pending: "bg-[#fff7ed] text-[#d97706]",
@@ -199,6 +200,12 @@ export default async function SettingsPage() {
               employer_can_view_profile_details: privacy?.employer_can_view_profile_details ?? true,
             }}
           />
+        </div>
+
+        {/* Public directory */}
+        <div className="bg-white rounded-xl border border-[#e2e8f0] p-6">
+          <h2 className="text-base font-semibold text-[#111] mb-4">Public Professional Directory</h2>
+          <PublicDirectoryToggle initial={privacy?.public_directory_opt_in ?? false} />
         </div>
 
         {/* Subscription */}

@@ -131,5 +131,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/courses`,            lastModified: new Date(), changeFrequency: "weekly",  priority: 0.95 },
     // Session 80 — GCC CME events calendar
     { url: `${BASE}/tools/cme-events`,   lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
+    // Session 130 — public professional directory
+    { url: `${BASE}/professionals`,      lastModified: new Date(), changeFrequency: "daily",   priority: 0.9 },
   ];
 }
