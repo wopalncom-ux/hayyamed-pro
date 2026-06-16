@@ -30,14 +30,14 @@ export async function GET() {
   const user = await getRequestUser(await headers());
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const orgId = await getProviderOrg(user.id);
-  if (!orgId) return NextResponse.json({ error: "No active training provider" }, { status: 403 });
+  const providerId = await getProviderOrg(user.id);
+  if (!providerId) return NextResponse.json({ error: "No active training provider" }, { status: 403 });
 
   const admin = createAdminClient();
   const { data: endpoints } = await admin
     .from("webhook_endpoints")
     .select("id, url, events, description, is_active, created_at")
-    .eq("organization_id", orgId)
+    .eq("training_provider_id", providerId)
     .order("created_at", { ascending: false });
 
   const ids = (endpoints ?? []).map((e) => e.id);
@@ -74,8 +74,8 @@ export async function POST(req: NextRequest) {
   const user = await getRequestUser(await headers());
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const orgId = await getProviderOrg(user.id);
-  if (!orgId) return NextResponse.json({ error: "No active training provider" }, { status: 403 });
+  const providerId = await getProviderOrg(user.id);
+  if (!providerId) return NextResponse.json({ error: "No active training provider" }, { status: 403 });
 
   const body = await req.json().catch(() => null);
   const parsed = CreateSchema.safeParse(body);
@@ -88,7 +88,7 @@ export async function POST(req: NextRequest) {
   const { count } = await admin
     .from("webhook_endpoints")
     .select("id", { count: "exact", head: true })
-    .eq("organization_id", orgId);
+    .eq("training_provider_id", providerId);
 
   if ((count ?? 0) >= 5) {
     return NextResponse.json({ error: "Maximum 5 webhook endpoints per provider" }, { status: 400 });
@@ -99,7 +99,7 @@ export async function POST(req: NextRequest) {
   const { data: endpoint, error } = await admin
     .from("webhook_endpoints")
     .insert({
-      organization_id: orgId,
+      training_provider_id: providerId,
       url: parsed.data.url,
       secret,
       events: parsed.data.events,
@@ -133,8 +133,8 @@ export async function PATCH(req: NextRequest) {
   const user = await getRequestUser(await headers());
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const orgId = await getProviderOrg(user.id);
-  if (!orgId) return NextResponse.json({ error: "No active training provider" }, { status: 403 });
+  const providerId = await getProviderOrg(user.id);
+  if (!providerId) return NextResponse.json({ error: "No active training provider" }, { status: 403 });
 
   const body = await req.json().catch(() => null);
   const parsed = UpdateSchema.safeParse(body);
@@ -145,11 +145,11 @@ export async function PATCH(req: NextRequest) {
 
   const { data: existing } = await admin
     .from("webhook_endpoints")
-    .select("organization_id")
+    .select("training_provider_id")
     .eq("id", id)
     .maybeSingle();
 
-  if (!existing || existing.organization_id !== orgId) {
+  if (!existing || existing.training_provider_id !== providerId) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 
@@ -175,8 +175,8 @@ export async function DELETE(req: NextRequest) {
   const user = await getRequestUser(await headers());
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const orgId = await getProviderOrg(user.id);
-  if (!orgId) return NextResponse.json({ error: "No active training provider" }, { status: 403 });
+  const providerId = await getProviderOrg(user.id);
+  if (!providerId) return NextResponse.json({ error: "No active training provider" }, { status: 403 });
 
   const { id } = await req.json().catch(() => ({ id: null }));
   if (!id) return NextResponse.json({ error: "Missing id" }, { status: 400 });
@@ -185,11 +185,11 @@ export async function DELETE(req: NextRequest) {
 
   const { data: existing } = await admin
     .from("webhook_endpoints")
-    .select("organization_id, url")
+    .select("training_provider_id, url")
     .eq("id", id)
     .maybeSingle();
 
-  if (!existing || existing.organization_id !== orgId) {
+  if (!existing || existing.training_provider_id !== providerId) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 

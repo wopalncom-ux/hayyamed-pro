@@ -10,6 +10,7 @@ type InboxItem = {
   icon: string;
   channel: string;
   status: string;
+  is_read: boolean;
   created_at: string;
   sent_at: string | null;
 };
@@ -48,6 +49,7 @@ export default function NotificationBell() {
   const [pushStatus, setPushStatus] = useState<"default" | "granted" | "denied" | "unsupported">("default");
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState<InboxItem[]>([]);
+  const [unread, setUnread] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -61,20 +63,35 @@ export default function NotificationBell() {
   }, []);
 
   const fetchInbox = useCallback(async () => {
-    if (loaded) return;
     try {
       const res = await fetch("/api/notifications/inbox?limit=15");
       if (res.ok) {
         const data = await res.json();
         setItems(data.notifications ?? []);
+        setUnread(data.unread ?? 0);
       }
     } catch {}
     setLoaded(true);
-  }, [loaded]);
+  }, []);
+
+  const markAllRead = useCallback(async () => {
+    if (unread === 0) return;
+    try {
+      await fetch("/api/notifications/inbox", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ mark_all_read: true }),
+      });
+      setUnread(0);
+      setItems((prev) => prev.map((n) => ({ ...n, is_read: true })));
+    } catch {}
+  }, [unread]);
 
   useEffect(() => {
-    if (open) fetchInbox();
-  }, [open, fetchInbox]);
+    if (open) {
+      fetchInbox().then(() => markAllRead());
+    }
+  }, [open, fetchInbox, markAllRead]);
 
   // Close on outside click
   useEffect(() => {
@@ -126,8 +143,6 @@ export default function NotificationBell() {
 
   if (pushStatus === "unsupported") return null;
 
-  const recentCount = items.length;
-
   return (
     <div ref={ref} className="relative">
       <button
@@ -141,9 +156,9 @@ export default function NotificationBell() {
         ) : (
           <BellOff className="w-4 h-4" />
         )}
-        {recentCount > 0 && (
+        {unread > 0 && (
           <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#dc2626] text-white text-[9px] font-bold flex items-center justify-center leading-none">
-            {recentCount > 9 ? "9+" : recentCount}
+            {unread > 9 ? "9+" : unread}
           </span>
         )}
       </button>
@@ -196,7 +211,12 @@ export default function NotificationBell() {
               </div>
             )}
             {loaded && items.map((item) => (
-              <div key={item.id} className="flex items-start gap-3 px-4 py-3 hover:bg-[#f8fafc] transition-colors">
+              <div
+                key={item.id}
+                className={`flex items-start gap-3 px-4 py-3 hover:bg-[#f8fafc] transition-colors ${
+                  !item.is_read && item.status === "sent" ? "bg-[#f0f7ff]" : ""
+                }`}
+              >
                 <div className="mt-0.5 w-7 h-7 rounded-full bg-[#f0f7ff] flex items-center justify-center flex-shrink-0 text-[#1a56a0]">
                   <NotifIcon icon={item.icon} channel={item.channel} />
                 </div>

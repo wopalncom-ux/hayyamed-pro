@@ -2,7 +2,8 @@ import { createHash } from "crypto";
 import { createAdminClient } from "@/lib/supabase/server";
 
 export type ApiKeyContext = {
-  organizationId: string;
+  organizationId: string;  // "" for provider keys (which use providerId instead)
+  providerId: string | null;  // set for training_provider API keys
   keyId: string;
   scopes: string[];
 };
@@ -33,7 +34,7 @@ export async function verifyApiKey(key: string): Promise<ApiKeyContext | null> {
 
   const { data } = await admin
     .from("api_keys")
-    .select("id, organization_id, scopes, expires_at")
+    .select("id, organization_id, training_provider_id, scopes, expires_at")
     .eq("key_hash", hash)
     .eq("is_active", true)
     .maybeSingle();
@@ -50,7 +51,8 @@ export async function verifyApiKey(key: string): Promise<ApiKeyContext | null> {
     .eq("id", data.id);
 
   return {
-    organizationId: data.organization_id,
+    organizationId: (data.organization_id as string | null) ?? "",
+    providerId: (data.training_provider_id as string | null) ?? null,
     keyId: data.id,
     scopes: (data.scopes as string[]) ?? [],
   };

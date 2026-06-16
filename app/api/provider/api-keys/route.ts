@@ -32,7 +32,7 @@ export async function GET() {
   const { data: keys } = await admin
     .from("api_keys")
     .select("id, name, key_prefix, scopes, last_used_at, expires_at, is_active, created_at")
-    .eq("organization_id", providerId)
+    .eq("training_provider_id", providerId)
     .order("created_at", { ascending: false });
 
   return NextResponse.json({ keys: keys ?? [] });
@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
   const { count } = await admin
     .from("api_keys")
     .select("id", { count: "exact", head: true })
-    .eq("organization_id", providerId)
+    .eq("training_provider_id", providerId)
     .eq("is_active", true);
 
   if ((count ?? 0) >= 10) {
@@ -74,7 +74,7 @@ export async function POST(req: NextRequest) {
   const { data: created, error } = await admin
     .from("api_keys")
     .insert({
-      organization_id: providerId,
+      training_provider_id: providerId,
       name: parsed.data.name,
       key_prefix: prefix,
       key_hash: hash,
@@ -111,11 +111,11 @@ export async function DELETE(req: NextRequest) {
   const admin = createAdminClient();
   const { data: existing } = await admin
     .from("api_keys")
-    .select("organization_id, name")
+    .select("training_provider_id, name")
     .eq("id", id)
     .maybeSingle();
 
-  if (!existing || existing.organization_id !== providerId) {
+  if (!existing || existing.training_provider_id !== providerId) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 

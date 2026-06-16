@@ -1,5 +1,5 @@
 -- ============================================================
--- Hayya Med PRO — ALL 67 MIGRATIONS COMBINED
+-- Hayya Med PRO — ALL 70 MIGRATIONS COMBINED
 -- Paste this entire file into the Supabase SQL Editor and Run.
 -- Idempotent: safe to run on a fresh project.
 -- Generated: 2026-06-16
@@ -3118,3 +3118,116 @@ ALTER TABLE profile_privacy_settings
 CREATE INDEX IF NOT EXISTS idx_privacy_public_directory
   ON profile_privacy_settings (public_directory_opt_in)
   WHERE public_directory_opt_in = true;
+
+
+-- ════════════════════════════════════════════════════════════
+-- MIGRATION 069: Provider Webhook FK Fix + Notification Read Tracking
+-- ════════════════════════════════════════════════════════════
+
+-- Part 1: webhook_endpoints provider FK
+ALTER TABLE webhook_endpoints
+  ALTER COLUMN organization_id DROP NOT NULL;
+
+ALTER TABLE webhook_endpoints
+  ADD COLUMN IF NOT EXISTS training_provider_id uuid
+    REFERENCES training_providers(id) ON DELETE CASCADE;
+
+ALTER TABLE webhook_endpoints
+  DROP CONSTRAINT IF EXISTS webhook_has_owner;
+ALTER TABLE webhook_endpoints
+  ADD CONSTRAINT webhook_has_owner CHECK (
+    (organization_id IS NOT NULL) OR (training_provider_id IS NOT NULL)
+  );
+
+CREATE INDEX IF NOT EXISTS idx_webhook_endpoints_provider
+  ON webhook_endpoints (training_provider_id)
+  WHERE training_provider_id IS NOT NULL AND is_active = true;
+
+DROP POLICY IF EXISTS "provider admin manages own webhooks" ON webhook_endpoints;
+CREATE POLICY "provider admin manages own webhooks" ON webhook_endpoints
+  FOR ALL
+  USING (
+    training_provider_id IS NOT NULL AND
+    EXISTS (
+      SELECT 1 FROM training_providers tp
+       WHERE tp.id = webhook_endpoints.training_provider_id
+         AND tp.created_by = auth.uid()
+         AND tp.status = 'active'
+    )
+  )
+  WITH CHECK (
+    training_provider_id IS NOT NULL AND
+    EXISTS (
+      SELECT 1 FROM training_providers tp
+       WHERE tp.id = webhook_endpoints.training_provider_id
+         AND tp.created_by = auth.uid()
+         AND tp.status = 'active'
+    )
+  );
+
+DROP POLICY IF EXISTS "provider admin reads own deliveries" ON webhook_deliveries;
+CREATE POLICY "provider admin reads own deliveries" ON webhook_deliveries
+  FOR SELECT
+  USING (
+    EXISTS (
+      SELECT 1
+        FROM webhook_endpoints we
+        JOIN training_providers tp ON tp.id = we.training_provider_id
+       WHERE we.id = webhook_deliveries.endpoint_id
+         AND tp.created_by = auth.uid()
+         AND tp.status = 'active'
+    )
+  );
+
+-- Part 2: notification_queue read tracking
+ALTER TABLE notification_queue
+  ADD COLUMN IF NOT EXISTS read_at timestamptz;
+
+CREATE INDEX IF NOT EXISTS idx_notification_queue_unread
+  ON notification_queue (professional_id, created_at DESC)
+  WHERE read_at IS NULL;
+
+
+-- ════════════════════════════════════════════════════════════
+-- MIGRATION 070: Provider API Keys FK Fix
+-- ════════════════════════════════════════════════════════════
+
+ALTER TABLE api_keys
+  ALTER COLUMN organization_id DROP NOT NULL;
+
+ALTER TABLE api_keys
+  ADD COLUMN IF NOT EXISTS training_provider_id uuid
+    REFERENCES training_providers(id) ON DELETE CASCADE;
+
+ALTER TABLE api_keys
+  DROP CONSTRAINT IF EXISTS api_keys_has_owner;
+ALTER TABLE api_keys
+  ADD CONSTRAINT api_keys_has_owner CHECK (
+    (organization_id IS NOT NULL) OR (training_provider_id IS NOT NULL)
+  );
+
+CREATE INDEX IF NOT EXISTS idx_api_keys_provider
+  ON api_keys (training_provider_id)
+  WHERE training_provider_id IS NOT NULL AND is_active = true;
+
+DROP POLICY IF EXISTS "provider admin manages own api keys" ON api_keys;
+CREATE POLICY "provider admin manages own api keys" ON api_keys
+  FOR ALL
+  USING (
+    training_provider_id IS NOT NULL AND
+    EXISTS (
+      SELECT 1 FROM training_providers tp
+       WHERE tp.id = api_keys.training_provider_id
+         AND tp.created_by = auth.uid()
+         AND tp.status = 'active'
+    )
+  )
+  WITH CHECK (
+    training_provider_id IS NOT NULL AND
+    EXISTS (
+      SELECT 1 FROM training_providers tp
+       WHERE tp.id = api_keys.training_provider_id
+         AND tp.created_by = auth.uid()
+         AND tp.status = 'active'
+    )
+  );

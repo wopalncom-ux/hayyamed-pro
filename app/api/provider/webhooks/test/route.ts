@@ -30,18 +30,18 @@ export async function POST(req: NextRequest) {
 
   const { data: endpoint } = await admin
     .from("webhook_endpoints")
-    .select("id, url, secret, organization_id")
+    .select("id, url, secret, training_provider_id")
     .eq("id", parsed.data.id)
     .maybeSingle();
 
-  if (!endpoint || endpoint.organization_id !== provider.id) {
+  if (!endpoint || endpoint.training_provider_id !== provider.id) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 
   const payload = JSON.stringify({
     event: "test",
     timestamp: new Date().toISOString(),
-    provider_id: endpoint.organization_id,
+    provider_id: endpoint.training_provider_id,
     data: { message: "This is a test delivery from Hayya Med Pro." },
   });
 

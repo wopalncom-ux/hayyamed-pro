@@ -35,6 +35,10 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Insufficient scope — requires read:courses" }, { status: 403 });
   }
 
+  if (!ctx.providerId) {
+    return NextResponse.json({ error: "This endpoint is only available to training provider accounts" }, { status: 403 });
+  }
+
   const rl = await checkApiKeyRateLimit(ctx.keyId);
   if (!rl.allowed) {
     return NextResponse.json(
@@ -45,16 +49,16 @@ export async function GET(req: NextRequest) {
 
   const admin = createAdminClient();
 
-  // Confirm this key belongs to a training provider
+  // Confirm this key belongs to an active training provider
   const { data: provider } = await admin
     .from("training_providers")
     .select("id, name")
-    .eq("id", ctx.organizationId)
+    .eq("id", ctx.providerId)
     .eq("status", "active")
     .maybeSingle();
 
   if (!provider) {
-    return NextResponse.json({ error: "This endpoint is only available to training provider accounts" }, { status: 403 });
+    return NextResponse.json({ error: "Provider account not found or inactive" }, { status: 403 });
   }
 
   const { searchParams } = new URL(req.url);
@@ -66,7 +70,7 @@ export async function GET(req: NextRequest) {
   let query = admin
     .from("courses")
     .select("id, title, category, credits, credit_type, delivery_mode, is_free, price_usd, status, created_at", { count: "exact" })
-    .eq("provider_id", ctx.organizationId)
+    .eq("provider_id", ctx.providerId)
     .order("created_at", { ascending: false })
     .range((page - 1) * perPage, page * perPage - 1);
 
@@ -118,7 +122,7 @@ export async function GET(req: NextRequest) {
     data,
     pagination: { page, per_page: perPage, total, total_pages: Math.ceil(total / perPage) },
     meta: {
-      provider_id:   ctx.organizationId,
+      provider_id:   ctx.providerId,
       provider_name: provider.name,
       generated_at:  new Date().toISOString(),
       api_version:   "v1",

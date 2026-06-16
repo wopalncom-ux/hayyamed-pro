@@ -39,6 +39,10 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Insufficient scope — requires read:enrollments" }, { status: 403 });
   }
 
+  if (!ctx.providerId) {
+    return NextResponse.json({ error: "This endpoint is only available to training provider accounts" }, { status: 403 });
+  }
+
   const rl = await checkApiKeyRateLimit(ctx.keyId);
   if (!rl.allowed) {
     return NextResponse.json(
@@ -52,12 +56,12 @@ export async function GET(req: NextRequest) {
   const { data: provider } = await admin
     .from("training_providers")
     .select("id, name")
-    .eq("id", ctx.organizationId)
+    .eq("id", ctx.providerId)
     .eq("status", "active")
     .maybeSingle();
 
   if (!provider) {
-    return NextResponse.json({ error: "This endpoint is only available to training provider accounts" }, { status: 403 });
+    return NextResponse.json({ error: "Provider account not found or inactive" }, { status: 403 });
   }
 
   const { searchParams } = new URL(req.url);
@@ -70,13 +74,13 @@ export async function GET(req: NextRequest) {
   const { data: providerCourses } = await admin
     .from("courses")
     .select("id, title")
-    .eq("provider_id", ctx.organizationId);
+    .eq("provider_id", ctx.providerId);
 
   if (!providerCourses?.length) {
     return NextResponse.json({
       data: [],
       pagination: { page, per_page: perPage, total: 0, total_pages: 0 },
-      meta: { provider_id: ctx.organizationId, generated_at: new Date().toISOString(), api_version: "v1" },
+      meta: { provider_id: ctx.providerId, generated_at: new Date().toISOString(), api_version: "v1" },
     });
   }
 
@@ -128,7 +132,7 @@ export async function GET(req: NextRequest) {
     data,
     pagination: { page, per_page: perPage, total, total_pages: Math.ceil(total / perPage) },
     meta: {
-      provider_id:  ctx.organizationId,
+      provider_id:  ctx.providerId,
       generated_at: new Date().toISOString(),
       api_version:  "v1",
     },

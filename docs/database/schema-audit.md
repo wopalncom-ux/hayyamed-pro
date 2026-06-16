@@ -1,5 +1,5 @@
 # Hayya Med Pro — Database Schema Audit
-_Generated: 2026-06-15 | Updated: 2026-06-16 | Migrations: 001–063 | Reviewer: Foundation Review Sprint_
+_Generated: 2026-06-15 | Updated: 2026-06-16 | Migrations: 001–069 | Reviewer: Foundation Review Sprint_
 
 ---
 
@@ -322,11 +322,18 @@ USING (
 
 ---
 
-## Migration Status — All 58 Applied
+## Migration Status — All 69 Applied
 
 | Migration | Description | Status |
 |-----------|-------------|--------|
-| 041–058 | See individual migration files | ✅ ALL DONE |
+| 041–063 | ai_call_logs, cert storage, mobile devices, notification queue, feature flags, webhooks, indexes, employer RLS, API keys, learning pathways, profile completion, link status, retry logic, push prefs, compliance snapshots, cycle credits, email sync, schema improvements, suspension, license completion fix, UK/AU/IN rules, privacy auto-create, gap analysis cache | ✅ ALL DONE |
+| 064 | pgvector semantic course search (IVFFlat, text-embedding-004, semantic_course_search RPC) | ✅ DONE |
+| 065 | Government / regulatory body settings table (government_settings) | ✅ DONE |
+| 066 | government_admin enum value added to user_role | ✅ DONE |
+| 067 | course_reviews table — star ratings + RLS | ✅ DONE |
+| 068 | public_directory_opt_in on profile_privacy_settings (default false, privacy-by-design) | ✅ DONE |
+| 069 | Provider webhook FK fix: webhook_endpoints.organization_id made nullable, training_provider_id FK added, CHECK constraint, RLS for providers. Notification read tracking: read_at column on notification_queue. | ✅ DONE |
+| 070 | Provider API keys FK fix: api_keys.organization_id made nullable, training_provider_id FK added, CHECK constraint, RLS for training_provider_admin. Same root cause as 069. | ✅ DONE |
 
 **Remaining open item (not yet a migration):**
 - `professional_profiles.license_number` deprecation — legacy field should be soft-deprecated once all reads go through `professional_licenses` (migration 040). No data loss risk; no rush.

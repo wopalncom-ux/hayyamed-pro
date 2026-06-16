@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 import { headers } from "next/headers";
 import { createAdminClient } from "@/lib/supabase/server";
 import { getRequestUser } from "@/lib/auth/getRequestUser";
@@ -47,8 +48,8 @@ function iconForTemplate(templateId: string): string {
 
 /**
  * GET /api/notifications/inbox?limit=20&offset=0
- * Returns recent sent/pending notifications for the authenticated user.
- * Used by NotificationBell dropdown and /dashboard/notifications inbox section.
+ * Returns recent notifications for the authenticated user.
+ * Unread = status='sent' AND read_at IS NULL.
  */
 export async function GET(req: NextRequest) {
   const user = await getRequestUser(await headers());
@@ -61,7 +62,7 @@ export async function GET(req: NextRequest) {
   const admin = createAdminClient();
   const { data: rows } = await admin
     .from("notification_queue")
-    .select("id, channel, template_id, status, created_at, sent_at")
+    .select("id, channel, template_id, status, read_at, created_at, sent_at")
     .eq("professional_id", user.id)
     .in("status", ["sent", "pending", "failed"])
     .order("created_at", { ascending: false })
@@ -73,11 +74,67 @@ export async function GET(req: NextRequest) {
     icon: iconForTemplate(row.template_id),
     channel: row.channel,
     status: row.status,
+    is_read: row.read_at !== null,
     created_at: row.created_at,
     sent_at: row.sent_at,
   }));
 
-  const unread = notifications.filter((n) => n.status === "sent").length;
+  const unread = notifications.filter((n) => n.status === "sent" && !n.is_read).length;
 
   return NextResponse.json({ notifications, unread, total: notifications.length });
+}
+
+const MarkReadSchema = z.union([
+  z.object({ id: z.string().uuid() }),
+  z.object({ mark_all_read: z.literal(true) }),
+]);
+
+/**
+ * PATCH /api/notifications/inbox
+ * Body: { id: uuid }          — mark one notification as read
+ *       { mark_all_read: true } — mark all unread notifications as read
+ */
+export async function PATCH(req: NextRequest) {
+  const user = await getRequestUser(await headers());
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const body = await req.json().catch(() => null);
+  const parsed = MarkReadSchema.safeParse(body);
+  if (!parsed.success) return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
+
+  const admin = createAdminClient();
+  const now = new Date().toISOString();
+
+  if ("mark_all_read" in parsed.data) {
+    await admin
+      .from("notification_queue")
+      .update({ read_at: now })
+      .eq("professional_id", user.id)
+      .eq("status", "sent")
+      .is("read_at", null);
+
+    return NextResponse.json({ ok: true });
+  }
+
+  // Single notification — verify ownership before marking read
+  const { data: row } = await admin
+    .from("notification_queue")
+    .select("professional_id, read_at")
+    .eq("id", parsed.data.id)
+    .maybeSingle();
+
+  if (!row || row.professional_id !== user.id) {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+
+  if (row.read_at !== null) {
+    return NextResponse.json({ ok: true }); // already read — idempotent
+  }
+
+  await admin
+    .from("notification_queue")
+    .update({ read_at: now })
+    .eq("id", parsed.data.id);
+
+  return NextResponse.json({ ok: true });
 }
