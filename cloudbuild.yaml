@@ -37,8 +37,16 @@ substitutions:
   _PADDLE_HOSP_ANNUAL: ""
 
 steps:
+  # Security gate: fail the build on any high-severity CVE in dependencies.
+  # package-lock.json is read directly — no install required.
+  - name: 'node:22'
+    id: 'npm-audit'
+    entrypoint: 'npm'
+    args: ['audit', '--audit-level=high']
+
   - name: 'gcr.io/cloud-builders/docker'
     id: 'build'
+    waitFor: ['npm-audit']
     args:
       - 'build'
       - '-t'

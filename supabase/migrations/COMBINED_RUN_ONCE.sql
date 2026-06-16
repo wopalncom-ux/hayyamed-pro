@@ -1,5 +1,5 @@
 -- ============================================================
--- Hayya Med PRO — ALL 57 MIGRATIONS COMBINED
+-- Hayya Med PRO — ALL 58 MIGRATIONS COMBINED
 -- Paste this entire file into the Supabase SQL Editor and Run.
 -- Idempotent: safe to run on a fresh project.
 -- Generated: 2026-06-16
@@ -2702,3 +2702,19 @@ SET    email      = u.email,
 FROM   auth.users u
 WHERE  pp.auth_id = u.id
   AND  pp.email IS DISTINCT FROM u.email;
+
+-- ════════════════════════════════════════════════════════════
+-- MIGRATION 058 — Schema Improvements
+-- ════════════════════════════════════════════════════════════
+
+ALTER TYPE org_type ADD VALUE IF NOT EXISTS 'government';
+ALTER TYPE org_type ADD VALUE IF NOT EXISTS 'regulatory_body';
+ALTER TYPE org_type ADD VALUE IF NOT EXISTS 'ngo';
+
+ALTER TABLE subscriptions DROP CONSTRAINT IF EXISTS plan_values;
+ALTER TABLE subscriptions
+  ADD CONSTRAINT plan_values
+  CHECK (plan IN ('free', 'pro', 'employer', 'university', 'government'));
+
+ALTER TABLE cme_activities
+  ADD COLUMN IF NOT EXISTS accreditor text;

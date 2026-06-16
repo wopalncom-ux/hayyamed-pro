@@ -1,5 +1,5 @@
 # Hayya Med Pro — Database Schema Audit
-_Generated: 2026-06-15 | Migrations: 001–040 | Reviewer: Foundation Review Sprint_
+_Generated: 2026-06-15 | Updated: 2026-06-16 | Migrations: 001–058 | Reviewer: Foundation Review Sprint_
 
 ---
 
@@ -42,9 +42,11 @@ Dropped the `UNIQUE` constraint on `professional_id` in `cme_wallets` to allow m
 
 ## ⚠️ Gaps and Risks
 
-### CRITICAL — Missing Tables
+### ✅ RESOLVED — Previously Missing Tables (migrations 041–058 applied)
 
-#### 1. `ai_call_logs` — MISSING
+The following tables were identified as missing during the original audit (migrations 001–040). All have since been implemented.
+
+#### 1. `ai_call_logs` — ✅ DONE (migration 041)
 **Risk: HIGH — Compliance + Cost**
 
 Every AI call must be logged (per CLAUDE.md: model, token count, latency, professional_id, action). Currently, AI calls write to `audit_logs` via `logAudit()`, but `audit_logs` is a generic event store not optimised for AI call analytics.
@@ -75,8 +77,8 @@ CREATE TABLE ai_call_logs (
 
 ---
 
-#### 2. `certificate_storage_records` — MISSING
-**Risk: HIGH — Security + Compliance**
+#### 2. `certificate_storage_records` — ✅ DONE (migration 042)
+**Was: HIGH — Security + Compliance**
 
 Certificate files are stored in Supabase private bucket but there is no database table tracking which files belong to which `cme_activity_id`, their storage paths, expiry of signed URLs, or deletion status. Currently `cme_activities.certificate_url` stores the raw storage path — this bypasses the signed URL pattern.
 
@@ -100,8 +102,8 @@ CREATE TABLE certificate_storage_records (
 
 ---
 
-#### 3. `mobile_device_registrations` — MISSING
-**Risk: MEDIUM — Mobile + Push**
+#### 3. `mobile_device_registrations` — ✅ DONE (migration 043)
+**Was: MEDIUM — Mobile + Push**
 
 `push_subscriptions` stores Web Push endpoints but there is no table for React Native / mobile device tokens (FCM for Android, APNs for iOS). When the mobile app ships, push notification dispatch will need both Web Push and FCM/APNs records per user.
 
@@ -124,8 +126,8 @@ CREATE TABLE mobile_device_registrations (
 
 ---
 
-#### 4. `email_queue` / `notification_queue` — MISSING
-**Risk: MEDIUM — Reliability**
+#### 4. `notification_queue` — ✅ DONE (migrations 044 + 053)
+**Was: MEDIUM — Reliability** | Retry logic added in migration 053 (`next_retry_at`, `attempts`)
 
 All emails are sent synchronously in API routes and cron jobs. If Postmark is down or the cron fails mid-batch, emails are lost with no retry mechanism. An email queue table enables: retry logic, deduplication, delivery confirmation tracking, and observability.
 
@@ -150,8 +152,8 @@ CREATE INDEX idx_notification_queue_pending ON notification_queue (scheduled_at)
 
 ---
 
-#### 5. `feature_flags` — MISSING
-**Risk: LOW-MEDIUM — Product**
+#### 5. `feature_flags` — ✅ DONE (migration 045)
+**Was: LOW-MEDIUM — Product**
 
 `platform_settings` handles price/limit configuration but has no structured feature flag system. Feature flags enable: A/B testing, gradual rollouts, per-plan feature control, and emergency kill switches.
 
@@ -169,8 +171,8 @@ CREATE TABLE feature_flags (
 
 ---
 
-#### 6. `webhook_endpoints` / `webhook_deliveries` — MISSING
-**Risk: MEDIUM — Enterprise**
+#### 6. `webhook_endpoints` / `webhook_deliveries` — ✅ DONE (migration 046)
+**Was: MEDIUM — Enterprise**
 
 For enterprise hospital/government integrations (HRIS sync, compliance reporting), the platform needs an outbound webhook system where organisations can register endpoints to receive real-time events (staff compliance change, license expiry, course completion).
 
@@ -200,7 +202,7 @@ CREATE TABLE webhook_deliveries (
 
 ---
 
-### MEDIUM — Missing Indexes
+### ✅ RESOLVED — Missing Indexes (migration 047 applied)
 
 | Table | Missing Index | Impact |
 |-------|--------------|--------|
@@ -242,7 +244,7 @@ CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_professional_licenses_expiry
 
 ---
 
-### MEDIUM — RLS Policy Gaps
+### ✅ RESOLVED — RLS Policy Gaps (migration 048 applied)
 
 | Table | Gap | Risk |
 |-------|-----|------|
@@ -272,15 +274,15 @@ USING (
 
 ---
 
-### LOW — Schema Improvements
+### Schema Improvements Status (migration 058 applied)
 
-| Issue | Table | Recommendation |
-|-------|-------|----------------|
-| `professional_profiles.license_number` | single text field | Should reference `professional_licenses` (multi-license table exists in 040 but profile still has legacy fields) |
-| `organizations.type` | enum with 6 values | Missing: `government`, `regulatory_body`, `ngo` — needed for QCHP/MOH partner accounts |
-| `subscriptions.plan` | `('free', 'pro', 'employer')` | Missing: `university`, `government` for future tiers |
-| `cme_activities` | no `accreditor` column | Cannot track which body accredited the activity — needed for compliance reporting |
-| `courses` | no `accreditor` column | Cannot filter by GCC-accepted accreditors |
+| Issue | Table | Status |
+|-------|-------|--------|
+| `professional_profiles.license_number` | single text field | ⚠️ OPEN — legacy field still present; `professional_licenses` table (040) is the authoritative source but profile not yet migrated |
+| `organizations.type` enum | was 6 values | ✅ DONE (058) — added `government`, `regulatory_body`, `ngo` |
+| `subscriptions.plan` constraint | was `free/pro/employer` | ✅ DONE (058) — added `university`, `government` |
+| `cme_activities` accreditor | missing column | ✅ DONE (058) — `accreditor text` column added |
+| `courses` accreditor | missing column | ✅ Already present in migration 006 |
 
 ---
 
@@ -306,18 +308,12 @@ USING (
 
 ---
 
-## Priority Migration Queue
+## Migration Status — All 58 Applied
 
-| # | Migration | Priority | Effort |
-|---|-----------|----------|--------|
-| 041 | `ai_call_logs` table | CRITICAL | 1h |
-| 042 | `certificate_storage_records` table | HIGH | 2h |
-| 043 | `mobile_device_registrations` table | HIGH | 1h |
-| 044 | `notification_queue` table | MEDIUM | 2h |
-| 045 | `feature_flags` table | MEDIUM | 1h |
-| 046 | `webhook_endpoints` + `webhook_deliveries` | MEDIUM | 3h |
-| 047 | Performance indexes (8 indexes, CONCURRENTLY) | HIGH | 30min |
-| 048 | Employer RLS policies on cme_activities | HIGH | 1h |
-| 049 | `organizations.type` enum expansion | LOW | 30min |
-| 050 | `subscriptions.plan` enum expansion (university/gov) | LOW | 30min |
+| Migration | Description | Status |
+|-----------|-------------|--------|
+| 041–058 | See individual migration files | ✅ ALL DONE |
+
+**Remaining open item (not yet a migration):**
+- `professional_profiles.license_number` deprecation — legacy field should be soft-deprecated once all reads go through `professional_licenses` (migration 040). No data loss risk; no rush.
 
