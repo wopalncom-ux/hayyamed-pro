@@ -6,7 +6,7 @@ import { logAudit } from "@/lib/audit";
 import { getUserPlan, isPro } from "@/lib/subscription";
 import { FREE_ACTIVITY_LIMIT } from "@/lib/planLimits";
 import { sendAdminActivityPendingEmail, sendFirstActivityEmail } from "@/lib/email";
-import { checkAndAwardBadges } from "@/lib/badges";
+import { checkAndAwardBadges } from "@/lib/badges-server";
 
 export async function addCmeActivity({
   walletId,

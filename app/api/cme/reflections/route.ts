@@ -4,7 +4,7 @@ import { z } from "zod";
 import { createAdminClient } from "@/lib/supabase/server";
 import { getRequestUser } from "@/lib/auth/getRequestUser";
 import { logAudit } from "@/lib/audit";
-import { checkAndAwardBadges } from "@/lib/badges";
+import { checkAndAwardBadges } from "@/lib/badges-server";
 
 export const runtime = "nodejs";
 

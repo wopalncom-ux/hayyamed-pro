@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { createAdminClient } from "@/lib/supabase/server";
 import { getRequestUser } from "@/lib/auth/getRequestUser";
-import { awardPortfolioBadge } from "@/lib/badges";
+import { awardPortfolioBadge } from "@/lib/badges-server";
 import { getUserPlan, isPro } from "@/lib/subscription";
 import { renderToBuffer } from "@react-pdf/renderer";
 import { CpdPortfolioDocument } from "@/components/pdf/CpdPortfolioDocument";
