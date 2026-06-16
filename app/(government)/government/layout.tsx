@@ -50,6 +50,8 @@ export default async function GovernmentLayout({ children }: { children: React.R
             { href: "/government/registry",   label: "Registry" },
             { href: "/government/reports",    label: "Reports" },
             { href: "/government/settings",   label: "Settings" },
+            { href: "/government/api-keys",   label: "API Keys" },
+            { href: "/government/api",        label: "Integration" },
           ].map(({ href, label }) => (
             <a
               key={href}

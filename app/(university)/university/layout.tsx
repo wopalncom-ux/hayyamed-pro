@@ -42,10 +42,12 @@ export default async function UniversityLayout({ children }: { children: React.R
       <nav className="bg-white border-b border-[#e2e8f0] px-6">
         <div className="max-w-5xl mx-auto flex gap-6 text-sm overflow-x-auto">
           {[
-            { href: "/university",            label: "Dashboard" },
-            { href: "/university/faculty",    label: "Faculty" },
-            { href: "/university/analytics",  label: "Analytics" },
+            { href: "/university",                   label: "Dashboard" },
+            { href: "/university/faculty",           label: "Faculty" },
+            { href: "/university/analytics",         label: "Analytics" },
             { href: "/university/required-training", label: "Required Training" },
+            { href: "/university/api-keys",          label: "API Keys" },
+            { href: "/university/integration",       label: "Integration" },
           ].map(({ href, label }) => (
             <a
               key={href}

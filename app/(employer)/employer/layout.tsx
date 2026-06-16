@@ -64,6 +64,7 @@ export default async function EmployerLayout({ children }: { children: React.Rea
             { href: "/employer/webhooks",          label: "Webhooks" },
             { href: "/employer/api-keys",          label: "API Keys" },
             { href: "/employer/integration",       label: "Integration" },
+            { href: "/employer/ai-analyzer",       label: "AI Insights" },
           ].map(({ href, label }) => (
             <a
               key={href}
