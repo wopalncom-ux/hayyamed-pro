@@ -39,15 +39,20 @@ export default async function AdminProfessionalsPage({
     }
   }
 
-  const [profilesRes, countRes, subsRes] = await Promise.all([
-    profilesQuery,
-    countQuery,
-    admin.from("subscriptions").select("professional_id, plan, employer_tier, status"),
-  ]);
+  const [profilesRes, countRes] = await Promise.all([profilesQuery, countQuery]);
 
   const profiles = profilesRes.data ?? [];
   const total = countRes.count ?? 0;
   const totalPages = Math.ceil(total / PAGE_SIZE);
+
+  // Fetch subscriptions only for the current page's professionals (not all users)
+  const pageIds = profiles.map((p) => p.auth_id);
+  const subsRes = pageIds.length
+    ? await admin
+        .from("subscriptions")
+        .select("professional_id, plan, employer_tier, status")
+        .in("professional_id", pageIds)
+    : { data: [] };
 
   const subMap = Object.fromEntries(
     (subsRes.data ?? []).map((s) => [s.professional_id, s])
