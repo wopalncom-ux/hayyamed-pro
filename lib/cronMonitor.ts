@@ -33,6 +33,7 @@ const JOB_ENV_MAP: Record<string, string> = {
   "storage-cleanup":        "CRON_MONITOR_STORAGE_CLEANUP",
   "process-notifications":  "CRON_MONITOR_PROCESS_NOTIFICATIONS",
   "process-webhooks":       "CRON_MONITOR_PROCESS_WEBHOOKS",
+  "data-retention":         "CRON_MONITOR_DATA_RETENTION",
 };
 
 export async function pingCronMonitor(

@@ -21,6 +21,7 @@ const CRON_JOBS = [
   { slug: "employer-digest",       label: "Employer Digest",        schedule: "Mon 07:00 GST",    description: "Weekly staff compliance digest email" },
   { slug: "professional-digest",   label: "Professional Digest",    schedule: "Mon 07:30 GST",    description: "Weekly CME progress digest email" },
   { slug: "storage-cleanup",       label: "Storage Cleanup",        schedule: "Sun 03:00 GST",    description: "Delete orphaned certificate files >7d old" },
+  { slug: "data-retention",        label: "Data Retention",         schedule: "Sun 04:00 GST",    description: "Prune ai_call_logs (90d), notification_queue (30d), webhook_deliveries (90d), drip_email_log (90d)" },
   // High-frequency
   { slug: "process-notifications", label: "Process Notifications",  schedule: "Every 5 min",      description: "Drain notification_queue (email + push)" },
   { slug: "process-webhooks",      label: "Process Webhooks",       schedule: "Every 5 min",      description: "Send pending webhook deliveries with retry" },

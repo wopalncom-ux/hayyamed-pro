@@ -1,5 +1,5 @@
 # Hayya Med Pro — Database Schema Audit
-_Generated: 2026-06-15 | Updated: 2026-06-16 | Migrations: 001–058 | Reviewer: Foundation Review Sprint_
+_Generated: 2026-06-15 | Updated: 2026-06-16 | Migrations: 001–062 | Reviewer: Foundation Review Sprint_
 
 ---
 
@@ -274,15 +274,29 @@ USING (
 
 ---
 
-### Schema Improvements Status (migration 058 applied)
+### Schema Improvements Status (migrations 058–062 applied)
 
 | Issue | Table | Status |
 |-------|-------|--------|
-| `professional_profiles.license_number` | single text field | ⚠️ OPEN — legacy field still present; `professional_licenses` table (040) is the authoritative source but profile not yet migrated |
+| `professional_profiles.license_number` | single text field | ⚠️ OPEN — legacy field is the primary license from onboarding; `professional_licenses` (040) holds additional licenses. Both crons + HRIS endpoints check both sources. No migration needed. |
 | `organizations.type` enum | was 6 values | ✅ DONE (058) — added `government`, `regulatory_body`, `ngo` |
 | `subscriptions.plan` constraint | was `free/pro/employer` | ✅ DONE (058) — added `university`, `government` |
 | `cme_activities` accreditor | missing column | ✅ DONE (058) — `accreditor text` column added |
-| `courses` accreditor | missing column | ✅ Already present in migration 006 |
+| Account suspension fields | `professional_profiles` | ✅ DONE (059) — `is_suspended`, `suspended_at`, `suspended_reason` |
+| Profile completion includes multi-license wallet | `professional_profiles` | ✅ DONE (060) — trigger now checks `professional_licenses` table for license credit |
+| Phase 3 market rules | `country_compliance_rules` | ✅ DONE (061) — UK (GB), Australia (AU), India (IN) — 12 profession rules + 20 categories |
+| `profile_privacy_settings` auto-create gap | trigger missing | ✅ DONE (062) — SECURITY DEFINER trigger fires on every `professional_profiles` INSERT; idempotent backfill for existing users |
+
+---
+
+### Migrations 059–062 Summary
+
+| Migration | Description | Tables Affected |
+|-----------|-------------|----------------|
+| 059 | Account suspension | `professional_profiles` — 3 columns + index |
+| 060 | Profile completion fix | Rewrites `compute_profile_completion_pct()` to check `professional_licenses`; cross-table trigger on license INSERT/DELETE |
+| 061 | UK / AU / IN compliance rules | `country_compliance_rules` (12 rows), `compliance_activity_categories` (20 rows) |
+| 062 | Privacy settings auto-create | New SECURITY DEFINER trigger + backfill; fixes employer RLS gap for users who never reached onboarding Step 6 |
 
 ---
 

@@ -59,6 +59,7 @@ if [ "${DELETE_MODE}" = "true" ]; then
     hayyamed-training-deadline
     hayyamed-compliance-alerts
     hayyamed-storage-cleanup
+    hayyamed-data-retention
     hayyamed-compliance-snapshot
     hayyamed-cycle-renewal
   )
@@ -240,6 +241,13 @@ create_or_update_job \
   "/api/cron/storage-cleanup" \
   "Delete orphaned certificate files from Supabase Storage (uploaded >7d ago, no linked CME activity)"
 
+# Sunday 04:00 GST (01:00 UTC) -- weekly data retention cleanup
+create_or_update_job \
+  "hayyamed-data-retention" \
+  "0 4 * * 0" \
+  "/api/cron/data-retention" \
+  "Prune ai_call_logs (90d), notification_queue terminal rows (30d), webhook_deliveries terminal rows (90d), drip_email_log (90d)"
+
 # 23:30 GST (20:30 UTC) -- daily compliance snapshot per organization
 create_or_update_job \
   "hayyamed-compliance-snapshot" \
@@ -255,11 +263,11 @@ create_or_update_job \
   "Advance expired CME wallet cycles; reset credits for new cycle; notify professionals"
 
 echo ""
-echo "=== All 15 Cloud Scheduler jobs configured ==="
+echo "=== All 16 Cloud Scheduler jobs configured ==="
 echo ""
 echo "Verify:"
 echo "  gcloud scheduler jobs list --location=${SCHEDULER_REGION} --project=${PROJECT_ID}"
-echo "  (expected: 15 jobs)"
+echo "  (expected: 16 jobs)"
 echo ""
 echo "Trigger a job manually to test:"
 echo "  gcloud scheduler jobs run hayyamed-trial-reminders --location=${SCHEDULER_REGION} --project=${PROJECT_ID}"
