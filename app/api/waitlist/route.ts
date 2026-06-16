@@ -34,13 +34,14 @@ export async function POST(req: NextRequest) {
   // Notify admin — fire-and-forget, never block the response
   const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL;
   if (adminEmail && process.env.POSTMARK_API_TOKEN) {
+    const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
     const { default: postmark } = await import("postmark");
     const client = new postmark.ServerClient(process.env.POSTMARK_API_TOKEN);
     client.sendEmail({
       From: process.env.EMAIL_FROM ?? "Hayya Med Pro <noreply@hayyamed.pro>",
       To: adminEmail,
       Subject: `New waitlist signup: ${email}`,
-      HtmlBody: `<p>Email: <strong>${email}</strong></p>${profession ? `<p>Profession: ${profession}</p>` : ""}${country ? `<p>Country: ${country}</p>` : ""}<p>Time: ${new Date().toISOString()}</p>`,
+      HtmlBody: `<p>Email: <strong>${esc(email)}</strong></p>${profession ? `<p>Profession: ${esc(profession)}</p>` : ""}${country ? `<p>Country: ${esc(country)}</p>` : ""}<p>Time: ${new Date().toISOString()}</p>`,
     }).catch(() => {});
   }
 
