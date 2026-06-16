@@ -8,6 +8,7 @@ import { checkAndLogRateLimit } from "@/lib/rateLimit";
 import { getUserPlan, isPro } from "@/lib/subscription";
 import { logAudit } from "@/lib/audit";
 import { logAiCall } from "@/lib/ai/logAiCall";
+import { buildComplianceRecommendationsPrompt } from "@/lib/ai/prompts/compliance-recommendations";
 
 const RecommendationSchema = z.object({
   title: z.string(),
@@ -59,33 +60,16 @@ export async function POST(req: NextRequest) {
     ? Math.ceil((new Date(cycleEndDate).getTime() - Date.now()) / 86400000)
     : null;
 
-  const gapLines = gaps
-    .map((g) => `  - ${g.category}: have ${g.earned}, need ${g.needed} more`)
-    .join("\n");
-
-  const prompt = `You are a healthcare CME compliance advisor. A ${profession}${specialty ? ` specializing in ${specialty}` : ""} in ${country} has these gaps in their current license renewal cycle${daysLeft !== null ? ` (${daysLeft} days remaining)` : ""}:
-
-Overall deficit: ${deficit} credits (${totalCompleted}/${totalRequired} completed)
-Category gaps:
-${gapLines}
-
-Give exactly 3 ranked, actionable recommendations to close the highest-priority gaps. Return only valid JSON — no markdown, no text outside the JSON:
-
-{
-  "summary": "One sentence summarizing priority and timeline",
-  "recommendations": [
-    {
-      "title": "Specific action title (max 8 words)",
-      "category": "exactly one of: conference, online, workshop, journal, teaching, simulation, mandatory, patient_safety, other",
-      "credits": <integer — how many credits this activity typically yields>,
-      "reason": "One sentence why this closes their specific gap",
-      "action_label": "Browse courses",
-      "urgency": "high"
-    }
-  ]
-}
-
-Rank by urgency: largest deficit first. Urgency: high (gap > 5 or < 60 days), medium (gap 2-5), low (gap 1-2).`;
+  const prompt = buildComplianceRecommendationsPrompt({
+    profession,
+    specialty,
+    country,
+    deficit,
+    totalCompleted,
+    totalRequired,
+    daysLeft,
+    gaps,
+  });
 
   let summary = "";
   let recommendations: {

@@ -8,6 +8,7 @@ import { getUserPlan, isPro } from "@/lib/subscription";
 import { isFeatureEnabled } from "@/lib/featureFlags";
 import { logAudit } from "@/lib/audit";
 import { logAiCall } from "@/lib/ai/logAiCall";
+import { VOICE_CHAT_SYSTEM } from "@/lib/ai/prompts/voice-chat";
 import { z } from "zod";
 
 export const runtime = "nodejs";
@@ -17,20 +18,6 @@ const BodySchema = z.object({
   conversationId: z.string().optional(),
 });
 
-const SYSTEM_PROMPT = `You are Hayya AI, a friendly and knowledgeable compliance assistant for Hayya Med Pro — a GCC healthcare professional platform. You help healthcare professionals understand their CME requirements, track compliance, and prepare for license renewals.
-
-You speak in a warm, professional tone. Keep responses concise and direct — this is a voice interface, so avoid bullet points, headers, or markdown. Speak naturally as if in conversation.
-
-Core topics you help with:
-- CME credit requirements for QCHP (Qatar), SCFHS (Saudi Arabia), DHA/DOH (UAE), NHRA (Bahrain), OMSB (Oman), MOH Kuwait
-- How to log CME activities and track compliance
-- License renewal timelines and documentation
-- Category caps and credit conversion factors
-- Navigating the Hayya Med Pro platform
-
-Always end answers to regulatory questions with: "I recommend verifying the exact requirements directly with your licensing authority."
-
-If asked about topics outside healthcare compliance, politely redirect to your area of expertise.`;
 
 export async function POST(req: NextRequest) {
   const user = await getRequestUser(await headers());
@@ -87,7 +74,7 @@ export async function POST(req: NextRequest) {
     const response = await claude.messages.create({
       model: "claude-haiku-4-5-20251001",
       max_tokens: 256,
-      system: SYSTEM_PROMPT + context,
+      system: VOICE_CHAT_SYSTEM + context,
       messages: [{ role: "user", content: message }],
     });
 

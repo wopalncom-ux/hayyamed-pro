@@ -9,6 +9,7 @@ import { getUserPlan, isPro } from "@/lib/subscription";
 import { isFeatureEnabled } from "@/lib/featureFlags";
 import { logAudit } from "@/lib/audit";
 import { logAiCall } from "@/lib/ai/logAiCall";
+import { buildComplianceChatSystem } from "@/lib/ai/prompts/compliance-chat";
 
 export const runtime = "nodejs";
 
@@ -98,44 +99,25 @@ export async function POST(req: NextRequest) {
     ? Math.ceil((cycleEnd.getTime() - Date.now()) / 86400000)
     : null;
 
-  const systemPrompt = wallet
-    ? `You are a CME compliance advisor embedded in Hayya Med Pro, a GCC healthcare professional platform. Answer the professional's questions about their CME compliance accurately and concisely. Use their exact data below.
-
-PROFESSIONAL CME STATUS:
-Country/Authority: ${wallet.country}
-Profession: ${wallet.profession}${wallet.specialty ? ` — ${wallet.specialty}` : ""}
-Renewal cycle: ${wallet.cycle_start_date} → ${wallet.cycle_end_date}${daysLeft !== null ? ` (${daysLeft} days left)` : ""}
-Status: ${wallet.compliance_status}
-
-CREDITS:
-Required: ${wallet.required_credits}
-Completed: ${wallet.completed_credits}
-Remaining: ${Math.max(0, wallet.required_credits - wallet.completed_credits)}
-${mainRule ? `Rule: ${mainRule}` : ""}
-
-CATEGORY BREAKDOWN:
-${categoryBreakdown || "No category data available."}
-
-RECENT ACTIVITIES (newest first):
-${
-  activities.length
-    ? activities
-        .slice(0, 10)
-        .map(
-          (a) =>
-            `• ${a.activity_date}: "${a.title}"${a.category ? ` [${a.category}]` : " [no category]"} — ${a.credits} credits (${a.verification_status})`
-        )
-        .join("\n")
-    : "No activities logged yet."
-}
-
-GUIDELINES:
-- Be specific and use the actual numbers above
-- If they ask about a rule you're unsure of, say so and refer them to their regulatory body
-- Keep answers brief unless complexity demands detail
-- Always end with a disclaimer if giving regulatory advice: "Verify final requirements with ${countryCode === "QA" ? "QCHP" : countryCode === "SA" ? "SCFHS" : countryCode === "AE" ? "DHA" : "your regulatory authority"} directly."
-- You may suggest they log missing activities or update uncategorized ones`
-    : `You are a CME compliance advisor. This professional hasn't set up their CME wallet yet. Encourage them to complete their profile setup at /onboarding/5 to unlock CME tracking and personalized compliance guidance.`;
+  const systemPrompt = buildComplianceChatSystem(
+    wallet
+      ? {
+          country: wallet.country,
+          profession: wallet.profession,
+          specialty: wallet.specialty ?? null,
+          cycle_start_date: wallet.cycle_start_date,
+          cycle_end_date: wallet.cycle_end_date,
+          compliance_status: wallet.compliance_status,
+          required_credits: wallet.required_credits,
+          completed_credits: wallet.completed_credits,
+          mainRule,
+          categoryBreakdown,
+          daysLeft,
+          countryCode,
+          recentActivities: activities,
+        }
+      : null
+  );
 
   const startTime = Date.now();
   const encoder = new TextEncoder();

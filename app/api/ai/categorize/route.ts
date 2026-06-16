@@ -6,6 +6,7 @@ import { getAnthropicClient } from "@/lib/anthropic";
 import { checkAndLogRateLimit } from "@/lib/rateLimit";
 import { logAudit } from "@/lib/audit";
 import { logAiCall } from "@/lib/ai/logAiCall";
+import { CATEGORIZE_SYSTEM } from "@/lib/ai/prompts/categorize";
 
 const CategorizeResponseSchema = z.object({
   category: z.enum(["conference", "online", "workshop", "journal", "teaching", "simulation", "mandatory", "patient_safety", "other"]),
@@ -42,10 +43,7 @@ export async function POST(req: NextRequest) {
     const response = await client.messages.create({
       model: "claude-haiku-4-5-20251001",
       max_tokens: 256,
-      system: `You are a CME (Continuing Medical Education) classification expert for GCC healthcare professionals. Classify activities into the correct category. Respond ONLY with valid JSON matching this exact schema with no other text:
-{"category":"<category>","confidence":"high|medium|low","creditSuggestion":<number or null>,"notes":"<one sentence>"}
-
-Valid categories: conference, online, workshop, journal, teaching, simulation, mandatory, patient_safety, other`,
+      system: CATEGORIZE_SYSTEM,
       messages: [
         {
           role: "user",

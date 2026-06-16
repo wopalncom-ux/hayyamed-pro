@@ -6,6 +6,7 @@ import { getAnthropicClient } from "@/lib/anthropic";
 import { checkAndLogRateLimit } from "@/lib/rateLimit";
 import { logAudit } from "@/lib/audit";
 import { logAiCall } from "@/lib/ai/logAiCall";
+import { PROVIDER_ANALYZER_SYSTEM } from "@/lib/ai/prompts/provider-analyzer";
 import { z } from "zod";
 
 export const runtime = "nodejs";
@@ -158,30 +159,6 @@ ${topDemand || "No platform data yet"}
 Top markets by registered professional count: ${topCountries || "No platform data yet"}
 `;
 
-  const systemPrompt = `You are an AI business intelligence analyst for a healthcare CME marketplace in the GCC region. You analyze anonymized, aggregate market demand data and training provider performance to provide actionable growth insights.
-
-Return valid JSON matching EXACTLY this schema:
-{
-  "summary": "string (2-3 sentence executive summary)",
-  "demandScore": number (0-100, market opportunity strength),
-  "topDemandedSpecialties": ["string", ...] (top 5 specialties with unmet demand),
-  "gapOpportunities": [
-    {
-      "area": "string (specific CME topic or specialty)",
-      "demandLevel": "very_high|high|medium|low",
-      "estimatedMonthlyLearners": number,
-      "recommendedAction": "string (specific action for this provider)"
-    }
-  ] (3-5 gaps),
-  "revenueInsights": {
-    "highValueCategories": ["string", ...] (3-4 categories),
-    "suggestedPricingTier": "string (e.g., 'QAR 150-300 per course')",
-    "estimatedMonthlyRevenuePotential": "string (e.g., 'QAR 15,000-25,000')"
-  },
-  "recommendations": ["string", ...] (4-5 specific, actionable items)
-}
-
-Use GCC context: QCHP, DHA, SCFHS requirements. Focus on practical opportunities for a CME training provider. Demandscores above 70 indicate strong market opportunity.`;
 
   const startTime = Date.now();
 
@@ -190,7 +167,7 @@ Use GCC context: QCHP, DHA, SCFHS requirements. Focus on practical opportunities
     const response = await claude.messages.create({
       model: "claude-sonnet-4-6",
       max_tokens: 1200,
-      system: systemPrompt,
+      system: PROVIDER_ANALYZER_SYSTEM,
       messages: [
         {
           role: "user",

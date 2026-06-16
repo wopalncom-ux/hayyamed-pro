@@ -8,6 +8,7 @@ import { getUserPlan, isPro } from "@/lib/subscription";
 import { isFeatureEnabled } from "@/lib/featureFlags";
 import { logAudit } from "@/lib/audit";
 import { logAiCall } from "@/lib/ai/logAiCall";
+import { OCR_CERTIFICATE_PROMPT } from "@/lib/ai/prompts/ocr-certificate";
 
 const OcrResponseSchema = z.object({
   title: z.string(),
@@ -82,16 +83,7 @@ export async function POST(req: NextRequest) {
             fileBlock,
             {
               type: "text",
-              text: `Extract CME/CPD certificate information. Respond ONLY with valid JSON, no other text:
-{"title":"<activity or course name>","provider":"<issuing organization>","date":"<YYYY-MM-DD or null>","credits":<number or null>,"category":"<conference|online|workshop|journal|teaching|simulation|mandatory|patient_safety|other or null>"}
-
-Rules:
-- title: the main training/activity name on the certificate
-- provider: who awarded it (hospital, authority, university, etc.)
-- date: completion or activity date in YYYY-MM-DD format; null if not visible
-- credits: CME/CPD credit hours shown as a number; null if not shown
-- category: best fit for the activity type; null if unclear
-Use null for any field not visible in the certificate.`,
+              text: OCR_CERTIFICATE_PROMPT,
             },
           ],
         },
