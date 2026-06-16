@@ -5,13 +5,25 @@ export const metadata = { title: "Monitoring — Hayya Med Pro Admin" };
 export const dynamic = "force-dynamic";
 
 const CRON_JOBS = [
-  { slug: "trial-reminders",     label: "Trial Reminders",     schedule: "Daily 08:00 GST", description: "Day 3, 7, 11, 14 trial nudges" },
-  { slug: "license-reminders",   label: "License Reminders",   schedule: "Daily 08:15 GST", description: "90/60/30/14/7 day license alerts" },
-  { slug: "cme-deadline",        label: "CME Deadline",        schedule: "Daily 08:30 GST", description: "CME cycle deadline warnings" },
-  { slug: "license-expiry",      label: "License Expiry",      schedule: "Daily 08:45 GST", description: "Push + email on expiry day" },
-  { slug: "employer-digest",     label: "Employer Digest",     schedule: "Mon 07:00 GST",   description: "Weekly staff compliance email" },
-  { slug: "professional-digest", label: "Professional Digest", schedule: "Mon 07:30 GST",   description: "Weekly CME progress email" },
-  { slug: "onboarding-reminder", label: "Onboarding Reminder", schedule: "Daily 09:00 GST", description: "Incomplete onboarding nudge" },
+  // Daily — morning batch (staggered)
+  { slug: "trial-reminders",       label: "Trial Reminders",        schedule: "Daily 08:00 GST",  description: "Day 3/7/11/14 trial conversion nudges" },
+  { slug: "license-reminders",     label: "License Reminders",      schedule: "Daily 08:15 GST",  description: "30d/7d license expiry push notifications" },
+  { slug: "cme-deadline",          label: "CME Deadline",           schedule: "Daily 08:30 GST",  description: "60d/30d CME cycle deadline push notifications" },
+  { slug: "license-expiry",        label: "License Expiry Email",   schedule: "Daily 08:45 GST",  description: "90d/60d/30d/7d/1d expiry email alerts" },
+  { slug: "onboarding-reminder",   label: "Onboarding Reminder",    schedule: "Daily 09:00 GST",  description: "Incomplete onboarding nudge (48h–7d window)" },
+  { slug: "onboarding-drip",       label: "Onboarding Drip",        schedule: "Daily 09:15 GST",  description: "D+1/3/7/10 activation email sequence" },
+  { slug: "training-deadline",     label: "Training Deadline",      schedule: "Daily 09:30 GST",  description: "7d/1d employer training deadline warnings" },
+  { slug: "compliance-alerts",     label: "Compliance Alerts",      schedule: "Daily 10:00 GST",  description: "Non-compliant staff webhook + push to employer" },
+  // Daily — end of day
+  { slug: "compliance-snapshot",   label: "Compliance Snapshot",    schedule: "Daily 23:30 GST",  description: "Daily org compliance state snapshot for trend chart" },
+  { slug: "cycle-renewal",         label: "CME Cycle Renewal",      schedule: "Daily 00:30 GST",  description: "Advance expired CME wallet cycles, reset credits" },
+  // Weekly
+  { slug: "employer-digest",       label: "Employer Digest",        schedule: "Mon 07:00 GST",    description: "Weekly staff compliance digest email" },
+  { slug: "professional-digest",   label: "Professional Digest",    schedule: "Mon 07:30 GST",    description: "Weekly CME progress digest email" },
+  { slug: "storage-cleanup",       label: "Storage Cleanup",        schedule: "Sun 03:00 GST",    description: "Delete orphaned certificate files >7d old" },
+  // High-frequency
+  { slug: "process-notifications", label: "Process Notifications",  schedule: "Every 5 min",      description: "Drain notification_queue (email + push)" },
+  { slug: "process-webhooks",      label: "Process Webhooks",       schedule: "Every 5 min",      description: "Send pending webhook deliveries with retry" },
 ];
 
 function timeAgo(date: Date): string {
@@ -28,7 +40,7 @@ export default async function MonitoringPage() {
   await requireAdminUser();
   const admin = createAdminClient();
 
-  // Platform health — direct DB check (same logic as /api/health)
+  // Platform health — direct DB check
   let dbOk = false;
   try {
     const { error } = await admin.from("professional_profiles").select("id").limit(1);
@@ -49,37 +61,45 @@ export default async function MonitoringPage() {
 
   const gcpProject = process.env.GOOGLE_CLOUD_PROJECT ?? "";
 
-  // Cron last-run data from audit_logs
+  // Cron last-run: query by action + metadata->>'job' (NOT by target_id — that's a UUID column)
+  const since14d = new Date(Date.now() - 14 * 86_400_000).toISOString();
   const { data: cronLogs } = await admin
     .from("audit_logs")
-    .select("target_id, metadata, created_at")
+    .select("metadata, created_at")
     .eq("action", "cron.completed")
-    .in("target_id", CRON_JOBS.map((j) => j.slug))
+    .gte("created_at", since14d)
     .order("created_at", { ascending: false })
-    .limit(70); // at most 7 jobs × 10 recent runs
+    .limit(300); // 15 jobs × up to 20 recent runs each
 
-  // Build last-run map: slug → most recent log
+  // Build last-run map: job slug → most recent log entry
   const lastRun: Record<string, { at: Date; meta: Record<string, unknown> }> = {};
   for (const log of cronLogs ?? []) {
-    if (!lastRun[log.target_id]) {
-      lastRun[log.target_id] = {
-        at: new Date(log.created_at),
-        meta: (log.metadata as Record<string, unknown>) ?? {},
-      };
+    const meta = (log.metadata as Record<string, unknown>) ?? {};
+    const job = meta.job as string | undefined;
+    if (job && !lastRun[job]) {
+      lastRun[job] = { at: new Date(log.created_at), meta };
     }
   }
 
-  // Recent errors from audit_logs (any action containing "error")
+  // Queue depth + error counts
   const since24h = new Date(Date.now() - 86_400_000).toISOString();
-  const { count: errorCount } = await admin
-    .from("audit_logs")
-    .select("id", { count: "exact", head: true })
-    .ilike("action", "%error%")
-    .gte("created_at", since24h);
+  const [errorCountRes, notifPendingRes, webhookPendingRes, webhookFailedRes] = await Promise.all([
+    admin.from("audit_logs").select("id", { count: "exact", head: true })
+      .ilike("action", "%error%").gte("created_at", since24h),
+    admin.from("notification_queue").select("id", { count: "exact", head: true }).eq("status", "pending"),
+    admin.from("webhook_deliveries").select("id", { count: "exact", head: true }).eq("status", "pending"),
+    admin.from("webhook_deliveries").select("id", { count: "exact", head: true }).eq("status", "failed"),
+  ]);
+
+  const errorCount      = errorCountRes.count ?? 0;
+  const notifPending    = notifPendingRes.count ?? 0;
+  const webhookPending  = webhookPendingRes.count ?? 0;
+  const webhookFailed   = webhookFailedRes.count ?? 0;
 
   const healthyServices = Object.values(envChecks).filter(Boolean).length;
   const totalServices   = Object.keys(envChecks).length;
   const overallHealthy  = dbOk && envChecks.supabase && envChecks.vertex_ai;
+  const cronHealthy     = Object.keys(lastRun).length;
 
   return (
     <div>
@@ -113,16 +133,9 @@ export default async function MonitoringPage() {
         </div>
       </div>
 
-      {/* ── Error Summary ── */}
+      {/* ── Queue Depth + Error Summary ── */}
       <h2 className="text-xs font-semibold text-[#64748b] uppercase tracking-wide mb-3">Last 24 Hours</h2>
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
-        <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
-          <p className="text-xs font-medium text-[#64748b] uppercase tracking-wide mb-1">Audit Log Errors</p>
-          <p className={`text-3xl font-bold ${(errorCount ?? 0) > 0 ? "text-[#dc2626]" : "text-[#16a34a]"}`}>
-            {errorCount ?? 0}
-          </p>
-          <p className="text-xs text-[#94a3b8] mt-1">action matching "%error%"</p>
-        </div>
+      <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-8">
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
           <p className="text-xs font-medium text-[#64748b] uppercase tracking-wide mb-1">DB Status</p>
           <p className={`text-3xl font-bold ${dbOk ? "text-[#16a34a]" : "text-[#dc2626]"}`}>
@@ -131,16 +144,42 @@ export default async function MonitoringPage() {
           <p className="text-xs text-[#94a3b8] mt-1">Supabase PostgreSQL</p>
         </div>
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
-          <p className="text-xs font-medium text-[#64748b] uppercase tracking-wide mb-1">Cron Jobs</p>
-          <p className={`text-3xl font-bold ${Object.keys(lastRun).length > 0 ? "text-[#16a34a]" : "text-[#d97706]"}`}>
-            {Object.keys(lastRun).length}/{CRON_JOBS.length}
+          <p className="text-xs font-medium text-[#64748b] uppercase tracking-wide mb-1">Audit Errors</p>
+          <p className={`text-3xl font-bold ${errorCount > 0 ? "text-[#dc2626]" : "text-[#16a34a]"}`}>
+            {errorCount}
           </p>
-          <p className="text-xs text-[#94a3b8] mt-1">have run at least once</p>
+          <p className="text-xs text-[#94a3b8] mt-1">actions matching "%error%"</p>
+        </div>
+        <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
+          <p className="text-xs font-medium text-[#64748b] uppercase tracking-wide mb-1">Notif Queue</p>
+          <p className={`text-3xl font-bold ${notifPending > 100 ? "text-[#d97706]" : "text-[#16a34a]"}`}>
+            {notifPending}
+          </p>
+          <p className="text-xs text-[#94a3b8] mt-1">pending items</p>
+        </div>
+        <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
+          <p className="text-xs font-medium text-[#64748b] uppercase tracking-wide mb-1">Webhook Queue</p>
+          <p className={`text-3xl font-bold ${webhookPending > 50 ? "text-[#d97706]" : "text-[#16a34a]"}`}>
+            {webhookPending}
+          </p>
+          <p className="text-xs text-[#94a3b8] mt-1">pending deliveries</p>
+        </div>
+        <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
+          <p className="text-xs font-medium text-[#64748b] uppercase tracking-wide mb-1">Webhooks Failed</p>
+          <p className={`text-3xl font-bold ${webhookFailed > 0 ? "text-[#dc2626]" : "text-[#16a34a]"}`}>
+            {webhookFailed}
+          </p>
+          <p className="text-xs text-[#94a3b8] mt-1">max attempts reached</p>
         </div>
       </div>
 
       {/* ── Cron Job Status ── */}
-      <h2 className="text-xs font-semibold text-[#64748b] uppercase tracking-wide mb-3">Cron Jobs — 7 Active</h2>
+      <h2 className="text-xs font-semibold text-[#64748b] uppercase tracking-wide mb-3">
+        Cron Jobs — 15 Active
+        <span className="ml-2 font-normal normal-case text-[#94a3b8]">
+          {cronHealthy}/{CRON_JOBS.length} have run in the last 14 days
+        </span>
+      </h2>
       <div className="bg-white rounded-xl border border-[#e2e8f0] overflow-hidden mb-8">
         <table className="w-full text-sm">
           <thead>
@@ -148,7 +187,7 @@ export default async function MonitoringPage() {
               <th className="text-left px-5 py-3 text-xs font-semibold text-[#64748b] uppercase tracking-wide">Job</th>
               <th className="text-left px-5 py-3 text-xs font-semibold text-[#64748b] uppercase tracking-wide">Schedule</th>
               <th className="text-left px-5 py-3 text-xs font-semibold text-[#64748b] uppercase tracking-wide">Last Run</th>
-              <th className="text-left px-5 py-3 text-xs font-semibold text-[#64748b] uppercase tracking-wide">Sent</th>
+              <th className="text-left px-5 py-3 text-xs font-semibold text-[#64748b] uppercase tracking-wide">Sent / Processed</th>
               <th className="text-left px-5 py-3 text-xs font-semibold text-[#64748b] uppercase tracking-wide">Status</th>
             </tr>
           </thead>
@@ -156,18 +195,21 @@ export default async function MonitoringPage() {
             {CRON_JOBS.map((job) => {
               const run = lastRun[job.slug];
               const hasError = run?.meta?.error;
+              const sent = Number(run?.meta?.sent ?? 0);
+              const processed = Number(run?.meta?.processed ?? 0);
+              const activity = sent > 0 ? `${sent} sent` : processed > 0 ? `${processed} processed` : "0";
               return (
                 <tr key={job.slug} className="hover:bg-[#f8fafc]">
                   <td className="px-5 py-3">
                     <p className="font-medium text-[#111]">{job.label}</p>
                     <p className="text-xs text-[#94a3b8]">{job.description}</p>
                   </td>
-                  <td className="px-5 py-3 text-xs text-[#64748b]">{job.schedule}</td>
+                  <td className="px-5 py-3 text-xs text-[#64748b] whitespace-nowrap">{job.schedule}</td>
                   <td className="px-5 py-3 text-xs text-[#64748b]">
                     {run ? timeAgo(run.at) : <span className="text-[#d97706]">Never</span>}
                   </td>
                   <td className="px-5 py-3 text-xs text-[#374151]">
-                    {run ? (Number(run.meta.sent ?? 0) > 0 ? String(run.meta.sent) : "0") : "—"}
+                    {run ? activity : "—"}
                   </td>
                   <td className="px-5 py-3">
                     {!run ? (
@@ -185,8 +227,8 @@ export default async function MonitoringPage() {
         </table>
         <div className="px-5 py-3 border-t border-[#f1f5f9] bg-[#f8fafc]">
           <p className="text-xs text-[#94a3b8]">
-            Last-run data written by <code className="bg-white border border-[#e2e8f0] px-1 rounded">pingCronMonitor()</code> in each cron route → audit_logs.
-            {" "}Cron jobs are scheduled in GCP Cloud Scheduler (me-central1).
+            Last-run data written by <code className="bg-white border border-[#e2e8f0] px-1 rounded">pingCronMonitor()</code> → audit_logs (action = &quot;cron.completed&quot;, metadata.job = slug).
+            {" "}Scheduled in GCP Cloud Scheduler (me-central1).
           </p>
         </div>
       </div>
@@ -209,7 +251,7 @@ export default async function MonitoringPage() {
                   Alert Policies ↗
                 </a>
                 <a href={`https://console.cloud.google.com/cloudscheduler?project=${gcpProject}`} target="_blank" rel="noopener noreferrer" className="block text-sm text-[#1a56a0] hover:underline">
-                  Cloud Scheduler (7 cron jobs) ↗
+                  Cloud Scheduler (15 cron jobs) ↗
                 </a>
                 <a href={`https://console.cloud.google.com/logs/query?project=${gcpProject}`} target="_blank" rel="noopener noreferrer" className="block text-sm text-[#1a56a0] hover:underline">
                   Cloud Logging ↗

@@ -18,13 +18,21 @@
 import { createAdminClient } from "@/lib/supabase/server";
 
 const JOB_ENV_MAP: Record<string, string> = {
-  "trial-reminders":      "CRON_MONITOR_TRIAL_REMINDERS",
-  "license-reminders":    "CRON_MONITOR_LICENSE_REMINDERS",
-  "cme-deadline":         "CRON_MONITOR_CME_DEADLINE",
-  "license-expiry":       "CRON_MONITOR_LICENSE_EXPIRY",
-  "employer-digest":      "CRON_MONITOR_EMPLOYER_DIGEST",
-  "professional-digest":  "CRON_MONITOR_PROFESSIONAL_DIGEST",
-  "onboarding-reminder":  "CRON_MONITOR_ONBOARDING_REMINDER",
+  "trial-reminders":        "CRON_MONITOR_TRIAL_REMINDERS",
+  "license-reminders":      "CRON_MONITOR_LICENSE_REMINDERS",
+  "cme-deadline":           "CRON_MONITOR_CME_DEADLINE",
+  "license-expiry":         "CRON_MONITOR_LICENSE_EXPIRY",
+  "employer-digest":        "CRON_MONITOR_EMPLOYER_DIGEST",
+  "professional-digest":    "CRON_MONITOR_PROFESSIONAL_DIGEST",
+  "onboarding-reminder":    "CRON_MONITOR_ONBOARDING_REMINDER",
+  "onboarding-drip":        "CRON_MONITOR_ONBOARDING_DRIP",
+  "training-deadline":      "CRON_MONITOR_TRAINING_DEADLINE",
+  "compliance-alerts":      "CRON_MONITOR_COMPLIANCE_ALERTS",
+  "compliance-snapshot":    "CRON_MONITOR_COMPLIANCE_SNAPSHOT",
+  "cycle-renewal":          "CRON_MONITOR_CYCLE_RENEWAL",
+  "storage-cleanup":        "CRON_MONITOR_STORAGE_CLEANUP",
+  "process-notifications":  "CRON_MONITOR_PROCESS_NOTIFICATIONS",
+  "process-webhooks":       "CRON_MONITOR_PROCESS_WEBHOOKS",
 };
 
 export async function pingCronMonitor(
@@ -44,14 +52,15 @@ export async function pingCronMonitor(
     }
   }
 
-  // 2 — Persist run record to audit_logs so /admin/monitoring can read it
+  // 2 — Persist run record to audit_logs so /admin/monitoring can read it.
+  // target_id is a UUID column — never pass the slug string there.
+  // The monitoring page filters by metadata->>'job' instead.
   try {
     const admin = createAdminClient();
     await admin.from("audit_logs").insert({
       actor_auth_id: null,
       action: "cron.completed",
-      target_type: "cron_job",
-      target_id: jobSlug,
+      target_table: "cron_jobs",
       metadata: {
         job: jobSlug,
         sent: meta?.sent ?? 0,
