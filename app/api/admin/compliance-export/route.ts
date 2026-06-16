@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
-import { createAdminClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
+import { createClient, createAdminClient } from "@/lib/supabase/server";
 
 export const runtime = "nodejs";
 
@@ -144,12 +142,9 @@ export async function GET(req: NextRequest) {
 
   const csv = [headers.join(","), ...rows].join("\n");
 
-  const filename = [
-    "hayya-med-compliance",
-    countryFilter    || "all-countries",
-    professionFilter || "all-professions",
-    exportDate,
-  ].join("-") + ".csv";
+  const safeCountry = (countryFilter    || "all-countries").replace(/[^a-zA-Z0-9-]/g, "").slice(0, 10) || "all-countries";
+  const safeProf   = (professionFilter || "all-professions").replace(/[^a-zA-Z0-9-]/g, "").slice(0, 20) || "all-professions";
+  const filename = `hayya-med-compliance-${safeCountry}-${safeProf}-${exportDate}.csv`;
 
   return new NextResponse(csv, {
     status: 200,
