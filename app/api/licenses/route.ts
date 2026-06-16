@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { createAdminClient } from "@/lib/supabase/server";
 import { getRequestUser } from "@/lib/auth/getRequestUser";
+import { getUserPlan, isPro } from "@/lib/subscription";
+import { FREE_LICENSE_LIMIT } from "@/lib/planLimits";
 import { z } from "zod";
 
 const LicenseSchema = z.object({
@@ -41,6 +43,18 @@ export async function POST(req: Request) {
   if (!parsed.success) return NextResponse.json({ error: parsed.error.issues }, { status: 400 });
 
   const admin = createAdminClient();
+
+  // Enforce Free tier license cap server-side
+  const plan = await getUserPlan(user.id);
+  if (!isPro(plan)) {
+    const { count } = await admin
+      .from("professional_licenses")
+      .select("id", { count: "exact", head: true })
+      .eq("professional_id", user.id);
+    if ((count ?? 0) >= FREE_LICENSE_LIMIT) {
+      return NextResponse.json({ error: "FREE_LIMIT_REACHED" }, { status: 403 });
+    }
+  }
 
   // If this is primary, unset existing primaries first
   if (parsed.data.is_primary) {

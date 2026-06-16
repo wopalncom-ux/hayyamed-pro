@@ -1,5 +1,6 @@
 import { createAdminClient } from "@/lib/supabase/server";
 import { createHmac } from "crypto";
+import { validateWebhookUrl } from "./validateUrl";
 
 export type WebhookEventType =
   | "staff.compliance_changed"
@@ -89,6 +90,16 @@ export async function sendWebhookDelivery(deliveryId: string): Promise<{ ok: boo
     if (!delivery) return { ok: false, error: "Delivery not found" };
 
     const p = delivery.payload as { body: string; signature: string; url: string };
+
+    // Defense-in-depth SSRF check at delivery time (also enforced at registration)
+    const urlCheck = validateWebhookUrl(p.url);
+    if (!urlCheck.ok) {
+      await admin
+        .from("webhook_deliveries")
+        .update({ status: "failed", response_body: `Blocked: ${urlCheck.error}`, attempts: (delivery.attempts ?? 0) + 1 })
+        .eq("id", deliveryId);
+      return { ok: false, error: urlCheck.error };
+    }
 
     const res = await fetch(p.url, {
       method: "POST",

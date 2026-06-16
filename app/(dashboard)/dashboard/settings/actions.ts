@@ -15,18 +15,39 @@ export async function deleteAccount() {
 
   const admin = createAdminClient();
 
-  // Audit log before deletion (append-only — survives the cascade)
+  // Block deletion while an active paid subscription exists.
+  // Users must cancel first via the billing portal to avoid disputed charges.
+  const { data: sub } = await admin
+    .from("subscriptions")
+    .select("plan, status, paddle_subscription_id")
+    .eq("professional_id", user.id)
+    .maybeSingle();
+
+  if (sub && sub.plan !== "free" && sub.status === "active" && sub.paddle_subscription_id) {
+    return {
+      error:
+        "You have an active paid subscription. Please cancel it from the Billing section before deleting your account.",
+    };
+  }
+
+  // Audit log BEFORE deletion — actor_auth_id will become NULL after the cascade,
+  // but the log entry itself is retained (append-only, 7-year retention).
   await logAudit({
     actorAuthId: user.id,
     action: "account.deleted",
-    targetTable: "professional_profiles",
+    targetTable: "auth.users",
     targetId: user.id,
-    metadata: { reason: "user_requested" },
+    metadata: {
+      email: user.email,
+      deleted_at: new Date().toISOString(),
+      initiated_by: "user",
+      reason: "user_requested_erasure",
+    },
   });
 
   // Deleting the auth user cascades to professional_profiles and all child tables.
-  // Audit logs are append-only and reference actor_auth_id as a plain UUID — they are
-  // retained for the 7-year compliance window even after the auth user is gone.
+  // Audit logs are append-only and reference actor_auth_id ON DELETE SET NULL —
+  // they are retained for the 7-year PDPL compliance window.
   const { error } = await admin.auth.admin.deleteUser(user.id);
   if (error) return { error: error.message };
 

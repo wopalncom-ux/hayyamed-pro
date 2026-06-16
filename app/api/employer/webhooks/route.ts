@@ -5,6 +5,7 @@ import { createAdminClient } from "@/lib/supabase/server";
 import { getRequestUser } from "@/lib/auth/getRequestUser";
 import { randomBytes } from "crypto";
 import { logAudit } from "@/lib/audit";
+import { validateWebhookUrl } from "@/lib/webhooks/validateUrl";
 
 export const runtime = "nodejs";
 
@@ -85,6 +86,10 @@ export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => null);
   const parsed = CreateSchema.safeParse(body);
   if (!parsed.success) return NextResponse.json({ error: "Invalid payload", details: parsed.error.flatten() }, { status: 400 });
+
+  // SSRF protection: block private IPs, localhost, and cloud metadata endpoints
+  const urlCheck = validateWebhookUrl(parsed.data.url);
+  if (!urlCheck.ok) return NextResponse.json({ error: urlCheck.error }, { status: 400 });
 
   // Check org has ≤ 5 endpoints (fair use limit)
   const admin = createAdminClient();
