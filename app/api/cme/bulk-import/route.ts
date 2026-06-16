@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { createAdminClient } from "@/lib/supabase/server";
 import { getRequestUser } from "@/lib/auth/getRequestUser";
 import { isPro } from "@/lib/planUtils";
+import { logAudit } from "@/lib/audit";
 import { z } from "zod";
 
 const RowSchema = z.object({
@@ -79,11 +80,12 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: insertError.message }, { status: 500 });
   }
 
-  await admin.from("audit_logs").insert({
-    actor_auth_id: user.id,
+  logAudit({
+    actorAuthId: user.id,
     action: "cme.bulk_import",
+    targetTable: "cme_activities",
     metadata: { count: records.length },
-  });
+  }).catch(() => {});
 
   return NextResponse.json({ count: count ?? records.length });
 }
