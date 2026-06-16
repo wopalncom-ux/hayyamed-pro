@@ -16,6 +16,7 @@ const VALID_EVENTS = [
   "cme.verified",
   "staff.linked",
   "staff.unlinked",
+  "staff.task_completed",
 ] as const;
 
 async function getEmployerOrg(userId: string) {

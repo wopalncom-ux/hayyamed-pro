@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { createAdminClient } from "@/lib/supabase/server";
 import { getRequestUser } from "@/lib/auth/getRequestUser";
 import { getPaddle } from "@/lib/paddle";
+import { logAudit } from "@/lib/audit";
 
 export async function POST() {
   const user = await getRequestUser(await headers());
@@ -39,11 +40,11 @@ export async function POST() {
     .update({ cancel_at_period_end: true, updated_at: new Date().toISOString() })
     .eq("professional_id", user.id);
 
-  await admin.from("audit_logs").insert({
-    actor_auth_id: user.id,
+  logAudit({
+    actorAuthId: user.id,
     action: "subscription.cancel_requested",
     metadata: { paddle_subscription_id: sub.paddle_subscription_id, plan: sub.plan },
-  });
+  }).catch(() => {});
 
   return NextResponse.json({ ok: true });
 }
