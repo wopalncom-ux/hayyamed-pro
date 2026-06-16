@@ -1124,6 +1124,90 @@ export async function sendUniversityWelcomeEmail({
   );
 }
 
+export async function sendGovernmentRegistrationAdminEmail({
+  authorityName,
+  authorityCode,
+  adminName,
+  jurisdictionCountry,
+  contactName,
+  contactRole,
+}: {
+  authorityName: string;
+  authorityCode?: string;
+  adminName: string;
+  jurisdictionCountry: string;
+  contactName?: string;
+  contactRole?: string;
+}) {
+  const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL;
+  if (!adminEmail) return;
+
+  await send(
+    adminEmail,
+    `[New authority] ${esc(authorityName)} registered on Hayya Med Pro`,
+    baseLayout(`
+      <p style="color:#374151;font-size:16px;margin:0 0 8px">New regulatory authority registration</p>
+      <p style="color:#374151;margin:0 0 24px;font-size:14px">
+        A new regulatory authority has registered on Hayya Med Pro. Please verify their details and activate their account.
+      </p>
+
+      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:20px 24px;margin:0 0 24px">
+        <p style="margin:0 0 4px;font-size:12px;font-weight:600;color:#16a34a;text-transform:uppercase;letter-spacing:0.05em">Authority Details</p>
+        <p style="margin:6px 0 4px;font-size:18px;font-weight:700;color:#111">${esc(authorityName)}</p>
+        ${authorityCode ? `<p style="margin:0 0 4px;color:#374151;font-size:14px">Code: ${esc(authorityCode)}</p>` : ""}
+        <p style="margin:0 0 4px;color:#374151;font-size:14px">Jurisdiction: ${esc(jurisdictionCountry)}</p>
+        ${contactName ? `<p style="margin:0 0 4px;color:#374151;font-size:14px">Contact: ${esc(contactName)}${contactRole ? ` (${esc(contactRole)})` : ""}</p>` : ""}
+        <p style="margin:0 0 4px;color:#374151;font-size:14px">Registered by: ${esc(adminName)}</p>
+      </div>
+
+      <a href="${APP_URL}/admin/organizations"
+         style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">
+        Verify in Admin Panel →
+      </a>
+    `)
+  );
+}
+
+export async function sendGovernmentWelcomeEmail({
+  to,
+  adminName,
+  authorityName,
+}: {
+  to: string;
+  adminName: string;
+  authorityName: string;
+}) {
+  await send(
+    to,
+    `Welcome to Hayya Med Pro — ${esc(authorityName)} is registered`,
+    baseLayout(`
+      <p style="color:#374151;font-size:16px;margin:0 0 8px">Hi ${esc(adminName)},</p>
+      <p style="color:#374151;margin:0 0 24px">
+        <strong>${esc(authorityName)}</strong> has been registered on Hayya Med Pro.
+        Your government authority dashboard is active and ready to use.
+      </p>
+
+      <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:20px 24px;margin:0 0 24px">
+        <p style="margin:0 0 12px;font-size:15px;font-weight:600;color:#111">Getting started</p>
+        <p style="margin:0 0 8px;color:#374151;font-size:14px">1. <strong>Copy your invite link</strong> from the dashboard and share it with healthcare professionals in your jurisdiction.</p>
+        <p style="margin:0 0 8px;color:#374151;font-size:14px">2. <strong>Approve registration requests</strong> as professionals link their accounts to your authority.</p>
+        <p style="margin:0;color:#374151;font-size:14px">3. <strong>Monitor compliance</strong> — CME credits, license expiry, and jurisdiction-wide compliance rates in real time.</p>
+      </div>
+
+      <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:10px;padding:16px 24px;margin:0 0 24px">
+        <p style="margin:0;color:#92400e;font-size:13px;">
+          ⏳ <strong>Verification pending:</strong> Our team will verify your authority details within 1 business day.
+        </p>
+      </div>
+
+      <a href="${APP_URL}/government"
+         style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">
+        Go to your dashboard →
+      </a>
+    `)
+  );
+}
+
 export async function sendAdminProviderPendingEmail({
   providerName, contactEmail, country, isAccredited, accreditor,
 }: {

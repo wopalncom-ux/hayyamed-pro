@@ -8,6 +8,7 @@ const PROTECTED_PREFIXES = [
   "/provider",
   "/admin",
   "/university",
+  "/government",
 ];
 
 // Routes that bypass the coming-soon redirect. Everything else is gated.
@@ -28,6 +29,7 @@ const COMING_SOON_BYPASS = [
   "/provider",
   "/admin",
   "/university",
+  "/government",
   "/_next/",
   "/favicon",
   "/icons/",
@@ -62,6 +64,7 @@ const COMING_SOON_BYPASS = [
   "/ent-cme",
   "/hematology-cme",
   "/geriatrics-cme",
+  "/government/register",     // government authority registration page (pre-auth)
   "/for-government",          // B2B government authority white-label licensing page
   "/blog",                    // blog index and all posts — public SEO content
   "/pathology-cme",           // specialty CME pages — public SEO
