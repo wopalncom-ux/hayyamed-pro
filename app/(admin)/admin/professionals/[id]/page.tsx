@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import PlanOverrideButton from "@/components/admin/PlanOverrideButton";
 import TrialExtendButton from "@/components/admin/TrialExtendButton";
+import SuspendAccountButton from "@/components/admin/SuspendAccountButton";
 import { ActivitiesSection } from "./ActivitiesSection";
 
 export default async function AdminProfessionalDetailPage({
@@ -78,9 +79,14 @@ export default async function AdminProfessionalDetailPage({
           <h1 className="text-2xl font-bold text-[#111]">{profile.full_name ?? "Unknown"}</h1>
           <p className="text-sm text-[#64748b] mt-1">{email}</p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 flex-wrap">
           <PlanOverrideButton authId={id} currentPlan={activeSub?.plan ?? "free"} />
           <TrialExtendButton authId={id} currentTrialEnd={profile.pro_trial_ends_at ?? null} />
+          <SuspendAccountButton
+            authId={id}
+            isSuspended={profile.is_suspended ?? false}
+            suspendedReason={profile.suspended_reason ?? null}
+          />
         </div>
       </div>
 

@@ -42,6 +42,86 @@ export async function overrideUserPlan(
   revalidatePath("/admin/professionals");
 }
 
+export async function suspendAccount(
+  authId: string,
+  reason: string
+): Promise<{ error?: string }> {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "Unauthorized" };
+
+  const adminUser = await requireAdminUser();
+  if (!adminUser) return { error: "Forbidden" };
+
+  if (!reason.trim()) return { error: "Reason is required" };
+
+  const admin = createAdminClient();
+
+  // Ban in Supabase Auth — immediately invalidates all active sessions
+  const { error: banError } = await admin.auth.admin.updateUserById(authId, {
+    ban_duration: "indefinite",
+  });
+  if (banError) return { error: banError.message };
+
+  // Record suspension metadata in our DB for audit trail + UI display
+  await admin
+    .from("professional_profiles")
+    .update({
+      is_suspended: true,
+      suspended_at: new Date().toISOString(),
+      suspended_reason: reason.trim(),
+    })
+    .eq("auth_id", authId);
+
+  await logAudit({
+    actorAuthId: user.id,
+    action: "admin.account.suspended",
+    targetTable: "professional_profiles",
+    targetId: authId,
+    metadata: { reason: reason.trim(), suspended_by: user.email },
+  });
+
+  revalidatePath(`/admin/professionals/${authId}`);
+  return {};
+}
+
+export async function unsuspendAccount(authId: string): Promise<{ error?: string }> {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "Unauthorized" };
+
+  const adminUser = await requireAdminUser();
+  if (!adminUser) return { error: "Forbidden" };
+
+  const admin = createAdminClient();
+
+  // Lift Supabase Auth ban — user can sign in again
+  const { error: unbanError } = await admin.auth.admin.updateUserById(authId, {
+    ban_duration: "none",
+  });
+  if (unbanError) return { error: unbanError.message };
+
+  await admin
+    .from("professional_profiles")
+    .update({
+      is_suspended: false,
+      suspended_at: null,
+      suspended_reason: null,
+    })
+    .eq("auth_id", authId);
+
+  await logAudit({
+    actorAuthId: user.id,
+    action: "admin.account.unsuspended",
+    targetTable: "professional_profiles",
+    targetId: authId,
+    metadata: { unsuspended_by: user.email },
+  });
+
+  revalidatePath(`/admin/professionals/${authId}`);
+  return {};
+}
+
 export async function extendTrial(authId: string, days: number): Promise<{ error?: string }> {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();

@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { getRequestUser } from "@/lib/auth/getRequestUser";
 import { createAdminClient } from "@/lib/supabase/server";
 import { logAudit } from "@/lib/audit";
+import { checkAndLogRateLimit } from "@/lib/rateLimit";
 
 export const runtime = "nodejs";
 
@@ -14,6 +15,19 @@ export async function GET(request: NextRequest) {
   const user = await getRequestUser(await headers());
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  // Prevent abuse: data export is expensive (11 table joins) and sensitive.
+  // Limit to 3 requests per hour per user.
+  const rl = await checkAndLogRateLimit({ action: "export.my_data", userId: user.id, maxPerHour: 3 });
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: "Too many export requests. Please wait before requesting your data again." },
+      {
+        status: 429,
+        headers: { "Retry-After": String(rl.retryAfterSeconds ?? 3600) },
+      }
+    );
   }
 
   const admin = createAdminClient();

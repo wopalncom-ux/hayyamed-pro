@@ -1,5 +1,5 @@
 -- ============================================================
--- Hayya Med PRO — ALL 58 MIGRATIONS COMBINED
+-- Hayya Med PRO — ALL 59 MIGRATIONS COMBINED
 -- Paste this entire file into the Supabase SQL Editor and Run.
 -- Idempotent: safe to run on a fresh project.
 -- Generated: 2026-06-16
@@ -2718,3 +2718,15 @@ ALTER TABLE subscriptions
 
 ALTER TABLE cme_activities
   ADD COLUMN IF NOT EXISTS accreditor text;
+
+-- ════════════════════════════════════════════════════════════
+-- MIGRATION 059 — Account Suspension Fields
+-- ════════════════════════════════════════════════════════════
+
+ALTER TABLE professional_profiles
+  ADD COLUMN IF NOT EXISTS is_suspended    boolean     NOT NULL DEFAULT false,
+  ADD COLUMN IF NOT EXISTS suspended_at    timestamptz,
+  ADD COLUMN IF NOT EXISTS suspended_reason text;
+
+CREATE INDEX IF NOT EXISTS idx_professional_profiles_suspended
+  ON professional_profiles (is_suspended) WHERE is_suspended = true;
