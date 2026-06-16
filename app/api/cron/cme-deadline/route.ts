@@ -112,6 +112,6 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  await pingCronMonitor("cme-deadline");
+  await pingCronMonitor("cme-deadline", { sent: notified });
   return NextResponse.json({ ok: true, notified });
 }

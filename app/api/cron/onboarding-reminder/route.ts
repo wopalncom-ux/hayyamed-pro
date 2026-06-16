@@ -39,7 +39,7 @@ export async function GET(req: NextRequest) {
   }
 
   if (!profiles?.length) {
-    await pingCronMonitor("onboarding-reminder");
+    await pingCronMonitor("onboarding-reminder", { sent: 0 });
     return NextResponse.json({ sent: 0, message: "No incomplete profiles in window" });
   }
 
@@ -83,6 +83,6 @@ export async function GET(req: NextRequest) {
     } catch { /* never abort the batch on individual email failure */ }
   }
 
-  await pingCronMonitor("onboarding-reminder");
+  await pingCronMonitor("onboarding-reminder", { sent, processed: profiles.length });
   return NextResponse.json({ sent, total: profiles.length });
 }

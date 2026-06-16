@@ -128,6 +128,6 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  await pingCronMonitor("professional-digest");
+  await pingCronMonitor("professional-digest", { sent, skipped });
   return NextResponse.json({ ok: true, sent, skipped });
 }

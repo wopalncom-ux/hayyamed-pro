@@ -141,6 +141,6 @@ export async function GET(req: NextRequest) {
     sent++;
   }
 
-  await pingCronMonitor("employer-digest");
+  await pingCronMonitor("employer-digest", { sent, processed: members.length });
   return NextResponse.json({ sent });
 }

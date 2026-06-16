@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
     .eq("status", "approved");
 
   if (!links?.length) {
-    await pingCronMonitor("compliance-snapshot");
+    await pingCronMonitor("compliance-snapshot", { processed: 0 });
     return NextResponse.json({ ok: true, organizations_snapshotted: 0 });
   }
 
@@ -105,7 +105,7 @@ export async function GET(request: NextRequest) {
     console.error("[compliance-snapshot] upsert error:", error.message);
   }
 
-  await pingCronMonitor("compliance-snapshot");
+  await pingCronMonitor("compliance-snapshot", { processed: snapshots.length });
   return NextResponse.json({
     ok: true,
     organizations_snapshotted: snapshots.length,

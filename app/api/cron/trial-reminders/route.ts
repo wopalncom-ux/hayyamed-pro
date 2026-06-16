@@ -211,6 +211,6 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  await pingCronMonitor("trial-reminders");
+  await pingCronMonitor("trial-reminders", { sent: day3Sent + day7Sent + warnSent + expiredSent });
   return NextResponse.json({ ok: true, day3_sent: day3Sent, day7_sent: day7Sent, warn_sent: warnSent, expired_sent: expiredSent });
 }

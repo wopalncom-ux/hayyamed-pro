@@ -111,6 +111,6 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  await pingCronMonitor("license-expiry");
+  await pingCronMonitor("license-expiry", { sent: webhooksDispatched });
   return NextResponse.json({ ok: true, webhooks_dispatched: webhooksDispatched });
 }

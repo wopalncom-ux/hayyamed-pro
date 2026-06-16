@@ -193,7 +193,7 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  await pingCronMonitor("license-reminders");
+  await pingCronMonitor("license-reminders", { sent, processed: (profiles?.length ?? 0) + newProfIds.length });
   return NextResponse.json({
     sent,
     total: (profiles?.length ?? 0) + newProfIds.length,

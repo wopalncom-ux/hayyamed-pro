@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
   }
 
   if (!orphans?.length) {
-    await pingCronMonitor("storage-cleanup");
+    await pingCronMonitor("storage-cleanup", { processed: 0 });
     return NextResponse.json({ cleaned: 0, errors: 0, storage_bytes_freed: 0 });
   }
 
@@ -63,7 +63,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: updateError.message }, { status: 500 });
   }
 
-  await pingCronMonitor("storage-cleanup");
+  await pingCronMonitor("storage-cleanup", { processed: ids.length });
 
   return NextResponse.json({
     cleaned: ids.length,
