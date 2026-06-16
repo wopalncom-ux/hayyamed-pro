@@ -1,5 +1,5 @@
 -- ============================================================
--- Hayya Med PRO — ALL 62 MIGRATIONS COMBINED
+-- Hayya Med PRO — ALL 63 MIGRATIONS COMBINED
 -- Paste this entire file into the Supabase SQL Editor and Run.
 -- Idempotent: safe to run on a fresh project.
 -- Generated: 2026-06-16
@@ -2958,4 +2958,4 @@ CREATE INDEX IF NOT EXISTS idx_gap_analysis_cache_lookup
 DROP TRIGGER IF EXISTS set_gap_analysis_cache_updated_at ON gap_analysis_cache;
 CREATE TRIGGER set_gap_analysis_cache_updated_at
   BEFORE UPDATE ON gap_analysis_cache
-  FOR EACH ROW EXECUTE FUNCTION public.handle_updated_at();
+  FOR EACH ROW EXECUTE FUNCTION public.set_updated_at();

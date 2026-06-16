@@ -54,4 +54,4 @@ CREATE INDEX IF NOT EXISTS idx_gap_analysis_cache_lookup
 DROP TRIGGER IF EXISTS set_gap_analysis_cache_updated_at ON gap_analysis_cache;
 CREATE TRIGGER set_gap_analysis_cache_updated_at
   BEFORE UPDATE ON gap_analysis_cache
-  FOR EACH ROW EXECUTE FUNCTION public.handle_updated_at();
+  FOR EACH ROW EXECUTE FUNCTION public.set_updated_at();
