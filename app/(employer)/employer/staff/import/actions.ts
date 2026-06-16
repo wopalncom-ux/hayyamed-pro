@@ -2,7 +2,11 @@
 
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { logAudit } from "@/lib/audit";
+import { EMPLOYER_TIERS, type EmployerTierKey } from "@/lib/paddle";
 import * as postmark from "postmark";
+
+const esc = (s: string) =>
+  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://hayyamed.pro";
 
@@ -38,10 +42,10 @@ async function sendStaffInviteEmail(to: string, name: string, orgName: string) {
         </div>
         <div style="background:white;border:1px solid #e2e8f0;border-top:none;padding:32px;border-radius:0 0 12px 12px">
           <p style="color:#374151;font-size:15px;line-height:1.6;margin:0 0 16px">
-            Hi${name ? " " + name : ""},
+            Hi${name ? " " + esc(name) : ""},
           </p>
           <p style="color:#374151;font-size:15px;line-height:1.6;margin:0 0 16px">
-            <strong>${orgName}</strong> has added you to Hayya Med Pro — a platform for tracking CME/CPD compliance and managing your healthcare license renewals.
+            <strong>${esc(orgName)}</strong> has added you to Hayya Med Pro — a platform for tracking CME/CPD compliance and managing your healthcare license renewals.
           </p>
           <a href="${registerUrl}" style="display:inline-block;background:#1a56a0;color:white;text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:600;font-size:15px">
             Create Account →
@@ -104,6 +108,15 @@ export async function importStaffCsv(
   if (rows.length === 0) return { error: "No valid email addresses found in CSV." };
   if (rows.length > 200) return { error: "Maximum 200 rows per import." };
 
+  // Enforce tier staff limit before processing
+  const [subRes, staffCountRes] = await Promise.all([
+    admin.from("subscriptions").select("employer_tier").eq("professional_id", user.id).in("status", ["active", "trialing"]).maybeSingle(),
+    admin.from("employer_link_requests").select("id", { count: "exact", head: true }).eq("organization_id", orgId).eq("status", "approved"),
+  ]);
+  const tierKey = (subRes.data?.employer_tier ?? "clinic") as EmployerTierKey;
+  const maxStaff = EMPLOYER_TIERS[tierKey]?.maxStaff ?? 10;
+  let remainingSlots = Math.max(0, maxStaff - (staffCountRes.count ?? 0));
+
   const results: ImportResult[] = [];
 
   for (const row of rows) {
@@ -127,6 +140,12 @@ export async function importStaffCsv(
           continue;
         }
 
+        // Enforce tier staff limit for new links
+        if (remainingSlots <= 0) {
+          results.push({ email: row.email, outcome: "error", reason: `Staff limit reached (${maxStaff}). Upgrade your plan.` });
+          continue;
+        }
+
         // Employer-initiated link = auto-approved
         await admin.from("employer_link_requests").upsert({
           professional_id: professionalId,
@@ -136,6 +155,7 @@ export async function importStaffCsv(
           department: row.department ?? null,
         }, { onConflict: "professional_id,organization_id" });
 
+        remainingSlots--;
         results.push({ email: row.email, outcome: "linked" });
       } else {
         // Not on platform yet — send invite
