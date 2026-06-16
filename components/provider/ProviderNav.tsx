@@ -5,10 +5,13 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
-  { href: "/provider",            label: "Dashboard" },
-  { href: "/provider/courses",    label: "Courses" },
-  { href: "/provider/analytics",  label: "Analytics" },
-  { href: "/provider/settings",   label: "Settings" },
+  { href: "/provider",              label: "Dashboard" },
+  { href: "/provider/courses",      label: "Courses" },
+  { href: "/provider/analytics",    label: "Analytics" },
+  { href: "/provider/ai-analyzer",  label: "AI Insights" },
+  { href: "/provider/api-keys",     label: "API Keys" },
+  { href: "/provider/integration",  label: "Integration" },
+  { href: "/provider/settings",     label: "Settings" },
 ];
 
 export default function ProviderNav({ providerName }: { providerName: string }) {
