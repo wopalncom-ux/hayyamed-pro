@@ -4,6 +4,12 @@ import { getRequestUser } from "@/lib/auth/getRequestUser";
 import { createAdminClient } from "@/lib/supabase/server";
 import { logAudit } from "@/lib/audit";
 
+function csvCell(v: string | null | undefined): string {
+  const s = v ?? "";
+  const safe = /^[=+\-@\t\r]/.test(s) ? `\t${s}` : s;
+  return `"${safe.replace(/"/g, '""')}"`;
+}
+
 export async function GET(): Promise<NextResponse> {
   const user = await getRequestUser(await headers());
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -62,10 +68,10 @@ export async function GET(): Promise<NextResponse> {
     const licenseVisible = privacy?.employer_can_view_license_expiry !== false;
 
     return [
-      `"${(profile.full_name ?? "Unknown").replace(/"/g, '""')}"`,
-      `"${(profile.profession ?? "—").replace(/"/g, '""')}"`,
-      `"${(profile.specialty ?? "—").replace(/"/g, '""')}"`,
-      `"${(profile.country ?? "—").replace(/"/g, '""')}"`,
+      csvCell(profile.full_name ?? "Unknown"),
+      csvCell(profile.profession ?? "—"),
+      csvCell(profile.specialty ?? "—"),
+      csvCell(profile.country ?? "—"),
       cmeVisible ? (wallet?.completed_credits ?? "") : "private",
       cmeVisible ? (wallet?.required_credits ?? "") : "private",
       cmeVisible ? (wallet?.compliance_status ?? "unknown") : "private",

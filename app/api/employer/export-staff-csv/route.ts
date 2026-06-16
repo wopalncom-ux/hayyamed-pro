@@ -7,6 +7,9 @@ export const runtime = "nodejs";
 
 function csvCell(val: string | null | undefined): string {
   const s = val ?? "";
+  if (/^[=+\-@\t\r]/.test(s)) {
+    return `"\t${s.replace(/"/g, '""')}"`;
+  }
   if (s.includes(",") || s.includes('"') || s.includes("\n")) {
     return `"${s.replace(/"/g, '""')}"`;
   }

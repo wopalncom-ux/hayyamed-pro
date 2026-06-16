@@ -35,8 +35,13 @@ export async function GET() {
     ]),
   ];
 
+  const csvCell = (cell: unknown) => {
+    const s = String(cell);
+    const safe = /^[=+\-@\t\r]/.test(s) ? `\t${s}` : s;
+    return `"${safe.replace(/"/g, '""')}"`;
+  };
   const csv = rows
-    .map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(","))
+    .map((row) => row.map(csvCell).join(","))
     .join("\n");
 
   const filename = `waitlist-${new Date().toISOString().slice(0, 10)}.csv`;

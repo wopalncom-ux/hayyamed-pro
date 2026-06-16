@@ -3,6 +3,12 @@ import { headers } from "next/headers";
 import { createAdminClient } from "@/lib/supabase/server";
 import { getRequestUser } from "@/lib/auth/getRequestUser";
 
+function csvCell(v: string | null | undefined): string {
+  const s = v ?? "";
+  const safe = /^[=+\-@\t\r]/.test(s) ? `\t${s}` : s;
+  return `"${safe.replace(/"/g, '""')}"`;
+}
+
 export async function GET(req: Request) {
   const user = await getRequestUser(await headers());
   if (!user) {
@@ -130,10 +136,10 @@ export async function GET(req: Request) {
     const pct = reqs.length > 0 ? Math.round((completedCount / reqs.length) * 100) : 0;
 
     return [
-      `"${name.replace(/"/g, '""')}"`,
-      `"${profession}"`,
-      `"${authority}"`,
-      `"${licenseNo}"`,
+      csvCell(name),
+      csvCell(profession),
+      csvCell(authority),
+      csvCell(licenseNo),
       ...courseStatuses.map((s) => `"${s}"`),
       completedCount,
       reqs.length,

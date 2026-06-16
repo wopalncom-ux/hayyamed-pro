@@ -92,6 +92,9 @@ export async function GET() {
 function csvEsc(v: string | null | undefined): string {
   if (!v) return "";
   const s = String(v);
+  if (/^[=+\-@\t\r]/.test(s)) {
+    return `"\t${s.replace(/"/g, '""')}"`;
+  }
   if (s.includes(",") || s.includes('"') || s.includes("\n")) {
     return `"${s.replace(/"/g, '""')}"`;
   }

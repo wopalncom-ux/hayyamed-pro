@@ -156,6 +156,9 @@ export async function GET(req: NextRequest) {
 }
 
 function csvEscape(value: string): string {
+  if (/^[=+\-@\t\r]/.test(value)) {
+    return `"\t${value.replace(/"/g, '""')}"`;
+  }
   if (/[",\n\r]/.test(value)) {
     return `"${value.replace(/"/g, '""')}"`;
   }

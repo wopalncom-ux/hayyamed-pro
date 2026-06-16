@@ -9,6 +9,9 @@ export const runtime = "nodejs";
 
 function escapeCsv(val: unknown): string {
   const s = val == null ? "" : String(val);
+  if (/^[=+\-@\t\r]/.test(s)) {
+    return `"\t${s.replace(/"/g, '""')}"`;
+  }
   if (s.includes(",") || s.includes('"') || s.includes("\n")) {
     return `"${s.replace(/"/g, '""')}"`;
   }
