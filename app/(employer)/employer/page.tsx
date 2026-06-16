@@ -42,7 +42,7 @@ const STATUS_CONFIG: Record<ComplianceStatus, { label: string; classes: string }
 export default async function EmployerDashboardPage({
   searchParams,
 }: {
-  searchParams: Promise<{ setup?: string; q?: string; status?: string }>;
+  searchParams: Promise<{ setup?: string; q?: string; status?: string; page?: string }>;
 }) {
   const sp = await searchParams;
   const searchQuery = sp.q?.trim().toLowerCase() ?? "";
@@ -193,7 +193,7 @@ export default async function EmployerDashboardPage({
     return true;
   });
 
-  // Group by department — based on displayStaff
+  // Dept groups from full displayStaff — used for heatmap and hasDepartments flag
   const deptMapDisplay = new Map<string, StaffMember[]>();
   for (const s of displayStaff) {
     const key = s.department ?? "";
@@ -206,6 +206,30 @@ export default async function EmployerDashboardPage({
     deptGroups.push({ name: key || "Unassigned", members });
   }
   deptGroups.sort((a, b) => {
+    if (a.name === "Unassigned") return 1;
+    if (b.name === "Unassigned") return -1;
+    return a.name.localeCompare(b.name);
+  });
+
+  // Pagination — applied to the table only; stats and heatmap use the full dataset
+  const PAGE_SIZE = 50;
+  const page = Math.max(0, parseInt(sp.page ?? "0", 10));
+  const totalDisplay = displayStaff.length;
+  const totalPages = Math.ceil(totalDisplay / PAGE_SIZE);
+  const pagedStaff = displayStaff.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
+
+  // Dept groups from paged slice — used for the table rows only
+  const pagedDeptMap = new Map<string, StaffMember[]>();
+  for (const s of pagedStaff) {
+    const key = s.department ?? "";
+    if (!pagedDeptMap.has(key)) pagedDeptMap.set(key, []);
+    pagedDeptMap.get(key)!.push(s);
+  }
+  const pagedDeptGroups: Array<{ name: string; members: StaffMember[] }> = [];
+  for (const [key, members] of pagedDeptMap) {
+    pagedDeptGroups.push({ name: key || "Unassigned", members });
+  }
+  pagedDeptGroups.sort((a, b) => {
     if (a.name === "Unassigned") return 1;
     if (b.name === "Unassigned") return -1;
     return a.name.localeCompare(b.name);
@@ -389,9 +413,10 @@ export default async function EmployerDashboardPage({
           <div>
             <h2 className="text-base font-semibold text-[#111]">
               Staff Compliance
-              {(searchQuery || statusFilter) && (
+              {(searchQuery || statusFilter) && displayStaff.length > 0 && (
                 <span className="ml-2 text-sm font-normal text-[#64748b]">
                   — {displayStaff.length} of {total} shown
+                  {totalPages > 1 && ` · page ${page + 1} of ${totalPages}`}
                 </span>
               )}
             </h2>
@@ -467,7 +492,33 @@ export default async function EmployerDashboardPage({
           </div>
         ) : (
           <>
-            {deptGroups.map((group) => {
+            {totalPages > 1 && (
+              <div className="px-6 py-4 border-b border-[#e2e8f0] flex items-center justify-between bg-[#f8fafc]">
+                <p className="text-xs text-[#64748b]">
+                  Showing {page * PAGE_SIZE + 1}–{Math.min((page + 1) * PAGE_SIZE, totalDisplay)} of {totalDisplay} staff
+                </p>
+                <div className="flex items-center gap-2">
+                  {page > 0 && (
+                    <a
+                      href={`/employer?${new URLSearchParams({ ...(sp.q ? { q: sp.q } : {}), ...(statusFilter ? { status: statusFilter } : {}), ...(sp.setup ? { setup: sp.setup } : {}), page: String(page - 1) })}`}
+                      className="px-3 py-1.5 text-xs font-medium rounded-lg border border-[#e2e8f0] text-[#374151] hover:border-[#1a56a0] hover:text-[#1a56a0] transition-colors"
+                    >
+                      ← Previous
+                    </a>
+                  )}
+                  <span className="text-xs text-[#64748b]">Page {page + 1} of {totalPages}</span>
+                  {page < totalPages - 1 && (
+                    <a
+                      href={`/employer?${new URLSearchParams({ ...(sp.q ? { q: sp.q } : {}), ...(statusFilter ? { status: statusFilter } : {}), ...(sp.setup ? { setup: sp.setup } : {}), page: String(page + 1) })}`}
+                      className="px-3 py-1.5 text-xs font-medium rounded-lg border border-[#e2e8f0] text-[#374151] hover:border-[#1a56a0] hover:text-[#1a56a0] transition-colors"
+                    >
+                      Next →
+                    </a>
+                  )}
+                </div>
+              </div>
+            )}
+            {pagedDeptGroups.map((group) => {
               const gCompliant = group.members.filter((s) => s.complianceStatus === "compliant").length;
               const gAtRisk = group.members.filter((s) => s.complianceStatus === "at_risk").length;
               const gNonCompliant = group.members.filter((s) => s.complianceStatus === "non_compliant").length;
