@@ -1,7 +1,7 @@
 ﻿#!/bin/bash
 # Hayya Med Pro — GCP Cloud Scheduler Setup
 #
-# Run once after initial deployment to activate all 13 automated cron jobs.
+# Run once after initial deployment to activate all 14 automated cron jobs.
 # Without this, no trial emails, license alerts, engagement emails, webhook
 # deliveries, or notification queue processing will fire.
 #
@@ -59,6 +59,7 @@ if [ "${DELETE_MODE}" = "true" ]; then
     hayyamed-training-deadline
     hayyamed-compliance-alerts
     hayyamed-storage-cleanup
+    hayyamed-compliance-snapshot
   )
   for JOB in "${JOBS[@]}"; do
     if gcloud scheduler jobs describe "${JOB}" \
@@ -238,11 +239,19 @@ create_or_update_job \
   "/api/cron/storage-cleanup" \
   "Delete orphaned certificate files from Supabase Storage (uploaded >7d ago, no linked CME activity)"
 
+# 23:30 GST (20:30 UTC) -- daily compliance snapshot per organization
+create_or_update_job \
+  "hayyamed-compliance-snapshot" \
+  "30 23 * * *" \
+  "/api/cron/compliance-snapshot" \
+  "Daily compliance state snapshot per org — powers 30-day trend in employer analytics"
+
 echo ""
-echo "=== All 13 Cloud Scheduler jobs configured ==="
+echo "=== All 14 Cloud Scheduler jobs configured ==="
 echo ""
 echo "Verify:"
 echo "  gcloud scheduler jobs list --location=${SCHEDULER_REGION} --project=${PROJECT_ID}"
+echo "  (expected: 14 jobs)"
 echo ""
 echo "Trigger a job manually to test:"
 echo "  gcloud scheduler jobs run hayyamed-trial-reminders --location=${SCHEDULER_REGION} --project=${PROJECT_ID}"

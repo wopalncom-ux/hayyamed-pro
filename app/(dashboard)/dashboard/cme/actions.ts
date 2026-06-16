@@ -69,6 +69,17 @@ export async function addCmeActivity({
 
   if (error) return { error: error.message };
 
+  // Track certificate file in dedicated storage records table (security + orphan detection)
+  if (certificateUrl && data?.id) {
+    admin.from("certificate_storage_records").insert({
+      professional_id: user.id,
+      cme_activity_id: data.id,
+      storage_path: certificateUrl,
+      file_name: certificateUrl.split("/").pop()?.split("?")[0] ?? null,
+      uploaded_at: new Date().toISOString(),
+    }).then(undefined, () => {});
+  }
+
   // Fire-and-forget — never block the user's submission on email delivery
   Promise.all([
     admin.from("professional_profiles").select("email, full_name").eq("auth_id", user.id).maybeSingle(),
@@ -140,6 +151,12 @@ export async function deleteCmeActivity(id: string): Promise<{ error?: string }>
     .eq("professional_id", user.id);
 
   if (error) return { error: error.message };
+
+  // Soft-delete the certificate storage record — file cleanup handled by storage-cleanup cron
+  admin.from("certificate_storage_records").update({
+    is_deleted: true,
+    deleted_at: new Date().toISOString(),
+  }).eq("cme_activity_id", id).then(undefined, () => {});
 
   await logAudit({
     actorAuthId: user.id,

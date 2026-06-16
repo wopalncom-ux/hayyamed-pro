@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import PlanOverrideButton from "@/components/admin/PlanOverrideButton";
 import TrialExtendButton from "@/components/admin/TrialExtendButton";
+import { ActivitiesSection } from "./ActivitiesSection";
 
 export default async function AdminProfessionalDetailPage({
   params,
@@ -234,37 +235,8 @@ export default async function AdminProfessionalDetailPage({
             </div>
           )}
 
-          {/* CME activities */}
-          <div className="bg-white rounded-xl border border-[#e2e8f0]">
-            <div className="px-6 py-4 border-b border-[#e2e8f0] flex items-center justify-between">
-              <h2 className="text-sm font-semibold text-[#111] uppercase tracking-wide">CME Activities (recent 20)</h2>
-            </div>
-            {activities.length === 0 ? (
-              <div className="px-6 py-8 text-center text-sm text-[#94a3b8]">No activities yet.</div>
-            ) : (
-              <div className="divide-y divide-[#f1f5f9]">
-                {activities.map((a) => (
-                  <div key={a.id} className="px-6 py-3 flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-[#111]">{a.title}</p>
-                      <p className="text-xs text-[#64748b] mt-0.5">
-                        {a.provider ?? "—"} · {a.activity_date} · {a.credits} credits
-                      </p>
-                    </div>
-                    <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${
-                      a.verification_status === "verified"
-                        ? "bg-[#dcfce7] text-[#16a34a]"
-                        : a.verification_status === "rejected"
-                        ? "bg-[#fef2f2] text-[#dc2626]"
-                        : "bg-[#fff7ed] text-[#d97706]"
-                    }`}>
-                      {a.verification_status}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+          {/* CME activities — inline verify/reject for pending items */}
+          <ActivitiesSection initialActivities={activities} />
         </div>
 
         {/* Right column — subscription + audit */}

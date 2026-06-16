@@ -1,5 +1,5 @@
 -- ============================================================
--- Hayya Med PRO — ALL 54 MIGRATIONS COMBINED
+-- Hayya Med PRO — ALL 55 MIGRATIONS COMBINED
 -- Paste this entire file into the Supabase SQL Editor and Run.
 -- Idempotent: safe to run on a fresh project.
 -- Generated: 2026-06-15
@@ -2600,3 +2600,47 @@ ALTER TABLE professional_profiles
   ADD COLUMN IF NOT EXISTS push_cme_deadline       boolean NOT NULL DEFAULT true,
   ADD COLUMN IF NOT EXISTS push_employer_tasks     boolean NOT NULL DEFAULT true,
   ADD COLUMN IF NOT EXISTS push_compliance_alerts  boolean NOT NULL DEFAULT true;
+
+
+-- ════════════════════════════════════════════════════════════
+-- MIGRATION 055 — Organization Compliance Snapshots
+-- ════════════════════════════════════════════════════════════
+
+CREATE TABLE IF NOT EXISTS organization_compliance_snapshots (
+  id               uuid    PRIMARY KEY DEFAULT gen_random_uuid(),
+  organization_id  uuid    NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
+  snapshot_date    date    NOT NULL,
+  total_staff      integer NOT NULL DEFAULT 0,
+  compliant        integer NOT NULL DEFAULT 0,
+  at_risk          integer NOT NULL DEFAULT 0,
+  non_compliant    integer NOT NULL DEFAULT 0,
+  unknown          integer NOT NULL DEFAULT 0,
+  created_at       timestamptz NOT NULL DEFAULT now(),
+  UNIQUE (organization_id, snapshot_date)
+);
+
+CREATE INDEX IF NOT EXISTS idx_org_compliance_snapshots_org_date
+  ON organization_compliance_snapshots (organization_id, snapshot_date DESC);
+
+ALTER TABLE organization_compliance_snapshots ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "employer reads own snapshots" ON organization_compliance_snapshots;
+CREATE POLICY "employer reads own snapshots" ON organization_compliance_snapshots
+  FOR SELECT USING (
+    EXISTS (
+      SELECT 1 FROM organization_members
+       WHERE auth_id = auth.uid()
+         AND organization_id = organization_compliance_snapshots.organization_id
+         AND role = 'employer_admin'
+    )
+  );
+
+DROP POLICY IF EXISTS "admin reads all snapshots" ON organization_compliance_snapshots;
+CREATE POLICY "admin reads all snapshots" ON organization_compliance_snapshots
+  FOR SELECT USING (
+    EXISTS (
+      SELECT 1 FROM organization_members
+       WHERE auth_id = auth.uid()
+         AND role IN ('master_admin', 'super_admin')
+    )
+  );

@@ -57,7 +57,9 @@ export default async function EmployerAnalyticsPage() {
     );
   }
 
-  const [walletsRes, profilesRes, privacyRes, activitiesRes] = await Promise.all([
+  const thirtyDaysAgo = new Date(Date.now() - 30 * 86400_000).toISOString().slice(0, 10);
+
+  const [walletsRes, profilesRes, privacyRes, activitiesRes, snapshotsRes] = await Promise.all([
     admin.from("cme_wallets")
       .select("professional_id, completed_credits, required_credits, compliance_status")
       .in("professional_id", staffIds),
@@ -71,12 +73,18 @@ export default async function EmployerAnalyticsPage() {
       .select("professional_id, credits, category, activity_date, verification_status")
       .in("professional_id", staffIds)
       .eq("verification_status", "verified"),
+    admin.from("organization_compliance_snapshots")
+      .select("snapshot_date, total_staff, compliant, at_risk, non_compliant, unknown")
+      .eq("organization_id", orgId)
+      .gte("snapshot_date", thirtyDaysAgo)
+      .order("snapshot_date", { ascending: true }),
   ]);
 
   const wallets = walletsRes.data ?? [];
   const profiles = profilesRes.data ?? [];
   const privacy = privacyRes.data ?? [];
   const activities = activitiesRes.data ?? [];
+  const snapshots = snapshotsRes.data ?? [];
 
   const walletMap = Object.fromEntries(wallets.map((w) => [w.professional_id, w]));
   const profileMap = Object.fromEntries(profiles.map((p) => [p.auth_id, p]));
@@ -150,6 +158,23 @@ export default async function EmployerAnalyticsPage() {
     .sort((a, b) => b.total - a.total)
     .slice(0, 8);
 
+  // 30-day compliance trend from snapshots
+  const trendDays: string[] = [];
+  for (let i = 29; i >= 0; i--) {
+    trendDays.push(new Date(Date.now() - i * 86400_000).toISOString().slice(0, 10));
+  }
+  const snapshotByDate = Object.fromEntries(snapshots.map((s) => [s.snapshot_date, s]));
+  const trendPoints = trendDays.map((day) => {
+    const s = snapshotByDate[day];
+    if (!s || s.total_staff === 0) return null;
+    return Math.round((s.compliant / s.total_staff) * 100);
+  });
+  const hasSnapshots = snapshots.length >= 2;
+  const oldestRate: number | null = hasSnapshots ? (trendPoints.find((p) => p !== null) ?? null) : null;
+  const latestRate: number | null = hasSnapshots ? ([...trendPoints].reverse().find((p) => p !== null) ?? null) : null;
+  const rateDelta = oldestRate !== null && latestRate !== null ? latestRate - oldestRate : null;
+  const maxTrendPct = Math.max(...trendPoints.filter(Boolean) as number[], 1);
+
   // Monthly activity volume (last 6 months)
   const sixMonthsAgo = new Date();
   sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
@@ -181,6 +206,61 @@ export default async function EmployerAnalyticsPage() {
         <KpiCard label="Avg Credits" value={avgCompleted.toString()} sub={`of ${avgRequired} required avg`} color="blue" />
         <KpiCard label="Total CME Activities" value={activities.length.toString()} sub="verified this cycle" color="blue" />
         <KpiCard label="Licenses Expiring ≤30d" value={(expiring30 + expired).toString()} sub={`${expired} already expired`} color={expiring30 + expired > 0 ? "red" : "green"} />
+      </div>
+
+      {/* 30-day compliance trend */}
+      <div className="bg-white rounded-xl border border-[#e2e8f0] p-6 mb-6">
+        <div className="flex items-start justify-between mb-4">
+          <div>
+            <h2 className="text-sm font-semibold text-[#111]">Compliance Rate — 30-Day Trend</h2>
+            <p className="text-xs text-[#64748b] mt-0.5">
+              {hasSnapshots
+                ? rateDelta !== null
+                  ? `${latestRate}% today · ${rateDelta >= 0 ? "+" : ""}${rateDelta}% vs 30 days ago`
+                  : "Trend building — check back tomorrow"
+                : "First snapshot will appear after tonight's cron run (23:30 GST)"}
+            </p>
+          </div>
+          {rateDelta !== null && (
+            <span className={`text-sm font-bold px-3 py-1 rounded-full ${rateDelta >= 0 ? "bg-[#dcfce7] text-[#16a34a]" : "bg-[#fee2e2] text-[#dc2626]"}`}>
+              {rateDelta >= 0 ? "+" : ""}{rateDelta}%
+            </span>
+          )}
+        </div>
+        {hasSnapshots ? (
+          <div className="flex items-end gap-px h-20">
+            {trendDays.map((day, i) => {
+              const val = trendPoints[i];
+              const label = i === 0 ? new Date(day + "T12:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "short" })
+                          : i === 29 ? "Today"
+                          : i % 7 === 0 ? new Date(day + "T12:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "short" })
+                          : "";
+              const heightPct = val !== null ? Math.max((val / maxTrendPct) * 100, 3) : 0;
+              return (
+                <div key={day} className="flex-1 flex flex-col items-center justify-end gap-0.5 group relative">
+                  {val !== null && (
+                    <div
+                      title={`${new Date(day + "T12:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "short" })}: ${val}%`}
+                      className={`w-full rounded-t-sm transition-colors ${val >= 80 ? "bg-[#16a34a]" : val >= 60 ? "bg-[#d97706]" : "bg-[#dc2626]"}`}
+                      style={{ height: `${heightPct}%` }}
+                    />
+                  )}
+                  {val === null && (
+                    <div className="w-full bg-[#f1f5f9] rounded-t-sm" style={{ height: "4%" }} />
+                  )}
+                  {label && (
+                    <span className="text-[9px] text-[#94a3b8] absolute -bottom-4 left-1/2 -translate-x-1/2 whitespace-nowrap">{label}</span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="h-20 flex items-center justify-center">
+            <p className="text-sm text-[#94a3b8]">No historical data yet. Snapshots are taken daily at 23:30 GST.</p>
+          </div>
+        )}
+        {hasSnapshots && <div className="mt-5" />}
       </div>
 
       {/* Compliance + License side by side */}
