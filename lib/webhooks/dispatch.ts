@@ -6,6 +6,8 @@ export type WebhookEventType =
   | "staff.compliance_changed"
   | "license.expiring"
   | "course.completed"
+  | "course.enrolled"
+  | "course.reviewed"
   | "cme.verified"
   | "staff.linked"
   | "staff.unlinked"

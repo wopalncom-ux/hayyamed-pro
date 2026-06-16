@@ -52,8 +52,8 @@ export async function POST(req: NextRequest) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "X-Hayya-Signature": sig,
-        "X-Hayya-Event": "test",
+        "X-HMP-Signature": sig,
+        "X-HMP-Event": "test",
         "User-Agent": "HayyaMed-Webhooks/1.0",
       },
       body: payload,

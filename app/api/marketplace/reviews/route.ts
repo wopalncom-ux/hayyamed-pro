@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { getRequestUser } from "@/lib/auth/getRequestUser";
 import { createAdminClient } from "@/lib/supabase/server";
 import { z } from "zod";
+import { dispatchProviderWebhook } from "@/lib/webhooks/dispatch";
 
 const ReviewSchema = z.object({
   courseId: z.string().uuid(),
@@ -55,6 +56,21 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   if (error) {
     console.error("review upsert error", error);
     return NextResponse.json({ error: "Failed to save review" }, { status: 500 });
+  }
+
+  // Notify provider that a review was submitted
+  const { data: courseRow } = await admin
+    .from("courses")
+    .select("provider_id")
+    .eq("id", courseId)
+    .maybeSingle();
+  if (courseRow?.provider_id) {
+    dispatchProviderWebhook(courseRow.provider_id, "course.reviewed", {
+      professional_id: user.id,
+      course_id: courseId,
+      rating,
+      review_id: review.id,
+    }).catch(() => {});
   }
 
   return NextResponse.json({ review });

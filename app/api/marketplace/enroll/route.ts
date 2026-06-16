@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { createAdminClient } from "@/lib/supabase/server";
 import { getRequestUser } from "@/lib/auth/getRequestUser";
+import { dispatchProviderWebhook } from "@/lib/webhooks/dispatch";
 
 export async function POST(req: NextRequest) {
   const user = await getRequestUser(await headers());
@@ -15,7 +16,7 @@ export async function POST(req: NextRequest) {
   // Verify course exists and is active
   const { data: course } = await admin
     .from("courses")
-    .select("id, status, max_enrollments, enrollment_deadline")
+    .select("id, status, max_enrollments, enrollment_deadline, provider_id")
     .eq("id", courseId)
     .eq("status", "active")
     .maybeSingle();
@@ -55,6 +56,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Already enrolled" }, { status: 409 });
     }
     return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  if (course.provider_id) {
+    dispatchProviderWebhook(course.provider_id, "course.enrolled", {
+      professional_id: user.id,
+      course_id: courseId,
+      enrollment_id: enrollment.id,
+    }).catch(() => {});
   }
 
   return NextResponse.json({ enrollmentId: enrollment.id });
