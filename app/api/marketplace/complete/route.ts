@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 import { createAdminClient } from "@/lib/supabase/server";
 import { getRequestUser } from "@/lib/auth/getRequestUser";
 import { logAudit } from "@/lib/audit";
-import { dispatchWebhook } from "@/lib/webhooks/dispatch";
+import { dispatchWebhook, dispatchProviderWebhook } from "@/lib/webhooks/dispatch";
 
 const VALID_CATEGORIES = [
   "conference", "online", "workshop", "journal", "teaching",
@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
 
   const { data: enrollment } = await admin
     .from("course_enrollments")
-    .select("id, course_id, professional_id, status, courses(title, credits, category, delivery_mode, training_providers(name))")
+    .select("id, course_id, professional_id, status, courses(title, credits, category, delivery_mode, provider_id, training_providers(id, name))")
     .eq("id", enrollmentId)
     .eq("professional_id", user.id)
     .maybeSingle();
@@ -45,15 +45,15 @@ export async function POST(req: NextRequest) {
     ? enrollment.courses[0]
     : enrollment.courses as {
         title: string; credits: number; category: string | null;
-        delivery_mode: string;
-        training_providers: { name: string } | { name: string }[] | null;
+        delivery_mode: string; provider_id: string | null;
+        training_providers: { id: string; name: string } | { id: string; name: string }[] | null;
       } | null;
 
   if (!course) return NextResponse.json({ error: "Course data missing" }, { status: 500 });
 
   const providerObj = Array.isArray(course.training_providers)
     ? course.training_providers[0]
-    : course.training_providers as { name: string } | null;
+    : course.training_providers as { id: string; name: string } | null;
 
   const today = new Date().toISOString().split("T")[0];
 
@@ -117,20 +117,28 @@ export async function POST(req: NextRequest) {
     metadata: { courseId: enrollment.course_id, credits: course.credits, activityId: activity.id },
   });
 
-  // Dispatch course.completed webhook to employer orgs this professional is linked to
+  const webhookPayload = {
+    professional_id: user.id,
+    course_id: enrollment.course_id,
+    course_title: course.title,
+    credits: course.credits,
+    enrollment_id: enrollmentId,
+  };
+
+  // Dispatch course.completed to employer orgs this professional is linked to
   const { data: links } = await admin
     .from("employer_link_requests")
     .select("organization_id")
     .eq("professional_id", user.id)
     .eq("status", "approved");
   for (const link of links ?? []) {
-    dispatchWebhook(link.organization_id, "course.completed", {
-      professional_id: user.id,
-      course_id: enrollment.course_id,
-      course_title: course.title,
-      credits: course.credits,
-      enrollment_id: enrollmentId,
-    }).catch(() => {});
+    dispatchWebhook(link.organization_id, "course.completed", webhookPayload).catch(() => {});
+  }
+
+  // Dispatch course.completed to the owning training provider
+  const providerId = providerObj?.id ?? course.provider_id;
+  if (providerId) {
+    dispatchProviderWebhook(providerId, "course.completed", webhookPayload).catch(() => {});
   }
 
   return NextResponse.json({ ok: true, creditsIssued: course.credits });

@@ -74,6 +74,54 @@ export async function dispatchWebhook(
 }
 
 /**
+ * Dispatch a webhook event to all active endpoints registered for a training provider.
+ * Same pattern as dispatchWebhook but queries by training_provider_id.
+ */
+export async function dispatchProviderWebhook(
+  providerId: string,
+  eventType: WebhookEventType,
+  payload: WebhookPayload
+): Promise<void> {
+  try {
+    const admin = createAdminClient();
+
+    const { data: endpoints } = await admin
+      .from("webhook_endpoints")
+      .select("id, url, secret, events")
+      .eq("training_provider_id", providerId)
+      .eq("is_active", true);
+
+    if (!endpoints?.length) return;
+
+    const matching = endpoints.filter(
+      (ep) => (ep.events as string[]).includes(eventType)
+    );
+    if (!matching.length) return;
+
+    const body = JSON.stringify({
+      event: eventType,
+      timestamp: new Date().toISOString(),
+      provider_id: providerId,
+      data: payload,
+    });
+
+    const deliveries = matching.map((ep) => {
+      const sig = createHmac("sha256", ep.secret).update(body).digest("hex");
+      return {
+        endpoint_id: ep.id,
+        event_type: eventType,
+        payload: { body, signature: `sha256=${sig}`, url: ep.url },
+        status: "pending" as const,
+      };
+    });
+
+    await admin.from("webhook_deliveries").insert(deliveries);
+  } catch {
+    // Never throw — webhook dispatch must not break the main flow
+  }
+}
+
+/**
  * Actually send a queued webhook delivery via HTTP POST.
  * Called by the webhook delivery cron (not yet built — see process-webhooks route).
  */

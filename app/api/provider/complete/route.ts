@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { createAdminClient } from "@/lib/supabase/server";
 import { getRequestUser } from "@/lib/auth/getRequestUser";
 import { logAudit } from "@/lib/audit";
+import { dispatchProviderWebhook } from "@/lib/webhooks/dispatch";
 
 const VALID_CATEGORIES = ["conference", "online", "workshop", "journal", "teaching", "simulation", "mandatory", "patient_safety", "other"] as const;
 type ValidCategory = typeof VALID_CATEGORIES[number];
@@ -25,7 +26,7 @@ export async function POST(req: NextRequest) {
 
   const { data: enrollment } = await admin
     .from("course_enrollments")
-    .select("id, course_id, professional_id, status, courses(title, credits, delivery_mode, training_providers(created_by, name))")
+    .select("id, course_id, professional_id, status, courses(title, credits, delivery_mode, training_providers(id, created_by, name))")
     .eq("id", enrollmentId)
     .maybeSingle();
 
@@ -34,11 +35,11 @@ export async function POST(req: NextRequest) {
 
   const course = Array.isArray(enrollment.courses) ? enrollment.courses[0] : enrollment.courses as {
     title: string; credits: number; delivery_mode: string;
-    training_providers: { created_by: string; name: string } | { created_by: string; name: string }[] | null;
+    training_providers: { id: string; created_by: string; name: string } | { id: string; created_by: string; name: string }[] | null;
   } | null;
 
   const providerObj = course
-    ? (Array.isArray(course.training_providers) ? course.training_providers[0] : course.training_providers as { created_by: string; name: string } | null)
+    ? (Array.isArray(course.training_providers) ? course.training_providers[0] : course.training_providers as { id: string; created_by: string; name: string } | null)
     : null;
 
   if (providerObj?.created_by !== user.id) {
@@ -94,6 +95,16 @@ export async function POST(req: NextRequest) {
     targetId: enrollmentId,
     metadata: { professionalId: enrollment.professional_id, credits: course.credits },
   });
+
+  if (providerObj?.id) {
+    dispatchProviderWebhook(providerObj.id, "course.completed", {
+      professional_id: enrollment.professional_id,
+      course_id: enrollment.course_id,
+      course_title: course.title,
+      credits: course.credits,
+      enrollment_id: enrollmentId,
+    }).catch(() => {});
+  }
 
   return NextResponse.json({ ok: true, creditsIssued: course.credits });
 }
