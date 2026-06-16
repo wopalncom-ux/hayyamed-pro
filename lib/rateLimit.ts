@@ -6,9 +6,16 @@ import { createAdminClient } from "@/lib/supabase/server";
 // Created once at module load; null when Upstash env vars are not set (dev / CI).
 // Middleware checks these before any auth logic — fail open if Upstash unavailable.
 
-const _mwUrl   = process.env.UPSTASH_REDIS_REST_URL ?? "";
-const _mwToken = process.env.UPSTASH_REDIS_REST_TOKEN ?? "";
-const _mwRedis = _mwUrl && _mwToken ? new Redis({ url: _mwUrl, token: _mwToken }) : null;
+const _mwUrl   = (process.env.UPSTASH_REDIS_REST_URL ?? "").trim();
+const _mwToken = (process.env.UPSTASH_REDIS_REST_TOKEN ?? "").trim();
+let _mwRedis: Redis | null = null;
+try {
+  if (_mwUrl.startsWith("https://") && _mwToken) {
+    _mwRedis = new Redis({ url: _mwUrl, token: _mwToken });
+  }
+} catch {
+  // Fail open — rate limiting unavailable but app still works
+}
 
 function makeMw(maxReqs: number, window: `${number} ${"s" | "m" | "h" | "d"}`, prefix: string) {
   if (!_mwRedis) return null;
@@ -40,12 +47,15 @@ let _redis: Redis | null = null;
 const _limiters = new Map<string, Ratelimit>();
 
 function getRedis(): Redis | null {
-  if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) return null;
+  const url   = (process.env.UPSTASH_REDIS_REST_URL   ?? "").trim();
+  const token = (process.env.UPSTASH_REDIS_REST_TOKEN ?? "").trim();
+  if (!url.startsWith("https://") || !token) return null;
   if (!_redis) {
-    _redis = new Redis({
-      url: process.env.UPSTASH_REDIS_REST_URL,
-      token: process.env.UPSTASH_REDIS_REST_TOKEN,
-    });
+    try {
+      _redis = new Redis({ url, token });
+    } catch {
+      return null;
+    }
   }
   return _redis;
 }
