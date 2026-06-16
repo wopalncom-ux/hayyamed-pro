@@ -103,6 +103,47 @@ export async function checkApiKeyRateLimit(
   return { allowed: true, remaining: result.remaining };
 }
 
+/**
+ * MFA-specific rate limiter with short windows to prevent brute-force on
+ * recovery codes, code regeneration, and factor unenrollment.
+ * Fail-open if Upstash is unavailable (prefer accessibility over lockout).
+ */
+const MFA_CONFIGS = {
+  recover:    { max: 5,  window: "15 m" as const },
+  regenerate: { max: 3,  window: "1 h"  as const },
+  unenroll:   { max: 5,  window: "1 h"  as const },
+} satisfies Record<string, { max: number; window: `${number} ${"s" | "m" | "h" | "d"}` }>;
+
+const _mfaLimiters = new Map<string, Ratelimit>();
+
+export async function checkMfaRateLimit(
+  userId: string,
+  action: keyof typeof MFA_CONFIGS,
+): Promise<RateLimitResult> {
+  const redis = getRedis();
+  if (!redis) return { allowed: true };
+
+  if (!_mfaLimiters.has(action)) {
+    const { max, window } = MFA_CONFIGS[action];
+    _mfaLimiters.set(
+      action,
+      new Ratelimit({
+        redis,
+        limiter: Ratelimit.slidingWindow(max, window),
+        prefix: `hayyamed:rl:mfa_${action}`,
+        analytics: false,
+      }),
+    );
+  }
+
+  const result = await _mfaLimiters.get(action)!.limit(userId);
+  if (!result.success) {
+    const retryAfter = result.reset ? Math.ceil((result.reset - Date.now()) / 1000) : 900;
+    return { allowed: false, retryAfterSeconds: retryAfter, remaining: 0 };
+  }
+  return { allowed: true, remaining: result.remaining };
+}
+
 export async function checkAndLogRateLimit({
   action,
   userId,

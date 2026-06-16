@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { createHash, randomBytes } from "crypto";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/server";
+import { checkMfaRateLimit } from "@/lib/rateLimit";
 
 function generateCode(): string {
   // XXXX-XXXX format — 8 uppercase alphanumeric chars
@@ -23,6 +24,14 @@ export async function GET() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const rl = await checkMfaRateLimit(user.id, "regenerate");
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: "Too many code regeneration attempts. Try again later." },
+      { status: 429, headers: { "Retry-After": String(rl.retryAfterSeconds) } },
+    );
+  }
 
   const admin = createAdminClient();
 
@@ -48,6 +57,14 @@ export async function POST(request: Request) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const rl = await checkMfaRateLimit(user.id, "recover");
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: "Too many recovery attempts. Please wait before trying again." },
+      { status: 429, headers: { "Retry-After": String(rl.retryAfterSeconds) } },
+    );
+  }
 
   const body = await request.json().catch(() => ({}));
   const raw = typeof body.code === "string" ? body.code.replace(/[\s-]/g, "").toUpperCase() : "";

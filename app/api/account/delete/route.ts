@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { logAudit } from "@/lib/audit";
+import { checkAndLogRateLimit } from "@/lib/rateLimit";
 import { z } from "zod";
+
+const CERT_BUCKET = "certificates";
+const STORAGE_BATCH = 100;
 
 export const runtime = "nodejs";
 
@@ -35,6 +39,14 @@ export async function POST(req: NextRequest) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const rl = await checkAndLogRateLimit({ action: "account.delete_attempt", userId: user.id, maxPerHour: 3 });
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: "Too many deletion attempts. Please contact support@hayyamed.pro if this is unexpected." },
+      { status: 429, headers: { "Retry-After": String(rl.retryAfterSeconds) } },
+    );
+  }
 
   const body = await req.json().catch(() => null);
   const parsed = BodySchema.safeParse(body);
@@ -71,6 +83,24 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  // Purge certificate files from private storage bucket (PDPL right to erasure).
+  // Must happen BEFORE auth user deletion — ON DELETE CASCADE removes the
+  // certificate_storage_records rows, so paths would be unqueryable after deletion.
+  const { data: certFiles } = await admin
+    .from("certificate_storage_records")
+    .select("storage_path")
+    .eq("professional_id", user.id)
+    .eq("is_deleted", false);
+
+  let filesDeleted = 0;
+  if (certFiles && certFiles.length > 0) {
+    const allPaths = certFiles.map((f) => f.storage_path as string);
+    for (let i = 0; i < allPaths.length; i += STORAGE_BATCH) {
+      await admin.storage.from(CERT_BUCKET).remove(allPaths.slice(i, i + STORAGE_BATCH));
+    }
+    filesDeleted = allPaths.length;
+  }
+
   // Audit log BEFORE deletion — actor_auth_id will become NULL after cascade
   await logAudit({
     actorAuthId: user.id,
@@ -82,6 +112,7 @@ export async function POST(req: NextRequest) {
       deleted_at: new Date().toISOString(),
       initiated_by: "user",
       reason: "user_requested_erasure",
+      certificate_files_deleted: filesDeleted,
     },
   });
 
