@@ -3,6 +3,7 @@
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { logAudit } from "@/lib/audit";
 
 const AUTHORITY_SUBTYPES = [
   "national_authority",
@@ -76,6 +77,14 @@ export async function updateGovernmentSettings(formData: FormData): Promise<void
     console.error("government_settings upsert error", error);
     redirect("/government/settings?error=Failed+to+save+settings");
   }
+
+  logAudit({
+    actorAuthId: user.id,
+    action: "government.settings_updated",
+    targetTable: "government_settings",
+    targetId: member.organization_id,
+    metadata: { authorityCode, authoritySubtype, jurisdictionCountry },
+  }).catch(() => {});
 
   redirect("/government/settings?saved=1");
 }
