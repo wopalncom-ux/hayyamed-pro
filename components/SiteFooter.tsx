@@ -171,11 +171,11 @@ export default function SiteFooter() {
 
         <div className="border-t border-[#e2e8f0] pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-3 flex-wrap justify-center sm:justify-start">
-            <p className="text-xs text-[#94a3b8]">© {new Date().getFullYear()} Hayya Med AI. All rights reserved.</p>
+            <p className="text-xs text-[#64748b]">© {new Date().getFullYear()} Hayya Med AI. All rights reserved.</p>
             <span className="hidden sm:inline text-[#e2e8f0]">·</span>
-            <p className="hidden sm:block text-xs text-[#94a3b8]">Registered in Qatar&nbsp;🇶🇦</p>
+            <p className="hidden sm:block text-xs text-[#64748b]">Registered in Qatar&nbsp;🇶🇦</p>
           </div>
-          <p className="text-xs text-[#94a3b8] text-center max-w-xl">
+          <p className="text-xs text-[#64748b] text-center max-w-xl">
             Supports CME/CPD tracking. Does not issue licenses. Verify requirements with QCHP, SCFHS, DHA, DOH, NHRA, OMSB, or MOH Kuwait.
           </p>
         </div>

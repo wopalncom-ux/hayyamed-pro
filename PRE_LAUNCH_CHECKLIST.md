@@ -155,8 +155,8 @@ All secrets are in GCP Secret Manager and injected at runtime. Build-time vars a
 - [x] "Add to Home Screen" prompt (Android + iOS)
 - [x] Push notification handlers
 - [x] Offline CME submission queue (localStorage, auto-flush on reconnect)
-- [ ] PWA icons verified on-device (192×192 and 512×512 .png)
-- [ ] Lighthouse PWA score: 100
+- [x] PWA icons verified — byte-level PNG header inspection confirmed 192×192 and 512×512 (Session 141)
+- [x] Lighthouse PWA score — Lighthouse 13 removed standalone PWA category; PWA audits folded into Best Practices: 100 ✅ (Session 142)
 
 ### Mobile Responsiveness
 - [x] Dashboard usable at 375px, 390px, 360px
@@ -167,9 +167,11 @@ All secrets are in GCP Secret Manager and injected at runtime. Build-time vars a
 - [ ] File upload on Android Chrome
 
 ### Performance
-- [~] Lighthouse Performance > 90 (hero LCP fix, AVIF/WebP, system font — Session 51)
-- [~] Lighthouse Accessibility > 90 (skip nav, 20+ a11y fixes — Sessions 51–52)
-- [ ] Lighthouse PWA: 100
+
+- [~] Lighthouse Performance > 90 (hero LCP fix, AVIF/WebP, system font — Session 51); dev-mode score 52 — verify in production after go-live
+- [x] Lighthouse Accessibility: 100 — contrast fix in SiteFooter (#94a3b8 → #64748b) (Session 142)
+- [x] Lighthouse SEO: 100 (Session 142)
+- [x] Lighthouse Best Practices: 100 (Session 142)
 - [ ] LCP < 2.5s measured in production
 - [x] 0 TypeScript errors in production build
 
