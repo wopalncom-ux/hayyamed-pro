@@ -41,7 +41,12 @@ async function main() {
   console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
 
   const browser = await chromium.launch({ headless: true });
-  const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+  // Start with a clean context — no cookies or storage from previous runs
+  const ctx = await browser.newContext({
+    viewport: { width: 1280, height: 800 },
+    storageState: undefined,
+  });
+  await ctx.clearCookies();
   const page = await ctx.newPage();
 
   // ── PUBLIC PAGES ─────────────────────────────────────────────────────────────
@@ -55,72 +60,72 @@ async function main() {
   });
 
   await check('Login page loads', async () => {
-    const res = await page.goto(`${BASE}/login`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+    const res = await page.goto(`${BASE}/login`, { waitUntil: 'domcontentloaded', timeout: 25000 });
     if (res.status() >= 400) throw new Error(`HTTP ${res.status()}`);
     await page.waitForSelector('input[type="email"]', { timeout: 5000 });
   });
 
   await check('Register page loads', async () => {
-    const res = await page.goto(`${BASE}/register`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+    const res = await page.goto(`${BASE}/register`, { waitUntil: 'domcontentloaded', timeout: 25000 });
     if (res.status() >= 400) throw new Error(`HTTP ${res.status()}`);
     await page.waitForSelector('input[type="email"]', { timeout: 5000 });
   });
 
   await check('Forgot password page loads', async () => {
-    const res = await page.goto(`${BASE}/forgot-password`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+    const res = await page.goto(`${BASE}/forgot-password`, { waitUntil: 'domcontentloaded', timeout: 25000 });
     if (res.status() >= 400) throw new Error(`HTTP ${res.status()}`);
     await page.waitForSelector('input[type="email"]', { timeout: 5000 });
   });
 
   await check('Pricing page loads', async () => {
-    const res = await page.goto(`${BASE}/pricing`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+    const res = await page.goto(`${BASE}/pricing`, { waitUntil: 'domcontentloaded', timeout: 25000 });
     if (res.status() >= 400) throw new Error(`HTTP ${res.status()}`);
     await page.waitForSelector('h1, h2', { timeout: 5000 });
   });
 
   await check('/demo page loads', async () => {
-    const res = await page.goto(`${BASE}/demo`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+    const res = await page.goto(`${BASE}/demo`, { waitUntil: 'domcontentloaded', timeout: 25000 });
     if (res.status() >= 400) throw new Error(`HTTP ${res.status()}`);
   });
 
   await check('Help page loads', async () => {
-    const res = await page.goto(`${BASE}/help`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+    const res = await page.goto(`${BASE}/help`, { waitUntil: 'domcontentloaded', timeout: 25000 });
     if (res.status() >= 400) throw new Error(`HTTP ${res.status()}`);
   });
 
   await check('Terms page loads', async () => {
-    const res = await page.goto(`${BASE}/terms`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+    const res = await page.goto(`${BASE}/terms`, { waitUntil: 'domcontentloaded', timeout: 25000 });
     if (res.status() >= 400) throw new Error(`HTTP ${res.status()}`);
   });
 
   await check('Privacy page loads', async () => {
-    const res = await page.goto(`${BASE}/privacy`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+    const res = await page.goto(`${BASE}/privacy`, { waitUntil: 'domcontentloaded', timeout: 25000 });
     if (res.status() >= 400) throw new Error(`HTTP ${res.status()}`);
   });
 
   await check('Status page loads', async () => {
-    const res = await page.goto(`${BASE}/status`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+    const res = await page.goto(`${BASE}/status`, { waitUntil: 'domcontentloaded', timeout: 25000 });
     if (res.status() >= 400) throw new Error(`HTTP ${res.status()}`);
   });
 
   await check('Courses catalog loads', async () => {
-    const res = await page.goto(`${BASE}/courses`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+    const res = await page.goto(`${BASE}/courses`, { waitUntil: 'domcontentloaded', timeout: 25000 });
     if (res.status() >= 400) throw new Error(`HTTP ${res.status()}`);
   });
 
   await check('Blog index loads', async () => {
-    const res = await page.goto(`${BASE}/blog`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+    const res = await page.goto(`${BASE}/blog`, { waitUntil: 'domcontentloaded', timeout: 25000 });
     if (res.status() >= 400) throw new Error(`HTTP ${res.status()}`);
   });
 
   await check('/professionals directory loads', async () => {
-    const res = await page.goto(`${BASE}/professionals`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+    const res = await page.goto(`${BASE}/professionals`, { waitUntil: 'domcontentloaded', timeout: 25000 });
     if (res.status() >= 400) throw new Error(`HTTP ${res.status()}`);
   });
 
   // Unauthenticated redirect — dashboard should redirect to login
   await check('Dashboard redirects to login when unauthenticated', async () => {
-    await page.goto(`${BASE}/dashboard`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+    await page.goto(`${BASE}/dashboard`, { waitUntil: 'domcontentloaded', timeout: 25000 });
     const url = page.url();
     if (!url.includes('/login')) throw new Error(`Expected /login redirect, got: ${url}`);
   });
@@ -143,27 +148,52 @@ async function main() {
     });
     if (error) throw new Error(error.message);
     testUserId = data.user.id;
+
+    // Ensure professional profile exists and is onboarding-complete.
+    // Use upsert because the DB trigger may auto-create the row on user creation.
+    const { error: profErr } = await admin.from('professional_profiles').upsert({
+      auth_id: testUserId,
+      full_name: 'Dr. E2E Test',
+      email: TEST_EMAIL,
+      profession: 'physician',
+      country_of_residence: 'Qatar',
+      onboarding_step: 7,
+      onboarding_complete: true,
+    }, { onConflict: 'auth_id' });
+    if (profErr) throw new Error(`Profile upsert: ${profErr.message}`);
   });
 
   // ── SIGN IN FLOW ──────────────────────────────────────────────────────────────
 
   await check('Sign in via login form (email + password)', async () => {
-    await page.goto(`${BASE}/login`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+    await page.goto(`${BASE}/login`, { waitUntil: 'domcontentloaded', timeout: 25000 });
 
-    await page.fill('input[type="email"]', TEST_EMAIL);
-    await page.fill('input[type="password"]', TEST_PASSWORD);
-    await page.click('button[type="submit"]');
+    // Use pressSequentially so React 19 controlled inputs receive proper keyboard events
+    await page.locator('#email').pressSequentially(TEST_EMAIL, { delay: 30 });
+    await page.locator('#password').pressSequentially(TEST_PASSWORD, { delay: 30 });
 
-    // Wait for redirect away from login
-    await page.waitForFunction(
-      () => !window.location.pathname.startsWith('/login'),
-      { timeout: 15000 }
-    );
+    // Phase 1: wait for the Supabase auth network response first
+    const [authResponse] = await Promise.all([
+      page.waitForResponse(
+        res => res.url().includes('/auth/v1/token') && res.request().method() === 'POST',
+        { timeout: 30000 }
+      ),
+      page.locator('button[type="submit"]').click(),
+    ]);
+    log('  ', `Supabase auth API: ${authResponse.status()}`);
+    if (!authResponse.ok()) {
+      const body = await authResponse.text();
+      throw new Error(`Sign in API returned ${authResponse.status()}: ${body.slice(0, 120)}`);
+    }
+
+    // Phase 2: wait for navigation away from /login (profile is onboarding-complete → goes to /dashboard)
+    // Use 45s: first webpack compile of /dashboard RSC payload can be slow in dev
+    await page.waitForURL(url => !url.pathname.startsWith('/login'), { timeout: 45000 });
 
     const finalUrl = page.url();
     log('  ', `After login: ${finalUrl}`);
-    if (finalUrl.includes('/login')) {
-      throw new Error('Still on login page — sign in failed');
+    if (new URL(finalUrl).pathname.startsWith('/login')) {
+      throw new Error('Still on login page after auth — navigation failed');
     }
   });
 
@@ -174,16 +204,16 @@ async function main() {
   await check('Onboarding step 1 loads', async () => {
     const url = authedPage.url();
     if (!url.includes('/onboarding')) {
-      await authedPage.goto(`${BASE}/onboarding/1`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+      await authedPage.goto(`${BASE}/onboarding/1`, { waitUntil: 'domcontentloaded', timeout: 25000 });
     }
-    const res = await authedPage.goto(`${BASE}/onboarding/1`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+    const res = await authedPage.goto(`${BASE}/onboarding/1`, { waitUntil: 'domcontentloaded', timeout: 25000 });
     if (res.status() >= 400) throw new Error(`HTTP ${res.status()}`);
     await authedPage.waitForSelector('form, input, select', { timeout: 5000 });
   });
 
   // Fill onboarding step 1 (basic info)
   await check('Onboarding step 1 — fill and submit', async () => {
-    await authedPage.goto(`${BASE}/onboarding/1`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+    await authedPage.goto(`${BASE}/onboarding/1`, { waitUntil: 'domcontentloaded', timeout: 25000 });
 
     // Full name
     const nameInput = await authedPage.$('input[name="full_name"], input[placeholder*="name" i], input[id*="name" i]');
@@ -206,7 +236,7 @@ async function main() {
 
   await check('Onboarding steps 2–7 are accessible', async () => {
     for (let step = 2; step <= 7; step++) {
-      const res = await authedPage.goto(`${BASE}/onboarding/${step}`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+      const res = await authedPage.goto(`${BASE}/onboarding/${step}`, { waitUntil: 'domcontentloaded', timeout: 25000 });
       if (res.status() >= 400) throw new Error(`Step ${step} returned HTTP ${res.status()}`);
     }
   });
@@ -221,64 +251,64 @@ async function main() {
   });
 
   await check('CME page loads', async () => {
-    const res = await authedPage.goto(`${BASE}/dashboard/cme`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+    const res = await authedPage.goto(`${BASE}/dashboard/cme`, { waitUntil: 'domcontentloaded', timeout: 25000 });
     if (res.status() >= 400) throw new Error(`HTTP ${res.status()}`);
   });
 
   await check('Licenses page loads', async () => {
-    const res = await authedPage.goto(`${BASE}/dashboard/licenses`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+    const res = await authedPage.goto(`${BASE}/dashboard/licenses`, { waitUntil: 'domcontentloaded', timeout: 25000 });
     if (res.status() >= 400) throw new Error(`HTTP ${res.status()}`);
   });
 
   await check('Settings page loads', async () => {
-    const res = await authedPage.goto(`${BASE}/dashboard/settings`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+    const res = await authedPage.goto(`${BASE}/dashboard/settings`, { waitUntil: 'domcontentloaded', timeout: 25000 });
     if (res.status() >= 400) throw new Error(`HTTP ${res.status()}`);
   });
 
   await check('Analytics page loads', async () => {
-    const res = await authedPage.goto(`${BASE}/dashboard/analytics`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+    const res = await authedPage.goto(`${BASE}/dashboard/analytics`, { waitUntil: 'domcontentloaded', timeout: 25000 });
     if (res.status() >= 400) throw new Error(`HTTP ${res.status()}`);
   });
 
   await check('Marketplace page loads', async () => {
-    const res = await authedPage.goto(`${BASE}/dashboard/marketplace`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+    const res = await authedPage.goto(`${BASE}/dashboard/marketplace`, { waitUntil: 'domcontentloaded', timeout: 25000 });
     if (res.status() >= 400) throw new Error(`HTTP ${res.status()}`);
   });
 
   await check('Referral page loads', async () => {
-    const res = await authedPage.goto(`${BASE}/dashboard/refer`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+    const res = await authedPage.goto(`${BASE}/dashboard/refer`, { waitUntil: 'domcontentloaded', timeout: 25000 });
     if (res.status() >= 400) throw new Error(`HTTP ${res.status()}`);
   });
 
   await check('Certificates gallery loads', async () => {
-    const res = await authedPage.goto(`${BASE}/dashboard/certificates`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+    const res = await authedPage.goto(`${BASE}/dashboard/certificates`, { waitUntil: 'domcontentloaded', timeout: 25000 });
     if (res.status() >= 400) throw new Error(`HTTP ${res.status()}`);
   });
 
   await check('Renewal calendar loads', async () => {
-    const res = await authedPage.goto(`${BASE}/dashboard/renewal-calendar`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+    const res = await authedPage.goto(`${BASE}/dashboard/renewal-calendar`, { waitUntil: 'domcontentloaded', timeout: 25000 });
     if (res.status() >= 400) throw new Error(`HTTP ${res.status()}`);
   });
 
   await check('Tasks page loads', async () => {
-    const res = await authedPage.goto(`${BASE}/dashboard/tasks`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+    const res = await authedPage.goto(`${BASE}/dashboard/tasks`, { waitUntil: 'domcontentloaded', timeout: 25000 });
     if (res.status() >= 400) throw new Error(`HTTP ${res.status()}`);
   });
 
   await check('Billing page loads', async () => {
-    const res = await authedPage.goto(`${BASE}/dashboard/billing`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+    const res = await authedPage.goto(`${BASE}/dashboard/billing`, { waitUntil: 'domcontentloaded', timeout: 25000 });
     if (res.status() >= 400) throw new Error(`HTTP ${res.status()}`);
   });
 
   // ── CME SUBMIT FLOW ───────────────────────────────────────────────────────────
 
   await check('CME add activity button present on dashboard', async () => {
-    await authedPage.goto(`${BASE}/dashboard`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+    await authedPage.goto(`${BASE}/dashboard`, { waitUntil: 'domcontentloaded', timeout: 25000 });
     // CmeDashboardQuickAddButton is on the main dashboard page
     const btn = await authedPage.$('button:has-text("Log CME"), button:has-text("Add"), a:has-text("Log CME"), [data-testid="add-activity"], button:has-text("Log")');
     if (!btn) {
       // Fallback: just verify the CME page has an AddActivityButton (component check)
-      await authedPage.goto(`${BASE}/dashboard/cme`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+      await authedPage.goto(`${BASE}/dashboard/cme`, { waitUntil: 'domcontentloaded', timeout: 25000 });
       const addBtn = await authedPage.$('button, a[href*="add"], a[href*="new"]');
       if (!addBtn) throw new Error('No activity add button found on dashboard or CME page');
     }
@@ -287,7 +317,7 @@ async function main() {
   // ── PASSWORD RESET FLOW ───────────────────────────────────────────────────────
 
   await check('Forgot password form submits', async () => {
-    await authedPage.goto(`${BASE}/forgot-password`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+    await authedPage.goto(`${BASE}/forgot-password`, { waitUntil: 'domcontentloaded', timeout: 25000 });
     await authedPage.fill('input[type="email"]', TEST_EMAIL);
     await authedPage.click('button[type="submit"]');
     await authedPage.waitForTimeout(2000);
@@ -301,7 +331,7 @@ async function main() {
   // ── SIGN OUT ──────────────────────────────────────────────────────────────────
 
   await check('Sign out clears session', async () => {
-    await authedPage.goto(`${BASE}/dashboard`, { waitUntil: 'domcontentloaded', timeout: 10000 });
+    await authedPage.goto(`${BASE}/dashboard`, { waitUntil: 'domcontentloaded', timeout: 25000 });
     // Look for sign out button/link
     const signOutBtn = await authedPage.$('button:has-text("Sign out"), a:has-text("Sign out"), button:has-text("Log out"), a:has-text("Log out")');
     if (signOutBtn) {
