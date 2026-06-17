@@ -1488,7 +1488,7 @@ export async function sendDripDay3Email({
         Your Hayya Med Pro gap analysis shows exactly which categories you still need to fill — and how many credits remain in your current cycle.
       </p>
 
-      <a href="${APP_URL}/dashboard/analytics"
+      <a href="${APP_URL}/dashboard/cme/gap-analysis"
          style="display:inline-block;background:#1a56a0;color:white;text-decoration:none;padding:13px 28px;border-radius:8px;font-weight:700;font-size:15px;margin-bottom:20px">
         See my gap analysis →
       </a>
@@ -1527,7 +1527,7 @@ export async function sendDripDay7Email({
           <p style="margin:0;color:#92400e;font-size:13px;font-weight:600">Pro feature — upgrade to download</p>
           <p style="margin:4px 0 0;color:#92400e;font-size:12px">PDF report download is available on the Pro plan. Your trial gives you full access — download now before it expires.</p>
         </div>
-        <a href="${APP_URL}/dashboard/analytics"
+        <a href="${APP_URL}/dashboard/cme"
            style="display:inline-block;background:#1a56a0;color:white;text-decoration:none;padding:13px 28px;border-radius:8px;font-weight:700;font-size:15px">
           Download my report (Pro) →
         </a>

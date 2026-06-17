@@ -13,15 +13,26 @@ const PRIVACY_FIELDS = [
   { id: "employer_can_view_certificates", label: "CME certificates", description: "Uploaded certificate files", defaultOn: false },
 ];
 
-export default function Step6Privacy({ profile, userId }: { profile: Record<string, unknown> | null; userId: string; authorities?: unknown[] }) {
+export default function Step6Privacy({
+  profile: _profile,
+  userId,
+  initialSettings,
+}: {
+  profile?: Record<string, unknown> | null;
+  userId: string;
+  authorities?: unknown[];
+  initialSettings?: Record<string, boolean> | null;
+}) {
   const router = useRouter();
   const [settings, setSettings] = useState<Record<string, boolean>>(
-    Object.fromEntries(PRIVACY_FIELDS.map(f => [f.id, f.defaultOn]))
+    initialSettings
+      ? Object.fromEntries(PRIVACY_FIELDS.map(f => [f.id, initialSettings[f.id] ?? f.defaultOn]))
+      : Object.fromEntries(PRIVACY_FIELDS.map(f => [f.id, f.defaultOn]))
   );
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: { preventDefault(): void }) {
     e.preventDefault();
     setError(null);
     setLoading(true);

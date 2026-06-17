@@ -50,7 +50,7 @@ export default async function OnboardingStepPage({
     "Pharmacist": "pharmacist", "Nurse": "nurse",
   };
 
-  const [{ data: authorities }, cmeRulesResult] = await Promise.all([
+  const [{ data: authorities }, cmeRulesResult, privacySettingsResult] = await Promise.all([
     stepNum === 3
       ? admin.from("licensing_authorities").select("id, abbreviation, authority_name, country").eq("is_active", true).order("country").order("authority_name")
       : Promise.resolve({ data: [] }),
@@ -70,6 +70,9 @@ export default async function OnboardingStepPage({
           );
         })()
       : Promise.resolve(null),
+    stepNum === 6
+      ? admin.from("profile_privacy_settings").select("employer_can_view_cme_summary, employer_can_view_license_expiry, employer_can_view_profile_details, employer_can_view_detailed_cme_activities, employer_can_view_certificates").eq("professional_id", user.id).maybeSingle().then(r => r.data)
+      : Promise.resolve(null),
   ]);
 
   if (profile?.onboarding_complete) redirect("/dashboard");
@@ -86,6 +89,8 @@ export default async function OnboardingStepPage({
       <div className="bg-white rounded-xl shadow-sm border border-[#e2e8f0] p-8">
         {stepNum === 5 ? (
           <Step5Cme profile={profile} userId={user.id} cmeRules={cmeRulesResult} />
+        ) : stepNum === 6 ? (
+          <Step6Privacy profile={profile} userId={user.id} initialSettings={privacySettingsResult} />
         ) : stepNum === 7 ? (
           <Step7Activate profile={profile} userId={user.id} trialDays={trialDays} />
         ) : (

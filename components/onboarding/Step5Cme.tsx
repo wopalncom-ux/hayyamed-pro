@@ -90,7 +90,7 @@ export default function Step5Cme({
     playSound("validate");
   }
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: { preventDefault(): void }) {
     e.preventDefault();
     setError(null);
     setLoading(true);
