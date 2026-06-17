@@ -48,6 +48,7 @@ const COMING_SOON_BYPASS = [
   "/unsubscribe",// email unsubscribe (linked from every email)
   "/pricing",    // pricing page (needed for upgrade flows)
   // B2B marketing pages — must work during soft launch for outreach
+  "/demo",          // interactive product demo (no login required)
   "/request-demo",  // demo request form (employer/hospital sales)
   "/contact",       // contact page
   "/about",         // about/team page
