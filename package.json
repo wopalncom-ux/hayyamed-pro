@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev --webpack",
     "build": "next build --webpack",
-    "start": "next start"
+    "start": "next start",
+    "test:e2e": "node --env-file=.env.local scripts/e2e-test.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.102.0",

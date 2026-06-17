@@ -147,55 +147,23 @@ async function main() {
 
   // ── SIGN IN FLOW ──────────────────────────────────────────────────────────────
 
-  await check('Sign in via magic link to localhost callback', async () => {
-    // Generate magic link with redirect_to pointing at local auth/callback
-    // Admin API can override redirect_to regardless of Supabase project's allowed list
-    const { data: linkData, error: linkErr } = await admin.auth.admin.generateLink({
-      type: 'magiclink',
-      email: TEST_EMAIL,
-      options: {
-        redirectTo: `${BASE}/auth/callback?next=/dashboard`,
-      },
-    });
-    if (linkErr) throw new Error(`generateLink: ${linkErr.message}`);
+  await check('Sign in via login form (email + password)', async () => {
+    await page.goto(`${BASE}/login`, { waitUntil: 'domcontentloaded', timeout: 10000 });
 
-    // Rewrite the action_link to use localhost redirect
-    // The generated URL is: https://{ref}.supabase.co/auth/v1/verify?token=...&type=...&redirect_to={encoded}
-    // We need to ensure redirect_to points to localhost, not production
-    let actionLink = linkData.properties?.action_link ?? '';
-    if (!actionLink) throw new Error('No action_link returned');
+    await page.fill('input[type="email"]', TEST_EMAIL);
+    await page.fill('input[type="password"]', TEST_PASSWORD);
+    await page.click('button[type="submit"]');
 
-    // Replace the redirect_to param to point at our localhost callback
-    const linkUrl = new URL(actionLink);
-    linkUrl.searchParams.set('redirect_to', `${BASE}/auth/callback?next=/dashboard`);
-    actionLink = linkUrl.toString();
-
-    log('  ', `Magic link (rewritten): ${actionLink.slice(0, 80)}...`);
-
-    // Navigate to Supabase verify URL — it will redirect to our callback with a code
-    await page.goto(actionLink, { waitUntil: 'domcontentloaded', timeout: 20000 });
-
-    // Wait to leave Supabase domain / auth paths
+    // Wait for redirect away from login
     await page.waitForFunction(
-      () => !window.location.hostname.includes('supabase.co'),
+      () => !window.location.pathname.startsWith('/login'),
       { timeout: 15000 }
     );
 
-    const afterLink = page.url();
-    log('  ', `After magic link: ${afterLink}`);
-
-    // May land on /auth/callback which then redirects to /dashboard
-    if (afterLink.includes('/auth/callback')) {
-      await page.waitForFunction(
-        () => !window.location.pathname.startsWith('/auth/'),
-        { timeout: 10000 }
-      );
-    }
-
     const finalUrl = page.url();
-    log('  ', `Final URL: ${finalUrl}`);
+    log('  ', `After login: ${finalUrl}`);
     if (finalUrl.includes('/login')) {
-      throw new Error('Ended up on login page — auth failed');
+      throw new Error('Still on login page — sign in failed');
     }
   });
 
