@@ -6,7 +6,7 @@ import { createClient } from "@/lib/supabase/client";
 import { track } from "@/lib/analytics";
 import { submitLinkRequest } from "@/app/(dashboard)/dashboard/settings/actions";
 
-export default function Step4Employer({ profile, userId }: { profile: Record<string, unknown> | null; userId: string; authorities?: unknown[] }) {
+export default function Step4Employer({ profile: _profile, userId }: { profile: Record<string, unknown> | null; userId: string; authorities?: unknown[] }) {
   const router = useRouter();
   const [search, setSearch] = useState("");
   const [matches, setMatches] = useState<Array<{ id: string; name: string }>>([]);
@@ -14,10 +14,12 @@ export default function Step4Employer({ profile, userId }: { profile: Record<str
   const [unverifiedName, setUnverifiedName] = useState("");
   const [mode, setMode] = useState<"search" | "unverified" | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [searching, setSearching] = useState(false);
   const [isPending, startTransition] = useTransition();
 
   async function handleSearch() {
     if (!search.trim()) return;
+    setSearching(true);
     const supabase = createClient();
     const { data } = await supabase
       .from("organizations")
@@ -26,6 +28,7 @@ export default function Step4Employer({ profile, userId }: { profile: Record<str
       .limit(5);
     setMatches(data ?? []);
     setMode("search");
+    setSearching(false);
   }
 
   async function advanceStep() {
@@ -34,7 +37,7 @@ export default function Step4Employer({ profile, userId }: { profile: Record<str
     router.push("/onboarding/5");
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  function handleSubmit(e: { preventDefault(): void }) {
     e.preventDefault();
     setError(null);
 
@@ -77,15 +80,17 @@ export default function Step4Employer({ profile, userId }: { profile: Record<str
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
+          onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); void handleSearch(); } }}
           placeholder="Search hospital or clinic name..."
           className="flex-1 px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a56a0]"
         />
         <button
           type="button"
           onClick={handleSearch}
-          className="px-4 py-2 bg-[#f0f4f8] text-[#1a56a0] text-sm rounded-lg border border-[#e2e8f0] hover:bg-[#e8f0fe]"
+          disabled={searching}
+          className="px-4 py-2 bg-[#f0f4f8] text-[#1a56a0] text-sm rounded-lg border border-[#e2e8f0] hover:bg-[#e8f0fe] disabled:opacity-50"
         >
-          Search
+          {searching ? "..." : "Search"}
         </button>
       </div>
 

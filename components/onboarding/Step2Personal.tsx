@@ -5,7 +5,29 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { track } from "@/lib/analytics";
 
-const NATIONALITIES = ["Qatari", "Saudi", "Emirati", "Jordanian", "Egyptian", "Lebanese", "Syrian", "Indian", "Pakistani", "Filipino", "British", "American", "Other"];
+const NATIONALITIES = [
+  "Qatari", "Saudi", "Emirati", "Kuwaiti", "Bahraini", "Omani",
+  "Jordanian", "Egyptian", "Lebanese", "Syrian", "Palestinian",
+  "Indian", "Pakistani", "Filipino", "Sri Lankan",
+  "British", "American", "Canadian", "Australian", "Other",
+];
+
+const COUNTRIES_OF_RESIDENCE = [
+  { code: "QA", name: "Qatar" },
+  { code: "SA", name: "Saudi Arabia" },
+  { code: "AE", name: "United Arab Emirates" },
+  { code: "KW", name: "Kuwait" },
+  { code: "BH", name: "Bahrain" },
+  { code: "OM", name: "Oman" },
+  { code: "EG", name: "Egypt" },
+  { code: "JO", name: "Jordan" },
+  { code: "GB", name: "United Kingdom" },
+  { code: "IN", name: "India" },
+  { code: "AU", name: "Australia" },
+  { code: "US", name: "United States" },
+  { code: "CA", name: "Canada" },
+  { code: "OTHER", name: "Other" },
+];
 
 export default function Step2Personal({ profile, userId }: { profile: Record<string, unknown> | null; userId: string; authorities?: unknown[] }) {
   const router = useRouter();
@@ -19,8 +41,9 @@ export default function Step2Personal({ profile, userId }: { profile: Record<str
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: { preventDefault(): void }) {
     e.preventDefault();
+    if (!form.full_name.trim()) { setError("Full name is required."); return; }
     setError(null);
     setLoading(true);
 
@@ -35,39 +58,81 @@ export default function Step2Personal({ profile, userId }: { profile: Record<str
     router.push("/onboarding/3");
   }
 
-  const field = (id: string, label: string, type = "text", placeholder = "") => (
-    <div>
-      <label htmlFor={id} className="block text-sm font-medium text-[#374151] mb-1">{label}</label>
-      <input
-        id={id}
-        type={type}
-        value={form[id as keyof typeof form]}
-        onChange={(e) => setForm(f => ({ ...f, [id]: e.target.value }))}
-        placeholder={placeholder}
-        className="w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a56a0] focus:border-transparent"
-      />
-    </div>
-  );
+  const inputCls = "w-full px-3 py-2.5 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a56a0] focus:border-transparent bg-white";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <h2 className="text-xl font-semibold text-[#111] mb-2">Personal Information</h2>
-      {field("full_name", "Full name", "text", "Dr. First Last")}
-      {field("date_of_birth", "Date of birth", "date")}
+
+      <div>
+        <label htmlFor="full_name" className="block text-sm font-medium text-[#374151] mb-1">
+          Full name <span className="text-[#dc2626]">*</span>
+        </label>
+        <input
+          id="full_name"
+          type="text"
+          value={form.full_name}
+          onChange={(e) => setForm(f => ({ ...f, full_name: e.target.value }))}
+          placeholder="Dr. First Last"
+          required
+          className={inputCls}
+        />
+      </div>
+
+      <div>
+        <label htmlFor="date_of_birth" className="block text-sm font-medium text-[#374151] mb-1">Date of birth</label>
+        <input
+          id="date_of_birth"
+          type="date"
+          value={form.date_of_birth}
+          onChange={(e) => setForm(f => ({ ...f, date_of_birth: e.target.value }))}
+          className={inputCls}
+        />
+      </div>
+
       <div>
         <label htmlFor="nationality" className="block text-sm font-medium text-[#374151] mb-1">Nationality</label>
         <select
           id="nationality"
           value={form.nationality}
           onChange={(e) => setForm(f => ({ ...f, nationality: e.target.value }))}
-          className="w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a56a0]"
+          className={inputCls}
         >
           <option value="">Select nationality</option>
           {NATIONALITIES.map(n => <option key={n} value={n}>{n}</option>)}
         </select>
       </div>
-      {field("country_of_residence", "Country of residence", "text", "Qatar")}
-      {field("mobile", "Mobile number", "tel", "+974 XXXX XXXX")}
+
+      <div>
+        <label htmlFor="country_of_residence" className="block text-sm font-medium text-[#374151] mb-1">
+          Country of residence <span className="text-[#dc2626]">*</span>
+        </label>
+        <select
+          id="country_of_residence"
+          value={form.country_of_residence}
+          onChange={(e) => setForm(f => ({ ...f, country_of_residence: e.target.value }))}
+          required
+          className={inputCls}
+        >
+          <option value="">Select country</option>
+          {COUNTRIES_OF_RESIDENCE.map(c => (
+            <option key={c.code} value={c.name}>{c.name}</option>
+          ))}
+        </select>
+        <p className="text-xs text-[#64748b] mt-1">Used to load your country&apos;s CME requirements in the next steps.</p>
+      </div>
+
+      <div>
+        <label htmlFor="mobile" className="block text-sm font-medium text-[#374151] mb-1">Mobile number</label>
+        <input
+          id="mobile"
+          type="tel"
+          value={form.mobile}
+          onChange={(e) => setForm(f => ({ ...f, mobile: e.target.value }))}
+          placeholder="+974 XXXX XXXX"
+          className={inputCls}
+        />
+      </div>
 
       {error && <p className="text-sm text-[#dc2626] bg-red-50 px-3 py-2 rounded-lg">{error}</p>}
 
@@ -75,8 +140,8 @@ export default function Step2Personal({ profile, userId }: { profile: Record<str
         <button type="button" onClick={() => router.push("/onboarding/1")} className="px-4 py-2 text-sm text-[#64748b] border border-[#e2e8f0] rounded-lg hover:bg-[#f8fafc]">
           Back
         </button>
-        <button type="submit" disabled={loading} className="flex-1 bg-[#1a56a0] text-white py-2.5 rounded-lg text-sm font-medium hover:bg-[#1547a0] disabled:opacity-50 transition-colors">
-          {loading ? "Saving..." : "Continue"}
+        <button type="submit" disabled={loading} className="flex-1 bg-[#1a56a0] text-white py-2.5 rounded-lg text-sm font-semibold hover:bg-[#1547a0] disabled:opacity-50 transition-colors">
+          {loading ? "Saving..." : "Continue →"}
         </button>
       </div>
     </form>
