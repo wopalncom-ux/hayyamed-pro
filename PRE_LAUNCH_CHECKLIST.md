@@ -334,9 +334,9 @@ All secrets are in GCP Secret Manager and injected at runtime. Build-time vars a
 
 ## DATABASE MIGRATIONS — STATUS
 
-Total: **71 migrations** (001–071)
+Total: **70 migrations** (001–070)
 - [x] All applied to production (run COMBINED_RUN_ONCE.sql to verify)
-- Key recent: 059 (account suspension), 060 (profile completion multi-license), 061 (UK/AU/IN rules), 062 (privacy settings trigger backfill), 063 (gap analysis cache), 064–071 (see COMBINED_RUN_ONCE.sql)
+- Key recent: 059 (account suspension), 060 (profile completion multi-license), 061 (UK/AU/IN rules), 062 (privacy settings trigger backfill), 063 (gap analysis cache), 064–070 (see COMBINED_RUN_ONCE.sql)
 
 ---
 

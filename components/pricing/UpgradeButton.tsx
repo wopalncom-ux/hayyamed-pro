@@ -120,7 +120,7 @@ export default function UpgradeButton({
             <button
               type="button"
               onClick={() => setShowPromo(true)}
-              className="text-xs text-[#64748b] hover:text-[#1a56a0] transition-colors w-full text-center"
+              className={`text-xs transition-colors w-full text-center ${variant === "white" ? "text-blue-100 hover:text-white" : "text-[#64748b] hover:text-[#1a56a0]"}`}
             >
               Have a promo code?
             </button>

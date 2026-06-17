@@ -45,7 +45,7 @@ function Toggle({ annual, onChange }: { annual: boolean; onChange: (v: boolean) 
       <button
         onClick={() => onChange(false)}
         className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
-          !annual ? "bg-white text-[#111] shadow-sm" : "text-[#64748b]"
+          !annual ? "bg-white text-[#111] shadow-sm" : "text-[#374151]"
         }`}
       >
         {t("toggle_monthly")}
@@ -53,11 +53,11 @@ function Toggle({ annual, onChange }: { annual: boolean; onChange: (v: boolean) 
       <button
         onClick={() => onChange(true)}
         className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors flex items-center gap-2 ${
-          annual ? "bg-white text-[#111] shadow-sm" : "text-[#64748b]"
+          annual ? "bg-white text-[#111] shadow-sm" : "text-[#374151]"
         }`}
       >
         {t("toggle_annual")}
-        <span className="bg-[#16a34a] text-white text-xs font-bold px-2 py-0.5 rounded-full">
+        <span className="bg-[#15803d] text-white text-xs font-bold px-2 py-0.5 rounded-full">
           {t("toggle_save")}
         </span>
       </button>
@@ -139,7 +139,7 @@ export default function PricingClient({
         </div>
       )}
 
-      <div className="max-w-6xl mx-auto px-6 py-16">
+      <div id="main-content" role="main" className="max-w-6xl mx-auto px-6 py-16">
         {/* Heading + toggle */}
         <div className="text-center mb-14">
           <h1 className="text-4xl font-bold text-[#111] tracking-tight mb-4">
@@ -160,7 +160,7 @@ export default function PricingClient({
             <div className="flex items-end gap-1 mb-1">
               <span className="text-4xl font-bold text-[#111]">$0</span>
             </div>
-            <p className="text-xs text-[#94a3b8] mb-6">{t("free_tagline")}</p>
+            <p className="text-xs text-[#64748b] mb-6">{t("free_tagline")}</p>
             <ul className="space-y-3 mb-8 flex-1">
               {freeFeatures.map((f) => (
                 <li key={f} className="flex items-start gap-2.5 text-sm text-[#374151]">
@@ -318,7 +318,7 @@ export default function PricingClient({
                 <p className={`text-sm font-semibold mb-0.5 ${tier.highlight ? "text-blue-100" : "text-[#64748b]"}`}>
                   {tier.label}
                 </p>
-                <p className={`text-xs mb-3 ${tier.highlight ? "text-blue-200" : "text-[#94a3b8]"}`}>
+                <p className={`text-xs mb-3 ${tier.highlight ? "text-blue-200" : "text-[#64748b]"}`}>
                   {t("employer_staff", { n: tier.maxStaff })}
                 </p>
                 <div className={`text-3xl font-bold mb-0.5 ${tier.highlight ? "text-white" : "text-[#111]"}`}>
