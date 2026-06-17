@@ -432,7 +432,6 @@ function Nav() {
 // ── Hero ─────────────────────────────────────────────────────────────────────
 function Hero() {
   const t = useTranslations("hero");
-  const locale = useLocale();
   const orb1 = useRef<HTMLDivElement>(null);
   const orb2 = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
@@ -522,7 +521,7 @@ function Hero() {
           initial={{ y: 10 }}
           animate={{ y: 0 }}
           transition={{ duration: 0.55, delay: 0.5, ease: "easeOut" }}
-          className="text-lg sm:text-xl text-white/50 max-w-xl mx-auto mb-8 leading-relaxed"
+          className="text-lg sm:text-xl text-white/72 max-w-xl mx-auto mb-8 leading-relaxed"
         >
           {t("subheading")}
         </motion.p>
@@ -530,7 +529,7 @@ function Hero() {
         {/* Authority pills */}
         <div className="flex flex-wrap justify-center gap-x-5 gap-y-1.5 mb-10">
           {AUTHORITIES.map((auth) => (
-            <span key={auth} className="text-[11px] font-semibold text-white/40 tracking-widest uppercase">
+            <span key={auth} className="text-[11px] font-semibold text-white/60 tracking-widest uppercase">
               {auth}
             </span>
           ))}
@@ -559,7 +558,7 @@ function Hero() {
           </motion.div>
         </motion.div>
 
-        <p className="text-white/55 text-sm mt-3">
+        <p className="text-white/70 text-sm mt-3">
           {t("trust_text")}
         </p>
       </div>
@@ -879,7 +878,7 @@ function VisionMission() {
                   <p className="text-4xl font-bold text-white tabular-nums mb-2">
                     <AnimatedCounter target={n} suffix={suffix} />
                   </p>
-                  <p className="text-xs text-white/35 leading-tight">{label}</p>
+                  <p className="text-xs text-white/60 leading-tight">{label}</p>
                 </motion.div>
               ))}
             </div>
@@ -888,7 +887,7 @@ function VisionMission() {
               {trust.map((item) => (
                 <div key={item} className="flex items-start gap-3">
                   <span className="text-[#4ade80] text-sm mt-0.5 flex-shrink-0">✓</span>
-                  <span className="text-sm text-white/45 leading-relaxed">{item}</span>
+                  <span className="text-sm text-white/65 leading-relaxed">{item}</span>
                 </div>
               ))}
             </div>
@@ -934,7 +933,7 @@ function AIDemo() {
           <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-4 leading-tight">
             {t("title")}<br className="hidden sm:block" /> {t("title_cont")}
           </h2>
-          <p className="text-white/40 max-w-lg mx-auto text-base leading-relaxed">
+          <p className="text-white/62 max-w-lg mx-auto text-base leading-relaxed">
             {t("subtitle")}
           </p>
         </FadeUp>
@@ -1202,7 +1201,7 @@ function Pricing() {
                   <p className={`text-sm font-medium mb-1 ${highlight ? "text-white/65" : "text-[#64748b]"}`}>{name}</p>
                   <div className="flex items-baseline gap-1 flex-wrap">
                     <span className={`text-3xl font-bold ${highlight ? "text-white" : "text-[#0f1f3d]"}`}>{price}</span>
-                    <span className={`text-sm ${highlight ? "text-white/45" : "text-[#94a3b8]"}`}>{period}</span>
+                    <span className={`text-sm ${highlight ? "text-white/65" : "text-[#94a3b8]"}`}>{period}</span>
                   </div>
                 </div>
                 <ul className="space-y-2.5 flex-1 mb-7">
@@ -1332,7 +1331,7 @@ function FinalCTA() {
         <h2 className="text-4xl sm:text-5xl font-bold text-white tracking-tight mb-5 leading-tight">
           {t("title")}
         </h2>
-        <p className="text-white/40 text-lg mb-10 leading-relaxed">{t("subtitle")}</p>
+        <p className="text-white/65 text-lg mb-10 leading-relaxed">{t("subtitle")}</p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <MagneticButton
             href="/register"
@@ -1340,12 +1339,12 @@ function FinalCTA() {
           >
             {t("cta_primary")}
           </MagneticButton>
-          <Link href="/pricing" className="text-white/50 text-sm hover:text-white/75 transition-colors">
+          <Link href="/pricing" className="text-white/65 text-sm hover:text-white/85 transition-colors">
             {t("cta_secondary")}
           </Link>
         </div>
-        <p className="text-white/20 text-xs mt-5">{t("footer_1")}</p>
-        <p className="text-white/14 text-xs mt-1.5">{t("footer_2")}</p>
+        <p className="text-white/50 text-xs mt-5">{t("footer_1")}</p>
+        <p className="text-white/40 text-xs mt-1.5">{t("footer_2")}</p>
       </FadeUp>
     </section>
   );
