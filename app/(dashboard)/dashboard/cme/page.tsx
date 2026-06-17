@@ -19,6 +19,7 @@ import CmeActivityList from "@/components/dashboard/CmeActivityList";
 import { getUserPlan, isPro } from "@/lib/subscription";
 import { FREE_ACTIVITY_LIMIT } from "@/lib/planLimits";
 import { toCountryCode } from "@/lib/countryCode";
+import CmeDashboardQuickAddButton from "@/components/dashboard/CmeDashboardQuickAddButton";
 
 function computeStreak(dates: string[]): { current: number; atRisk: boolean } {
   if (!dates.length) return { current: 0, atRisk: false };
@@ -123,7 +124,7 @@ export default async function CmePage({
 
       <div className="flex items-center justify-between mb-2 flex-wrap gap-2">
         <h1 className="text-2xl font-bold text-[#111]">CME Wallet</h1>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           {isPro(plan) && (
             <a
               href="/dashboard/cme/pathway"
@@ -139,6 +140,21 @@ export default async function CmePage({
             >
               AI Gap Analysis →
             </a>
+          )}
+          {!isPro(plan) && (
+            <a
+              href="/pricing?source=cme_header"
+              className="text-xs font-semibold border border-[#1a56a0] text-[#1a56a0] px-3 py-1.5 rounded-lg hover:bg-[#f0f4f8] transition-colors"
+            >
+              Upgrade to Pro →
+            </a>
+          )}
+          {wallet && (
+            <CmeDashboardQuickAddButton
+              walletId={wallet.id}
+              plan={plan}
+              countryCode={toCountryCode(wallet.country ?? "QA")}
+            />
           )}
         </div>
       </div>
@@ -174,6 +190,27 @@ export default async function CmePage({
             cycleEndDate={wallet.cycle_end_date ?? null}
             licenseExpiryDays={null}
           />
+
+          {/* PDF upgrade strip — shown to free users immediately after the ring */}
+          {!isPro(plan) && (
+            <div className="bg-gradient-to-r from-[#0f1f3d] to-[#1a3563] rounded-xl px-5 py-3.5 mb-6 flex items-center justify-between gap-4 flex-wrap">
+              <div className="flex items-center gap-3">
+                <svg className="w-5 h-5 text-[#93c5fd] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                </svg>
+                <div>
+                  <p className="text-sm font-semibold text-white leading-tight">Your compliance PDF report is ready</p>
+                  <p className="text-xs text-[rgba(255,255,255,0.6)]">QCHP-ready · includes all verified activities · Pro only</p>
+                </div>
+              </div>
+              <a
+                href="/pricing?source=cme_pdf_strip"
+                className="text-xs font-semibold bg-white text-[#0f1f3d] px-4 py-2 rounded-lg hover:bg-[#f0f4f8] transition-colors whitespace-nowrap flex-shrink-0"
+              >
+                Download PDF → $6/mo
+              </a>
+            </div>
+          )}
 
           {/* Cycle meta */}
           <div className="bg-white rounded-xl border border-[#e2e8f0] px-5 py-3.5 mb-6 flex items-center justify-between flex-wrap gap-3">
@@ -309,15 +346,15 @@ export default async function CmePage({
             />
           </div>
 
+          {/* PDF report card — paywall for Free users, download card for Pro */}
+          <PdfReportCard plan={plan} walletCountry={wallet.country ?? null} />
+
           {/* Activity heatmap — 52-week GitHub-style grid */}
           {activities.length > 0 && (
             <CmeHeatmap
               activities={activities.map((a) => ({ activity_date: a.activity_date, credits: a.credits }))}
             />
           )}
-
-          {/* PDF report card — paywall for Free users, download card for Pro */}
-          <PdfReportCard plan={plan} walletCountry={wallet.country ?? null} />
         </>
       ) : (
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-10 text-center">
