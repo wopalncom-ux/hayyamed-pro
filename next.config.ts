@@ -40,10 +40,11 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   output: "standalone",
-  // In development, build outside the OneDrive folder to avoid EBUSY file-lock errors.
-  // OneDrive tries to sync .next files while webpack is writing them simultaneously.
-  // The relative path ../../../../tmp/hayyamed-next resolves to C:\Users\{user}\tmp\hayyamed-next
-  // which is outside OneDrive. Production always uses ".next" (overridden by NEXT_DIST_DIR=.next).
+  // In development, build outside OneDrive to prevent EBUSY file-lock errors.
+  // OneDrive syncs files in the project tree; this moves the build output outside it.
+  // The node_modules junction at C:\Users\<user>\tmp\hayyamed-next\node_modules
+  // ensures webpack-compiled server bundles can still resolve packages at runtime.
+  // Run scripts/setup-dev.ps1 once before first `npm run dev` to create junctions.
   distDir: isDev ? (process.env.NEXT_DIST_DIR ?? "../../../../tmp/hayyamed-next") : ".next",
   images: {
     formats: ["image/avif", "image/webp"],
