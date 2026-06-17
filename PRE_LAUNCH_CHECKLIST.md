@@ -16,8 +16,9 @@
 ## TIER 0 — ABSOLUTE BLOCKERS (Platform cannot function without these)
 
 ### Database
-- [!] Run all 71 migrations — paste `supabase/migrations/COMBINED_RUN_ONCE.sql` into Supabase SQL Editor (single idempotent script, safe to re-run)
-- [!] Verify migration 068 ran — adds `public_directory_opt_in` column to `professional_profiles`
+
+- [x] All 70 migrations applied — `supabase db push` run in Session 139; migrations 063–070 applied to production
+- [x] Migration 068 confirmed applied — `public_directory_opt_in` column exists in `professional_profiles`
 
 ### Infrastructure
 - [x] Supabase project connected — URL + anon key + service role key
@@ -49,7 +50,7 @@ All secrets are in GCP Secret Manager and injected at runtime. Build-time vars a
 | COMING_SOON | cloudbuild.yaml --set-env-vars (`true` → set `false` to go live) | [x] |
 | NEXT_PUBLIC_VAPID_PUBLIC_KEY | cloudbuild.yaml build-arg (hardcoded) | [x] |
 | VAPID_SUBJECT | cloudbuild.yaml --set-env-vars | [x] |
-| VAPID_PRIVATE_KEY | Secret Manager: `hayyamed-pro-vapid-private` | [!] Needs value |
+| VAPID_PRIVATE_KEY | Secret Manager: `hayyamed-pro-vapid-private` | [x] Added Session 139 (v3) |
 | CRON_SECRET | Secret Manager: `hayyamed-pro-cron-secret` | [x] |
 | NEXT_PUBLIC_POSTHOG_KEY | cloudbuild.yaml substitution `_POSTHOG_KEY` | [x] |
 | NEXT_PUBLIC_POSTHOG_HOST | cloudbuild.yaml --set-env-vars (us.i.posthog.com) | [x] |
@@ -57,15 +58,15 @@ All secrets are in GCP Secret Manager and injected at runtime. Build-time vars a
 | SENTRY_ORG | [!] Set in Cloud Build Trigger substitution vars |  |
 | SENTRY_PROJECT | [!] Set in Cloud Build Trigger substitution vars |  |
 | SENTRY_AUTH_TOKEN | [!] Set in Cloud Build Trigger substitution vars |  |
-| POSTMARK_API_TOKEN | Secret Manager: `hayyamed-pro-postmark-key` | [~] Needs Postmark approval |
+| POSTMARK_API_TOKEN | Secret Manager: `hayyamed-pro-postmark-key` | [x] Live mode — approved and tested Session 139 |
 | POSTMARK_WEBHOOK_TOKEN | Secret Manager: `hayyamed-pro-postmark-webhook-token` | [~] Set when Postmark active |
 | PADDLE_API_KEY | Secret Manager: `hayyamed-pro-paddle-key` | [!] Needs Paddle account |
 | PADDLE_WEBHOOK_SECRET | Secret Manager: `hayyamed-pro-paddle-webhook` | [!] Needs Paddle account |
 | PADDLE_PRO_MONTHLY_PRICE_ID | cloudbuild.yaml substitution `_PADDLE_PRO_MONTHLY` | [!] Set once Paddle active |
 | PADDLE_PRO_ANNUAL_PRICE_ID | cloudbuild.yaml substitution `_PADDLE_PRO_ANNUAL` | [!] Set once Paddle active |
 | PADDLE_EMPLOYER_* (8 price IDs) | cloudbuild.yaml substitutions | [!] Set once Paddle active |
-| UPSTASH_REDIS_REST_URL | Secret Manager: `hayyamed-pro-upstash-url` | [!] Rotate (Session 47 flag) |
-| UPSTASH_REDIS_REST_TOKEN | Secret Manager: `hayyamed-pro-upstash-token` | [!] Rotate (Session 47 flag) |
+| UPSTASH_REDIS_REST_URL | Secret Manager: `hayyamed-pro-upstash-url` | [x] Live — PING verified Session 139 (v3) |
+| UPSTASH_REDIS_REST_TOKEN | Secret Manager: `hayyamed-pro-upstash-token` | [x] Live — PING verified Session 139 (v4) |
 | SUPPORT_EMAIL | --set-env-vars (support@hayyamed.pro) | [x] |
 | ADMIN_NOTIFICATION_EMAIL | --set-env-vars (admin@hayyamed.pro) | [x] |
 
@@ -138,9 +139,10 @@ All secrets are in GCP Secret Manager and injected at runtime. Build-time vars a
 - [ ] Subscription cancellation tested (canceled → downgraded)
 - [x] Billing portal working (/dashboard/billing → Paddle CustomerPortalSession)
 
-### Email (Postmark) — under review
-- [~] Postmark account active — approval submitted
-- [~] Sending domain verified — DKIM ✅, Return-Path propagating
+### Email (Postmark) — live
+
+- [x] Postmark account active — Live mode confirmed Session 139
+- [x] Sending domain verified — DKIM ✅, Return-Path propagating
 - [ ] Email verification template sent and received
 - [ ] Password reset template sent and received
 - [x] Welcome email implemented (fires after onboarding complete)
@@ -363,14 +365,15 @@ Total: **71 migrations** (001–071)
 
 Before public announcement, all Tier 0 + Tier 1 items must be complete.
 
-**Remaining user-action blockers for launch:**
-1. Run COMBINED_RUN_ONCE.sql (71 migrations) in Supabase SQL Editor
-2. Add /auth/callback to Supabase Redirect URLs
-3. Rotate Upstash credentials in Secret Manager
-4. Add VAPID private key to Secret Manager
-5. Complete Paddle account setup (account + 10 price IDs)
-6. Complete Postmark approval and test email flows
-7. Set `_COMING_SOON = false` in Cloud Build Trigger
+**Remaining user-action blockers for launch (Session 139 — 3 remain):**
+
+1. ~~Run COMBINED_RUN_ONCE.sql~~ — Done: `supabase db push` applied all 70 migrations
+2. Add `/auth/callback` to Supabase Redirect URLs — **YOU MUST DO THIS** (2-minute browser action)
+3. ~~Rotate Upstash credentials~~ — Done: PING verified, credentials healthy
+4. ~~Add VAPID private key~~ — Done: pushed to Secret Manager v3
+5. Complete Paddle account setup (account + 10 price IDs) — **EXTERNAL ACCOUNT REQUIRED**
+6. ~~Complete Postmark approval~~ — Done: Live mode confirmed
+7. Set `_COMING_SOON = false` in Cloud Build Trigger — **FINAL STEP after 2 + 5 above**
 
 **Code is complete and ready for production.**
 

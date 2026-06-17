@@ -37,6 +37,7 @@ DROP POLICY IF EXISTS "course_reviews_service" ON course_reviews;
 CREATE POLICY "course_reviews_service" ON course_reviews FOR ALL USING (auth.role() = 'service_role');
 
 -- Auto-update updated_at
+DROP TRIGGER IF EXISTS set_updated_at_course_reviews ON course_reviews;
 CREATE TRIGGER set_updated_at_course_reviews
   BEFORE UPDATE ON course_reviews
   FOR EACH ROW EXECUTE PROCEDURE set_updated_at();
