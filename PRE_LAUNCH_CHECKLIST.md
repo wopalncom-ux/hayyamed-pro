@@ -171,7 +171,7 @@ All secrets are in GCP Secret Manager and injected at runtime. Build-time vars a
 ### Performance
 
 - [~] Lighthouse Performance > 90 (hero LCP fix, AVIF/WebP, system font — Session 51); dev-mode score 52 — verify in production after go-live
-- [x] Lighthouse Accessibility: 100 — contrast fix in SiteFooter (#94a3b8 → #64748b) (Session 142)
+- [x] Lighthouse Accessibility: 100 — contrast fix in SiteFooter (Session 142); global #94a3b8→#64748b across all 263 files (Session 145)
 - [x] Lighthouse SEO: 100 (Session 142)
 - [x] Lighthouse Best Practices: 100 (Session 142)
 - [ ] LCP < 2.5s measured in production
@@ -264,8 +264,8 @@ All secrets are in GCP Secret Manager and injected at runtime. Build-time vars a
 
 ### ARR Tracking
 - [x] MRR/ARR dashboard at /admin/revenue (plan breakdown, trial pipeline, upgrades)
-- [ ] Churn tracking defined
-- [ ] Revenue per plan tier tracked
+- [x] Churn tracking defined (30-day cancelled subs, churned MRR, churn rate, lost ARR on /admin/revenue — Session 145)
+- [x] Revenue per plan tier tracked (interval-corrected MRR: Pro Monthly, Pro Annual, Employer by tier — Session 145)
 
 ---
 
