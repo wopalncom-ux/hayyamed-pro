@@ -21,7 +21,7 @@ const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://hayyamed.pro";
 function baseLayout(content: string, unsubscribeUrl?: string) {
   const prefsUrl = `${APP_URL}/dashboard/settings#notifications`;
   const unsubLink = unsubscribeUrl
-    ? `<a href="${unsubscribeUrl}" style="color:#94a3b8;text-decoration:underline">Unsubscribe</a> · `
+    ? `<a href="${unsubscribeUrl}" style="color:#64748b;text-decoration:underline">Unsubscribe</a> · `
     : "";
   return `
     <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:600px;margin:0 auto;background:#f8fafc;padding:24px">
@@ -31,8 +31,8 @@ function baseLayout(content: string, unsubscribeUrl?: string) {
       <div style="background:white;border:1px solid #e2e8f0;border-top:none;padding:32px;border-radius:0 0 12px 12px">
         ${content}
         <hr style="border:none;border-top:1px solid #e2e8f0;margin:28px 0"/>
-        <p style="color:#94a3b8;font-size:12px;margin:0 0 6px">Hayya Med Pro · Healthcare Professional Platform · Qatar</p>
-        <p style="color:#94a3b8;font-size:11px;margin:0">${unsubLink}<a href="${prefsUrl}" style="color:#94a3b8;text-decoration:underline">Manage email preferences</a></p>
+        <p style="color:#64748b;font-size:12px;margin:0 0 6px">Hayya Med Pro · Healthcare Professional Platform · Qatar</p>
+        <p style="color:#64748b;font-size:11px;margin:0">${unsubLink}<a href="${prefsUrl}" style="color:#64748b;text-decoration:underline">Manage email preferences</a></p>
       </div>
     </div>`;
 }
@@ -126,7 +126,7 @@ export async function sendComplianceReminderEmail({
     </div>
     ${cmeBlock}
     <a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">View My CPD Wallet →</a>
-    <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">This reminder was sent by your employer administrator via Hayya Med Pro.</p>
+    <p style="color:#64748b;font-size:11px;margin:20px 0 0">This reminder was sent by your employer administrator via Hayya Med Pro.</p>
   `));
 }
 
@@ -157,7 +157,7 @@ export async function sendTaskAssignedEmail({
       ${message ? `<p style="margin:12px 0 0;color:#374151;font-size:13px;border-top:1px solid #dbeafe;padding-top:12px">${esc(message)}</p>` : ""}
     </div>
     <a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">View My CPD Tasks →</a>
-    <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">This task was assigned by your employer administrator via Hayya Med Pro.</p>
+    <p style="color:#64748b;font-size:11px;margin:20px 0 0">This task was assigned by your employer administrator via Hayya Med Pro.</p>
   `));
 }
 
@@ -202,7 +202,7 @@ export async function sendWelcomeEmail({
       </ul>
     </div>
     <a href="${APP_URL}/dashboard" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Go to My Dashboard →</a>
-    <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">Hayya Med Pro supports CME tracking and licensing readiness. It does not issue licenses and does not replace official licensing authorities. Always verify final requirements with your relevant regulatory body.</p>
+    <p style="color:#64748b;font-size:11px;margin:20px 0 0">Hayya Med Pro supports CME tracking and licensing readiness. It does not issue licenses and does not replace official licensing authorities. Always verify final requirements with your relevant regulatory body.</p>
   `));
 }
 
@@ -315,7 +315,7 @@ export async function sendCmeDeadlineEmail({
       <p style="margin:6px 0 0;font-size:28px;font-weight:700;color:${color}">${creditsNeeded}</p>
     </div>
     <a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Log CME Activities →</a>
-    <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">Hayya Med Pro supports CME tracking and licensing readiness. It does not issue licenses and does not replace official licensing authorities.</p>
+    <p style="color:#64748b;font-size:11px;margin:20px 0 0">Hayya Med Pro supports CME tracking and licensing readiness. It does not issue licenses and does not replace official licensing authorities.</p>
   `, unsub), unsub);
 }
 
@@ -352,7 +352,7 @@ export async function sendTrialStartEmail({
     </div>
     <a href="${APP_URL}/dashboard" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Explore Pro Features →</a>
     ${referralSection}
-    <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">No charge during the trial. Upgrade any time at <a href="${APP_URL}/pricing" style="color:#94a3b8">${APP_URL}/pricing</a> to keep Pro access after ${expiryDate}.</p>
+    <p style="color:#64748b;font-size:11px;margin:20px 0 0">No charge during the trial. Upgrade any time at <a href="${APP_URL}/pricing" style="color:#64748b">${APP_URL}/pricing</a> to keep Pro access after ${expiryDate}.</p>
   `));
 }
 
@@ -376,7 +376,7 @@ export async function sendTrialEndingSoonEmail({
       </ul>
     </div>
     <a href="${APP_URL}/pricing" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Upgrade Now — from $6/month →</a>
-    <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">Your data is always safe regardless of plan. If you don't upgrade, you'll stay on the free tier with limited access.</p>
+    <p style="color:#64748b;font-size:11px;margin:20px 0 0">Your data is always safe regardless of plan. If you don't upgrade, you'll stay on the free tier with limited access.</p>
   `, unsub), unsub);
 }
 
@@ -400,7 +400,7 @@ export async function sendTrialExpiredEmail({
       </ul>
     </div>
     <a href="${APP_URL}/pricing" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Upgrade to Pro →</a>
-    <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">Your CME history and profile data are always retained regardless of your plan.</p>
+    <p style="color:#64748b;font-size:11px;margin:20px 0 0">Your CME history and profile data are always retained regardless of your plan.</p>
   `, authId ? unsubUrl(authId, "reminders") : undefined), authId ? unsubUrl(authId, "reminders") : undefined);
 }
 
@@ -424,7 +424,7 @@ export async function sendTrialDay3Email({
       <p style="margin:0;font-size:13px;color:#64748b">Your Pro trial ends: <strong style="color:#111">${expiryDate}</strong> · ${daysRemaining} days remaining</p>
     </div>
     <a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Log my first CME activity →</a>
-    <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">Your compliance snapshot updates automatically as you add activities. Every verified activity brings you closer to renewal.</p>
+    <p style="color:#64748b;font-size:11px;margin:20px 0 0">Your compliance snapshot updates automatically as you add activities. Every verified activity brings you closer to renewal.</p>
   `));
 }
 
@@ -455,7 +455,7 @@ export async function sendTrialDay7Email({
     </div>
     <a href="${APP_URL}/pricing" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Keep Pro access — $6/month →</a>
     <p style="color:#64748b;font-size:12px;margin:16px 0 0">Or $61.20/year (save 15%) · 14-day money-back guarantee · Cancel any time</p>
-    <p style="color:#94a3b8;font-size:11px;margin:12px 0 0">Your CME data and profile are always kept, regardless of plan.</p>
+    <p style="color:#64748b;font-size:11px;margin:12px 0 0">Your CME data and profile are always kept, regardless of plan.</p>
   `));
 }
 
@@ -673,9 +673,9 @@ export async function sendProfessionalWeeklyDigestEmail({
 
     <div style="margin:0 0 16px">${ctaHtml}</div>
 
-    <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">
+    <p style="color:#64748b;font-size:11px;margin:20px 0 0">
       You're receiving this because you have an active CME wallet on Hayya Med Pro.
-      <a href="${APP_URL}/dashboard/settings" style="color:#94a3b8">Manage email preferences</a>
+      <a href="${APP_URL}/dashboard/settings" style="color:#64748b">Manage email preferences</a>
     </p>
   `));
 }
@@ -773,7 +773,7 @@ export async function sendReferralRewardEmail({
         View my referral link →
       </a>
 
-      <p style="color:#94a3b8;font-size:12px;margin:24px 0 0">
+      <p style="color:#64748b;font-size:12px;margin:24px 0 0">
         To manage email preferences, visit
         <a href="${APP_URL}/dashboard/settings" style="color:#1a56a0">dashboard settings</a>.
       </p>
@@ -805,7 +805,7 @@ export async function sendOnboardingReminderEmail({
       </ul>
     </div>
     <a href="${href}" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Continue setup — finish ${esc(stepLabel)} →</a>
-    <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">Setup takes about 3 minutes total. Your Pro trial activates automatically when you finish. Your CME data is always yours on any plan.</p>
+    <p style="color:#64748b;font-size:11px;margin:20px 0 0">Setup takes about 3 minutes total. Your Pro trial activates automatically when you finish. Your CME data is always yours on any plan.</p>
   `));
 }
 
@@ -946,7 +946,7 @@ export async function sendFirstActivityEmail({
       <a href="${APP_URL}/pricing" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">Upgrade to Pro — from $6/month →</a>
       `}
 
-      <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">Every verified activity brings you closer to renewal. Keep going.</p>
+      <p style="color:#64748b;font-size:11px;margin:20px 0 0">Every verified activity brings you closer to renewal. Keep going.</p>
     `),
   );
 }
@@ -1025,7 +1025,7 @@ export async function sendEmployerLinkRequestNotificationEmail({
         ${esc(portalLabel)} →
       </a>
 
-      <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">
+      <p style="color:#64748b;font-size:11px;margin:20px 0 0">
         To manage email notifications, visit your
         <a href="${APP_URL}/dashboard/settings" style="color:#1a56a0">account settings</a>.
       </p>
@@ -1639,7 +1639,7 @@ export async function sendComplianceAlertEmail({
       <a href="${APP_URL}/employer" style="display:inline-block;background:#1a56a0;color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px">
         Open Employer Dashboard →
       </a>
-      <p style="color:#94a3b8;font-size:12px;margin:20px 0 0">
+      <p style="color:#64748b;font-size:12px;margin:20px 0 0">
         This alert was triggered because ${belowThreshold.length} staff member${belowThreshold.length !== 1 ? "s are" : " is"} below your ${thresholdPct}% compliance threshold.
         You can update or disable this alert in your employer settings.
       </p>
@@ -1687,7 +1687,7 @@ export async function sendTaskDeadlineReminderEmail({
         ${message ? `<p style="margin:10px 0 0;color:#374151;font-size:13px;border-top:1px solid #fed7aa;padding-top:10px">${esc(message)}</p>` : ""}
       </div>
       <a href="${APP_URL}/dashboard/cme" style="display:inline-block;background:#1a56a0;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">View &amp; Complete Task →</a>
-      <p style="color:#94a3b8;font-size:11px;margin:20px 0 0">
+      <p style="color:#64748b;font-size:11px;margin:20px 0 0">
         This reminder was sent because this task has an upcoming due date.
         You can manage your email preferences in your <a href="${APP_URL}/dashboard/settings" style="color:#1a56a0">Hayya Med Pro settings</a>.
       </p>
