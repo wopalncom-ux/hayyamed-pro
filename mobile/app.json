@@ -1,0 +1,72 @@
+{
+  "expo": {
+    "name": "Hayya Med Pro",
+    "slug": "hayyamed-pro",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "scheme": "hayyamedpro",
+    "splash": {
+      "image": "./assets/icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1a56a0"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "pro.hayyamed.app",
+      "infoPlist": {
+        "NSFaceIDUsageDescription": "Use Face ID to sign in securely",
+        "NSCameraUsageDescription": "Scan and upload CME certificates"
+      }
+    },
+    "android": {
+      "package": "pro.hayyamed.app",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#1a56a0"
+      },
+      "permissions": [
+        "CAMERA",
+        "USE_BIOMETRIC",
+        "USE_FINGERPRINT",
+        "RECEIVE_BOOT_COMPLETED",
+        "VIBRATE"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/icon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      "expo-font",
+      "expo-splash-screen",
+      "expo-status-bar",
+      "expo-image",
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Use Face ID to sign in securely"
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon.png",
+          "color": "#1a56a0",
+          "sounds": []
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "hayyamed-pro"
+      }
+    }
+  }
+}
