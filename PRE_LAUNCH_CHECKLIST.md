@@ -298,7 +298,7 @@ All secrets are in GCP Secret Manager and injected at runtime. Build-time vars a
 ### Mobile App (React Native)
 - [ ] Expo project initialized
 - [ ] Core screens: dashboard, CME tracker, licenses, settings
-- [ ] API-first patterns confirmed (Bearer token auth — 100% complete)
+- [x] API-first patterns confirmed (Bearer token auth — 100% complete, Session 101)
 - [ ] App Store / Google Play developer accounts
 - [x] Apple app-site-association + assetlinks.json stubs (⚠ TEAMID/SHA256 need real values)
 - [ ] FCM + APNs push configured for React Native
