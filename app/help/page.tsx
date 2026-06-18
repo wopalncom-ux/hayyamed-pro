@@ -61,8 +61,15 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: "How do I get support?",
-    a: "Email us at support@hayyamed.pro. Pro and Enterprise subscribers receive priority response within 4 business hours. Free tier response time is 1–2 business days.",
+    a: "Email us at support@hayyamed.pro. Response times depend on your plan — see the Support SLA section below for details. Business hours are Sunday–Thursday 09:00–18:00 GST.",
   },
+];
+
+const SLA_ROWS: { plan: string; response: string; channel: string }[] = [
+  { plan: "Enterprise / Government", response: "1 business hour", channel: "Email + dedicated Slack" },
+  { plan: "Employer / University", response: "4 business hours", channel: "Email" },
+  { plan: "Pro", response: "1 business day", channel: "Email" },
+  { plan: "Free", response: "2 business days", channel: "Email" },
 ];
 
 const jsonLd = {
@@ -116,9 +123,35 @@ export default function HelpPage() {
           ))}
         </div>
 
-        <div className="mt-12 bg-[#1a56a0] rounded-xl px-6 py-8 text-center">
+        {/* Support SLA */}
+        <div className="mt-12 mb-8">
+          <h2 className="text-xl font-bold text-[#111] mb-1">Support SLA</h2>
+          <p className="text-sm text-[#64748b] mb-4">Business hours: Sunday–Thursday 09:00–18:00 GST (UTC+3). Email: <a href="mailto:support@hayyamed.pro" className="text-[#1a56a0] hover:underline">support@hayyamed.pro</a></p>
+          <div className="overflow-x-auto rounded-xl border border-[#e2e8f0]">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-[#f0f4f8]">
+                  <th className="text-left px-4 py-3 font-semibold text-[#374151]">Plan</th>
+                  <th className="text-left px-4 py-3 font-semibold text-[#374151]">Initial Response</th>
+                  <th className="text-left px-4 py-3 font-semibold text-[#374151]">Channel</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#e2e8f0]">
+                {SLA_ROWS.map((row) => (
+                  <tr key={row.plan} className="bg-white">
+                    <td className="px-4 py-3 font-medium text-[#111]">{row.plan}</td>
+                    <td className="px-4 py-3 text-[#374151]">{row.response}</td>
+                    <td className="px-4 py-3 text-[#64748b]">{row.channel}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div className="bg-[#1a56a0] rounded-xl px-6 py-8 text-center">
           <p className="text-white font-semibold text-lg mb-2">Still have questions?</p>
-          <p className="text-blue-200 text-sm mb-5">Our support team typically responds within one business day.</p>
+          <p className="text-blue-200 text-sm mb-5">Our support team responds within the SLA for your plan.</p>
           <a
             href="/contact"
             className="inline-block bg-white text-[#1a56a0] font-semibold text-sm px-6 py-2.5 rounded-lg hover:bg-blue-50 transition-colors"
@@ -129,7 +162,7 @@ export default function HelpPage() {
       </main>
 
       <footer className="border-t border-[#e2e8f0] mt-12">
-        <div className="max-w-3xl mx-auto px-4 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#94a3b8]">
+        <div className="max-w-3xl mx-auto px-4 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#64748b]">
           <span>© 2026 Hayya Med Pro · Healthcare Professional Platform · Qatar</span>
           <div className="flex gap-4">
             <Link href="/privacy" className="hover:text-[#374151] transition-colors">Privacy Policy</Link>

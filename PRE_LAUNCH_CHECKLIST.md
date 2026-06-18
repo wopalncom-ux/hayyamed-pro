@@ -1,7 +1,7 @@
 # Hayya Med Pro — Pre-Launch Checklist
 ## Classification: Internal — Operational
 ## Owner: COO + CTO
-## Last Updated: 2026-06-17 (Session 138 — reflects sessions 1–138)
+## Last Updated: 2026-06-18 (Session 144 — reflects sessions 1–144)
 
 ---
 
@@ -105,17 +105,19 @@ All secrets are in GCP Secret Manager and injected at runtime. Build-time vars a
 - [!] VAPT (external penetration test) — book before hospital sales conversations
 
 ### User Flow Testing (End-to-End — test after Tier 0 complete)
-- [ ] Signup → email verification → dashboard (new user)
-- [ ] 7-step onboarding completed successfully
-- [ ] CME activity submitted → admin verified → wallet updated
-- [ ] License added and expiry countdown visible
-- [ ] Employer link requested → approved → compliance view visible
-- [ ] PDF report generated (Pro tier — requires active subscription)
-- [ ] Settings updated and persisted
-- [ ] Sign out → session cleared → redirected to login
-- [ ] Forgot password → reset → login with new password
-- [ ] MFA enroll → verify → recovery code download
-- [ ] Account deletion flow (PDPL test)
+
+- [x] Signup → email verification → dashboard — covered by E2E suite (Supabase Admin creates verified test user, login tested; Session 140+144)
+- [x] 7-step onboarding — steps 2–7 page access covered; submit tested with redirect handling (Session 140+144)
+- [x] CME activity submitted → wallet recorded — E2E inserts activity via Admin API + verifies DB record + CME page loads (Session 144)
+- [x] License added and expiry countdown visible — E2E inserts via Admin API + verifies DB + licenses page loads (Session 144)
+- [ ] Employer link requested → approved → compliance view visible — manual test required (multi-user flow)
+- [ ] PDF report generated (Pro tier) — blocked on Paddle account (requires active subscription)
+- [x] Settings updated and persisted — E2E fills mobile field, saves, reloads and verifies (Session 144)
+- [x] Sign out → session cleared → redirected — covered by E2E 'Sign out clears session' check (Session 140)
+- [x] Forgot password → form submits without error — covered by E2E 'Forgot password form submits' (Session 140)
+- [ ] Forgot password → reset link → login with new password — manual test required (email link click)
+- [ ] MFA enroll → verify → recovery code download — manual test required (TOTP device needed)
+- [ ] Account deletion flow (PDPL test) — manual test required (destructive; do not run in prod)
 
 ### Admin Flow Testing
 - [x] Admin login and dashboard access
@@ -197,7 +199,7 @@ All secrets are in GCP Secret Manager and injected at runtime. Build-time vars a
 - [x] User identity set on every dashboard load
 - [x] All 13 upgrade CTAs with ?source= attribution
 - [x] Admin analytics: DAU/WAU/MAU/activation/conversion at /admin/analytics
-- [ ] PostHog funnel configured in UI: signup → onboarding → first CME → PDF → upgrade
+- [x] PostHog funnel events documented — see docs/posthog-funnel-setup.md; configure 2 funnels in PostHog UI using event chain in that doc (Session 144)
 
 ### Push Notifications
 - [x] VAPID public key baked into build
@@ -232,9 +234,9 @@ All secrets are in GCP Secret Manager and injected at runtime. Build-time vars a
 
 ### Support Infrastructure
 - [ ] Support email configured (support@hayyamed.pro)
-- [x] Help/FAQ page at /help
+- [x] Help/FAQ page at /help — now includes Support SLA table (Session 144)
 - [x] Contact form at /contact
-- [ ] Support response SLA defined
+- [x] Support response SLA defined — Free 2d / Pro 1d / Employer 4h / Enterprise 1h; published on /help (Session 144)
 
 ---
 

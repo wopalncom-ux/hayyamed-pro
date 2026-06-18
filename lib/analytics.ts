@@ -48,6 +48,14 @@ export function resetAnalytics(): void {
   posthog.reset();
 }
 
+// ── Conversion funnel chain (configure in PostHog UI → Funnels) ─────────────
+//   Step 1: signup_completed
+//   Step 2: onboarding_completed
+//   Step 3: cme_activity_submitted   ← activation ("aha moment")
+//   Step 4: pdf_report_blocked       ← paywall hit
+//   Step 5: upgrade_clicked          ← intent signal
+//   Step 6: subscription_activated   ← conversion
+
 // ── Typed event catalogue ────────────────────────────────────────────────────
 export type AnalyticsEvent =
   // Auth funnel
@@ -68,6 +76,7 @@ export type AnalyticsEvent =
   | "ai_ocr_used"
   | "ai_chat_message_sent"
   | "ai_recommendation_viewed"
+  | "ai_gap_analysis_viewed"
   // Revenue funnel (conversion signals)
   | "pricing_page_viewed"
   | "pdf_report_downloaded"
