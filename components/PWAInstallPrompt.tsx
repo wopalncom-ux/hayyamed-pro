@@ -73,7 +73,7 @@ export function PWAInstallPrompt() {
           <div className="flex items-start gap-3">
             {/* Icon */}
             <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
-              <Smartphone className="w-5 h-5 text-blue-700" />
+              <Smartphone className="w-5 h-5 text-[#1a56a0]" />
             </div>
 
             {/* Content */}
@@ -101,7 +101,7 @@ export function PWAInstallPrompt() {
             <button
               onClick={dismiss}
               aria-label="Dismiss"
-              className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+              className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-[#64748b] hover:text-[#374151] hover:bg-[#f1f5f9] transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
@@ -111,7 +111,7 @@ export function PWAInstallPrompt() {
           {!showIOSGuide && (
             <button
               onClick={install}
-              className="mt-3 w-full flex items-center justify-center gap-2 rounded-xl bg-blue-700 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-800 active:bg-blue-900 transition-colors"
+              className="mt-3 w-full flex items-center justify-center gap-2 rounded-xl bg-[#1a56a0] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#1547a0] active:bg-[#1240a0] transition-colors"
             >
               <Download className="w-4 h-4" />
               Install App

@@ -38,6 +38,20 @@ const TAG_STYLES: Record<Tag, string> = {
 
 const RELEASES: Release[] = [
   {
+    version: "1.5",
+    date: "June 2026",
+    title: "Interactive demo, accessibility, and support SLA",
+    summary: "Try the platform without signing up, a comprehensive accessibility pass across all pages, and a published support SLA.",
+    entries: [
+      { tag: "New",      text: "Interactive demo at /demo — explore the CME wallet, compliance ring, PDF paywall, and AI advisor without creating an account." },
+      { tag: "New",      text: "Beta feedback form at /feedback — submit experience ratings, bug reports, and feature requests directly in the app." },
+      { tag: "New",      text: "Support SLA table on /help — response times per plan: Enterprise 1 hour, Employer 4 hours, Pro 1 day, Free 2 days." },
+      { tag: "New",      text: "Admin revenue dashboard — 30-day churn panel (cancelled count, lost MRR, churn rate) with Pro vs Annual vs Employer tier MRR breakdown." },
+      { tag: "Improved", text: "Lighthouse 100/100/100/100 across all public pages — Performance, Accessibility, Best Practices, and SEO." },
+      { tag: "Improved", text: "WCAG AA contrast across the entire platform — all muted text, icons, SVG fills, email templates, and chart colours updated." },
+    ],
+  },
+  {
     version: "1.4",
     date: "June 2026",
     title: "Email reliability & Pro export tools",

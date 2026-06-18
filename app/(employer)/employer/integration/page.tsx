@@ -46,7 +46,7 @@ function EndpointCard({
   response: string;
 }) {
   const methodColor = method === "POST"
-    ? "bg-blue-600 text-white"
+    ? "bg-[#1a56a0] text-white"
     : "bg-green-600 text-white";
 
   return (

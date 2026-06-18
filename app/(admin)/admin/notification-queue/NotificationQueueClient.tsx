@@ -103,7 +103,7 @@ function QueueTable({
                   <button
                     disabled={isPending}
                     onClick={() => onAction([item.id], "retry")}
-                    className="text-xs px-2 py-1 rounded bg-[#1a56a0] text-white hover:bg-blue-700 disabled:opacity-50"
+                    className="text-xs px-2 py-1 rounded bg-[#1a56a0] text-white hover:bg-[#1547a0] disabled:opacity-50"
                   >
                     Retry
                   </button>
@@ -201,7 +201,7 @@ export default function NotificationQueueClient({
                   <button
                     disabled={isPending}
                     onClick={() => doAction([...selected], "retry")}
-                    className="text-sm px-3 py-1.5 rounded bg-[#1a56a0] text-white hover:bg-blue-700 disabled:opacity-50"
+                    className="text-sm px-3 py-1.5 rounded bg-[#1a56a0] text-white hover:bg-[#1547a0] disabled:opacity-50"
                   >
                     Retry {selected.size} selected
                   </button>
