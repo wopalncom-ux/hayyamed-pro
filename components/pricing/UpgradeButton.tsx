@@ -64,7 +64,7 @@ export default function UpgradeButton({
     setErrorMsg(null);
     track("upgrade_clicked", { source: "pricing_page", plan, billing_interval: billingInterval, employer_tier: employerTier });
     try {
-      const res = await fetch("/api/paddle/checkout", {
+      const res = await fetch("/api/payment/qiib/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -81,9 +81,16 @@ export default function UpgradeButton({
       }
 
       const data = await res.json();
+
       if (data.url) {
         track("subscription_started", { plan, billing_interval: billingInterval });
         window.location.href = data.url;
+        return;
+      }
+
+      // Payment gateway not yet configured — show contact prompt
+      if (data.error === "payment_not_configured") {
+        setErrorMsg(`Payment setup in progress. Email ${data.support_email ?? "support@hayyamed.pro"} to upgrade now.`);
         return;
       }
 

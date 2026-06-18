@@ -3,6 +3,7 @@ export type UserRole =
   | "employer_admin"
   | "training_provider_admin"
   | "university_admin"
+  | "government_admin"
   | "master_admin"
   | "super_admin";
 
@@ -30,10 +31,33 @@ export interface ProfessionalProfile {
   subspecialty: string | null;
   license_number: string | null;
   licensing_authority: string | null;
+  licensing_authority_id: string | null;
   license_expiry: string | null;
   onboarding_step: OnboardingStep;
   onboarding_complete: boolean;
   profile_completion_pct: number;
+  // referral
+  referral_code: string | null;
+  // trial
+  pro_trial_ends_at: string | null;
+  // email preferences (migration 022)
+  email_cme_verified: boolean;
+  email_cme_deadline: boolean;
+  email_license_expiry: boolean;
+  email_trial_reminders: boolean;
+  email_employer_tasks: boolean;
+  // bounce / spam protection (migration 028)
+  email_hard_bounced: boolean;
+  email_spam_reported: boolean;
+  // push preferences (migration 054)
+  push_license_expiry: boolean;
+  push_cme_deadline: boolean;
+  push_employer_tasks: boolean;
+  push_compliance_alerts: boolean;
+  // account suspension (migration 059)
+  is_suspended: boolean;
+  suspended_at: string | null;
+  suspended_reason: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -43,7 +67,16 @@ export interface ProfessionalProfile {
 export interface Organization {
   id: string;
   name: string;
-  type: "hospital" | "clinic" | "pharmacy" | "university" | "lab" | "other";
+  type:
+    | "hospital"
+    | "clinic"
+    | "pharmacy"
+    | "university"
+    | "lab"
+    | "other"
+    | "government"
+    | "regulatory_body"
+    | "ngo";
   country: string | null;
   city: string | null;
   verified: boolean;
@@ -83,6 +116,7 @@ export interface ProfilePrivacySettings {
   employer_can_view_license_expiry: boolean;
   employer_can_view_detailed_cme_activities: boolean;
   employer_can_view_profile_details: boolean;
+  public_directory_opt_in: boolean;
   updated_at: string;
 }
 
@@ -100,6 +134,8 @@ export interface CmeWallet {
   cycle_start_date: string;
   cycle_end_date: string;
   compliance_status: ComplianceStatus;
+  is_primary: boolean;
+  label: string | null;
   updated_at: string;
 }
 
@@ -114,6 +150,7 @@ export interface CmeActivity {
   activity_date: string;
   credits: number;
   category: string | null;
+  accreditor: string | null;
   certificate_url: string | null;
   verification_status: VerificationStatus;
   rejection_reason: string | null;
@@ -206,12 +243,14 @@ export interface Subscription {
   professional_id: string;
   paddle_customer_id: string | null;
   paddle_subscription_id: string | null;
-  plan: "free" | "pro" | "employer";
+  plan: "free" | "pro" | "employer" | "university" | "government";
   status: "active" | "trialing" | "past_due" | "canceled" | "incomplete";
   billing_interval: BillingInterval | null;
   employer_tier: EmployerTier | null;
   current_period_end: string | null;
   cancel_at_period_end: boolean;
+  payment_provider: string | null;
+  qpay_invoice_id: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -248,6 +287,31 @@ export interface Discount {
   promo_code: string | null;
   notes: string | null;
   created_by: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+// ── qiib_payment_sessions ─────────────────────────────────────────────────
+
+export type QiibPaymentStatus = "pending" | "paid" | "failed" | "expired" | "cancelled";
+
+export interface QiibPaymentSession {
+  id: string;
+  professional_id: string;
+  plan: "pro" | "employer";
+  billing_interval: BillingInterval;
+  employer_tier: EmployerTier | null;
+  amount_usd: number;
+  amount_qar: number;
+  currency: string;
+  qiib_order_id: string | null;
+  qiib_session_id: string | null;
+  payment_url: string | null;
+  status: QiibPaymentStatus;
+  paid_at: string | null;
+  qiib_transaction_ref: string | null;
+  failure_reason: string | null;
+  discount_id: string | null;
   created_at: string;
   updated_at: string;
 }

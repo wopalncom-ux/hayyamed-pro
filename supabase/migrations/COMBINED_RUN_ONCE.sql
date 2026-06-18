@@ -1,8 +1,10 @@
 -- ============================================================
--- Hayya Med PRO — ALL 70 MIGRATIONS COMBINED
+-- Hayya Med PRO — ALL 72 MIGRATIONS COMBINED
 -- Paste this entire file into the Supabase SQL Editor and Run.
 -- Idempotent: safe to run on a fresh project.
--- Generated: 2026-06-16
+-- Generated: 2026-06-18
+-- NOTE: Enable the 'vector' extension in Supabase Dashboard →
+--   Database → Extensions BEFORE running (required for migration 064).
 -- ============================================================
 
 -- ════════════════════════════════════════════════════════════
@@ -3230,5 +3232,86 @@ CREATE POLICY "provider admin manages own api keys" ON api_keys
        WHERE tp.id = api_keys.training_provider_id
          AND tp.created_by = auth.uid()
          AND tp.status = 'active'
+    )
+  );
+
+
+-- ════════════════════════════════════════════════════════════
+-- MIGRATION 071 — Missing FK Indexes
+-- Five high-traffic FK columns on core tables (001) that
+-- predate the indexing discipline introduced in migration 047.
+-- Note: CONCURRENTLY removed — not supported inside SQL Editor transactions.
+-- The standalone 071_missing_fk_indexes.sql retains CONCURRENTLY for psql.
+-- ════════════════════════════════════════════════════════════
+
+CREATE INDEX IF NOT EXISTS idx_cme_activities_wallet_id
+  ON cme_activities (wallet_id);
+
+CREATE INDEX IF NOT EXISTS idx_employer_link_requests_professional_id
+  ON employer_link_requests (professional_id);
+
+CREATE INDEX IF NOT EXISTS idx_organization_members_auth_id
+  ON organization_members (auth_id);
+
+CREATE INDEX IF NOT EXISTS idx_organization_members_organization_id
+  ON organization_members (organization_id);
+
+CREATE INDEX IF NOT EXISTS idx_professional_profiles_licensing_authority_id
+  ON professional_profiles (licensing_authority_id)
+  WHERE licensing_authority_id IS NOT NULL;
+
+-- ════════════════════════════════════════════════════════════
+-- MIGRATION 072 — QIIB Payment Sessions
+-- Records every payment attempt through QIIB bank gateway.
+-- Covers Visa, Mastercard, and NAPS (Qatar local debit).
+-- ════════════════════════════════════════════════════════════
+
+CREATE TABLE IF NOT EXISTS qiib_payment_sessions (
+  id                    uuid        PRIMARY KEY DEFAULT gen_random_uuid(),
+  professional_id       uuid        NOT NULL REFERENCES professional_profiles(auth_id) ON DELETE CASCADE,
+  plan                  text        NOT NULL CHECK (plan IN ('pro', 'employer')),
+  billing_interval      text        NOT NULL CHECK (billing_interval IN ('monthly', 'annual')),
+  employer_tier         text        CHECK (employer_tier IN ('clinic', 'growth', 'department', 'hospital')),
+  amount_usd            numeric(10, 2) NOT NULL,
+  amount_qar            numeric(10, 2) NOT NULL,
+  currency              text        NOT NULL DEFAULT 'QAR',
+  qiib_order_id         text        UNIQUE,
+  qiib_session_id       text,
+  payment_url           text,
+  status                text        NOT NULL DEFAULT 'pending'
+                        CHECK (status IN ('pending', 'paid', 'failed', 'expired', 'cancelled')),
+  paid_at               timestamptz,
+  qiib_transaction_ref  text,
+  failure_reason        text,
+  discount_id           uuid        REFERENCES discounts(id) ON DELETE SET NULL,
+  created_at            timestamptz NOT NULL DEFAULT now(),
+  updated_at            timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS idx_qiib_sessions_professional ON qiib_payment_sessions (professional_id);
+CREATE INDEX IF NOT EXISTS idx_qiib_sessions_status       ON qiib_payment_sessions (status);
+CREATE INDEX IF NOT EXISTS idx_qiib_sessions_order_id     ON qiib_payment_sessions (qiib_order_id) WHERE qiib_order_id IS NOT NULL;
+
+DROP TRIGGER IF EXISTS trg_qiib_sessions_updated_at ON qiib_payment_sessions;
+CREATE TRIGGER trg_qiib_sessions_updated_at
+  BEFORE UPDATE ON qiib_payment_sessions
+  FOR EACH ROW EXECUTE FUNCTION public.set_updated_at();
+
+ALTER TABLE qiib_payment_sessions ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "qiib_sessions_owner_read" ON qiib_payment_sessions;
+CREATE POLICY "qiib_sessions_owner_read" ON qiib_payment_sessions
+  FOR SELECT TO authenticated USING (professional_id = auth.uid());
+
+DROP POLICY IF EXISTS "qiib_sessions_service_all" ON qiib_payment_sessions;
+CREATE POLICY "qiib_sessions_service_all" ON qiib_payment_sessions
+  FOR ALL TO service_role USING (true) WITH CHECK (true);
+
+DROP POLICY IF EXISTS "qiib_sessions_admin_read" ON qiib_payment_sessions;
+CREATE POLICY "qiib_sessions_admin_read" ON qiib_payment_sessions
+  FOR SELECT USING (
+    EXISTS (
+      SELECT 1 FROM organization_members
+      WHERE auth_id = auth.uid() AND role IN ('master_admin', 'super_admin')
     )
   );
