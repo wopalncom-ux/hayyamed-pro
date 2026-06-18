@@ -64,6 +64,21 @@ async function send(To: string, Subject: string, HtmlBody: string, unsubscribeUr
   } catch { /* never crash a server action over an email */ }
 }
 
+// Sends to an internal recipient (support inbox) — bypasses suppression list.
+export async function sendAdminNotification({
+  to, subject, html, replyTo,
+}: { to: string; subject: string; html: string; replyTo?: string }): Promise<void> {
+  try {
+    await getClient().sendEmail({
+      From: FROM,
+      To: to,
+      Subject: subject,
+      HtmlBody: html,
+      ...(replyTo ? { ReplyTo: replyTo } : {}),
+    });
+  } catch { /* never crash over email */ }
+}
+
 export async function sendCmeVerifiedEmail({
   to, name, activityTitle, credits, isPro = true,
 }: { to: string; name: string; activityTitle: string; credits: number; isPro?: boolean }) {

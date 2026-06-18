@@ -260,7 +260,7 @@ All secrets are in GCP Secret Manager and injected at runtime. Build-time vars a
 - [ ] 10 healthcare professionals invited to beta (personal network)
 - [ ] QCHP outreach initiated
 - [ ] 1 hospital/clinic employer approached for pilot
-- [ ] Beta feedback survey (Typeform or similar)
+- [x] Beta feedback survey — built in-app at /feedback (no Typeform; emails support@hayyamed.pro; role/area/rating/message — Session 145)
 
 ### ARR Tracking
 - [x] MRR/ARR dashboard at /admin/revenue (plan breakdown, trial pipeline, upgrades)
