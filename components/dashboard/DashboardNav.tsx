@@ -6,6 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import NotificationBell from "./NotificationBell";
+import SignOutButton from "./SignOutButton";
 
 const NAV_ITEMS = [
   { href: "/dashboard", label: "Overview" },
@@ -68,9 +69,11 @@ export default function DashboardNav({
                 </div>
               )}
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1">
               <NotificationBell />
               <span className="text-sm text-[#64748b] ml-1 hidden sm:inline">{userName}</span>
+              {/* Sign out — desktop only */}
+              <SignOutButton variant="icon" className="hidden md:flex" />
               {/* Hamburger — visible on mobile only */}
               <button
                 onClick={() => setDrawerOpen(true)}
@@ -165,10 +168,14 @@ export default function DashboardNav({
           </nav>
 
           {/* Drawer footer */}
-          <div className="px-4 py-4 border-t border-[#e2e8f0]">
-            <a href="/help" className="text-xs text-[#64748b] hover:text-[#374151] transition-colors">
-              Help & FAQ
+          <div className="px-2 py-3 border-t border-[#e2e8f0] space-y-1">
+            <a
+              href="/help"
+              className="flex items-center px-4 py-2.5 rounded-xl text-sm text-[#64748b] hover:bg-[#f8fafc] transition-colors"
+            >
+              Help &amp; FAQ
             </a>
+            <SignOutButton variant="full" />
           </div>
         </div>
       </div>
