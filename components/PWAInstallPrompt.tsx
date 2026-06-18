@@ -78,11 +78,11 @@ export function PWAInstallPrompt() {
 
             {/* Content */}
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-gray-900">
+              <p className="text-sm font-semibold text-[#111]">
                 Install Hayya Med Pro
               </p>
               {showIOSGuide ? (
-                <p className="text-xs text-gray-500 mt-0.5 leading-relaxed">
+                <p className="text-xs text-[#64748b] mt-0.5 leading-relaxed">
                   Tap{" "}
                   <span className="font-medium text-gray-700">Share</span> then{" "}
                   <span className="font-medium text-gray-700">
@@ -91,7 +91,7 @@ export function PWAInstallPrompt() {
                   for faster access and offline use.
                 </p>
               ) : (
-                <p className="text-xs text-gray-500 mt-0.5">
+                <p className="text-xs text-[#64748b] mt-0.5">
                   Faster access, works offline. No App Store needed.
                 </p>
               )}
