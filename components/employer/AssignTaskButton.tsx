@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useState } from "react";
 
 const CATEGORIES = [
@@ -79,7 +79,7 @@ export default function AssignTaskButton({
                 <h2 className="text-base font-semibold text-[#111]">Assign CPD Task</h2>
                 <p className="text-xs text-[#64748b] mt-0.5">{staffName}</p>
               </div>
-              <button onClick={close} aria-label="Close" className="text-[#94a3b8] hover:text-[#374151] text-xl leading-none">×</button>
+              <button onClick={close} aria-label="Close" className="text-[#64748b] hover:text-[#374151] text-xl leading-none">×</button>
             </div>
 
             {done ? (

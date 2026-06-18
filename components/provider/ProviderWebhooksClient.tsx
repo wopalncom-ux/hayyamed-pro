@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition, useCallback } from "react";
 
@@ -37,7 +37,7 @@ function SecretReveal({ secret }: { secret: string }) {
           {copied ? "Copied!" : "Copy"}
         </button>
       </div>
-      <p className="text-[10px] text-[#94a3b8] mt-2">
+      <p className="text-[10px] text-[#64748b] mt-2">
         Verify incoming requests: <code>X-Hayya-Signature: sha256=HMAC-SHA256(secret, body)</code>
       </p>
     </div>
@@ -102,7 +102,7 @@ function EndpointCard({
           <span className="text-[#16a34a] font-medium">{delivered} delivered</span>
           {failed > 0 && <span className="text-[#dc2626] font-medium">{failed} failed</span>}
           {pending > 0 && <span className="text-[#d97706] font-medium">{pending} pending</span>}
-          {delivered === 0 && failed === 0 && pending === 0 && <span className="text-[#94a3b8]">No deliveries yet</span>}
+          {delivered === 0 && failed === 0 && pending === 0 && <span className="text-[#64748b]">No deliveries yet</span>}
         </div>
 
         <div className="flex items-center gap-2 flex-wrap">
@@ -333,7 +333,7 @@ export default function ProviderWebhooksClient({ initialEndpoints }: { initialEn
           {endpoints.length === 0 && !newSecret && (
             <div className="bg-[#f8fafc] border border-dashed border-[#e2e8f0] rounded-xl px-5 py-8 text-center">
               <p className="text-sm font-medium text-[#374151] mb-1">No webhook endpoints yet</p>
-              <p className="text-xs text-[#94a3b8]">Add an endpoint to receive enrolment and completion events in your LMS.</p>
+              <p className="text-xs text-[#64748b]">Add an endpoint to receive enrolment and completion events in your LMS.</p>
             </div>
           )}
           {endpoints.map((ep) => (

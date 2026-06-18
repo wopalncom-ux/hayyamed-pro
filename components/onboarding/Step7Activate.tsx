@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -99,7 +99,7 @@ export default function Step7Activate({ profile, trialDays = 14 }: { profile: Re
                 <p className="text-sm font-medium text-[#111] group-hover:text-[#1a56a0] transition-colors">{step.label}</p>
                 <p className="text-xs text-[#64748b] mt-0.5">{step.sub}</p>
               </div>
-              <svg className="w-4 h-4 text-[#94a3b8] flex-shrink-0 group-hover:text-[#1a56a0] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg className="w-4 h-4 text-[#64748b] flex-shrink-0 group-hover:text-[#1a56a0] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
               </svg>
             </a>

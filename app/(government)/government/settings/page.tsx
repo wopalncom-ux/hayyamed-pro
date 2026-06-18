@@ -1,4 +1,4 @@
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+﻿import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { updateGovernmentSettings } from "./actions";
 
@@ -96,7 +96,7 @@ export default async function GovernmentSettingsPage({ searchParams }: { searchP
               placeholder="e.g. QCHP, SCFHS, DHA"
               className="w-full text-sm border border-[#e2e8f0] rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20 bg-white"
             />
-            <p className="text-xs text-[#94a3b8] mt-1">Abbreviated identifier used in reports and certificates.</p>
+            <p className="text-xs text-[#64748b] mt-1">Abbreviated identifier used in reports and certificates.</p>
           </div>
 
           <div>
@@ -151,7 +151,7 @@ export default async function GovernmentSettingsPage({ searchParams }: { searchP
               placeholder="e.g. physician, nurse, pharmacist, dentist"
               className="w-full text-sm border border-[#e2e8f0] rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20 bg-white"
             />
-            <p className="text-xs text-[#94a3b8] mt-1">
+            <p className="text-xs text-[#64748b] mt-1">
               Comma-separated list. Leave blank to cover all professions.
             </p>
           </div>
@@ -174,7 +174,7 @@ export default async function GovernmentSettingsPage({ searchParams }: { searchP
               placeholder="https://www.qchp.org.qa/renewal"
               className="w-full text-sm border border-[#e2e8f0] rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20 bg-white"
             />
-            <p className="text-xs text-[#94a3b8] mt-1">
+            <p className="text-xs text-[#64748b] mt-1">
               Shown to professionals whose license is expiring soon as a direct renewal link.
             </p>
           </div>

@@ -1,4 +1,4 @@
-import { createAdminClient } from "@/lib/supabase/server";
+﻿import { createAdminClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import AddCountryForm from "@/components/admin/AddCountryForm";
 
@@ -114,7 +114,7 @@ export default async function CountryRulesPage() {
                 )}
               </div>
 
-              <div className="mt-3 pt-3 border-t border-[#f1f5f9] flex items-center justify-between text-xs text-[#94a3b8]">
+              <div className="mt-3 pt-3 border-t border-[#f1f5f9] flex items-center justify-between text-xs text-[#64748b]">
                 <span>{countryRules.length} rule{countryRules.length !== 1 ? "s" : ""}</span>
                 <span>{catCounts[countryCode] ?? 0} categories</span>
               </div>

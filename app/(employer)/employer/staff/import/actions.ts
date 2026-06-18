@@ -50,7 +50,7 @@ async function sendStaffInviteEmail(to: string, name: string, orgName: string) {
           <a href="${registerUrl}" style="display:inline-block;background:#1a56a0;color:white;text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:600;font-size:15px">
             Create Account →
           </a>
-          <p style="color:#94a3b8;font-size:12px;margin:28px 0 0">If you did not expect this, you can safely ignore this email.</p>
+          <p style="color:#64748b;font-size:12px;margin:28px 0 0">If you did not expect this, you can safely ignore this email.</p>
         </div>
       </div>`,
     TextBody: `Hi${name ? " " + name : ""},\n\n${orgName} has added you to Hayya Med Pro.\n\nCreate your account: ${registerUrl}`,

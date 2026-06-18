@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { track } from "@/lib/analytics";
@@ -238,11 +238,11 @@ export default function AIRecommendationsCard(props: Props) {
                           >
                             <div>
                               <p className="text-xs font-medium text-[#111] group-hover:text-[#1a56a0]">{c.title}</p>
-                              <p className="text-[10px] text-[#94a3b8]">{c.provider_name}</p>
+                              <p className="text-[10px] text-[#64748b]">{c.provider_name}</p>
                             </div>
                             <div className="text-right shrink-0 ml-3">
                               <p className="text-xs font-semibold text-[#1a56a0]">{c.credits} cr</p>
-                              <p className="text-[10px] text-[#94a3b8]">{c.is_free ? "Free" : "Paid"}</p>
+                              <p className="text-[10px] text-[#64748b]">{c.is_free ? "Free" : "Paid"}</p>
                             </div>
                           </a>
                         ))}

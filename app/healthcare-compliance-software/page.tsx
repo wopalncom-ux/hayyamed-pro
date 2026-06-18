@@ -257,7 +257,7 @@ export default function HealthcareComplianceSoftwarePage() {
                   {COMPARISON_ROWS.map(([feature, manual, pro]) => (
                     <tr key={feature}>
                       <td className="px-6 py-3 text-sm text-[#374151]">{feature}</td>
-                      <td className="px-4 py-3 text-center text-sm text-[#94a3b8]">{manual}</td>
+                      <td className="px-4 py-3 text-center text-sm text-[#64748b]">{manual}</td>
                       <td className="px-4 py-3 text-center text-sm bg-[#f8fbff]">{pro}</td>
                     </tr>
                   ))}
@@ -301,9 +301,9 @@ export default function HealthcareComplianceSoftwarePage() {
               {PLAN_TIERS.map((t) => (
                 <div key={t.label} className="bg-white rounded-xl border border-[#e2e8f0] p-5 text-center">
                   <p className="text-xs font-semibold text-[#64748b] mb-0.5">{t.label}</p>
-                  <p className="text-xs text-[#94a3b8] mb-3">Up to {t.maxStaff} staff</p>
+                  <p className="text-xs text-[#64748b] mb-3">Up to {t.maxStaff} staff</p>
                   <p className="text-2xl font-black text-[#111]">${t.monthly}</p>
-                  <p className="text-xs text-[#94a3b8] mb-4">/month</p>
+                  <p className="text-xs text-[#64748b] mb-4">/month</p>
                   <Link
                     href="/request-demo"
                     className="block w-full text-center py-2 rounded-lg text-xs font-semibold bg-[#1a56a0] text-white hover:bg-[#154890] transition-colors"
@@ -353,7 +353,7 @@ export default function HealthcareComplianceSoftwarePage() {
             <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
               See Hayya Med Pro for your team
             </h2>
-            <p className="text-[#94a3b8] mb-8 text-sm max-w-xl mx-auto">
+            <p className="text-[#64748b] mb-8 text-sm max-w-xl mx-auto">
               Clinics and hospital departments across Qatar and Saudi Arabia use Hayya Med Pro
               to manage staff CME compliance before QCHP and SCFHS renewal season.
               Request a demo and see the dashboard for your organisation.
@@ -378,11 +378,11 @@ export default function HealthcareComplianceSoftwarePage() {
         {/* Footer */}
         <footer className="py-6 bg-[#f8fafc] border-t border-[#e2e8f0]">
           <div className="max-w-4xl mx-auto px-4 sm:px-6">
-            <p className="text-xs text-[#94a3b8] text-center leading-relaxed">
+            <p className="text-xs text-[#64748b] text-center leading-relaxed">
               Hayya Med Pro supports CME tracking and licensing readiness for GCC healthcare organisations.
               It does not replace official licensing authorities. Users must verify final requirements with QCHP, SCFHS, DHA, or their relevant regulatory body.
             </p>
-            <p className="text-xs text-[#94a3b8] text-center mt-2">
+            <p className="text-xs text-[#64748b] text-center mt-2">
               <Link href="/employers" className="hover:text-[#64748b]">Employer features</Link>
               {" · "}
               <Link href="/pricing" className="hover:text-[#64748b]">Pricing</Link>

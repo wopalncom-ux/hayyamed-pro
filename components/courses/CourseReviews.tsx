@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 
@@ -186,7 +186,7 @@ export default function CourseReviews({
               </div>
               <div className="mb-3">
                 <label className="block text-xs text-[#64748b] mb-1.5">
-                  Review <span className="text-[#94a3b8]">(optional)</span>
+                  Review <span className="text-[#64748b]">(optional)</span>
                 </label>
                 <textarea
                   value={text}
@@ -196,7 +196,7 @@ export default function CourseReviews({
                   placeholder="What did you find most valuable? Would you recommend this course?"
                   className="w-full text-sm border border-[#e2e8f0] rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20 bg-white resize-none"
                 />
-                <p className="text-xs text-[#94a3b8] mt-1 text-right">{text.length}/1000</p>
+                <p className="text-xs text-[#64748b] mt-1 text-right">{text.length}/1000</p>
               </div>
               {error && <p className="text-xs text-[#dc2626] mb-2">{error}</p>}
               <button
@@ -220,7 +220,7 @@ export default function CourseReviews({
                 <div>
                   <StarRating value={review.rating} readonly size="sm" />
                 </div>
-                <span className="text-xs text-[#94a3b8]">
+                <span className="text-xs text-[#64748b]">
                   {new Date(review.created_at).toLocaleDateString("en-GB", {
                     day: "numeric",
                     month: "short",
@@ -232,7 +232,7 @@ export default function CourseReviews({
                 <p className="text-xs font-medium text-[#374151] mb-1">
                   {review.reviewer_name}
                   {review.reviewer_profession && (
-                    <span className="text-[#94a3b8] font-normal"> · {review.reviewer_profession}</span>
+                    <span className="text-[#64748b] font-normal"> · {review.reviewer_profession}</span>
                   )}
                 </p>
               )}

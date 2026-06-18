@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+﻿import { redirect } from "next/navigation";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 
 export default async function UniversityLayout({ children }: { children: React.ReactNode }) {
@@ -27,7 +27,7 @@ export default async function UniversityLayout({ children }: { children: React.R
         <div className="max-w-5xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <a href="/university" className="text-base font-bold text-[#1a56a0] hover:text-[#1547a0]">Hayya Med Pro</a>
-            <span className="text-xs text-[#94a3b8]">University</span>
+            <span className="text-xs text-[#64748b]">University</span>
           </div>
           <div className="flex items-center gap-3">
             {!isVerified && (

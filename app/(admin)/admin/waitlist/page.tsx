@@ -1,4 +1,4 @@
-import { createAdminClient } from "@/lib/supabase/server";
+﻿import { createAdminClient } from "@/lib/supabase/server";
 import WaitlistNotifyButton from "./WaitlistNotifyButton";
 
 export const dynamic = "force-dynamic";
@@ -142,8 +142,8 @@ export default async function WaitlistPage() {
               {signups?.map((s) => (
                 <tr key={s.id} className="hover:bg-[#f8fafc] transition-colors">
                   <td className="px-4 py-3 font-medium text-[#111]">{s.email}</td>
-                  <td className="px-4 py-3 text-[#374151]">{s.profession ?? <span className="text-[#94a3b8]">—</span>}</td>
-                  <td className="px-4 py-3 text-[#374151]">{s.country ?? <span className="text-[#94a3b8]">—</span>}</td>
+                  <td className="px-4 py-3 text-[#374151]">{s.profession ?? <span className="text-[#64748b]">—</span>}</td>
+                  <td className="px-4 py-3 text-[#374151]">{s.country ?? <span className="text-[#64748b]">—</span>}</td>
                   <td className="px-4 py-3 text-[#64748b] text-xs">{s.source ?? "—"}</td>
                   <td className="px-4 py-3 text-[#64748b] text-xs">{new Date(s.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</td>
                   <td className="px-4 py-3">

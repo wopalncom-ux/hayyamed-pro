@@ -1,4 +1,4 @@
-import { createAdminClient } from "@/lib/supabase/server";
+﻿import { createAdminClient } from "@/lib/supabase/server";
 import { requireAdminUser } from "@/lib/adminAuth";
 
 export const metadata = { title: "Monitoring — Hayya Med Pro Admin" };
@@ -142,42 +142,42 @@ export default async function MonitoringPage() {
           <p className={`text-3xl font-bold ${dbOk ? "text-[#16a34a]" : "text-[#dc2626]"}`}>
             {dbOk ? "OK" : "DOWN"}
           </p>
-          <p className="text-xs text-[#94a3b8] mt-1">Supabase PostgreSQL</p>
+          <p className="text-xs text-[#64748b] mt-1">Supabase PostgreSQL</p>
         </div>
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
           <p className="text-xs font-medium text-[#64748b] uppercase tracking-wide mb-1">Audit Errors</p>
           <p className={`text-3xl font-bold ${errorCount > 0 ? "text-[#dc2626]" : "text-[#16a34a]"}`}>
             {errorCount}
           </p>
-          <p className="text-xs text-[#94a3b8] mt-1">actions matching "%error%"</p>
+          <p className="text-xs text-[#64748b] mt-1">actions matching "%error%"</p>
         </div>
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
           <p className="text-xs font-medium text-[#64748b] uppercase tracking-wide mb-1">Notif Queue</p>
           <p className={`text-3xl font-bold ${notifPending > 100 ? "text-[#d97706]" : "text-[#16a34a]"}`}>
             {notifPending}
           </p>
-          <p className="text-xs text-[#94a3b8] mt-1">pending items</p>
+          <p className="text-xs text-[#64748b] mt-1">pending items</p>
         </div>
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
           <p className="text-xs font-medium text-[#64748b] uppercase tracking-wide mb-1">Webhook Queue</p>
           <p className={`text-3xl font-bold ${webhookPending > 50 ? "text-[#d97706]" : "text-[#16a34a]"}`}>
             {webhookPending}
           </p>
-          <p className="text-xs text-[#94a3b8] mt-1">pending deliveries</p>
+          <p className="text-xs text-[#64748b] mt-1">pending deliveries</p>
         </div>
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
           <p className="text-xs font-medium text-[#64748b] uppercase tracking-wide mb-1">Webhooks Failed</p>
           <p className={`text-3xl font-bold ${webhookFailed > 0 ? "text-[#dc2626]" : "text-[#16a34a]"}`}>
             {webhookFailed}
           </p>
-          <p className="text-xs text-[#94a3b8] mt-1">max attempts reached</p>
+          <p className="text-xs text-[#64748b] mt-1">max attempts reached</p>
         </div>
       </div>
 
       {/* ── Cron Job Status ── */}
       <h2 className="text-xs font-semibold text-[#64748b] uppercase tracking-wide mb-3">
         Cron Jobs — 15 Active
-        <span className="ml-2 font-normal normal-case text-[#94a3b8]">
+        <span className="ml-2 font-normal normal-case text-[#64748b]">
           {cronHealthy}/{CRON_JOBS.length} have run in the last 14 days
         </span>
       </h2>
@@ -203,7 +203,7 @@ export default async function MonitoringPage() {
                 <tr key={job.slug} className="hover:bg-[#f8fafc]">
                   <td className="px-5 py-3">
                     <p className="font-medium text-[#111]">{job.label}</p>
-                    <p className="text-xs text-[#94a3b8]">{job.description}</p>
+                    <p className="text-xs text-[#64748b]">{job.description}</p>
                   </td>
                   <td className="px-5 py-3 text-xs text-[#64748b] whitespace-nowrap">{job.schedule}</td>
                   <td className="px-5 py-3 text-xs text-[#64748b]">
@@ -227,7 +227,7 @@ export default async function MonitoringPage() {
           </tbody>
         </table>
         <div className="px-5 py-3 border-t border-[#f1f5f9] bg-[#f8fafc]">
-          <p className="text-xs text-[#94a3b8]">
+          <p className="text-xs text-[#64748b]">
             Last-run data written by <code className="bg-white border border-[#e2e8f0] px-1 rounded">pingCronMonitor()</code> → audit_logs (action = &quot;cron.completed&quot;, metadata.job = slug).
             {" "}Scheduled in GCP Cloud Scheduler (me-central1).
           </p>

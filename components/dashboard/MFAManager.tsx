@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useCallback } from "react";
 import { createClient } from "@/lib/supabase/client";
@@ -181,7 +181,7 @@ export default function MFAManager() {
           <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${isEnabled ? "bg-[#dcfce7]" : "bg-[#f1f5f9]"}`}>
             {isEnabled
               ? <ShieldCheck className="w-5 h-5 text-[#16a34a]" />
-              : <ShieldOff className="w-5 h-5 text-[#94a3b8]" />
+              : <ShieldOff className="w-5 h-5 text-[#64748b]" />
             }
           </div>
           <div>
@@ -217,7 +217,7 @@ export default function MFAManager() {
         <div>
           <div className="flex items-center justify-between mb-4">
             <p className="text-sm font-medium text-[#111]">Step 1 — Scan this QR code</p>
-            <button onClick={cancelSetup} className="text-[#94a3b8] hover:text-[#374151]"><X className="w-4 h-4" /></button>
+            <button onClick={cancelSetup} className="text-[#64748b] hover:text-[#374151]"><X className="w-4 h-4" /></button>
           </div>
           {enrollData ? (
             <div className="flex flex-col items-center gap-4">
@@ -247,7 +247,7 @@ export default function MFAManager() {
         <form onSubmit={verifyEnrollment}>
           <div className="flex items-center justify-between mb-4">
             <p className="text-sm font-medium text-[#111]">Step 2 — Enter the 6-digit code</p>
-            <button type="button" onClick={cancelSetup} className="text-[#94a3b8] hover:text-[#374151]"><X className="w-4 h-4" /></button>
+            <button type="button" onClick={cancelSetup} className="text-[#64748b] hover:text-[#374151]"><X className="w-4 h-4" /></button>
           </div>
           <p className="text-sm text-[#64748b] mb-4">
             Open your authenticator app and enter the code for Hayya Med Pro.
@@ -369,7 +369,7 @@ export default function MFAManager() {
                 <button onClick={copyRecoveryCodes} className="flex-1 border border-[#e2e8f0] text-[#374151] py-2 rounded-lg text-sm font-medium hover:bg-[#f8fafc] transition-colors">Copy</button>
                 <button onClick={downloadRecoveryCodes} className="flex-1 inline-flex items-center justify-center gap-1 border border-[#e2e8f0] text-[#374151] py-2 rounded-lg text-sm font-medium hover:bg-[#f8fafc] transition-colors"><Download className="w-3.5 h-3.5" />Download</button>
               </div>
-              <button onClick={() => setRecoveryCodes([])} className="text-xs text-[#94a3b8] hover:text-[#64748b] w-full text-center">Hide codes</button>
+              <button onClick={() => setRecoveryCodes([])} className="text-xs text-[#64748b] hover:text-[#64748b] w-full text-center">Hide codes</button>
             </div>
           )}
 

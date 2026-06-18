@@ -1,4 +1,4 @@
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+﻿import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import LicenseCountdownCard from "@/components/dashboard/LicenseCountdownCard";
 import LicenseEditForm from "@/components/dashboard/LicenseEditForm";
@@ -341,12 +341,12 @@ export default async function LicensesPage() {
               return (
                 <div key={d} className={`flex items-center justify-between py-2 px-3 rounded-lg text-sm ${fired ? "bg-[#f8fafc]" : "bg-[#f0f7ff]"}`}>
                   <div className="flex items-center gap-2">
-                    <span className={`w-2 h-2 rounded-full flex-shrink-0 ${fired ? "bg-[#94a3b8]" : "bg-[#1a56a0]"}`} />
-                    <span className={fired ? "text-[#94a3b8] line-through" : "text-[#374151]"}>
+                    <span className={`w-2 h-2 rounded-full flex-shrink-0 ${fired ? "bg-[#64748b]" : "bg-[#1a56a0]"}`} />
+                    <span className={fired ? "text-[#64748b] line-through" : "text-[#374151]"}>
                       {d} days before expiry
                     </span>
                   </div>
-                  <span className={`text-xs ${fired ? "text-[#94a3b8]" : "text-[#64748b]"}`}>
+                  <span className={`text-xs ${fired ? "text-[#64748b]" : "text-[#64748b]"}`}>
                     {reminderDate.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
                   </span>
                 </div>

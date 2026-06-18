@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useCallback } from "react";
 import { createClient } from "@/lib/supabase/client";
@@ -147,7 +147,7 @@ export default function PasskeyManager() {
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">
           <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${factors.length > 0 ? "bg-[#dcfce7]" : "bg-[#f1f5f9]"}`}>
-            <Key className={`w-5 h-5 ${factors.length > 0 ? "text-[#16a34a]" : "text-[#94a3b8]"}`} />
+            <Key className={`w-5 h-5 ${factors.length > 0 ? "text-[#16a34a]" : "text-[#64748b]"}`} />
           </div>
           <div>
             <h2 className="text-base font-semibold text-[#111]">Passkeys</h2>

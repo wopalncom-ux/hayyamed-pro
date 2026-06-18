@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -115,7 +115,7 @@ export default function CountryRuleForm({ rule, authorities }: Props) {
         </div>
         <div className="flex items-center gap-3">
           {saved && <span className="text-xs text-[#16a34a] font-medium">Saved</span>}
-          <span className="text-xs text-[#94a3b8]">{expanded ? "▲" : "▼"}</span>
+          <span className="text-xs text-[#64748b]">{expanded ? "▲" : "▼"}</span>
         </div>
       </button>
 

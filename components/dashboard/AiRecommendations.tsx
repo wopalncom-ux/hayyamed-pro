@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { track } from "@/lib/analytics";
@@ -151,7 +151,7 @@ export default function AiRecommendations({
                     style={{ width: `${Math.min(100, (g.earned / (g.earned + g.needed)) * 100)}%` }}
                   />
                 </div>
-                <p className="text-xs text-[#94a3b8] mt-1">{g.earned} earned of {g.earned + g.needed} required</p>
+                <p className="text-xs text-[#64748b] mt-1">{g.earned} earned of {g.earned + g.needed} required</p>
               </div>
             ))}
           </div>

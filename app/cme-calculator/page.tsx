@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import CmeCalculatorClient from "./CmeCalculatorClient";
 
@@ -150,7 +150,7 @@ export default function CmeCalculatorPage() {
         <section className="px-4 sm:px-6 py-10">
           <div className="max-w-3xl mx-auto">
             <CmeCalculatorClient />
-            <p className="text-xs text-[#94a3b8] text-center mt-4">
+            <p className="text-xs text-[#64748b] text-center mt-4">
               Hayya Med Pro supports CME/CPD tracking. It does not issue licenses and does not replace official licensing authorities — QCHP, SCFHS, DHA, DOH, NHRA, OMSB, or MOH Kuwait. Always verify final requirements with your authority.
             </p>
           </div>

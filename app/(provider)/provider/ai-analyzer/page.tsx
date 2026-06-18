@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -344,7 +344,7 @@ export default function ProviderAIAnalyzerPage() {
               </div>
             </div>
 
-            <p className="text-[10px] text-[#94a3b8] text-center leading-relaxed">
+            <p className="text-[10px] text-[#64748b] text-center leading-relaxed">
               Market estimates are based on anonymized, aggregated platform data and GCC healthcare compliance patterns.
               Verify all projections independently before making business decisions.
             </p>
@@ -353,7 +353,7 @@ export default function ProviderAIAnalyzerPage() {
       </AnimatePresence>
 
       {!result && !loading && !error && (
-        <div className="text-center py-16 text-[#94a3b8]">
+        <div className="text-center py-16 text-[#64748b]">
           <svg className="w-12 h-12 mx-auto mb-4 text-[#e2e8f0]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605" />
           </svg>

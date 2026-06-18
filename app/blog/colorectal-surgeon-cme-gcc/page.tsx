@@ -1,4 +1,4 @@
-import BlogPostLayout from "@/components/BlogPostLayout";
+﻿import BlogPostLayout from "@/components/BlogPostLayout";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -94,7 +94,7 @@ export default function Page() {
         <h2>Documentation and Renewal</h2>
         <p>All GCC authorities require original certificates showing activity name, date, credit value, and accrediting body. QCHP uses its online practitioner portal; SCFHS uses Mumaris+. Colorectal surgeons practising across multiple jurisdictions must track compliance separately in each system. Hayya Med Pro provides cross-country CME tracking with automated gap analysis for each authority.</p>
 
-        <p style={{ fontSize: "0.75rem", color: "#94a3b8", marginTop: "2rem", paddingTop: "1rem", borderTop: "1px solid #e2e8f0" }}>
+        <p style={{ fontSize: "0.75rem", color: "#64748b", marginTop: "2rem", paddingTop: "1rem", borderTop: "1px solid #e2e8f0" }}>
           Hayya Med Pro supports CME tracking and licensing readiness. It does not issue licenses and does not replace official licensing authorities. Verify requirements with QCHP, SCFHS, DHA, or the relevant GCC regulatory body.
         </p>
       </BlogPostLayout>

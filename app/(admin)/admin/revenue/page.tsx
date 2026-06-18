@@ -1,4 +1,4 @@
-import { createAdminClient } from "@/lib/supabase/server";
+﻿import { createAdminClient } from "@/lib/supabase/server";
 
 // Monthly recurring revenue per plan/tier/interval
 function calcMrr(plan: string, tier: string | null, interval: string | null): number {
@@ -134,7 +134,7 @@ export default async function AdminRevenuePage() {
               />
             ))}
             {totalPaid === 0 && (
-              <p className="text-sm text-[#94a3b8] py-2">No paid subscriptions yet.</p>
+              <p className="text-sm text-[#64748b] py-2">No paid subscriptions yet.</p>
             )}
           </div>
 
@@ -148,7 +148,7 @@ export default async function AdminRevenuePage() {
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-6">
           <h2 className="text-sm font-semibold text-[#111] mb-4">Recent Upgrades</h2>
           {recentSubs.length === 0 ? (
-            <p className="text-sm text-[#94a3b8]">No upgrades yet.</p>
+            <p className="text-sm text-[#64748b]">No upgrades yet.</p>
           ) : (
             <div className="space-y-2.5">
               {recentSubs.map((s, i) => {
@@ -163,7 +163,7 @@ export default async function AdminRevenuePage() {
                   <div key={i} className="flex items-center justify-between py-1.5 border-b border-[#f8fafc] last:border-0">
                     <div>
                       <p className="text-xs font-medium text-[#111]">{label}</p>
-                      <p className="text-[10px] text-[#94a3b8]">{when}</p>
+                      <p className="text-[10px] text-[#64748b]">{when}</p>
                     </div>
                     <span className="text-xs font-semibold text-[#16a34a]">+${mrr.toFixed(0)}/mo</span>
                   </div>
@@ -184,7 +184,7 @@ export default async function AdminRevenuePage() {
             <p className="text-xs text-[#64748b] mt-1">Active trials</p>
           </div>
           <div className={`rounded-xl p-4 text-center border ${trialsExpiringSoon > 0 ? "bg-[#fff7ed] border-[#fed7aa]" : "bg-[#f8fafc] border-[#e2e8f0]"}`}>
-            <p className={`text-2xl font-bold ${trialsExpiringSoon > 0 ? "text-[#d97706]" : "text-[#94a3b8]"}`}>{trialsExpiringSoon}</p>
+            <p className={`text-2xl font-bold ${trialsExpiringSoon > 0 ? "text-[#d97706]" : "text-[#64748b]"}`}>{trialsExpiringSoon}</p>
             <p className="text-xs text-[#64748b] mt-1">Expiring in 3 days</p>
           </div>
           <div className="bg-[#f0fdf4] border border-[#bbf7d0] rounded-xl p-4 text-center">
@@ -215,7 +215,7 @@ export default async function AdminRevenuePage() {
                   style={{ height: `${heightPct}%`, minHeight: d.count > 0 ? "4px" : "1px", opacity: d.count > 0 ? 1 : 0.15 }}
                 />
                 {showLabel && (
-                  <span className="text-[8px] text-[#94a3b8] rotate-0 whitespace-nowrap" style={{ fontSize: "8px" }}>
+                  <span className="text-[8px] text-[#64748b] rotate-0 whitespace-nowrap" style={{ fontSize: "8px" }}>
                     {d.label}
                   </span>
                 )}
@@ -233,7 +233,7 @@ function KpiCard({ label, value, sub, green }: { label: string; value: string; s
     <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
       <p className="text-xs font-semibold text-[#64748b] uppercase tracking-wide mb-2">{label}</p>
       <p className={`text-2xl font-bold mb-1 ${green ? "text-[#16a34a]" : "text-[#1a56a0]"}`}>{value}</p>
-      <p className="text-xs text-[#94a3b8]">{sub}</p>
+      <p className="text-xs text-[#64748b]">{sub}</p>
     </div>
   );
 }

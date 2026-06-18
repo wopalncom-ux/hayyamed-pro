@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
@@ -222,7 +222,7 @@ export default function CmeCalculatorClient() {
               value={credits}
               onChange={(e) => setCredits(e.target.value)}
               placeholder={required !== null ? `0 – ${required}` : "e.g. 25"}
-              className="w-full border border-[#e2e8f0] rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#1a56a0] text-[#111] placeholder:text-[#94a3b8]"
+              className="w-full border border-[#e2e8f0] rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#1a56a0] text-[#111] placeholder:text-[#64748b]"
             />
             {rule && required !== null && (
               <p className="text-[11px] text-[#64748b] mt-1">
@@ -321,7 +321,7 @@ export default function CmeCalculatorClient() {
             </div>
           </div>
         ) : (
-          <div className="border-t border-[#e2e8f0] px-6 py-8 text-center text-sm text-[#94a3b8]">
+          <div className="border-t border-[#e2e8f0] px-6 py-8 text-center text-sm text-[#64748b]">
             Select your country, profession, and current credits above to see your compliance gap.
           </div>
         )}
@@ -352,7 +352,7 @@ export default function CmeCalculatorClient() {
             </tbody>
           </table>
         </div>
-        <p className="text-xs text-[#94a3b8] mt-3">SCFHS and DOH/OMSB vary by profession. Use the calculator above for your exact requirement.</p>
+        <p className="text-xs text-[#64748b] mt-3">SCFHS and DOH/OMSB vary by profession. Use the calculator above for your exact requirement.</p>
       </section>
 
       {/* Why track automatically */}
@@ -379,7 +379,7 @@ export default function CmeCalculatorClient() {
             Start tracking free — no credit card
             <span aria-hidden="true">→</span>
           </Link>
-          <p className="text-xs text-[#94a3b8] mt-3">14-day Pro trial included · Free forever after</p>
+          <p className="text-xs text-[#64748b] mt-3">14-day Pro trial included · Free forever after</p>
         </div>
       </section>
     </>

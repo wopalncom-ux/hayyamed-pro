@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { track } from "@/lib/analytics";
@@ -132,7 +132,7 @@ export default function UpgradeButton({
                 onChange={(e) => { setPromoInput(e.target.value.toUpperCase()); setPromoError(null); }}
                 onKeyDown={(e) => e.key === "Enter" && applyPromoCode()}
                 placeholder="PROMO CODE"
-                className="flex-1 text-xs border border-[#e2e8f0] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20 placeholder:text-[#94a3b8] uppercase"
+                className="flex-1 text-xs border border-[#e2e8f0] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20 placeholder:text-[#64748b] uppercase"
                 maxLength={50}
                 autoFocus
               />

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { createAdminClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
@@ -144,7 +144,7 @@ export default async function StatusPage() {
             <h1 className={`text-xl font-bold ${banner.textColor}`}>{banner.title}</h1>
           </div>
           <p className={`text-sm ${banner.textColor} opacity-80 ml-9`}>{banner.text}</p>
-          <p className="text-xs text-[#94a3b8] mt-3 ml-9">
+          <p className="text-xs text-[#64748b] mt-3 ml-9">
             {operationalCount} of {services.length} services operational
           </p>
         </div>
@@ -179,22 +179,22 @@ export default async function StatusPage() {
             <h2 className="text-sm font-semibold text-[#374151]">Past incidents</h2>
           </div>
           <div className="px-6 py-8 text-center">
-            <p className="text-sm text-[#94a3b8]">No incidents reported in the last 90 days.</p>
+            <p className="text-sm text-[#64748b]">No incidents reported in the last 90 days.</p>
           </div>
         </div>
 
         {/* Footer */}
         <div className="text-center space-y-2">
-          <p className="text-xs text-[#94a3b8]">
+          <p className="text-xs text-[#64748b]">
             Last checked: <time dateTime={checkedAt}>{checkedStr}</time>
           </p>
-          <p className="text-xs text-[#94a3b8]">
+          <p className="text-xs text-[#64748b]">
             Issues? Contact{" "}
             <a href="mailto:support@hayyamed.pro" className="text-[#1a56a0] hover:underline">
               support@hayyamed.pro
             </a>
           </p>
-          <p className="text-xs text-[#94a3b8]">
+          <p className="text-xs text-[#64748b]">
             <a href="/" className="hover:text-[#1a56a0] transition-colors">← Back to Hayya Med Pro</a>
           </p>
         </div>

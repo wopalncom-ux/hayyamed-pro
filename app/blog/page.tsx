@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import BlogList, { type BlogPost } from "@/components/blog/BlogList";
 
@@ -137,7 +137,7 @@ export default function BlogIndexPage() {
 
         <div className="mt-12 bg-[#0f1f3d] rounded-2xl px-8 py-10 text-center">
           <h2 className="text-xl font-bold text-white mb-3">Track your CME while you read</h2>
-          <p className="text-[#94a3b8] mb-5 text-sm max-w-sm mx-auto">Log activities, upload certificates, and get renewal alerts — free for all GCC healthcare professionals.</p>
+          <p className="text-[#64748b] mb-5 text-sm max-w-sm mx-auto">Log activities, upload certificates, and get renewal alerts — free for all GCC healthcare professionals.</p>
           <Link href="/register" className="inline-flex items-center gap-2 bg-[#1a56a0] hover:bg-[#1d4ed8] text-white font-bold px-7 py-3.5 rounded-xl text-sm transition-colors">Start tracking free →</Link>
         </div>
       </main>

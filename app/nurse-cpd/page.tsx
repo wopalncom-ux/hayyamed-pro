@@ -228,7 +228,7 @@ export default function NurseCpdPage() {
                 See what&apos;s free vs Pro
               </Link>
             </div>
-            <p className="text-xs text-[#94a3b8] mt-3">No credit card required · 14-day Pro trial included</p>
+            <p className="text-xs text-[#64748b] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>
 
           {/* GCC comparison table */}
@@ -379,7 +379,7 @@ export default function NurseCpdPage() {
             <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
               Never miss a nursing CPD deadline
             </h2>
-            <p className="text-[#94a3b8] text-sm max-w-xl mx-auto mb-6">
+            <p className="text-[#64748b] text-sm max-w-xl mx-auto mb-6">
               Hayya Med Pro tracks your credits, enforces online caps, flags mandatory requirements, and sends renewal reminders —
               for Qatar, Saudi Arabia, UAE, Kuwait, Bahrain, and Oman.
             </p>

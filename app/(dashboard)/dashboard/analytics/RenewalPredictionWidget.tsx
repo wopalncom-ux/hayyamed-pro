@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 
@@ -207,12 +207,12 @@ export default function RenewalPredictionWidget({
       </div>
 
       {prediction._fallback && (
-        <p className="mt-4 text-xs text-[#94a3b8]">
+        <p className="mt-4 text-xs text-[#64748b]">
           Forecast generated from rule-based analysis (AI unavailable).
         </p>
       )}
 
-      <p className="mt-4 text-xs text-[#94a3b8]">
+      <p className="mt-4 text-xs text-[#64748b]">
         Powered by Claude · Based on verified activities only · 5 forecasts/hour
       </p>
     </div>
@@ -240,7 +240,7 @@ function MiniStat({
     <div className="bg-[#f8fafc] rounded-lg p-3 border border-[#e2e8f0]">
       <p className="text-xs text-[#64748b] mb-0.5">{label}</p>
       <p className={`text-base font-bold ${valueClass}`}>{value}</p>
-      <p className="text-xs text-[#94a3b8]">{sub}</p>
+      <p className="text-xs text-[#64748b]">{sub}</p>
     </div>
   );
 }

@@ -373,7 +373,7 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ i
               existingReview={existingReview ? { rating: existingReview.rating, review_text: existingReview.review_text } : null}
             />
             {!isCompleted && !user && (
-              <p className="text-xs text-[#94a3b8] mt-4">
+              <p className="text-xs text-[#64748b] mt-4">
                 <a href="/register" className="text-[#1a56a0] hover:underline font-medium">Create a free account</a>
                 {" "}to enroll and review this course.
               </p>

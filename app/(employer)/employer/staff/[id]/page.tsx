@@ -13,7 +13,7 @@ function statusBadge(s: string) {
 
 function PrivacyNote() {
   return (
-    <p className="text-xs text-[#94a3b8] italic">
+    <p className="text-xs text-[#64748b] italic">
       This information is private — the staff member has not consented to sharing it with employers.
     </p>
   );
@@ -195,7 +195,7 @@ export default async function StaffDetailPage({ params }: { params: Promise<{ id
               )}
             </div>
           ) : (
-            <p className="text-sm text-[#94a3b8]">No CME wallet set up yet.</p>
+            <p className="text-sm text-[#64748b]">No CME wallet set up yet.</p>
           )}
         </div>
 
@@ -250,7 +250,7 @@ export default async function StaffDetailPage({ params }: { params: Promise<{ id
                 </div>
               )}
               {!licenseExpiry && licenses.length === 0 && (
-                <p className="text-xs text-[#94a3b8]">No license data available.</p>
+                <p className="text-xs text-[#64748b]">No license data available.</p>
               )}
             </div>
           )}
@@ -262,7 +262,7 @@ export default async function StaffDetailPage({ params }: { params: Promise<{ id
         <h2 className="text-sm font-semibold text-[#0f1f3d] mb-4">
           Recent CME Activity
           {showActivities && activities.length > 0 && (
-            <span className="ml-2 text-xs font-normal text-[#94a3b8]">
+            <span className="ml-2 text-xs font-normal text-[#64748b]">
               (employer-visible, verified only)
             </span>
           )}
@@ -270,7 +270,7 @@ export default async function StaffDetailPage({ params }: { params: Promise<{ id
         {!showActivities ? (
           <PrivacyNote />
         ) : activities.length === 0 ? (
-          <p className="text-sm text-[#94a3b8]">No verified employer-visible activities yet.</p>
+          <p className="text-sm text-[#64748b]">No verified employer-visible activities yet.</p>
         ) : (
           <div className="space-y-0 divide-y divide-[#f1f5f9]">
             {activities.map((a) => (
@@ -285,7 +285,7 @@ export default async function StaffDetailPage({ params }: { params: Promise<{ id
                 </div>
                 <div className="flex-shrink-0 text-right">
                   <p className="text-sm font-bold text-[#1a56a0]">+{a.credits}</p>
-                  <p className="text-xs text-[#94a3b8]">credits</p>
+                  <p className="text-xs text-[#64748b]">credits</p>
                 </div>
               </div>
             ))}
@@ -319,7 +319,7 @@ export default async function StaffDetailPage({ params }: { params: Promise<{ id
         </div>
       )}
 
-      <p className="text-xs text-[#94a3b8] mt-6 text-center">
+      <p className="text-xs text-[#64748b] mt-6 text-center">
         This view shows only data the staff member has consented to share with employers.
       </p>
     </div>

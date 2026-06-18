@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import { saveAIModuleSettings } from "./actions";
@@ -294,7 +294,7 @@ function ModuleCard({
         )}
         {(!enabled || model.provider === "disabled") && (
           <div className="mt-3 pt-3 border-t border-[#f1f5f9]">
-            <span className="text-xs text-[#94a3b8]">Module disabled — no AI cost</span>
+            <span className="text-xs text-[#64748b]">Module disabled — no AI cost</span>
           </div>
         )}
       </div>
@@ -380,7 +380,7 @@ export default function AIModulesPage() {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-4">
           <p className="text-xs text-[#64748b] mb-1">Modules active</p>
-          <p className="text-2xl font-bold text-[#0f1f3d]">{enabledCount} <span className="text-sm font-normal text-[#94a3b8]">/ {AI_MODULES.length}</span></p>
+          <p className="text-2xl font-bold text-[#0f1f3d]">{enabledCount} <span className="text-sm font-normal text-[#64748b]">/ {AI_MODULES.length}</span></p>
         </div>
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-4">
           <p className="text-xs text-[#64748b] mb-1">Est. monthly cost</p>
@@ -395,7 +395,7 @@ export default function AIModulesPage() {
               </span>
             ))}
             {Object.values(providerBreakdown).every((v) => v === 0) && (
-              <span className="text-xs text-[#94a3b8]">None</span>
+              <span className="text-xs text-[#64748b]">None</span>
             )}
           </div>
         </div>

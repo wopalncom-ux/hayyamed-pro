@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+﻿import { redirect } from "next/navigation";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import WeeklyEnrollmentChart, { WeekBucket } from "@/components/provider/WeeklyEnrollmentChart";
 
@@ -171,7 +171,7 @@ export default async function ProviderAnalyticsPage() {
             Enrollment performance, completion rates, and learner demographics across all your courses.
           </p>
         </div>
-        <span className="text-xs text-[#94a3b8] mt-1 whitespace-nowrap">
+        <span className="text-xs text-[#64748b] mt-1 whitespace-nowrap">
           Updated {now.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}
         </span>
       </div>
@@ -181,7 +181,7 @@ export default async function ProviderAnalyticsPage() {
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-5 sm:col-span-1 lg:col-span-1">
           <p className="text-xs text-[#64748b] font-medium uppercase tracking-wide mb-1">Total Enrollments</p>
           <p className="text-3xl font-bold text-[#1a56a0]">{totalEnrollments.toLocaleString()}</p>
-          <p className="text-xs text-[#94a3b8] mt-1">all time</p>
+          <p className="text-xs text-[#64748b] mt-1">all time</p>
         </div>
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
           <p className="text-xs text-[#64748b] font-medium uppercase tracking-wide mb-1">This Month</p>
@@ -197,22 +197,22 @@ export default async function ProviderAnalyticsPage() {
           <p className={`text-3xl font-bold ${overallCompletionRate >= 70 ? "text-[#16a34a]" : overallCompletionRate >= 40 ? "text-[#d97706]" : "text-[#dc2626]"}`}>
             {overallCompletionRate}%
           </p>
-          <p className="text-xs text-[#94a3b8] mt-1">{totalCompletions} completions</p>
+          <p className="text-xs text-[#64748b] mt-1">{totalCompletions} completions</p>
         </div>
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
           <p className="text-xs text-[#64748b] font-medium uppercase tracking-wide mb-1">CME Credits</p>
           <p className="text-3xl font-bold text-[#0f1f3d]">{creditHoursDelivered.toLocaleString()}</p>
-          <p className="text-xs text-[#94a3b8] mt-1">delivered</p>
+          <p className="text-xs text-[#64748b] mt-1">delivered</p>
         </div>
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
           <p className="text-xs text-[#64748b] font-medium uppercase tracking-wide mb-1">Est. Revenue</p>
           <p className="text-3xl font-bold text-[#16a34a]">${estimatedRevenue.toLocaleString()}</p>
-          <p className="text-xs text-[#94a3b8] mt-1">all time (paid)</p>
+          <p className="text-xs text-[#64748b] mt-1">all time (paid)</p>
         </div>
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
           <p className="text-xs text-[#64748b] font-medium uppercase tracking-wide mb-1">This Month Rev.</p>
           <p className="text-3xl font-bold text-[#0f1f3d]">${thisMonthRevenue.toLocaleString()}</p>
-          <p className="text-xs text-[#94a3b8] mt-1">estimated</p>
+          <p className="text-xs text-[#64748b] mt-1">estimated</p>
         </div>
       </div>
 
@@ -220,7 +220,7 @@ export default async function ProviderAnalyticsPage() {
       <div className="bg-white rounded-xl border border-[#e2e8f0] p-6 mb-6">
         <h2 className="text-sm font-semibold text-[#0f1f3d] mb-4">Daily enrollments — last 30 days</h2>
         {recentEnrollments.length === 0 ? (
-          <p className="text-sm text-[#94a3b8]">No enrollments in the last 30 days.</p>
+          <p className="text-sm text-[#64748b]">No enrollments in the last 30 days.</p>
         ) : (
           <div className="flex items-end gap-0.5 h-20 overflow-x-auto">
             {last30Days.map((day) => {
@@ -235,7 +235,7 @@ export default async function ProviderAnalyticsPage() {
                     style={{ height: `${Math.max(heightPct, count > 0 ? 4 : 2)}%` }}
                   />
                   {(dayLabel === 1 || dayLabel % 7 === 0) && (
-                    <span className="text-[8px] text-[#94a3b8]">{dayLabel}</span>
+                    <span className="text-[8px] text-[#64748b]">{dayLabel}</span>
                   )}
                 </div>
               );
@@ -250,7 +250,7 @@ export default async function ProviderAnalyticsPage() {
           <h2 className="text-sm font-semibold text-[#0f1f3d]">Course performance</h2>
         </div>
         {coursePerf.length === 0 ? (
-          <div className="px-6 py-8 text-center text-sm text-[#94a3b8]">No courses yet.</div>
+          <div className="px-6 py-8 text-center text-sm text-[#64748b]">No courses yet.</div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm min-w-[600px]">
@@ -269,7 +269,7 @@ export default async function ProviderAnalyticsPage() {
                   <tr key={c.id} className="hover:bg-[#f8fafc] transition-colors">
                     <td className="px-6 py-3">
                       <p className="font-medium text-[#0f1f3d] truncate max-w-[220px]">{c.title}</p>
-                      <p className="text-xs text-[#94a3b8]">{c.credits} credits · {c.status}</p>
+                      <p className="text-xs text-[#64748b]">{c.credits} credits · {c.status}</p>
                     </td>
                     <td className="px-4 py-3 text-right font-semibold text-[#0f1f3d]">{c.enrolled}</td>
                     <td className="px-4 py-3 text-right text-[#16a34a] font-medium">{c.completed}</td>
@@ -277,7 +277,7 @@ export default async function ProviderAnalyticsPage() {
                       <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
                         c.completionRate >= 70 ? "bg-[#dcfce7] text-[#15803d]"
                         : c.completionRate >= 40 ? "bg-[#fef9c3] text-[#92400e]"
-                        : c.enrolled === 0 ? "bg-[#f1f5f9] text-[#94a3b8]"
+                        : c.enrolled === 0 ? "bg-[#f1f5f9] text-[#64748b]"
                         : "bg-[#fee2e2] text-[#dc2626]"
                       }`}>
                         {c.completionRate}%
@@ -288,7 +288,7 @@ export default async function ProviderAnalyticsPage() {
                       {c.thisMonth > 0 ? (
                         <span className="text-xs font-semibold text-[#1a56a0]">+{c.thisMonth}</span>
                       ) : (
-                        <span className="text-xs text-[#94a3b8]">—</span>
+                        <span className="text-xs text-[#64748b]">—</span>
                       )}
                     </td>
                   </tr>
@@ -304,7 +304,7 @@ export default async function ProviderAnalyticsPage() {
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-6">
           <h2 className="text-sm font-semibold text-[#0f1f3d] mb-4">Learners by country</h2>
           {topCountries.length === 0 ? (
-            <p className="text-sm text-[#94a3b8]">No enrollment data yet.</p>
+            <p className="text-sm text-[#64748b]">No enrollment data yet.</p>
           ) : (
             <div className="space-y-3">
               {topCountries.map(([country, count]) => (
@@ -325,7 +325,7 @@ export default async function ProviderAnalyticsPage() {
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-6">
           <h2 className="text-sm font-semibold text-[#0f1f3d] mb-4">Learners by profession</h2>
           {topProfessions.length === 0 ? (
-            <p className="text-sm text-[#94a3b8]">No enrollment data yet.</p>
+            <p className="text-sm text-[#64748b]">No enrollment data yet.</p>
           ) : (
             <div className="space-y-3">
               {topProfessions.map(([profession, count]) => (

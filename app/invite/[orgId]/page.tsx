@@ -125,7 +125,7 @@ export default async function InvitePage({ params }: Props) {
                   </li>
                 ))}
               </ul>
-              <p className="text-xs text-[#94a3b8] mt-3">
+              <p className="text-xs text-[#64748b] mt-3">
                 You control your privacy settings. Your CME activities and certificates are always private to you.
               </p>
             </div>
@@ -155,13 +155,13 @@ export default async function InvitePage({ params }: Props) {
             >
               Join {org.name} on Hayya Med Pro →
             </a>
-            <p className="text-center text-xs text-[#94a3b8] mt-3">
+            <p className="text-center text-xs text-[#64748b] mt-3">
               Free account · 14-day Pro trial · No credit card required
             </p>
           </div>
         </div>
 
-        <div className="flex items-center justify-center gap-6 text-xs text-[#94a3b8]">
+        <div className="flex items-center justify-center gap-6 text-xs text-[#64748b]">
           <span>Privacy-first · Your data stays yours</span>
           <span>·</span>
           <a href="/privacy" className="hover:text-[#64748b]">Privacy Policy</a>

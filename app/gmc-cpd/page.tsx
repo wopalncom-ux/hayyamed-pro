@@ -258,7 +258,7 @@ export default function GmcCpdPage() {
 
       {/* Disclaimer */}
       <section style={{ background: "#f8fafc", padding: "32px 24px", borderTop: "1px solid #e2e8f0" }}>
-        <p style={{ maxWidth: 800, margin: "0 auto", textAlign: "center", color: "#94a3b8", fontSize: 13, lineHeight: 1.7 }}>
+        <p style={{ maxWidth: 800, margin: "0 auto", textAlign: "center", color: "#64748b", fontSize: 13, lineHeight: 1.7 }}>
           Hayya Med PRO supports CME/CPD tracking and licensing readiness. It does not issue licences and does not replace official GMC or royal college requirements. Always verify final requirements with the General Medical Council (gmc-uk.org) and your relevant royal college.
         </p>
       </section>

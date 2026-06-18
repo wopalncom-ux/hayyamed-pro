@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -142,7 +142,7 @@ export default function DashboardNav({
 
           {/* User identity */}
           <div className="px-4 py-3 border-b border-[#e2e8f0]">
-            <p className="text-xs text-[#94a3b8] uppercase tracking-wide mb-0.5">Signed in as</p>
+            <p className="text-xs text-[#64748b] uppercase tracking-wide mb-0.5">Signed in as</p>
             <p className="text-sm font-medium text-[#111] truncate">{userName}</p>
           </div>
 
@@ -166,7 +166,7 @@ export default function DashboardNav({
 
           {/* Drawer footer */}
           <div className="px-4 py-4 border-t border-[#e2e8f0]">
-            <a href="/help" className="text-xs text-[#94a3b8] hover:text-[#374151] transition-colors">
+            <a href="/help" className="text-xs text-[#64748b] hover:text-[#374151] transition-colors">
               Help & FAQ
             </a>
           </div>

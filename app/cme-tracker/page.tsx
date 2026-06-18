@@ -192,7 +192,7 @@ export default function CmeTrackerPage() {
                 See pricing
               </Link>
             </div>
-            <p className="text-xs text-[#94a3b8]">Free plan available · 14-day Pro trial · No credit card required</p>
+            <p className="text-xs text-[#64748b]">Free plan available · 14-day Pro trial · No credit card required</p>
           </div>
         </section>
 
@@ -412,7 +412,7 @@ export default function CmeTrackerPage() {
             <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
               Start tracking your CME today
             </h2>
-            <p className="text-[#94a3b8] mb-8 text-sm max-w-xl mx-auto">
+            <p className="text-[#64748b] mb-8 text-sm max-w-xl mx-auto">
               Join healthcare professionals across Qatar, Saudi Arabia, UAE, Kuwait, Bahrain, and Oman
               who track their compliance with Hayya Med Pro. Free to start — no credit card needed.
             </p>
@@ -436,12 +436,12 @@ export default function CmeTrackerPage() {
         {/* Disclaimer */}
         <footer className="py-6 bg-[#f8fafc] border-t border-[#e2e8f0]">
           <div className="max-w-4xl mx-auto px-4 sm:px-6">
-            <p className="text-xs text-[#94a3b8] text-center leading-relaxed">
+            <p className="text-xs text-[#64748b] text-center leading-relaxed">
               Hayya Med Pro supports CME tracking and licensing readiness. It does not issue licenses
               and does not replace official licensing authorities. Users must verify final requirements
               with QCHP, SCFHS, DHA, DOH, MOH Kuwait, NHRA, or OMSB as applicable.
             </p>
-            <p className="text-xs text-[#94a3b8] text-center mt-2">
+            <p className="text-xs text-[#64748b] text-center mt-2">
               <Link href="/privacy" className="hover:text-[#64748b]">Privacy</Link>
               {" · "}
               <Link href="/terms" className="hover:text-[#64748b]">Terms</Link>

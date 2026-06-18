@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 const CELL = 12;
 const GAP = 2;
@@ -82,7 +82,7 @@ export default function CmeHeatmap({ activities }: { activities: Activity[] }) {
               return (
                 <div key={w} style={{ width: CELL + GAP, flexShrink: 0 }}>
                   {lbl && (
-                    <span style={{ fontSize: 10, color: "#94a3b8", lineHeight: 1 }}>{lbl.label}</span>
+                    <span style={{ fontSize: 10, color: "#64748b", lineHeight: 1 }}>{lbl.label}</span>
                   )}
                 </div>
               );
@@ -100,7 +100,7 @@ export default function CmeHeatmap({ activities }: { activities: Activity[] }) {
                     height: CELL + GAP,
                     lineHeight: CELL + "px",
                     fontSize: 9,
-                    color: "#94a3b8",
+                    color: "#64748b",
                     textAlign: "right",
                     paddingRight: 4,
                   }}
@@ -139,11 +139,11 @@ export default function CmeHeatmap({ activities }: { activities: Activity[] }) {
 
           {/* Legend */}
           <div className="flex items-center gap-1.5 mt-3" style={{ marginLeft: LEFT_W }}>
-            <span style={{ fontSize: 10, color: "#94a3b8" }}>Less</span>
+            <span style={{ fontSize: 10, color: "#64748b" }}>Less</span>
             {COLORS.map((color, i) => (
               <div key={i} style={{ width: CELL, height: CELL, borderRadius: 2, backgroundColor: color }} />
             ))}
-            <span style={{ fontSize: 10, color: "#94a3b8" }}>More</span>
+            <span style={{ fontSize: 10, color: "#64748b" }}>More</span>
           </div>
         </div>
       </div>

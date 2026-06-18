@@ -1,4 +1,4 @@
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+﻿import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import BulkReportButton from "@/components/employer/BulkReportButton";
 import ExportStaffCsvButton from "@/components/employer/ExportStaffCsvButton";
@@ -315,7 +315,7 @@ export default async function EmployerDashboardPage({
             {sp.setup && <input type="hidden" name="setup" value={sp.setup} />}
             {statusFilter && <input type="hidden" name="status" value={statusFilter} />}
             <div className="relative">
-              <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#94a3b8]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#64748b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
               </svg>
               <input
@@ -557,13 +557,13 @@ export default async function EmployerDashboardPage({
                     <table className="w-full text-sm">
                       <thead>
                         <tr className="border-b border-[#f1f5f9]">
-                          <th className="text-left px-6 py-2 text-xs font-medium text-[#94a3b8] uppercase tracking-wide">Name</th>
-                          <th className="text-left px-6 py-2 text-xs font-medium text-[#94a3b8] uppercase tracking-wide">Profession</th>
-                          <th className="text-left px-6 py-2 text-xs font-medium text-[#94a3b8] uppercase tracking-wide">Department</th>
-                          <th className="text-left px-6 py-2 text-xs font-medium text-[#94a3b8] uppercase tracking-wide">CME Credits</th>
-                          <th className="text-left px-6 py-2 text-xs font-medium text-[#94a3b8] uppercase tracking-wide">Status</th>
-                          <th className="text-left px-6 py-2 text-xs font-medium text-[#94a3b8] uppercase tracking-wide">License Expiry</th>
-                          <th className="text-left px-6 py-2 text-xs font-medium text-[#94a3b8] uppercase tracking-wide">Actions</th>
+                          <th className="text-left px-6 py-2 text-xs font-medium text-[#64748b] uppercase tracking-wide">Name</th>
+                          <th className="text-left px-6 py-2 text-xs font-medium text-[#64748b] uppercase tracking-wide">Profession</th>
+                          <th className="text-left px-6 py-2 text-xs font-medium text-[#64748b] uppercase tracking-wide">Department</th>
+                          <th className="text-left px-6 py-2 text-xs font-medium text-[#64748b] uppercase tracking-wide">CME Credits</th>
+                          <th className="text-left px-6 py-2 text-xs font-medium text-[#64748b] uppercase tracking-wide">Status</th>
+                          <th className="text-left px-6 py-2 text-xs font-medium text-[#64748b] uppercase tracking-wide">License Expiry</th>
+                          <th className="text-left px-6 py-2 text-xs font-medium text-[#64748b] uppercase tracking-wide">Actions</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-[#f1f5f9]">
@@ -592,7 +592,7 @@ export default async function EmployerDashboardPage({
                                   </div>
                                 </div>
                               ) : (
-                                <span className="text-xs text-[#94a3b8]">Private</span>
+                                <span className="text-xs text-[#64748b]">Private</span>
                               )}
                             </td>
                             <td className="px-6 py-4">
@@ -610,7 +610,7 @@ export default async function EmployerDashboardPage({
                                   {s.daysToExpiry < 0 ? "EXPIRED" : `${s.daysToExpiry}d`}
                                 </span>
                               ) : (
-                                <span className="text-xs text-[#94a3b8]">Private</span>
+                                <span className="text-xs text-[#64748b]">Private</span>
                               )}
                             </td>
                             <td className="px-6 py-4">
@@ -685,7 +685,7 @@ export default async function EmployerDashboardPage({
       </div>
 
       {/* Disclaimer */}
-      <p className="text-xs text-[#94a3b8] mt-6 text-center">
+      <p className="text-xs text-[#64748b] mt-6 text-center">
         Hayya Med Pro employer view only shows data that professionals have explicitly consented to share.
       </p>
     </div>

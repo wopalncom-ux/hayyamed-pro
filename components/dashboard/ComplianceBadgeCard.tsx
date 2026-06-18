@@ -245,7 +245,7 @@ export default function ComplianceBadgeCard({ professionalId, plan, name, pct, c
         </button>
       </div>
 
-      <p className="text-[11px] text-[#94a3b8] mt-3">
+      <p className="text-[11px] text-[#64748b] mt-3">
         Anyone with the badge link can view your compliance status. Share it with employers, licensing authorities, or on social media.
       </p>
 
@@ -286,7 +286,7 @@ export default function ComplianceBadgeCard({ professionalId, plan, name, pct, c
             Share profile on LinkedIn
           </a>
         </div>
-        <p className="text-[11px] text-[#94a3b8] mt-2">
+        <p className="text-[11px] text-[#64748b] mt-2">
           Your public profile shows your compliance status without revealing personal details.
         </p>
       </div>

@@ -199,7 +199,7 @@ export default async function CourseDetailPage({
           existingReview={existingReview ? { rating: existingReview.rating, review_text: existingReview.review_text } : null}
         />
         {!completed && enrolled && (
-          <p className="text-xs text-[#94a3b8] mt-4">
+          <p className="text-xs text-[#64748b] mt-4">
             Complete this course to unlock reviews.
           </p>
         )}

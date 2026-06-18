@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import { updateEmailPreferences } from "@/app/(dashboard)/dashboard/settings/actions";
@@ -102,7 +102,7 @@ export default function EmailPreferencesForm({ initial }: { initial: Prefs }) {
           </div>
         ))}
       </div>
-      <p className="text-xs text-[#94a3b8] mt-4">
+      <p className="text-xs text-[#64748b] mt-4">
         Account security emails (password reset, email verification) cannot be disabled.
       </p>
     </div>

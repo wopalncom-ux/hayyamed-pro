@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 
 const APP_URL = "https://hayyamed.pro";
@@ -253,7 +253,7 @@ export default function ForHospitalsPage() {
             <h1 className="text-4xl sm:text-5xl font-extrabold text-white leading-tight mb-6">
               CME compliance tracking for<br className="hidden sm:block" /> every staff member, automatically
             </h1>
-            <p className="text-lg text-[#94a3b8] max-w-2xl mx-auto mb-10 leading-relaxed">
+            <p className="text-lg text-[#64748b] max-w-2xl mx-auto mb-10 leading-relaxed">
               Real-time compliance dashboards, QCHP employer reporting, department-level analytics, and audit-ready PDF exports — for hospitals across Qatar, Saudi Arabia, UAE, and the GCC.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -284,7 +284,7 @@ export default function ForHospitalsPage() {
                   <div className="text-xl mb-1" aria-hidden="true">{a.flag}</div>
                   <div className="font-bold text-sm text-[#111]">{a.code}</div>
                   <div className="text-[11px] text-[#64748b] mt-0.5">{a.name}</div>
-                  <div className="text-[10px] text-[#94a3b8] mt-1">{a.credits}</div>
+                  <div className="text-[10px] text-[#64748b] mt-1">{a.credits}</div>
                 </div>
               ))}
             </div>
@@ -388,7 +388,7 @@ export default function ForHospitalsPage() {
               ].map((s) => (
                 <div key={s.label}>
                   <div className="text-3xl font-extrabold text-white mb-1">{s.n}</div>
-                  <div className="text-sm text-[#94a3b8]">{s.label}</div>
+                  <div className="text-sm text-[#64748b]">{s.label}</div>
                 </div>
               ))}
             </div>
@@ -445,7 +445,7 @@ export default function ForHospitalsPage() {
 
         {/* Disclaimer */}
         <div className="bg-[#f8fafc] border-t border-[#e2e8f0] px-6 py-6 text-center">
-          <p className="text-xs text-[#94a3b8] max-w-2xl mx-auto">
+          <p className="text-xs text-[#64748b] max-w-2xl mx-auto">
             Hayya Med Pro supports CME/CPD tracking and compliance reporting. It does not issue licenses and does not replace official licensing authorities. Hospitals must verify final requirements directly with QCHP, SCFHS, DHA, DOH, NHRA, OMSB, or MOH Kuwait.
           </p>
         </div>

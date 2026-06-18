@@ -283,7 +283,7 @@ export default function CountriesPage() {
             >
               Track my compliance — free →
             </Link>
-            <p className="text-xs text-[#94a3b8] mt-3">Supports all 7 GCC countries · No credit card required</p>
+            <p className="text-xs text-[#64748b] mt-3">Supports all 7 GCC countries · No credit card required</p>
           </div>
 
           {/* Country cards grid */}
@@ -312,22 +312,22 @@ export default function CountriesPage() {
                 </div>
                 <div className="px-5 py-4 space-y-2.5">
                   <div>
-                    <p className="text-[11px] font-semibold text-[#94a3b8] uppercase tracking-wide mb-0.5">Credits</p>
+                    <p className="text-[11px] font-semibold text-[#64748b] uppercase tracking-wide mb-0.5">Credits</p>
                     <p className="text-sm font-bold text-[#111]">{c.creditsLabel}</p>
                   </div>
                   <div>
-                    <p className="text-[11px] font-semibold text-[#94a3b8] uppercase tracking-wide mb-0.5">Cycle</p>
+                    <p className="text-[11px] font-semibold text-[#64748b] uppercase tracking-wide mb-0.5">Cycle</p>
                     <p className="text-sm text-[#374151]">{c.cycle}</p>
                   </div>
                   <div>
-                    <p className="text-[11px] font-semibold text-[#94a3b8] uppercase tracking-wide mb-0.5">Patient safety</p>
+                    <p className="text-[11px] font-semibold text-[#64748b] uppercase tracking-wide mb-0.5">Patient safety</p>
                     <p className="text-sm text-[#374151]">{c.patientSafety}</p>
                   </div>
                   <div>
-                    <p className="text-[11px] font-semibold text-[#94a3b8] uppercase tracking-wide mb-0.5">Term used</p>
+                    <p className="text-[11px] font-semibold text-[#64748b] uppercase tracking-wide mb-0.5">Term used</p>
                     <p className="text-sm text-[#374151]">{c.term}</p>
                   </div>
-                  <p className="text-[11px] text-[#94a3b8] border-t border-[#f1f5f9] pt-2 leading-relaxed">
+                  <p className="text-[11px] text-[#64748b] border-t border-[#f1f5f9] pt-2 leading-relaxed">
                     {c.professionNote}
                   </p>
                 </div>
@@ -383,7 +383,7 @@ export default function CountriesPage() {
                 </tbody>
               </table>
             </div>
-            <p className="text-[11px] text-[#94a3b8] mt-2">
+            <p className="text-[11px] text-[#64748b] mt-2">
               * Credits shown are typical maximums. Always verify current requirements with the relevant licensing authority before renewal.
             </p>
           </div>
@@ -427,7 +427,7 @@ export default function CountriesPage() {
                       <p className="text-xs text-[#64748b]">{c.authorityFull}</p>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between text-xs text-[#94a3b8]">
+                  <div className="flex items-center justify-between text-xs text-[#64748b]">
                     <span>{c.creditsLabel} · {c.cycle} cycle</span>
                     <span className="text-[#1a56a0] font-semibold group-hover:translate-x-1 transition-transform inline-block">→</span>
                   </div>

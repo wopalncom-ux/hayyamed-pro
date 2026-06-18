@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Bell, BellOff, Mail, Shield, BookOpen, RefreshCw, Clock, GraduationCap, CreditCard, X } from "lucide-react";
@@ -174,7 +174,7 @@ export default function NotificationBell() {
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="p-0.5 rounded text-[#94a3b8] hover:text-[#374151]"
+                className="p-0.5 rounded text-[#64748b] hover:text-[#374151]"
                 aria-label="Close"
               >
                 <X className="w-3.5 h-3.5" />
@@ -200,14 +200,14 @@ export default function NotificationBell() {
           <div className="max-h-80 overflow-y-auto divide-y divide-[#f8fafc]">
             {!loaded && (
               <div className="px-4 py-6 text-center">
-                <p className="text-xs text-[#94a3b8]">Loading…</p>
+                <p className="text-xs text-[#64748b]">Loading…</p>
               </div>
             )}
             {loaded && items.length === 0 && (
               <div className="px-4 py-8 text-center">
                 <Bell className="w-8 h-8 text-[#e2e8f0] mx-auto mb-2" />
-                <p className="text-xs text-[#94a3b8]">No notifications yet.</p>
-                <p className="text-[10px] text-[#94a3b8] mt-1">Reminders and alerts will appear here.</p>
+                <p className="text-xs text-[#64748b]">No notifications yet.</p>
+                <p className="text-[10px] text-[#64748b] mt-1">Reminders and alerts will appear here.</p>
               </div>
             )}
             {loaded && items.map((item) => (
@@ -222,7 +222,7 @@ export default function NotificationBell() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-xs font-medium text-[#111] leading-snug">{item.label}</p>
-                  <p className="text-[10px] text-[#94a3b8] mt-0.5">{timeAgo(item.created_at)}</p>
+                  <p className="text-[10px] text-[#64748b] mt-0.5">{timeAgo(item.created_at)}</p>
                 </div>
                 <span className={`text-[9px] font-semibold px-1.5 py-0.5 rounded-full flex-shrink-0 mt-0.5 ${
                   item.status === "sent"    ? "bg-[#dcfce7] text-[#15803d]" :

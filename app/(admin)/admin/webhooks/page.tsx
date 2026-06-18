@@ -1,4 +1,4 @@
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+﻿import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
 export const metadata = { title: "Webhook Event Log — Admin" };
@@ -91,17 +91,17 @@ export default async function WebhookLogPage() {
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
           <p className="text-xs text-[#64748b] font-medium uppercase tracking-wide mb-2">Paddle Events</p>
           <p className="text-3xl font-bold text-[#1a56a0]">{subscriptionEvents}</p>
-          <p className="text-xs text-[#94a3b8] mt-1">subscriptions</p>
+          <p className="text-xs text-[#64748b] mt-1">subscriptions</p>
         </div>
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
           <p className="text-xs text-[#64748b] font-medium uppercase tracking-wide mb-2">Email Events</p>
           <p className="text-3xl font-bold text-[#d97706]">{emailEvents}</p>
-          <p className="text-xs text-[#94a3b8] mt-1">bounces · spam · unsub</p>
+          <p className="text-xs text-[#64748b] mt-1">bounces · spam · unsub</p>
         </div>
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
           <p className="text-xs text-[#64748b] font-medium uppercase tracking-wide mb-2">Push Events</p>
           <p className="text-3xl font-bold text-[#7e22ce]">{pushEvents}</p>
-          <p className="text-xs text-[#94a3b8] mt-1">broadcasts sent</p>
+          <p className="text-xs text-[#64748b] mt-1">broadcasts sent</p>
         </div>
       </div>
 
@@ -155,10 +155,10 @@ export default async function WebhookLogPage() {
                       </p>
                     )}
                     {log.target_table && (
-                      <p className="text-xs text-[#94a3b8] mt-0.5">table: {log.target_table}</p>
+                      <p className="text-xs text-[#64748b] mt-0.5">table: {log.target_table}</p>
                     )}
                   </div>
-                  <div className="flex-shrink-0 text-xs text-[#94a3b8] whitespace-nowrap">
+                  <div className="flex-shrink-0 text-xs text-[#64748b] whitespace-nowrap">
                     {timeAgo(log.created_at)}
                   </div>
                 </div>

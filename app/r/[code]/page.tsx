@@ -121,14 +121,14 @@ export default async function ReferralPage({ params }: Props) {
             >
               Accept {firstName}&rsquo;s Invitation →
             </a>
-            <p className="text-center text-xs text-[#94a3b8] mt-3">
+            <p className="text-center text-xs text-[#64748b] mt-3">
               30-day trial · No credit card required · Cancel anytime
             </p>
           </div>
         </div>
 
         {/* Footer trust */}
-        <div className="flex items-center justify-center gap-6 text-xs text-[#94a3b8]">
+        <div className="flex items-center justify-center gap-6 text-xs text-[#64748b]">
           <span>QCHP · SCFHS · DHA · DOH</span>
           <span>·</span>
           <a href="/privacy" className="hover:text-[#64748b]">Privacy</a>

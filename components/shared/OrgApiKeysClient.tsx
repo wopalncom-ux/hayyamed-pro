@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition, useCallback } from "react";
 
@@ -88,7 +88,7 @@ function KeyCard({ apiKey, onRevoke }: { apiKey: ApiKey; onRevoke: (id: string) 
           </span>
         ))}
       </div>
-      <div className="flex items-center gap-4 text-xs text-[#94a3b8] pt-3 border-t border-[#f8fafc]">
+      <div className="flex items-center gap-4 text-xs text-[#64748b] pt-3 border-t border-[#f8fafc]">
         <span>Last used: <span className="text-[#64748b]">{lastUsed}</span></span>
         {apiKey.expires_at && (
           <span>Expires: <span className="text-[#64748b]">{new Date(apiKey.expires_at).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}</span></span>
@@ -266,7 +266,7 @@ export default function OrgApiKeysClient({
           {activeKeys.length === 0 && !newKeyData && (
             <div className="bg-[#f8fafc] border border-dashed border-[#e2e8f0] rounded-xl px-5 py-8 text-center">
               <p className="text-sm font-medium text-[#374151] mb-1">No API keys yet</p>
-              <p className="text-xs text-[#94a3b8]">Generate a key to start integrating with your systems.</p>
+              <p className="text-xs text-[#64748b]">Generate a key to start integrating with your systems.</p>
             </div>
           )}
           {activeKeys.map((key) => (

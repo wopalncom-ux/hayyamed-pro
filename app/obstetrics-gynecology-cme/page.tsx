@@ -241,7 +241,7 @@ export default function ObstetricsGynecologyCmePage() {
       </section>
 
       <section style={{ background: "#f8fafc", padding: "32px 24px", borderTop: "1px solid #e2e8f0" }}>
-        <p style={{ maxWidth: 800, margin: "0 auto", textAlign: "center", color: "#94a3b8", fontSize: 13, lineHeight: 1.7 }}>
+        <p style={{ maxWidth: 800, margin: "0 auto", textAlign: "center", color: "#64748b", fontSize: 13, lineHeight: 1.7 }}>
           Hayya Med PRO supports CME tracking and licensing readiness. It does not issue licenses and does not replace official licensing authorities. Users must verify final requirements with their relevant regulatory body.
         </p>
       </section>

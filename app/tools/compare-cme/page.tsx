@@ -1,4 +1,4 @@
-import { createAdminClient } from "@/lib/supabase/server";
+﻿import { createAdminClient } from "@/lib/supabase/server";
 import CompareToolClient from "./CompareToolClient";
 import SiteFooter from "@/components/SiteFooter";
 import type { Metadata } from "next";
@@ -168,7 +168,7 @@ export default async function CompareToolPage() {
             </div>
           </div>
 
-          <p className="text-xs text-[#94a3b8] text-center">
+          <p className="text-xs text-[#64748b] text-center">
             Requirements are sourced from official GCC healthcare authority publications and are reviewed regularly.
             Always verify current requirements with QCHP, SCFHS, DHA, DOH, MOH Kuwait, NHRA, or OMSB directly.
           </p>

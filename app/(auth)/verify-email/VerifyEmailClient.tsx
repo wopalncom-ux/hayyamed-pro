@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -101,7 +101,7 @@ export default function VerifyEmailClient({ email }: { email: string | null }) {
         </div>
       )}
 
-      <p className="text-xs text-[#94a3b8]">
+      <p className="text-xs text-[#64748b]">
         Wrong email?{" "}
         <a href="/register" className="text-[#1a56a0] hover:underline">Start over with a different address</a>
       </p>

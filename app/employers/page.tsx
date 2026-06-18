@@ -217,7 +217,7 @@ function MockDashboard() {
               <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-full flex-shrink-0 ${sc.cls}`}>
                 {sc.label}
               </span>
-              <span className="text-[11px] text-[#94a3b8] hidden md:block w-16 text-right flex-shrink-0">
+              <span className="text-[11px] text-[#64748b] hidden md:block w-16 text-right flex-shrink-0">
                 {s.days}d left
               </span>
             </div>
@@ -312,7 +312,7 @@ export default function EmployersPage() {
             {/* Live dashboard mockup */}
             <div>
               <MockDashboard />
-              <p className="text-xs text-[#94a3b8] text-center mt-2">Live staff compliance dashboard — example data</p>
+              <p className="text-xs text-[#64748b] text-center mt-2">Live staff compliance dashboard — example data</p>
             </div>
           </div>
 
@@ -398,13 +398,13 @@ export default function EmployersPage() {
                   <p className={`text-sm font-semibold mb-0.5 ${t.highlight ? "text-blue-200" : "text-[#64748b]"}`}>
                     {t.label}
                   </p>
-                  <p className={`text-xs mb-3 ${t.highlight ? "text-blue-300" : "text-[#94a3b8]"}`}>
+                  <p className={`text-xs mb-3 ${t.highlight ? "text-blue-300" : "text-[#64748b]"}`}>
                     Up to {t.maxStaff} staff
                   </p>
                   <p className={`text-2xl font-black mb-0.5 ${t.highlight ? "text-white" : "text-[#111]"}`}>
                     ${t.monthly}
                   </p>
-                  <p className={`text-xs mb-5 ${t.highlight ? "text-blue-300" : "text-[#94a3b8]"}`}>/month</p>
+                  <p className={`text-xs mb-5 ${t.highlight ? "text-blue-300" : "text-[#64748b]"}`}>/month</p>
                   <Link
                     href="/pricing#employer"
                     className={`block w-full text-center py-2.5 rounded-xl text-xs font-semibold transition-colors mt-auto ${

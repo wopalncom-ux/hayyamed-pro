@@ -1,4 +1,4 @@
-import { createAdminClient } from "@/lib/supabase/server";
+﻿import { createAdminClient } from "@/lib/supabase/server";
 import PushBroadcastPanel from "@/components/admin/PushBroadcastPanel";
 
 interface ServiceCheck {
@@ -164,11 +164,11 @@ export default async function AdminPage() {
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
           <p className="text-xs font-medium text-[#64748b] mb-1">NPS Score</p>
           <p className="text-3xl font-bold" style={{
-            color: npsScore === null ? "#94a3b8" : npsScore >= 50 ? "#16a34a" : npsScore >= 0 ? "#d97706" : "#dc2626"
+            color: npsScore === null ? "#64748b" : npsScore >= 50 ? "#16a34a" : npsScore >= 0 ? "#d97706" : "#dc2626"
           }}>
             {npsScore !== null ? (npsScore > 0 ? `+${npsScore}` : String(npsScore)) : "—"}
           </p>
-          <p className="text-xs text-[#94a3b8] mt-1">{npsScores.length} response{npsScores.length !== 1 ? "s" : ""}</p>
+          <p className="text-xs text-[#64748b] mt-1">{npsScores.length} response{npsScores.length !== 1 ? "s" : ""}</p>
         </div>
         <StatCard label="NPS Responses"   value={npsScores.length}            color="blue" />
         <StatCard

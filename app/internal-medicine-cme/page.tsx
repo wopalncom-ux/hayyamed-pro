@@ -160,7 +160,7 @@ export default function InternalMedicineCmePage() {
                 See all physician CME requirements
               </Link>
             </div>
-            <p className="text-xs text-[#94a3b8] mt-3">No credit card required · 14-day Pro trial included</p>
+            <p className="text-xs text-[#64748b] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>
 
           {/* Requirements table */}

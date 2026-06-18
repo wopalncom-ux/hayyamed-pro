@@ -1,4 +1,4 @@
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+﻿import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import InviteLinkButton from "@/components/employer/InviteLinkButton";
@@ -330,7 +330,7 @@ export default async function UniversityDashboardPage({
                       <thead>
                         <tr className="border-b border-[#f1f5f9]">
                           {["Name", "Profession", "School / Dept", "CME Credits", "Status", "License Expiry"].map((h) => (
-                            <th key={h} className="text-left px-6 py-2 text-xs font-medium text-[#94a3b8] uppercase tracking-wide">{h}</th>
+                            <th key={h} className="text-left px-6 py-2 text-xs font-medium text-[#64748b] uppercase tracking-wide">{h}</th>
                           ))}
                         </tr>
                       </thead>
@@ -358,7 +358,7 @@ export default async function UniversityDashboardPage({
                                   </div>
                                 </div>
                               ) : (
-                                <span className="text-xs text-[#94a3b8]">Private</span>
+                                <span className="text-xs text-[#64748b]">Private</span>
                               )}
                             </td>
                             <td className="px-6 py-4">
@@ -376,7 +376,7 @@ export default async function UniversityDashboardPage({
                                   {f.daysToExpiry < 0 ? "EXPIRED" : `${f.daysToExpiry}d`}
                                 </span>
                               ) : (
-                                <span className="text-xs text-[#94a3b8]">Private</span>
+                                <span className="text-xs text-[#64748b]">Private</span>
                               )}
                             </td>
                           </tr>
@@ -412,7 +412,7 @@ export default async function UniversityDashboardPage({
         )}
       </div>
 
-      <p className="text-xs text-[#94a3b8] mt-6 text-center">
+      <p className="text-xs text-[#64748b] mt-6 text-center">
         Hayya Med Pro shows only data that faculty have explicitly consented to share with their institution.
       </p>
     </div>

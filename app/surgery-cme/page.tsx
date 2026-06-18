@@ -159,7 +159,7 @@ export default function SurgeryCmePage() {
                 See all physician CME requirements
               </Link>
             </div>
-            <p className="text-xs text-[#94a3b8] mt-3">No credit card required · 14-day Pro trial included</p>
+            <p className="text-xs text-[#64748b] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>
 
           <div className="bg-white rounded-2xl border border-[#e2e8f0] overflow-hidden mb-10 shadow-sm">

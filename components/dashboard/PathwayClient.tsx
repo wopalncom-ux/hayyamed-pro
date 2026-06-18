@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 
@@ -63,9 +63,9 @@ function MonthCard({ month, index }: { month: PathwayMonth; index: number }) {
         </div>
         <div className="text-right flex-shrink-0">
           <p className="text-lg font-bold text-[#1a56a0]">{month.target_credits}</p>
-          <p className="text-[10px] text-[#94a3b8]">credits</p>
+          <p className="text-[10px] text-[#64748b]">credits</p>
         </div>
-        <span className="text-[#94a3b8] text-sm ml-1">{expanded ? "▲" : "▼"}</span>
+        <span className="text-[#64748b] text-sm ml-1">{expanded ? "▲" : "▼"}</span>
       </button>
 
       {expanded && (
@@ -111,7 +111,7 @@ export default function PathwayClient({ initialData }: { initialData: PathwayInp
     return (
       <div className="bg-[#f8fafc] border border-dashed border-[#e2e8f0] rounded-xl px-6 py-12 text-center">
         <p className="text-sm font-medium text-[#374151] mb-1">No CME wallet found</p>
-        <p className="text-xs text-[#94a3b8]">
+        <p className="text-xs text-[#64748b]">
           Complete onboarding to set up your CME wallet before generating a learning pathway.
         </p>
         <a href="/onboarding/1" className="mt-4 inline-block text-xs font-semibold text-[#1a56a0] hover:underline">
@@ -136,22 +136,22 @@ export default function PathwayClient({ initialData }: { initialData: PathwayInp
             <div className="flex items-center gap-6 flex-wrap">
               <div>
                 <p className="text-2xl font-bold text-[#0f1f3d]">{initialData.completedCredits}/{initialData.requiredCredits}</p>
-                <p className="text-xs text-[#94a3b8]">credits ({pct}%)</p>
+                <p className="text-xs text-[#64748b]">credits ({pct}%)</p>
               </div>
               <div>
                 <p className="text-2xl font-bold text-[#dc2626]">{gap}</p>
-                <p className="text-xs text-[#94a3b8]">credits gap</p>
+                <p className="text-xs text-[#64748b]">credits gap</p>
               </div>
               <div>
                 <p className="text-sm font-semibold text-[#374151] capitalize">{initialData.profession.replace(/_/g, " ")}</p>
-                <p className="text-xs text-[#94a3b8]">{initialData.country}{initialData.specialty ? ` · ${initialData.specialty}` : ""}</p>
+                <p className="text-xs text-[#64748b]">{initialData.country}{initialData.specialty ? ` · ${initialData.specialty}` : ""}</p>
               </div>
               {initialData.cycleEndDate && (
                 <div>
                   <p className="text-sm font-semibold text-[#374151]">
                     {new Date(initialData.cycleEndDate).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}
                   </p>
-                  <p className="text-xs text-[#94a3b8]">cycle deadline</p>
+                  <p className="text-xs text-[#64748b]">cycle deadline</p>
                 </div>
               )}
             </div>
@@ -199,7 +199,7 @@ export default function PathwayClient({ initialData }: { initialData: PathwayInp
         <div className="bg-white border border-[#e2e8f0] rounded-xl px-6 py-12 text-center">
           <div className="w-8 h-8 border-3 border-[#1a56a0] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
           <p className="text-sm font-medium text-[#374151]">Generating your 12-month pathway…</p>
-          <p className="text-xs text-[#94a3b8] mt-1">This takes 5–15 seconds</p>
+          <p className="text-xs text-[#64748b] mt-1">This takes 5–15 seconds</p>
         </div>
       )}
 
@@ -210,7 +210,7 @@ export default function PathwayClient({ initialData }: { initialData: PathwayInp
             <div className="flex items-start justify-between gap-3 mb-3">
               <p className="text-sm font-semibold text-[#1e40af]">Plan Summary</p>
               {generatedAt && (
-                <p className="text-[10px] text-[#94a3b8] flex-shrink-0">
+                <p className="text-[10px] text-[#64748b] flex-shrink-0">
                   Generated {generatedAt.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })}
                 </p>
               )}
@@ -247,7 +247,7 @@ export default function PathwayClient({ initialData }: { initialData: PathwayInp
 
           {/* Month-by-month timeline */}
           <div>
-            <p className="text-sm font-semibold text-[#374151] mb-3">12-Month Plan <span className="text-[#94a3b8] font-normal">(click to expand)</span></p>
+            <p className="text-sm font-semibold text-[#374151] mb-3">12-Month Plan <span className="text-[#64748b] font-normal">(click to expand)</span></p>
             <div className="space-y-2">
               {pathway.months.map((m, i) => (
                 <MonthCard key={m.month} month={m} index={i} />
@@ -272,7 +272,7 @@ export default function PathwayClient({ initialData }: { initialData: PathwayInp
           </div>
 
           {/* Disclaimer */}
-          <p className="text-[10px] text-[#94a3b8] text-center">
+          <p className="text-[10px] text-[#64748b] text-center">
             AI-generated pathway — verify specific requirements with your licensing authority.
             Hayya Med Pro does not issue licenses and does not replace official regulatory guidance.
           </p>
@@ -283,7 +283,7 @@ export default function PathwayClient({ initialData }: { initialData: PathwayInp
         <div className="bg-[#f8fafc] border border-dashed border-[#e2e8f0] rounded-xl px-6 py-12 text-center">
           <p className="text-4xl mb-3">🗺️</p>
           <p className="text-sm font-medium text-[#374151] mb-1">Your pathway is ready to generate</p>
-          <p className="text-xs text-[#94a3b8]">
+          <p className="text-xs text-[#64748b]">
             Click "Generate my pathway" to create your personalised 12-month CME plan.
           </p>
         </div>

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 
@@ -69,7 +69,7 @@ export default function WaitlistForm() {
         placeholder="your@email.com"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="w-full border border-[#e2e8f0] rounded-xl px-4 py-3 text-sm text-[#111] placeholder-[#94a3b8] focus:outline-none focus:ring-2 focus:ring-[#1a56a0] bg-white"
+        className="w-full border border-[#e2e8f0] rounded-xl px-4 py-3 text-sm text-[#111] placeholder-[#64748b] focus:outline-none focus:ring-2 focus:ring-[#1a56a0] bg-white"
         disabled={status === "loading"}
       />
 

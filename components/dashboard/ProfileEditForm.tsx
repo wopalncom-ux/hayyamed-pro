@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { updateProfessionalProfile } from "@/app/(dashboard)/dashboard/settings/actions";
@@ -140,8 +140,8 @@ export default function ProfileEditForm({ profile }: { profile: Profile }) {
             { label: "License expiry", value: form.licenseExpiry },
           ].map(({ label, value }) => (
             <div key={label}>
-              <dt className="text-xs text-[#94a3b8] font-medium uppercase tracking-wide mb-0.5">{label}</dt>
-              <dd className="text-sm text-[#111] font-medium">{value || <span className="text-[#94a3b8]">Not set</span>}</dd>
+              <dt className="text-xs text-[#64748b] font-medium uppercase tracking-wide mb-0.5">{label}</dt>
+              <dd className="text-sm text-[#111] font-medium">{value || <span className="text-[#64748b]">Not set</span>}</dd>
             </div>
           ))}
         </dl>

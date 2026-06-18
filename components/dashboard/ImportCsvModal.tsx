@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useRef, useState } from "react";
 import { importCmeActivities, type ImportRow, type ImportResult } from "@/app/(dashboard)/dashboard/cme/actions";
@@ -248,7 +248,7 @@ export default function ImportCsvModal({
                     </svg>
                   </div>
                   <p className="text-sm font-medium text-[#374151] mb-1">Click to select a CSV file</p>
-                  <p className="text-xs text-[#94a3b8]">or drag and drop · .csv only</p>
+                  <p className="text-xs text-[#64748b]">or drag and drop · .csv only</p>
                 </div>
                 <input ref={fileRef} type="file" accept=".csv,text/csv" className="hidden" onChange={handleFile} />
               </label>
@@ -299,7 +299,7 @@ export default function ImportCsvModal({
                         const hasError = r._errors.length > 0;
                         return (
                           <tr key={r._rowNum} className={hasError ? "bg-[#fef2f2]" : willSkip ? "bg-[#fffbeb] opacity-60" : ""}>
-                            <td className="px-3 py-2 text-[#94a3b8]">{r._rowNum}</td>
+                            <td className="px-3 py-2 text-[#64748b]">{r._rowNum}</td>
                             <td className="px-3 py-2 font-medium text-[#111] max-w-[180px] truncate">{r.title || <span className="text-[#dc2626] italic">missing</span>}</td>
                             <td className="px-3 py-2 text-[#374151] whitespace-nowrap">{r.activityDate || <span className="text-[#dc2626] italic">invalid</span>}</td>
                             <td className="px-3 py-2 text-[#374151]">{r.credits || "—"}</td>
@@ -344,7 +344,7 @@ export default function ImportCsvModal({
           {step === "done" && result && (
             <div className="text-center py-6">
               <div className={`w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4 ${result.imported > 0 ? "bg-[#dcfce7]" : "bg-[#f1f5f9]"}`}>
-                <svg className={`w-7 h-7 ${result.imported > 0 ? "text-[#16a34a]" : "text-[#94a3b8]"}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <svg className={`w-7 h-7 ${result.imported > 0 ? "text-[#16a34a]" : "text-[#64748b]"}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
               </div>

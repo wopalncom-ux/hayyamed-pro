@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+﻿import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/server";
 import DashboardNav from "@/components/dashboard/DashboardNav";
@@ -69,7 +69,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
         {profile?.created_at && <NpsSurvey createdAt={profile.created_at} />}
         <HayyaVoiceOrb plan={userPlan} />
         <footer className="border-t border-[#e2e8f0] mt-4">
-          <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between text-xs text-[#94a3b8]">
+          <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between text-xs text-[#64748b]">
             <span>Hayya Med Pro supports CME tracking only. Verify requirements with your regulatory authority.</span>
             <a href="/help" className="hover:text-[#374151] transition-colors whitespace-nowrap ml-4">Help & FAQ</a>
           </div>

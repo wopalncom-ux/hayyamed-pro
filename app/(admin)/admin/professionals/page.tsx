@@ -1,4 +1,4 @@
-import { createAdminClient } from "@/lib/supabase/server";
+﻿import { createAdminClient } from "@/lib/supabase/server";
 import PlanOverrideButton from "@/components/admin/PlanOverrideButton";
 import TrialExtendButton from "@/components/admin/TrialExtendButton";
 import Link from "next/link";
@@ -148,7 +148,7 @@ export default async function AdminProfessionalsPage({
                         <span className={`text-xs font-medium ${
                           daysToExpiry < 30 ? "text-[#dc2626]" : daysToExpiry < 90 ? "text-[#d97706]" : "text-[#16a34a]"
                         }`}>{daysToExpiry}d</span>
-                      ) : <span className="text-xs text-[#94a3b8]">—</span>}
+                      ) : <span className="text-xs text-[#64748b]">—</span>}
                     </td>
                     <td className="px-4 py-3 text-xs text-[#64748b]">{p.profile_completion_pct ?? 0}%</td>
                     <td className="px-4 py-3">

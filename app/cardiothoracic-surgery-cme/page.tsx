@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 
 const APP_URL = "https://hayyamed.pro";
@@ -154,7 +154,7 @@ export default function CardiothoracicSurgeryCmePage() {
                 See general surgery CME requirements
               </Link>
             </div>
-            <p className="text-xs text-[#94a3b8] mt-3">No credit card required · 14-day Pro trial included</p>
+            <p className="text-xs text-[#64748b] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>
 
           <div className="bg-white rounded-2xl border border-[#e2e8f0] overflow-hidden mb-10 shadow-sm">
@@ -224,7 +224,7 @@ export default function CardiothoracicSurgeryCmePage() {
 
           <div className="bg-[#0f1f3d] rounded-2xl p-8 text-center">
             <h2 className="text-2xl font-bold text-white mb-3">Track your cardiothoracic surgery CME across all GCC authorities</h2>
-            <p className="text-[#94a3b8] text-sm mb-6 max-w-lg mx-auto">
+            <p className="text-[#64748b] text-sm mb-6 max-w-lg mx-auto">
               Log EACTS, STS, AATS, and procedural training credits — Hayya Med Pro calculates compliance for every active GCC license automatically.
             </p>
             <Link href="/register" className="inline-flex items-center gap-2 bg-white text-[#1a56a0] font-bold text-sm px-7 py-3.5 rounded-xl hover:bg-[#f0f6ff] transition-colors">

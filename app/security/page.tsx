@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 
 const APP_URL = "https://hayyamed.pro";
@@ -205,7 +205,7 @@ export default function SecurityPage() {
               We welcome responsible disclosure of security vulnerabilities from security researchers. If you discover a vulnerability, please contact us at{" "}
               <span className="font-semibold text-[#1a56a0]">security@hayyamed.pro</span> with a detailed description. We commit to acknowledging reports within 48 hours and resolving critical issues within 72 hours.
             </p>
-            <p className="text-sm text-[#94a3b8]">
+            <p className="text-sm text-[#64748b]">
               We do not pursue legal action against researchers who discover and responsibly disclose vulnerabilities in good faith.
             </p>
           </div>
@@ -215,14 +215,14 @@ export default function SecurityPage() {
         <section className="bg-[#0f1f3d] py-14">
           <div className="max-w-3xl mx-auto px-6 text-center">
             <h2 className="text-2xl font-bold text-white mb-3">Need security documentation for procurement?</h2>
-            <p className="text-[#94a3b8] mb-7 max-w-md mx-auto">
+            <p className="text-[#64748b] mb-7 max-w-md mx-auto">
               We provide security questionnaire responses, architecture documentation, and data processing agreements (DPA) for hospital and government procurement reviews. Request a demo to speak with our team.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link href="/request-demo" className="inline-flex items-center gap-2 bg-[#1a56a0] hover:bg-[#1d4ed8] text-white font-bold px-7 py-3.5 rounded-xl text-sm transition-colors">
                 Request security documentation
               </Link>
-              <Link href="/contact" className="text-sm font-medium text-[#94a3b8] hover:text-white px-4 py-3.5 transition-colors">
+              <Link href="/contact" className="text-sm font-medium text-[#64748b] hover:text-white px-4 py-3.5 transition-colors">
                 Contact us →
               </Link>
             </div>

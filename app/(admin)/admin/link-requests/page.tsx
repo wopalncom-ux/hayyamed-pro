@@ -1,4 +1,4 @@
-import { createAdminClient } from "@/lib/supabase/server";
+﻿import { createAdminClient } from "@/lib/supabase/server";
 import UnverifiedRequestActions from "@/components/admin/UnverifiedRequestActions";
 import VerifiedRequestActions from "@/components/admin/VerifiedRequestActions";
 
@@ -63,7 +63,7 @@ export default async function AdminLinkRequestsPage() {
                         </span>
                       )}
                     </div>
-                    <p className="text-xs text-[#94a3b8] mt-0.5">
+                    <p className="text-xs text-[#64748b] mt-0.5">
                       {new Date(req.requested_at).toLocaleDateString()}
                     </p>
                   </div>
@@ -100,7 +100,7 @@ export default async function AdminLinkRequestsPage() {
                 <div key={req.id} className="px-6 py-4 flex items-center justify-between">
                   <div>
                     <p className="text-sm font-medium text-[#111]">{prof?.full_name ?? "Unknown"} → {orgName}</p>
-                    <p className="text-xs text-[#94a3b8] mt-0.5">{new Date(req.requested_at).toLocaleDateString()}</p>
+                    <p className="text-xs text-[#64748b] mt-0.5">{new Date(req.requested_at).toLocaleDateString()}</p>
                   </div>
                   <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${
                     req.status === "approved"

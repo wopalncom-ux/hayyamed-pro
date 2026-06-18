@@ -1,4 +1,4 @@
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+﻿import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
 export const metadata = { title: "Faculty Analytics — University Portal" };
@@ -178,7 +178,7 @@ export default async function UniversityAnalyticsPage() {
                 compliant:     { bar: "bg-[#16a34a]", label: "text-[#16a34a]" },
                 at_risk:       { bar: "bg-[#d97706]", label: "text-[#d97706]" },
                 non_compliant: { bar: "bg-[#dc2626]", label: "text-[#dc2626]" },
-                unknown:       { bar: "bg-[#94a3b8]", label: "text-[#64748b]" },
+                unknown:       { bar: "bg-[#64748b]", label: "text-[#64748b]" },
               };
               return (
                 <div key={s}>
@@ -204,7 +204,7 @@ export default async function UniversityAnalyticsPage() {
               { label: "Expiring ≤30 days",value: expiring30, color: "bg-[#f97316]", textColor: "text-[#f97316]" },
               { label: "Expiring ≤90 days",value: expiring90, color: "bg-[#d97706]", textColor: "text-[#d97706]" },
               { label: "Active (>90 days)",value: active,     color: "bg-[#16a34a]", textColor: "text-[#16a34a]" },
-              { label: "Not provided",     value: unknown,    color: "bg-[#94a3b8]", textColor: "text-[#64748b]" },
+              { label: "Not provided",     value: unknown,    color: "bg-[#64748b]", textColor: "text-[#64748b]" },
             ].map(({ label, value, color, textColor }) => {
               const pct = total > 0 ? Math.round((value / total) * 100) : 0;
               return (
@@ -235,7 +235,7 @@ export default async function UniversityAnalyticsPage() {
                 className="w-full bg-[#1a56a0] rounded-t-md transition-all"
                 style={{ height: `${Math.max((count / maxMonthly) * 80, count > 0 ? 4 : 2)}px`, opacity: count === 0 ? 0.15 : 1 }}
               />
-              <span className="text-xs text-[#94a3b8] text-center leading-tight">{month}</span>
+              <span className="text-xs text-[#64748b] text-center leading-tight">{month}</span>
             </div>
           ))}
         </div>
@@ -304,7 +304,7 @@ function KpiCard({ label, value, sub, color }: { label: string; value: string; s
     <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
       <p className="text-xs text-[#64748b] font-medium uppercase tracking-wide mb-2">{label}</p>
       <p className={`text-3xl font-bold ${colors[color]}`}>{value}</p>
-      <p className="text-xs text-[#94a3b8] mt-1">{sub}</p>
+      <p className="text-xs text-[#64748b] mt-1">{sub}</p>
     </div>
   );
 }

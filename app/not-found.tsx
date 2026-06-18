@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -82,7 +82,7 @@ export default function NotFound() {
         </div>
       </main>
 
-      <footer className="text-center pb-8 text-xs text-[#94a3b8]">
+      <footer className="text-center pb-8 text-xs text-[#64748b]">
         Hayya Med Pro — Healthcare Professional Compliance Platform
       </footer>
     </div>

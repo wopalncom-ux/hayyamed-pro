@@ -1,4 +1,4 @@
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+﻿import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import WalletTabs from "@/components/dashboard/WalletTabs";
 import RenewalPredictionWidget from "./RenewalPredictionWidget";
@@ -299,7 +299,7 @@ export default async function AnalyticsPage({
                   </div>
                   <span className="text-xs text-[#64748b]">{m.label}</span>
                   {m.count > 0 && (
-                    <span className="text-[10px] text-[#94a3b8]">
+                    <span className="text-[10px] text-[#64748b]">
                       {m.count} act.
                     </span>
                   )}
@@ -402,7 +402,7 @@ export default async function AnalyticsPage({
                       x={x}
                       y={H - 2}
                       textAnchor="middle"
-                      fill="#94a3b8"
+                      fill="#64748b"
                       fontSize={8.5}
                       fontFamily="system-ui,-apple-system,sans-serif"
                     >
@@ -477,7 +477,7 @@ function StatCard({
     <div className="bg-white rounded-xl border border-[#e2e8f0] p-4">
       <p className="text-xs text-[#64748b] mb-1">{label}</p>
       <p className={`text-2xl font-bold ${accentColor}`}>{value}</p>
-      <p className="text-xs text-[#94a3b8] mt-0.5 truncate">{sub}</p>
+      <p className="text-xs text-[#64748b] mt-0.5 truncate">{sub}</p>
     </div>
   );
 }

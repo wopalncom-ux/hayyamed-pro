@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { BADGE_DEFINITIONS, BADGE_MAP } from "@/lib/badges";
@@ -77,7 +77,7 @@ export default function AchievementBadges() {
               {/* Tooltip */}
               <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-10 hidden group-hover:block w-40 bg-[#0f1f3d] text-white text-xs rounded-lg px-2.5 py-2 text-center pointer-events-none shadow-lg">
                 <p className="font-semibold">{badge.title}</p>
-                <p className="text-[#94a3b8] mt-0.5 leading-snug">{badge.description}</p>
+                <p className="text-[#64748b] mt-0.5 leading-snug">{badge.description}</p>
                 {earned && awardDate && (
                   <p className="text-[#60a5fa] mt-1">{formatDate(awardDate)}</p>
                 )}

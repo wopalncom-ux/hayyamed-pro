@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
@@ -60,7 +60,7 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
       {/* Filter bar */}
       <div className="mb-8 space-y-4">
         <div className="relative">
-          <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#94a3b8]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#64748b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
           </svg>
           <input
@@ -108,14 +108,14 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                 <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${CATEGORY_STYLES[post.category] ?? CATEGORY_STYLES.guide}`}>
                   {CATEGORY_LABELS[post.category] ?? "Article"}
                 </span>
-                <span className="text-xs text-[#94a3b8]">{post.tag}</span>
-                <span className="text-xs text-[#94a3b8]">·</span>
-                <span className="text-xs text-[#94a3b8]">{post.readingMinutes} min read</span>
+                <span className="text-xs text-[#64748b]">{post.tag}</span>
+                <span className="text-xs text-[#64748b]">·</span>
+                <span className="text-xs text-[#64748b]">{post.readingMinutes} min read</span>
               </div>
               <h2 className="text-lg font-bold text-[#111] mb-2 group-hover:text-[#1a56a0] transition-colors leading-snug">{post.title}</h2>
               <p className="text-sm text-[#64748b] leading-relaxed mb-3 line-clamp-2">{post.description}</p>
               <div className="flex items-center justify-between">
-                <span className="text-xs text-[#94a3b8]">{formatDate(post.publishedAt)}</span>
+                <span className="text-xs text-[#64748b]">{formatDate(post.publishedAt)}</span>
                 <span className="text-xs font-semibold text-[#1a56a0] group-hover:underline">Read article →</span>
               </div>
             </Link>

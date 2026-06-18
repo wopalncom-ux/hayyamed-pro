@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { submitDemoRequest } from "./actions";
@@ -27,7 +27,7 @@ const COUNTRIES = [
 ];
 
 const inputCls =
-  "w-full px-3 py-2.5 text-sm border border-[#e2e8f0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20 focus:border-[#1a56a0] placeholder:text-[#94a3b8] bg-white";
+  "w-full px-3 py-2.5 text-sm border border-[#e2e8f0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20 focus:border-[#1a56a0] placeholder:text-[#64748b] bg-white";
 
 const labelCls = "block text-xs font-medium text-[#374151] mb-1.5";
 
@@ -162,7 +162,7 @@ export default function DemoForm() {
 
       {/* Optional message */}
       <div>
-        <label htmlFor="demo-message" className={labelCls}>Anything you&apos;d like us to know? <span className="text-[#94a3b8] font-normal">(optional)</span></label>
+        <label htmlFor="demo-message" className={labelCls}>Anything you&apos;d like us to know? <span className="text-[#64748b] font-normal">(optional)</span></label>
         <textarea
           id="demo-message"
           name="message"
@@ -186,7 +186,7 @@ export default function DemoForm() {
         {submitting ? "Sending request…" : "Request a demo →"}
       </button>
 
-      <p className="text-xs text-[#94a3b8] text-center">
+      <p className="text-xs text-[#64748b] text-center">
         We typically respond within one business day. No pressure, no sales scripts.
       </p>
     </form>

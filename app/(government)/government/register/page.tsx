@@ -1,4 +1,4 @@
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+﻿import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { registerGovernmentAuthority } from "./actions";
 
@@ -107,7 +107,7 @@ export default async function GovernmentRegisterPage({
                   maxLength={20}
                   className={inputCls}
                 />
-                <p className="text-xs text-[#94a3b8] mt-1">Short official abbreviation</p>
+                <p className="text-xs text-[#64748b] mt-1">Short official abbreviation</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-[#374151] mb-1.5">
@@ -164,7 +164,7 @@ export default async function GovernmentRegisterPage({
           </form>
         </div>
 
-        <p className="text-center text-xs text-[#94a3b8] mt-6">
+        <p className="text-center text-xs text-[#64748b] mt-6">
           Are you a healthcare professional?{" "}
           <a href="/dashboard" className="text-[#1a56a0] hover:underline">
             Go to your dashboard

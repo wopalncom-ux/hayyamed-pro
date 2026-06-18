@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { Bell, Send } from "lucide-react";
@@ -91,7 +91,7 @@ export default function PushBroadcastPanel() {
         {/* Title */}
         <div>
           <label htmlFor="push-title" className="block text-xs font-medium text-[#374151] mb-1.5">
-            Title <span className="text-[#94a3b8]">(max 100 chars)</span>
+            Title <span className="text-[#64748b]">(max 100 chars)</span>
           </label>
           <input
             id="push-title"
@@ -102,13 +102,13 @@ export default function PushBroadcastPanel() {
             placeholder="e.g. Your license expires in 30 days"
             className="w-full text-sm border border-[#e2e8f0] rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#1a56a0] focus:border-transparent"
           />
-          <p className="text-xs text-[#94a3b8] mt-1 text-right">{title.length}/100</p>
+          <p className="text-xs text-[#64748b] mt-1 text-right">{title.length}/100</p>
         </div>
 
         {/* Body */}
         <div>
           <label htmlFor="push-body" className="block text-xs font-medium text-[#374151] mb-1.5">
-            Message <span className="text-[#94a3b8]">(max 250 chars)</span>
+            Message <span className="text-[#64748b]">(max 250 chars)</span>
           </label>
           <textarea
             id="push-body"
@@ -119,13 +119,13 @@ export default function PushBroadcastPanel() {
             placeholder="e.g. Review your CME status now to avoid compliance issues at renewal."
             className="w-full text-sm border border-[#e2e8f0] rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#1a56a0] focus:border-transparent resize-none"
           />
-          <p className="text-xs text-[#94a3b8] mt-1 text-right">{body.length}/250</p>
+          <p className="text-xs text-[#64748b] mt-1 text-right">{body.length}/250</p>
         </div>
 
         {/* URL */}
         <div>
           <label htmlFor="push-url" className="block text-xs font-medium text-[#374151] mb-1.5">
-            Link URL <span className="text-[#94a3b8]">(where tapping opens)</span>
+            Link URL <span className="text-[#64748b]">(where tapping opens)</span>
           </label>
           <input
             id="push-url"

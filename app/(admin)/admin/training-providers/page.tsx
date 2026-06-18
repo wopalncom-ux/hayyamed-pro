@@ -1,4 +1,4 @@
-import { createAdminClient } from "@/lib/supabase/server";
+﻿import { createAdminClient } from "@/lib/supabase/server";
 import ProviderActions from "@/components/admin/ProviderActions";
 
 export const metadata = { title: "Training Providers — Admin" };
@@ -49,10 +49,10 @@ export default async function AdminTrainingProvidersPage() {
           </div>
           <div className="flex items-center gap-2 mt-0.5">
             <p className="text-xs text-[#64748b]">{p.country_code}</p>
-            {p.accreditor && <><span className="text-xs text-[#94a3b8]">·</span><p className="text-xs text-[#64748b]">{p.accreditor}</p></>}
-            {p.contact_email && <><span className="text-xs text-[#94a3b8]">·</span><p className="text-xs text-[#64748b]">{p.contact_email}</p></>}
+            {p.accreditor && <><span className="text-xs text-[#64748b]">·</span><p className="text-xs text-[#64748b]">{p.accreditor}</p></>}
+            {p.contact_email && <><span className="text-xs text-[#64748b]">·</span><p className="text-xs text-[#64748b]">{p.contact_email}</p></>}
           </div>
-          <p className="text-xs text-[#94a3b8] mt-0.5">
+          <p className="text-xs text-[#64748b] mt-0.5">
             {courseCounts[p.id] ?? 0} courses · Registered {new Date(p.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
           </p>
         </div>

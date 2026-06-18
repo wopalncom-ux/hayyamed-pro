@@ -1,4 +1,4 @@
-import BlogPostLayout from "@/components/BlogPostLayout";
+﻿import BlogPostLayout from "@/components/BlogPostLayout";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -136,7 +136,7 @@ export default function Page() {
           Hayya Med Pro allows neonatologists to upload and organise certificates, track accumulated credits by category and authority, and receive alerts when compliance falls below the level required for renewal. Gap analysis shows exactly which activities still need to be completed before the cycle closes.
         </p>
 
-        <p style={{ fontSize: "0.75rem", color: "#94a3b8", marginTop: "2rem", paddingTop: "1rem", borderTop: "1px solid #e2e8f0" }}>
+        <p style={{ fontSize: "0.75rem", color: "#64748b", marginTop: "2rem", paddingTop: "1rem", borderTop: "1px solid #e2e8f0" }}>
           Hayya Med Pro supports CME tracking and licensing readiness. It does not issue licenses and does not replace official licensing authorities. Users must verify final requirements with QCHP, SCFHS, DHA, or the relevant GCC regulatory body.
         </p>
       </BlogPostLayout>

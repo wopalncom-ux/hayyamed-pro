@@ -1,4 +1,4 @@
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+﻿import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import InviteLinkButton from "@/components/employer/InviteLinkButton";
 import LinkRequestActions from "@/components/employer/LinkRequestActions";
@@ -109,10 +109,10 @@ export default async function UniversityFacultyPage() {
                         <span className="text-xs text-[#64748b]">{prof.profession}</span>
                       )}
                       {prof?.specialty && (
-                        <span className="text-xs text-[#94a3b8]">· {prof.specialty}</span>
+                        <span className="text-xs text-[#64748b]">· {prof.specialty}</span>
                       )}
                     </div>
-                    <p className="text-xs text-[#94a3b8] mt-0.5">
+                    <p className="text-xs text-[#64748b] mt-0.5">
                       Requested {new Date(req.requested_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
                     </p>
                   </div>
@@ -151,7 +151,7 @@ export default async function UniversityFacultyPage() {
                 <thead>
                   <tr className="border-b border-[#f1f5f9]">
                     {["Name", "Profession / Specialty", "School / Dept", "License Expiry", "Linked Since"].map((h) => (
-                      <th key={h} className="text-left px-6 py-2 text-xs font-medium text-[#94a3b8] uppercase tracking-wide">{h}</th>
+                      <th key={h} className="text-left px-6 py-2 text-xs font-medium text-[#64748b] uppercase tracking-wide">{h}</th>
                     ))}
                   </tr>
                 </thead>
@@ -183,7 +183,7 @@ export default async function UniversityFacultyPage() {
                               {daysToExpiry < 0 ? "EXPIRED" : `${daysToExpiry}d`}
                             </span>
                           ) : (
-                            <span className="text-xs text-[#94a3b8]">Private</span>
+                            <span className="text-xs text-[#64748b]">Private</span>
                           )}
                         </td>
                         <td className="px-6 py-4 text-xs text-[#64748b]">
@@ -204,7 +204,7 @@ export default async function UniversityFacultyPage() {
                   <div key={link.id} className="px-4 py-4">
                     <p className="text-sm font-medium text-[#111]">{prof?.full_name ?? "—"}</p>
                     <p className="text-xs text-[#64748b] mt-0.5">{prof?.profession ?? "—"} · {prof?.specialty ?? ""}</p>
-                    <p className="text-xs text-[#94a3b8] mt-1">
+                    <p className="text-xs text-[#64748b] mt-1">
                       Linked {new Date(link.requested_at).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}
                     </p>
                   </div>
@@ -231,7 +231,7 @@ export default async function UniversityFacultyPage() {
                 <div key={req.id} className="px-6 py-3 flex items-center justify-between">
                   <div>
                     <p className="text-sm text-[#374151]">{prof?.full_name ?? "—"}</p>
-                    <p className="text-xs text-[#94a3b8]">{prof?.profession ?? "—"}</p>
+                    <p className="text-xs text-[#64748b]">{prof?.profession ?? "—"}</p>
                   </div>
                   <span className="text-xs text-[#dc2626] font-medium">Rejected</span>
                 </div>

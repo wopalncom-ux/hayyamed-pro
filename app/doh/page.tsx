@@ -175,7 +175,7 @@ export default function DohPage() {
                 See what&apos;s free vs Pro
               </Link>
             </div>
-            <p className="text-xs text-[#94a3b8] mt-3">No credit card required · 14-day Pro trial included</p>
+            <p className="text-xs text-[#64748b] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>
 
           {/* Requirements card */}
@@ -191,7 +191,7 @@ export default function DohPage() {
                 <div key={s.label} className="text-center">
                   <p className="text-3xl font-black mb-1" style={{ color: s.color }}>{s.value}</p>
                   <p className="text-xs font-semibold text-[#374151] mb-0.5 leading-snug">{s.label}</p>
-                  <p className="text-[11px] text-[#94a3b8]">{s.sub}</p>
+                  <p className="text-[11px] text-[#64748b]">{s.sub}</p>
                 </div>
               ))}
             </div>
@@ -269,7 +269,7 @@ export default function DohPage() {
                   ].map(([feature, manual, platform]) => (
                     <tr key={feature}>
                       <td className="px-6 py-3 text-sm text-[#374151]">{feature}</td>
-                      <td className="px-4 py-3 text-center text-sm text-[#94a3b8]">{manual}</td>
+                      <td className="px-4 py-3 text-center text-sm text-[#64748b]">{manual}</td>
                       <td className="px-4 py-3 text-center text-sm bg-[#f8fbff]">{platform}</td>
                     </tr>
                   ))}

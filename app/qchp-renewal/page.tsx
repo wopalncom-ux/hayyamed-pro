@@ -274,7 +274,7 @@ export default function QchpRenewalPage() {
                     </div>
                   ))}
                 </div>
-                <p className="text-xs text-[#94a3b8] mt-4">
+                <p className="text-xs text-[#64748b] mt-4">
                   Green items are requirements Hayya Med Pro tracks automatically.
                 </p>
               </div>
@@ -370,7 +370,7 @@ export default function QchpRenewalPage() {
             <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
               Ready for QCHP renewal? Start tracking today.
             </h2>
-            <p className="text-[#94a3b8] mb-8 text-sm max-w-xl mx-auto">
+            <p className="text-[#64748b] mb-8 text-sm max-w-xl mx-auto">
               Hayya Med Pro tracks your 80-credit QCHP CPD requirement automatically.
               Log activities, upload certificates, and download your submission-ready report.
               Free to start.
@@ -395,12 +395,12 @@ export default function QchpRenewalPage() {
         {/* Disclaimer */}
         <footer className="py-6 bg-[#f8fafc] border-t border-[#e2e8f0]">
           <div className="max-w-4xl mx-auto px-4 sm:px-6">
-            <p className="text-xs text-[#94a3b8] text-center leading-relaxed">
+            <p className="text-xs text-[#64748b] text-center leading-relaxed">
               Hayya Med Pro supports CPD tracking and licensing readiness. It does not issue licenses and does not replace
               the official QCHP renewal process. Always verify final CPD requirements and renewal procedures with the
               Department of Healthcare Professionals – Accreditation Section (DHP-AS) at qchp.org.qa.
             </p>
-            <p className="text-xs text-[#94a3b8] text-center mt-2">
+            <p className="text-xs text-[#64748b] text-center mt-2">
               <Link href="/qchp" className="hover:text-[#64748b]">QCHP Guide</Link>
               {" · "}
               <Link href="/cpd-tracker" className="hover:text-[#64748b]">CPD Tracker</Link>

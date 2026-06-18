@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+﻿import { redirect } from "next/navigation";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
@@ -145,17 +145,17 @@ export default async function AdminEmployersPage() {
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
           <p className="text-xs text-[#64748b] font-medium uppercase tracking-wide mb-1">Linked staff</p>
           <p className="text-2xl font-bold text-[#0f1f3d]">{totalStaff}</p>
-          <p className="text-xs text-[#94a3b8] mt-1">{totalCompliant} compliant</p>
+          <p className="text-xs text-[#64748b] mt-1">{totalCompliant} compliant</p>
         </div>
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
           <p className="text-xs text-[#64748b] font-medium uppercase tracking-wide mb-1">With webhooks</p>
           <p className="text-2xl font-bold text-[#1a56a0]">{withWebhooks}</p>
-          <p className="text-xs text-[#94a3b8] mt-1">of {totalOrgs} orgs</p>
+          <p className="text-xs text-[#64748b] mt-1">of {totalOrgs} orgs</p>
         </div>
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
           <p className="text-xs text-[#64748b] font-medium uppercase tracking-wide mb-1">With API keys</p>
           <p className="text-2xl font-bold text-[#1a56a0]">{withApiKeys}</p>
-          <p className="text-xs text-[#94a3b8] mt-1">of {totalOrgs} orgs</p>
+          <p className="text-xs text-[#64748b] mt-1">of {totalOrgs} orgs</p>
         </div>
       </div>
 
@@ -196,7 +196,7 @@ export default async function AdminEmployersPage() {
 
       {/* Per-org table */}
       {sorted.length === 0 ? (
-        <div className="bg-white rounded-xl border border-[#e2e8f0] p-8 text-center text-sm text-[#94a3b8]">
+        <div className="bg-white rounded-xl border border-[#e2e8f0] p-8 text-center text-sm text-[#64748b]">
           No employer organisations yet. Organisations appear here once an employer admin registers.
         </div>
       ) : (
@@ -220,7 +220,7 @@ export default async function AdminEmployersPage() {
                   <tr key={org.id} className="hover:bg-[#f8fafc] transition-colors">
                     <td className="px-4 py-3">
                       <p className="font-medium text-[#111]">{org.name}</p>
-                      <p className="text-xs text-[#94a3b8]">{org.country ?? "—"} · {adminCount} admin{adminCount !== 1 ? "s" : ""}</p>
+                      <p className="text-xs text-[#64748b]">{org.country ?? "—"} · {adminCount} admin{adminCount !== 1 ? "s" : ""}</p>
                     </td>
                     <td className="px-4 py-3 text-center font-semibold text-[#374151]">{staffCount}</td>
                     <td className="px-4 py-3 text-center">
@@ -229,12 +229,12 @@ export default async function AdminEmployersPage() {
                           {pendingCount} pending
                         </span>
                       ) : (
-                        <span className="text-xs text-[#94a3b8]">—</span>
+                        <span className="text-xs text-[#64748b]">—</span>
                       )}
                     </td>
                     <td className="px-4 py-3 text-center">
                       {staffCount === 0 ? (
-                        <span className="text-xs text-[#94a3b8]">No staff</span>
+                        <span className="text-xs text-[#64748b]">No staff</span>
                       ) : (
                         <div className="flex flex-col items-center gap-1">
                           <span className={`text-xs font-bold px-2 py-0.5 rounded-full border ${statusColor(overallStatus)}`}>
@@ -256,28 +256,28 @@ export default async function AdminEmployersPage() {
                           <div className="text-[#dc2626]">{nonCompliant} fail</div>
                         </div>
                       ) : (
-                        <span className="text-xs text-[#94a3b8]">—</span>
+                        <span className="text-xs text-[#64748b]">—</span>
                       )}
                     </td>
                     <td className="px-4 py-3 text-center hidden md:table-cell">
                       {threshold ? (
                         <span className="text-xs font-medium text-[#374151]">{threshold.threshold_pct}%</span>
                       ) : (
-                        <span className="text-xs text-[#94a3b8]">—</span>
+                        <span className="text-xs text-[#64748b]">—</span>
                       )}
                     </td>
                     <td className="px-4 py-3 text-center hidden lg:table-cell">
                       {hasWebhook ? (
                         <span className="text-xs font-medium text-[#16a34a]">Active</span>
                       ) : (
-                        <span className="text-xs text-[#94a3b8]">None</span>
+                        <span className="text-xs text-[#64748b]">None</span>
                       )}
                     </td>
                     <td className="px-4 py-3 text-center hidden lg:table-cell">
                       {hasApiKey ? (
                         <span className="text-xs font-medium text-[#16a34a]">Active</span>
                       ) : (
-                        <span className="text-xs text-[#94a3b8]">None</span>
+                        <span className="text-xs text-[#64748b]">None</span>
                       )}
                     </td>
                   </tr>

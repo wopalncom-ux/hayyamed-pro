@@ -1,4 +1,4 @@
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+﻿import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { registerUniversity } from "./actions";
 
@@ -182,7 +182,7 @@ export default async function UniversityRegisterPage({
           </form>
         </div>
 
-        <p className="text-center text-xs text-[#94a3b8] mt-6">
+        <p className="text-center text-xs text-[#64748b] mt-6">
           Already a healthcare professional?{" "}
           <a href="/dashboard" className="text-[#1a56a0] hover:underline">
             Go to your dashboard

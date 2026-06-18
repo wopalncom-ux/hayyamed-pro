@@ -1,4 +1,4 @@
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+﻿import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 
@@ -119,7 +119,7 @@ export default async function ProviderDashboardPage() {
                 <div key={e.id} className="px-6 py-3 flex items-center justify-between">
                   <div>
                     <p className="text-sm text-[#111]">{courseData?.title ?? "—"}</p>
-                    <p className="text-xs text-[#94a3b8] mt-0.5">
+                    <p className="text-xs text-[#64748b] mt-0.5">
                       {new Date(e.enrolled_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
                     </p>
                   </div>

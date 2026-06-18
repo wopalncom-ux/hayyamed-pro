@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import { extendTrial } from "@/app/(admin)/admin/professionals/actions";
@@ -56,7 +56,7 @@ export default function TrialExtendButton({ authId, currentTrialEnd }: {
       </button>
       <button
         onClick={() => { setOpen(false); setError(null); }}
-        className="text-xs text-[#94a3b8] hover:text-[#64748b]"
+        className="text-xs text-[#64748b] hover:text-[#64748b]"
       >
         ✕
       </button>

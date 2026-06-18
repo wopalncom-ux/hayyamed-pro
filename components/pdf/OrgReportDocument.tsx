@@ -1,4 +1,4 @@
-// @ts-nocheck — @react-pdf/renderer has known type incompatibilities with React 19 JSX types
+﻿// @ts-nocheck — @react-pdf/renderer has known type incompatibilities with React 19 JSX types
 import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 
 const styles = StyleSheet.create({
@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
   compliant:     { color: "#16a34a", fontFamily: "Helvetica-Bold" },
   at_risk:       { color: "#d97706", fontFamily: "Helvetica-Bold" },
   non_compliant: { color: "#dc2626", fontFamily: "Helvetica-Bold" },
-  unknown:       { color: "#94a3b8" },
-  footer: { position: "absolute", bottom: 28, left: 40, right: 40, flexDirection: "row", justifyContent: "space-between", fontSize: 8, color: "#94a3b8", borderTopWidth: 1, borderTopColor: "#e2e8f0", paddingTop: 6 },
+  unknown:       { color: "#64748b" },
+  footer: { position: "absolute", bottom: 28, left: 40, right: 40, flexDirection: "row", justifyContent: "space-between", fontSize: 8, color: "#64748b", borderTopWidth: 1, borderTopColor: "#e2e8f0", paddingTop: 6 },
 });
 
 type StaffRow = {

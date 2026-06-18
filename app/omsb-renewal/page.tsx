@@ -196,7 +196,7 @@ export default function OmsbRenewalPage() {
               <div key={s.label} className="bg-white rounded-xl border border-[#e2e8f0] p-4 text-center">
                 <p className="text-3xl font-black text-[#1a56a0]">{s.value}</p>
                 <p className="text-xs font-semibold text-[#374151] mt-0.5">{s.label}</p>
-                <p className="text-[11px] text-[#94a3b8]">{s.sub}</p>
+                <p className="text-[11px] text-[#64748b]">{s.sub}</p>
               </div>
             ))}
           </div>

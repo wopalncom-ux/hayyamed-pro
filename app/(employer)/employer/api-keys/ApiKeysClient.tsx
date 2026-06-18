@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition, useCallback } from "react";
 
@@ -36,7 +36,7 @@ function SecretReveal({ fullKey }: { fullKey: string }) {
           {copied ? "Copied!" : "Copy"}
         </button>
       </div>
-      <p className="text-[10px] text-[#94a3b8] mt-2">
+      <p className="text-[10px] text-[#64748b] mt-2">
         Pass as header: <code>X-Api-Key: {fullKey.slice(0, 22)}…</code>
       </p>
     </div>
@@ -98,7 +98,7 @@ function KeyCard({ apiKey, onRevoke }: { apiKey: ApiKey; onRevoke: (id: string) 
         ))}
       </div>
 
-      <div className="flex items-center gap-4 text-xs text-[#94a3b8] pt-3 border-t border-[#f8fafc]">
+      <div className="flex items-center gap-4 text-xs text-[#64748b] pt-3 border-t border-[#f8fafc]">
         <span>Last used: <span className="text-[#64748b]">{lastUsed}</span></span>
         {apiKey.expires_at && (
           <span>Expires: <span className="text-[#64748b]">{new Date(apiKey.expires_at).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}</span></span>
@@ -265,7 +265,7 @@ export default function ApiKeysClient({ initialKeys }: { initialKeys: ApiKey[] }
           {activeKeys.length === 0 && !newKeyData && (
             <div className="bg-[#f8fafc] border border-dashed border-[#e2e8f0] rounded-xl px-5 py-8 text-center">
               <p className="text-sm font-medium text-[#374151] mb-1">No API keys yet</p>
-              <p className="text-xs text-[#94a3b8]">Generate a key to start integrating with your HRIS or HIS.</p>
+              <p className="text-xs text-[#64748b]">Generate a key to start integrating with your HRIS or HIS.</p>
             </div>
           )}
           {activeKeys.map((key) => (
@@ -310,13 +310,13 @@ curl -X POST .../api/v1/staff/sync \\
                   </span>
                   <div>
                     <code className="text-[10px] text-[#374151]">{path}</code>
-                    <p className="text-[10px] text-[#94a3b8]">{desc}</p>
+                    <p className="text-[10px] text-[#64748b]">{desc}</p>
                     <span className="text-[9px] font-medium px-1 py-0.5 rounded bg-[#f0f7ff] text-[#1a56a0]">{scope}</span>
                   </div>
                 </div>
               ))}
             </div>
-            <p className="text-[10px] text-[#94a3b8] mt-3">Rate limit: 100 req/min (20 req/min for sync). All endpoints return JSON.</p>
+            <p className="text-[10px] text-[#64748b] mt-3">Rate limit: 100 req/min (20 req/min for sync). All endpoints return JSON.</p>
           </div>
         </div>
       </div>

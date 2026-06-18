@@ -228,7 +228,7 @@ export default function PharmacistCmePage() {
                 See what&apos;s free vs Pro
               </Link>
             </div>
-            <p className="text-xs text-[#94a3b8] mt-3">No credit card required · 14-day Pro trial included</p>
+            <p className="text-xs text-[#64748b] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>
 
           {/* GCC comparison table */}
@@ -383,7 +383,7 @@ export default function PharmacistCmePage() {
             <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
               Your pharmacy license renewal starts here
             </h2>
-            <p className="text-[#94a3b8] text-sm max-w-xl mx-auto mb-6">
+            <p className="text-[#64748b] text-sm max-w-xl mx-auto mb-6">
               Hayya Med Pro tracks every credit, enforces online caps, flags patient safety requirements,
               and generates your submission-ready PDF portfolio — for every GCC authority you&apos;re licensed with.
             </p>

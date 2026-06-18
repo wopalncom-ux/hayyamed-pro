@@ -1,4 +1,4 @@
-import { createAdminClient } from "@/lib/supabase/server";
+﻿import { createAdminClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
@@ -179,7 +179,7 @@ export default async function AdminCompliancePage({
             style={{ width: `${complianceRate}%` }}
           />
         </div>
-        <p className="text-xs text-[#94a3b8] mt-2">
+        <p className="text-xs text-[#64748b] mt-2">
           {compliantCount} of {totalWithWallets} professionals with at least one CME wallet are compliant
         </p>
       </div>
@@ -268,7 +268,7 @@ export default async function AdminCompliancePage({
                 <span className={`text-xs font-bold w-10 text-right ${rate >= 80 ? "text-[#16a34a]" : rate >= 50 ? "text-[#d97706]" : "text-[#dc2626]"}`}>
                   {rate}%
                 </span>
-                <span className="text-xs text-[#94a3b8] w-14 text-right">{compliant}/{total}</span>
+                <span className="text-xs text-[#64748b] w-14 text-right">{compliant}/{total}</span>
               </div>
             );
           })}
@@ -338,7 +338,7 @@ export default async function AdminCompliancePage({
             <tbody>
               {displayRows.length === 0 && (
                 <tr>
-                  <td colSpan={6} className="text-center py-8 text-sm text-[#94a3b8]">
+                  <td colSpan={6} className="text-center py-8 text-sm text-[#64748b]">
                     No professionals match the selected filters.
                   </td>
                 </tr>
@@ -353,13 +353,13 @@ export default async function AdminCompliancePage({
                   <tr key={`${w.professional_id}-${w.country}`} className="border-b border-[#f8fafc] hover:bg-[#f8fafc]">
                     <td className="py-2.5 pr-3">
                       <p className="text-xs font-medium text-[#0f1f3d]">{profile?.full_name ?? "—"}</p>
-                      <p className="text-[10px] text-[#94a3b8]">{profile?.email ?? w.professional_id.slice(0, 8)}</p>
+                      <p className="text-[10px] text-[#64748b]">{profile?.email ?? w.professional_id.slice(0, 8)}</p>
                     </td>
                     <td className="py-2.5 px-3 text-xs text-[#374151] capitalize">{(w.profession ?? "—").replace(/_/g, " ")}</td>
                     <td className="py-2.5 px-3 text-xs font-medium text-[#374151]">{w.country ?? "—"}</td>
                     <td className="py-2.5 px-3 text-center">
                       <div className="text-xs font-medium text-[#374151]">{w.completed_credits}/{w.required_credits}</div>
-                      <div className="text-[10px] text-[#94a3b8]">{pct}%</div>
+                      <div className="text-[10px] text-[#64748b]">{pct}%</div>
                     </td>
                     <td className="py-2.5 px-3 text-center">
                       <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${bg} ${text}`}>{label}</span>
@@ -379,7 +379,7 @@ export default async function AdminCompliancePage({
           </table>
         </div>
         {tableRows.length > 200 && (
-          <p className="text-xs text-[#94a3b8] text-center mt-4">
+          <p className="text-xs text-[#64748b] text-center mt-4">
             Showing first 200 of {tableRows.length} results. Use filters to narrow or export CSV for full data.
           </p>
         )}

@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   badge: { fontSize: 8, color: "#16a34a", fontFamily: "Helvetica-Bold" },
   badgePending: { fontSize: 8, color: "#d97706", fontFamily: "Helvetica-Bold" },
   pendingNote: { fontSize: 8, color: "#92400e", backgroundColor: "#fff7ed", padding: "6 8", borderRadius: 4, marginBottom: 6 },
-  footer: { position: "absolute", bottom: 30, left: 40, right: 40, flexDirection: "row", justifyContent: "space-between", fontSize: 8, color: "#94a3b8", borderTopWidth: 1, borderTopColor: "#e2e8f0", paddingTop: 8 },
+  footer: { position: "absolute", bottom: 30, left: 40, right: 40, flexDirection: "row", justifyContent: "space-between", fontSize: 8, color: "#64748b", borderTopWidth: 1, borderTopColor: "#e2e8f0", paddingTop: 8 },
 });
 
 type Props = {

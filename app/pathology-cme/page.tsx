@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 
 const APP_URL = "https://hayyamed.pro";
@@ -204,7 +204,7 @@ export default function PathologyCme() {
           {/* CTA */}
           <div className="bg-[#0f1f3d] rounded-2xl px-8 py-10 text-center mb-10">
             <h2 className="text-2xl font-bold text-white mb-3">Track your pathology CME automatically</h2>
-            <p className="text-[#94a3b8] mb-6 max-w-md mx-auto">Log activities, upload CAP or ESP certificates, and monitor your progress toward every GCC authority target — free for all healthcare professionals.</p>
+            <p className="text-[#64748b] mb-6 max-w-md mx-auto">Log activities, upload CAP or ESP certificates, and monitor your progress toward every GCC authority target — free for all healthcare professionals.</p>
             <Link href="/register" className="inline-flex items-center gap-2 bg-[#1a56a0] hover:bg-[#1d4ed8] text-white font-bold px-7 py-3.5 rounded-xl text-sm transition-colors">Start tracking free →</Link>
           </div>
 

@@ -289,7 +289,7 @@ export default function GccCmeRequirementsPage() {
               </tbody>
             </table>
           </div>
-          <p style={{ textAlign: "center", color: "#94a3b8", fontSize: 12, marginTop: 16 }}>
+          <p style={{ textAlign: "center", color: "#64748b", fontSize: 12, marginTop: 16 }}>
             Source: QCHP, SCFHS, DHA, DOH, MOH Kuwait, NHRA, and OMSB official websites. Verify with each authority before renewal.
           </p>
         </div>
@@ -423,7 +423,7 @@ export default function GccCmeRequirementsPage() {
 
       {/* Disclaimer */}
       <section style={{ background: "#f8fafc", padding: "32px 24px", borderTop: "1px solid #e2e8f0" }}>
-        <p style={{ maxWidth: 800, margin: "0 auto", textAlign: "center", color: "#94a3b8", fontSize: 13, lineHeight: 1.7 }}>
+        <p style={{ maxWidth: 800, margin: "0 auto", textAlign: "center", color: "#64748b", fontSize: 13, lineHeight: 1.7 }}>
           Hayya Med PRO supports CME tracking and licensing readiness. It does not issue licenses and does not replace official licensing authorities. Users must verify final requirements with QCHP, SCFHS, DHA, DOH, MOH Kuwait, NHRA, OMSB, or their relevant regulatory body.
         </p>
       </section>

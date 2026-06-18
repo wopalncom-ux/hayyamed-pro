@@ -258,7 +258,7 @@ export default function GlobalCmeRequirementsPage() {
               </tbody>
             </table>
           </div>
-          <p style={{ textAlign: "center", color: "#94a3b8", fontSize: 13, marginTop: 16 }}>
+          <p style={{ textAlign: "center", color: "#64748b", fontSize: 13, marginTop: 16 }}>
             Cross-recognition rules change. Always verify directly with your licensing authority before attending an event.
           </p>
         </div>
@@ -376,7 +376,7 @@ export default function GlobalCmeRequirementsPage() {
 
       {/* Disclaimer */}
       <section style={{ background: "#f8fafc", padding: "32px 24px", borderTop: "1px solid #e2e8f0" }}>
-        <p style={{ maxWidth: 800, margin: "0 auto", textAlign: "center", color: "#94a3b8", fontSize: 13, lineHeight: 1.7 }}>
+        <p style={{ maxWidth: 800, margin: "0 auto", textAlign: "center", color: "#64748b", fontSize: 13, lineHeight: 1.7 }}>
           Hayya Med Pro supports CME tracking and licensing readiness. It does not issue licenses and does not replace official licensing authorities. CME requirements change — always verify current requirements directly with your licensing authority before your renewal date.
         </p>
       </section>

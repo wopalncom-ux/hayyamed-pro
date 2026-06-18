@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useRealtimeWallet } from "@/hooks/useRealtimeWallet";
 
@@ -38,7 +38,7 @@ export default function RealtimeWalletBadge({
       <span className="text-xs text-[#64748b]">
         {wallet.completed_credits}/{wallet.required_credits} credits ({pct}%)
       </span>
-      <span className="flex items-center gap-1 text-[10px] text-[#94a3b8]">
+      <span className="flex items-center gap-1 text-[10px] text-[#64748b]">
         <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#16a34a] animate-pulse" />
         live
       </span>

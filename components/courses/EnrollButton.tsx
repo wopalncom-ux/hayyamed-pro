@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 
@@ -57,7 +57,7 @@ export default function EnrollButton({
 
   if (deadlinePassed) {
     return (
-      <div className="w-full flex items-center justify-center bg-[#f8fafc] border border-[#e2e8f0] text-[#94a3b8] text-sm font-semibold px-6 py-3 rounded-xl">
+      <div className="w-full flex items-center justify-center bg-[#f8fafc] border border-[#e2e8f0] text-[#64748b] text-sm font-semibold px-6 py-3 rounded-xl">
         Enrollment closed
       </div>
     );
@@ -65,7 +65,7 @@ export default function EnrollButton({
 
   if (isFull) {
     return (
-      <div className="w-full flex items-center justify-center bg-[#f8fafc] border border-[#e2e8f0] text-[#94a3b8] text-sm font-semibold px-6 py-3 rounded-xl">
+      <div className="w-full flex items-center justify-center bg-[#f8fafc] border border-[#e2e8f0] text-[#64748b] text-sm font-semibold px-6 py-3 rounded-xl">
         Course full
       </div>
     );

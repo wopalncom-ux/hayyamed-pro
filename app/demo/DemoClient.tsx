@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
@@ -143,7 +143,7 @@ export default function DemoClient() {
             <span style={{ background: "#1e3a5f", color: "#93c5fd", fontSize: 11, fontWeight: 600, padding: "2px 10px", borderRadius: 99 }}>Sample Data — Not Real</span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <span style={{ color: "#94a3b8", fontSize: 13 }}>Ready to track your real CME?</span>
+            <span style={{ color: "#64748b", fontSize: 13 }}>Ready to track your real CME?</span>
             <Link href="/register?source=demo" onClick={() => trackCta("demo_banner")}
               style={{ background: "#1a56a0", color: "white", padding: "7px 16px", borderRadius: 8, textDecoration: "none", fontSize: 13, fontWeight: 600 }}>
               Start Free →
@@ -205,7 +205,7 @@ export default function DemoClient() {
               <p style={{ fontSize: 28, fontWeight: 800, color: stat.color, margin: "0 0 4px", lineHeight: 1 }}>
                 <AnimNum to={stat.value} suffix={stat.suffix} />
               </p>
-              <p style={{ fontSize: 12, color: "#94a3b8", margin: 0 }}>{stat.sub}</p>
+              <p style={{ fontSize: 12, color: "#64748b", margin: 0 }}>{stat.sub}</p>
             </div>
           ))}
         </div>
@@ -352,7 +352,7 @@ export default function DemoClient() {
                     <AnimNum to={87} /> days
                   </span>
                 </div>
-                <p style={{ fontSize: 11, color: "#94a3b8", margin: "6px 0 0" }}>Expires Sep 2025</p>
+                <p style={{ fontSize: 11, color: "#64748b", margin: "6px 0 0" }}>Expires Sep 2025</p>
               </div>
               <div style={{ background: "#fff7ed", border: "1px solid #fed7aa", borderRadius: 10, padding: "12px 14px" }}>
                 <p style={{ fontSize: 12, fontWeight: 600, color: "#c2410c", margin: "0 0 2px" }}>⚠ Renewal approaching</p>
@@ -407,7 +407,7 @@ export default function DemoClient() {
                   <span style={{ fontSize: 18 }}>{a.flag}</span>
                   <div style={{ flex: 1 }}>
                     <p style={{ margin: 0, fontSize: 13, fontWeight: 600, color: "#0f172a" }}>{a.name}</p>
-                    <p style={{ margin: 0, fontSize: 11, color: "#94a3b8" }}>{a.credits}</p>
+                    <p style={{ margin: 0, fontSize: 11, color: "#64748b" }}>{a.credits}</p>
                   </div>
                   <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#16a34a", flexShrink: 0 }} />
                 </div>
@@ -426,7 +426,7 @@ export default function DemoClient() {
             Start tracking your CME today.<br />
             <span style={{ color: "#60a5fa" }}>Free forever. No credit card.</span>
           </h2>
-          <p style={{ color: "#94a3b8", fontSize: 15, margin: "0 0 28px" }}>
+          <p style={{ color: "#64748b", fontSize: 15, margin: "0 0 28px" }}>
             Join healthcare professionals across Qatar, Saudi Arabia, and the UAE who use Hayya Med Pro to stay compliant.
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>

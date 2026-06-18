@@ -1,4 +1,4 @@
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+﻿import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { getUserPlan, isPro } from "@/lib/subscription";
 import Link from "next/link";
@@ -187,7 +187,7 @@ export default async function CmeHistoryPage() {
             return (
               <div key={i} className="flex-shrink-0" style={{ width: "14px", marginRight: "2px" }}>
                 {marker && (
-                  <span className="text-[9px] text-[#94a3b8] font-medium whitespace-nowrap">
+                  <span className="text-[9px] text-[#64748b] font-medium whitespace-nowrap">
                     {marker.label}
                   </span>
                 )}
@@ -202,7 +202,7 @@ export default async function CmeHistoryPage() {
           <div className="flex flex-col flex-shrink-0 mr-1.5" style={{ gap: "2px" }}>
             {DAY_LABELS.map((label, i) => (
               <div key={i} className="flex items-center justify-end" style={{ height: "12px" }}>
-                <span className="text-[8px] text-[#94a3b8] font-medium">{label}</span>
+                <span className="text-[8px] text-[#64748b] font-medium">{label}</span>
               </div>
             ))}
           </div>
@@ -224,11 +224,11 @@ export default async function CmeHistoryPage() {
 
         {/* Legend */}
         <div className="flex items-center gap-1.5 mt-3 justify-end">
-          <span className="text-[10px] text-[#94a3b8]">Less</span>
+          <span className="text-[10px] text-[#64748b]">Less</span>
           {["bg-[#e2e8f0]", "bg-[#bfdbfe]", "bg-[#60a5fa]", "bg-[#1a56a0]"].map((cls) => (
             <div key={cls} className={`w-3 h-3 rounded-sm ${cls}`} />
           ))}
-          <span className="text-[10px] text-[#94a3b8]">More</span>
+          <span className="text-[10px] text-[#64748b]">More</span>
         </div>
       </div>
 
@@ -284,7 +284,7 @@ export default async function CmeHistoryPage() {
                 </div>
                 <div className="text-right flex-shrink-0">
                   <p className="text-sm font-semibold text-[#1a56a0]">{a.credits} cr</p>
-                  <p className="text-xs text-[#94a3b8]">{a.activity_date.slice(0, 10)}</p>
+                  <p className="text-xs text-[#64748b]">{a.activity_date.slice(0, 10)}</p>
                 </div>
               </div>
             ))}

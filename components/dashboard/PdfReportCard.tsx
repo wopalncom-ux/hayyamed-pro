@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect } from "react";
 import { track } from "@/lib/analytics";
@@ -180,7 +180,7 @@ export default function PdfReportCard({ plan, walletCountry }: Props) {
           </div>
         </div>
 
-        <p className="text-[11px] text-[#94a3b8] mt-3 text-center">
+        <p className="text-[11px] text-[#64748b] mt-3 text-center">
           14-day money-back guarantee · No credit card required to start
         </p>
       </div>

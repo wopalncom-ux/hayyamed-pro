@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { track } from "@/lib/analytics";
@@ -80,7 +80,7 @@ export default function NpsSurvey({ createdAt }: { createdAt: string }) {
             </p>
             <button
               onClick={dismiss}
-              className="shrink-0 text-[#94a3b8] hover:text-[#64748b] text-lg leading-none"
+              className="shrink-0 text-[#64748b] hover:text-[#64748b] text-lg leading-none"
               aria-label="Dismiss"
             >
               ✕
@@ -103,7 +103,7 @@ export default function NpsSurvey({ createdAt }: { createdAt: string }) {
               </button>
             ))}
           </div>
-          <div className="flex justify-between text-[10px] text-[#94a3b8] mb-4 px-0.5">
+          <div className="flex justify-between text-[10px] text-[#64748b] mb-4 px-0.5">
             <span>Not likely</span>
             <span>Very likely</span>
           </div>

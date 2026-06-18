@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+﻿import { redirect } from "next/navigation";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { getUserPlan, isPro } from "@/lib/subscription";
 import AiChat from "@/components/dashboard/AiChat";
@@ -93,7 +93,7 @@ export default async function AiPage() {
         />
       </div>
 
-      <p className="text-xs text-[#94a3b8] text-center">
+      <p className="text-xs text-[#64748b] text-center">
         AI advice is for guidance only — always verify requirements with your regulatory authority (e.g. QCHP, SCFHS, DHA).
       </p>
     </div>

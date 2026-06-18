@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import ContactForm from "./ContactForm";
 
 export const metadata: Metadata = {
@@ -40,7 +40,7 @@ export default function ContactPage() {
 
         <ContactForm />
 
-        <div className="mt-8 pt-6 border-t border-[#e2e8f0] text-xs text-[#94a3b8] space-y-1">
+        <div className="mt-8 pt-6 border-t border-[#e2e8f0] text-xs text-[#64748b] space-y-1">
           <p>Response times: &lt;24 hours for Pro plan · &lt;72 hours for Free plan</p>
           <p>
             <a href="/privacy" className="hover:text-[#374151] transition-colors">Privacy Policy</a>

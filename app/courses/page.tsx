@@ -1,4 +1,4 @@
-import { createAdminClient } from "@/lib/supabase/server";
+﻿import { createAdminClient } from "@/lib/supabase/server";
 import SiteFooter from "@/components/SiteFooter";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -373,7 +373,7 @@ export default async function PublicCoursesPage({
               {/* CTA for training providers */}
               <div className="mt-10 bg-[#0f1f3d] rounded-2xl p-7 text-center">
                 <h2 className="text-white text-xl font-bold mb-2">Are you a training provider?</h2>
-                <p className="text-[#94a3b8] text-sm mb-5 max-w-md mx-auto">
+                <p className="text-[#64748b] text-sm mb-5 max-w-md mx-auto">
                   List your accredited CME courses on Hayya Med Pro and reach thousands of GCC healthcare professionals
                   actively tracking their compliance.
                 </p>
@@ -386,7 +386,7 @@ export default async function PublicCoursesPage({
                   </a>
                   <a
                     href="/register"
-                    className="inline-flex items-center justify-center text-sm text-[#94a3b8] hover:text-white transition-colors"
+                    className="inline-flex items-center justify-center text-sm text-[#64748b] hover:text-white transition-colors"
                   >
                     Or register as a professional
                   </a>

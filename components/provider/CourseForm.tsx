@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -242,7 +242,7 @@ export default function CourseForm({ providerId, initial }: Props) {
             </button>
           ))}
         </div>
-        <p className="text-xs text-[#94a3b8] mt-2">
+        <p className="text-xs text-[#64748b] mt-2">
           Published courses are visible to all healthcare professionals in the marketplace.
         </p>
       </div>

@@ -164,14 +164,14 @@ export default function ForProvidersPage() {
                 Browse the marketplace
               </Link>
             </div>
-            <p className="text-xs text-[#94a3b8] mt-4">No upfront fees · Approved within 2 business days</p>
+            <p className="text-xs text-[#64748b] mt-4">No upfront fees · Approved within 2 business days</p>
           </div>
         </section>
 
         {/* Authorities */}
         <section className="px-6 py-10 bg-[#f8fafc] border-b border-[#e2e8f0]">
           <div className="max-w-4xl mx-auto">
-            <p className="text-xs font-semibold text-[#94a3b8] uppercase tracking-widest text-center mb-5">
+            <p className="text-xs font-semibold text-[#64748b] uppercase tracking-widest text-center mb-5">
               Recognized accreditation authorities
             </p>
             <div className="flex flex-wrap justify-center gap-3">
@@ -182,7 +182,7 @@ export default function ForProvidersPage() {
                 >
                   <span>{code}</span>
                   <span className="font-semibold text-[#111]">{name}</span>
-                  <span className="text-[#94a3b8]">· {country}</span>
+                  <span className="text-[#64748b]">· {country}</span>
                 </div>
               ))}
             </div>
@@ -213,14 +213,14 @@ export default function ForProvidersPage() {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-white mb-3">Get listed in 4 steps</h2>
-              <p className="text-[#94a3b8]">From registration to your first enrollment — as fast as 2 business days.</p>
+              <p className="text-[#64748b]">From registration to your first enrollment — as fast as 2 business days.</p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {STEPS.map(({ step, title, body }) => (
                 <div key={step} className="bg-white/5 border border-white/10 rounded-xl p-6">
                   <p className="text-4xl font-black text-[#1a56a0] mb-3 opacity-60">{step}</p>
                   <h3 className="text-base font-semibold text-white mb-2">{title}</h3>
-                  <p className="text-sm text-[#94a3b8] leading-relaxed">{body}</p>
+                  <p className="text-sm text-[#64748b] leading-relaxed">{body}</p>
                 </div>
               ))}
             </div>
@@ -244,7 +244,7 @@ export default function ForProvidersPage() {
                 <details key={q} className="bg-white border border-[#e2e8f0] rounded-xl group">
                   <summary className="px-6 py-4 cursor-pointer text-sm font-semibold text-[#111] list-none flex items-center justify-between gap-4">
                     <span>{q}</span>
-                    <svg className="w-4 h-4 text-[#94a3b8] flex-shrink-0 group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <svg className="w-4 h-4 text-[#64748b] flex-shrink-0 group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="m19 9-7 7-7-7" />
                     </svg>
                   </summary>
@@ -277,7 +277,7 @@ export default function ForProvidersPage() {
 
         {/* Footer */}
         <footer className="bg-[#0f1f3d] px-6 py-8">
-          <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#94a3b8]">
+          <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#64748b]">
             <span>Â© {new Date().getFullYear()} Hayya Med Pro · hayyamed.pro</span>
             <div className="flex items-center gap-4">
               <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>

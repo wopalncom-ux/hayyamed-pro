@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import type { LearningPathway } from "@/app/api/ai/learning-pathway/route";
@@ -59,7 +59,7 @@ export default function LearningPathwayResult({ pathway, profession, country, on
                 className="text-left bg-white rounded-xl border border-[#e2e8f0] p-4 hover:border-[#1a56a0] hover:shadow-sm transition-all"
               >
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-semibold text-[#94a3b8]">{m.month_name.slice(0, 3).toUpperCase()}</span>
+                  <span className="text-xs font-semibold text-[#64748b]">{m.month_name.slice(0, 3).toUpperCase()}</span>
                   <span
                     className="text-xs font-semibold px-1.5 py-0.5 rounded"
                     style={{ background: color.bg, color: color.text }}
@@ -78,7 +78,7 @@ export default function LearningPathwayResult({ pathway, profession, country, on
             );
           })}
         </div>
-        <p className="text-[11px] text-[#94a3b8] mt-2">Tap any month to see the rationale.</p>
+        <p className="text-[11px] text-[#64748b] mt-2">Tap any month to see the rationale.</p>
       </div>
 
       {/* Key topics */}
@@ -131,7 +131,7 @@ export default function LearningPathwayResult({ pathway, profession, country, on
         </button>
       </div>
 
-      <p className="text-xs text-[#94a3b8] text-center">
+      <p className="text-xs text-[#64748b] text-center">
         AI-generated plan is a guide only — verify credit requirements with your licensing authority.
       </p>
     </div>

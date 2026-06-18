@@ -85,7 +85,7 @@ export default function AboutPage() {
             <h1 className="text-3xl sm:text-4xl font-bold text-white mb-5 leading-tight">
               Healthcare compliance shouldn&apos;t require a spreadsheet
             </h1>
-            <p className="text-lg text-[#94a3b8] max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg text-[#64748b] max-w-2xl mx-auto leading-relaxed">
               Hayya Med Pro is a healthcare SaaS platform that tracks CME credits, manages licensing
               readiness, and helps GCC healthcare professionals and their employers stay compliant —
               without the paperwork.
@@ -99,7 +99,7 @@ export default function AboutPage() {
             {stats.map((s) => (
               <div key={s.label} className="text-center">
                 <p className="text-2xl font-bold text-white">{s.n}</p>
-                <p className="text-xs text-[#94a3b8] mt-0.5">{s.label}</p>
+                <p className="text-xs text-[#64748b] mt-0.5">{s.label}</p>
               </div>
             ))}
           </div>
@@ -232,7 +232,7 @@ export default function AboutPage() {
                   <p className="text-sm font-semibold text-[#1a56a0]">{t.price}</p>
                 </div>
               ))}
-              <p className="text-[11px] text-[#94a3b8] mt-3">15% off on annual billing. Enterprise available.</p>
+              <p className="text-[11px] text-[#64748b] mt-3">15% off on annual billing. Enterprise available.</p>
             </div>
           </div>
         </section>
@@ -317,7 +317,7 @@ export default function AboutPage() {
             <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
               Ready to track your CME compliance?
             </h2>
-            <p className="text-[#94a3b8] mb-8 text-sm">
+            <p className="text-[#64748b] mb-8 text-sm">
               Free for individual professionals. 14-day Pro trial on signup. No credit card required.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -342,7 +342,7 @@ export default function AboutPage() {
       <footer className="py-6 bg-[#f8fafc] border-t border-[#e2e8f0]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 flex flex-wrap items-center justify-between gap-3">
           <Link href="/" className="text-xs font-semibold text-[#1a56a0]">Hayya Med Pro</Link>
-          <div className="flex gap-4 text-xs text-[#94a3b8]">
+          <div className="flex gap-4 text-xs text-[#64748b]">
             <Link href="/privacy" className="hover:text-[#64748b]">Privacy</Link>
             <Link href="/terms" className="hover:text-[#64748b]">Terms</Link>
             <Link href="/legal/dpa" className="hover:text-[#64748b]">DPA</Link>

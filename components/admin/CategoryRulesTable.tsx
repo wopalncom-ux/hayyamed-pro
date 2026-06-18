@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -110,14 +110,14 @@ function CategoryRow({
           ) : "—"}
         </td>
         <td className="px-4 py-3 text-sm text-center text-[#374151]">
-          {cat.max_credits_per_cycle != null ? cat.max_credits_per_cycle : <span className="text-[#94a3b8]">No cap</span>}
+          {cat.max_credits_per_cycle != null ? cat.max_credits_per_cycle : <span className="text-[#64748b]">No cap</span>}
         </td>
         <td className="px-4 py-3 text-sm text-center text-[#374151]">{cat.credits_per_hour}</td>
         <td className="px-4 py-3 text-center">
           {cat.accreditation_required ? (
             <span className="text-xs bg-[#eff6ff] text-[#1a56a0] font-medium px-2 py-0.5 rounded-full">Required</span>
           ) : (
-            <span className="text-xs text-[#94a3b8]">Optional</span>
+            <span className="text-xs text-[#64748b]">Optional</span>
           )}
         </td>
         <td className="px-4 py-3 text-xs text-[#64748b] max-w-[200px] truncate">{cat.notes ?? "—"}</td>

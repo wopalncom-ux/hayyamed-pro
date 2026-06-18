@@ -169,7 +169,7 @@ export default function ScfhsPage() {
                 See what&apos;s free vs Pro
               </Link>
             </div>
-            <p className="text-xs text-[#94a3b8] mt-3">No credit card required · 14-day Pro trial included</p>
+            <p className="text-xs text-[#64748b] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>
 
           {/* Credits by profession */}
@@ -181,7 +181,7 @@ export default function ScfhsPage() {
                   <div className="text-2xl mb-1.5">{p.icon}</div>
                   <p className="text-xs font-semibold text-[#374151] mb-1">{p.label}</p>
                   <p className="text-2xl font-black text-[#1a56a0]">{p.credits}</p>
-                  <p className="text-[11px] text-[#94a3b8]">credits/{p.cycle}</p>
+                  <p className="text-[11px] text-[#64748b]">credits/{p.cycle}</p>
                 </div>
               ))}
             </div>
@@ -190,17 +190,17 @@ export default function ScfhsPage() {
               <div className="text-center">
                 <p className="text-xl font-black text-[#d97706]">50%</p>
                 <p className="text-xs font-medium text-[#374151]">Max online credits</p>
-                <p className="text-[11px] text-[#94a3b8]">e.g. max 30 of 60</p>
+                <p className="text-[11px] text-[#64748b]">e.g. max 30 of 60</p>
               </div>
               <div className="text-center">
                 <p className="text-xl font-black text-[#dc2626]">5</p>
                 <p className="text-xs font-medium text-[#374151]">Patient safety credits</p>
-                <p className="text-[11px] text-[#94a3b8]">mandatory per year</p>
+                <p className="text-[11px] text-[#64748b]">mandatory per year</p>
               </div>
               <div className="text-center">
                 <p className="text-xl font-black text-[#16a34a]">50%</p>
                 <p className="text-xs font-medium text-[#374151]">Max self-learning</p>
-                <p className="text-[11px] text-[#94a3b8]">structured activities preferred</p>
+                <p className="text-[11px] text-[#64748b]">structured activities preferred</p>
               </div>
             </div>
           </div>

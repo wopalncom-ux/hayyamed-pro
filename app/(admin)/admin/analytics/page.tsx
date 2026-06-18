@@ -1,4 +1,4 @@
-import { createAdminClient } from "@/lib/supabase/server";
+﻿import { createAdminClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
 
@@ -285,7 +285,7 @@ export default async function AdminAnalyticsPage() {
         <h2 className="text-sm font-semibold text-[#111] mb-1">Net Promoter Score (NPS) — Last 90 Days</h2>
         <p className="text-xs text-[#64748b] mb-5">{npsTotal} responses · Promoters (9–10) minus Detractors (0–6) ÷ Total × 100</p>
         {npsTotal === 0 ? (
-          <p className="text-sm text-[#94a3b8]">No responses yet.</p>
+          <p className="text-sm text-[#64748b]">No responses yet.</p>
         ) : (
           <div className="flex gap-8 items-start flex-wrap">
             <div className="text-center min-w-[80px]">
@@ -317,7 +317,7 @@ export default async function AdminAnalyticsPage() {
                   return (
                     <div key={score} className="flex-1 flex flex-col items-center gap-1 group relative">
                       <div className="w-full rounded-t-sm" style={{ height: `${h}%`, backgroundColor: color, minHeight: count > 0 ? "3px" : "0" }} />
-                      <span className="text-[8px] text-[#94a3b8]">{score}</span>
+                      <span className="text-[8px] text-[#64748b]">{score}</span>
                     </div>
                   );
                 })}
@@ -361,7 +361,7 @@ export default async function AdminAnalyticsPage() {
           <h2 className="text-sm font-semibold text-[#111] mb-1">Top Countries</h2>
           <p className="text-xs text-[#64748b] mb-5">Users by country of residence (all-time)</p>
           {topCountries.length === 0 ? (
-            <p className="text-sm text-[#94a3b8]">No data yet.</p>
+            <p className="text-sm text-[#64748b]">No data yet.</p>
           ) : (
             <div className="space-y-3">
               {topCountries.map(([country, count]) => (
@@ -385,7 +385,7 @@ export default async function AdminAnalyticsPage() {
           <h2 className="text-sm font-semibold text-[#111] mb-1">Top Professions</h2>
           <p className="text-xs text-[#64748b] mb-5">Users by profession (all-time)</p>
           {topProfessions.length === 0 ? (
-            <p className="text-sm text-[#94a3b8]">No data yet.</p>
+            <p className="text-sm text-[#64748b]">No data yet.</p>
           ) : (
             <div className="space-y-3">
               {topProfessions.map(([profession, count]) => (
@@ -419,7 +419,7 @@ function KpiCard({ label, value, color, sub }: {
     <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
       <p className="text-xs font-medium text-[#64748b] uppercase tracking-wide mb-2">{label}</p>
       <p className={`text-2xl font-bold ${c}`}>{value}</p>
-      {sub && <p className="text-xs text-[#94a3b8] mt-1">{sub}</p>}
+      {sub && <p className="text-xs text-[#64748b] mt-1">{sub}</p>}
     </div>
   );
 }
@@ -437,7 +437,7 @@ function BarChart({ days, max, color }: { days: [string, number][]; max: number;
               style={{ height: `${h}%`, backgroundColor: color, opacity: count > 0 ? 0.8 : 0.15, minHeight: count > 0 ? "3px" : "0" }}
             />
             {show.includes(day) && (
-              <span className="text-[9px] text-[#94a3b8] absolute -bottom-4 whitespace-nowrap">{day}</span>
+              <span className="text-[9px] text-[#64748b] absolute -bottom-4 whitespace-nowrap">{day}</span>
             )}
           </div>
         );

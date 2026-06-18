@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useMemo } from "react";
 import { Eye, EyeOff } from "lucide-react";
@@ -74,7 +74,7 @@ export default function ChangePasswordForm() {
           <button
             type="button"
             onClick={() => setShowNew((v) => !v)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-[#94a3b8] hover:text-[#374151] transition-colors"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-[#64748b] hover:text-[#374151] transition-colors"
             aria-label={showNew ? "Hide password" : "Show password"}
           >
             {showNew ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -109,7 +109,7 @@ export default function ChangePasswordForm() {
           <button
             type="button"
             onClick={() => setShowConfirm((v) => !v)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-[#94a3b8] hover:text-[#374151] transition-colors"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-[#64748b] hover:text-[#374151] transition-colors"
             aria-label={showConfirm ? "Hide password" : "Show password"}
           >
             {showConfirm ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}

@@ -55,7 +55,7 @@ export default function WeeklyEnrollmentChart({ data }: { data: WeekBucket[] }) 
               x={x + BAR_W / 2}
               y={CHART_H + 14}
               textAnchor="middle"
-              fill="#94a3b8"
+              fill="#64748b"
               fontSize={8.5}
               fontFamily="system-ui,-apple-system,sans-serif"
             >

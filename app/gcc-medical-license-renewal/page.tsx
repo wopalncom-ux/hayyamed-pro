@@ -294,7 +294,7 @@ export default function GccMedicalLicenseRenewalPage() {
                         Renewal guide →
                       </Link>
                     ) : (
-                      <span className="flex-1 text-center text-xs font-medium text-[#94a3b8] bg-[#f8fafc] border border-[#e2e8f0] py-2 rounded-lg">
+                      <span className="flex-1 text-center text-xs font-medium text-[#64748b] bg-[#f8fafc] border border-[#e2e8f0] py-2 rounded-lg">
                         Guide coming soon
                       </span>
                     )}

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -152,7 +152,7 @@ export default function ProviderRegisterForm() {
       >
         {loading ? "Submitting…" : "Submit Application"}
       </button>
-      <p className="text-xs text-[#94a3b8] text-center">
+      <p className="text-xs text-[#64748b] text-center">
         Applications are reviewed within 1–2 business days.
       </p>
     </form>

@@ -31,7 +31,7 @@ export function ActivitiesSection({ initialActivities }: { initialActivities: Ac
         </a>
       </div>
       {activities.length === 0 ? (
-        <div className="px-6 py-8 text-center text-sm text-[#94a3b8]">No activities yet.</div>
+        <div className="px-6 py-8 text-center text-sm text-[#64748b]">No activities yet.</div>
       ) : (
         <div className="divide-y divide-[#f1f5f9]">
           {activities.map((a) => (

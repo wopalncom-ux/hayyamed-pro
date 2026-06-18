@@ -168,7 +168,7 @@ export default async function AdminProfessionalDetailPage({
                         </div>
                         <span className="text-xs font-bold text-[#374151] w-10 text-right">{pct}%</span>
                       </div>
-                      <p className="text-xs text-[#94a3b8] mt-1.5">
+                      <p className="text-xs text-[#64748b] mt-1.5">
                         {w.completed_credits ?? 0}/{w.required_credits ?? 0} credits
                         {gap > 0 && <span className="text-[#dc2626]"> · {gap} gap</span>}
                         {w.cycle_end_date && <span> · ends {new Date(w.cycle_end_date).toLocaleDateString("en-GB")}</span>}
@@ -195,13 +195,13 @@ export default async function AdminProfessionalDetailPage({
                           {l.is_primary && <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded-full bg-[#dbeafe] text-[#1d4ed8]">Primary</span>}
                         </div>
                         <p className="text-xs text-[#64748b]">{l.licensing_authority} · {l.country_code}</p>
-                        <p className="text-xs text-[#94a3b8] capitalize">{(l.profession ?? "").replace(/_/g, " ")}{l.specialty ? ` · ${l.specialty}` : ""}</p>
+                        <p className="text-xs text-[#64748b] capitalize">{(l.profession ?? "").replace(/_/g, " ")}{l.specialty ? ` · ${l.specialty}` : ""}</p>
                       </div>
                       {l.expiry_date && (
                         <div className="text-right flex-shrink-0">
                           <p className="text-xs text-[#374151]">{new Date(l.expiry_date).toLocaleDateString("en-GB")}</p>
                           {daysLeft !== null && (
-                            <p className={`text-[10px] font-semibold ${daysLeft < 0 ? "text-[#dc2626]" : daysLeft <= 30 ? "text-[#d97706]" : "text-[#94a3b8]"}`}>
+                            <p className={`text-[10px] font-semibold ${daysLeft < 0 ? "text-[#dc2626]" : daysLeft <= 30 ? "text-[#d97706]" : "text-[#64748b]"}`}>
                               {daysLeft < 0 ? "EXPIRED" : `${daysLeft}d left`}
                             </p>
                           )}
@@ -252,7 +252,7 @@ export default async function AdminProfessionalDetailPage({
           <div className="bg-white rounded-xl border border-[#e2e8f0] p-6">
             <h2 className="text-sm font-semibold text-[#111] uppercase tracking-wide mb-4">Subscription</h2>
             {subs.length === 0 ? (
-              <p className="text-sm text-[#94a3b8]">Free plan</p>
+              <p className="text-sm text-[#64748b]">Free plan</p>
             ) : (
               <div className="space-y-3">
                 {subs.map((s, i) => (
@@ -302,13 +302,13 @@ export default async function AdminProfessionalDetailPage({
               <h2 className="text-sm font-semibold text-[#111] uppercase tracking-wide">Recent Activity</h2>
             </div>
             {auditLogs.length === 0 ? (
-              <div className="px-5 py-6 text-center text-xs text-[#94a3b8]">No audit records.</div>
+              <div className="px-5 py-6 text-center text-xs text-[#64748b]">No audit records.</div>
             ) : (
               <div className="divide-y divide-[#f1f5f9]">
                 {auditLogs.map((log) => (
                   <div key={log.id} className="px-5 py-3">
                     <p className="text-xs font-mono text-[#374151]">{log.action}</p>
-                    <p className="text-[10px] text-[#94a3b8] mt-0.5">
+                    <p className="text-[10px] text-[#64748b] mt-0.5">
                       {new Date(log.created_at).toLocaleString("en-GB", {
                         day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit",
                       })}
@@ -335,9 +335,9 @@ export default async function AdminProfessionalDetailPage({
 function Field({ label, value, warn }: { label: string; value: string | null | undefined; warn?: boolean }) {
   return (
     <div>
-      <p className="text-xs text-[#94a3b8] mb-0.5">{label}</p>
+      <p className="text-xs text-[#64748b] mb-0.5">{label}</p>
       <p className={`text-sm ${warn ? "text-[#d97706] font-medium" : "text-[#374151]"}`}>
-        {value ?? <span className="text-[#94a3b8]">—</span>}
+        {value ?? <span className="text-[#64748b]">—</span>}
       </p>
     </div>
   );

@@ -1,4 +1,4 @@
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+﻿import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import MarkCourseCompleteButton from "@/components/marketplace/MarkCourseCompleteButton";
@@ -101,12 +101,12 @@ export default async function MyCoursesPage() {
             <p className="text-xs text-[#64748b]">{provider?.name ?? "—"}</p>
             {course?.category && (
               <>
-                <span className="text-xs text-[#94a3b8]">·</span>
+                <span className="text-xs text-[#64748b]">·</span>
                 <span className="text-xs text-[#64748b]">{course.category}</span>
               </>
             )}
           </div>
-          <p className="text-xs text-[#94a3b8] mt-0.5">
+          <p className="text-xs text-[#64748b] mt-0.5">
             Enrolled {new Date(e.enrolled_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
             {e.completed_at && (
               <> · Completed {new Date(e.completed_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</>

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -95,7 +95,7 @@ export default function EmployerSetupChecklist({
         </div>
         <button
           onClick={() => setDismissed(true)}
-          className="text-xs text-[#94a3b8] hover:text-[#64748b] transition-colors"
+          className="text-xs text-[#64748b] hover:text-[#64748b] transition-colors"
           aria-label="Dismiss setup checklist"
         >
           Dismiss

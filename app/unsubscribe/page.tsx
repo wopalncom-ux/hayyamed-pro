@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -53,7 +53,7 @@ export default async function UnsubscribePage({
               </Link>
             </div>
           </div>
-          <p className="text-xs text-[#94a3b8] mt-6">
+          <p className="text-xs text-[#64748b] mt-6">
             Hayya Med Pro · Healthcare Professional Platform
           </p>
         </div>

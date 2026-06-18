@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { submitContactForm } from "./actions";
@@ -64,7 +64,7 @@ export default function ContactForm() {
             required
             autoComplete="name"
             placeholder="Dr. Sarah Al-Mansouri"
-            className="w-full px-3 py-2.5 text-sm border border-[#e2e8f0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20 focus:border-[#1a56a0] placeholder:text-[#94a3b8]"
+            className="w-full px-3 py-2.5 text-sm border border-[#e2e8f0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20 focus:border-[#1a56a0] placeholder:text-[#64748b]"
           />
         </div>
         <div>
@@ -78,7 +78,7 @@ export default function ContactForm() {
             required
             autoComplete="email"
             placeholder="you@hospital.qa"
-            className="w-full px-3 py-2.5 text-sm border border-[#e2e8f0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20 focus:border-[#1a56a0] placeholder:text-[#94a3b8]"
+            className="w-full px-3 py-2.5 text-sm border border-[#e2e8f0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20 focus:border-[#1a56a0] placeholder:text-[#64748b]"
           />
         </div>
       </div>
@@ -111,7 +111,7 @@ export default function ContactForm() {
           required
           rows={5}
           placeholder="Describe your question or issue in detail…"
-          className="w-full px-3 py-2.5 text-sm border border-[#e2e8f0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20 focus:border-[#1a56a0] placeholder:text-[#94a3b8] resize-none"
+          className="w-full px-3 py-2.5 text-sm border border-[#e2e8f0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20 focus:border-[#1a56a0] placeholder:text-[#64748b] resize-none"
         />
       </div>
 

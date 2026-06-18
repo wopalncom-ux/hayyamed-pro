@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 
 const APP_URL = "https://hayyamed.pro";
@@ -208,7 +208,7 @@ export default function ForGovernmentPage() {
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight mb-6 leading-tight">
               License the complete CME platform<br className="hidden lg:block" /> to your health authority
             </h1>
-            <p className="text-lg text-[#94a3b8] max-w-2xl mx-auto mb-10 leading-relaxed">
+            <p className="text-lg text-[#64748b] max-w-2xl mx-auto mb-10 leading-relaxed">
               A production-ready, GCC-data-sovereign, API-first CME compliance platform — white-labeled under your authority's brand. From 20,000 to 700,000+ licensed professionals.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -299,7 +299,7 @@ export default function ForGovernmentPage() {
                   <div key={s.label} className="bg-[#f8fafc] rounded-xl border border-[#e2e8f0] p-4 text-center">
                     <p className="text-xs text-[#64748b] mb-1">{s.label}</p>
                     <p className="text-lg font-bold text-[#1a56a0]">{s.value}</p>
-                    <p className="text-xs text-[#94a3b8]">{s.sub}</p>
+                    <p className="text-xs text-[#64748b]">{s.sub}</p>
                   </div>
                 ))}
               </div>
@@ -332,7 +332,7 @@ export default function ForGovernmentPage() {
                 </div>
               ))}
             </div>
-            <p className="text-xs text-[#94a3b8] text-center mt-6">Pricing is per licensed professional per year, with minimum commitment. Volume discounts available at 50K+ professionals.</p>
+            <p className="text-xs text-[#64748b] text-center mt-6">Pricing is per licensed professional per year, with minimum commitment. Volume discounts available at 50K+ professionals.</p>
           </div>
         </section>
 
@@ -358,7 +358,7 @@ export default function ForGovernmentPage() {
         <section className="py-20 bg-[#0f1f3d]">
           <div className="max-w-3xl mx-auto px-6 text-center">
             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 leading-tight">Ready to discuss a national deployment?</h2>
-            <p className="text-[#94a3b8] mb-8 text-sm max-w-lg mx-auto leading-relaxed">
+            <p className="text-[#64748b] mb-8 text-sm max-w-lg mx-auto leading-relaxed">
               We engage directly with health authority leadership, IT departments, and procurement teams. All proposals are tailored to your authority's scale, existing systems, and regulatory requirements.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -376,7 +376,7 @@ export default function ForGovernmentPage() {
         {/* Disclaimer */}
         <div className="py-6 bg-[#f8fafc] border-t border-[#e2e8f0]">
           <div className="max-w-4xl mx-auto px-6 text-center">
-            <p className="text-xs text-[#94a3b8]">
+            <p className="text-xs text-[#64748b]">
               Hayya Med Pro is an independent technology platform. It is not officially endorsed by QCHP, SCFHS, DHA, DOH, MOH Kuwait, NHRA, or OMSB unless a formal partnership agreement has been signed.{" "}
               <Link href="/contact" className="hover:text-[#64748b]">Contact us</Link> to discuss a partnership.
             </p>

@@ -1,4 +1,4 @@
-const CATEGORY_LABELS: Record<string, string> = {
+﻿const CATEGORY_LABELS: Record<string, string> = {
   conference: "Conference / Seminar",
   online: "Online / E-Learning",
   workshop: "Workshop (Hands-on)",
@@ -150,7 +150,7 @@ export default function ComplianceGapCard({
                     </span>
                   )}
                   {cap === null && earned === 0 && (
-                    <span className="text-xs text-[#94a3b8]">No cap</span>
+                    <span className="text-xs text-[#64748b]">No cap</span>
                   )}
                 </div>
               </div>

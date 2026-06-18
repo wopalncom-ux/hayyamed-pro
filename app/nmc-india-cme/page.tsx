@@ -261,7 +261,7 @@ export default function NmcIndiaCmePage() {
 
       {/* Disclaimer */}
       <section style={{ background: "#f8fafc", padding: "32px 24px", borderTop: "1px solid #e2e8f0" }}>
-        <p style={{ maxWidth: 800, margin: "0 auto", textAlign: "center", color: "#94a3b8", fontSize: 13, lineHeight: 1.7 }}>
+        <p style={{ maxWidth: 800, margin: "0 auto", textAlign: "center", color: "#64748b", fontSize: 13, lineHeight: 1.7 }}>
           Hayya Med PRO supports CME tracking and licensing readiness. It does not issue licences and does not replace official NMC India or State Medical Council requirements. Always verify final requirements at nmc.org.in and with your State Medical Council.
         </p>
       </section>

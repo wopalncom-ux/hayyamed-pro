@@ -1,4 +1,4 @@
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+﻿import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import NotificationsEnableButton from "@/components/dashboard/NotificationsEnableButton";
 
@@ -108,7 +108,7 @@ export default async function NotificationsPage() {
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-6">
           <h2 className="text-base font-semibold text-[#111] mb-4">Recent Activity</h2>
           {recent.length === 0 ? (
-            <p className="text-sm text-[#94a3b8]">No notifications sent yet. Reminders and alerts will appear here once your profile is set up.</p>
+            <p className="text-sm text-[#64748b]">No notifications sent yet. Reminders and alerts will appear here once your profile is set up.</p>
           ) : (
             <div className="divide-y divide-[#f8fafc]">
               {recent.map((item) => {
@@ -122,7 +122,7 @@ export default async function NotificationsPage() {
                     }`} />
                     <div className="flex-1 min-w-0">
                       <p className="text-sm text-[#111] leading-snug">{label}</p>
-                      <p className="text-xs text-[#94a3b8] mt-0.5">{timeAgo(item.created_at)}</p>
+                      <p className="text-xs text-[#64748b] mt-0.5">{timeAgo(item.created_at)}</p>
                     </div>
                     <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full flex-shrink-0 ${
                       item.channel === "email" ? "bg-[#f0f7ff] text-[#1a56a0]" :
@@ -160,17 +160,17 @@ export default async function NotificationsPage() {
                 {licenseReminders.map(({ label, date, fired }) => (
                   <div key={label} className={`flex items-center justify-between py-2.5 px-3 rounded-lg ${fired ? "bg-[#f8fafc]" : "bg-[#f0f7ff]"}`}>
                     <div className="flex items-center gap-2.5">
-                      <span className={`w-2 h-2 rounded-full flex-shrink-0 ${fired ? "bg-[#94a3b8]" : "bg-[#1a56a0]"}`} />
-                      <span className={`text-sm ${fired ? "text-[#94a3b8] line-through" : "text-[#374151]"}`}>{label}</span>
+                      <span className={`w-2 h-2 rounded-full flex-shrink-0 ${fired ? "bg-[#64748b]" : "bg-[#1a56a0]"}`} />
+                      <span className={`text-sm ${fired ? "text-[#64748b] line-through" : "text-[#374151]"}`}>{label}</span>
                     </div>
-                    <span className={`text-xs ${fired ? "text-[#94a3b8]" : "text-[#64748b]"}`}>{fmt(date)}</span>
+                    <span className={`text-xs ${fired ? "text-[#64748b]" : "text-[#64748b]"}`}>{fmt(date)}</span>
                   </div>
                 ))}
               </div>
             </>
           ) : (
             <div className="py-4">
-              <p className="text-sm text-[#94a3b8] mb-3">No license expiry date set.</p>
+              <p className="text-sm text-[#64748b] mb-3">No license expiry date set.</p>
               <a href="/dashboard/settings" className="text-sm text-[#1a56a0] hover:underline">
                 Add your license expiry date in Settings →
               </a>
@@ -193,17 +193,17 @@ export default async function NotificationsPage() {
                 {cmeReminders.map(({ label, date, fired }) => (
                   <div key={label} className={`flex items-center justify-between py-2.5 px-3 rounded-lg ${fired ? "bg-[#f8fafc]" : "bg-[#f0f7ff]"}`}>
                     <div className="flex items-center gap-2.5">
-                      <span className={`w-2 h-2 rounded-full flex-shrink-0 ${fired ? "bg-[#94a3b8]" : "bg-[#1a56a0]"}`} />
-                      <span className={`text-sm ${fired ? "text-[#94a3b8] line-through" : "text-[#374151]"}`}>{label}</span>
+                      <span className={`w-2 h-2 rounded-full flex-shrink-0 ${fired ? "bg-[#64748b]" : "bg-[#1a56a0]"}`} />
+                      <span className={`text-sm ${fired ? "text-[#64748b] line-through" : "text-[#374151]"}`}>{label}</span>
                     </div>
-                    <span className={`text-xs ${fired ? "text-[#94a3b8]" : "text-[#64748b]"}`}>{fmt(date)}</span>
+                    <span className={`text-xs ${fired ? "text-[#64748b]" : "text-[#64748b]"}`}>{fmt(date)}</span>
                   </div>
                 ))}
               </div>
             </>
           ) : (
             <div className="py-4">
-              <p className="text-sm text-[#94a3b8] mb-3">No CME wallet found.</p>
+              <p className="text-sm text-[#64748b] mb-3">No CME wallet found.</p>
               <a href="/dashboard/cme" className="text-sm text-[#1a56a0] hover:underline">
                 Set up your CME wallet →
               </a>
@@ -223,11 +223,11 @@ export default async function NotificationsPage() {
               { label: "Employer compliance tasks",  sub: "Email when your employer sends a compliance task or reminder",               active: true },
             ].map(({ label, sub, active }) => (
               <div key={label} className="flex items-start gap-3 py-2 border-b border-[#f8fafc] last:border-0">
-                <span className={`mt-0.5 w-4 h-4 rounded-full flex-shrink-0 flex items-center justify-center text-xs ${active ? "bg-[#dcfce7] text-[#16a34a]" : "bg-[#f1f5f9] text-[#94a3b8]"}`}>
+                <span className={`mt-0.5 w-4 h-4 rounded-full flex-shrink-0 flex items-center justify-center text-xs ${active ? "bg-[#dcfce7] text-[#16a34a]" : "bg-[#f1f5f9] text-[#64748b]"}`}>
                   {active ? "✓" : "—"}
                 </span>
                 <div>
-                  <p className={`text-sm font-medium ${active ? "text-[#111]" : "text-[#94a3b8]"}`}>{label}</p>
+                  <p className={`text-sm font-medium ${active ? "text-[#111]" : "text-[#64748b]"}`}>{label}</p>
                   <p className="text-xs text-[#64748b] mt-0.5">{sub}</p>
                 </div>
               </div>

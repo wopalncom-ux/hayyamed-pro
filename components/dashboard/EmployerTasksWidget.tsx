@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
@@ -60,7 +60,7 @@ function TaskRow({ task, onUpdate }: { task: EmployerTask; onUpdate: (id: string
       <div className="flex-1 min-w-0">
         <div className="flex items-start justify-between gap-3 flex-wrap">
           <div className="min-w-0">
-            <p className={`text-sm font-semibold ${task.status === "completed" ? "line-through text-[#94a3b8]" : "text-[#111]"}`}>
+            <p className={`text-sm font-semibold ${task.status === "completed" ? "line-through text-[#64748b]" : "text-[#111]"}`}>
               {task.title}
             </p>
             <p className="text-xs text-[#64748b] mt-0.5">
@@ -73,7 +73,7 @@ function TaskRow({ task, onUpdate }: { task: EmployerTask; onUpdate: (id: string
           {/* Due date badge */}
           {task.due_date && (
             <span className={`flex-shrink-0 text-xs font-semibold px-2 py-0.5 rounded-full ${
-              task.status === "completed" ? "bg-[#f1f5f9] text-[#94a3b8]" :
+              task.status === "completed" ? "bg-[#f1f5f9] text-[#64748b]" :
               overdue ? "bg-[#fef2f2] text-[#dc2626]" :
               urgent ? "bg-[#fff7ed] text-[#d97706]" :
               "bg-[#f1f5f9] text-[#64748b]"
@@ -162,7 +162,7 @@ export default function EmployerTasksWidget({ initialTasks }: { initialTasks: Em
         {/* Completed tasks collapsed */}
         {completed.length > 0 && (
           <div className="px-5 py-3">
-            <p className="text-xs text-[#94a3b8]">{completed.length} completed task{completed.length !== 1 ? "s" : ""}</p>
+            <p className="text-xs text-[#64748b]">{completed.length} completed task{completed.length !== 1 ? "s" : ""}</p>
           </div>
         )}
       </div>

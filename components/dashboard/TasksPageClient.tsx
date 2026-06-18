@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
@@ -63,12 +63,12 @@ function TaskCard({
         <StatusIcon status={task.status} />
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-3 flex-wrap">
-            <p className={`text-sm font-semibold ${task.status === "completed" ? "line-through text-[#94a3b8]" : "text-[#111]"}`}>
+            <p className={`text-sm font-semibold ${task.status === "completed" ? "line-through text-[#64748b]" : "text-[#111]"}`}>
               {task.title}
             </p>
             {task.due_date && (
               <span className={`text-xs font-semibold px-2 py-0.5 rounded-full flex-shrink-0 ${
-                task.status === "completed" ? "bg-[#f1f5f9] text-[#94a3b8]" :
+                task.status === "completed" ? "bg-[#f1f5f9] text-[#64748b]" :
                 overdue ? "bg-[#fef2f2] text-[#dc2626]" :
                 urgent ? "bg-[#fff7ed] text-[#d97706]" :
                 "bg-[#f1f5f9] text-[#64748b]"
@@ -179,7 +179,7 @@ export default function TasksPageClient({ initialTasks }: { initialTasks: Employ
 
       {/* Task list */}
       {filtered.length === 0 ? (
-        <div className="text-center py-16 text-[#94a3b8]">
+        <div className="text-center py-16 text-[#64748b]">
           <p className="text-sm">No {filter === "all" ? "" : filter} tasks</p>
         </div>
       ) : (

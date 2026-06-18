@@ -254,7 +254,7 @@ export default function AhpraCpdPage() {
 
       {/* Disclaimer */}
       <section style={{ background: "#f8fafc", padding: "32px 24px", borderTop: "1px solid #e2e8f0" }}>
-        <p style={{ maxWidth: 800, margin: "0 auto", textAlign: "center", color: "#94a3b8", fontSize: 13, lineHeight: 1.7 }}>
+        <p style={{ maxWidth: 800, margin: "0 auto", textAlign: "center", color: "#64748b", fontSize: 13, lineHeight: 1.7 }}>
           Hayya Med PRO supports CPD tracking and licensing readiness. It does not issue registrations and does not replace official AHPRA or Medical Board of Australia requirements. Always verify final requirements at ahpra.gov.au and with your CPD home (medical college).
         </p>
       </section>

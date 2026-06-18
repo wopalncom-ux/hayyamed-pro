@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import WaitlistForm from "./WaitlistForm";
 
 export const metadata: Metadata = {
@@ -117,7 +117,7 @@ export default function ComingSoonPage() {
           </a>
         </div>
 
-        <div className="mt-8 flex items-center justify-center gap-6 text-xs text-[#94a3b8]">
+        <div className="mt-8 flex items-center justify-center gap-6 text-xs text-[#64748b]">
           <a href="/privacy" className="hover:text-[#64748b]">Privacy Policy</a>
           <span>·</span>
           <a href="/terms" className="hover:text-[#64748b]">Terms</a>

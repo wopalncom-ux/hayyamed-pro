@@ -1,4 +1,4 @@
-// @ts-nocheck — @react-pdf/renderer has known type incompatibilities with React 19 JSX types
+﻿// @ts-nocheck — @react-pdf/renderer has known type incompatibilities with React 19 JSX types
 import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 
 const styles = StyleSheet.create({
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   // Footer
   footer: { position: "absolute", bottom: 50, left: 82, right: 82, borderTopWidth: 1, borderTopColor: "#e2e8f0", paddingTop: 10, alignItems: "center" },
   footerLine1: { fontSize: 8, color: "#64748b", textAlign: "center", marginBottom: 3 },
-  footerLine2: { fontSize: 7, color: "#94a3b8", textAlign: "center" },
+  footerLine2: { fontSize: 7, color: "#64748b", textAlign: "center" },
 });
 
 type Props = {
@@ -143,7 +143,7 @@ export function ComplianceCertificateDocument({ profile, wallet, generatedAt, ve
             </View>
 
             {/* Generated date */}
-            <Text style={{ fontSize: 8, color: "#94a3b8", textAlign: "center" }}>
+            <Text style={{ fontSize: 8, color: "#64748b", textAlign: "center" }}>
               Issued: {genDate}
             </Text>
 

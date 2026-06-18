@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -107,7 +107,7 @@ export default function AddCountryForm() {
               maxLength={6}
               required
             />
-            <p className="text-[10px] text-[#94a3b8] mt-1">ISO 3166-1 alpha-2 or sub-code</p>
+            <p className="text-[10px] text-[#64748b] mt-1">ISO 3166-1 alpha-2 or sub-code</p>
           </div>
 
           {/* Profession code */}
@@ -119,7 +119,7 @@ export default function AddCountryForm() {
               value={form.profession_code}
               onChange={(e) => set("profession_code", e.target.value)}
             />
-            <p className="text-[10px] text-[#94a3b8] mt-1">Usually "all" for first rule</p>
+            <p className="text-[10px] text-[#64748b] mt-1">Usually "all" for first rule</p>
           </div>
 
           {/* Credit terminology */}

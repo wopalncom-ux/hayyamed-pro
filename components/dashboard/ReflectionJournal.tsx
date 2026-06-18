@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useCallback } from "react";
 
@@ -178,7 +178,7 @@ export default function ReflectionJournal({ activities }: { activities: Activity
                           <span className="text-xs font-semibold px-2 py-0.5 rounded-full" style={{ background: meta.bg, color: meta.text }}>
                             {meta.label}
                           </span>
-                          <span className="text-xs text-[#94a3b8]">{r.reflection_date}</span>
+                          <span className="text-xs text-[#64748b]">{r.reflection_date}</span>
                           {r.cme_activities && (
                             <span className="text-xs bg-[#f1f5f9] text-[#374151] px-2 py-0.5 rounded-full truncate max-w-[160px]">
                               🔗 {(r.cme_activities as { title: string }).title}
@@ -189,7 +189,7 @@ export default function ReflectionJournal({ activities }: { activities: Activity
                       </div>
                     </div>
                     <svg
-                      className={`w-4 h-4 text-[#94a3b8] flex-shrink-0 mt-1 transition-transform ${isExpanded ? "rotate-180" : ""}`}
+                      className={`w-4 h-4 text-[#64748b] flex-shrink-0 mt-1 transition-transform ${isExpanded ? "rotate-180" : ""}`}
                       fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
@@ -200,24 +200,24 @@ export default function ReflectionJournal({ activities }: { activities: Activity
                 {isExpanded && (
                   <div className="px-5 pb-4 border-t border-[#f1f5f9] space-y-3">
                     <div className="pt-3">
-                      <p className="text-xs font-semibold text-[#94a3b8] uppercase tracking-wide mb-1">What I learned</p>
+                      <p className="text-xs font-semibold text-[#64748b] uppercase tracking-wide mb-1">What I learned</p>
                       <p className="text-sm text-[#374151] whitespace-pre-wrap">{r.what_learned}</p>
                     </div>
                     {r.how_applied && (
                       <div>
-                        <p className="text-xs font-semibold text-[#94a3b8] uppercase tracking-wide mb-1">How I applied it</p>
+                        <p className="text-xs font-semibold text-[#64748b] uppercase tracking-wide mb-1">How I applied it</p>
                         <p className="text-sm text-[#374151] whitespace-pre-wrap">{r.how_applied}</p>
                       </div>
                     )}
                     {r.impact_on_practice && (
                       <div>
-                        <p className="text-xs font-semibold text-[#94a3b8] uppercase tracking-wide mb-1">Impact on practice</p>
+                        <p className="text-xs font-semibold text-[#64748b] uppercase tracking-wide mb-1">Impact on practice</p>
                         <p className="text-sm text-[#374151] whitespace-pre-wrap">{r.impact_on_practice}</p>
                       </div>
                     )}
                     {r.further_learning && (
                       <div>
-                        <p className="text-xs font-semibold text-[#94a3b8] uppercase tracking-wide mb-1">Further learning needed</p>
+                        <p className="text-xs font-semibold text-[#64748b] uppercase tracking-wide mb-1">Further learning needed</p>
                         <p className="text-sm text-[#374151] whitespace-pre-wrap">{r.further_learning}</p>
                       </div>
                     )}
@@ -284,7 +284,7 @@ export default function ReflectionJournal({ activities }: { activities: Activity
               {activities.length > 0 && (
                 <div>
                   <label htmlFor="rf-activity" className="block text-xs font-semibold text-[#374151] mb-1">
-                    Link to CME Activity <span className="font-normal text-[#94a3b8]">(optional)</span>
+                    Link to CME Activity <span className="font-normal text-[#64748b]">(optional)</span>
                   </label>
                   <select
                     id="rf-activity"
@@ -320,7 +320,7 @@ export default function ReflectionJournal({ activities }: { activities: Activity
 
               <div>
                 <label htmlFor="rf-applied" className="block text-xs font-semibold text-[#374151] mb-1">
-                  How have you applied this? <span className="font-normal text-[#94a3b8]">(optional)</span>
+                  How have you applied this? <span className="font-normal text-[#64748b]">(optional)</span>
                 </label>
                 <textarea
                   id="rf-applied"
@@ -334,7 +334,7 @@ export default function ReflectionJournal({ activities }: { activities: Activity
 
               <div>
                 <label htmlFor="rf-impact" className="block text-xs font-semibold text-[#374151] mb-1">
-                  Impact on practice <span className="font-normal text-[#94a3b8]">(optional)</span>
+                  Impact on practice <span className="font-normal text-[#64748b]">(optional)</span>
                 </label>
                 <textarea
                   id="rf-impact"
@@ -348,7 +348,7 @@ export default function ReflectionJournal({ activities }: { activities: Activity
 
               <div>
                 <label htmlFor="rf-further" className="block text-xs font-semibold text-[#374151] mb-1">
-                  Further learning needed <span className="font-normal text-[#94a3b8]">(optional)</span>
+                  Further learning needed <span className="font-normal text-[#64748b]">(optional)</span>
                 </label>
                 <textarea
                   id="rf-further"

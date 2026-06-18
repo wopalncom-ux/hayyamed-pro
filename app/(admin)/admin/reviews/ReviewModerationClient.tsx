@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 
@@ -45,7 +45,7 @@ function ReviewRow({
               {review.reviewer_anon}
               {review.profession && <span className="ml-1">· {review.profession}</span>}
             </span>
-            <span className="text-xs text-[#94a3b8]">
+            <span className="text-xs text-[#64748b]">
               {new Date(review.created_at).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}
             </span>
           </div>
@@ -83,7 +83,7 @@ function ReviewRow({
         <p className="text-sm text-[#374151] mt-2 leading-relaxed">{review.review_text}</p>
       )}
       {!review.review_text && (
-        <p className="text-xs italic text-[#94a3b8] mt-2">Rating only — no written review.</p>
+        <p className="text-xs italic text-[#64748b] mt-2">Rating only — no written review.</p>
       )}
     </div>
   );

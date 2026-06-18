@@ -1,4 +1,4 @@
-import { createAdminClient } from "@/lib/supabase/server";
+﻿import { createAdminClient } from "@/lib/supabase/server";
 import { isQPayConfigured } from "@/lib/qpay";
 import type { Metadata } from "next";
 
@@ -136,13 +136,13 @@ export default async function AdminQPayInvoicesPage({
                       </td>
                       <td className="px-4 py-3">
                         <p className="text-[#111] font-medium text-xs">{profile?.full_name ?? "—"}</p>
-                        <p className="text-[#94a3b8] text-xs">{profile?.email ?? inv.professional_id.slice(0, 8) + "…"}</p>
+                        <p className="text-[#64748b] text-xs">{profile?.email ?? inv.professional_id.slice(0, 8) + "…"}</p>
                       </td>
                       <td className="px-4 py-3">
                         <span className="text-xs font-medium text-[#374151]">
                           {PLAN_LABELS[inv.plan] ?? inv.plan}
                         </span>
-                        <span className="text-xs text-[#94a3b8] ml-1 capitalize">{inv.billing_interval}</span>
+                        <span className="text-xs text-[#64748b] ml-1 capitalize">{inv.billing_interval}</span>
                       </td>
                       <td className="px-4 py-3 text-right font-semibold text-[#111]">
                         QAR {Number(inv.amount_qar).toLocaleString()}
@@ -219,7 +219,7 @@ function StatCard({
     <div className="bg-white rounded-xl border border-[#e2e8f0] p-4">
       <p className="text-xs text-[#64748b] mb-1">{label}</p>
       <p className={`text-xl font-bold ${colorClass}`}>{value}</p>
-      <p className="text-xs text-[#94a3b8] mt-0.5">{sub}</p>
+      <p className="text-xs text-[#64748b] mt-0.5">{sub}</p>
     </div>
   );
 }

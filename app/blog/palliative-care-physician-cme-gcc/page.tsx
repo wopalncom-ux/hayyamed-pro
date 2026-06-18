@@ -1,4 +1,4 @@
-import BlogPostLayout from "@/components/BlogPostLayout";
+﻿import BlogPostLayout from "@/components/BlogPostLayout";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -101,7 +101,7 @@ export default function Page() {
         <h2>Track Your Palliative Care CME</h2>
         <p>Hayya Med Pro tracks CME credits per GCC authority and per renewal cycle with automated gap analysis. Upload IAHPC, EAPC, AAHPM and GCC conference certificates — all stored securely with full renewal history.</p>
 
-        <p style={{ fontSize: "0.75rem", color: "#94a3b8", marginTop: "2rem", paddingTop: "1rem", borderTop: "1px solid #e2e8f0" }}>
+        <p style={{ fontSize: "0.75rem", color: "#64748b", marginTop: "2rem", paddingTop: "1rem", borderTop: "1px solid #e2e8f0" }}>
           Hayya Med Pro supports CME tracking and licensing readiness. It does not issue licenses and does not replace official licensing authorities. Verify requirements with QCHP, SCFHS, DHA, or the relevant GCC regulatory body.
         </p>
       </BlogPostLayout>

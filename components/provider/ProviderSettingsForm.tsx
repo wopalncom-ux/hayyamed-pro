@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useActionState } from "react";
 import { updateProviderSettings } from "@/app/(provider)/provider/settings/actions";
@@ -101,7 +101,7 @@ export default function ProviderSettingsForm({ provider }: Props) {
         )}
       </div>
 
-      <p className="text-xs text-[#94a3b8]">
+      <p className="text-xs text-[#64748b]">
         To update country or accreditation details, contact{" "}
         <a href="mailto:support@hayyamed.com" className="text-[#1a56a0] hover:underline">
           support@hayyamed.com

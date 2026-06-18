@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect } from "react";
 import * as Sentry from "@sentry/nextjs";
@@ -57,13 +57,13 @@ export default function RootError({
           </div>
 
           {error.digest && (
-            <p className="text-[10px] text-[#94a3b8] mt-4 font-mono">
+            <p className="text-[10px] text-[#64748b] mt-4 font-mono">
               Error ref: {error.digest}
             </p>
           )}
         </div>
 
-        <p className="text-xs text-[#94a3b8] mt-6">
+        <p className="text-xs text-[#64748b] mt-6">
           If this keeps happening, contact{" "}
           <a href="mailto:support@hayyamed.pro" className="hover:underline">
             support@hayyamed.pro

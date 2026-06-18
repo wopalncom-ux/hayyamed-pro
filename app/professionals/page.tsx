@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { createAdminClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
@@ -152,7 +152,7 @@ export default async function ProfessionalsDirectoryPage({ searchParams }: { sea
           )}
         </form>
 
-        <p className="text-xs text-[#94a3b8] mb-4">
+        <p className="text-xs text-[#64748b] mb-4">
           {professionals.length} professional{professionals.length !== 1 ? "s" : ""} listed
           {(q || profession || country) && " matching your filters"}
         </p>
@@ -160,7 +160,7 @@ export default async function ProfessionalsDirectoryPage({ searchParams }: { sea
         {professionals.length === 0 ? (
           <div className="bg-white rounded-xl border border-dashed border-[#e2e8f0] px-6 py-16 text-center">
             <p className="text-sm font-medium text-[#374151] mb-1">No professionals match your search</p>
-            <p className="text-xs text-[#94a3b8]">Try adjusting your filters or clearing the search.</p>
+            <p className="text-xs text-[#64748b]">Try adjusting your filters or clearing the search.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -205,7 +205,7 @@ export default async function ProfessionalsDirectoryPage({ searchParams }: { sea
         {/* Opt-in CTA for logged-in users */}
         <div className="mt-12 bg-[#0f1f3d] rounded-xl p-6 text-center">
           <h2 className="text-base font-semibold text-white mb-2">Are you a healthcare professional?</h2>
-          <p className="text-sm text-[#94a3b8] mb-4">
+          <p className="text-sm text-[#64748b] mb-4">
             Join Hayya Med Pro to track your CME credits and optionally list yourself in this directory.
           </p>
           <div className="flex items-center justify-center gap-3 flex-wrap">
@@ -217,7 +217,7 @@ export default async function ProfessionalsDirectoryPage({ searchParams }: { sea
             </a>
             <a
               href="/dashboard/settings"
-              className="text-sm font-medium px-5 py-2.5 rounded-xl border border-[#374151] text-[#94a3b8] hover:border-[#64748b] hover:text-white transition-colors"
+              className="text-sm font-medium px-5 py-2.5 rounded-xl border border-[#374151] text-[#64748b] hover:border-[#64748b] hover:text-white transition-colors"
             >
               Manage visibility settings
             </a>

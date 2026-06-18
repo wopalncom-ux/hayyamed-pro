@@ -1,4 +1,4 @@
-import { createAdminClient } from "@/lib/supabase/server";
+﻿import { createAdminClient } from "@/lib/supabase/server";
 
 const ACTION_PREFIXES = [
   { value: "",              label: "All actions" },
@@ -166,7 +166,7 @@ export default async function AuditLogsPage({
                       {nameMap[log.actor_auth_id] ?? log.actor_auth_id.slice(0, 8) + "…"}
                     </span>
                   ) : (
-                    <span className="text-[#94a3b8]">system</span>
+                    <span className="text-[#64748b]">system</span>
                   )}
                 </td>
                 <td className="px-4 py-3">
@@ -177,7 +177,7 @@ export default async function AuditLogsPage({
                     <span>
                       {log.target_table}
                       {log.target_id && (
-                        <span className="ml-1 font-mono text-[#94a3b8]">
+                        <span className="ml-1 font-mono text-[#64748b]">
                           #{log.target_id.slice(0, 8)}
                         </span>
                       )}
@@ -220,7 +220,7 @@ export default async function AuditLogsPage({
         </div>
       )}
 
-      <p className="text-xs text-[#94a3b8] mt-4">
+      <p className="text-xs text-[#64748b] mt-4">
         Audit logs are append-only. No records can be edited or deleted. Retained for 7 years per platform policy.
       </p>
     </div>

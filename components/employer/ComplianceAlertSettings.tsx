@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 
@@ -109,7 +109,7 @@ export default function ComplianceAlertSettings() {
             onChange={(e) => setThresholdPct(Number(e.target.value))}
             className="w-full h-2 bg-[#e2e8f0] rounded-lg appearance-none cursor-pointer accent-[#1a56a0]"
           />
-          <div className="flex justify-between text-xs text-[#94a3b8] mt-1">
+          <div className="flex justify-between text-xs text-[#64748b] mt-1">
             <span>0%</span>
             <span>50%</span>
             <span>100%</span>
@@ -130,7 +130,7 @@ export default function ComplianceAlertSettings() {
             value={alertEmail}
             onChange={(e) => setAlertEmail(e.target.value)}
             placeholder="hr@yourhospital.com"
-            className="w-full max-w-sm border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm text-[#111] placeholder-[#94a3b8] focus:outline-none focus:ring-2 focus:ring-[#1a56a0] focus:border-transparent"
+            className="w-full max-w-sm border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm text-[#111] placeholder-[#64748b] focus:outline-none focus:ring-2 focus:ring-[#1a56a0] focus:border-transparent"
           />
           <p className="text-xs text-[#64748b] mt-1">
             The compliance cron runs weekly and sends a summary to this address.

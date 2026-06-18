@@ -1,4 +1,4 @@
-function urgency(days: number) {
+﻿function urgency(days: number) {
   if (days < 0) return { label: "EXPIRED", ring: "border-red-500", text: "text-red-600", bg: "bg-red-50" };
   if (days <= 14) return { label: "Critical", ring: "border-red-500", text: "text-red-600", bg: "bg-red-50" };
   if (days <= 30) return { label: "Urgent", ring: "border-orange-400", text: "text-orange-600", bg: "bg-orange-50" };
@@ -115,7 +115,7 @@ export default function LicenseCountdownCard({
               <p className="text-xs font-medium text-[#374151]">
                 {cmeCompleted}/{cmeRequired} credits
                 {cmeDaysLeft !== null && (
-                  <span className="text-[#94a3b8] ml-1">· {cmeDaysLeft}d left</span>
+                  <span className="text-[#64748b] ml-1">· {cmeDaysLeft}d left</span>
                 )}
               </p>
             </div>

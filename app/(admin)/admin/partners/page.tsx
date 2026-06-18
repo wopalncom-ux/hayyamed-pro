@@ -1,4 +1,4 @@
-import { createAdminClient } from "@/lib/supabase/server";
+﻿import { createAdminClient } from "@/lib/supabase/server";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import type { Partner } from "@/lib/types";
@@ -95,7 +95,7 @@ export default async function PartnersPage() {
       {/* Partner list */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {!partners?.length && (
-          <p className="col-span-3 text-[#94a3b8] text-sm py-8 text-center">No partners added yet.</p>
+          <p className="col-span-3 text-[#64748b] text-sm py-8 text-center">No partners added yet.</p>
         )}
         {partners?.map((p: Partner) => (
           <div
@@ -116,7 +116,7 @@ export default async function PartnersPage() {
                   />
                 </div>
               ) : (
-                <div className="w-12 h-12 flex-shrink-0 rounded-lg border border-[#e2e8f0] bg-[#f8fafc] flex items-center justify-center text-[#94a3b8] text-xs font-bold uppercase">
+                <div className="w-12 h-12 flex-shrink-0 rounded-lg border border-[#e2e8f0] bg-[#f8fafc] flex items-center justify-center text-[#64748b] text-xs font-bold uppercase">
                   {p.name.slice(0, 2)}
                 </div>
               )}

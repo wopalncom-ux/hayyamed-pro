@@ -1,4 +1,4 @@
-import { revalidatePath } from "next/cache";
+﻿import { revalidatePath } from "next/cache";
 import { createAdminClient } from "@/lib/supabase/server";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
@@ -144,13 +144,13 @@ export default async function DemoRequestsPage() {
                     </div>
                     <div className="flex items-center gap-3 flex-wrap mb-2">
                       <a href={`mailto:${r.email}`} className="text-sm text-[#1a56a0] hover:underline">{r.email}</a>
-                      <span className="text-xs text-[#94a3b8]">|</span>
+                      <span className="text-xs text-[#64748b]">|</span>
                       <span className="text-sm font-medium text-[#374151]">{r.org_name}</span>
-                      <span className="text-xs text-[#94a3b8]">·</span>
+                      <span className="text-xs text-[#64748b]">·</span>
                       <span className="text-xs text-[#64748b]">{r.org_type}</span>
-                      <span className="text-xs text-[#94a3b8]">·</span>
+                      <span className="text-xs text-[#64748b]">·</span>
                       <span className="text-xs text-[#64748b]">{r.staff_count} staff</span>
-                      <span className="text-xs text-[#94a3b8]">·</span>
+                      <span className="text-xs text-[#64748b]">·</span>
                       <span className="text-xs text-[#64748b]">{r.country}</span>
                     </div>
                     {r.message && (
@@ -158,7 +158,7 @@ export default async function DemoRequestsPage() {
                         {r.message}
                       </p>
                     )}
-                    <p className="text-xs text-[#94a3b8] mt-2">
+                    <p className="text-xs text-[#64748b] mt-2">
                       {new Date(r.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" })}
                     </p>
                   </div>
@@ -199,7 +199,7 @@ export default async function DemoRequestsPage() {
                       defaultValue={r.notes ?? ""}
                       rows={2}
                       placeholder="Call notes, qualification details, next steps…"
-                      className="flex-1 text-xs border border-[#e2e8f0] rounded-lg px-3 py-2 focus:outline-none focus:border-[#1a56a0] resize-none text-[#374151] placeholder:text-[#94a3b8]"
+                      className="flex-1 text-xs border border-[#e2e8f0] rounded-lg px-3 py-2 focus:outline-none focus:border-[#1a56a0] resize-none text-[#374151] placeholder:text-[#64748b]"
                     />
                     <button
                       type="submit"

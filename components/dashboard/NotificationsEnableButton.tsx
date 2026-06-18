@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { useToast } from "@/components/ui/toast";
@@ -74,7 +74,7 @@ export default function NotificationsEnableButton() {
 
   if (status === "unsupported") {
     return (
-      <p className="text-sm text-[#94a3b8]">
+      <p className="text-sm text-[#64748b]">
         Push notifications are not supported in this browser.
       </p>
     );

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useCallback } from "react";
 import type { LearningPathway } from "@/app/api/ai/learning-pathway/route";
@@ -86,7 +86,7 @@ export default function LearningPathwayClient({ isPro, wallet, gaps }: Props) {
         >
           Upgrade to Pro — $6/month →
         </a>
-        <p className="text-xs text-[#94a3b8] mt-3">14-day money-back guarantee · Cancel anytime</p>
+        <p className="text-xs text-[#64748b] mt-3">14-day money-back guarantee · Cancel anytime</p>
       </div>
     );
   }
@@ -147,7 +147,7 @@ export default function LearningPathwayClient({ isPro, wallet, gaps }: Props) {
           "✦ Generate 12-Month Plan"
         )}
       </button>
-      <p className="text-xs text-[#94a3b8] mt-3">Takes about 10–15 seconds · Powered by Claude Sonnet AI</p>
+      <p className="text-xs text-[#64748b] mt-3">Takes about 10–15 seconds · Powered by Claude Sonnet AI</p>
     </div>
   );
 }

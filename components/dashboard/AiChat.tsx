@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useRef, useEffect } from "react";
 import { track } from "@/lib/analytics";
@@ -85,7 +85,7 @@ export default function AiChat({ isPro, hasWallet }: { isPro: boolean; hasWallet
       <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
         {messages.length === 0 && isPro && (
           <div className="space-y-3">
-            <p className="text-xs text-[#94a3b8] text-center mb-4">
+            <p className="text-xs text-[#64748b] text-center mb-4">
               {hasWallet ? "Ask anything about your CME compliance status." : "Set up your CME wallet first to unlock personalized answers."}
             </p>
             {STARTER_PROMPTS.map((p) => (
@@ -157,7 +157,7 @@ export default function AiChat({ isPro, hasWallet }: { isPro: boolean; hasWallet
           <a href="/pricing?source=ai_chat" className="bg-[#1a56a0] text-white text-sm font-semibold px-5 py-2.5 rounded-lg hover:bg-[#1547a0] transition-colors">
             Upgrade to Pro — $6/month
           </a>
-          <p className="text-xs text-[#94a3b8]">or $61.20/year (save 15%) · Cancel anytime</p>
+          <p className="text-xs text-[#64748b]">or $61.20/year (save 15%) · Cancel anytime</p>
         </div>
       )}
     </div>

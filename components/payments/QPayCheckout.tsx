@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -139,7 +139,7 @@ export default function QPayCheckout({ plan, billingInterval, onClose }: QPayChe
             {/* Bank-specific payment links */}
             {invoice.urls && invoice.urls.length > 0 && (
               <div>
-                <p className="text-[10px] text-[#94a3b8] text-center mb-2">Or pay directly with your bank</p>
+                <p className="text-[10px] text-[#64748b] text-center mb-2">Or pay directly with your bank</p>
                 <div className="grid grid-cols-2 gap-2">
                   {invoice.urls.slice(0, 4).map((u) => (
                     <a
@@ -160,7 +160,7 @@ export default function QPayCheckout({ plan, billingInterval, onClose }: QPayChe
               </div>
             )}
 
-            <p className="text-[10px] text-[#94a3b8] text-center">
+            <p className="text-[10px] text-[#64748b] text-center">
               After payment, you will be automatically redirected. Allow up to 2 minutes for activation.
             </p>
 
@@ -168,7 +168,7 @@ export default function QPayCheckout({ plan, billingInterval, onClose }: QPayChe
               <button
                 type="button"
                 onClick={onClose}
-                className="w-full text-xs text-[#94a3b8] hover:text-[#64748b] transition-colors"
+                className="w-full text-xs text-[#64748b] hover:text-[#64748b] transition-colors"
               >
                 Cancel
               </button>

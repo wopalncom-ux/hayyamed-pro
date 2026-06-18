@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 
@@ -76,7 +76,7 @@ function FlagRow({ flag }: { flag: Flag }) {
 
           {flag.enabled_plans && flag.enabled_plans.length > 0 ? (
             <div className="flex flex-wrap gap-1">
-              <span className="text-[10px] text-[#94a3b8] self-center">Plans:</span>
+              <span className="text-[10px] text-[#64748b] self-center">Plans:</span>
               {flag.enabled_plans.map((p) => (
                 <span key={p} className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${PLAN_COLORS[p] ?? "bg-[#f1f5f9] text-[#374151]"}`}>
                   {p}
@@ -84,11 +84,11 @@ function FlagRow({ flag }: { flag: Flag }) {
               ))}
             </div>
           ) : (
-            <span className="text-[10px] text-[#94a3b8]">All plans</span>
+            <span className="text-[10px] text-[#64748b]">All plans</span>
           )}
         </div>
 
-        <p className="text-[10px] text-[#94a3b8] whitespace-nowrap flex-shrink-0">
+        <p className="text-[10px] text-[#64748b] whitespace-nowrap flex-shrink-0">
           {new Date(flag.updated_at).toLocaleDateString("en-GB", { day: "2-digit", month: "short" })}
         </p>
       </div>

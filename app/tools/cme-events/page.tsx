@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useMemo } from "react";
 import SiteFooter from "@/components/SiteFooter";
@@ -683,7 +683,7 @@ export default function CmeEventsPage() {
             </a>
           </div>
 
-          <p className="mt-6 text-xs text-[#94a3b8] text-center">
+          <p className="mt-6 text-xs text-[#64748b] text-center">
             Event dates are estimates based on typical annual scheduling and may change. Verify exact
             dates and CME credit totals with the event organiser and your licensing authority before
             attending. Hayya Med Pro is not affiliated with any listed event organiser.

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useMemo } from "react";
 import dynamic from "next/dynamic";
@@ -69,7 +69,7 @@ export default function CmeActivityList({
       {/* Filter bar */}
       <div className="px-6 py-3 border-b border-[#f1f5f9] bg-[#fafbfc] flex flex-wrap items-center gap-3">
         <div className="relative flex-1 min-w-[180px]">
-          <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#94a3b8]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#64748b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
           </svg>
           <input
@@ -114,14 +114,14 @@ export default function CmeActivityList({
           </button>
         )}
 
-        <span className="text-xs text-[#94a3b8] ml-auto flex-shrink-0">
+        <span className="text-xs text-[#64748b] ml-auto flex-shrink-0">
           {filtered.length} / {activities.length}
         </span>
       </div>
 
       {/* Activity list */}
       {filtered.length === 0 ? (
-        <div className="px-6 py-8 text-center text-sm text-[#94a3b8]">
+        <div className="px-6 py-8 text-center text-sm text-[#64748b]">
           No activities match your filters.
         </div>
       ) : (

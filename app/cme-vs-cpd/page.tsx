@@ -173,7 +173,7 @@ export default function CmeVsCpdPage() {
                 Compare all GCC requirements →
               </Link>
             </div>
-            <p className="text-xs text-[#94a3b8] mt-3">Works for both CME and CPD · All GCC authorities supported</p>
+            <p className="text-xs text-[#64748b] mt-3">Works for both CME and CPD · All GCC authorities supported</p>
           </div>
 
           {/* Short answer card */}
@@ -350,7 +350,7 @@ export default function CmeVsCpdPage() {
             <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
               One app for CME and CPD — across every GCC authority
             </h2>
-            <p className="text-[#94a3b8] text-sm max-w-xl mx-auto mb-6">
+            <p className="text-[#64748b] text-sm max-w-xl mx-auto mb-6">
               Whether your authority calls it CME or CPD, Hayya Med Pro tracks your credits, enforces category caps,
               sends renewal reminders, and generates your submission-ready compliance report.
             </p>

@@ -1,4 +1,4 @@
-// Shown on dashboard when profile is incomplete. Each gap links to where it can be filled.
+﻿// Shown on dashboard when profile is incomplete. Each gap links to where it can be filled.
 
 const FIELD_GUIDANCE: Record<string, { label: string; action: string; href: string }> = {
   full_name:           { label: "Full name",              action: "Add in Settings",    href: "/dashboard/settings" },
@@ -68,7 +68,7 @@ export default function ProfileCompletionCard({ pct, gaps }: Props) {
               <span className="w-4 h-4 rounded-full border-2 border-[#e2e8f0] group-hover:border-[#1a56a0] flex-shrink-0 transition-colors" />
               <span className="text-sm text-[#374151]">{gap.label}</span>
             </div>
-            <div className="flex items-center gap-2 text-xs text-[#94a3b8] group-hover:text-[#1a56a0] transition-colors">
+            <div className="flex items-center gap-2 text-xs text-[#64748b] group-hover:text-[#1a56a0] transition-colors">
               <span>+{gap.points}pts</span>
               <span>→</span>
             </div>
@@ -77,7 +77,7 @@ export default function ProfileCompletionCard({ pct, gaps }: Props) {
       </div>
 
       {gaps.length > 5 && (
-        <p className="text-xs text-[#94a3b8] mt-2 px-3">
+        <p className="text-xs text-[#64748b] mt-2 px-3">
           + {gaps.length - 5} more in{" "}
           <a href="/dashboard/settings" className="text-[#1a56a0] hover:underline">
             Settings

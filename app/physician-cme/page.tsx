@@ -228,7 +228,7 @@ export default function PhysicianCmePage() {
                 See what&apos;s free vs Pro
               </Link>
             </div>
-            <p className="text-xs text-[#94a3b8] mt-3">No credit card required · 14-day Pro trial included</p>
+            <p className="text-xs text-[#64748b] mt-3">No credit card required · 14-day Pro trial included</p>
           </div>
 
           {/* GCC requirements table */}
@@ -383,7 +383,7 @@ export default function PhysicianCmePage() {
             <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
               Stop tracking CME on a spreadsheet
             </h2>
-            <p className="text-[#94a3b8] text-sm max-w-xl mx-auto mb-6">
+            <p className="text-[#64748b] text-sm max-w-xl mx-auto mb-6">
               Hayya Med Pro calculates your compliance score, flags category gaps, tracks mandatory requirements,
               and generates your submission-ready PDF report — for every GCC country you&apos;re licensed in.
             </p>

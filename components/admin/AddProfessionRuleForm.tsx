@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -115,7 +115,7 @@ export default function AddProfessionRuleForm({ countryCode }: Props) {
                 <option key={p} value={p} />
               ))}
             </datalist>
-            <p className="text-[10px] text-[#94a3b8] mt-1">Use "all" to apply to every profession</p>
+            <p className="text-[10px] text-[#64748b] mt-1">Use "all" to apply to every profession</p>
           </div>
 
           {/* Credit terminology */}

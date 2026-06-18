@@ -1,4 +1,4 @@
-// @ts-nocheck — @react-pdf/renderer has known type incompatibilities with React 19 JSX types
+﻿// @ts-nocheck — @react-pdf/renderer has known type incompatibilities with React 19 JSX types
 import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 
 const TYPE_LABELS: Record<string, string> = {
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   reflType:     { fontSize: 8, fontFamily: "Helvetica-Bold", color: "#1a56a0", marginBottom: 4 },
   reflDate:     { fontSize: 8, color: "#64748b", marginBottom: 6 },
   reflField:    { marginBottom: 6 },
-  reflFieldLbl: { fontSize: 8, color: "#94a3b8", fontFamily: "Helvetica-Bold", marginBottom: 2 },
+  reflFieldLbl: { fontSize: 8, color: "#64748b", fontFamily: "Helvetica-Bold", marginBottom: 2 },
   reflFieldVal: { fontSize: 9, color: "#374151", lineHeight: 1.5 },
   actLink:      { fontSize: 8, color: "#16a34a", fontFamily: "Helvetica-Bold", marginBottom: 6 },
   // Activity table
@@ -47,8 +47,8 @@ const styles = StyleSheet.create({
   declBox:      { borderWidth: 1, borderColor: "#e2e8f0", borderRadius: 4, padding: 12, backgroundColor: "#f8fafc" },
   declText:     { fontSize: 8, color: "#374151", lineHeight: 1.6 },
   sigLine:      { borderBottomWidth: 1, borderBottomColor: "#111827", width: 200, marginTop: 20, marginBottom: 4 },
-  sigLabel:     { fontSize: 8, color: "#94a3b8" },
-  footer:       { position: "absolute", bottom: 28, left: 40, right: 40, flexDirection: "row", justifyContent: "space-between", fontSize: 8, color: "#94a3b8", borderTopWidth: 1, borderTopColor: "#e2e8f0", paddingTop: 6 },
+  sigLabel:     { fontSize: 8, color: "#64748b" },
+  footer:       { position: "absolute", bottom: 28, left: 40, right: 40, flexDirection: "row", justifyContent: "space-between", fontSize: 8, color: "#64748b", borderTopWidth: 1, borderTopColor: "#e2e8f0", paddingTop: 6 },
 });
 
 type Reflection = {
@@ -127,7 +127,7 @@ export function CpdPortfolioDocument({ profile, wallet, reflections, activities,
         )}
 
         {/* Disclaimer */}
-        <Text style={{ fontSize: 7, color: "#94a3b8", marginBottom: 14, lineHeight: 1.5 }}>
+        <Text style={{ fontSize: 7, color: "#64748b", marginBottom: 14, lineHeight: 1.5 }}>
           Hayya Med Pro supports CME tracking and licensing readiness. It does not issue licenses and does not replace official licensing authorities. Users must verify final requirements with their relevant regulatory body.
         </Text>
       </Page>

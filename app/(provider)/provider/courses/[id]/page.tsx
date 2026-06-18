@@ -131,7 +131,7 @@ export default async function CourseDetailPage({
             <p className="text-2xl font-bold" style={{ color: stat.color }}>
               {stat.value}
             </p>
-            <p className="text-xs text-[#94a3b8] mt-0.5 truncate">{stat.sub}</p>
+            <p className="text-xs text-[#64748b] mt-0.5 truncate">{stat.sub}</p>
           </div>
         ))}
       </div>
@@ -166,7 +166,7 @@ export default async function CourseDetailPage({
                     <div key={e.id} className="px-6 py-3 flex items-center justify-between">
                       <div>
                         <p className="text-sm font-medium text-[#111]">{profileMap[e.professional_id] ?? "—"}</p>
-                        <p className="text-xs text-[#94a3b8]">
+                        <p className="text-xs text-[#64748b]">
                           Enrolled {new Date(e.enrolled_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
                         </p>
                       </div>
@@ -186,7 +186,7 @@ export default async function CourseDetailPage({
                     <div key={e.id} className="px-6 py-3 flex items-center justify-between">
                       <div>
                         <p className="text-sm font-medium text-[#111]">{profileMap[e.professional_id] ?? "—"}</p>
-                        <p className="text-xs text-[#94a3b8]">
+                        <p className="text-xs text-[#64748b]">
                           Completed {e.completed_at ? new Date(e.completed_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "—"}
                         </p>
                       </div>

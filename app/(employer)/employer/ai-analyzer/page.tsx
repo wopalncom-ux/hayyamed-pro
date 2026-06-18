@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -96,9 +96,9 @@ function DeptHeatmapRow({
       </div>
       <div className="flex gap-1 text-[10px] flex-shrink-0">
         <span className="text-[#16a34a] font-semibold">{dept.compliantPct}%</span>
-        <span className="text-[#94a3b8]">/</span>
+        <span className="text-[#64748b]">/</span>
         <span className="text-[#d97706] font-semibold">{dept.atRiskPct}%</span>
-        <span className="text-[#94a3b8]">/</span>
+        <span className="text-[#64748b]">/</span>
         <span className="text-[#dc2626] font-semibold">{dept.nonCompliantPct}%</span>
       </div>
     </motion.div>
@@ -278,7 +278,7 @@ export default function EmployerAIAnalyzerPage() {
             </div>
           </div>
           <p className="text-sm text-[#64748b] font-medium">Analyzing compliance data with Hayya Med AI…</p>
-          <p className="text-xs text-[#94a3b8]">No personal data is shared with AI models</p>
+          <p className="text-xs text-[#64748b]">No personal data is shared with AI models</p>
         </div>
       )}
 
@@ -390,7 +390,7 @@ export default function EmployerAIAnalyzerPage() {
             </div>
 
             {/* Disclaimer */}
-            <p className="text-[10px] text-[#94a3b8] text-center leading-relaxed">
+            <p className="text-[10px] text-[#64748b] text-center leading-relaxed">
               Hayya Med Pro AI analysis is based on aggregated, anonymized compliance data.
               No individual staff personal information was used. Always verify requirements with your local regulatory authority.
             </p>
@@ -400,7 +400,7 @@ export default function EmployerAIAnalyzerPage() {
 
       {/* Empty state */}
       {!result && !loading && !error && (
-        <div className="text-center py-16 text-[#94a3b8]">
+        <div className="text-center py-16 text-[#64748b]">
           <svg className="w-12 h-12 mx-auto mb-4 text-[#e2e8f0]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z" />
           </svg>

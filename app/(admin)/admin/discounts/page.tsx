@@ -1,4 +1,4 @@
-import { createAdminClient } from "@/lib/supabase/server";
+﻿import { createAdminClient } from "@/lib/supabase/server";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import type { Discount } from "@/lib/types";
@@ -108,7 +108,7 @@ export default async function DiscountsPage() {
           <tbody className="divide-y divide-[#e2e8f0]">
             {!discounts?.length && (
               <tr>
-                <td colSpan={8} className="px-4 py-6 text-center text-[#94a3b8] text-sm">
+                <td colSpan={8} className="px-4 py-6 text-center text-[#64748b] text-sm">
                   No discounts created yet.
                 </td>
               </tr>
@@ -129,7 +129,7 @@ export default async function DiscountsPage() {
                 </td>
                 <td className="px-4 py-3 text-[#64748b] capitalize">
                   {d.target_type}
-                  {d.target_id && <span className="ml-1 text-xs text-[#94a3b8]">(specific)</span>}
+                  {d.target_id && <span className="ml-1 text-xs text-[#64748b]">(specific)</span>}
                 </td>
                 <td className="px-4 py-3 text-[#64748b]">{d.applicable_plans.join(", ")}</td>
                 <td className="px-4 py-3 text-[#64748b]">

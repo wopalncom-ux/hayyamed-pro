@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import { deleteCmeActivity, editCmeActivity } from "@/app/(dashboard)/dashboard/cme/actions";
@@ -189,7 +189,7 @@ export default function CmeActivityActions({ id, status, title, provider, activi
               Cancel
             </button>
           </div>
-          <p className="text-[11px] text-[#94a3b8]">Saving will reset this activity to pending re-verification.</p>
+          <p className="text-[11px] text-[#64748b]">Saving will reset this activity to pending re-verification.</p>
         </form>
       )}
     </div>

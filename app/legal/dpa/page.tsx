@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import PrintButton from "./PrintButton";
 
@@ -294,10 +294,10 @@ export default function DpaPage() {
           </Section>
 
           <div className="mt-10 pt-6 border-t border-[#e2e8f0] not-prose">
-            <p className="text-xs text-[#94a3b8]">
+            <p className="text-xs text-[#64748b]">
               {PROCESSOR} · Data Processing Agreement · Version {DPA_VERSION} · {LAST_UPDATED}
             </p>
-            <p className="text-xs text-[#94a3b8] mt-1">
+            <p className="text-xs text-[#64748b] mt-1">
               Questions? Email <a href={`mailto:${SUPPORT_EMAIL}`} className="text-[#1a56a0] hover:underline">{SUPPORT_EMAIL}</a>
             </p>
             <div className="flex gap-4 mt-3">

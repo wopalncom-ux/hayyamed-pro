@@ -182,7 +182,7 @@ export default function ChangelogPage() {
                     <span className="text-xs font-mono font-semibold bg-[#f1f5f9] text-[#374151] px-2 py-0.5 rounded">
                       v{release.version}
                     </span>
-                    <span className="text-xs text-[#94a3b8]">{release.date}</span>
+                    <span className="text-xs text-[#64748b]">{release.date}</span>
                     {idx === 0 && (
                       <span className="text-xs font-semibold bg-[#1a56a0] text-white px-2 py-0.5 rounded-full">Latest</span>
                     )}
@@ -228,7 +228,7 @@ export default function ChangelogPage() {
 
       {/* Footer */}
       <footer className="max-w-3xl mx-auto px-6 py-8 mt-8 border-t border-[#e2e8f0]">
-        <div className="flex flex-wrap gap-4 text-xs text-[#94a3b8] justify-center">
+        <div className="flex flex-wrap gap-4 text-xs text-[#64748b] justify-center">
           <Link href="/" className="hover:text-[#1a56a0]">Home</Link>
           <Link href="/pricing" className="hover:text-[#1a56a0]">Pricing</Link>
           <Link href="/help" className="hover:text-[#1a56a0]">Help</Link>

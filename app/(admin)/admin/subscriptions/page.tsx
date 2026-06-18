@@ -1,4 +1,4 @@
-import { createAdminClient } from "@/lib/supabase/server";
+﻿import { createAdminClient } from "@/lib/supabase/server";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
@@ -134,7 +134,7 @@ export default async function SubscriptionsPage({
           <tbody className="divide-y divide-[#e2e8f0]">
             {!rows.length && (
               <tr>
-                <td colSpan={7} className="px-4 py-8 text-center text-[#94a3b8]">
+                <td colSpan={7} className="px-4 py-8 text-center text-[#64748b]">
                   No paid subscriptions yet.
                 </td>
               </tr>
@@ -145,7 +145,7 @@ export default async function SubscriptionsPage({
                   <p className="font-medium text-[#111]">{s.professional_profiles?.full_name ?? "—"}</p>
                   <p className="text-xs text-[#64748b]">{s.professional_profiles?.email ?? ""}</p>
                   {s.professional_profiles?.profession && (
-                    <p className="text-xs text-[#94a3b8]">{s.professional_profiles.profession}</p>
+                    <p className="text-xs text-[#64748b]">{s.professional_profiles.profession}</p>
                   )}
                 </td>
                 <td className="px-4 py-3 font-semibold text-[#111] capitalize">{s.plan}</td>

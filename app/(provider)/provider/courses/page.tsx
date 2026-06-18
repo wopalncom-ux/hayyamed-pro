@@ -1,4 +1,4 @@
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+﻿import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 
@@ -92,9 +92,9 @@ export default async function ProviderCoursesPage() {
                   </Link>
                   <div className="flex items-center gap-2 mt-0.5">
                     <span className="text-xs text-[#64748b]">{course.category}</span>
-                    <span className="text-xs text-[#94a3b8]">·</span>
+                    <span className="text-xs text-[#64748b]">·</span>
                     <span className="text-xs font-semibold text-[#1a56a0]">+{course.credits} {course.credit_type}</span>
-                    <span className="text-xs text-[#94a3b8]">·</span>
+                    <span className="text-xs text-[#64748b]">·</span>
                     <span className="text-xs text-[#64748b] capitalize">{course.delivery_mode.replace("_", " ")}</span>
                   </div>
                 </div>

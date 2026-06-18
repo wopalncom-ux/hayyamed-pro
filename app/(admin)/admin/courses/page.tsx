@@ -1,4 +1,4 @@
-import { createAdminClient } from "@/lib/supabase/server";
+﻿import { createAdminClient } from "@/lib/supabase/server";
 import CourseStatusActions from "@/components/admin/CourseStatusActions";
 import Link from "next/link";
 
@@ -47,7 +47,7 @@ function CourseRow({ c }: { c: Course }) {
           <span>· {c.delivery_mode.replace("_", " ")}</span>
           <span>· {c.is_free ? "Free" : `$${c.price_usd}`}</span>
         </div>
-        <p className="text-xs text-[#94a3b8] mt-0.5">
+        <p className="text-xs text-[#64748b] mt-0.5">
           Submitted {new Date(c.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
         </p>
       </div>

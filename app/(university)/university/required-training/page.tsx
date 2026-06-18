@@ -1,4 +1,4 @@
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+﻿import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 
@@ -87,11 +87,11 @@ export default async function UniversityRequiredTrainingPage() {
                     <p className="text-sm font-medium text-[#111]">{course?.title ?? "—"}</p>
                     <div className="flex items-center gap-2 mt-0.5 flex-wrap">
                       <span className="text-xs font-semibold text-[#1a56a0]">+{course?.credits} {course?.credit_type}</span>
-                      <span className="text-xs text-[#94a3b8]">·</span>
+                      <span className="text-xs text-[#64748b]">·</span>
                       <span className="text-xs text-[#64748b] capitalize">{course?.delivery_mode?.replace("_", " ")}</span>
                       {r.department && (
                         <>
-                          <span className="text-xs text-[#94a3b8]">·</span>
+                          <span className="text-xs text-[#64748b]">·</span>
                           <span className="text-xs bg-[#f1f5f9] text-[#374151] px-1.5 py-0.5 rounded font-medium">{r.department}</span>
                         </>
                       )}
@@ -107,9 +107,9 @@ export default async function UniversityRequiredTrainingPage() {
                         {daysUntilDue < 0 ? "OVERDUE" : `Due in ${daysUntilDue}d`}
                       </span>
                     ) : (
-                      <span className="text-xs text-[#94a3b8]">No deadline</span>
+                      <span className="text-xs text-[#64748b]">No deadline</span>
                     )}
-                    <p className="text-xs text-[#94a3b8] mt-0.5">
+                    <p className="text-xs text-[#64748b] mt-0.5">
                       Assigned {new Date(r.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}
                     </p>
                   </div>

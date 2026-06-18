@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import {
@@ -1112,7 +1112,7 @@ function EmployerSection() {
           >
             <div className="px-5 py-3.5 border-b border-[#e2e8f0] flex items-center justify-between">
               <p className="text-sm font-semibold text-[#0f1f3d]">{t("dashboard_title")}</p>
-              <span className="text-xs text-[#94a3b8]">{t("dashboard_org")}</span>
+              <span className="text-xs text-[#64748b]">{t("dashboard_org")}</span>
             </div>
             <div className="divide-y divide-[#f1f5f9]">
               {staffRows.map(({ name, role, pct, status }, i) => {
@@ -1131,7 +1131,7 @@ function EmployerSection() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-xs font-semibold text-[#0f1f3d] truncate">{name}</p>
-                      <p className="text-[10px] text-[#94a3b8]">{role}</p>
+                      <p className="text-[10px] text-[#64748b]">{role}</p>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-14 bg-[#f1f5f9] rounded-full h-1.5 hidden sm:block">
@@ -1201,7 +1201,7 @@ function Pricing() {
                   <p className={`text-sm font-medium mb-1 ${highlight ? "text-white/65" : "text-[#64748b]"}`}>{name}</p>
                   <div className="flex items-baseline gap-1 flex-wrap">
                     <span className={`text-3xl font-bold ${highlight ? "text-white" : "text-[#0f1f3d]"}`}>{price}</span>
-                    <span className={`text-sm ${highlight ? "text-white/65" : "text-[#94a3b8]"}`}>{period}</span>
+                    <span className={`text-sm ${highlight ? "text-white/65" : "text-[#64748b]"}`}>{period}</span>
                   </div>
                 </div>
                 <ul className="space-y-2.5 flex-1 mb-7">

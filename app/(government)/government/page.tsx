@@ -1,4 +1,4 @@
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+﻿import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import InviteLinkButton from "@/components/employer/InviteLinkButton";
@@ -342,7 +342,7 @@ export default async function GovernmentDashboardPage({
                     <thead>
                       <tr className="border-b border-[#f1f5f9]">
                         {["Name", "Specialty", "CME Credits", "Status", "License Expiry"].map((h) => (
-                          <th key={h} className="text-left px-6 py-2 text-xs font-medium text-[#94a3b8] uppercase tracking-wide">{h}</th>
+                          <th key={h} className="text-left px-6 py-2 text-xs font-medium text-[#64748b] uppercase tracking-wide">{h}</th>
                         ))}
                       </tr>
                     </thead>
@@ -364,7 +364,7 @@ export default async function GovernmentDashboardPage({
                                 </div>
                               </div>
                             ) : (
-                              <span className="text-xs text-[#94a3b8]">Private</span>
+                              <span className="text-xs text-[#64748b]">Private</span>
                             )}
                           </td>
                           <td className="px-6 py-4">
@@ -382,7 +382,7 @@ export default async function GovernmentDashboardPage({
                                 {p.daysToExpiry < 0 ? "EXPIRED" : `${p.daysToExpiry}d`}
                               </span>
                             ) : (
-                              <span className="text-xs text-[#94a3b8]">Private</span>
+                              <span className="text-xs text-[#64748b]">Private</span>
                             )}
                           </td>
                         </tr>
@@ -417,7 +417,7 @@ export default async function GovernmentDashboardPage({
         )}
       </div>
 
-      <p className="text-xs text-[#94a3b8] mt-6 text-center">
+      <p className="text-xs text-[#64748b] mt-6 text-center">
         Hayya Med Pro displays only data that professionals have explicitly consented to share with your authority.
       </p>
     </div>

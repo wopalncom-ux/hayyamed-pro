@@ -1,4 +1,4 @@
-interface Props {
+﻿interface Props {
   completed: number;
   required: number;
   complianceStatus: string;
@@ -30,7 +30,7 @@ export default function ComplianceStatusCard({
     compliant:     { color: "#16a34a", bg: "bg-[#dcfce7]", text: "text-[#16a34a]", label: "Compliant" },
     at_risk:       { color: "#d97706", bg: "bg-[#fff7ed]", text: "text-[#d97706]", label: "At Risk" },
     non_compliant: { color: "#dc2626", bg: "bg-[#fef2f2]", text: "text-[#dc2626]", label: "Non-Compliant" },
-  }[complianceStatus] ?? { color: "#94a3b8", bg: "bg-[#f1f5f9]", text: "text-[#64748b]", label: "Unknown" };
+  }[complianceStatus] ?? { color: "#64748b", bg: "bg-[#f1f5f9]", text: "text-[#64748b]", label: "Unknown" };
 
   const ringColor = statusConfig.color;
 
@@ -94,7 +94,7 @@ export default function ComplianceStatusCard({
               </span>
             )}
             {country && (
-              <span className="text-xs text-[#94a3b8]">{country}</span>
+              <span className="text-xs text-[#64748b]">{country}</span>
             )}
           </div>
         </div>

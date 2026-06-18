@@ -1,4 +1,4 @@
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+﻿import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { getUserPlan, isPro } from "@/lib/subscription";
 import { EMPLOYER_TIERS, PRO_PLAN } from "@/lib/paddle";
@@ -236,7 +236,7 @@ export default async function BillingPage({
 
       {/* Invoice note */}
       {hasPaddleCustomer && (
-        <p className="text-xs text-[#94a3b8] mt-2">
+        <p className="text-xs text-[#64748b] mt-2">
           Invoices and receipts are available in the{" "}
           <a href="/api/paddle/portal" className="text-[#1a56a0] hover:underline">billing portal</a>.
           All amounts in USD. VAT may apply based on your location.

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -389,7 +389,7 @@ export default function FeaturesPage() {
                   View pricing
                 </Link>
               </div>
-              <p className="text-xs text-[#94a3b8] mt-4">Free forever · 14-day Pro trial · No credit card required</p>
+              <p className="text-xs text-[#64748b] mt-4">Free forever · 14-day Pro trial · No credit card required</p>
             </div>
           </section>
 
@@ -427,7 +427,7 @@ export default function FeaturesPage() {
                 <Link href="/register" className="inline-block bg-[#1a56a0] text-white px-8 py-3.5 rounded-xl font-semibold text-sm hover:bg-[#1547a0] transition-colors shadow-md shadow-blue-900/20">
                   Start 14-day Pro trial →
                 </Link>
-                <p className="text-xs text-[#94a3b8] mt-3">No credit card required · Cancel anytime</p>
+                <p className="text-xs text-[#64748b] mt-3">No credit card required · Cancel anytime</p>
               </div>
             </div>
           </section>
@@ -536,16 +536,16 @@ export default function FeaturesPage() {
                     <div>
                       <p className="text-sm font-bold text-[#1a56a0] group-hover:text-[#1547a0] transition-colors">{abbr}</p>
                       <p className="text-xs text-[#374151] mb-1">{full}</p>
-                      <p className="text-[11px] text-[#94a3b8] font-medium">{note}</p>
+                      <p className="text-[11px] text-[#64748b] font-medium">{note}</p>
                     </div>
                   </Link>
                 ))}
                 <div className="flex items-start gap-3 border border-dashed border-[#e2e8f0] rounded-xl p-4">
                   <span className="text-2xl leading-none mt-0.5">🌍</span>
                   <div>
-                    <p className="text-sm font-bold text-[#94a3b8]">More coming</p>
-                    <p className="text-xs text-[#94a3b8]">UK (GMC) · India (NMC) · Australia (AHPRA)</p>
-                    <p className="text-[11px] text-[#94a3b8] font-medium mt-1">Phase 2 expansion</p>
+                    <p className="text-sm font-bold text-[#64748b]">More coming</p>
+                    <p className="text-xs text-[#64748b]">UK (GMC) · India (NMC) · Australia (AHPRA)</p>
+                    <p className="text-[11px] text-[#64748b] font-medium mt-1">Phase 2 expansion</p>
                   </div>
                 </div>
               </div>

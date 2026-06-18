@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 
 const APP_URL = "https://hayyamed.pro";
@@ -254,7 +254,7 @@ export default function HowItWorksPage() {
                 <Link href="/register" className="mt-6 block text-center text-sm font-bold text-[#1a56a0] bg-white px-4 py-3 rounded-xl hover:bg-[#f0f9ff] transition-colors">Start Pro free trial →</Link>
               </div>
             </div>
-            <p className="text-center text-xs text-[#94a3b8] mt-4">No credit card required for the free tier. Pro trial starts after registration.</p>
+            <p className="text-center text-xs text-[#64748b] mt-4">No credit card required for the free tier. Pro trial starts after registration.</p>
           </section>
 
           {/* FAQ */}
@@ -276,7 +276,7 @@ export default function HowItWorksPage() {
           <section className="bg-[#0f1f3d] py-16">
             <div className="max-w-3xl mx-auto px-6 text-center">
               <h2 className="text-3xl font-bold text-white mb-4">Ready to stop worrying about CME?</h2>
-              <p className="text-[#94a3b8] mb-8 max-w-md mx-auto">Set up your license profile in 2 minutes. Log your first activity in under 60 seconds. Free for every GCC healthcare professional.</p>
+              <p className="text-[#64748b] mb-8 max-w-md mx-auto">Set up your license profile in 2 minutes. Log your first activity in under 60 seconds. Free for every GCC healthcare professional.</p>
               <Link href="/register" className="inline-flex items-center gap-2 bg-[#1a56a0] hover:bg-[#1d4ed8] text-white font-bold px-8 py-4 rounded-xl text-sm transition-colors">
                 Start tracking free — no card needed
               </Link>

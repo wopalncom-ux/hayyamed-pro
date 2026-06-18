@@ -1,4 +1,4 @@
-import { createAdminClient } from "@/lib/supabase/server";
+﻿import { createAdminClient } from "@/lib/supabase/server";
 
 function npsLabel(score: number): "promoter" | "passive" | "detractor" {
   if (score >= 9) return "promoter";
@@ -59,24 +59,24 @@ export default async function AdminNpsPage() {
           <p className="text-3xl font-bold" style={{ color: npsColor }}>
             {npsScore !== null ? (npsScore > 0 ? `+${npsScore}` : String(npsScore)) : "—"}
           </p>
-          <p className="text-xs text-[#94a3b8] mt-1">
+          <p className="text-xs text-[#64748b] mt-1">
             {npsScore === null ? "No responses yet" : npsScore >= 50 ? "Excellent" : npsScore >= 0 ? "Good" : "Needs work"}
           </p>
         </div>
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
           <p className="text-xs font-medium text-[#64748b] mb-1">Total Responses</p>
           <p className="text-3xl font-bold text-[#111]">{total}</p>
-          <p className="text-xs text-[#94a3b8] mt-1">{responseRate}% response rate</p>
+          <p className="text-xs text-[#64748b] mt-1">{responseRate}% response rate</p>
         </div>
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
           <p className="text-xs font-medium text-[#64748b] mb-1">Promoters (9–10)</p>
           <p className="text-3xl font-bold text-[#16a34a]">{promoters}</p>
-          <p className="text-xs text-[#94a3b8] mt-1">{total > 0 ? Math.round((promoters / total) * 100) : 0}% of responses</p>
+          <p className="text-xs text-[#64748b] mt-1">{total > 0 ? Math.round((promoters / total) * 100) : 0}% of responses</p>
         </div>
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
           <p className="text-xs font-medium text-[#64748b] mb-1">Detractors (0–6)</p>
           <p className="text-3xl font-bold text-[#dc2626]">{detractors}</p>
-          <p className="text-xs text-[#94a3b8] mt-1">{total > 0 ? Math.round((detractors / total) * 100) : 0}% of responses</p>
+          <p className="text-xs text-[#64748b] mt-1">{total > 0 ? Math.round((detractors / total) * 100) : 0}% of responses</p>
         </div>
       </div>
 
@@ -137,7 +137,7 @@ export default async function AdminNpsPage() {
                     <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${tagColor}`}>
                       {r.score} — {label.charAt(0).toUpperCase() + label.slice(1)}
                     </span>
-                    <span className="text-xs text-[#94a3b8]">
+                    <span className="text-xs text-[#64748b]">
                       {new Date(r.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
                     </span>
                   </div>

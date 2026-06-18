@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useState } from "react";
 
 export default function SendReminderButton({
@@ -66,7 +66,7 @@ export default function SendReminderButton({
                 <h2 className="text-base font-semibold text-[#111]">Send Compliance Reminder</h2>
                 <p className="text-xs text-[#64748b] mt-0.5">{staffName}</p>
               </div>
-              <button onClick={close} aria-label="Close" className="text-[#94a3b8] hover:text-[#374151] text-xl leading-none">×</button>
+              <button onClick={close} aria-label="Close" className="text-[#64748b] hover:text-[#374151] text-xl leading-none">×</button>
             </div>
 
             {done ? (
@@ -95,7 +95,7 @@ export default function SendReminderButton({
                     placeholder={defaultMsg}
                     className="w-full border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#1a56a0] resize-none"
                   />
-                  <p className="text-[10px] text-[#94a3b8] mt-1">Leave blank to use the default message. Sent via email + in-app notification.</p>
+                  <p className="text-[10px] text-[#64748b] mt-1">Leave blank to use the default message. Sent via email + in-app notification.</p>
                 </div>
 
                 <div className="flex items-center justify-end gap-3 pt-1">

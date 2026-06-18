@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 
@@ -147,7 +147,7 @@ export default function CompareToolClient({ rules }: { rules: CountryRule[] }) {
                     {r.online_credits_max_pct != null ? (
                       <span className="font-medium text-[#374151]">Max {r.online_credits_max_pct}%</span>
                     ) : (
-                      <span className="text-[#94a3b8]">No limit</span>
+                      <span className="text-[#64748b]">No limit</span>
                     )}
                   </div>
                 ))}
@@ -159,7 +159,7 @@ export default function CompareToolClient({ rules }: { rules: CountryRule[] }) {
                     {r.mandatory_credits_min ? (
                       <span className="font-medium text-[#374151]">{r.mandatory_credits_min} cr</span>
                     ) : (
-                      <span className="text-[#94a3b8]">None</span>
+                      <span className="text-[#64748b]">None</span>
                     )}
                   </div>
                 ))}
@@ -180,7 +180,7 @@ export default function CompareToolClient({ rules }: { rules: CountryRule[] }) {
       {/* CTA */}
       <div className="mt-8 bg-[#0f1f3d] rounded-2xl p-6 text-center">
         <h3 className="text-white text-lg font-bold mb-2">Track your {selectedProfession} CME across all countries</h3>
-        <p className="text-[#94a3b8] text-sm mb-4">
+        <p className="text-[#64748b] text-sm mb-4">
           Hayya Med Pro automatically calculates your compliance gap for every GCC authority you hold a license in.
           Free to start — no credit card required.
         </p>
@@ -193,7 +193,7 @@ export default function CompareToolClient({ rules }: { rules: CountryRule[] }) {
           </a>
           <a
             href="/pricing"
-            className="inline-flex items-center justify-center text-sm text-[#94a3b8] hover:text-white transition-colors"
+            className="inline-flex items-center justify-center text-sm text-[#64748b] hover:text-white transition-colors"
           >
             See Pro features
           </a>

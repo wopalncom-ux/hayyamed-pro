@@ -1,4 +1,4 @@
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+﻿import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
 export const metadata = {
@@ -21,7 +21,7 @@ function daysUntil(date: Date): number {
 }
 
 function urgencyClass(days: number): { badge: string; dot: string; row: string } {
-  if (days < 0)   return { badge: "bg-[#f1f5f9] text-[#94a3b8]",    dot: "bg-[#94a3b8]",    row: "opacity-60" };
+  if (days < 0)   return { badge: "bg-[#f1f5f9] text-[#64748b]",    dot: "bg-[#64748b]",    row: "opacity-60" };
   if (days <= 30)  return { badge: "bg-[#fef2f2] text-[#dc2626]",    dot: "bg-[#dc2626]",    row: "" };
   if (days <= 90)  return { badge: "bg-[#fff7ed] text-[#d97706]",    dot: "bg-[#d97706]",    row: "" };
   return               { badge: "bg-[#f0fdf4]  text-[#16a34a]",    dot: "bg-[#16a34a]",    row: "" };
@@ -192,7 +192,7 @@ export default async function RenewalCalendarPage() {
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-semibold text-[#111] truncate">{event.label}</p>
                         <p className="text-xs text-[#64748b] mt-0.5">{event.sublabel}</p>
-                        <p className="text-xs text-[#94a3b8] mt-0.5">{fmtDate(event.date)}</p>
+                        <p className="text-xs text-[#64748b] mt-0.5">{fmtDate(event.date)}</p>
                       </div>
 
                       {/* Countdown badge */}
@@ -211,7 +211,7 @@ export default async function RenewalCalendarPage() {
           {/* Expired events */}
           {expired.length > 0 && (
             <section>
-              <h2 className="text-sm font-bold text-[#94a3b8] uppercase tracking-wide mb-4">
+              <h2 className="text-sm font-bold text-[#64748b] uppercase tracking-wide mb-4">
                 Expired / Past
               </h2>
               <div className="space-y-2">
@@ -225,9 +225,9 @@ export default async function RenewalCalendarPage() {
                       </div>
                       <div className="flex-shrink-0 text-xl opacity-40">{TYPE_ICON[event.type]}</div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-[#94a3b8] truncate line-through">{event.label}</p>
-                        <p className="text-xs text-[#94a3b8] mt-0.5">{event.sublabel}</p>
-                        <p className="text-xs text-[#94a3b8] mt-0.5">{fmtDate(event.date)}</p>
+                        <p className="text-sm font-semibold text-[#64748b] truncate line-through">{event.label}</p>
+                        <p className="text-xs text-[#64748b] mt-0.5">{event.sublabel}</p>
+                        <p className="text-xs text-[#64748b] mt-0.5">{fmtDate(event.date)}</p>
                       </div>
                       <span className={`text-xs font-bold px-3 py-1.5 rounded-lg ${urg.badge}`}>
                         Expired

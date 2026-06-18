@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { submitNpsResponse } from "@/app/(dashboard)/dashboard/actions/nps";
@@ -98,7 +98,7 @@ export default function NpsSurveyBanner({ eligible }: { eligible: boolean }) {
             <button
               onClick={dismiss}
               aria-label="Dismiss survey"
-              className="text-[#94a3b8] hover:text-[#64748b] transition-colors flex-shrink-0 mt-0.5"
+              className="text-[#64748b] hover:text-[#64748b] transition-colors flex-shrink-0 mt-0.5"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -141,13 +141,13 @@ export default function NpsSurveyBanner({ eligible }: { eligible: boolean }) {
                 placeholder="What's the main reason for your score? (optional)"
                 rows={2}
                 maxLength={1000}
-                className="w-full text-sm border border-[#e2e8f0] rounded-lg px-3 py-2 text-[#111] placeholder-[#94a3b8] resize-none focus:outline-none focus:ring-2 focus:ring-[#1a56a0] focus:border-transparent"
+                className="w-full text-sm border border-[#e2e8f0] rounded-lg px-3 py-2 text-[#111] placeholder-[#64748b] resize-none focus:outline-none focus:ring-2 focus:ring-[#1a56a0] focus:border-transparent"
               />
             </div>
           )}
 
           <div className="flex items-center justify-between">
-            <p className="text-xs text-[#94a3b8]">Takes 10 seconds · anonymous feedback</p>
+            <p className="text-xs text-[#64748b]">Takes 10 seconds · anonymous feedback</p>
             <button
               onClick={submit}
               disabled={score === null || submitting}

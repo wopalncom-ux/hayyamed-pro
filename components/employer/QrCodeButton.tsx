@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { track } from "@/lib/analytics";
@@ -122,7 +122,7 @@ export default function QrCodeButton({ orgName }: { orgName: string }) {
               )}
             </div>
 
-            <p className="text-xs text-[#94a3b8] text-center mt-2 mb-4">{orgName}</p>
+            <p className="text-xs text-[#64748b] text-center mt-2 mb-4">{orgName}</p>
 
             {svgContent && (
               <div className="flex gap-2">

@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+﻿import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 
@@ -42,7 +42,7 @@ export default async function EmployerLayout({ children }: { children: React.Rea
         <div className="max-w-5xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <a href="/employer" className="text-base font-bold text-[#1a56a0] hover:text-[#1547a0]">Hayya Med Pro</a>
-            <span className="text-xs text-[#94a3b8]">Employer</span>
+            <span className="text-xs text-[#64748b]">Employer</span>
           </div>
           <div className="flex items-center gap-3">
             {!isVerified && (

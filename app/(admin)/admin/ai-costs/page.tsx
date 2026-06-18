@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+﻿import { redirect } from "next/navigation";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
@@ -120,26 +120,26 @@ export default async function AiCostsPage() {
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
           <p className="text-xs text-[#64748b] font-medium uppercase tracking-wide mb-1">This month</p>
           <p className="text-2xl font-bold text-[#0f1f3d]">{fmt(totalCostMonth)}</p>
-          <p className="text-xs text-[#94a3b8] mt-1">
+          <p className="text-xs text-[#64748b] mt-1">
             {now.toLocaleString("en-GB", { month: "long" })} {now.getFullYear()}
           </p>
         </div>
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
           <p className="text-xs text-[#64748b] font-medium uppercase tracking-wide mb-1">All-time total</p>
           <p className="text-2xl font-bold text-[#0f1f3d]">{fmt(totalCostAllTime)}</p>
-          <p className="text-xs text-[#94a3b8] mt-1">{allLogs.length} total calls</p>
+          <p className="text-xs text-[#64748b] mt-1">{allLogs.length} total calls</p>
         </div>
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
           <p className="text-xs text-[#64748b] font-medium uppercase tracking-wide mb-1">Calls this month</p>
           <p className="text-2xl font-bold text-[#1a56a0]">{totalCallsMonth.toLocaleString()}</p>
-          <p className="text-xs text-[#94a3b8] mt-1">{successRate}% success rate</p>
+          <p className="text-xs text-[#64748b] mt-1">{successRate}% success rate</p>
         </div>
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
           <p className="text-xs text-[#64748b] font-medium uppercase tracking-wide mb-1">Avg latency</p>
           <p className={`text-2xl font-bold ${avgLatencyMs > 5000 ? "text-[#dc2626]" : avgLatencyMs > 2000 ? "text-[#d97706]" : "text-[#16a34a]"}`}>
             {avgLatencyMs > 0 ? `${(avgLatencyMs / 1000).toFixed(1)}s` : "—"}
           </p>
-          <p className="text-xs text-[#94a3b8] mt-1">p50 this month</p>
+          <p className="text-xs text-[#64748b] mt-1">p50 this month</p>
         </div>
       </div>
 
@@ -147,7 +147,7 @@ export default async function AiCostsPage() {
       <div className="bg-white rounded-xl border border-[#e2e8f0] p-6 mb-6">
         <h2 className="text-sm font-semibold text-[#0f1f3d] mb-4">Daily spend — last 7 days</h2>
         {days.every((d) => !dailyCost[d]) ? (
-          <p className="text-sm text-[#94a3b8]">No AI calls in the last 7 days.</p>
+          <p className="text-sm text-[#64748b]">No AI calls in the last 7 days.</p>
         ) : (
           <div className="flex items-end gap-2 h-24">
             {days.map((day) => {
@@ -158,7 +158,7 @@ export default async function AiCostsPage() {
                 <div key={day} className="flex flex-col items-center flex-1 gap-1">
                   <span className="text-[9px] text-[#64748b]">{cost > 0 ? fmt(cost) : ""}</span>
                   <div className="w-full rounded-t-sm bg-[#1a56a0]" style={{ height: `${Math.max(heightPct, 2)}%` }} />
-                  <span className="text-[9px] text-[#94a3b8] text-center leading-tight">{label}</span>
+                  <span className="text-[9px] text-[#64748b] text-center leading-tight">{label}</span>
                 </div>
               );
             })}
@@ -171,7 +171,7 @@ export default async function AiCostsPage() {
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-6">
           <h2 className="text-sm font-semibold text-[#0f1f3d] mb-4">Cost by model — this month</h2>
           {modelRows.length === 0 ? (
-            <p className="text-sm text-[#94a3b8]">No data yet.</p>
+            <p className="text-sm text-[#64748b]">No data yet.</p>
           ) : (
             <div className="space-y-3">
               {modelRows.map(([model, { calls, cost }]) => {
@@ -203,7 +203,7 @@ export default async function AiCostsPage() {
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-6">
           <h2 className="text-sm font-semibold text-[#0f1f3d] mb-4">Cost by feature — this month</h2>
           {actionRows.length === 0 ? (
-            <p className="text-sm text-[#94a3b8]">No data yet.</p>
+            <p className="text-sm text-[#64748b]">No data yet.</p>
           ) : (
             <div className="space-y-3">
               {actionRows.map(([action, { calls, cost }]) => {

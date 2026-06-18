@@ -272,10 +272,10 @@ export default async function PublicProfilePage({
 
           {/* Footer */}
           <div className="px-8 py-4 bg-[#f8fafc] flex items-center justify-between">
-            <p className="text-xs text-[#94a3b8]">
+            <p className="text-xs text-[#64748b]">
               Verified by Hayya Med Pro · {issuedDate}
             </p>
-            <p className="text-xs text-[#94a3b8]">hayyamed.pro</p>
+            <p className="text-xs text-[#64748b]">hayyamed.pro</p>
           </div>
         </div>
 
@@ -315,7 +315,7 @@ export default async function PublicProfilePage({
           >
             Create free account →
           </Link>
-          <p className="text-xs text-[#94a3b8] mt-3">No credit card · 14-day Pro trial included</p>
+          <p className="text-xs text-[#64748b] mt-3">No credit card · 14-day Pro trial included</p>
         </div>
       </main>
     </div>

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useRealtimeStaffCompliance } from "@/hooks/useRealtimeStaff";
 
@@ -21,7 +21,7 @@ export default function RealtimeComplianceSummary({
     <div className="bg-white border border-[#e2e8f0] rounded-xl p-5">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-sm font-semibold text-[#0f1f3d]">Staff Compliance</h3>
-        <span className="flex items-center gap-1 text-[10px] text-[#94a3b8]">
+        <span className="flex items-center gap-1 text-[10px] text-[#64748b]">
           <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#16a34a] animate-pulse" />
           live
         </span>
@@ -68,7 +68,7 @@ export default function RealtimeComplianceSummary({
         </div>
       </div>
 
-      <p className="text-xs text-[#94a3b8] mt-3">{total} total staff</p>
+      <p className="text-xs text-[#64748b] mt-3">{total} total staff</p>
     </div>
   );
 }
