@@ -175,6 +175,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/dentists`,          lastModified: D_CONTENT, changeFrequency: "monthly" as const, priority: 0.9 },
     { url: `${BASE}/physiotherapists`,  lastModified: D_CONTENT, changeFrequency: "monthly" as const, priority: 0.9 },
 
+    // ── Install guides ──────────────────────────────────────────────────────
+    { url: `${BASE}/ios-install`,     lastModified: D_CONTENT, changeFrequency: "yearly" as const, priority: 0.7 },
+    { url: `${BASE}/android-install`, lastModified: D_CONTENT, changeFrequency: "yearly" as const, priority: 0.7 },
+
     // ── Programmatic specialty × country pages (23 × 26 = 598 pages) ───────
     ...SPECIALTY_SLUGS.flatMap((specialty) =>
       COUNTRY_SLUGS.map((country) => ({
