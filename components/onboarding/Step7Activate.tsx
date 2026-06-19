@@ -20,6 +20,7 @@ export default function Step7Activate({ profile, trialDays = 14 }: { profile: Re
     try {
       const result = await completeOnboarding();
       if ("error" in result) {
+        console.error("[Step7Activate] completeOnboarding returned error:", result.error);
         setError("Activation failed. Please try again.");
         setLoading(false);
         return;

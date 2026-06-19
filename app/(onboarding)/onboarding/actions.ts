@@ -10,8 +10,10 @@ const REFERRAL_TRIAL_DAYS = 30;  // referee gets 30-day trial instead of 14
 const REFERRER_BONUS_DAYS = 30;  // referrer gains 30 free Pro days
 
 export async function completeOnboarding(): Promise<{ pct: number; trialDays: number } | { error: string }> {
+  try {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const { data: { user }, error: userError } = await supabase.auth.getUser();
+  if (userError) { console.error("[completeOnboarding] getUser error:", userError.message); return { error: "Unauthorized" }; }
   if (!user) return { error: "Unauthorized" };
 
   const admin = createAdminClient();
@@ -20,6 +22,7 @@ export async function completeOnboarding(): Promise<{ pct: number; trialDays: nu
     admin.from("cme_wallets").select("id").eq("professional_id", user.id).maybeSingle(),
     admin.from("employer_link_requests").select("id").eq("professional_id", user.id).eq("status", "approved").maybeSingle(),
   ]);
+  if (profileRes.error) { console.error("[completeOnboarding] profile fetch error:", profileRes.error.message); }
 
   const profile = profileRes.data;
   const pct = calcProfileCompletion(profile ?? {}, {
@@ -187,4 +190,8 @@ export async function completeOnboarding(): Promise<{ pct: number; trialDays: nu
   }
 
   return { pct, trialDays };
+  } catch (err) {
+    console.error("[completeOnboarding] unexpected error:", err);
+    return { error: "internal" };
+  }
 }
