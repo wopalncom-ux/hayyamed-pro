@@ -20,6 +20,7 @@ import CmeDashboardQuickAddButton from "@/components/dashboard/CmeDashboardQuick
 import CmeFirstActivityPrompt from "@/components/dashboard/CmeFirstActivityPrompt";
 import EmployerTasksWidget from "@/components/dashboard/EmployerTasksWidget";
 import type { EmployerTask } from "@/components/dashboard/EmployerTasksWidget";
+import { QuickActions } from "@/components/dashboard/QuickActions";
 import Image from "next/image";
 import type { Partner } from "@/lib/types";
 
@@ -147,6 +148,9 @@ export default async function DashboardPage({
           />
         )}
       </div>
+
+      {/* Quick actions — prominent shortcuts to most-used features */}
+      <QuickActions isPro={isPro(plan)} hasWallet={!!wallet} />
 
       {/* Trial banner — shown while 14-day trial is active */}
       {plan === "trialing" && (() => {

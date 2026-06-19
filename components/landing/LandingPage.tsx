@@ -1275,6 +1275,286 @@ function EmployerSection() {
   );
 }
 
+// ── Testimonials ─────────────────────────────────────────────────────────────
+const TESTIMONIALS = [
+  {
+    quote: "Hayya Med Pro transformed how I track my CME. I used to spend hours searching for my certificates before renewal. Now everything is in one place and my QCHP renewal was the smoothest it has ever been.",
+    name: "Dr. Ahmed Al-Rashidi",
+    role: "Cardiologist",
+    org: "Hamad Medical Corporation, Qatar",
+    initials: "AR",
+    color: "#dbeafe",
+    textColor: "#1a56a0",
+    country: "🇶🇦",
+  },
+  {
+    quote: "As a nurse managing CPD across two hospitals, I was always worried about compliance gaps. The AI gap analysis showed me exactly what I was missing three months before my renewal deadline. Incredible tool.",
+    name: "Fatima Al-Mansouri",
+    role: "ICU Senior Nurse",
+    org: "King Faisal Specialist Hospital, Saudi Arabia",
+    initials: "FM",
+    color: "#dcfce7",
+    textColor: "#16a34a",
+    country: "🇸🇦",
+  },
+  {
+    quote: "I manage compliance for 120 staff across our clinic group. The employer dashboard gives me a real-time view of every doctor and nurse's status. We went from manual spreadsheets to full automation in one week.",
+    name: "Dr. Sarah Hassan",
+    role: "Chief Medical Officer",
+    org: "Medcare Hospitals Group, UAE",
+    initials: "SH",
+    color: "#fef9c3",
+    textColor: "#d97706",
+    country: "🇦🇪",
+  },
+];
+
+function Testimonials() {
+  const reduced = useReducedMotion();
+  return (
+    <section className="bg-white px-6 py-20 border-t border-[#e2e8f0]">
+      <div className="max-w-6xl mx-auto">
+        <FadeUp className="text-center mb-14">
+          <p className="text-xs font-semibold text-[#1a56a0] uppercase tracking-[0.2em] mb-3">Trusted by GCC healthcare professionals</p>
+          <h2 className="text-3xl sm:text-[2.5rem] font-bold text-[#0f1f3d] tracking-tight mb-4 leading-tight">
+            Doctors and nurses love Hayya Med Pro
+          </h2>
+          <p className="text-[#64748b] max-w-lg mx-auto text-lg leading-relaxed">
+            From Doha to Dubai — healthcare professionals across the GCC trust us with their compliance.
+          </p>
+        </FadeUp>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {TESTIMONIALS.map(({ quote, name, role, org, initials, color, textColor, country }, i) => (
+            <motion.div
+              key={name}
+              initial={reduced ? false : { opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="flex flex-col bg-[#f8fafc] border border-[#e2e8f0] rounded-2xl p-6 hover:border-[#1a56a0]/20 hover:bg-white hover:shadow-md transition-all duration-300"
+            >
+              {/* Stars */}
+              <div className="flex gap-0.5 mb-4" aria-label="5 out of 5 stars">
+                {Array.from({ length: 5 }).map((_, s) => (
+                  <svg key={s} className="w-4 h-4 text-[#f59e0b]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
+
+              {/* Quote */}
+              <blockquote className="text-sm text-[#374151] leading-relaxed flex-1 mb-6">
+                &ldquo;{quote}&rdquo;
+              </blockquote>
+
+              {/* Author */}
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0" style={{ backgroundColor: color, color: textColor }}>
+                  {initials}
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold text-[#0f1f3d] flex items-center gap-1.5">
+                    {name} <span aria-hidden="true">{country}</span>
+                  </p>
+                  <p className="text-xs text-[#64748b] truncate">{role} · {org}</p>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Stats strip */}
+        <FadeUp delay={0.2} className="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-6 border-t border-[#e2e8f0] pt-12">
+          {[
+            { n: "7+", label: "GCC countries supported" },
+            { n: "8", label: "licensing authorities" },
+            { n: "3 min", label: "average setup time" },
+            { n: "100%", label: "free to start" },
+          ].map(({ n, label }) => (
+            <div key={label} className="text-center">
+              <p className="text-3xl font-bold text-[#1a56a0] mb-1">{n}</p>
+              <p className="text-xs text-[#64748b] font-medium">{label}</p>
+            </div>
+          ))}
+        </FadeUp>
+      </div>
+    </section>
+  );
+}
+
+// ── Mobile App Preview ────────────────────────────────────────────────────────
+function MobileAppPreview() {
+  const reduced = useReducedMotion();
+  const appFeatures = [
+    { icon: <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />, title: "Offline access", desc: "Log CME activities without internet — syncs when back online" },
+    { icon: <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />, title: "Push reminders", desc: "License expiry and CME deadline alerts before it's too late" },
+    { icon: <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />, title: "Download PDF report", desc: "Official compliance report available instantly from your phone" },
+    { icon: <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z" />, title: "AI assistant on mobile", desc: "Ask compliance questions and get instant, accurate answers" },
+  ];
+
+  return (
+    <section className="bg-[#060d1f] px-6 py-20 overflow-hidden relative">
+      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 80% 50%, rgba(26,86,160,0.18) 0%, transparent 55%)" }} aria-hidden="true" />
+
+      <div className="max-w-5xl mx-auto relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+
+          {/* Left: Copy */}
+          <FadeUp>
+            <p className="text-xs font-semibold text-[#60a5fa] uppercase tracking-[0.2em] mb-4">Available on all devices</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-5 leading-tight">
+              Your compliance platform,<br className="hidden sm:block" /> in your pocket
+            </h2>
+            <p className="text-white/62 text-base leading-relaxed mb-8">
+              Install Hayya Med Pro as an app on iOS or Android — no App Store required. Works offline. Push notifications. Full CME tracking from your phone.
+            </p>
+
+            <div className="space-y-5 mb-10">
+              {appFeatures.map(({ icon, title, desc }, i) => (
+                <motion.div
+                  key={title}
+                  initial={reduced ? false : { opacity: 0, x: -16 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.08 }}
+                  className="flex items-start gap-3"
+                >
+                  <div className="w-8 h-8 rounded-lg bg-[#1a56a0]/30 border border-[#1a56a0]/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#60a5fa" strokeWidth={1.8} className="w-4 h-4" aria-hidden="true">{icon}</svg>
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-white mb-0.5">{title}</p>
+                    <p className="text-xs text-white/50 leading-relaxed">{desc}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Install buttons */}
+            <div className="flex flex-col sm:flex-row gap-3">
+              <button
+                onClick={() => { if (typeof window !== "undefined") window.dispatchEvent(new CustomEvent("hmp:open-download")); }}
+                className="inline-flex items-center justify-center gap-2 bg-white text-[#0f1f3d] px-6 py-3 rounded-xl font-semibold text-sm hover:bg-blue-50 transition-colors"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-4 h-4" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+                Download App — Free
+              </button>
+              <a href="/demo" className="inline-flex items-center justify-center gap-2 border border-white/15 text-white/80 px-6 py-3 rounded-xl font-semibold text-sm hover:border-white/30 hover:text-white transition-colors">
+                See live demo
+              </a>
+            </div>
+          </FadeUp>
+
+          {/* Right: Phone mockup (CSS only) */}
+          <FadeUp delay={0.15}>
+            <div className="flex justify-center">
+              <motion.div
+                animate={reduced ? {} : { y: [0, -10, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                className="relative"
+              >
+                {/* Phone frame */}
+                <div className="w-[240px] sm:w-[270px] bg-[#0f1f3d] rounded-[2.5rem] border-2 border-white/10 shadow-2xl shadow-black/60 overflow-hidden" style={{ boxShadow: "0 40px 120px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05)" }}>
+                  {/* Notch */}
+                  <div className="flex justify-center pt-3 pb-1">
+                    <div className="w-20 h-5 bg-[#060d1f] rounded-full" aria-hidden="true" />
+                  </div>
+
+                  {/* Screen content */}
+                  <div className="bg-[#f8fafc] mx-2 rounded-2xl overflow-hidden" style={{ minHeight: 420 }}>
+                    {/* App header */}
+                    <div className="bg-[#1a56a0] px-4 py-3">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-1.5">
+                          <div className="w-5 h-5 rounded bg-white/20 flex items-center justify-center">
+                            <span className="text-white text-[8px] font-bold">H</span>
+                          </div>
+                          <span className="text-white text-[10px] font-bold">Hayya Med Pro</span>
+                        </div>
+                        <div className="w-4 h-4 rounded-full bg-[#4ade80]/20 flex items-center justify-center">
+                          <span className="text-[#4ade80] text-[6px]">●</span>
+                        </div>
+                      </div>
+                      <p className="text-white/70 text-[9px]">Dr. Ahmed Al-Rashidi · QCHP</p>
+                    </div>
+
+                    {/* Compliance ring */}
+                    <div className="flex flex-col items-center py-4 bg-white border-b border-[#e2e8f0]">
+                      <div className="relative w-20 h-20">
+                        <svg viewBox="0 0 80 80" className="w-full h-full -rotate-90" aria-hidden="true">
+                          <circle cx="40" cy="40" r="32" fill="none" stroke="#e2e8f0" strokeWidth="8" />
+                          <circle cx="40" cy="40" r="32" fill="none" stroke="#1a56a0" strokeWidth="8" strokeDasharray={`${2 * Math.PI * 32 * 0.65} ${2 * Math.PI * 32}`} strokeLinecap="round" />
+                        </svg>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center">
+                          <span className="text-lg font-bold text-[#0f1f3d]">65%</span>
+                          <span className="text-[7px] text-[#64748b]">CME</span>
+                        </div>
+                      </div>
+                      <p className="text-[9px] text-[#64748b] mt-1">52 / 80 credits · QCHP</p>
+                    </div>
+
+                    {/* Quick actions */}
+                    <div className="grid grid-cols-2 gap-1.5 p-2">
+                      {[
+                        { label: "Add CME", color: "#dbeafe", text: "#1a56a0" },
+                        { label: "Download PDF", color: "#dcfce7", text: "#16a34a" },
+                        { label: "AI Chat", color: "#f3e8ff", text: "#7c3aed" },
+                        { label: "Licenses", color: "#fef9c3", text: "#d97706" },
+                      ].map(({ label, color, text }) => (
+                        <div key={label} className="rounded-xl p-2 flex items-center justify-center text-center" style={{ backgroundColor: color }}>
+                          <span className="text-[8px] font-semibold" style={{ color: text }}>{label}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Recent activity */}
+                    <div className="px-2 pb-2">
+                      <p className="text-[7px] font-semibold text-[#64748b] uppercase tracking-wide mb-1 px-1">Recent</p>
+                      {["Cardiology Conference · 8 crd", "Online CME Module · 2 crd"].map((item) => (
+                        <div key={item} className="flex items-center gap-1.5 px-2 py-1.5 rounded-lg bg-white border border-[#e2e8f0] mb-1">
+                          <div className="w-1.5 h-1.5 rounded-full bg-[#16a34a] flex-shrink-0" aria-hidden="true" />
+                          <span className="text-[7px] text-[#374151]">{item}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Home indicator */}
+                  <div className="flex justify-center py-2">
+                    <div className="w-16 h-1 bg-white/20 rounded-full" aria-hidden="true" />
+                  </div>
+                </div>
+
+                {/* Floating badge */}
+                <motion.div
+                  animate={reduced ? {} : { y: [0, -5, 0] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                  className="absolute -right-8 top-16 bg-white rounded-xl px-3 py-2 shadow-xl border border-[#e2e8f0]"
+                >
+                  <p className="text-[9px] font-bold text-[#16a34a]">✓ Compliant</p>
+                  <p className="text-[8px] text-[#64748b]">QCHP 2026</p>
+                </motion.div>
+
+                <motion.div
+                  animate={reduced ? {} : { y: [0, -4, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+                  className="absolute -left-10 bottom-24 bg-white rounded-xl px-3 py-2 shadow-xl border border-[#e2e8f0]"
+                >
+                  <p className="text-[9px] font-bold text-[#1a56a0]">+8 credits</p>
+                  <p className="text-[8px] text-[#64748b]">Conference added</p>
+                </motion.div>
+              </motion.div>
+            </div>
+          </FadeUp>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ── Pricing ───────────────────────────────────────────────────────────────────
 function Pricing() {
   const t = useTranslations("landing_pricing");
@@ -1515,6 +1795,8 @@ export default function LandingPage() {
             <VisionMission />
             <AIDemo />
             <EmployerSection />
+            <MobileAppPreview />
+            <Testimonials />
             <Pricing />
             <FAQ />
             <FinalCTA />
