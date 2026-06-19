@@ -1,5 +1,6 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
+import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -130,9 +131,15 @@ const HOW_IT_WORKS = [
   },
 ];
 
+const breadcrumbs = [
+  { name: "Home", url: "https://hayyamed.pro" },
+  { name: "NHRA CPD Tracker", url: "https://hayyamed.pro/nhra" },
+];
+
 export default function NhraPage() {
   return (
     <>
+      <BreadcrumbJsonLd items={breadcrumbs} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}

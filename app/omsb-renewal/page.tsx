@@ -1,5 +1,6 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
+import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -135,9 +136,15 @@ const howToLd = {
   })),
 };
 
+const breadcrumbs = [
+  { name: "Home", url: "https://hayyamed.pro" },
+  { name: "OMSB License Renewal", url: "https://hayyamed.pro/omsb-renewal" },
+];
+
 export default function OmsbRenewalPage() {
   return (
     <>
+      <BreadcrumbJsonLd items={breadcrumbs} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}

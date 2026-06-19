@@ -1,5 +1,6 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
+import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -138,9 +139,15 @@ const HOW_IT_WORKS = [
   },
 ];
 
+const breadcrumbs = [
+  { name: "Home", url: "https://hayyamed.pro" },
+  { name: "QCHP CME Tracker", url: "https://hayyamed.pro/qchp" },
+];
+
 export default function QchpPage() {
   return (
     <>
+      <BreadcrumbJsonLd items={breadcrumbs} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
