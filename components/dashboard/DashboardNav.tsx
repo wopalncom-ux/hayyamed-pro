@@ -12,6 +12,7 @@ import {
 import { cn } from "@/lib/utils";
 import NotificationBell from "./NotificationBell";
 import SignOutButton from "./SignOutButton";
+import CommandPalette from "./CommandPalette";
 import { triggerAppDownloadModal } from "@/components/AppDownloadModal";
 
 const NAV_ITEMS = [
@@ -74,6 +75,8 @@ export default function DashboardNav({
               )}
             </div>
             <div className="flex items-center gap-1">
+              {/* Command palette — desktop */}
+              <CommandPalette isEmployerAdmin={isEmployerAdmin} />
               {/* Download App — desktop */}
               <button
                 type="button"
