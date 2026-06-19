@@ -1714,6 +1714,52 @@ function FAQ() {
   );
 }
 
+// ── Resources / Guides ─────────────────────────────────────────────────────────
+function ResourcesSection() {
+  const RESOURCES = [
+    { title: "CME Requirements", desc: "Credits required by country and authority", href: "/cme-requirements", icon: "📋" },
+    { title: "CPD Requirements", desc: "UK, Australia, and GCC CPD guide", href: "/cpd-requirements", icon: "📚" },
+    { title: "Medical License Renewal", desc: "Step-by-step renewal checklist", href: "/medical-license-renewal", icon: "🔄" },
+    { title: "GCC CME Comparison", desc: "QCHP vs SCFHS vs DHA side by side", href: "/gcc-cme-requirements", icon: "🇶🇦" },
+    { title: "Global CME Guide", desc: "20+ countries and authorities", href: "/global-cme-requirements", icon: "🌍" },
+    { title: "CME Tracker", desc: "Free CME tracking for every authority", href: "/cme-tracker", icon: "📊" },
+    { title: "CME vs CPD Explained", desc: "What's the difference?", href: "/cme-vs-cpd", icon: "💡" },
+    { title: "License Renewal Guide", desc: "How to renew your medical licence", href: "/guides/license-renewal", icon: "✅" },
+    { title: "Compare All Countries", desc: "All 26 countries and authorities", href: "/countries", icon: "🗺️" },
+  ];
+
+  return (
+    <section className="bg-white border-t border-[#e2e8f0] px-6 py-16">
+      <div className="max-w-5xl mx-auto">
+        <FadeUp className="mb-10">
+          <p className="text-xs font-semibold text-[#1a56a0] uppercase tracking-[0.2em] mb-2">CME &amp; CPD Knowledge Base</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#0f1f3d]">Healthcare compliance guides</h2>
+          <p className="text-[#64748b] text-sm mt-2 max-w-xl">
+            Everything you need to understand CME requirements, CPD targets, and medical licence renewal across GCC, UK, and global markets.
+          </p>
+        </FadeUp>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {RESOURCES.map(({ title, desc, href, icon }, i) => (
+            <FadeUp key={href} delay={Math.min(i * 0.05, 0.3)}>
+              <a
+                href={href}
+                className="group flex items-start gap-3 bg-[#f8fafc] border border-[#e2e8f0] rounded-xl p-4 hover:border-[#1a56a0]/30 hover:bg-[#f0f7ff] hover:shadow-sm transition-all"
+              >
+                <span className="text-xl flex-shrink-0 mt-0.5" aria-hidden="true">{icon}</span>
+                <div className="min-w-0">
+                  <p className="font-semibold text-[#0f1f3d] text-sm group-hover:text-[#1a56a0] transition-colors">{title}</p>
+                  <p className="text-xs text-[#64748b] mt-0.5 leading-relaxed">{desc}</p>
+                </div>
+              </a>
+            </FadeUp>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ── Final CTA ─────────────────────────────────────────────────────────────────
 function FinalCTA() {
   const t = useTranslations("final_cta");
@@ -1799,6 +1845,7 @@ export default function LandingPage() {
             <Testimonials />
             <Pricing />
             <FAQ />
+            <ResourcesSection />
             <FinalCTA />
           </main>
           <SiteFooter />
