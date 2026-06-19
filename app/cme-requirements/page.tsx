@@ -371,10 +371,12 @@ export default function CmeRequirementsPage() {
                 { title: "GCC CME Requirements", desc: "All 7 GCC countries compared", href: "/gcc-cme-requirements" },
                 { title: "Global CME Comparison", desc: "International authority comparison", href: "/global-cme-requirements" },
                 { title: "Qatar QCHP Guide", desc: "80 CPD / 2-year cycle", href: "/qchp" },
+                { title: "Saudi Arabia CME Guide", desc: "SCFHS requirements 2025", href: "/saudi-arabia-cme" },
                 { title: "Saudi Arabia SCFHS", desc: "40–60 CME per year", href: "/scfhs" },
                 { title: "UAE DHA Guide", desc: "40 CME / 2-year cycle", href: "/dha" },
                 { title: "CME vs CPD Explained", desc: "What's the difference?", href: "/cme-vs-cpd" },
                 { title: "Doctors CME Guide", desc: "CME by profession", href: "/doctors" },
+                { title: "Nurse CME Requirements", desc: "GCC nursing CME by authority", href: "/nurse-cme" },
                 { title: "Nurses CPD Guide", desc: "CPD requirements for nurses", href: "/nurses" },
                 { title: "License Renewal Guide", desc: "Step-by-step renewal process", href: "/guides/license-renewal" },
               ].map(({ title, desc, href }) => (

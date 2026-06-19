@@ -87,6 +87,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     // ── Profession pages ────────────────────────────────────────────────────
     { url: `${BASE}/physician-cme`,    lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/nurse-cme`,        lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.92 },
     { url: `${BASE}/nurse-cpd`,        lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/pharmacist-cme`,   lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/dentist-cme`,      lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.9 },
@@ -98,6 +99,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/medical-license-renewal`, lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.97 },
     { url: `${BASE}/gcc-cme-requirements`,    lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.95 },
     { url: `${BASE}/global-cme-requirements`, lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.95 },
+    { url: `${BASE}/saudi-arabia-cme`,        lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.95 },
     { url: `${BASE}/countries`,               lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/egypt-cme`,               lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/jordan-cme`,              lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.9 },
