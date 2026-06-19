@@ -203,6 +203,9 @@ export function AppDownloadModal() {
                   <span aria-label="share icon">⎙</span> in Safari, then tap{" "}
                   <span className="font-semibold">Add to Home Screen</span>.
                 </p>
+                <a href="/ios-install" className="inline-block mt-2 text-[#1a56a0] font-semibold text-xs hover:underline">
+                  Step-by-step install guide →
+                </a>
               </div>
             ) : canInstall ? (
               <button
@@ -229,6 +232,10 @@ export function AppDownloadModal() {
                   On desktop: click the <span className="font-semibold">⊕</span> icon in your browser&apos;s address bar.<br />
                   On mobile: open <span className="font-semibold">hayyamed.pro</span> in Chrome or Safari.
                 </p>
+                <div className="flex items-center justify-center gap-4 mt-1">
+                  <a href="/ios-install" className="text-[10px] text-[#1a56a0] font-semibold hover:underline">iPhone guide</a>
+                  <a href="/android-install" className="text-[10px] text-[#1a56a0] font-semibold hover:underline">Android guide</a>
+                </div>
               </div>
             )}
 

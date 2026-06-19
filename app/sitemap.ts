@@ -93,6 +93,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/allied-health-cpd`, lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.9 },
 
     // ── GCC / regional requirements ─────────────────────────────────────────
+    { url: `${BASE}/cme-requirements`,        lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.97 },
     { url: `${BASE}/gcc-cme-requirements`,    lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.95 },
     { url: `${BASE}/global-cme-requirements`, lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.95 },
     { url: `${BASE}/countries`,               lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.9 },
