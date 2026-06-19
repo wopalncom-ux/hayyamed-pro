@@ -49,7 +49,8 @@ export async function middleware(request: NextRequest) {
   if (
     pathname === "/api/paddle/webhook" ||
     pathname === "/api/push/webhook" ||
-    pathname === "/api/qpay/webhook"
+    pathname === "/api/qpay/webhook" ||
+    pathname === "/api/payment/qiib/callback"
   ) {
     const blocked = await tryLimit(webhookLimiter, ip);
     if (blocked) return blocked;

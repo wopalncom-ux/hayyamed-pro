@@ -1,6 +1,15 @@
 ﻿import Link from "next/link";
 import type { ReactNode } from "react";
 
+const GLOBAL_RESOURCES = [
+  { title: "CME Requirements", desc: "Credits by country & authority", href: "/cme-requirements" },
+  { title: "CPD Requirements", desc: "UK, Australia & GCC guide", href: "/cpd-requirements" },
+  { title: "Medical Licence Renewal", desc: "Step-by-step renewal checklists", href: "/medical-license-renewal" },
+  { title: "GCC CME Comparison", desc: "QCHP vs SCFHS vs DHA vs DOH", href: "/gcc-cme-requirements" },
+  { title: "Global CME Guide", desc: "20+ countries & authorities", href: "/global-cme-requirements" },
+  { title: "All Countries", desc: "Compare every GCC & global authority", href: "/countries" },
+];
+
 interface RelatedLink {
   label: string;
   href: string;
@@ -121,9 +130,26 @@ export default function BlogPostLayout({
           <p className="text-[#475569] text-xs mt-3">No credit card required · 14-day Pro trial</p>
         </div>
 
+        {/* CME Knowledge Base — global links to high-priority SEO pages */}
+        <div className="mt-8 border border-[#e2e8f0] rounded-2xl p-6 bg-white">
+          <p className="text-xs font-semibold text-[#1a56a0] uppercase tracking-[0.15em] mb-4">CME &amp; CPD Knowledge Base</p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+            {GLOBAL_RESOURCES.map(r => (
+              <Link
+                key={r.href}
+                href={r.href}
+                className="group flex flex-col gap-0.5 bg-[#f8fafc] border border-[#e2e8f0] rounded-xl px-3 py-2.5 hover:border-[#1a56a0]/40 hover:bg-[#f0f7ff] transition-all"
+              >
+                <span className="text-xs font-semibold text-[#0f1f3d] group-hover:text-[#1a56a0] transition-colors leading-snug">{r.title}</span>
+                <span className="text-[11px] text-[#64748b] leading-snug">{r.desc}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+
         {/* Related links */}
         {relatedLinks.length > 0 && (
-          <div className="mt-8">
+          <div className="mt-6">
             <p className="text-xs font-semibold text-[#64748b] uppercase tracking-wide mb-3">Related guides</p>
             <div className="flex flex-wrap gap-2">
               {relatedLinks.map(l => (
