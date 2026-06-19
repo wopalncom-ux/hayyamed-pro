@@ -89,14 +89,19 @@ export default function CommandPalette({ isEmployerAdmin = false }: { isEmployer
     if (item.href) router.push(item.href);
   }, [close, router]);
 
-  // Keyboard shortcut
+  // Keyboard shortcut + external open event (for mobile trigger)
   useEffect(() => {
     function handler(e: KeyboardEvent) {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") { e.preventDefault(); open_(); }
       if (e.key === "Escape") close();
     }
+    function openEvent() { open_(); }
     window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
+    window.addEventListener("hayya:search:open", openEvent);
+    return () => {
+      window.removeEventListener("keydown", handler);
+      window.removeEventListener("hayya:search:open", openEvent);
+    };
   }, [open_, close]);
 
   // Focus input on open

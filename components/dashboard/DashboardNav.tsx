@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import {
   LayoutDashboard, BookOpen, PenLine, Sparkles, Map, BarChart2,
   CreditCard, Award, ShoppingBag, GraduationCap, Bell, Users,
-  Receipt, Settings, Building2, Download,
+  Receipt, Settings, Building2, Download, Search,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import NotificationBell from "./NotificationBell";
@@ -91,6 +91,14 @@ export default function DashboardNav({
               <NotificationBell />
               <span className="text-sm text-[#64748b] ml-1 hidden sm:inline">{userName}</span>
               <SignOutButton variant="icon" className="hidden md:flex" />
+              {/* Mobile search trigger */}
+              <button
+                onClick={() => window.dispatchEvent(new Event("hayya:search:open"))}
+                className="md:hidden p-2 rounded-lg hover:bg-[#f8fafc] transition-colors"
+                aria-label="Search dashboard"
+              >
+                <Search className="w-5 h-5 text-[#374151]" aria-hidden="true" />
+              </button>
               <button
                 onClick={() => setDrawerOpen(true)}
                 className="md:hidden p-2 -mr-1 rounded-lg hover:bg-[#f8fafc] transition-colors"
@@ -184,6 +192,15 @@ export default function DashboardNav({
 
           {/* Drawer footer */}
           <div className="px-2 py-3 border-t border-[#e2e8f0] space-y-1">
+            {/* Search */}
+            <button
+              type="button"
+              onClick={() => { setDrawerOpen(false); window.dispatchEvent(new Event("hayya:search:open")); }}
+              className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm text-[#374151] hover:bg-[#f8fafc] transition-colors"
+            >
+              <Search className="w-4 h-4 flex-shrink-0 text-[#94a3b8]" aria-hidden="true" />
+              Search dashboard
+            </button>
             {/* Download App */}
             <button
               type="button"
