@@ -342,13 +342,13 @@ function Nav() {
           <button
             type="button"
             onClick={() => triggerAppDownloadModal()}
-            className={`flex items-center gap-1.5 font-medium transition-colors hover:text-[#1a56a0] ${scrolled ? "text-[#64748b]" : "text-white/75"}`}
+            className={`flex items-center gap-1.5 text-sm font-semibold px-3 py-1.5 rounded-full border transition-colors ${scrolled ? "border-[#1a56a0] text-[#1a56a0] hover:bg-[#1a56a0] hover:text-white" : "border-white/50 text-white hover:border-white hover:bg-white/10"}`}
             aria-label="Download Hayya Med Pro app"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 3v12" />
             </svg>
-            App
+            Download App
           </button>
         </nav>
 

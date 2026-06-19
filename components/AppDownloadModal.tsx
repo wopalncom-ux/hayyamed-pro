@@ -213,8 +213,22 @@ export function AppDownloadModal() {
                 Download App — Free
               </button>
             ) : (
-              <div className="rounded-xl bg-[#f0f4f8] px-4 py-3 text-sm text-[#64748b] text-center">
-                Open this page in Chrome or Safari on your device to install the app.
+              <div className="space-y-2.5">
+                <button
+                  onClick={() => {
+                    // Try to prompt Chrome's native install via address bar
+                    window.dispatchEvent(new Event("beforeinstallprompt"));
+                    // If that doesn't work, show browser address bar hint
+                  }}
+                  className="w-full flex items-center justify-center gap-2 bg-[#1a56a0] text-white py-3.5 rounded-xl text-sm font-semibold hover:bg-[#1547a0] active:bg-[#1240a0] transition-colors shadow-md shadow-blue-900/20"
+                >
+                  <Download className="w-4 h-4" aria-hidden="true" />
+                  Download Now — Free
+                </button>
+                <p className="text-xs text-[#64748b] text-center leading-relaxed">
+                  On desktop: click the <span className="font-semibold">⊕</span> icon in your browser&apos;s address bar.<br />
+                  On mobile: open <span className="font-semibold">hayyamed.pro</span> in Chrome or Safari.
+                </p>
               </div>
             )}
 
