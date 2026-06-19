@@ -32,7 +32,7 @@ async function tryLimit(
   return null;
 }
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const ip = clientIp(request);
 

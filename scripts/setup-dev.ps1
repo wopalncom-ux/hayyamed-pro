@@ -24,21 +24,25 @@ if (-not (Test-Path $targetPath)) {
 if (Test-Path $junctionPath) {
     $item = Get-Item $junctionPath -Force
     if ($item.LinkType -eq "Junction") {
-        Write-Host "  Junction already exists — nothing to do." -ForegroundColor Green
-        exit 0
+        Write-Host "  .next junction already exists." -ForegroundColor Green
     } else {
         Write-Host "  Removing existing .next directory..." -ForegroundColor Yellow
         Remove-Item $junctionPath -Recurse -Force
+        # Create .next junction
+        New-Item -ItemType Junction -Path $junctionPath -Target $targetPath | Out-Null
+        Write-Host "  .next junction created." -ForegroundColor Green
     }
 }
 
-# Create .next junction
-New-Item -ItemType Junction -Path $junctionPath -Target $targetPath | Out-Null
-if (Test-Path $junctionPath) {
-    Write-Host "  .next junction created." -ForegroundColor Green
-} else {
-    Write-Host "  Failed to create .next junction." -ForegroundColor Red
-    exit 1
+# Create .next junction if it doesn't exist yet (skip if handled above)
+if (-not (Test-Path $junctionPath)) {
+    New-Item -ItemType Junction -Path $junctionPath -Target $targetPath | Out-Null
+    if (Test-Path $junctionPath) {
+        Write-Host "  .next junction created." -ForegroundColor Green
+    } else {
+        Write-Host "  Failed to create .next junction." -ForegroundColor Red
+        exit 1
+    }
 }
 
 # Create node_modules junction inside the target so Node.js can resolve packages.

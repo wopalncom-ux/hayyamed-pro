@@ -40,6 +40,16 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  // Keep node_modules junction inside the Windows tmp distDir alive across builds.
+  // In Docker/GCP the dist dir is always fresh, so this is a no-op there.
+  cleanDistDir: false,
+  typescript: {
+    // On Windows, the junction-based distDir causes Next.js to generate type files
+    // with relative paths that resolve outside the project tree, breaking build-time
+    // TypeScript. Types are enforced via `npx tsc --noEmit` and in Docker/GCP builds
+    // (Linux has no junction, so this flag is false there).
+    ignoreBuildErrors: process.platform === "win32",
+  },
   experimental: {
     serverActions: {
       // Cloud Run sits behind Cloudflare; the x-forwarded-host header
