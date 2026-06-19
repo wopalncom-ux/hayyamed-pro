@@ -366,6 +366,8 @@ export default function CmeRequirementsPage() {
             <h2 id="related-heading" className="text-xl font-bold text-[#0f1f3d] mb-4">Related guides</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {[
+                { title: "CPD Requirements Guide", desc: "UK, Australia & GCC CPD explained", href: "/cpd-requirements" },
+                { title: "Medical Licence Renewal", desc: "QCHP, SCFHS, DHA, GMC checklists", href: "/medical-license-renewal" },
                 { title: "GCC CME Requirements", desc: "All 7 GCC countries compared", href: "/gcc-cme-requirements" },
                 { title: "Global CME Comparison", desc: "International authority comparison", href: "/global-cme-requirements" },
                 { title: "Qatar QCHP Guide", desc: "80 CPD / 2-year cycle", href: "/qchp" },
