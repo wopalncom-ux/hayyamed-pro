@@ -4,40 +4,40 @@ import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/lib/supabase";
-import { CmeWallet, License, Subscription } from "@/lib/types";
+import { CmeWallet, Subscription } from "@/lib/types";
 import { ComplianceRing } from "@/components/dashboard/ComplianceRing";
 import { StatCard } from "@/components/ui/StatCard";
 
 export default function DashboardScreen() {
-  const { profile, signOut } = useAuth();
+  const { user, profile, signOut } = useAuth();
   const router = useRouter();
-  const [wallet, setWallet]           = useState<CmeWallet | null>(null);
+  const [wallet, setWallet]             = useState<CmeWallet | null>(null);
   const [subscription, setSubscription] = useState<Subscription | null>(null);
   const [licenseCount, setLicenseCount] = useState(0);
-  const [loading, setLoading]           = useState(true);
   const [refreshing, setRefreshing]     = useState(false);
 
   async function loadData() {
+    if (!user?.id) return;
     const [walletRes, subRes, licRes] = await Promise.all([
       supabase
         .from("cme_wallets")
         .select("*")
+        .eq("professional_id", user.id)
         .eq("is_primary", true)
-        .single(),
+        .maybeSingle(),
       supabase
         .from("subscriptions")
         .select("*")
-        .eq("professional_id", profile?.id ?? "")
-        .single(),
+        .eq("professional_id", user.id)
+        .maybeSingle(),
       supabase
         .from("licenses")
         .select("id", { count: "exact", head: true })
-        .eq("professional_id", profile?.id ?? ""),
+        .eq("professional_id", user.id),
     ]);
     setWallet(walletRes.data ?? null);
     setSubscription(subRes.data ?? null);
     setLicenseCount(licRes.count ?? 0);
-    setLoading(false);
   }
 
   async function onRefresh() {
@@ -47,16 +47,16 @@ export default function DashboardScreen() {
   }
 
   useEffect(() => {
-    if (profile?.id) loadData();
-  }, [profile?.id]);
+    if (user?.id) loadData();
+  }, [user?.id]);
 
   const pct = wallet
     ? Math.min(100, Math.round((wallet.completed_credits / wallet.required_credits) * 100))
     : 0;
 
   const statusColor =
-    wallet?.compliance_status === "compliant"  ? "#16a34a" :
-    wallet?.compliance_status === "at_risk"    ? "#d97706" : "#dc2626";
+    wallet?.compliance_status === "compliant" ? "#16a34a" :
+    wallet?.compliance_status === "at_risk"   ? "#d97706" : "#dc2626";
 
   const firstName = profile?.full_name?.split(" ")[0] ?? "Doctor";
 

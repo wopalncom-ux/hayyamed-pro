@@ -13,16 +13,16 @@ const STATUS_CONFIG: Record<string, { label: string; bg: string; text: string }>
 };
 
 export default function LicensesScreen() {
-  const { profile } = useAuth();
+  const { user } = useAuth();
   const [licenses, setLicenses] = useState<License[]>([]);
   const [refreshing, setRefreshing] = useState(false);
 
   async function loadData() {
-    if (!profile?.id) return;
+    if (!user?.id) return;
     const { data } = await supabase
       .from("licenses")
       .select("*")
-      .eq("professional_id", profile.id)
+      .eq("professional_id", user.id)
       .order("expiry_date", { ascending: true });
     setLicenses(data ?? []);
   }
@@ -33,7 +33,7 @@ export default function LicensesScreen() {
     setRefreshing(false);
   }
 
-  useEffect(() => { loadData(); }, [profile?.id]);
+  useEffect(() => { loadData(); }, [user?.id]);
 
   function daysUntilExpiry(dateStr: string | null) {
     if (!dateStr) return null;

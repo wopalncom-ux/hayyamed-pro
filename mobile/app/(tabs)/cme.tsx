@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
-import { View, Text, ScrollView, RefreshControl, TouchableOpacity, Alert, TextInput, Modal } from "react-native";
+import { useCallback, useEffect, useState } from "react";
+import { View, Text, ScrollView, RefreshControl, TouchableOpacity, Alert, TextInput, Modal, ActivityIndicator } from "react-native";
+import { useFocusEffect } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/lib/supabase";
+import { enqueueActivity, flushQueue, getQueueCount } from "@/lib/offlineQueue";
 import { CmeActivity, CmeWallet } from "@/lib/types";
 
 const STATUS_COLORS: Record<string, string> = {
@@ -12,29 +14,56 @@ const STATUS_COLORS: Record<string, string> = {
 };
 
 export default function CmeScreen() {
-  const { profile } = useAuth();
-  const [wallet, setWallet]         = useState<CmeWallet | null>(null);
-  const [activities, setActivities] = useState<CmeActivity[]>([]);
-  const [refreshing, setRefreshing] = useState(false);
-  const [showAdd, setShowAdd]       = useState(false);
+  const { user } = useAuth();
+  const [wallet, setWallet]           = useState<CmeWallet | null>(null);
+  const [activities, setActivities]   = useState<CmeActivity[]>([]);
+  const [pendingCount, setPendingCount] = useState(0);
+  const [syncing, setSyncing]         = useState(false);
+  const [refreshing, setRefreshing]   = useState(false);
+  const [showAdd, setShowAdd]         = useState(false);
 
   async function loadData() {
-    if (!profile?.id) return;
+    if (!user?.id) return;
     const [walletRes, actRes] = await Promise.all([
-      supabase.from("cme_wallets").select("*").eq("professional_id", profile.id).eq("is_primary", true).single(),
-      supabase.from("cme_activities").select("*").eq("professional_id", profile.id).order("activity_date", { ascending: false }).limit(20),
+      supabase
+        .from("cme_wallets")
+        .select("*")
+        .eq("professional_id", user.id)
+        .eq("is_primary", true)
+        .maybeSingle(),
+      supabase
+        .from("cme_activities")
+        .select("*")
+        .eq("professional_id", user.id)
+        .order("activity_date", { ascending: false })
+        .limit(20),
     ]);
     setWallet(walletRes.data ?? null);
     setActivities(actRes.data ?? []);
   }
 
+  async function syncPending() {
+    setSyncing(true);
+    const synced = await flushQueue();
+    if (synced > 0) await loadData();
+    setPendingCount(await getQueueCount());
+    setSyncing(false);
+  }
+
   async function onRefresh() {
     setRefreshing(true);
+    await syncPending();
     await loadData();
     setRefreshing(false);
   }
 
-  useEffect(() => { loadData(); }, [profile?.id]);
+  // Flush offline queue every time this screen gains focus
+  useFocusEffect(
+    useCallback(() => {
+      loadData();
+      syncPending();
+    }, [user?.id])
+  );
 
   const pct = wallet
     ? Math.min(100, Math.round((wallet.completed_credits / wallet.required_credits) * 100))
@@ -43,16 +72,34 @@ export default function CmeScreen() {
   return (
     <SafeAreaView className="flex-1 bg-surface">
       {/* Header */}
-      <View className="bg-white border-b border-border px-5 pt-4 pb-4">
-        <Text className="text-xl font-bold text-gray-900">CME Wallet</Text>
-        <Text className="text-sm text-muted mt-0.5">{wallet?.country} &bull; {wallet?.profession}</Text>
+      <View className="bg-white border-b border-border px-5 pt-4 pb-4 flex-row items-center justify-between">
+        <View>
+          <Text className="text-xl font-bold text-gray-900">CME Wallet</Text>
+          <Text className="text-sm text-muted mt-0.5">{wallet?.country} &bull; {wallet?.profession}</Text>
+        </View>
+        {pendingCount > 0 && (
+          <TouchableOpacity
+            onPress={syncPending}
+            disabled={syncing}
+            className="flex-row items-center gap-1.5 bg-warning-light px-3 py-1.5 rounded-full border border-warning"
+            accessibilityLabel={`${pendingCount} activities pending sync`}
+          >
+            {syncing
+              ? <ActivityIndicator size="small" color="#d97706" />
+              : <Text style={{ color: "#d97706", fontSize: 12 }}>↑</Text>
+            }
+            <Text className="text-xs font-semibold" style={{ color: "#d97706" }}>
+              {pendingCount} pending
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
 
       <ScrollView
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#1a56a0" />}
         contentContainerClassName="pb-8"
       >
-        {/* Progress bar card */}
+        {/* Progress card */}
         {wallet && (
           <View className="bg-white mx-4 mt-4 rounded-2xl p-5 border border-border">
             <View className="flex-row justify-between items-baseline mb-3">
@@ -95,14 +142,18 @@ export default function CmeScreen() {
           <View className="items-center py-10 px-8">
             <Text className="text-4xl mb-3">📋</Text>
             <Text className="text-gray-900 font-semibold text-center">No activities yet</Text>
-            <Text className="text-muted text-center text-sm mt-1">Log your first CME activity to start tracking compliance.</Text>
+            <Text className="text-muted text-center text-sm mt-1">
+              Log your first CME activity to start tracking compliance.
+            </Text>
           </View>
         ) : (
           <View className="gap-2 px-4">
             {activities.map((act) => (
               <View key={act.id} className="bg-white rounded-xl border border-border px-4 py-3.5">
                 <View className="flex-row justify-between items-start">
-                  <Text className="text-sm font-semibold text-gray-900 flex-1 mr-2" numberOfLines={2}>{act.title}</Text>
+                  <Text className="text-sm font-semibold text-gray-900 flex-1 mr-2" numberOfLines={2}>
+                    {act.title}
+                  </Text>
                   <View className="rounded-full px-2 py-0.5" style={{ backgroundColor: STATUS_COLORS[act.verification_status] + "20" }}>
                     <Text className="text-xs font-semibold capitalize" style={{ color: STATUS_COLORS[act.verification_status] }}>
                       {act.verification_status}
@@ -120,13 +171,16 @@ export default function CmeScreen() {
         )}
       </ScrollView>
 
-      {/* Add Activity Modal */}
       <AddActivityModal
         visible={showAdd}
         walletId={wallet?.id ?? ""}
-        professionalId={profile?.id ?? ""}
+        professionalId={user?.id ?? ""}
         onClose={() => setShowAdd(false)}
-        onSaved={() => { setShowAdd(false); loadData(); }}
+        onSaved={async () => {
+          setShowAdd(false);
+          setPendingCount(await getQueueCount());
+          await loadData();
+        }}
       />
     </SafeAreaView>
   );
@@ -138,9 +192,9 @@ function AddActivityModal({
   visible: boolean; walletId: string; professionalId: string;
   onClose: () => void; onSaved: () => void;
 }) {
-  const [title, setTitle]     = useState("");
-  const [credits, setCredits] = useState("");
-  const [date, setDate]       = useState(new Date().toISOString().slice(0, 10));
+  const [title, setTitle]       = useState("");
+  const [credits, setCredits]   = useState("");
+  const [date, setDate]         = useState(new Date().toISOString().slice(0, 10));
   const [provider, setProvider] = useState("");
   const [loading, setLoading]   = useState(false);
 
@@ -155,19 +209,41 @@ function AddActivityModal({
       return;
     }
     setLoading(true);
-    const { error } = await supabase.from("cme_activities").insert({
+
+    const payload = {
       wallet_id: walletId,
       professional_id: professionalId,
       title: title.trim(),
       credits: cr,
       activity_date: date,
       provider: provider.trim() || null,
-      verification_status: "pending",
+      verification_status: "pending" as const,
       employer_visible: true,
-    });
+    };
+
+    const { error } = await supabase.from("cme_activities").insert(payload);
     setLoading(false);
+
     if (error) {
-      Alert.alert("Error", error.message);
+      if (error.message.toLowerCase().includes("network") || error.message.toLowerCase().includes("fetch")) {
+        // Network unavailable — queue locally
+        await enqueueActivity({
+          wallet_id: walletId,
+          professional_id: professionalId,
+          title: payload.title,
+          credits: cr,
+          activity_date: date,
+          provider: payload.provider,
+        });
+        setTitle(""); setCredits(""); setProvider("");
+        Alert.alert(
+          "Saved offline",
+          "You're offline. This activity has been queued and will sync when you reconnect.",
+          [{ text: "OK", onPress: onSaved }]
+        );
+      } else {
+        Alert.alert("Error", error.message);
+      }
     } else {
       setTitle(""); setCredits(""); setProvider("");
       onSaved();
@@ -196,6 +272,10 @@ function AddActivityModal({
           >
             <Text className="text-white font-semibold">{loading ? "Saving…" : "Save activity"}</Text>
           </TouchableOpacity>
+
+          <Text className="text-xs text-muted text-center mt-4 leading-5">
+            Activities saved offline will sync automatically when you reconnect.
+          </Text>
         </ScrollView>
       </SafeAreaView>
     </Modal>

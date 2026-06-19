@@ -5,13 +5,17 @@ import { Stack, useRouter, useSegments } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider, useAuth } from "@/hooks/useAuth";
+import { usePushNotifications } from "@/hooks/usePushNotifications";
 
 const queryClient = new QueryClient();
 
 function RootGuard() {
-  const { session, profile, loading } = useAuth();
+  const { session, user, profile, loading } = useAuth();
   const segments = useSegments();
   const router = useRouter();
+
+  // Register for push notifications once authenticated
+  usePushNotifications(user?.id ?? null);
 
   useEffect(() => {
     if (loading) return;
