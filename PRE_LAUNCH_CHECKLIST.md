@@ -34,7 +34,7 @@
 
 ### Authentication
 - [x] Supabase Auth production URL — Site URL: `https://hayyamed.pro`
-- [!] Add `https://hayyamed.pro/auth/callback` to Supabase Redirect URLs (Dashboard → Authentication → URL Configuration)
+- [x] Add `https://hayyamed.pro/auth/callback` to Supabase Redirect URLs — confirmed by user 2026-06-19
 - [x] Email verification flow working
 - [x] Password reset flow working
 - [x] Session persistence working
@@ -377,17 +377,17 @@ Total: **70 migrations** (001–070)
 
 Before public announcement, all Tier 0 + Tier 1 items must be complete.
 
-**Remaining user-action blockers for launch (Session 146 — 3 remain):**
+**Remaining user-action blockers for launch (Session 147 — 1 remains):**
 
 1. ~~Run COMBINED_RUN_ONCE.sql~~ — Done: 72 migrations applied (Session 146)
-2. Add `/auth/callback` to Supabase Redirect URLs — **YOU MUST DO THIS** (Supabase Dashboard → Authentication → URL Configuration)
+2. ~~Add `/auth/callback` to Supabase Redirect URLs~~ — Done: confirmed by user 2026-06-19
 3. ~~Upstash credentials~~ — Done: PING verified
 4. ~~VAPID private key~~ — Done: Secret Manager v3
 5. ~~COMING_SOON toggle~~ — Done: already `false` in cloudbuild.yaml
 6. ~~Postmark~~ — Done: Live mode confirmed
-7. Create `hayyamed-pro-anthropic-key` in GCP Secret Manager — **YOU MUST DO THIS** (value: `sk-ant-api03-zwh_...` from .env.local)
+7. Create `hayyamed-pro-anthropic-key` in GCP Secret Manager — **YOU MUST DO THIS** (value: `sk-ant-api03-...` from .env.local) — AI features fail without this
 8. Contact QIIB merchant services for payment API credentials — **EXTERNAL** (app launches without it; users see "contact support" until wired)
-9. Trigger Cloud Build deploy — **FINAL STEP** (push any commit or trigger manually in GCP Console)
+9. ~~Trigger Cloud Build deploy~~ — Done: launched 2026-06-18
 
 **Code is complete and ready for production.**
 
