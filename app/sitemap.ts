@@ -95,6 +95,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // ── GCC / regional requirements ─────────────────────────────────────────
     { url: `${BASE}/cme-requirements`,        lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.97 },
     { url: `${BASE}/cpd-requirements`,        lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.97 },
+    { url: `${BASE}/medical-license-renewal`, lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.97 },
     { url: `${BASE}/gcc-cme-requirements`,    lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.95 },
     { url: `${BASE}/global-cme-requirements`, lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.95 },
     { url: `${BASE}/countries`,               lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.9 },
