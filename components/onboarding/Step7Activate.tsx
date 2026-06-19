@@ -12,17 +12,30 @@ export default function Step7Activate({ profile, trialDays = 14 }: { profile: Re
   const t = useTranslations("onboarding");
   const [loading, setLoading] = useState(false);
   const [actualTrialDays, setActualTrialDays] = useState(trialDays);
+  const [error, setError] = useState<string | null>(null);
 
   async function handleActivate() {
     setLoading(true);
-    const result = await completeOnboarding();
-    const pct = "pct" in result ? result.pct : 0;
-    if ("trialDays" in result) setActualTrialDays(result.trialDays);
-    track("onboarding_step_completed", { step: 7, step_name: "activate", profile_completion_pct: pct });
-    track("onboarding_completed", { profile_completion_pct: pct });
-    playSound("complete");
-    router.push("/dashboard?upgrade=trial");
-    router.refresh();
+    setError(null);
+    try {
+      const result = await completeOnboarding();
+      if ("error" in result) {
+        setError("Activation failed. Please try again.");
+        setLoading(false);
+        return;
+      }
+      const pct = result.pct;
+      setActualTrialDays(result.trialDays);
+      track("onboarding_step_completed", { step: 7, step_name: "activate", profile_completion_pct: pct });
+      track("onboarding_completed", { profile_completion_pct: pct });
+      playSound("complete");
+      // refresh first so dashboard layout sees onboarding_complete = true before navigating
+      router.refresh();
+      router.push("/dashboard?upgrade=trial");
+    } catch {
+      setError("Something went wrong. Please try again.");
+      setLoading(false);
+    }
   }
 
   const trialEndDate = new Date(Date.now() + actualTrialDays * 24 * 60 * 60 * 1000).toLocaleDateString("en-GB", {
@@ -112,6 +125,9 @@ export default function Step7Activate({ profile, trialDays = 14 }: { profile: Re
         {t("step7_disclaimer")}
       </div>
 
+      {error && (
+        <p className="text-sm text-[#dc2626] mb-3 text-center">{error}</p>
+      )}
       <button
         onClick={handleActivate}
         disabled={loading}
