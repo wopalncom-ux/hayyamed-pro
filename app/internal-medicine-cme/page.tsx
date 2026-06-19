@@ -1,5 +1,6 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
+import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -122,6 +123,10 @@ export default function InternalMedicineCmePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
       />
+      <BreadcrumbJsonLd items={[
+        { name: "Home", url: "https://hayyamed.pro" },
+        { name: "Internal Medicine CME", url: "https://hayyamed.pro/internal-medicine-cme" },
+      ]} />
 
       <div className="min-h-screen bg-[#f8fafc]">
         <header className="bg-white border-b border-[#e2e8f0]">

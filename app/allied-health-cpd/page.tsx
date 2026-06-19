@@ -1,5 +1,6 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
+import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -199,6 +200,10 @@ export default function AlliedHealthCpdPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
       />
+      <BreadcrumbJsonLd items={[
+        { name: "Home", url: "https://hayyamed.pro" },
+        { name: "Allied Health CPD", url: "https://hayyamed.pro/allied-health-cpd" },
+      ]} />
 
       {/* Header nav */}
       <header className="border-b border-[#e2e8f0] bg-white sticky top-0 z-10">

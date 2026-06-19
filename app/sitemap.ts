@@ -2,6 +2,7 @@ import { MetadataRoute } from "next";
 import fs from "fs";
 import path from "path";
 import { COUNTRY_SLUGS } from "@/lib/data/countries";
+import { SPECIALTY_SLUGS } from "@/lib/data/specialties";
 
 const BASE = "https://hayyamed.pro";
 
@@ -166,6 +167,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       { url: `${BASE}/${slug}/cme`,              lastModified: D_CONTENT, changeFrequency: "monthly" as const, priority: 0.9 },
       { url: `${BASE}/${slug}/license-renewal`,  lastModified: D_CONTENT, changeFrequency: "monthly" as const, priority: 0.9 },
     ]),
+
+    // ── Programmatic specialty × country pages (23 × 26 = 598 pages) ───────
+    ...SPECIALTY_SLUGS.flatMap((specialty) =>
+      COUNTRY_SLUGS.map((country) => ({
+        url: `${BASE}/cme/${specialty}/${country}`,
+        lastModified: D_CONTENT,
+        changeFrequency: "monthly" as const,
+        priority: 0.75,
+      }))
+    ),
 
     // ── Blog ────────────────────────────────────────────────────────────────
     { url: `${BASE}/blog`, lastModified: D_TODAY, changeFrequency: "weekly", priority: 0.85 },
