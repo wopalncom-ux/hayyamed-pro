@@ -2,6 +2,7 @@
 import { redirect } from "next/navigation";
 import WalletTabs from "@/components/dashboard/WalletTabs";
 import RenewalPredictionWidget from "./RenewalPredictionWidget";
+import PdfReportCard from "@/components/dashboard/PdfReportCard";
 import { getUserPlan, isPro } from "@/lib/subscription";
 
 interface Activity {
@@ -425,7 +426,7 @@ export default async function AnalyticsPage({
 
       {/* Category breakdown */}
       {categoryRows.length > 0 && (
-        <div className="bg-white rounded-xl border border-[#e2e8f0] p-6">
+        <div className="bg-white rounded-xl border border-[#e2e8f0] p-6 mb-6">
           <h2 className="text-base font-semibold text-[#111] mb-5">Credits by Category</h2>
           <div className="space-y-3">
             {categoryRows.map(([cat, credits]) => {
@@ -450,6 +451,9 @@ export default async function AnalyticsPage({
           </div>
         </div>
       )}
+
+      {/* PDF compliance report — primary Free→Pro conversion driver */}
+      <PdfReportCard plan={plan} walletCountry={wallet?.country ?? null} />
     </div>
   );
 }
