@@ -35,7 +35,11 @@ export const metadata: Metadata = {
       },
     ],
   },
-  twitter: { card: "summary_large_image" },
+  twitter: {
+    card: "summary_large_image",
+    title: "GCC CME Requirements 2025 — All 7 Countries Compared",
+    description: "QCHP · SCFHS · DHA · DOH · MOH Kuwait · NHRA · OMSB. Credits, cycles, online caps, and mandatory categories — all in one guide.",
+  },
   alternates: { canonical: `${APP_URL}/gcc-cme-requirements` },
 };
 
