@@ -740,6 +740,115 @@ function TrustSignals() {
   );
 }
 
+// ── How It Works ──────────────────────────────────────────────────────────────
+const HOW_IT_WORKS_STEPS = [
+  {
+    step: "01",
+    title: "Create your free account",
+    desc: "Register in under 3 minutes. No credit card required. Choose your country, profession, and licensing authority.",
+    icon: (
+      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+    ),
+    color: "#dbeafe",
+    iconColor: "#1a56a0",
+  },
+  {
+    step: "02",
+    title: "Add your CME activities & licenses",
+    desc: "Log completed activities, upload certificates, and add your medical license. Our AI verifies and tracks everything automatically.",
+    icon: (
+      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+    ),
+    color: "#dcfce7",
+    iconColor: "#16a34a",
+  },
+  {
+    step: "03",
+    title: "Track compliance & download your report",
+    desc: "See your compliance status in real time. Download your official PDF report for QCHP, SCFHS, DHA, and all GCC authorities.",
+    icon: (
+      <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+    ),
+    color: "#fef9c3",
+    iconColor: "#d97706",
+  },
+];
+
+function HowItWorks() {
+  const reduced = useReducedMotion();
+  return (
+    <section className="bg-[#f8fafc] border-y border-[#e2e8f0] px-6 py-20">
+      <div className="max-w-5xl mx-auto">
+        <FadeUp className="text-center mb-12">
+          <p className="text-xs font-semibold text-[#1a56a0] uppercase tracking-[0.2em] mb-3">Get started in minutes</p>
+          <h2 className="text-3xl sm:text-[2.5rem] font-bold text-[#0f1f3d] tracking-tight mb-4 leading-tight">
+            How Hayya Med Pro works
+          </h2>
+          <p className="text-[#64748b] max-w-lg mx-auto text-lg leading-relaxed">
+            Three simple steps — and you have a complete, accurate picture of your compliance status.
+          </p>
+        </FadeUp>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+          {/* Connector line — desktop only */}
+          <div className="hidden md:block absolute top-10 left-[calc(16.67%+1rem)] right-[calc(16.67%+1rem)] h-px bg-gradient-to-r from-[#e2e8f0] via-[#1a56a0]/20 to-[#e2e8f0]" aria-hidden="true" />
+
+          {HOW_IT_WORKS_STEPS.map(({ step, title, desc, icon, color, iconColor }, i) => (
+            <motion.div
+              key={step}
+              initial={reduced ? false : { opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
+              className="relative flex flex-col items-center text-center"
+            >
+              {/* Step circle */}
+              <div className="relative mb-5">
+                <div
+                  className="w-20 h-20 rounded-2xl flex items-center justify-center shadow-sm"
+                  style={{ backgroundColor: color }}
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke={iconColor} strokeWidth={1.7} className="w-8 h-8" aria-hidden="true">
+                    {icon}
+                  </svg>
+                </div>
+                <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-[#1a56a0] flex items-center justify-center shadow-md">
+                  <span className="text-white text-[9px] font-bold">{step}</span>
+                </div>
+              </div>
+
+              <h3 className="text-base font-semibold text-[#0f1f3d] mb-2 leading-snug">{title}</h3>
+              <p className="text-sm text-[#64748b] leading-relaxed max-w-[220px]">{desc}</p>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* CTA row */}
+        <FadeUp delay={0.3} className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <Link
+            href="/register"
+            className="inline-flex items-center gap-2 bg-[#1a56a0] text-white px-7 py-3.5 rounded-xl font-semibold text-sm hover:bg-[#1547a0] transition-colors shadow-md shadow-blue-900/15"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-4 h-4" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+            </svg>
+            Register free — no card required
+          </Link>
+          <Link
+            href="/demo"
+            className="inline-flex items-center gap-2 border border-[#e2e8f0] text-[#64748b] px-7 py-3.5 rounded-xl font-semibold text-sm hover:border-[#1a56a0]/30 hover:text-[#1a56a0] hover:bg-white transition-colors"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-4 h-4" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
+            </svg>
+            See live demo
+          </Link>
+        </FadeUp>
+      </div>
+    </section>
+  );
+}
+
 // ── Features ──────────────────────────────────────────────────────────────────
 function Features() {
   const t = useTranslations("features");
@@ -1401,6 +1510,7 @@ export default function LandingPage() {
           <main id="main-content">
             <Hero />
             <TrustSignals />
+            <HowItWorks />
             <Features />
             <VisionMission />
             <AIDemo />

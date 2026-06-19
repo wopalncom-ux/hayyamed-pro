@@ -20,7 +20,7 @@ export default function SignOutButton({ variant = "text", className }: SignOutBu
     setLoading(true);
     const supabase = createClient();
     await supabase.auth.signOut();
-    router.push("/login");
+    router.push("/");
     router.refresh();
   }
 
