@@ -100,6 +100,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/gcc-cme-requirements`,    lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.95 },
     { url: `${BASE}/global-cme-requirements`, lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.95 },
     { url: `${BASE}/saudi-arabia-cme`,        lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.95 },
+    { url: `${BASE}/qatar-cme`,               lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.95 },
+    { url: `${BASE}/uae-cme`,                 lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.95 },
     { url: `${BASE}/countries`,               lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/egypt-cme`,               lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/jordan-cme`,              lastModified: D_CONTENT, changeFrequency: "monthly", priority: 0.9 },
