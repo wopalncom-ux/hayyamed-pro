@@ -5,8 +5,10 @@ import { createClient } from "@/lib/supabase/server";
 // Uses token_hash (verifyOtp) instead of PKCE code exchange — works across any browser,
 // no code_verifier cookie required (the old /auth/callback route requires the cookie
 // from the same browser session that initiated the flow, which breaks email clients).
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://hayyamed.pro";
+
 export async function GET(request: NextRequest) {
-  const { searchParams, origin } = new URL(request.url);
+  const { searchParams } = new URL(request.url);
   const token_hash = searchParams.get("token_hash");
   const type = searchParams.get("type") as
     | "signup"
@@ -28,9 +30,9 @@ export async function GET(request: NextRequest) {
 
     if (!error) {
       const dest = type === "recovery" ? "/reset-password" : next;
-      return NextResponse.redirect(`${origin}${dest}`);
+      return NextResponse.redirect(`${APP_URL}${dest}`);
     }
   }
 
-  return NextResponse.redirect(`${origin}/login?error=verification-failed`);
+  return NextResponse.redirect(`${APP_URL}/login?error=verification-failed`);
 }

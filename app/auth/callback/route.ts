@@ -5,8 +5,10 @@ import { createClient } from "@/lib/supabase/server";
 // emailRedirectTo and OAuth providers should point here, not to /verify-email directly.
 // Without this route the code exchange happens client-side (fragile: race conditions,
 // JS failures, SSR hydration mismatches before the cookie is written).
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://hayyamed.pro";
+
 export async function GET(request: NextRequest) {
-  const { searchParams, origin } = new URL(request.url);
+  const { searchParams } = new URL(request.url);
   const code = searchParams.get("code");
 
   // Validate `next` to prevent open redirect — must be a local path, never a full URL.
@@ -19,12 +21,10 @@ export async function GET(request: NextRequest) {
     const { error } = await supabase.auth.exchangeCodeForSession(code);
 
     if (!error) {
-      return NextResponse.redirect(`${origin}${next}`);
+      return NextResponse.redirect(`${APP_URL}${next}`);
     }
   }
 
   // Code missing or exchange failed — send to login with an error hint.
-  return NextResponse.redirect(
-    `${origin}/login?error=verification-failed`,
-  );
+  return NextResponse.redirect(`${APP_URL}/login?error=verification-failed`);
 }
