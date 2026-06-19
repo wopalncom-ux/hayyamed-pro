@@ -168,6 +168,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       { url: `${BASE}/${slug}/license-renewal`,  lastModified: D_CONTENT, changeFrequency: "monthly" as const, priority: 0.9 },
     ]),
 
+    // ── Global profession pages ─────────────────────────────────────────────
+    { url: `${BASE}/doctors`,           lastModified: D_CONTENT, changeFrequency: "monthly" as const, priority: 0.95 },
+    { url: `${BASE}/nurses`,            lastModified: D_CONTENT, changeFrequency: "monthly" as const, priority: 0.95 },
+    { url: `${BASE}/pharmacists`,       lastModified: D_CONTENT, changeFrequency: "monthly" as const, priority: 0.9 },
+    { url: `${BASE}/dentists`,          lastModified: D_CONTENT, changeFrequency: "monthly" as const, priority: 0.9 },
+    { url: `${BASE}/physiotherapists`,  lastModified: D_CONTENT, changeFrequency: "monthly" as const, priority: 0.9 },
+
     // ── Programmatic specialty × country pages (23 × 26 = 598 pages) ───────
     ...SPECIALTY_SLUGS.flatMap((specialty) =>
       COUNTRY_SLUGS.map((country) => ({
