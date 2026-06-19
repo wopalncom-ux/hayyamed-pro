@@ -40,6 +40,18 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  experimental: {
+    serverActions: {
+      // Cloud Run sits behind Cloudflare; the x-forwarded-host header
+      // arrives as the internal Cloud Run URL rather than hayyamed.pro.
+      // Listing both ensures Next.js CSRF check passes in all paths.
+      allowedOrigins: [
+        "hayyamed.pro",
+        "www.hayyamed.pro",
+        "hayyamed-pro-543551932098.me-central1.run.app",
+      ],
+    },
+  },
   // In development, build outside OneDrive to prevent EBUSY file-lock errors.
   // OneDrive syncs files in the project tree; this moves the build output outside it.
   // The node_modules junction at C:\Users\<user>\tmp\hayyamed-next\node_modules
