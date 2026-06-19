@@ -32,8 +32,10 @@ const CME_BY_COUNTRY = [
   { label: "NHRA — Bahrain", href: "/nhra" },
   { label: "OMSB — Oman", href: "/omsb" },
   { label: "Compare all countries", href: "/countries" },
+  { label: "CME requirements", href: "/cme-requirements" },
+  { label: "CPD requirements", href: "/cpd-requirements" },
   { label: "GCC CME requirements", href: "/gcc-cme-requirements" },
-  { label: "GCC renewal guide", href: "/gcc-medical-license-renewal" },
+  { label: "Medical licence renewal", href: "/medical-license-renewal" },
 ];
 
 const CME_BY_PROFESSION = [
@@ -43,6 +45,8 @@ const CME_BY_PROFESSION = [
   { label: "Dentists", href: "/dentist-cme" },
   { label: "Allied Health", href: "/allied-health-cpd" },
   { label: "CME vs CPD explained", href: "/cme-vs-cpd" },
+  { label: "CME requirements", href: "/cme-requirements" },
+  { label: "CPD requirements", href: "/cpd-requirements" },
 ];
 
 // Top 12 specialties — full list at /specialties
