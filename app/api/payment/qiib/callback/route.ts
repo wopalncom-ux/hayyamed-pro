@@ -105,7 +105,7 @@ export async function GET(request: NextRequest) {
       });
 
     return NextResponse.redirect(
-      new URL("/dashboard?upgrade=success", request.nextUrl.origin),
+      new URL(`/billing/success?checkout_id=${sessionId}`, request.nextUrl.origin),
     );
   }
 
@@ -127,6 +127,6 @@ export async function GET(request: NextRequest) {
   });
 
   return NextResponse.redirect(
-    new URL("/pricing?payment=failed", request.nextUrl.origin),
+    new URL(`/billing/failed?checkout_id=${sessionId}`, request.nextUrl.origin),
   );
 }
