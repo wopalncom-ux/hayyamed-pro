@@ -14,6 +14,7 @@ import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import SiteFooter from "@/components/SiteFooter";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { triggerAppDownloadModal } from "@/components/AppDownloadModal";
 
 // ── Reduced-motion hook ──────────────────────────────────────────────────────
 function useReducedMotion() {
@@ -279,6 +280,7 @@ const MOB_NAV_LINKS = [
   { href: "#ai", label: "Hayya AI" },
   { href: "/employers", label: "For Employers" },
   { href: "/pricing", label: "Pricing" },
+  { href: "#", label: "📲 Download App", download: true },
 ];
 
 // ── Nav ──────────────────────────────────────────────────────────────────────
@@ -337,6 +339,17 @@ function Nav() {
           <a href="#ai" className="hover:text-[#1a56a0] transition-colors">{t("hayya_ai")}</a>
           <Link href="/employers" className="hover:text-[#1a56a0] transition-colors">{t("for_employers")}</Link>
           <Link href="/pricing" className="hover:text-[#1a56a0] transition-colors">{t("pricing")}</Link>
+          <button
+            type="button"
+            onClick={() => triggerAppDownloadModal()}
+            className={`flex items-center gap-1.5 font-medium transition-colors hover:text-[#1a56a0] ${scrolled ? "text-[#64748b]" : "text-white/75"}`}
+            aria-label="Download Hayya Med Pro app"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 3v12" />
+            </svg>
+            App
+          </button>
         </nav>
 
         <div className="hidden sm:flex items-center gap-3">
@@ -392,12 +405,15 @@ function Nav() {
             className="overflow-hidden sm:hidden border-t border-[#e2e8f0] bg-white"
           >
             <nav className="px-6 py-4 flex flex-col" aria-label="Mobile navigation">
-              {MOB_NAV_LINKS.map(({ href, label }) => (
+              {MOB_NAV_LINKS.map(({ href, label, download }) => (
                 <a
-                  key={href}
-                  href={href}
-                  className="text-sm text-[#374151] hover:text-[#1a56a0] py-3 border-b border-[#f1f5f9] last:border-0 transition-colors font-medium"
-                  onClick={() => setMobileOpen(false)}
+                  key={label}
+                  href={download ? undefined : href}
+                  className="text-sm text-[#374151] hover:text-[#1a56a0] py-3 border-b border-[#f1f5f9] last:border-0 transition-colors font-medium cursor-pointer"
+                  onClick={(e) => {
+                    if (download) { e.preventDefault(); triggerAppDownloadModal(); }
+                    setMobileOpen(false);
+                  }}
                 >
                   {label}
                 </a>

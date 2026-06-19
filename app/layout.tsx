@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import { PWARegister } from "@/components/PWARegister";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
+import { AppDownloadModal } from "@/components/AppDownloadModal";
 import { PostHogProvider } from "@/components/PostHogProvider";
 import CookieConsent from "@/components/CookieConsent";
 import ConditionalFooter from "@/components/ConditionalFooter";
@@ -70,6 +71,7 @@ export default async function RootLayout({
         <CookieConsent />
         <PWARegister />
         <PWAInstallPrompt />
+        <AppDownloadModal />
       </body>
     </html>
   );
