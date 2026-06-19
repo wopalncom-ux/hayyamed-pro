@@ -32,7 +32,9 @@
         "USE_FINGERPRINT",
         "RECEIVE_BOOT_COMPLETED",
         "VIBRATE",
-        "POST_NOTIFICATIONS"
+        "POST_NOTIFICATIONS",
+        "android.permission.USE_BIOMETRIC",
+        "android.permission.USE_FINGERPRINT"
       ]
     },
     "web": {
@@ -65,9 +67,11 @@
       "typedRoutes": true
     },
     "extra": {
+      "router": {},
       "eas": {
-        "projectId": "hayyamed-pro"
+        "projectId": "b8853a21-b638-4478-b20d-fc557e243303"
       }
-    }
+    },
+    "owner": "hayya-med-ai"
   }
 }
