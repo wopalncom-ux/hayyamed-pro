@@ -1,15 +1,39 @@
-import { useState } from "react";
-import { View, Text, TouchableOpacity, ScrollView, Alert, Switch } from "react-native";
+import { useEffect, useState } from "react";
+import { View, Text, TouchableOpacity, ScrollView, Alert, Switch, Linking } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as LocalAuthentication from "expo-local-authentication";
 import * as SecureStore from "expo-secure-store";
 import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/lib/supabase";
 
 const BIOMETRIC_KEY = "biometric_enabled";
 
+interface Subscription {
+  plan: string;
+  status: string;
+}
+
 export default function ProfileScreen() {
-  const { profile, signOut } = useAuth();
+  const { user, profile, signOut } = useAuth();
   const [biometricEnabled, setBiometricEnabled] = useState(false);
+  const [subscription, setSubscription] = useState<Subscription | null>(null);
+
+  useEffect(() => {
+    SecureStore.getItemAsync(BIOMETRIC_KEY).then((val) => {
+      if (val === "true") setBiometricEnabled(true);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!user?.id) return;
+    supabase
+      .from("subscriptions")
+      .select("plan, status")
+      .eq("professional_id", user.id)
+      .eq("status", "active")
+      .maybeSingle()
+      .then(({ data }) => setSubscription(data));
+  }, [user?.id]);
 
   async function toggleBiometric(val: boolean) {
     if (val) {
@@ -39,10 +63,11 @@ export default function ProfileScreen() {
   }
 
   const initials = profile?.full_name
-    ? profile.full_name.split(" ").map((n) => n[0]).slice(0, 2).join("").toUpperCase()
+    ? profile.full_name.split(" ").map((n: string) => n[0]).slice(0, 2).join("").toUpperCase()
     : "HM";
 
   const completionPct = profile?.profile_completion_pct ?? 0;
+  const isPro = subscription && subscription.plan !== "free";
 
   return (
     <SafeAreaView className="flex-1 bg-surface">
@@ -61,7 +86,13 @@ export default function ProfileScreen() {
           {profile?.profession && (
             <Text className="text-primary text-sm font-medium mt-1">{profile.profession}</Text>
           )}
-          {/* Profile completion bar */}
+          {isPro && (
+            <View className="mt-2 px-3 py-1 rounded-full" style={{ backgroundColor: "#1a56a010" }}>
+              <Text style={{ color: "#1a56a0", fontSize: 11, fontWeight: "700", letterSpacing: 0.5 }}>
+                {subscription!.plan.toUpperCase()} PLAN
+              </Text>
+            </View>
+          )}
           {completionPct < 100 && (
             <View className="w-48 mt-4">
               <Text className="text-xs text-muted text-center mb-1.5">Profile {completionPct}% complete</Text>
@@ -72,7 +103,7 @@ export default function ProfileScreen() {
           )}
         </View>
 
-        {/* Info section */}
+        {/* Account info */}
         <View className="px-5 pt-6">
           <SectionLabel>Account</SectionLabel>
           <InfoRow label="Country" value={profile?.country_of_residence ?? "—"} />
@@ -82,13 +113,55 @@ export default function ProfileScreen() {
           {profile?.license_expiry && (
             <InfoRow
               label="License expiry"
-              value={new Date(profile.license_expiry).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
+              value={new Date(profile.license_expiry).toLocaleDateString("en-GB", {
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+              })}
               accent={isExpiringSoon(profile.license_expiry) ? "#d97706" : undefined}
             />
           )}
         </View>
 
-        {/* Security section */}
+        {/* Subscription */}
+        <View className="px-5 pt-6">
+          <SectionLabel>Subscription</SectionLabel>
+          <View className="bg-white border border-border rounded-xl overflow-hidden">
+            <View className="flex-row items-center justify-between px-4 py-3.5">
+              <View className="flex-1 mr-3">
+                <Text className="text-sm font-medium text-gray-900">
+                  {isPro
+                    ? `${subscription!.plan.charAt(0).toUpperCase()}${subscription!.plan.slice(1)} Plan`
+                    : "Free Plan"}
+                </Text>
+                <Text className="text-xs text-muted mt-0.5">
+                  {isPro
+                    ? "Full tracking · PDF reports · AI analysis"
+                    : "Basic CME tracking · upgrade for PDF reports"}
+                </Text>
+              </View>
+              {!isPro ? (
+                <TouchableOpacity
+                  onPress={() => Linking.openURL("https://hayyamed.pro/pricing")}
+                  style={{ backgroundColor: "#1a56a0", paddingHorizontal: 12, paddingVertical: 6, borderRadius: 8 }}
+                  accessibilityRole="button"
+                  accessibilityLabel="Upgrade to Pro"
+                >
+                  <Text style={{ color: "white", fontSize: 12, fontWeight: "700" }}>Upgrade →</Text>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  onPress={() => Linking.openURL("https://hayyamed.pro/settings/billing")}
+                  accessibilityLabel="Manage subscription"
+                >
+                  <Text style={{ color: "#1a56a0", fontSize: 12, fontWeight: "600" }}>Manage</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          </View>
+        </View>
+
+        {/* Security */}
         <View className="px-5 pt-6">
           <SectionLabel>Security</SectionLabel>
           <View className="bg-white border border-border rounded-xl overflow-hidden">
@@ -111,11 +184,11 @@ export default function ProfileScreen() {
         {/* Links */}
         <View className="px-5 pt-6">
           <SectionLabel>About</SectionLabel>
-          <View className="bg-white border border-border rounded-xl overflow-hidden gap-px">
-            <TextRow label="Terms of Service" />
-            <TextRow label="Privacy Policy" />
-            <TextRow label="Help & FAQ" />
-            <TextRow label="App version" value="1.0.0" />
+          <View className="bg-white border border-border rounded-xl overflow-hidden">
+            <LinkRow label="Terms of Service"  url="https://hayyamed.pro/terms" />
+            <LinkRow label="Privacy Policy"     url="https://hayyamed.pro/privacy" />
+            <LinkRow label="Help & Support"     url="https://hayyamed.pro/help" />
+            <LinkRow label="App version"        value="1.0.0" />
           </View>
         </View>
 
@@ -131,30 +204,45 @@ export default function ProfileScreen() {
           </TouchableOpacity>
         </View>
 
-        <Text className="text-xs text-muted text-center px-8 mt-6 leading-5">
-          Hayya Med Pro supports CME tracking only. Verify requirements with your regulatory authority.
-        </Text>
+        {/* Mandatory compliance disclaimer */}
+        <View className="mx-5 mt-6 mb-2 bg-gray-50 border border-border rounded-xl px-4 py-3">
+          <Text className="text-xs text-muted leading-5 text-center">
+            Hayya Med PRO supports CME tracking and licensing readiness. It does not issue licenses and
+            does not replace official licensing authorities. Users must verify final requirements with
+            their relevant regulatory body.
+          </Text>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
 }
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
-  return <Text className="text-xs font-bold text-muted uppercase tracking-widest mb-2">{children}</Text>;
+  return (
+    <Text className="text-xs font-bold text-muted uppercase tracking-widest mb-2">
+      {children}
+    </Text>
+  );
 }
 
 function InfoRow({ label, value, accent }: { label: string; value: string; accent?: string }) {
   return (
     <View className="bg-white border border-border rounded-xl px-4 py-3 mb-2 flex-row justify-between items-center">
       <Text className="text-xs text-muted">{label}</Text>
-      <Text className="text-sm font-medium" style={{ color: accent ?? "#111827" }}>{value}</Text>
+      <Text className="text-sm font-medium" style={{ color: accent ?? "#111827" }}>
+        {value}
+      </Text>
     </View>
   );
 }
 
-function TextRow({ label, value }: { label: string; value?: string }) {
+function LinkRow({ label, value, url }: { label: string; value?: string; url?: string }) {
   return (
-    <TouchableOpacity className="flex-row justify-between items-center px-4 py-3.5 bg-white border-b border-border last:border-0">
+    <TouchableOpacity
+      className="flex-row justify-between items-center px-4 py-3.5 bg-white border-b border-border"
+      onPress={url ? () => Linking.openURL(url) : undefined}
+      accessibilityRole={url ? "link" : "text"}
+    >
       <Text className="text-sm text-gray-900">{label}</Text>
       {value ? (
         <Text className="text-sm text-muted">{value}</Text>

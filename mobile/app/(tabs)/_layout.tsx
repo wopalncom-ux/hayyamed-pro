@@ -1,23 +1,29 @@
+import { useEffect, useState } from "react";
 import { Tabs } from "expo-router";
-import { View, Text } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { getQueueCount } from "@/lib/offlineQueue";
 
-function TabIcon({ name, focused }: { name: string; focused: boolean }) {
-  const icons: Record<string, string> = {
-    index: "⊕",
-    cme: "✦",
-    licenses: "⊞",
-    profile: "◉",
-  };
-  return (
-    <View className="items-center justify-center w-8 h-8">
-      <Text style={{ fontSize: 18, color: focused ? "#1a56a0" : "#94a3b8" }}>
-        {icons[name] ?? "●"}
-      </Text>
-    </View>
-  );
-}
+type IoniconName = React.ComponentProps<typeof Ionicons>["name"];
+
+const TAB_ICONS: Record<string, { active: IoniconName; inactive: IoniconName }> = {
+  index:    { active: "home",          inactive: "home-outline" },
+  cme:      { active: "document-text", inactive: "document-text-outline" },
+  licenses: { active: "card",          inactive: "card-outline" },
+  profile:  { active: "person-circle", inactive: "person-circle-outline" },
+};
 
 export default function TabsLayout() {
+  const [cmeBadge, setCmeBadge] = useState<number | undefined>(undefined);
+
+  useEffect(() => {
+    function checkQueue() {
+      getQueueCount().then((c) => setCmeBadge(c > 0 ? c : undefined));
+    }
+    checkQueue();
+    const id = setInterval(checkQueue, 8000);
+    return () => clearInterval(id);
+  }, []);
+
   return (
     <Tabs
       screenOptions={{
@@ -43,28 +49,54 @@ export default function TabsLayout() {
         name="index"
         options={{
           title: "Dashboard",
-          tabBarIcon: ({ focused }) => <TabIcon name="index" focused={focused} />,
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name={focused ? TAB_ICONS.index.active : TAB_ICONS.index.inactive}
+              size={22}
+              color={focused ? "#1a56a0" : "#94a3b8"}
+            />
+          ),
         }}
       />
       <Tabs.Screen
         name="cme"
         options={{
           title: "CME Wallet",
-          tabBarIcon: ({ focused }) => <TabIcon name="cme" focused={focused} />,
+          tabBarBadge: cmeBadge,
+          tabBarBadgeStyle: { backgroundColor: "#d97706", minWidth: 16, height: 16, fontSize: 10 },
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name={focused ? TAB_ICONS.cme.active : TAB_ICONS.cme.inactive}
+              size={22}
+              color={focused ? "#1a56a0" : "#94a3b8"}
+            />
+          ),
         }}
       />
       <Tabs.Screen
         name="licenses"
         options={{
           title: "Licenses",
-          tabBarIcon: ({ focused }) => <TabIcon name="licenses" focused={focused} />,
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name={focused ? TAB_ICONS.licenses.active : TAB_ICONS.licenses.inactive}
+              size={22}
+              color={focused ? "#1a56a0" : "#94a3b8"}
+            />
+          ),
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
           title: "Profile",
-          tabBarIcon: ({ focused }) => <TabIcon name="profile" focused={focused} />,
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name={focused ? TAB_ICONS.profile.active : TAB_ICONS.profile.inactive}
+              size={22}
+              color={focused ? "#1a56a0" : "#94a3b8"}
+            />
+          ),
         }}
       />
     </Tabs>

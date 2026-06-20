@@ -17,7 +17,8 @@
       "bundleIdentifier": "pro.hayyamed.app",
       "infoPlist": {
         "NSFaceIDUsageDescription": "Use Face ID to sign in securely",
-        "NSCameraUsageDescription": "Scan and upload CME certificates"
+        "NSCameraUsageDescription": "Scan and upload CME certificates",
+        "NSPhotoLibraryUsageDescription": "Upload CME certificates and documents from your photo library"
       }
     },
     "android": {
@@ -28,6 +29,8 @@
       },
       "permissions": [
         "CAMERA",
+        "READ_MEDIA_IMAGES",
+        "READ_EXTERNAL_STORAGE",
         "USE_BIOMETRIC",
         "USE_FINGERPRINT",
         "RECEIVE_BOOT_COMPLETED",
@@ -48,6 +51,12 @@
       "expo-splash-screen",
       "expo-status-bar",
       "expo-image",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Upload CME certificates and documents from your photo library."
+        }
+      ],
       [
         "expo-local-authentication",
         {
