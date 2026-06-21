@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hayya Med Pro — Executive Platform Demo</title>
+<style>
+:root {
+  --navy:   #030d1e;
+  --navy2:  #061428;
+  --navy3:  #0a1f3c;
+  --blue:   #1a56a0;
+  --bright: #2563eb;
+  --cyan:   #06b6d4;
+  --teal:   #0d9488;
+  --green:  #16a34a;
+  --amber:  #d97706;
+  --red:    #dc2626;
+  --t1: rgba(255,255,255,0.95);
+  --t2: rgba(255,255,255,0.68);
+  --t3: rgba(255,255,255,0.40);
+  --g:  rgba(255,255,255,0.06);
+  --gb: rgba(255,255,255,0.11);
+  --gh: rgba(255,255,255,0.10);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--navy);color:var(--t1);overflow-x:hidden;line-height:1.65}
+::selection{background:rgba(37,99,235,0.4)}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--navy2)}
+::-webkit-scrollbar-thumb{background:var(--blue);border-radius:3px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(3,13,30,0.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.07)}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-logo-mark{width:34px;height:34px;background:linear-gradient(135deg,var(--bright),var(--cyan));border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:#fff}
+.nav-logo-text{font-weight:700;font-size:16px;letter-spacing:-0.3px}
+.nav-logo-text span{color:var(--cyan)}
+.nav-badge{font-size:10px;background:linear-gradient(90deg,var(--bright),var(--cyan));padding:3px 10px;border-radius:20px;font-weight:600;letter-spacing:0.5px}
+.nav-links{display:flex;gap:28px}
+.nav-links a{color:var(--t2);text-decoration:none;font-size:13px;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:#fff}
+@media(max-width:768px){.nav-links{display:none}.nav-badge{display:none}}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:100px 40px 60px;position:relative;overflow:hidden;text-align:center}
+.hero-bg{position:absolute;inset:0;pointer-events:none}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.18}
+.orb1{width:600px;height:600px;background:var(--bright);top:-200px;left:-200px;animation:float 8s ease-in-out infinite}
+.orb2{width:400px;height:400px;background:var(--cyan);bottom:-100px;right:-100px;animation:float 10s ease-in-out infinite reverse}
+.orb3{width:300px;height:300px;background:var(--teal);top:50%;left:50%;transform:translate(-50%,-50%);animation:pulse-orb 6s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-30px)}}
+@keyframes pulse-orb{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:0.15}50%{transform:translate(-50%,-50%) scale(1.2);opacity:0.25}}
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(37,99,235,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(37,99,235,0.06) 1px,transparent 1px);background-size:60px 60px}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(37,99,235,0.15);border:1px solid rgba(37,99,235,0.35);border-radius:30px;padding:6px 18px;font-size:12px;font-weight:600;color:var(--cyan);letter-spacing:0.8px;text-transform:uppercase;margin-bottom:32px;position:relative;z-index:1}
+.tag-dot{width:6px;height:6px;background:var(--cyan);border-radius:50%;animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.hero-h1{font-size:clamp(32px,5vw,64px);font-weight:800;line-height:1.12;letter-spacing:-1.5px;margin-bottom:24px;position:relative;z-index:1}
+.hero-h1 .grad{background:linear-gradient(135deg,#fff 30%,var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:clamp(15px,2vw,19px);color:var(--t2);max-width:780px;margin:0 auto 48px;line-height:1.75;position:relative;z-index:1}
+.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:80px;position:relative;z-index:1}
+.btn-primary{padding:15px 36px;background:linear-gradient(135deg,var(--bright),var(--cyan));border:none;border-radius:12px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;transition:all .3s;letter-spacing:0.2px;text-decoration:none;display:inline-block}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(37,99,235,0.45)}
+.btn-secondary{padding:15px 36px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.2);border-radius:12px;color:#fff;font-size:15px;font-weight:600;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block}
+.btn-secondary:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.35)}
+
+/* HERO MOCKUP */
+.hero-mockup{position:relative;z-index:1;width:100%;max-width:1000px;margin:0 auto}
+.mockup-shell{background:rgba(6,20,40,0.9);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:20px;box-shadow:0 40px 120px rgba(0,0,0,0.6),0 0 0 1px rgba(37,99,235,0.2);backdrop-filter:blur(20px)}
+.mockup-topbar{display:flex;align-items:center;gap:8px;margin-bottom:18px}
+.dot{width:10px;height:10px;border-radius:50%}
+.dot-r{background:#ff5f57}.dot-y{background:#febc2e}.dot-g{background:#28c840}
+.mockup-title{margin-left:8px;font-size:12px;color:var(--t3)}
+.mockup-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+.mkpi{background:var(--g);border:1px solid var(--gb);border-radius:12px;padding:14px;text-align:left}
+.mkpi-label{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:4px}
+.mkpi-val{font-size:22px;font-weight:800;letter-spacing:-0.5px}
+.mkpi-sub{font-size:10px;color:var(--t3);margin-top:2px}
+.mkpi-val.blue{color:var(--cyan)}.mkpi-val.green{color:#4ade80}.mkpi-val.amber{color:#fbbf24}.mkpi-val.red{color:#f87171}
+.mockup-bottom{display:grid;grid-template-columns:2fr 1fr;gap:12px}
+.chart-area{background:var(--g);border:1px solid var(--gb);border-radius:12px;padding:16px}
+.chart-label{font-size:11px;color:var(--t3);margin-bottom:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.6px}
+.mini-bars{display:flex;align-items:flex-end;gap:6px;height:60px}
+.mbar{flex:1;border-radius:4px 4px 0 0;background:linear-gradient(180deg,var(--bright),var(--cyan));opacity:0.8;transition:opacity .3s}
+.mbar:hover{opacity:1}
+.status-area{background:var(--g);border:1px solid var(--gb);border-radius:12px;padding:16px}
+.status-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.status-row:last-child{border:none}
+.sdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.sname{font-size:11px;color:var(--t2)}
+.sbadge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px}
+.bg-green{background:rgba(22,163,74,0.2);color:#4ade80}
+.bg-amber{background:rgba(217,119,6,0.2);color:#fbbf24}
+.bg-red{background:rgba(220,38,38,0.2);color:#f87171}
+.bg-blue{background:rgba(37,99,235,0.2);color:#93c5fd}
+@media(max-width:600px){.mockup-grid{grid-template-columns:repeat(2,1fr)}.mockup-bottom{grid-template-columns:1fr}}
+
+/* SECTION COMMONS */
+section{padding:100px 40px}
+.section-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--cyan);background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.25);padding:5px 14px;border-radius:20px;margin-bottom:20px}
+.section-h2{font-size:clamp(26px,3.5vw,44px);font-weight:800;letter-spacing:-1px;margin-bottom:16px;line-height:1.2}
+.section-h2 .grad{background:linear-gradient(135deg,#fff,var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.section-sub{font-size:17px;color:var(--t2);max-width:680px;line-height:1.7}
+.section-head{text-align:center;margin-bottom:64px}
+.section-head .section-sub{margin:0 auto}
+
+/* PROBLEM */
+.problem-bg{background:linear-gradient(180deg,var(--navy) 0%,var(--navy2) 100%)}
+.problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pcard{background:var(--g);border:1px solid var(--gb);border-radius:16px;padding:28px;transition:all .35s;position:relative;overflow:hidden}
+.pcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),var(--amber));opacity:0;transition:opacity .3s}
+.pcard:hover{border-color:rgba(220,38,38,0.3);background:rgba(220,38,38,0.04);transform:translateY(-4px)}
+.pcard:hover::before{opacity:1}
+.picon{width:44px;height:44px;border-radius:10px;background:rgba(220,38,38,0.12);border:1px solid rgba(220,38,38,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.pcard h3{font-size:16px;font-weight:700;margin-bottom:8px}
+.pcard p{font-size:13.5px;color:var(--t2);line-height:1.65}
+@media(max-width:900px){.problem-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:580px){.problem-grid{grid-template-columns:1fr}}
+
+/* SOLUTION FLOW */
+.solution-bg{background:var(--navy3)}
+.flow{display:flex;align-items:flex-start;justify-content:center;gap:0;flex-wrap:wrap;position:relative}
+.flow-step{flex:1;min-width:120px;max-width:160px;text-align:center;padding:0 10px;position:relative}
+.flow-icon{width:52px;height:52px;border-radius:14px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:22px;position:relative;z-index:1}
+.flow-arrow{position:absolute;top:26px;right:-20px;color:var(--cyan);font-size:18px;z-index:2}
+.flow-step:last-child .flow-arrow{display:none}
+.flow-step h4{font-size:12px;font-weight:700;margin-bottom:4px}
+.flow-step p{font-size:11px;color:var(--t3);line-height:1.4}
+.fi-1{background:rgba(37,99,235,0.2);border:1px solid rgba(37,99,235,0.3)}
+.fi-2{background:rgba(6,182,212,0.2);border:1px solid rgba(6,182,212,0.3)}
+.fi-3{background:rgba(13,148,136,0.2);border:1px solid rgba(13,148,136,0.3)}
+.fi-4{background:rgba(22,163,74,0.2);border:1px solid rgba(22,163,74,0.3)}
+.fi-5{background:rgba(168,85,247,0.2);border:1px solid rgba(168,85,247,0.3)}
+.fi-6{background:rgba(217,119,6,0.2);border:1px solid rgba(217,119,6,0.3)}
+.fi-7{background:rgba(239,68,68,0.2);border:1px solid rgba(239,68,68,0.3)}
+.fi-8{background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.3)}
+
+/* DASHBOARD TABS */
+.dash-bg{background:var(--navy2)}
+.tab-nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:40px}
+.tab-btn{padding:10px 22px;border-radius:10px;border:1px solid var(--gb);background:var(--g);color:var(--t2);font-size:13px;font-weight:600;cursor:pointer;transition:all .25s}
+.tab-btn:hover{border-color:rgba(37,99,235,0.4);color:#fff}
+.tab-btn.active{background:linear-gradient(135deg,var(--bright),var(--cyan));border-color:transparent;color:#fff;box-shadow:0 4px 20px rgba(37,99,235,0.4)}
+.tab-panel{display:none;animation:fadeUp .4s ease}
+.tab-panel.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.dash-shell{background:rgba(6,20,40,0.85);border:1px solid rgba(255,255,255,0.1);border-radius:20px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,0.5)}
+.dash-header{padding:20px 28px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.03)}
+.dash-header h3{font-size:17px;font-weight:700}
+.dash-header p{font-size:12px;color:var(--t3);margin-top:2px}
+.dash-meta{text-align:right}
+.dash-meta .live{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--green);font-weight:600}
+.dash-meta .live::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;animation:blink 2s infinite}
+.dash-body{padding:24px 28px}
+.kpi-row{display:grid;gap:14px;margin-bottom:24px}
+.kpi-row.cols-4{grid-template-columns:repeat(4,1fr)}
+.kpi-row.cols-5{grid-template-columns:repeat(5,1fr)}
+.kpi-row.cols-3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:900px){.kpi-row.cols-4,.kpi-row.cols-5{grid-template-columns:repeat(2,1fr)}.kpi-row.cols-3{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.kpi-row.cols-4,.kpi-row.cols-5,.kpi-row.cols-3{grid-template-columns:1fr}}
+.kpi{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:18px 20px;position:relative;overflow:hidden;transition:border-color .3s}
+.kpi:hover{border-color:rgba(37,99,235,0.3)}
+.kpi-accent{position:absolute;top:0;left:0;width:3px;height:100%;border-radius:0}
+.kpi label{display:block;font-size:11px;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:0.7px;margin-bottom:6px}
+.kpi .val{font-size:28px;font-weight:800;letter-spacing:-0.5px;line-height:1}
+.kpi .sub{font-size:11px;color:var(--t3);margin-top:5px}
+.kpi .trend-up{color:#4ade80;font-size:11px;margin-top:5px;font-weight:600}
+.kpi .trend-dn{color:#f87171;font-size:11px;margin-top:5px;font-weight:600}
+.acc-blue{background:linear-gradient(180deg,var(--bright),var(--cyan))}
+.acc-green{background:var(--green)}
+.acc-amber{background:var(--amber)}
+.acc-red{background:var(--red)}
+.acc-purple{background:#8b5cf6}
+.acc-teal{background:var(--teal)}
+.val-blue{color:var(--cyan)}
+.val-green{color:#4ade80}
+.val-amber{color:#fbbf24}
+.val-red{color:#f87171}
+.val-purple{color:#c4b5fd}
+.val-white{color:#fff}
+.dash-two{display:grid;grid-template-columns:1.6fr 1fr;gap:18px}
+.dash-three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+@media(max-width:900px){.dash-two,.dash-three{grid-template-columns:1fr}}
+.panel{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:18px 20px}
+.panel-title{font-size:12px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:14px}
+.prog-row{display:flex;flex-direction:column;gap:10px}
+.prog-item{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
+.prog-item span{font-size:12px;color:var(--t2)}
+.prog-item .pct{font-size:11px;color:var(--t3);text-align:right}
+.prog-bar-bg{background:rgba(255,255,255,0.07);border-radius:4px;height:6px;grid-column:1/-1}
+.prog-bar-fill{height:6px;border-radius:4px;background:linear-gradient(90deg,var(--bright),var(--cyan))}
+.feat-list{display:flex;flex-direction:column;gap:7px}
+.feat-list li{list-style:none;display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--t2)}
+.feat-list li::before{content:'✓';color:var(--cyan);font-weight:700;flex-shrink:0;font-size:13px}
+.disclaimer{font-size:11px;color:var(--t3);background:rgba(217,119,6,0.08);border:1px solid rgba(217,119,6,0.2);border-radius:8px;padding:10px 14px;margin-top:16px;line-height:1.5}
+/* Donut chart */
+.donut-wrap{display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap}
+.donut-legend{display:flex;flex-direction:column;gap:10px}
+.leg-row{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--t2)}
+.leg-dot{width:10px;height:10px;border-radius:50%}
+/* Table */
+.mini-table{width:100%;border-collapse:collapse}
+.mini-table th{font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:0.7px;padding:8px 10px;border-bottom:1px solid rgba(255,255,255,0.07);text-align:left}
+.mini-table td{font-size:12px;color:var(--t2);padding:9px 10px;border-bottom:1px solid rgba(255,255,255,0.04)}
+.mini-table tr:last-child td{border:none}
+.badge{font-size:10px;font-weight:700;padding:2px 9px;border-radius:20px}
+
+/* AI TOOLS */
+.ai-bg{background:linear-gradient(180deg,var(--navy2),var(--navy3))}
+.ai-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.ai-card{background:var(--g);border:1px solid var(--gb);border-radius:16px;padding:22px 18px;transition:all .3s;cursor:default;position:relative;overflow:hidden}
+.ai-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(37,99,235,0.05),rgba(6,182,212,0.05));opacity:0;transition:opacity .3s}
+.ai-card:hover{border-color:rgba(6,182,212,0.35);transform:translateY(-5px);box-shadow:0 16px 48px rgba(37,99,235,0.2)}
+.ai-card:hover::after{opacity:1}
+.ai-icon{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,rgba(37,99,235,0.25),rgba(6,182,212,0.15));border:1px solid rgba(37,99,235,0.3);display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-size:18px}
+.ai-card h3{font-size:13px;font-weight:700;margin-bottom:7px;line-height:1.3}
+.ai-card p{font-size:12px;color:var(--t2);line-height:1.6}
+@media(max-width:1100px){.ai-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:700px){.ai-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:420px){.ai-grid{grid-template-columns:1fr}}
+
+/* STAKEHOLDERS */
+.stake-bg{background:var(--navy2)}
+.stake-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.scard{border-radius:18px;padding:30px;border:1px solid var(--gb);background:var(--g);transition:all .35s;position:relative;overflow:hidden}
+.scard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.scard:hover{transform:translateY(-5px)}
+.sc-1::before{background:linear-gradient(90deg,var(--bright),var(--cyan))}
+.sc-2::before{background:linear-gradient(90deg,var(--teal),var(--green))}
+.sc-3::before{background:linear-gradient(90deg,#8b5cf6,var(--cyan))}
+.sc-4::before{background:linear-gradient(90deg,var(--amber),#f97316)}
+.sc-5::before{background:linear-gradient(90deg,var(--green),var(--teal))}
+.sc-6::before{background:linear-gradient(90deg,var(--cyan),var(--bright))}
+.scard:hover{border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.07)}
+.scard-icon{font-size:28px;margin-bottom:14px}
+.scard h3{font-size:16px;font-weight:700;margin-bottom:4px}
+.scard .role{font-size:11px;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:0.7px;margin-bottom:16px}
+.scard ul{display:flex;flex-direction:column;gap:7px;list-style:none}
+.scard ul li{font-size:13px;color:var(--t2);display:flex;align-items:flex-start;gap:8px}
+.scard ul li::before{content:'→';color:var(--cyan);font-weight:700;flex-shrink:0;margin-top:1px}
+@media(max-width:900px){.stake-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.stake-grid{grid-template-columns:1fr}}
+
+/* IMPACT */
+.impact-bg{background:var(--navy3)}
+.impact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.icard{background:var(--g);border:1px solid var(--gb);border-radius:16px;padding:28px 22px;text-align:center;transition:all .3s}
+.icard:hover{border-color:rgba(6,182,212,0.35);background:rgba(6,182,212,0.04);transform:translateY(-4px)}
+.icard .big{font-size:42px;font-weight:900;background:linear-gradient(135deg,#fff,var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;margin-bottom:6px}
+.icard h4{font-size:14px;font-weight:700;margin-bottom:8px}
+.icard p{font-size:12.5px;color:var(--t2);line-height:1.6}
+@media(max-width:900px){.impact-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.impact-grid{grid-template-columns:1fr}}
+
+/* BEFORE/AFTER */
+.compare-bg{background:var(--navy2)}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:700px){.compare-grid{grid-template-columns:1fr}}
+.compare-col{border-radius:18px;padding:32px;border:1px solid var(--gb)}
+.compare-col.before{background:rgba(220,38,38,0.05);border-color:rgba(220,38,38,0.2)}
+.compare-col.after{background:rgba(22,163,74,0.05);border-color:rgba(22,163,74,0.2)}
+.compare-label{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:20px}
+.before .compare-label{background:rgba(220,38,38,0.15);color:#f87171}
+.after .compare-label{background:rgba(22,163,74,0.15);color:#4ade80}
+.compare-h{font-size:18px;font-weight:700;margin-bottom:20px}
+.compare-rows{display:flex;flex-direction:column;gap:12px}
+.compare-row{display:flex;align-items:flex-start;gap:12px;font-size:13.5px;color:var(--t2)}
+.cr-icon{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;margin-top:1px}
+.before .cr-icon{background:rgba(220,38,38,0.15);color:#f87171}
+.after .cr-icon{background:rgba(22,163,74,0.15);color:#4ade80}
+
+/* GOVERNMENT */
+.gov-bg{background:var(--navy3)}
+.gov-feature-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px}
+.gf-card{background:rgba(37,99,235,0.05);border:1px solid rgba(37,99,235,0.2);border-radius:14px;padding:22px 18px;transition:all .3s}
+.gf-card:hover{background:rgba(37,99,235,0.10);border-color:rgba(37,99,235,0.4);transform:translateY(-3px)}
+.gf-card h4{font-size:13.5px;font-weight:700;margin-bottom:6px;color:#fff}
+.gf-card p{font-size:12px;color:var(--t2);line-height:1.6}
+.gf-num{font-size:24px;font-weight:900;color:var(--cyan);margin-bottom:8px}
+@media(max-width:900px){.gov-feature-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.gov-feature-grid{grid-template-columns:1fr}}
+.gov-privacy{background:rgba(37,99,235,0.06);border:1px solid rgba(37,99,235,0.2);border-radius:14px;padding:20px 24px;margin-top:32px;display:flex;align-items:flex-start;gap:14px}
+.gov-privacy-icon{font-size:22px;flex-shrink:0;margin-top:2px}
+.gov-privacy p{font-size:13px;color:var(--t2);line-height:1.65}
+
+/* SUMMARY */
+.summary-bg{background:var(--navy2)}
+.summary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.sum-card{background:var(--g);border:1px solid var(--gb);border-radius:14px;padding:22px;display:flex;align-items:flex-start;gap:14px;transition:all .3s}
+.sum-card:hover{border-color:rgba(6,182,212,0.3);background:rgba(6,182,212,0.04)}
+.sum-icon{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,rgba(37,99,235,0.2),rgba(6,182,212,0.15));border:1px solid rgba(6,182,212,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
+.sum-card h4{font-size:14px;font-weight:700;margin-bottom:5px}
+.sum-card p{font-size:12.5px;color:var(--t2);line-height:1.6}
+@media(max-width:700px){.summary-grid{grid-template-columns:1fr}}
+
+/* CTA */
+.cta-section{padding:120px 40px;background:linear-gradient(180deg,var(--navy2),var(--navy));position:relative;overflow:hidden;text-align:center}
+.cta-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(37,99,235,0.12),transparent)}
+.cta-h{font-size:clamp(28px,4vw,52px);font-weight:800;letter-spacing:-1px;margin-bottom:20px;line-height:1.2}
+.cta-sub{font-size:17px;color:var(--t2);max-width:640px;margin:0 auto 48px;line-height:1.75}
+
+/* FOOTER */
+footer{background:var(--navy);border-top:1px solid rgba(255,255,255,0.07);padding:32px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:gap;gap:16px}
+.footer-left{font-size:13px;color:var(--t3)}
+.footer-right{font-size:13px;color:var(--t3);text-align:right}
+.footer-right strong{color:var(--t2)}
+
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+
+/* SVG CHART */
+.svg-chart{width:100%;overflow:visible}
+.trend-line{fill:none;stroke:var(--cyan);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.trend-fill{opacity:0.15}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-mark">H</div>
+    <div class="nav-logo-text">Hayya Med <span>Pro</span></div>
+    <div class="nav-badge">EXECUTIVE DEMO</div>
+  </div>
+  <div class="nav-links">
+    <a href="#dashboards">Dashboards</a>
+    <a href="#ai-tools">AI Tools</a>
+    <a href="#stakeholders">Value</a>
+    <a href="#government">Government</a>
+    <a href="#cta">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="grid-bg"></div>
+    <div class="hero-orb orb1"></div>
+    <div class="hero-orb orb2"></div>
+    <div class="hero-orb orb3"></div>
+  </div>
+  <div class="hero-tag"><span class="tag-dot"></span>AI-Powered Healthcare Compliance Platform</div>
+  <h1 class="hero-h1"><span class="grad">One Platform.</span><br>Every CME Record.<br>Total Compliance Intelligence.</h1>
+  <p class="hero-sub">Hayya Med Pro connects medical practitioners, employers, training providers, universities, and government authorities through smart dashboards, AI analysis, automated reporting, and real-time compliance visibility.</p>
+  <div class="hero-btns">
+    <a href="#dashboards" class="btn-primary">Explore Dashboards</a>
+    <a href="#government" class="btn-secondary">View Government Value</a>
+  </div>
+  <div class="hero-mockup reveal">
+    <div class="mockup-shell">
+      <div class="mockup-topbar">
+        <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+        <span class="mockup-title">Hayya Med Pro — Compliance Command Center</span>
+      </div>
+      <div class="mockup-grid">
+        <div class="mkpi"><div class="mkpi-label">CME Progress</div><div class="mkpi-val blue">52/80</div><div class="mkpi-sub">Credits · QCHP 2-yr</div></div>
+        <div class="mkpi"><div class="mkpi-label">Compliance Score</div><div class="mkpi-val green">87%</div><div class="mkpi-sub">AI-calculated</div></div>
+        <div class="mkpi"><div class="mkpi-label">License Expiry</div><div class="mkpi-val amber">74 days</div><div class="mkpi-sub">Action recommended</div></div>
+        <div class="mkpi"><div class="mkpi-label">Workforce At Risk</div><div class="mkpi-val red">38</div><div class="mkpi-sub">Staff need action</div></div>
+      </div>
+      <div class="mockup-bottom">
+        <div class="chart-area">
+          <div class="chart-label">Compliance Trend — 14 Days</div>
+          <svg viewBox="0 0 380 70" class="svg-chart" style="height:70px">
+            <defs><linearGradient id="hg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2563eb" stop-opacity="0.4"/><stop offset="100%" stop-color="#2563eb" stop-opacity="0"/></linearGradient></defs>
+            <path d="M0,60 L27,52 L54,46 L81,50 L108,38 L135,32 L162,28 L189,20 L216,22 L243,15 L270,12 L297,8 L324,5 L351,3 L380,2 L380,70 L0,70Z" fill="url(#hg)"/>
+            <path d="M0,60 L27,52 L54,46 L81,50 L108,38 L135,32 L162,28 L189,20 L216,22 L243,15 L270,12 L297,8 L324,5 L351,3 L380,2" class="trend-line"/>
+          </svg>
+        </div>
+        <div class="status-area">
+          <div class="status-row"><span class="sdot" style="background:#4ade80"></span><span class="sname">Compliant</span><span class="sbadge bg-green">82%</span></div>
+          <div class="status-row"><span class="sdot" style="background:#fbbf24"></span><span class="sname">At Risk</span><span class="sbadge bg-amber">12%</span></div>
+          <div class="status-row"><span class="sdot" style="background:#f87171"></span><span class="sname">Non-Compliant</span><span class="sbadge bg-red">6%</span></div>
+          <div class="status-row"><span class="sdot" style="background:#93c5fd"></span><span class="sname">AI Active</span><span class="sbadge bg-blue">ON</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem-bg" style="padding:100px 40px">
+  <div class="section-head reveal">
+    <div class="section-tag">The Challenge</div>
+    <h2 class="section-h2">The Current <span class="grad">Compliance Gap</span></h2>
+    <p class="section-sub">Healthcare professionals, employers, and authorities face a fragmented, manual, and disconnected compliance landscape.</p>
+  </div>
+  <div class="problem-grid">
+    <div class="pcard reveal"><div class="picon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><h3>Fragmented CME Records</h3><p>Practitioners track CME manually across certificates, emails, PDFs, spreadsheets, and multiple training sources — scattered and unverified.</p></div>
+    <div class="pcard reveal"><div class="picon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><h3>Limited Real-Time Visibility</h3><p>Employers often don't know which professionals are compliant, near renewal deadline, or missing required credits until it's too late.</p></div>
+    <div class="pcard reveal"><div class="picon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></div><h3>Manual Reporting Burden</h3><p>HR, medical education, and compliance teams spend hours collecting documents and preparing reports that should be generated in seconds.</p></div>
+    <div class="pcard reveal"><div class="picon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><h3>Delayed Renewal Preparation</h3><p>Many practitioners discover missing CME requirements only weeks before license renewal deadlines — causing avoidable stress and risk.</p></div>
+    <div class="pcard reveal"><div class="picon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h3>Training Provider Disconnect</h3><p>Training centers deliver CME activities without a unified post-training compliance tracking connection to practitioners' wallets.</p></div>
+    <div class="pcard reveal"><div class="picon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div><h3>Government Data Gap</h3><p>Authorities may lack a live, structured, centralized view of professional development readiness across the full medical workforce.</p></div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section class="solution-bg" style="padding:100px 40px">
+  <div class="section-head reveal">
+    <div class="section-tag">The Solution</div>
+    <h2 class="section-h2">How Hayya Med Pro <span class="grad">Solves It</span></h2>
+    <p class="section-sub">One connected intelligence layer that transforms every compliance touchpoint into automated, trackable, AI-powered data.</p>
+  </div>
+  <div class="flow reveal">
+    <div class="flow-step"><div class="flow-icon fi-1">👨‍⚕️</div><h4>Practitioner Logs CME</h4><p>Activity recorded or certificate uploaded</p><div class="flow-arrow">›</div></div>
+    <div class="flow-step"><div class="flow-icon fi-2">🤖</div><h4>AI Reads Certificate</h4><p>Extracts credits, date, provider, category</p><div class="flow-arrow">›</div></div>
+    <div class="flow-step"><div class="flow-icon fi-3">💼</div><h4>CME Wallet Updated</h4><p>Real-time balance with gap analysis</p><div class="flow-arrow">›</div></div>
+    <div class="flow-step"><div class="flow-icon fi-4">📊</div><h4>Compliance Score</h4><p>AI calculates readiness percentage</p><div class="flow-arrow">›</div></div>
+    <div class="flow-step"><div class="flow-icon fi-5">🏥</div><h4>Employer Dashboard</h4><p>Real-time staff compliance view updated</p><div class="flow-arrow">›</div></div>
+    <div class="flow-step"><div class="flow-icon fi-6">🎓</div><h4>Training Insights</h4><p>Course impact tracked, certificates issued</p><div class="flow-arrow">›</div></div>
+    <div class="flow-step"><div class="flow-icon fi-7">🏛️</div><h4>Authority Intelligence</h4><p>Authorized aggregate workforce insights</p><div class="flow-arrow">›</div></div>
+    <div class="flow-step"><div class="flow-icon fi-8">📄</div><h4>Instant PDF Reports</h4><p>Generated in seconds, submission-ready</p></div>
+  </div>
+</section>
+
+<!-- DASHBOARDS -->
+<section class="dash-bg" id="dashboards" style="padding:100px 40px">
+  <div class="section-head reveal">
+    <div class="section-tag">Platform Dashboards</div>
+    <h2 class="section-h2">Dashboard <span class="grad">Reality Showcase</span></h2>
+    <p class="section-sub">Eight role-specific dashboards, each purpose-built for its stakeholder with live data, AI insights, and instant reporting.</p>
+  </div>
+  <div class="tab-nav reveal">
+    <button class="tab-btn active" onclick="switchTab('practitioner',this)">👨‍⚕️ Practitioner</button>
+    <button class="tab-btn" onclick="switchTab('employer',this)">🏥 Employer</button>
+    <button class="tab-btn" onclick="switchTab('government',this)">🏛️ Government</button>
+    <button class="tab-btn" onclick="switchTab('training',this)">🎓 Training Center</button>
+    <button class="tab-btn" onclick="switchTab('university',this)">🏫 University</button>
+    <button class="tab-btn" onclick="switchTab('admin',this)">⚙️ Admin</button>
+    <button class="tab-btn" onclick="switchTab('ai',this)">🤖 AI Intelligence</button>
+    <button class="tab-btn" onclick="switchTab('analytics',this)">📊 Analytics</button>
+  </div>
+
+  <!-- PRACTITIONER -->
+  <div id="tab-practitioner" class="tab-panel active">
+    <div class="dash-shell">
+      <div class="dash-header">
+        <div><h3>Medical Practitioner Dashboard</h3><p>Dr. Sarah Al-Khalid · Physician · QCHP Qatar · 2-Year CME Cycle</p></div>
+        <div class="dash-meta"><div class="live">Live · Real-Time Sync</div><div style="font-size:11px;color:var(--t3);margin-top:3px">Last updated: just now</div></div>
+      </div>
+      <div class="dash-body">
+        <div class="kpi-row cols-4">
+          <div class="kpi"><div class="kpi-accent acc-blue"></div><label>CME Credits Completed</label><div class="val val-blue">52 / 80</div><div class="sub">QCHP 2-yr requirement</div><div class="trend-up">↑ +8 this month</div></div>
+          <div class="kpi"><div class="kpi-accent acc-green"></div><label>Compliance Score</label><div class="val val-green">65%</div><div class="sub">AI-calculated readiness</div><div class="trend-up">↑ Improving</div></div>
+          <div class="kpi"><div class="kpi-accent acc-amber"></div><label>License Expiry</label><div class="val val-amber">74 days</div><div class="sub">Action recommended</div><div class="trend-dn">⚠ Upload 28 more credits</div></div>
+          <div class="kpi"><div class="kpi-accent acc-blue"></div><label>Certificates Uploaded</label><div class="val val-white">6</div><div class="sub">AI-verified · 2 pending</div></div>
+        </div>
+        <div class="dash-two">
+          <div class="panel">
+            <div class="panel-title">CME Progress by Category</div>
+            <div class="prog-row">
+              <div class="prog-item"><span>Clinical Skills</span><span class="pct">28/30</span><div class="prog-bar-bg"><div class="prog-bar-fill" style="width:93%"></div></div></div>
+              <div class="prog-item"><span>Patient Safety</span><span class="pct">4/8</span><div class="prog-bar-bg"><div class="prog-bar-fill" style="width:50%;background:linear-gradient(90deg,#d97706,#fbbf24)"></div></div></div>
+              <div class="prog-item"><span>Professional Development</span><span class="pct">12/20</span><div class="prog-bar-bg"><div class="prog-bar-fill" style="width:60%;background:linear-gradient(90deg,#d97706,#fbbf24)"></div></div></div>
+              <div class="prog-item"><span>Medical Ethics</span><span class="pct">8/12</span><div class="prog-bar-bg"><div class="prog-bar-fill" style="width:67%"></div></div></div>
+              <div class="prog-item"><span>Research & Evidence</span><span class="pct">0/10</span><div class="prog-bar-bg"><div class="prog-bar-fill" style="width:0%;background:linear-gradient(90deg,#dc2626,#f87171)"></div></div></div>
+            </div>
+            <div class="disclaimer">⚠ 3 categories need attention before renewal deadline</div>
+          </div>
+          <div>
+            <div class="panel" style="margin-bottom:14px">
+              <div class="panel-title">CME Progress Ring</div>
+              <div class="donut-wrap">
+                <svg width="110" height="110" viewBox="0 0 110 110">
+                  <circle cx="55" cy="55" r="44" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="11"/>
+                  <circle cx="55" cy="55" r="44" fill="none" stroke="url(#dg)" stroke-width="11" stroke-dasharray="179 277" stroke-linecap="round" transform="rotate(-90 55 55)"/>
+                  <defs><linearGradient id="dg" x1="1" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2563eb"/><stop offset="100%" stop-color="#06b6d4"/></linearGradient></defs>
+                  <text x="55" y="51" text-anchor="middle" fill="#fff" font-size="18" font-weight="800">65%</text>
+                  <text x="55" y="66" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="9">Complete</text>
+                </svg>
+                <div class="donut-legend">
+                  <div class="leg-row"><div class="leg-dot" style="background:#2563eb"></div><span>Done (52)</span></div>
+                  <div class="leg-row"><div class="leg-dot" style="background:rgba(255,255,255,0.15)"></div><span>Remaining (28)</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-title">AI Compliance Advisor</div>
+              <div style="font-size:12px;color:var(--t2);line-height:1.65;padding:10px;background:rgba(37,99,235,0.08);border-radius:8px;border:1px solid rgba(37,99,235,0.2)">"You need 28 more CME credits in 74 days. Priority: Research & Evidence (10 credits missing). Consider the upcoming QCHP-approved webinar series."</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EMPLOYER -->
+  <div id="tab-employer" class="tab-panel">
+    <div class="dash-shell">
+      <div class="dash-header">
+        <div><h3>Employer Compliance Dashboard</h3><p>Hamad Medical Corporation · Qatar · 240 Registered Professionals</p></div>
+        <div class="dash-meta"><div class="live">Live · Real-Time Sync</div></div>
+      </div>
+      <div class="dash-body">
+        <div class="kpi-row cols-5">
+          <div class="kpi"><div class="kpi-accent acc-blue"></div><label>Total Practitioners</label><div class="val val-white">240</div><div class="sub">Registered staff</div></div>
+          <div class="kpi"><div class="kpi-accent acc-green"></div><label>Compliance Readiness</label><div class="val val-green">82%</div><div class="sub">Workforce average</div><div class="trend-up">↑ +4% vs last month</div></div>
+          <div class="kpi"><div class="kpi-accent acc-red"></div><label>Staff Need Action</label><div class="val val-red">38</div><div class="sub">Below required threshold</div></div>
+          <div class="kpi"><div class="kpi-accent acc-amber"></div><label>Licenses Expiring Soon</label><div class="val val-amber">12</div><div class="sub">Within 60 days</div></div>
+          <div class="kpi"><div class="kpi-accent acc-blue"></div><label>Reports Generated</label><div class="val val-white">96</div><div class="sub">This quarter</div></div>
+        </div>
+        <div class="dash-two">
+          <div class="panel">
+            <div class="panel-title">Department Compliance Overview</div>
+            <table class="mini-table">
+              <tr><th>Department</th><th>Staff</th><th>Compliant</th><th>At Risk</th><th>Status</th></tr>
+              <tr><td>Emergency Medicine</td><td>48</td><td>42</td><td>6</td><td><span class="badge bg-green">Good</span></td></tr>
+              <tr><td>Internal Medicine</td><td>62</td><td>54</td><td>8</td><td><span class="badge bg-green">Good</span></td></tr>
+              <tr><td>Surgery</td><td>35</td><td>26</td><td>9</td><td><span class="badge bg-amber">Monitor</span></td></tr>
+              <tr><td>Nursing — ICU</td><td>55</td><td>38</td><td>17</td><td><span class="badge" style="background:rgba(220,38,38,0.15);color:#f87171">Action</span></td></tr>
+              <tr><td>Pharmacy</td><td>40</td><td>37</td><td>3</td><td><span class="badge bg-green">Good</span></td></tr>
+            </table>
+          </div>
+          <div class="panel">
+            <div class="panel-title">AI Risk Intelligence</div>
+            <div class="feat-list" style="margin-bottom:16px">
+              <li>17 ICU nurses at high renewal risk</li>
+              <li>9 surgeons need Patient Safety credits</li>
+              <li>4 physicians — license expires &lt; 30 days</li>
+              <li>12 staff: CME gap &gt; 40 credits</li>
+              <li>Broadcast reminder sent to 38 staff</li>
+            </div>
+            <div style="text-align:center;margin-top:10px">
+              <div style="font-size:11px;color:var(--t3);margin-bottom:6px">AI Risk Score — Workforce</div>
+              <div style="font-size:32px;font-weight:900;color:#fbbf24">MEDIUM</div>
+              <div style="font-size:11px;color:var(--t3)">3 critical actions required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GOVERNMENT -->
+  <div id="tab-government" class="tab-panel">
+    <div class="dash-shell">
+      <div class="dash-header">
+        <div><h3>Government Authority Intelligence Dashboard</h3><p>Qatar Council for Healthcare Practitioners (QCHP) · Authorized Regulatory Access</p></div>
+        <div class="dash-meta"><div class="live">Authorized Access · Secure</div></div>
+      </div>
+      <div class="dash-body">
+        <div class="kpi-row cols-5">
+          <div class="kpi"><div class="kpi-accent acc-blue"></div><label>Practitioners Monitored</label><div class="val val-blue">18,500</div><div class="sub">Authorized registry</div></div>
+          <div class="kpi"><div class="kpi-accent acc-green"></div><label>Renewal Readiness</label><div class="val val-green">76%</div><div class="sub">Workforce average</div></div>
+          <div class="kpi"><div class="kpi-accent acc-red"></div><label>Need CME Action</label><div class="val val-red">4,200</div><div class="sub">AI-flagged professionals</div></div>
+          <div class="kpi"><div class="kpi-accent acc-purple"></div><label>Organizations Covered</label><div class="val val-purple">312</div><div class="sub">Hospitals & clinics</div></div>
+          <div class="kpi"><div class="kpi-accent acc-teal"></div><label>High-Demand Categories</label><div class="val val-white">9</div><div class="sub">Training gap analysis</div></div>
+        </div>
+        <div class="dash-three">
+          <div class="panel">
+            <div class="panel-title">Compliance by Profession</div>
+            <div class="prog-row">
+              <div class="prog-item"><span>Physicians</span><span class="pct">81%</span><div class="prog-bar-bg"><div class="prog-bar-fill" style="width:81%"></div></div></div>
+              <div class="prog-item"><span>Nurses</span><span class="pct">74%</span><div class="prog-bar-bg"><div class="prog-bar-fill" style="width:74%;background:linear-gradient(90deg,#d97706,#fbbf24)"></div></div></div>
+              <div class="prog-item"><span>Pharmacists</span><span class="pct">88%</span><div class="prog-bar-bg"><div class="prog-bar-fill" style="width:88%"></div></div></div>
+              <div class="prog-item"><span>Dentists</span><span class="pct">79%</span><div class="prog-bar-bg"><div class="prog-bar-fill" style="width:79%"></div></div></div>
+              <div class="prog-item"><span>Allied Health</span><span class="pct">62%</span><div class="prog-bar-bg"><div class="prog-bar-fill" style="width:62%;background:linear-gradient(90deg,#dc2626,#f87171)"></div></div></div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">14-Day Compliance Trend</div>
+            <svg viewBox="0 0 200 80" style="width:100%;height:80px">
+              <defs><linearGradient id="gg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#06b6d4" stop-opacity="0.3"/><stop offset="100%" stop-color="#06b6d4" stop-opacity="0"/></linearGradient></defs>
+              <path d="M0,70 L15,62 L30,55 L45,58 L60,46 L75,38 L90,34 L105,28 L120,30 L135,22 L150,18 L165,12 L180,8 L200,5 L200,80 L0,80Z" fill="url(#gg)"/>
+              <path d="M0,70 L15,62 L30,55 L45,58 L60,46 L75,38 L90,34 L105,28 L120,30 L135,22 L150,18 L165,12 L180,8 L200,5" fill="none" stroke="#06b6d4" stroke-width="2.5" stroke-linecap="round"/>
+              <text x="160" y="12" fill="#4ade80" font-size="9" font-weight="700">87.5%</text>
+            </svg>
+            <div style="font-size:11px;color:var(--t3);margin-top:8px">Compliance improving · +11.5% in 14 days</div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">AI Workforce Forecast</div>
+            <div style="text-align:center;padding:8px 0">
+              <div style="font-size:11px;color:var(--t3);margin-bottom:6px">90-Day Projected Compliance</div>
+              <div style="font-size:38px;font-weight:900;color:#4ade80">83%</div>
+              <div style="font-size:11px;color:var(--t3);margin-bottom:14px">Confidence: High (91%)</div>
+            </div>
+            <div class="feat-list">
+              <li>Nursing sector needs targeted CME</li>
+              <li>Allied Health — top training gap</li>
+              <li>3 orgs flagged as high risk</li>
+              <li>Patient Safety demand +34%</li>
+            </div>
+          </div>
+        </div>
+        <div class="disclaimer">🔒 Government dashboard access is governed by approved authorization, consent frameworks, role-based access controls, and applicable privacy and regulatory data-sharing policies. No individual personal data is exposed without proper legal and governance approval.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRAINING -->
+  <div id="tab-training" class="tab-panel">
+    <div class="dash-shell">
+      <div class="dash-header">
+        <div><h3>Training Center Dashboard</h3><p>Qatar Medical Education Institute · CME Provider · QCHP Accredited</p></div>
+        <div class="dash-meta"><div class="live">Live</div></div>
+      </div>
+      <div class="dash-body">
+        <div class="kpi-row cols-5">
+          <div class="kpi"><div class="kpi-accent acc-blue"></div><label>CME Activities</label><div class="val val-blue">42</div><div class="sub">Active courses</div></div>
+          <div class="kpi"><div class="kpi-accent acc-green"></div><label>Total Participants</label><div class="val val-green">3,600</div><div class="sub">This year</div></div>
+          <div class="kpi"><div class="kpi-accent acc-teal"></div><label>Certificate Issuance</label><div class="val val-white">92%</div><div class="sub">Completion rate</div></div>
+          <div class="kpi"><div class="kpi-accent acc-purple"></div><label>Upcoming Courses</label><div class="val val-purple">18</div><div class="sub">Next 30 days</div></div>
+          <div class="kpi"><div class="kpi-accent acc-amber"></div><label>Satisfaction Score</label><div class="val val-amber">4.7/5</div><div class="sub">Participant feedback</div></div>
+        </div>
+        <div class="dash-two">
+          <div class="panel">
+            <div class="panel-title">Top CME Courses — Participant Demand</div>
+            <table class="mini-table">
+              <tr><th>Course</th><th>Credits</th><th>Enrolled</th><th>Completion</th></tr>
+              <tr><td>Advanced Cardiac Life Support</td><td>8</td><td>320</td><td><span class="badge bg-green">94%</span></td></tr>
+              <tr><td>Patient Safety & Quality</td><td>4</td><td>580</td><td><span class="badge bg-green">96%</span></td></tr>
+              <tr><td>Clinical Documentation</td><td>3</td><td>240</td><td><span class="badge bg-amber">78%</span></td></tr>
+              <tr><td>Infection Prevention</td><td>6</td><td>415</td><td><span class="badge bg-green">91%</span></td></tr>
+              <tr><td>Ethics in Healthcare</td><td>5</td><td>190</td><td><span class="badge bg-amber">82%</span></td></tr>
+            </table>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Training Impact</div>
+            <div class="feat-list">
+              <li>3,312 certificates auto-issued</li>
+              <li>AI reads all uploaded certificates</li>
+              <li>Post-course compliance impact tracked</li>
+              <li>Demand forecasting by specialty</li>
+              <li>Direct B2B employer reporting</li>
+              <li>API integration available</li>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UNIVERSITY -->
+  <div id="tab-university" class="tab-panel">
+    <div class="dash-shell">
+      <div class="dash-header">
+        <div><h3>University Dashboard</h3><p>Weill Cornell Medicine — Qatar · CPD & Professional Education Programs</p></div>
+        <div class="dash-meta"><div class="live">Live</div></div>
+      </div>
+      <div class="dash-body">
+        <div class="kpi-row cols-5">
+          <div class="kpi"><div class="kpi-accent acc-blue"></div><label>Total Learners</label><div class="val val-blue">1,200</div><div class="sub">Faculty & professionals</div></div>
+          <div class="kpi"><div class="kpi-accent acc-green"></div><label>CPD Completion</label><div class="val val-green">84%</div><div class="sub">Program average</div></div>
+          <div class="kpi"><div class="kpi-accent acc-teal"></div><label>Active Programs</label><div class="val val-white">28</div><div class="sub">Across 14 departments</div></div>
+          <div class="kpi"><div class="kpi-accent acc-purple"></div><label>Departments</label><div class="val val-purple">14</div><div class="sub">All tracked</div></div>
+          <div class="kpi"><div class="kpi-accent acc-amber"></div><label>Certificates Issued</label><div class="val val-amber">320</div><div class="sub">This academic year</div></div>
+        </div>
+        <div class="panel" style="margin-top:0">
+          <div class="panel-title">CPD Program Performance</div>
+          <div class="prog-row">
+            <div class="prog-item"><span>Faculty Development</span><span class="pct">91%</span><div class="prog-bar-bg"><div class="prog-bar-fill" style="width:91%"></div></div></div>
+            <div class="prog-item"><span>Research Methods</span><span class="pct">78%</span><div class="prog-bar-bg"><div class="prog-bar-fill" style="width:78%"></div></div></div>
+            <div class="prog-item"><span>Clinical Leadership</span><span class="pct">85%</span><div class="prog-bar-bg"><div class="prog-bar-fill" style="width:85%"></div></div></div>
+            <div class="prog-item"><span>Medical Education</span><span class="pct">88%</span><div class="prog-bar-bg"><div class="prog-bar-fill" style="width:88%"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN -->
+  <div id="tab-admin" class="tab-panel">
+    <div class="dash-shell">
+      <div class="dash-header">
+        <div><h3>Platform Admin Dashboard</h3><p>Hayya Med Pro · Master Administration · Full Platform Control</p></div>
+        <div class="dash-meta"><div class="live">System Operational</div></div>
+      </div>
+      <div class="dash-body">
+        <div class="kpi-row cols-4">
+          <div class="kpi"><div class="kpi-accent acc-blue"></div><label>User Roles</label><div class="val val-blue">6</div><div class="sub">Practitioner, Employer, Gov, Training, University, Admin</div></div>
+          <div class="kpi"><div class="kpi-accent acc-green"></div><label>GCC Authorities</label><div class="val val-green">8</div><div class="sub">QCHP, SCFHS, DHA, DOH, MOH, NHRA, OMSB + more</div></div>
+          <div class="kpi"><div class="kpi-accent acc-teal"></div><label>System Availability</label><div class="val val-white">99.9%</div><div class="sub">GCP Cloud Run · Doha</div></div>
+          <div class="kpi"><div class="kpi-accent acc-amber"></div><label>Audit Events</label><div class="val val-amber">1,240</div><div class="sub">7-year append-only log</div></div>
+        </div>
+        <div class="dash-two">
+          <div class="panel">
+            <div class="panel-title">Country Rules Engine</div>
+            <table class="mini-table">
+              <tr><th>Authority</th><th>Country</th><th>Credits</th><th>Cycle</th><th>Term</th></tr>
+              <tr><td>QCHP</td><td>🇶🇦 Qatar</td><td>80</td><td>2 yr</td><td>CPD</td></tr>
+              <tr><td>SCFHS</td><td>🇸🇦 Saudi</td><td>40–60</td><td>1–3 yr</td><td>CME</td></tr>
+              <tr><td>DHA</td><td>🇦🇪 Dubai</td><td>40</td><td>2 yr</td><td>CME</td></tr>
+              <tr><td>DOH</td><td>🇦🇪 Abu Dhabi</td><td>30–50</td><td>1–2 yr</td><td>CPD</td></tr>
+              <tr><td>NHRA</td><td>🇧🇭 Bahrain</td><td>40</td><td>2 yr</td><td>CPD</td></tr>
+            </table>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Security & Compliance</div>
+            <div class="feat-list">
+              <li>RLS enabled on every table</li>
+              <li>OWASP Top 10 audited</li>
+              <li>Append-only audit logs (7yr)</li>
+              <li>Signed URL certificates (1hr)</li>
+              <li>Rate limiting on all AI endpoints</li>
+              <li>Qatar PDPL & GDPR compliant</li>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI -->
+  <div id="tab-ai" class="tab-panel">
+    <div class="dash-shell">
+      <div class="dash-header">
+        <div><h3>AI Compliance Intelligence Dashboard</h3><p>Claude Sonnet & Haiku · Real-Time Analysis · Zod-Validated Outputs</p></div>
+        <div class="dash-meta"><div class="live">AI Active</div></div>
+      </div>
+      <div class="dash-body">
+        <div class="kpi-row cols-4">
+          <div class="kpi"><div class="kpi-accent acc-blue"></div><label>Prediction Confidence</label><div class="val val-blue">91%</div><div class="sub">AI compliance forecast accuracy</div></div>
+          <div class="kpi"><div class="kpi-accent acc-red"></div><label>Risk Alerts Generated</label><div class="val val-red">1,840</div><div class="sub">This month</div></div>
+          <div class="kpi"><div class="kpi-accent acc-green"></div><label>AI Recommendations</label><div class="val val-green">12,500</div><div class="sub">Sent to professionals</div></div>
+          <div class="kpi"><div class="kpi-accent acc-amber"></div><label>Manual Work Reduced</label><div class="val val-amber">68%</div><div class="sub">Potential time saving</div></div>
+        </div>
+        <div class="dash-three">
+          <div class="panel">
+            <div class="panel-title">AI Model Deployment</div>
+            <table class="mini-table">
+              <tr><th>Task</th><th>Model</th></tr>
+              <tr><td>Compliance Chatbot</td><td><span class="badge bg-blue">Haiku 4.5</span></td></tr>
+              <tr><td>Gap Analysis</td><td><span class="badge bg-blue">Sonnet 4.6</span></td></tr>
+              <tr><td>Certificate OCR</td><td><span class="badge bg-blue">Sonnet 4.6</span></td></tr>
+              <tr><td>Gov Forecast</td><td><span class="badge" style="background:rgba(139,92,246,0.2);color:#c4b5fd">Opus 4.8</span></td></tr>
+              <tr><td>Report Generation</td><td><span class="badge bg-blue">Haiku 4.5</span></td></tr>
+            </table>
+          </div>
+          <div class="panel">
+            <div class="panel-title">AI Safety Framework</div>
+            <div class="feat-list">
+              <li>No PII in AI prompts — IDs only</li>
+              <li>Zod schema validation on all outputs</li>
+              <li>Prompts versioned in lib/ai/prompts/</li>
+              <li>Fallback to rule-based on AI failure</li>
+              <li>Every AI call logged with tokens + latency</li>
+              <li>Rate limits: 5–30 req/hr per endpoint</li>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Live AI Activity</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="background:rgba(37,99,235,0.08);border:1px solid rgba(37,99,235,0.2);border-radius:8px;padding:10px;font-size:11px;color:var(--t2)"><strong style="color:var(--cyan)">Certificate Read</strong><br>Extracted 8 CME credits from uploaded PDF · 1.2s</div>
+              <div style="background:rgba(22,163,74,0.08);border:1px solid rgba(22,163,74,0.2);border-radius:8px;padding:10px;font-size:11px;color:var(--t2)"><strong style="color:#4ade80">Gap Analysis</strong><br>3 missing categories detected · Recommendations sent · 2.1s</div>
+              <div style="background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.2);border-radius:8px;padding:10px;font-size:11px;color:var(--t2)"><strong style="color:#c4b5fd">Gov Forecast</strong><br>90-day compliance outlook generated · Confidence 91% · 4.8s</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ANALYTICS -->
+  <div id="tab-analytics" class="tab-panel">
+    <div class="dash-shell">
+      <div class="dash-header">
+        <div><h3>Analytics & Reports Dashboard</h3><p>Executive Reporting · PDF Export · Compliance Intelligence · Multi-Jurisdiction</p></div>
+        <div class="dash-meta"><div class="live">Live</div></div>
+      </div>
+      <div class="dash-body">
+        <div class="kpi-row cols-4">
+          <div class="kpi"><div class="kpi-accent acc-blue"></div><label>Report Types</label><div class="val val-blue">8</div><div class="sub">Individual, employer, gov, training, university, authority, summary, audit</div></div>
+          <div class="kpi"><div class="kpi-accent acc-green"></div><label>Export Formats</label><div class="val val-green">4</div><div class="sub">PDF, CSV, JSON, API</div></div>
+          <div class="kpi"><div class="kpi-accent acc-teal"></div><label>Monthly Reports</label><div class="val val-white">120</div><div class="sub">Auto-generated</div></div>
+          <div class="kpi"><div class="kpi-accent acc-purple"></div><label>Analytics Widgets</label><div class="val val-purple">36</div><div class="sub">Across all dashboards</div></div>
+        </div>
+        <div class="panel" style="margin-top:0">
+          <div class="panel-title">6-Month Compliance Trend — Platform Wide</div>
+          <svg viewBox="0 0 600 100" style="width:100%;height:100px">
+            <defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2563eb" stop-opacity="0.25"/><stop offset="100%" stop-color="#2563eb" stop-opacity="0"/></linearGradient></defs>
+            <line x1="0" y1="25" x2="600" y2="25" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+            <line x1="0" y1="50" x2="600" y2="50" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+            <line x1="0" y1="75" x2="600" y2="75" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+            <path d="M0,85 L100,72 L200,60 L300,52 L400,38 L500,25 L600,15 L600,100 L0,100Z" fill="url(#ag)"/>
+            <path d="M0,85 L100,72 L200,60 L300,52 L400,38 L500,25 L600,15" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+            <text x="10" y="88" fill="rgba(255,255,255,0.3)" font-size="9">Jan</text>
+            <text x="95" y="75" fill="rgba(255,255,255,0.3)" font-size="9">Feb</text>
+            <text x="195" y="63" fill="rgba(255,255,255,0.3)" font-size="9">Mar</text>
+            <text x="295" y="55" fill="rgba(255,255,255,0.3)" font-size="9">Apr</text>
+            <text x="395" y="41" fill="rgba(255,255,255,0.3)" font-size="9">May</text>
+            <text x="495" y="28" fill="rgba(255,255,255,0.3)" font-size="9">Jun</text>
+            <text x="555" y="18" fill="#4ade80" font-size="10" font-weight="700">+42%</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI TOOLS -->
+<section class="ai-bg" id="ai-tools" style="padding:100px 40px">
+  <div class="section-head reveal">
+    <div class="section-tag">AI Intelligence Layer</div>
+    <h2 class="section-h2">AI Tools Built Into <span class="grad">Hayya Med Pro</span></h2>
+    <p class="section-sub">Ten purpose-built AI capabilities that automate, predict, analyze, and guide — across every stakeholder and every workflow.</p>
+  </div>
+  <div class="ai-grid">
+    <div class="ai-card reveal"><div class="ai-icon">📄</div><h3>AI Certificate Reader</h3><p>Extracts activity title, date, provider, credits, and category from uploaded CME certificates instantly.</p></div>
+    <div class="ai-card reveal"><div class="ai-icon">🧠</div><h3>AI Compliance Advisor</h3><p>Explains exactly what the practitioner needs to complete before license renewal with actionable steps.</p></div>
+    <div class="ai-card reveal"><div class="ai-icon">🎯</div><h3>AI Renewal Readiness Score</h3><p>Calculates risk level and readiness percentage based on credits, categories, and time remaining.</p></div>
+    <div class="ai-card reveal"><div class="ai-icon">🔍</div><h3>AI Gap Analyzer</h3><p>Detects missing CME categories, credit deficits, and deadline risks with precision and specificity.</p></div>
+    <div class="ai-card reveal"><div class="ai-icon">💡</div><h3>AI Training Recommender</h3><p>Suggests suitable CME activities based on profession, specialty, authority, and missing requirements.</p></div>
+    <div class="ai-card reveal"><div class="ai-icon">⚠️</div><h3>AI Employer Risk Monitor</h3><p>Identifies staff members who may create compliance risk and flags them for HR action before deadlines.</p></div>
+    <div class="ai-card reveal"><div class="ai-icon">🏛️</div><h3>AI Workforce Analyzer</h3><p>Provides authorized policy-level insights, workforce patterns, and training demand trends for authorities.</p></div>
+    <div class="ai-card reveal"><div class="ai-icon">📊</div><h3>AI Report Generator</h3><p>Creates professional PDF summaries for individuals, employers, training providers, and authorities.</p></div>
+    <div class="ai-card reveal"><div class="ai-icon">🔔</div><h3>AI Notification Engine</h3><p>Sends smart reminders before deadlines, missing documents, and license expiry — personalized per user.</p></div>
+    <div class="ai-card reveal"><div class="ai-icon">✅</div><h3>AI Data Quality Checker</h3><p>Detects incomplete records, duplicate certificates, and inconsistent CME entries automatically.</p></div>
+  </div>
+</section>
+
+<!-- STAKEHOLDERS -->
+<section class="stake-bg" id="stakeholders" style="padding:100px 40px">
+  <div class="section-head reveal">
+    <div class="section-tag">Stakeholder Value</div>
+    <h2 class="section-h2">Value by <span class="grad">Stakeholder</span></h2>
+    <p class="section-sub">Every stakeholder gets a purpose-built experience with clear, measurable value — from individual practitioners to government authorities.</p>
+  </div>
+  <div class="stake-grid">
+    <div class="scard sc-1 reveal"><div class="scard-icon">👨‍⚕️</div><h3>Medical Practitioners</h3><div class="role">Primary Users</div><ul><li>Know exactly where they stand at all times</li><li>Avoid last-minute renewal stress and risk</li><li>Store all CME records in one secure wallet</li><li>Generate submission-ready reports instantly</li><li>Get personalized AI compliance guidance</li><li>Save time — minutes instead of hours</li></ul></div>
+    <div class="scard sc-2 reveal"><div class="scard-icon">🏥</div><h3>Employers & HR</h3><div class="role">Compliance Managers</div><ul><li>Monitor full workforce readiness in real time</li><li>Reduce organizational compliance risk</li><li>Support staff with proactive renewal reminders</li><li>Improve HR compliance reporting quality</li><li>Save manual tracking and document collection</li><li>Identify training needs before they become gaps</li></ul></div>
+    <div class="scard sc-3 reveal"><div class="scard-icon">🏛️</div><h3>Government Authorities</h3><div class="role">Regulatory Bodies</div><ul><li>Improve healthcare workforce visibility</li><li>Support evidence-based policy decisions</li><li>Detect systemic compliance trends early</li><li>Understand specialty-level training gaps</li><li>Improve license renewal planning cycles</li><li>Enable smarter workforce development strategy</li></ul></div>
+    <div class="scard sc-4 reveal"><div class="scard-icon">🎓</div><h3>Training Centers</h3><div class="role">CME Providers</div><ul><li>Connect CME delivery to compliance outcomes</li><li>Improve course demand and scheduling</li><li>Issue certificates efficiently at scale</li><li>Track participant impact and satisfaction</li><li>Build stronger B2B employer relationships</li><li>Access training marketplace audience</li></ul></div>
+    <div class="scard sc-5 reveal"><div class="scard-icon">🏫</div><h3>Universities</h3><div class="role">Academic Institutions</div><ul><li>Manage CPD and continuing education programs</li><li>Track faculty and learner development</li><li>Support healthcare education reporting</li><li>Build continuing education partnerships</li><li>Demonstrate research and CPD program impact</li></ul></div>
+    <div class="scard sc-6 reveal"><div class="scard-icon">📈</div><h3>Platform Revenue</h3><div class="role">Business Model</div><ul><li>Subscription revenue (Free → Pro → Enterprise)</li><li>B2B employer and hospital contracts</li><li>Government authority partnerships</li><li>Training provider marketplace commissions</li><li>Scalable GCC → MENA → Global expansion</li><li>Data intelligence and API licensing products</li></ul></div>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section class="impact-bg" style="padding:100px 40px">
+  <div class="section-head reveal">
+    <div class="section-tag">Efficiency Impact</div>
+    <h2 class="section-h2">Smart <span class="grad">Time Saving Impact</span></h2>
+    <p class="section-sub">Potential operational efficiency gains across every stakeholder using Hayya Med Pro compared to manual processes.</p>
+  </div>
+  <div class="impact-grid">
+    <div class="icard reveal"><div class="big">70%</div><h4>Manual Tracking Reduced</h4><p>Potential reduction in manual CME tracking and document collection effort per professional.</p></div>
+    <div class="icard reveal"><div class="big">~0s</div><h4>Report Generation</h4><p>PDF compliance reports generated in seconds — compared to hours of manual preparation.</p></div>
+    <div class="icard reveal"><div class="big">60%</div><h4>Earlier Risk Detection</h4><p>AI flags compliance gaps up to 60% earlier than traditional manual review processes.</p></div>
+    <div class="icard reveal"><div class="big">80%</div><h4>HR Follow-Up Reduced</h4><p>Potential reduction in HR follow-up burden through automated reminders and live dashboards.</p></div>
+  </div>
+  <p style="text-align:center;font-size:12px;color:var(--t3);margin-top:32px">All figures are projected estimates. Actual results may vary by organization size, workflow complexity, and platform adoption level.</p>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section class="compare-bg" style="padding:100px 40px">
+  <div class="section-head reveal">
+    <div class="section-tag">Transformation</div>
+    <h2 class="section-h2">Before vs. <span class="grad">After Hayya Med Pro</span></h2>
+    <p class="section-sub">A clear picture of what changes when intelligent automation replaces manual compliance processes.</p>
+  </div>
+  <div class="compare-grid">
+    <div class="compare-col before reveal">
+      <div class="compare-label">Current Situation</div>
+      <h3 class="compare-h">Without Hayya Med Pro</h3>
+      <div class="compare-rows">
+        <div class="compare-row"><div class="cr-icon">✗</div><span>CME records scattered across emails, PDFs, and spreadsheets</span></div>
+        <div class="compare-row"><div class="cr-icon">✗</div><span>Manual certificate tracking — time-consuming and error-prone</span></div>
+        <div class="compare-row"><div class="cr-icon">✗</div><span>Employers have limited visibility into staff compliance status</span></div>
+        <div class="compare-row"><div class="cr-icon">✗</div><span>Renewal gaps discovered late — weeks before deadline</span></div>
+        <div class="compare-row"><div class="cr-icon">✗</div><span>Reports prepared manually — days of effort per cycle</span></div>
+        <div class="compare-row"><div class="cr-icon">✗</div><span>No AI guidance — practitioners don't know what's missing</span></div>
+        <div class="compare-row"><div class="cr-icon">✗</div><span>Training demand is unclear and reactive</span></div>
+        <div class="compare-row"><div class="cr-icon">✗</div><span>Government insights are fragmented and delayed</span></div>
+      </div>
+    </div>
+    <div class="compare-col after reveal">
+      <div class="compare-label">With Hayya Med Pro</div>
+      <h3 class="compare-h">Intelligent Compliance Ecosystem</h3>
+      <div class="compare-rows">
+        <div class="compare-row"><div class="cr-icon">✓</div><span>Centralized CME wallet — all records in one verified place</span></div>
+        <div class="compare-row"><div class="cr-icon">✓</div><span>AI reads certificates automatically — instant credit extraction</span></div>
+        <div class="compare-row"><div class="cr-icon">✓</div><span>Employer compliance dashboard — real-time workforce view</span></div>
+        <div class="compare-row"><div class="cr-icon">✓</div><span>AI-powered early alerts — months before any deadline</span></div>
+        <div class="compare-row"><div class="cr-icon">✓</div><span>Instant PDF reports — generated in seconds on demand</span></div>
+        <div class="compare-row"><div class="cr-icon">✓</div><span>AI compliance advisor — knows exactly what's missing</span></div>
+        <div class="compare-row"><div class="cr-icon">✓</div><span>Training demand analytics — predictive and data-driven</span></div>
+        <div class="compare-row"><div class="cr-icon">✓</div><span>Authorized workforce intelligence for government authorities</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GOVERNMENT -->
+<section class="gov-bg" id="government" style="padding:100px 40px">
+  <div class="section-head reveal">
+    <div class="section-tag">Government Value</div>
+    <h2 class="section-h2">Government Healthcare <span class="grad">Workforce Intelligence</span></h2>
+    <p class="section-sub">Hayya Med Pro can support healthcare authorities with an authorized dashboard providing structured visibility into CME/CPD readiness, license renewal preparedness, and workforce development trends.</p>
+  </div>
+  <div class="gov-feature-grid">
+    <div class="gf-card reveal"><div class="gf-num">01</div><h4>Workforce Development Planning</h4><p>Data-driven insights for healthcare education policy and long-term workforce planning decisions.</p></div>
+    <div class="gf-card reveal"><div class="gf-num">02</div><h4>License Renewal Monitoring</h4><p>Real-time visibility into renewal readiness across the professional workforce by specialty and region.</p></div>
+    <div class="gf-card reveal"><div class="gf-num">03</div><h4>CME/CPD Policy Insights</h4><p>Understand how well current policy requirements are being met and identify areas for improvement.</p></div>
+    <div class="gf-card reveal"><div class="gf-num">04</div><h4>Profession-Level Training Gaps</h4><p>Identify which professions and specialties have the most significant CME/CPD gaps at any point.</p></div>
+    <div class="gf-card reveal"><div class="gf-num">05</div><h4>Specialty Training Demand</h4><p>AI analysis of what training categories are most needed across the workforce — plan supply accordingly.</p></div>
+    <div class="gf-card reveal"><div class="gf-num">06</div><h4>Organization Compliance Trends</h4><p>Compare compliance rates across hospitals, clinics, and health systems with structured benchmarking.</p></div>
+    <div class="gf-card reveal"><div class="gf-num">07</div><h4>Healthcare Education Planning</h4><p>Forward-looking AI forecasting for CME demand, renewal peaks, and training infrastructure needs.</p></div>
+    <div class="gf-card reveal"><div class="gf-num">08</div><h4>Risk-Based Monitoring</h4><p>Segment the workforce by compliance risk level for targeted intervention and regulatory follow-up.</p></div>
+  </div>
+  <div class="gov-privacy reveal">
+    <div class="gov-privacy-icon">🔒</div>
+    <p><strong style="color:#fff">Privacy & Governance Statement:</strong> All government-level access to workforce compliance data must be governed by approved legal frameworks, applicable data privacy regulations (including Qatar PDPL and GDPR), explicit consent mechanisms, role-based access controls, and formal data-sharing agreements. Hayya Med Pro is designed with privacy by design — no individual professional data is accessible without proper authorization, governance policy, and regulatory compliance approval.</p>
+  </div>
+</section>
+
+<!-- SUMMARY -->
+<section class="summary-bg" style="padding:100px 40px">
+  <div class="section-head reveal">
+    <div class="section-tag">Strategic Summary</div>
+    <h2 class="section-h2">Why <span class="grad">Hayya Med Pro Matters</span></h2>
+    <p class="section-sub">A platform built to solve a real, significant, and scalable problem in one of the world's fastest-growing healthcare markets.</p>
+  </div>
+  <div class="summary-grid">
+    <div class="sum-card reveal"><div class="sum-icon">⚡</div><div><h4>Intelligent Automation</h4><p>Converts manual compliance tracking into AI-powered automation — eliminating wasted time, human error, and administrative burden at every level.</p></div></div>
+    <div class="sum-card reveal"><div class="sum-icon">👁️</div><div><h4>Real-Time Visibility</h4><p>Gives employers a live, accurate view of their entire workforce's compliance status — enabling proactive action instead of reactive crisis management.</p></div></div>
+    <div class="sum-card reveal"><div class="sum-icon">🏛️</div><div><h4>Government-Ready</h4><p>Provides healthcare authorities with authorized, structured, policy-level workforce intelligence — supporting regulation, planning, and governance decisions.</p></div></div>
+    <div class="sum-card reveal"><div class="sum-icon">🤖</div><div><h4>AI at Every Layer</h4><p>Ten purpose-built AI tools embedded throughout the platform — from certificate reading to workforce forecasting — reducing manual work by up to 70%.</p></div></div>
+    <div class="sum-card reveal"><div class="sum-icon">🌍</div><div><h4>Built for GCC → Global</h4><p>Country rules engine governs all compliance logic — Qatar today, Saudi Arabia and UAE next, with a clear path to MENA and global expansion.</p></div></div>
+    <div class="sum-card reveal"><div class="sum-icon">💰</div><div><h4>Commercial Scalability</h4><p>Seven revenue streams: subscriptions, employer plans, government licensing, training marketplace, university partnerships, API products, and white-label licensing.</p></div></div>
+    <div class="sum-card reveal"><div class="sum-icon">🔐</div><div><h4>Enterprise Security</h4><p>Healthcare-grade security: RLS on every table, OWASP Top 10 audited, Qatar PDPL compliant, append-only audit logs, and SOC 2 preparation roadmap.</p></div></div>
+    <div class="sum-card reveal"><div class="sum-icon">📱</div><div><h4>Web + PWA + Mobile</h4><p>Fully responsive web platform with PWA support today, and React Native iOS/Android in active development — one platform, every device.</p></div></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div style="position:relative;z-index:1">
+    <div class="section-tag" style="margin-bottom:28px">Executive Summary</div>
+    <h2 class="cta-h"><span style="background:linear-gradient(135deg,#fff,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Hayya Med Pro Is Not Just a CME Tracker.</span><br><span style="color:var(--t2);font-weight:500;font-size:clamp(20px,3vw,36px)">It Is a Healthcare Compliance Intelligence Platform.</span></h2>
+    <p class="cta-sub">A smart ecosystem designed to connect practitioners, employers, training providers, universities, and authorities through AI-powered compliance visibility, real-time reporting, and intelligent workforce analytics.</p>
+    <div class="hero-btns">
+      <a href="https://hayyamed.pro" class="btn-primary" target="_blank">Visit hayyamed.pro</a>
+      <a href="https://hayyamed.pro/register" class="btn-secondary" target="_blank">Start Free Trial</a>
+    </div>
+    <div style="margin-top:60px;padding-top:40px;border-top:1px solid rgba(255,255,255,0.08)">
+      <div style="font-size:20px;font-weight:800;color:#fff;margin-bottom:8px">Hayya Med AI</div>
+      <div style="font-size:12px;color:var(--t3)">hayyamed.pro · hayyamed.ai · Qatar · GCC · Global</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-left">© 2026 Hayya Med AI · Hayya Med Pro · All rights reserved</div>
+  <div class="footer-right"><strong>Confidential Executive Presentation</strong><br>Prepared for stakeholder review · Not for public distribution</div>
+</footer>
+
+<script>
+// Tab switching
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Stagger children
+document.querySelectorAll('.problem-grid, .ai-grid, .stake-grid, .impact-grid, .summary-grid, .gov-feature-grid').forEach(grid => {
+  Array.from(grid.children).forEach((child, i) => {
+    child.style.transitionDelay = (i * 80) + 'ms';
+  });
+});
+
+// Animated bar heights in hero
+const bars = document.querySelectorAll('.mbar');
+const heights = [35, 55, 40, 70, 50, 85, 60, 90, 75, 95];
+bars.forEach((b, i) => { b.style.height = (heights[i % heights.length]) + 'px'; });
+
+// Smooth scroll for nav links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+</body>
+</html>
