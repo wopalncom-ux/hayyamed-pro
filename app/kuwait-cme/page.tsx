@@ -1,11 +1,11 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "Kuwait CME Requirements 2025 — MOH Kuwait CME Credits & Renewal Guide",
+  title: "Kuwait CME Requirements 2025 â€” MOH Kuwait CME Credits & Renewal Guide",
   description:
     "Complete guide to CME requirements in Kuwait. MOH Kuwait requires 30 CME credits per year for physicians and pharmacists, 20 per year for nurses. Track your Kuwait MOH compliance automatically with Hayya Med Pro.",
   keywords: [
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     "Kuwait healthcare professional CME",
   ],
   openGraph: {
-    title: "Kuwait CME Requirements 2025 — MOH Kuwait Guide | Hayya Med Pro",
+    title: "Kuwait CME Requirements 2025 â€” MOH Kuwait Guide | Hayya Med Pro",
     description:
       "Kuwait MOH requires 30 CME credits/year for physicians and pharmacists, 20/year for nurses. Strict 30% online cap. Complete country guide with profession breakdown and renewal checklist.",
     url: `${APP_URL}/kuwait-cme`,
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kuwait CME Requirements 2025 — MOH Kuwait",
+    title: "Kuwait CME Requirements 2025 â€” MOH Kuwait",
     description:
       "30 CME credits/year for Kuwait physicians. 20/year for nurses. Strictest online cap in GCC at 30%. Full guide with renewal checklist.",
   },
@@ -62,7 +62,7 @@ const faqJsonLd = {
       name: "What is Kuwait's online CME limit?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Kuwait has the strictest online CME cap in the GCC — a maximum of 30% of total annual credits can come from online activities. For physicians this means a maximum of 9 online credits per year out of 30 total. The remaining 70% must come from in-person conferences, workshops, or seminars.",
+        text: "Kuwait has the strictest online CME cap in the GCC â€” a maximum of 30% of total annual credits can come from online activities. For physicians this means a maximum of 9 online credits per year out of 30 total. The remaining 70% must come from in-person conferences, workshops, or seminars.",
       },
     },
     {
@@ -86,7 +86,7 @@ const faqJsonLd = {
       name: "How do I submit my CME record to Kuwait MOH?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "CME records are submitted through the Kuwait MOH health professional portal before your annual license renewal date. Hayya Med Pro maintains your complete CME log and generates a summary report — with activity names, dates, credits, and providers — ready to attach to your renewal application.",
+        text: "CME records are submitted through the Kuwait MOH health professional portal before your annual license renewal date. Hayya Med Pro maintains your complete CME log and generates a summary report â€” with activity names, dates, credits, and providers â€” ready to attach to your renewal application.",
       },
     },
     {
@@ -131,7 +131,7 @@ const CATEGORIES = [
     bg: "#fef3c7",
     limit: "Max 30% of total",
     highlight: true,
-    desc: "Accredited e-learning platforms and online CME courses — strictly capped at 30% of annual total (9 for physicians, 6 for nurses)",
+    desc: "Accredited e-learning platforms and online CME courses â€” strictly capped at 30% of annual total (9 for physicians, 6 for nurses)",
   },
   {
     letter: "D",
@@ -139,7 +139,7 @@ const CATEGORIES = [
     color: "#64748b",
     bg: "#f1f5f9",
     limit: "Subject to limits",
-    desc: "Journal reading, case discussions, and independent study — subject to MOH Kuwait caps and documentation requirements",
+    desc: "Journal reading, case discussions, and independent study â€” subject to MOH Kuwait caps and documentation requirements",
   },
 ];
 
@@ -170,9 +170,9 @@ export default function KuwaitCmePage() {
       />
       <BreadcrumbJsonLd
         items={[
-          { name: "Home", href: "/" },
-          { name: "GCC CME Requirements", href: "/gcc-cme-requirements" },
-          { name: "Kuwait CME Requirements", href: "/kuwait-cme" },
+          { name: "Home", url: "/" },
+          { name: "GCC CME Requirements", url: "/gcc-cme-requirements" },
+          { name: "Kuwait CME Requirements", url: "/kuwait-cme" },
         ]}
       />
 
@@ -181,8 +181,8 @@ export default function KuwaitCmePage() {
         <section className="bg-white border-b border-[#e2e8f0] py-16 px-4">
           <div className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-[#f0fdf4] text-[#15803d] text-xs font-semibold px-3 py-1.5 rounded-full mb-6">
-              <span>🇰🇼</span>
-              <span>MOH Kuwait · Annual Renewal Cycle</span>
+              <span>ðŸ‡°ðŸ‡¼</span>
+              <span>MOH Kuwait Â· Annual Renewal Cycle</span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-extrabold text-[#0f172a] leading-tight mb-4">
               Kuwait CME Requirements 2025
@@ -197,7 +197,7 @@ export default function KuwaitCmePage() {
                 href="/register"
                 className="inline-flex items-center justify-center gap-2 bg-[#1a56a0] text-white font-semibold text-sm px-6 py-3 rounded-xl hover:bg-[#1547a0] transition-colors"
               >
-                Track my Kuwait CME — free →
+                Track my Kuwait CME â€” free â†’
               </Link>
               <Link
                 href="/cme-calculator"
@@ -206,7 +206,7 @@ export default function KuwaitCmePage() {
                 Calculate my credit gap
               </Link>
             </div>
-            <p className="text-xs text-[#64748b] mt-3">No credit card required · 14-day Pro trial included</p>
+            <p className="text-xs text-[#64748b] mt-3">No credit card required Â· 14-day Pro trial included</p>
           </div>
         </section>
 
@@ -268,7 +268,7 @@ export default function KuwaitCmePage() {
           <div className="max-w-3xl mx-auto">
             <h2 className="text-2xl font-bold text-[#111] mb-2">Kuwait MOH CME activity categories</h2>
             <p className="text-sm text-[#64748b] mb-8">
-              MOH Kuwait recognizes four types of CME activities. The 30% cap on online activities is the lowest in the GCC —
+              MOH Kuwait recognizes four types of CME activities. The 30% cap on online activities is the lowest in the GCC â€”
               most of your annual CME must come from in-person learning.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -290,7 +290,7 @@ export default function KuwaitCmePage() {
             <div className="mt-6 bg-[#fef3c7] border border-[#fcd34d] rounded-xl px-4 py-3">
               <p className="text-sm text-[#92400e]">
                 <strong>Important:</strong> Kuwait&apos;s 30% online cap is the strictest in the GCC. If you rely heavily on online
-                courses (Coursera, Medscape, UpToDate, etc.), plan carefully — only 9 credits per year (physicians) or 6 credits per year
+                courses (Coursera, Medscape, UpToDate, etc.), plan carefully â€” only 9 credits per year (physicians) or 6 credits per year
                 (nurses) will count toward renewal.
               </p>
             </div>
@@ -305,17 +305,17 @@ export default function KuwaitCmePage() {
               <p>
                 The Kuwait Ministry of Health (MOH) governs CME for all licensed healthcare professionals in Kuwait.
                 Unlike some GCC authorities that use the term CPD (Continuing Professional Development), Kuwait uses CME
-                (Continuing Medical Education) for all professions — doctors, nurses, pharmacists, and allied health.
+                (Continuing Medical Education) for all professions â€” doctors, nurses, pharmacists, and allied health.
               </p>
               <p>
                 Kuwait&apos;s annual CME cycle is the shortest in the GCC. While Qatar and Bahrain use 2-year cycles and
-                the UAE varies by authority, Kuwait requires annual renewal — meaning your CME record resets every year
+                the UAE varies by authority, Kuwait requires annual renewal â€” meaning your CME record resets every year
                 based on your license registration date.
               </p>
               <p>
                 The 30% online cap makes Kuwait&apos;s CME system distinct. Qatar allows 50% online, Bahrain allows 50%,
                 and some UAE authorities are similar. In Kuwait, attending accredited conferences, workshops, and live seminars
-                is essential to meeting your annual requirement — you cannot meet it through online learning alone.
+                is essential to meeting your annual requirement â€” you cannot meet it through online learning alone.
               </p>
               <p>
                 MOH Kuwait accepts CME from internationally recognized bodies including AMA (Category 1), ACGME-accredited
@@ -352,7 +352,7 @@ export default function KuwaitCmePage() {
         {/* FAQ */}
         <section className="py-14 px-4">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl font-bold text-[#111] mb-8">Kuwait CME — frequently asked questions</h2>
+            <h2 className="text-2xl font-bold text-[#111] mb-8">Kuwait CME â€” frequently asked questions</h2>
             <div className="space-y-5">
               {faqJsonLd.mainEntity.map((faq) => (
                 <div key={faq.name} className="border border-[#e2e8f0] bg-white rounded-xl p-5">
@@ -372,15 +372,15 @@ export default function KuwaitCmePage() {
             </h2>
             <p className="text-[#94a3b8] mb-8 text-sm leading-relaxed">
               Hayya Med Pro calculates your annual Kuwait CME total, enforces the 30% online cap,
-              and shows your real-time compliance status — so you&apos;re never caught short before renewal.
+              and shows your real-time compliance status â€” so you&apos;re never caught short before renewal.
             </p>
             <Link
               href="/register"
               className="inline-flex items-center gap-2 bg-white text-[#1a56a0] font-bold text-sm px-8 py-3.5 rounded-xl hover:bg-[#f0f4f8] transition-colors"
             >
-              Start free — no credit card →
+              Start free â€” no credit card â†’
             </Link>
-            <p className="text-[#64748b] text-xs mt-4">14-day Pro trial · 30% online cap enforced automatically</p>
+            <p className="text-[#64748b] text-xs mt-4">14-day Pro trial Â· 30% online cap enforced automatically</p>
           </div>
         </section>
 
@@ -406,3 +406,4 @@ export default function KuwaitCmePage() {
     </>
   );
 }
+

@@ -1,11 +1,11 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "Oman CME Requirements 2025 — OMSB CME Credits & Renewal Guide",
+  title: "Oman CME Requirements 2025 â€” OMSB CME Credits & Renewal Guide",
   description:
     "Complete guide to CME requirements in Oman. OMSB requires 40 CME credits per 2-year cycle for physicians and 30 for nurses and AHPs. Track Category A and B CME automatically with Hayya Med Pro.",
   keywords: [
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     "OMSB 40 CME credits",
   ],
   openGraph: {
-    title: "Oman CME Requirements 2025 — OMSB Guide | Hayya Med Pro",
+    title: "Oman CME Requirements 2025 â€” OMSB Guide | Hayya Med Pro",
     description:
       "OMSB Oman requires 40 CME credits per 2-year cycle for physicians and 30 for nurses and AHPs. Category A (accredited) and Category B (self-directed) framework with 20-credit online cap.",
     url: `${APP_URL}/oman-cme`,
@@ -38,9 +38,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Oman CME Requirements 2025 — OMSB",
+    title: "Oman CME Requirements 2025 â€” OMSB",
     description:
-      "OMSB requires 40 CME/2yr for physicians, 30/2yr for nurses. Category A and B framework — max 20 online credits per cycle.",
+      "OMSB requires 40 CME/2yr for physicians, 30/2yr for nurses. Category A and B framework â€” max 20 online credits per cycle.",
   },
   alternates: { canonical: `${APP_URL}/oman-cme` },
 };
@@ -86,7 +86,7 @@ const faqJsonLd = {
       name: "How do I submit my CME portfolio to OMSB Oman?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "CME portfolios are submitted through the OMSB online portal (omsb.org) before your 2-year license renewal date. Hayya Med Pro generates a complete CME activity log organized by Category A and Category B — including activity name, provider, date, credits, and accreditation — ready for OMSB portal submission.",
+        text: "CME portfolios are submitted through the OMSB online portal (omsb.org) before your 2-year license renewal date. Hayya Med Pro generates a complete CME activity log organized by Category A and Category B â€” including activity name, provider, date, credits, and accreditation â€” ready for OMSB portal submission.",
       },
     },
     {
@@ -122,7 +122,7 @@ const CATEGORIES = [
     color: "#7c3aed",
     limit: "Max 20 per 2-year cycle",
     highlight: true,
-    desc: "Accredited e-learning and online CME from OMSB-recognized providers — counts as Category A but online credits are capped at 20 per cycle",
+    desc: "Accredited e-learning and online CME from OMSB-recognized providers â€” counts as Category A but online credits are capped at 20 per cycle",
   },
   {
     letter: "B",
@@ -130,7 +130,7 @@ const CATEGORIES = [
     color: "#d97706",
     limit: "Subject to OMSB limits",
     highlight: false,
-    desc: "Journal reading, case discussions, independent study, and non-accredited educational activities — must be documented",
+    desc: "Journal reading, case discussions, independent study, and non-accredited educational activities â€” must be documented",
   },
   {
     letter: "B",
@@ -138,17 +138,17 @@ const CATEGORIES = [
     color: "#16a34a",
     limit: "Subject to OMSB limits",
     highlight: false,
-    desc: "Lecturing, supervising trainees, research publications, and conference presentations — accepted with supporting documentation",
+    desc: "Lecturing, supervising trainees, research publications, and conference presentations â€” accepted with supporting documentation",
   },
 ];
 
 const CHECKLIST = [
   { step: "1", title: "Confirm your 2-year renewal date", desc: "Your OMSB CME cycle runs for 2 years from your license registration or last renewal date. Log in to the OMSB portal at omsb.org to verify your next renewal deadline." },
   { step: "2", title: "Know your profession-specific requirement", desc: "Physicians and dentists need 40 CME per 2-year cycle. Nurses and AHPs need 30. Hayya Med Pro applies the correct rule automatically based on your registered profession." },
-  { step: "3", title: "Prioritize Category A accredited activities", desc: "Category A (conferences, workshops, accredited online) carries the most value and has no upper cap for in-person activities. Build your CME plan around 2–3 major accredited events each year." },
-  { step: "4", title: "Track your online credit total", desc: "Online CME is capped at 20 credits per 2-year cycle — even though it falls under Category A. If you rely on online learning, monitor this limit carefully to avoid credits that won't count toward renewal." },
+  { step: "3", title: "Prioritize Category A accredited activities", desc: "Category A (conferences, workshops, accredited online) carries the most value and has no upper cap for in-person activities. Build your CME plan around 2â€“3 major accredited events each year." },
+  { step: "4", title: "Track your online credit total", desc: "Online CME is capped at 20 credits per 2-year cycle â€” even though it falls under Category A. If you rely on online learning, monitor this limit carefully to avoid credits that won't count toward renewal." },
   { step: "5", title: "Document all Category B activities", desc: "Self-directed learning and teaching activities need documentation. Keep reading logs, teaching timetables, and publication receipts. OMSB may request evidence during renewal verification." },
-  { step: "6", title: "Generate and submit your CME portfolio", desc: "Before your renewal date, generate a CME portfolio report from Hayya Med Pro organized by Category A and B — and upload it to the OMSB online portal." },
+  { step: "6", title: "Generate and submit your CME portfolio", desc: "Before your renewal date, generate a CME portfolio report from Hayya Med Pro organized by Category A and B â€” and upload it to the OMSB online portal." },
 ];
 
 const RELATED = [
@@ -169,9 +169,9 @@ export default function OmanCmePage() {
       />
       <BreadcrumbJsonLd
         items={[
-          { name: "Home", href: "/" },
-          { name: "GCC CME Requirements", href: "/gcc-cme-requirements" },
-          { name: "Oman CME Requirements", href: "/oman-cme" },
+          { name: "Home", url: "/" },
+          { name: "GCC CME Requirements", url: "/gcc-cme-requirements" },
+          { name: "Oman CME Requirements", url: "/oman-cme" },
         ]}
       />
 
@@ -180,8 +180,8 @@ export default function OmanCmePage() {
         <section className="bg-white border-b border-[#e2e8f0] py-16 px-4">
           <div className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-[#f0fdf4] text-[#15803d] text-xs font-semibold px-3 py-1.5 rounded-full mb-6">
-              <span>🇴🇲</span>
-              <span>OMSB Oman · 2-Year Renewal Cycle</span>
+              <span>ðŸ‡´ðŸ‡²</span>
+              <span>OMSB Oman Â· 2-Year Renewal Cycle</span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-extrabold text-[#0f172a] leading-tight mb-4">
               Oman CME Requirements 2025
@@ -197,7 +197,7 @@ export default function OmanCmePage() {
                 href="/register"
                 className="inline-flex items-center justify-center gap-2 bg-[#1a56a0] text-white font-semibold text-sm px-6 py-3 rounded-xl hover:bg-[#1547a0] transition-colors"
               >
-                Track my Oman CME — free →
+                Track my Oman CME â€” free â†’
               </Link>
               <Link
                 href="/cme-calculator"
@@ -206,7 +206,7 @@ export default function OmanCmePage() {
                 Calculate my credit gap
               </Link>
             </div>
-            <p className="text-xs text-[#64748b] mt-3">No credit card required · 14-day Pro trial included</p>
+            <p className="text-xs text-[#64748b] mt-3">No credit card required Â· 14-day Pro trial included</p>
           </div>
         </section>
 
@@ -308,7 +308,7 @@ export default function OmanCmePage() {
               <p>
                 The <strong>Oman Medical Specialty Board (OMSB)</strong> is the primary authority overseeing postgraduate
                 medical education and professional development for healthcare professionals in Oman. Unlike Qatar&apos;s QCHP
-                or Bahrain&apos;s NHRA, OMSB was originally established to manage specialty training — CME for licensed
+                or Bahrain&apos;s NHRA, OMSB was originally established to manage specialty training â€” CME for licensed
                 professionals is part of its broader mandate.
               </p>
               <p>
@@ -319,7 +319,7 @@ export default function OmanCmePage() {
               <p>
                 The 20-credit online cap reflects OMSB&apos;s emphasis on in-person learning and clinical engagement.
                 With the growing number of high-quality online CME platforms, professionals need to track their online
-                credits carefully to avoid exceeding the cap — a common issue flagged at renewal time.
+                credits carefully to avoid exceeding the cap â€” a common issue flagged at renewal time.
               </p>
             </div>
           </div>
@@ -351,7 +351,7 @@ export default function OmanCmePage() {
         {/* FAQ */}
         <section className="py-14 px-4">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl font-bold text-[#111] mb-8">Oman CME — frequently asked questions</h2>
+            <h2 className="text-2xl font-bold text-[#111] mb-8">Oman CME â€” frequently asked questions</h2>
             <div className="space-y-5">
               {faqJsonLd.mainEntity.map((faq) => (
                 <div key={faq.name} className="border border-[#e2e8f0] bg-white rounded-xl p-5">
@@ -378,9 +378,9 @@ export default function OmanCmePage() {
               href="/register"
               className="inline-flex items-center gap-2 bg-white text-[#1a56a0] font-bold text-sm px-8 py-3.5 rounded-xl hover:bg-[#f0f4f8] transition-colors"
             >
-              Start free — no credit card →
+              Start free â€” no credit card â†’
             </Link>
-            <p className="text-[#64748b] text-xs mt-4">14-day Pro trial · Category A / B tracked automatically</p>
+            <p className="text-[#64748b] text-xs mt-4">14-day Pro trial Â· Category A / B tracked automatically</p>
           </div>
         </section>
 
@@ -406,3 +406,4 @@ export default function OmanCmePage() {
     </>
   );
 }
+

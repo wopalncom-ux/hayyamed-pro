@@ -1,11 +1,11 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 
 const BASE = "https://hayyamed.pro";
 
 export const metadata: Metadata = {
-  title: "CPD Requirements for Nurses 2026 — Nurse CME Guide (GCC & Global) | Hayya Med Pro",
+  title: "CPD Requirements for Nurses 2026 â€” Nurse CME Guide (GCC & Global) | Hayya Med Pro",
   description:
     "Complete CPD and CME requirements for nurses worldwide. Qatar QCHP (80 CPD/2yr), Saudi SCFHS (40-60 CME/yr), UAE DHA (40/2yr), UK NMC (35 hours/yr), Australia AHPRA. Track nurse CPD automatically.",
   keywords: [
@@ -22,15 +22,15 @@ export const metadata: Metadata = {
     "nursing continuing education",
   ],
   openGraph: {
-    title: "CPD Requirements for Nurses 2026 — All Countries",
-    description: "Qatar · Saudi Arabia · UAE · UK · Australia — nurse CPD and CME requirements worldwide.",
+    title: "CPD Requirements for Nurses 2026 â€” All Countries",
+    description: "Qatar Â· Saudi Arabia Â· UAE Â· UK Â· Australia â€” nurse CPD and CME requirements worldwide.",
     url: `${BASE}/nurses`,
     type: "website",
     images: [{ url: `${BASE}/api/og?title=CPD+Requirements+for+Nurses+2026`, width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "CPD Requirements for Nurses 2026 — All Countries",
+    title: "CPD Requirements for Nurses 2026 â€” All Countries",
     description: "Nurse CPD and CME requirements for Qatar, Saudi Arabia, UAE, UK, Australia and more.",
   },
   alternates: { canonical: `${BASE}/nurses` },
@@ -45,7 +45,7 @@ const faqLd = {
       name: "How many CPD credits do nurses need in the GCC?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "GCC CPD requirements for nurses: Qatar (QCHP) — 80 CPD credits per 2-year cycle; Saudi Arabia (SCFHS) — 40–60 credits per 1–3 years; UAE Dubai (DHA) — 40 credits per 2 years; UAE Abu Dhabi (DOH) — 30–50 credits per 2 years; Kuwait (MOH) — 30 credits annually; Bahrain (NHRA) — 40 credits per 2 years; Oman (OMSB) — 40 credits per 2 years.",
+        text: "GCC CPD requirements for nurses: Qatar (QCHP) â€” 80 CPD credits per 2-year cycle; Saudi Arabia (SCFHS) â€” 40â€“60 credits per 1â€“3 years; UAE Dubai (DHA) â€” 40 credits per 2 years; UAE Abu Dhabi (DOH) â€” 30â€“50 credits per 2 years; Kuwait (MOH) â€” 30 credits annually; Bahrain (NHRA) â€” 40 credits per 2 years; Oman (OMSB) â€” 40 credits per 2 years.",
       },
     },
     {
@@ -53,7 +53,7 @@ const faqLd = {
       name: "Can nurses complete CPD online in the GCC?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. All GCC licensing authorities accept online CPD for nurses, including QCHP Qatar, SCFHS Saudi Arabia, and DHA Dubai. Online nursing CPD — webinars, e-learning modules, and accredited online courses — counts toward the same credit requirement as in-person attendance. Many nurses in GCC prefer online CPD for flexibility around shift work.",
+        text: "Yes. All GCC licensing authorities accept online CPD for nurses, including QCHP Qatar, SCFHS Saudi Arabia, and DHA Dubai. Online nursing CPD â€” webinars, e-learning modules, and accredited online courses â€” counts toward the same credit requirement as in-person attendance. Many nurses in GCC prefer online CPD for flexibility around shift work.",
       },
     },
     {
@@ -81,14 +81,14 @@ const breadcrumbs = [
 ];
 
 const NURSING_SPECIALTIES = [
-  { name: "ICU / Critical Care", href: "/cme/critical-care/qatar", icon: "🏥" },
-  { name: "Emergency Nursing", href: "/cme/emergency-medicine/saudi-arabia", icon: "🚨" },
-  { name: "Paediatric Nursing", href: "/cme/pediatrics/uae", icon: "👶" },
-  { name: "Oncology Nursing", href: "/cme/oncology/qatar", icon: "🎗️" },
-  { name: "Midwifery", href: "/nurse-cpd", icon: "🤰" },
-  { name: "Theatre / OR Nursing", href: "/nurse-cpd", icon: "🔬" },
-  { name: "Ward / General Nursing", href: "/nurse-cpd", icon: "🩺" },
-  { name: "Community Nursing", href: "/nurse-cpd", icon: "🏡" },
+  { name: "ICU / Critical Care", url: "/cme/critical-care/qatar", icon: "ðŸ¥" },
+  { name: "Emergency Nursing", url: "/cme/emergency-medicine/saudi-arabia", icon: "ðŸš¨" },
+  { name: "Paediatric Nursing", url: "/cme/pediatrics/uae", icon: "ðŸ‘¶" },
+  { name: "Oncology Nursing", url: "/cme/oncology/qatar", icon: "ðŸŽ—ï¸" },
+  { name: "Midwifery", url: "/nurse-cpd", icon: "ðŸ¤°" },
+  { name: "Theatre / OR Nursing", url: "/nurse-cpd", icon: "ðŸ”¬" },
+  { name: "Ward / General Nursing", url: "/nurse-cpd", icon: "ðŸ©º" },
+  { name: "Community Nursing", url: "/nurse-cpd", icon: "ðŸ¡" },
 ];
 
 export default function NursesPage() {
@@ -113,11 +113,11 @@ export default function NursesPage() {
         <header className="bg-white border-b border-[#e2e8f0]">
           <div className="max-w-5xl mx-auto px-6 py-16">
             <div className="flex items-center gap-2 mb-4">
-              <span className="text-4xl" aria-hidden="true">👩‍⚕️</span>
-              <span className="text-xs font-bold text-[#1a56a0] bg-[#dbeafe] px-2.5 py-1 rounded-full uppercase tracking-wide">Registered Nurses · GCC & Global</span>
+              <span className="text-4xl" aria-hidden="true">ðŸ‘©â€âš•ï¸</span>
+              <span className="text-xs font-bold text-[#1a56a0] bg-[#dbeafe] px-2.5 py-1 rounded-full uppercase tracking-wide">Registered Nurses Â· GCC & Global</span>
             </div>
             <h1 className="text-4xl font-bold text-[#0f1f3d] tracking-tight mb-5 leading-tight max-w-3xl">
-              CPD requirements for nurses — every country, every authority
+              CPD requirements for nurses â€” every country, every authority
             </h1>
             <p className="text-lg text-[#64748b] max-w-2xl leading-relaxed mb-8">
               Registered nurses worldwide must complete CPD or CME to renew their nursing license.
@@ -126,10 +126,10 @@ export default function NursesPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <Link href="/register" className="inline-flex items-center gap-2 bg-[#1a56a0] text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-[#1547a0] transition-colors shadow-md shadow-blue-900/15">
-                Track my nursing CPD — free
+                Track my nursing CPD â€” free
               </Link>
               <Link href="/nurse-cpd" className="inline-flex items-center gap-2 border border-[#c7daf7] text-[#1a56a0] bg-white px-6 py-3 rounded-xl font-semibold text-sm hover:bg-[#f0f7ff] transition-colors">
-                Nurse CPD guide →
+                Nurse CPD guide â†’
               </Link>
             </div>
           </div>
@@ -142,13 +142,13 @@ export default function NursesPage() {
             <h2 id="gcc-heading" className="text-2xl font-bold text-[#0f1f3d] mb-5">Nurse CPD requirements by GCC country</h2>
             <div className="space-y-3">
               {[
-                { flag: "🇶🇦", country: "Qatar", authority: "QCHP / DHP-AS", credits: "80 CPD", cycle: "2 years", terminology: "CPD", slug: "qatar" },
-                { flag: "🇸🇦", country: "Saudi Arabia", authority: "SCFHS", credits: "40–60 CME", cycle: "1–3 years", terminology: "CME", slug: "saudi-arabia" },
-                { flag: "🇦🇪", country: "UAE (Dubai)", authority: "DHA", credits: "40 CME", cycle: "2 years", terminology: "CME", slug: "uae" },
-                { flag: "🇦🇪", country: "UAE (Abu Dhabi)", authority: "DOH", credits: "30–50 CPD", cycle: "2 years", terminology: "CPD", slug: "uae" },
-                { flag: "🇧🇭", country: "Bahrain", authority: "NHRA", credits: "40 CPD", cycle: "2 years", terminology: "CPD", slug: "bahrain" },
-                { flag: "🇰🇼", country: "Kuwait", authority: "MOH", credits: "30 CME", cycle: "1 year", terminology: "CME", slug: "kuwait" },
-                { flag: "🇴🇲", country: "Oman", authority: "OMSB", credits: "40 CME", cycle: "2 years", terminology: "CME", slug: "oman" },
+                { flag: "ðŸ‡¶ðŸ‡¦", country: "Qatar", authority: "QCHP / DHP-AS", credits: "80 CPD", cycle: "2 years", terminology: "CPD", slug: "qatar" },
+                { flag: "ðŸ‡¸ðŸ‡¦", country: "Saudi Arabia", authority: "SCFHS", credits: "40â€“60 CME", cycle: "1â€“3 years", terminology: "CME", slug: "saudi-arabia" },
+                { flag: "ðŸ‡¦ðŸ‡ª", country: "UAE (Dubai)", authority: "DHA", credits: "40 CME", cycle: "2 years", terminology: "CME", slug: "uae" },
+                { flag: "ðŸ‡¦ðŸ‡ª", country: "UAE (Abu Dhabi)", authority: "DOH", credits: "30â€“50 CPD", cycle: "2 years", terminology: "CPD", slug: "uae" },
+                { flag: "ðŸ‡§ðŸ‡­", country: "Bahrain", authority: "NHRA", credits: "40 CPD", cycle: "2 years", terminology: "CPD", slug: "bahrain" },
+                { flag: "ðŸ‡°ðŸ‡¼", country: "Kuwait", authority: "MOH", credits: "30 CME", cycle: "1 year", terminology: "CME", slug: "kuwait" },
+                { flag: "ðŸ‡´ðŸ‡²", country: "Oman", authority: "OMSB", credits: "40 CME", cycle: "2 years", terminology: "CME", slug: "oman" },
               ].map(({ flag, country, authority, credits, cycle, slug }) => (
                 <div key={`${country}-${authority}`} className="bg-white border border-[#e2e8f0] rounded-xl px-6 py-4 flex items-center justify-between flex-wrap gap-4">
                   <div className="flex items-center gap-3">
@@ -164,7 +164,7 @@ export default function NursesPage() {
                       <p className="text-xs text-[#64748b]">{cycle}</p>
                     </div>
                     <Link href={`/${slug}/cme`} className="text-xs font-semibold text-[#1a56a0] border border-[#c7daf7] px-3 py-1.5 rounded-lg hover:bg-[#f0f7ff] transition-colors">
-                      Full guide →
+                      Full guide â†’
                     </Link>
                   </div>
                 </div>
@@ -187,7 +187,7 @@ export default function NursesPage() {
 
           {/* FAQ */}
           <section aria-labelledby="faq-heading">
-            <h2 id="faq-heading" className="text-2xl font-bold text-[#0f1f3d] mb-6">Nurse CPD — frequently asked questions</h2>
+            <h2 id="faq-heading" className="text-2xl font-bold text-[#0f1f3d] mb-6">Nurse CPD â€” frequently asked questions</h2>
             <div className="space-y-4">
               {faqLd.mainEntity.map(q => (
                 <div key={q.name} className="bg-white border border-[#e2e8f0] rounded-xl p-6">
@@ -203,10 +203,10 @@ export default function NursesPage() {
             <h2 id="professions-heading" className="text-xl font-bold text-[#0f1f3d] mb-4">Other healthcare professions</h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {[
-                { name: "Doctors", href: "/doctors", icon: "🩺" },
-                { name: "Pharmacists", href: "/pharmacists", icon: "💊" },
-                { name: "Dentists", href: "/dentists", icon: "🦷" },
-                { name: "Physiotherapists", href: "/physiotherapists", icon: "🏃" },
+                { name: "Doctors", url: "/doctors", icon: "ðŸ©º" },
+                { name: "Pharmacists", url: "/pharmacists", icon: "ðŸ’Š" },
+                { name: "Dentists", url: "/dentists", icon: "ðŸ¦·" },
+                { name: "Physiotherapists", url: "/physiotherapists", icon: "ðŸƒ" },
               ].map(({ name, href, icon }) => (
                 <Link key={href} href={href} className="group bg-white border border-[#e2e8f0] rounded-xl p-4 hover:border-[#1a56a0]/30 hover:shadow-sm transition-all text-center">
                   <span className="text-2xl block mb-2" aria-hidden="true">{icon}</span>
@@ -217,12 +217,12 @@ export default function NursesPage() {
           </section>
 
           <section className="bg-[#1a56a0] rounded-2xl p-8 text-center text-white">
-            <h2 className="text-2xl font-bold mb-3">Track your nursing CPD — free</h2>
+            <h2 className="text-2xl font-bold mb-3">Track your nursing CPD â€” free</h2>
             <p className="text-white/75 mb-6 max-w-md mx-auto text-sm">
               Hayya Med Pro tracks nursing CPD for all GCC countries and alerts you before every renewal deadline.
             </p>
             <Link href="/register" className="inline-block bg-white text-[#1a56a0] px-6 py-3 rounded-xl font-bold text-sm hover:bg-blue-50 transition-colors">
-              Start free — 3 minutes
+              Start free â€” 3 minutes
             </Link>
           </section>
 
@@ -235,3 +235,4 @@ export default function NursesPage() {
     </>
   );
 }
+
