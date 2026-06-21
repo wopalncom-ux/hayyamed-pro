@@ -175,7 +175,7 @@ export default function PharmacistsPage() {
                 { name: "Nurses", url: "/nurses", icon: "ðŸ‘©â€âš•ï¸" },
                 { name: "Dentists", url: "/dentists", icon: "ðŸ¦·" },
                 { name: "Physiotherapists", url: "/physiotherapists", icon: "ðŸƒ" },
-              ].map(({ name, href, icon }) => (
+              ].map(({ name, url: href, icon }) => (
                 <Link key={href} href={href} className="group bg-white border border-[#e2e8f0] rounded-xl p-4 hover:border-[#1a56a0]/30 hover:shadow-sm transition-all text-center">
                   <span className="text-2xl block mb-2" aria-hidden="true">{icon}</span>
                   <p className="text-sm font-semibold text-[#0f1f3d] group-hover:text-[#1a56a0]">{name}</p>
@@ -203,4 +203,5 @@ export default function PharmacistsPage() {
     </>
   );
 }
+
 

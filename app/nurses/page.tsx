@@ -176,7 +176,7 @@ export default function NursesPage() {
           <section aria-labelledby="specialties-heading">
             <h2 id="specialties-heading" className="text-2xl font-bold text-[#0f1f3d] mb-5">CPD by nursing specialty</h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              {NURSING_SPECIALTIES.map(({ name, href, icon }) => (
+              {NURSING_SPECIALTIES.map(({ name, url: href, icon }) => (
                 <Link key={name} href={href} className="group bg-white border border-[#e2e8f0] rounded-xl p-4 hover:border-[#1a56a0]/30 hover:shadow-sm transition-all text-center">
                   <span className="text-2xl block mb-2" aria-hidden="true">{icon}</span>
                   <p className="text-xs font-semibold text-[#0f1f3d] group-hover:text-[#1a56a0] leading-tight">{name}</p>
@@ -207,7 +207,7 @@ export default function NursesPage() {
                 { name: "Pharmacists", url: "/pharmacists", icon: "ðŸ’Š" },
                 { name: "Dentists", url: "/dentists", icon: "ðŸ¦·" },
                 { name: "Physiotherapists", url: "/physiotherapists", icon: "ðŸƒ" },
-              ].map(({ name, href, icon }) => (
+              ].map(({ name, url: href, icon }) => (
                 <Link key={href} href={href} className="group bg-white border border-[#e2e8f0] rounded-xl p-4 hover:border-[#1a56a0]/30 hover:shadow-sm transition-all text-center">
                   <span className="text-2xl block mb-2" aria-hidden="true">{icon}</span>
                   <p className="text-sm font-semibold text-[#0f1f3d] group-hover:text-[#1a56a0]">{name}</p>
@@ -235,4 +235,5 @@ export default function NursesPage() {
     </>
   );
 }
+
 
