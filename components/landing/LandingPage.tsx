@@ -12,7 +12,6 @@ import {
 } from "framer-motion";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
-import SiteFooter from "@/components/SiteFooter";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { triggerAppDownloadModal } from "@/components/AppDownloadModal";
 
@@ -1850,7 +1849,6 @@ export default function LandingPage() {
             <ResourcesSection />
             <FinalCTA />
           </main>
-          <SiteFooter />
         </div>
       </MotionConfig>
     </>
