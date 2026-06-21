@@ -1,6 +1,6 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
+import FoundersSection from "@/components/about/FoundersSection";
 
 export const metadata: Metadata = {
   title: "About Hayya Med Pro — Healthcare CME Compliance Platform for the GCC",
@@ -33,26 +33,6 @@ const authorities = [
   { name: "OMSB", full: "Oman Medical Specialty Board", country: "Oman", flag: "🇴🇲" },
 ];
 
-const founders = [
-  {
-    name: "Dr. Khaled Sadeddine",
-    role: "Founder Partner",
-    photo: "/Team/Khaled.jpeg",
-    bio: "Seasoned enterprise transformation leader with extensive experience in management consulting, innovation strategy, and organizational development. He has led large-scale transformation initiatives and startup ecosystem development across multiple sectors, contributing to Hayya Med Pro's long-term vision, innovation strategy, and transformation roadmap.",
-  },
-  {
-    name: "Abbas Al Masri",
-    role: "Founder Partner",
-    photo: "/Team/abbas.jpeg",
-    bio: "Experienced business leader with a strong background in healthcare operations, strategic partnerships, and organizational growth. He has served in senior leadership roles within Qatar's healthcare sector, including as Chief Operating Officer of leading healthcare organizations, and serves as CEO of Hayya Med AI.",
-  },
-  {
-    name: "Dr. Lina Aboutouk",
-    role: "Founder Partner",
-    photo: "/Team/Lina.jpeg",
-    bio: "Healthcare and educational leadership professional with expertise in stakeholder engagement, organizational coordination, and capability-building. She guides professional engagement strategies, education-focused initiatives, and healthcare workforce development programs, bringing a commitment to quality and continuous learning.",
-  },
-];
 
 const principles = [
   {
@@ -155,79 +135,7 @@ export default function AboutPage() {
         </section>
 
         {/* Founding Team */}
-        <section className="py-20 px-4 sm:px-6 bg-[#0f1f3d]">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-14">
-              <p className="text-xs font-semibold text-[#93c5fd] uppercase tracking-[0.2em] mb-3">Leadership</p>
-              <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">Founding Team</h2>
-              <div className="w-16 h-px bg-gradient-to-r from-transparent via-[#3b82f6] to-transparent mx-auto mb-5" />
-              <p className="text-sm text-[#8ea5c8] max-w-xl mx-auto leading-relaxed">
-                Built by leaders with deep roots in GCC healthcare operations, enterprise transformation, and professional development.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-7">
-              {founders.map((f) => (
-                <div
-                  key={f.name}
-                  className="group flex flex-col overflow-hidden rounded-2xl shadow-2xl"
-                  style={{ boxShadow: "0 8px 40px rgba(0,0,0,0.45)" }}
-                >
-                  {/* Photo area — navy gradient background, same for all */}
-                  <div
-                    className="relative overflow-hidden"
-                    style={{
-                      height: 280,
-                      background: "linear-gradient(160deg, #060c1a 0%, #0d1f40 45%, #1a3a6e 100%)",
-                    }}
-                  >
-                    {/* Subtle mesh overlay */}
-                    <div
-                      className="absolute inset-0 opacity-[0.07]"
-                      style={{
-                        backgroundImage:
-                          "repeating-linear-gradient(0deg,#fff 0,#fff 1px,transparent 1px,transparent 32px),repeating-linear-gradient(90deg,#fff 0,#fff 1px,transparent 1px,transparent 32px)",
-                      }}
-                    />
-                    {/* Radial glow behind subject */}
-                    <div
-                      className="absolute inset-0"
-                      style={{
-                        background:
-                          "radial-gradient(ellipse 70% 80% at 50% 60%, rgba(26,86,160,0.35) 0%, transparent 70%)",
-                      }}
-                    />
-                    <Image
-                      src={f.photo}
-                      alt={f.name}
-                      fill
-                      className="object-cover object-top"
-                      sizes="(max-width:640px) 100vw, 33vw"
-                    />
-                    {/* Bottom fade into card */}
-                    <div
-                      className="absolute bottom-0 left-0 right-0 h-20"
-                      style={{
-                        background:
-                          "linear-gradient(to top, #0a1628 0%, transparent 100%)",
-                      }}
-                    />
-                  </div>
-
-                  {/* Content */}
-                  <div className="flex-1 flex flex-col items-center text-center px-6 pt-5 pb-7"
-                    style={{ background: "linear-gradient(180deg, #0a1628 0%, #0d1e3c 100%)" }}>
-                    {/* Accent line */}
-                    <div className="w-10 h-px bg-gradient-to-r from-transparent via-[#3b82f6] to-transparent mb-4" />
-                    <h3 className="text-base font-bold text-white mb-1 leading-tight">{f.name}</h3>
-                    <p className="text-[10px] font-semibold text-[#93c5fd] uppercase tracking-[0.18em] mb-4">{f.role}</p>
-                    <p className="text-sm text-[#8ea5c8] leading-relaxed">{f.bio}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <FoundersSection />
 
         {/* Authorities */}
         <section className="py-12 bg-white border-b border-[#e2e8f0] px-4 sm:px-6">

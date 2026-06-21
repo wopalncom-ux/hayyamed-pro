@@ -280,6 +280,7 @@ const MOB_NAV_LINKS = [
   { href: "#ai", label: "Hayya AI" },
   { href: "/employers", label: "For Employers" },
   { href: "/pricing", label: "Pricing" },
+  { href: "/about", label: "About" },
   { href: "#", label: "📲 Download App", download: true },
 ];
 
@@ -339,6 +340,7 @@ function Nav() {
           <a href="#ai" className="hover:text-[#1a56a0] transition-colors">{t("hayya_ai")}</a>
           <Link href="/employers" className="hover:text-[#1a56a0] transition-colors">{t("for_employers")}</Link>
           <Link href="/pricing" className="hover:text-[#1a56a0] transition-colors">{t("pricing")}</Link>
+          <Link href="/about" className="hover:text-[#1a56a0] transition-colors">About</Link>
           <button
             type="button"
             onClick={() => triggerAppDownloadModal()}
