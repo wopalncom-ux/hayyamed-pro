@@ -10,7 +10,7 @@ export default async function GovernmentLayout({ children }: { children: React.R
   const admin = createAdminClient();
   const { data: member } = await admin
     .from("organization_members")
-    .select("role, organizations(name, verified)")
+    .select("role, organization_id, organizations(name, verified)")
     .eq("auth_id", user.id)
     .in("role", ["government_admin", "government_staff"])
     .maybeSingle();
@@ -22,6 +22,7 @@ export default async function GovernmentLayout({ children }: { children: React.R
   const orgName = org?.name ?? "Your Authority";
   const isVerified = org?.verified ?? false;
   const isAdmin = member.role === "government_admin";
+  const orgId = member.organization_id as string;
 
   return (
     <div className="min-h-screen bg-[#f8fafc]">
