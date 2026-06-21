@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import {
   LayoutDashboard, BookOpen, PenLine, Sparkles, Map, BarChart2,
   CreditCard, Award, ShoppingBag, GraduationCap, Bell, Users,
-  Receipt, Settings, Building2, Download, Search,
+  Receipt, Settings, Building2, Download, Search, IdCard,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import NotificationBell from "./NotificationBell";
@@ -24,6 +24,7 @@ const NAV_ITEMS = [
   { href: "/dashboard/analytics",               label: "Analytics",     Icon: BarChart2 },
   { href: "/dashboard/licenses",                label: "Licenses",      Icon: CreditCard },
   { href: "/dashboard/certificates",            label: "Certificates",  Icon: Award },
+  { href: "/dashboard/passport",               label: "My Passport",   Icon: IdCard },
   { href: "/dashboard/marketplace",             label: "Marketplace",   Icon: ShoppingBag },
   { href: "/dashboard/marketplace/my-courses",  label: "My Courses",    Icon: GraduationCap },
   { href: "/dashboard/notifications",           label: "Notifications", Icon: Bell },
