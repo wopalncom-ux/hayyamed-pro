@@ -16,7 +16,7 @@ const founders = [
     name: "Abbas Al Masri",
     role: "Founder Partner",
     photo: "/Team/abbas.jpeg",
-    photoPosition: "object-center",
+    photoPosition: "object-contain object-bottom",
     bio: "Abbas Al Masri is a Founder Partner of Hayya Med Pro and an experienced business leader with a strong background in healthcare operations, business development, strategic partnerships, and organizational growth. Throughout his career, he has held senior leadership roles within Qatar's healthcare sector, including serving as Chief Operating Officer of leading healthcare organizations. His experience spans healthcare management, operational excellence, commercial strategy, and stakeholder engagement. Abbas is also the Chief Executive Officer of Hayya Med AI, where he leads initiatives focused on artificial intelligence, digital transformation, enterprise technology, and innovation. His vision for Hayya Med Pro is centered on simplifying healthcare compliance, supporting professional development, and creating smarter digital solutions for healthcare professionals and organizations. As a Founder Partner, he contributes to the strategic direction, ecosystem development, growth initiatives, and long-term expansion of the platform.",
   },
   {
