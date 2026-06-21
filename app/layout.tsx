@@ -8,6 +8,7 @@ import { AppDownloadModal } from "@/components/AppDownloadModal";
 import { PostHogProvider } from "@/components/PostHogProvider";
 import CookieConsent from "@/components/CookieConsent";
 import ConditionalFooter from "@/components/ConditionalFooter";
+import HayyaAssistant from "@/components/HayyaAssistant";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -86,6 +87,7 @@ export default async function RootLayout({
           </NextIntlClientProvider>
         </PostHogProvider>
         <ConditionalFooter />
+        <HayyaAssistant />
         <CookieConsent />
         <PWARegister />
         <PWAInstallPrompt />
