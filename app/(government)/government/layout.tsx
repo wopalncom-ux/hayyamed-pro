@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
+import GovernmentAIFloating from "@/components/government/GovernmentAIFloating";
 
 export default async function GovernmentLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient();
@@ -68,6 +69,7 @@ export default async function GovernmentLayout({ children }: { children: React.R
         </div>
       </nav>
       <main className="max-w-6xl mx-auto px-4 py-8">{children}</main>
+      <GovernmentAIFloating organizationId={orgId} />
     </div>
   );
 }
