@@ -19,7 +19,7 @@ function MarkdownText({ text }: { text: string }) {
     .replace(/\*(.*?)\*/g, "<em>$1</em>")
     .replace(/^• (.+)$/gm, "<li>$1</li>")
     .replace(/^- (.+)$/gm, "<li>$1</li>")
-    .replace(/(<li>.*<\/li>)/gs, "<ul class=\"list-disc pl-4 space-y-0.5\">$1</ul>")
+    .replace(/(<li>[\s\S]*?<\/li>)/g, "<ul class=\"list-disc pl-4 space-y-0.5\">$1</ul>")
     .replace(/\n\n/g, "</p><p class=\"mt-2\">")
     .replace(/\n/g, "<br/>");
   return <p dangerouslySetInnerHTML={{ __html: `<p>${html}</p>` }} />;
