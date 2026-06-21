@@ -1,26 +1,15 @@
-﻿import { createClient, createAdminClient } from "@/lib/supabase/server";
+import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import InviteLinkButton from "@/components/employer/InviteLinkButton";
-import LinkRequestActions from "@/components/employer/LinkRequestActions";
+import BulkApproveRequests from "@/components/government/BulkApproveRequests";
+import ComplianceTrendChart from "@/components/government/ComplianceTrendChart";
+import RenewalCycleCountdown from "@/components/government/RenewalCycleCountdown";
+import GovernmentForecastPanel from "@/components/government/GovernmentForecastPanel";
 
 export const metadata = { title: "Authority Dashboard — Hayya Med Pro" };
 
 type ComplianceStatus = "compliant" | "at_risk" | "non_compliant" | "unknown";
-
-interface Professional {
-  linkId: string;
-  professionalId: string;
-  name: string;
-  profession: string;
-  specialty: string;
-  cmeVisible: boolean;
-  completedCredits: number | null;
-  requiredCredits: number | null;
-  complianceStatus: ComplianceStatus;
-  licenseExpiry: string | null;
-  daysToExpiry: number | null;
-}
 
 const STATUS_CONFIG: Record<ComplianceStatus, { label: string; classes: string }> = {
   compliant:     { label: "Compliant",     classes: "bg-[#dcfce7] text-[#16a34a]" },
@@ -45,7 +34,7 @@ export default async function GovernmentDashboardPage({
     .from("organization_members")
     .select("organization_id, organizations(name, verified)")
     .eq("auth_id", user.id)
-    .eq("role", "government_admin")
+    .in("role", ["government_admin", "government_staff"])
     .maybeSingle();
 
   if (!member) redirect("/dashboard");
@@ -77,7 +66,7 @@ export default async function GovernmentDashboardPage({
   const approvedIds = approved.map((r) => r.professional_id);
   const pendingIds = pending.map((r) => r.professional_id);
 
-  const [profilesRes, pendingProfilesRes, privacyRes, walletsRes] = await Promise.all([
+  const [profilesRes, pendingProfilesRes, privacyRes, walletsRes, snapshotsRes, countryRulesRes] = await Promise.all([
     approvedIds.length
       ? admin.from("professional_profiles")
           .select("auth_id, full_name, profession, specialty, license_expiry")
@@ -98,6 +87,20 @@ export default async function GovernmentDashboardPage({
           .select("professional_id, completed_credits, required_credits, compliance_status")
           .in("professional_id", approvedIds)
       : Promise.resolve({ data: [] }),
+    // Compliance trend: last 90 days of snapshots
+    admin.from("organization_compliance_snapshots")
+      .select("snapshot_date, total_staff, compliant, at_risk, non_compliant")
+      .eq("organization_id", orgId)
+      .order("snapshot_date", { ascending: true })
+      .limit(90),
+    // Country rules for renewal cycle countdown
+    govSettings?.jurisdiction_country
+      ? admin.from("country_compliance_rules")
+          .select("cycle_months, cycle_start_month, credits_required")
+          .eq("country_code", govSettings.jurisdiction_country)
+          .limit(1)
+          .maybeSingle()
+      : Promise.resolve({ data: null }),
   ]);
 
   const profileMap = Object.fromEntries((profilesRes.data ?? []).map((p) => [p.auth_id, p]));
@@ -105,7 +108,7 @@ export default async function GovernmentDashboardPage({
   const privacyMap = Object.fromEntries((privacyRes.data ?? []).map((p) => [p.professional_id, p]));
   const walletMap = Object.fromEntries((walletsRes.data ?? []).map((w) => [w.professional_id, w]));
 
-  const professionals: Professional[] = approved.map((link) => {
+  const professionals = approved.map((link) => {
     const profile = profileMap[link.professional_id];
     const privacy = privacyMap[link.professional_id];
     const wallet = walletMap[link.professional_id];
@@ -115,7 +118,6 @@ export default async function GovernmentDashboardPage({
     const daysToExpiry = licenseExpiry
       ? Math.ceil((new Date(licenseExpiry).getTime() - Date.now()) / 86400000)
       : null;
-
     return {
       linkId: link.id,
       professionalId: link.professional_id,
@@ -138,8 +140,7 @@ export default async function GovernmentDashboardPage({
   const expiringSoon = professionals.filter((p) => p.daysToExpiry !== null && p.daysToExpiry <= 30 && p.daysToExpiry >= 0).length;
   const complianceRate = total > 0 ? Math.round((compliant / total) * 100) : 0;
 
-  // Group by profession
-  const professionMap = new Map<string, Professional[]>();
+  const professionMap = new Map<string, typeof professionals>();
   for (const p of professionals) {
     const key = p.profession || "Other";
     if (!professionMap.has(key)) professionMap.set(key, []);
@@ -154,6 +155,26 @@ export default async function GovernmentDashboardPage({
             (p.daysToExpiry !== null && p.daysToExpiry <= 30)
   );
 
+  // Prepare trend chart data
+  const snapshots = (snapshotsRes.data ?? []).map((s) => ({
+    date: s.snapshot_date as string,
+    total: s.total_staff as number,
+    compliant: s.compliant as number,
+    atRisk: s.at_risk as number,
+    nonCompliant: s.non_compliant as number,
+  }));
+
+  // Renewal cycle data
+  const countryRule = countryRulesRes?.data as { cycle_months: number; cycle_start_month: number; credits_required: number } | null;
+
+  // Pending requests for bulk approve
+  const pendingRequests = pending.map((req) => ({
+    id: req.id,
+    name: pendingProfileMap[req.professional_id]?.full_name ?? "Unknown",
+    profession: pendingProfileMap[req.professional_id]?.profession ?? "—",
+    requestedAt: req.requested_at as string,
+  }));
+
   return (
     <div>
       {sp.setup === "complete" && (
@@ -165,22 +186,17 @@ export default async function GovernmentDashboardPage({
           </div>
           <div>
             <p className="text-sm font-semibold text-[#15803d]">Authority registered — government dashboard is active</p>
-            <p className="text-xs text-[#64748b] mt-0.5">
-              Share your invite link with healthcare professionals to start tracking compliance.
-              Our team will verify your authority within 1 business day.
-            </p>
+            <p className="text-xs text-[#64748b] mt-0.5">Share your invite link with healthcare professionals to start tracking compliance.</p>
           </div>
         </div>
       )}
 
       {!isVerified && sp.setup !== "complete" && (
         <div className="bg-[#fff7ed] border border-[#fed7aa] rounded-xl px-5 py-4 mb-6 flex items-start gap-3">
-          <span className="text-lg flex-shrink-0">&#x23F3;</span>
+          <span className="text-lg flex-shrink-0">⏳</span>
           <div>
             <p className="text-sm font-semibold text-[#92400e]">Authority verification pending</p>
-            <p className="text-xs text-[#374151] mt-0.5">
-              Your authority is being verified by our team. You can configure settings and share the invite link in the meantime.
-            </p>
+            <p className="text-xs text-[#374151] mt-0.5">Your authority is being verified. You can configure settings and share the invite link in the meantime.</p>
           </div>
         </div>
       )}
@@ -200,14 +216,14 @@ export default async function GovernmentDashboardPage({
               href="/government/reports"
               className="text-sm bg-white border border-[#e2e8f0] text-[#374151] px-4 py-2 rounded-lg hover:bg-[#f8fafc] transition-colors font-medium"
             >
-              Download reports
+              Reports
             </Link>
           )}
         </div>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 sm:grid-cols-6 gap-3 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-6 gap-3 mb-6">
         <StatCard label="Registered" value={total.toString()} color="blue" />
         <StatCard label="Compliant" value={compliant.toString()} color="green" />
         <StatCard label="At Risk" value={atRisk.toString()} color="orange" />
@@ -220,11 +236,40 @@ export default async function GovernmentDashboardPage({
         />
       </div>
 
+      {/* Renewal Cycle Countdown */}
+      {countryRule && total > 0 && (
+        <RenewalCycleCountdown
+          cycleMonths={countryRule.cycle_months}
+          cycleStartMonth={countryRule.cycle_start_month}
+          nonCompliantCount={nonCompliant + atRisk}
+          totalCount={total}
+          countryCode={govSettings?.jurisdiction_country ?? "QA"}
+        />
+      )}
+
+      {/* Compliance Trend Chart */}
+      {snapshots.length > 0 && (
+        <div className="bg-white rounded-xl border border-[#e2e8f0] p-6 mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="text-base font-semibold text-[#111]">Compliance Trend</h2>
+              <p className="text-xs text-[#64748b] mt-0.5">Daily compliance rate over the last {snapshots.length} days</p>
+            </div>
+          </div>
+          <ComplianceTrendChart snapshots={snapshots} />
+        </div>
+      )}
+
+      {/* AI Forecast */}
+      {total >= 5 && (
+        <GovernmentForecastPanel organizationId={orgId} />
+      )}
+
       {/* Attention alerts */}
       {needsAttention.length > 0 && (
         <div className="bg-[#fef9c3] border border-[#fde68a] rounded-xl p-4 mb-6">
           <p className="text-sm font-semibold text-[#92400e] mb-2">
-            &#x26A0; {needsAttention.length} professional{needsAttention.length > 1 ? "s" : ""} need attention
+            ⚠ {needsAttention.length} professional{needsAttention.length > 1 ? "s" : ""} need attention
           </p>
           <div className="space-y-1">
             {needsAttention.slice(0, 5).map((p) => (
@@ -245,79 +290,49 @@ export default async function GovernmentDashboardPage({
         </div>
       )}
 
-      {/* Pending requests */}
-      {pending.length > 0 && (
-        <div className="bg-white rounded-xl border border-[#e2e8f0] mb-6">
-          <div className="px-6 py-4 border-b border-[#e2e8f0]">
-            <h2 className="text-base font-semibold text-[#111]">Pending Registration Requests</h2>
-            <p className="text-xs text-[#64748b] mt-0.5">Professionals requesting to link with your authority</p>
-          </div>
-          <div className="divide-y divide-[#e2e8f0]">
-            {pending.map((req) => {
-              const prof = pendingProfileMap[req.professional_id];
-              return (
-                <div key={req.id} className="px-6 py-4 flex items-center justify-between gap-4">
-                  <div>
-                    <p className="text-sm font-medium text-[#111]">{prof?.full_name ?? "Unknown"}</p>
-                    <p className="text-xs text-[#64748b] mt-0.5">
-                      {prof?.profession ?? "—"} &middot; Requested {new Date(req.requested_at).toLocaleDateString()}
-                    </p>
-                  </div>
-                  <LinkRequestActions requestId={req.id} organizationId={orgId} />
-                </div>
-              );
-            })}
-          </div>
-        </div>
+      {/* Bulk Approve Pending Requests */}
+      {pendingRequests.length > 0 && (
+        <BulkApproveRequests requests={pendingRequests} organizationId={orgId} />
       )}
 
-      {/* Registry grouped by profession */}
+      {/* Professional Registry */}
       <div className="bg-white rounded-xl border border-[#e2e8f0]">
         <div className="px-6 py-4 border-b border-[#e2e8f0] flex items-center justify-between">
           <div>
             <h2 className="text-base font-semibold text-[#111]">Professional Registry</h2>
-            <p className="text-xs text-[#64748b] mt-0.5">
-              CME and license data visible only where professionals have given consent.
-            </p>
+            <p className="text-xs text-[#64748b] mt-0.5">CME and license data visible only where professionals have given consent.</p>
           </div>
           {total > 0 && (
-            <Link
-              href="/government/registry"
-              className="text-xs text-[#1a56a0] hover:underline font-medium"
-            >
-              View full registry &rarr;
-            </Link>
+            <div className="flex items-center gap-3">
+              <a
+                href="/api/government/export-registry"
+                className="text-xs px-3 py-1.5 border border-[#e2e8f0] text-[#374151] rounded-lg hover:bg-[#f8fafc] transition-colors font-medium flex items-center gap-1.5"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+                CSV
+              </a>
+              <Link
+                href="/government/registry"
+                className="text-xs text-[#1a56a0] hover:underline font-medium"
+              >
+                View full registry →
+              </Link>
+            </div>
           )}
         </div>
 
         {professionals.length === 0 ? (
-          <div className="px-6 py-10">
-            <div className="text-center mb-8">
-              <div className="w-16 h-16 rounded-2xl bg-[#e8f0fe] flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">&#x1F3DB;</span>
-              </div>
-              <h3 className="text-base font-bold text-[#111] mb-1">No professionals registered yet</h3>
-              <p className="text-sm text-[#64748b] max-w-sm mx-auto">
-                Share your invite link with healthcare professionals so they can link their Hayya Med Pro accounts
-                with your authority.
-              </p>
+          <div className="px-6 py-10 text-center">
+            <div className="w-16 h-16 rounded-2xl bg-[#e8f0fe] flex items-center justify-center mx-auto mb-4">
+              <span className="text-3xl">🏛</span>
             </div>
-            <div className="mb-6 flex justify-center">
-              <InviteLinkButton organizationId={orgId} orgName={orgName} />
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
-              {[
-                { step: "1", title: "Share invite link", body: "Share your authority invite link via email or official channels." },
-                { step: "2", title: "Professionals opt in", body: "Professionals register on Hayya Med Pro and link their account to your authority." },
-                { step: "3", title: "Track compliance", body: "Approve requests to view CME, licensing, and renewal compliance in real time." },
-              ].map(({ step, title, body }) => (
-                <div key={step} className="bg-[#f8fafc] rounded-xl border border-[#e2e8f0] p-4 text-center">
-                  <div className="w-8 h-8 rounded-full bg-[#1a56a0] text-white text-sm font-bold flex items-center justify-center mx-auto mb-2">{step}</div>
-                  <p className="text-xs font-semibold text-[#111] mb-1">{title}</p>
-                  <p className="text-xs text-[#64748b] leading-relaxed">{body}</p>
-                </div>
-              ))}
-            </div>
+            <h3 className="text-base font-bold text-[#111] mb-1">No professionals registered yet</h3>
+            <p className="text-sm text-[#64748b] max-w-sm mx-auto mb-6">
+              Share your invite link with healthcare professionals so they can link their accounts with your authority.
+            </p>
+            <InviteLinkButton organizationId={orgId} orgName={orgName} />
           </div>
         ) : (
           professionGroups.map((group) => {
@@ -335,8 +350,6 @@ export default async function GovernmentDashboardPage({
                     {gNonCompliant > 0 && <span className="bg-[#fef2f2] text-[#dc2626] px-1.5 py-0.5 rounded font-medium">{gNonCompliant}</span>}
                   </div>
                 </div>
-
-                {/* Desktop */}
                 <div className="hidden sm:block overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
@@ -390,8 +403,6 @@ export default async function GovernmentDashboardPage({
                     </tbody>
                   </table>
                 </div>
-
-                {/* Mobile */}
                 <div className="sm:hidden divide-y divide-[#e2e8f0]">
                   {group.members.map((p) => (
                     <div key={p.professionalId} className="px-4 py-4">

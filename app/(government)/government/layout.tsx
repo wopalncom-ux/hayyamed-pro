@@ -11,7 +11,7 @@ export default async function GovernmentLayout({ children }: { children: React.R
     .from("organization_members")
     .select("role, organizations(name, verified)")
     .eq("auth_id", user.id)
-    .eq("role", "government_admin")
+    .in("role", ["government_admin", "government_staff"])
     .maybeSingle();
 
   if (!member) redirect("/government/register");
@@ -20,6 +20,7 @@ export default async function GovernmentLayout({ children }: { children: React.R
   const org = Array.isArray(_orgs) ? _orgs[0] : (_orgs as { name: string; verified: boolean } | null);
   const orgName = org?.name ?? "Your Authority";
   const isVerified = org?.verified ?? false;
+  const isAdmin = member.role === "government_admin";
 
   return (
     <div className="min-h-screen bg-[#f8fafc]">
@@ -46,13 +47,15 @@ export default async function GovernmentLayout({ children }: { children: React.R
       <nav className="bg-white border-b border-[#e2e8f0] px-6">
         <div className="max-w-6xl mx-auto flex gap-6 text-sm overflow-x-auto">
           {[
-            { href: "/government",            label: "Dashboard" },
-            { href: "/government/registry",   label: "Registry" },
-            { href: "/government/reports",    label: "Reports" },
-            { href: "/government/settings",   label: "Settings" },
-            { href: "/government/api-keys",   label: "API Keys" },
-            { href: "/government/api",        label: "Integration" },
-          ].map(({ href, label }) => (
+            { href: "/government",             label: "Dashboard",   adminOnly: false },
+            { href: "/government/registry",    label: "Registry",    adminOnly: false },
+            { href: "/government/reports",     label: "Reports",     adminOnly: false },
+            { href: "/government/broadcast",   label: "Broadcast",   adminOnly: true  },
+            { href: "/government/team",        label: "Team",        adminOnly: true  },
+            { href: "/government/settings",    label: "Settings",    adminOnly: true  },
+            { href: "/government/api-keys",    label: "API Keys",    adminOnly: true  },
+            { href: "/government/api",         label: "Integration", adminOnly: true  },
+          ].filter((item) => !item.adminOnly || isAdmin).map(({ href, label }) => (
             <a
               key={href}
               href={href}
