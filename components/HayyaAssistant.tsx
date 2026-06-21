@@ -20,12 +20,8 @@ const SUGGESTED = [
   "What does the Pro plan include?",
 ];
 
-declare global {
-  interface Window {
-    SpeechRecognition: typeof SpeechRecognition;
-    webkitSpeechRecognition: typeof SpeechRecognition;
-  }
-}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type AnySpeechRecognition = any;
 
 export default function HayyaAssistant() {
   const pathname = usePathname();
@@ -42,13 +38,15 @@ export default function HayyaAssistant() {
 
   const inputRef = useRef<HTMLInputElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
-  const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const recognitionRef = useRef<AnySpeechRecognition>(null);
 
   // Check if voice is supported
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const w = window as any;
     setVoiceSupported(
       typeof window !== "undefined" &&
-        ("SpeechRecognition" in window || "webkitSpeechRecognition" in window)
+        (!!w.SpeechRecognition || !!w.webkitSpeechRecognition)
     );
   }, []);
 
@@ -120,7 +118,9 @@ export default function HayyaAssistant() {
   }, [loading, messages, mode, open, speak, speakEnabled]);
 
   const startRecording = useCallback(() => {
-    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const w = window as any;
+    const SR = w.SpeechRecognition || w.webkitSpeechRecognition;
     if (!SR) return;
 
     const recognition = new SR();
@@ -130,7 +130,8 @@ export default function HayyaAssistant() {
 
     recognition.onstart = () => setRecording(true);
 
-    recognition.onresult = (e: SpeechRecognitionEvent) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    recognition.onresult = (e: any) => {
       let interim = "";
       let final = "";
       for (let i = e.resultIndex; i < e.results.length; i++) {
