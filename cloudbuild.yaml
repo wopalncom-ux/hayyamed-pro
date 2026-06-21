@@ -65,6 +65,8 @@ steps:
       - 'NEXT_PUBLIC_POSTHOG_KEY=$_POSTHOG_KEY'
       - '--build-arg'
       - 'NEXT_PUBLIC_SENTRY_DSN=$_SENTRY_DSN'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_GA_ID=G-4HGH2F0YX3'
       - '--cache-from'
       - 'me-central1-docker.pkg.dev/project-38d955b0-84e7-44b6-8b5/hayyamed-pro/app:latest'
       - '.'
