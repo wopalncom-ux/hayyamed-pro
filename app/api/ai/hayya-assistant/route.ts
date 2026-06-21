@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { getAnthropicClient } from "@/lib/anthropic";
 import { HAYYA_ASSISTANT_SYSTEM_PROMPT } from "@/lib/ai/prompts/hayya-assistant";
-import { redis } from "@/lib/redis";
+import { aiLimiter } from "@/lib/rateLimit";
 
 const BodySchema = z.object({
   message: z.string().min(1).max(500),
@@ -18,9 +18,6 @@ const BodySchema = z.object({
   voice: z.boolean().default(false),
 });
 
-const RATE_LIMIT = 20;
-const RATE_WINDOW = 3600;
-
 export async function POST(req: NextRequest) {
   // IP-based rate limiting for public endpoint
   const ip =
@@ -28,12 +25,9 @@ export async function POST(req: NextRequest) {
     req.headers.get("x-real-ip") ??
     "anonymous";
 
-  const rateLimitKey = `hayya_assistant:${ip}`;
-
-  if (redis) {
-    const count = await redis.incr(rateLimitKey);
-    if (count === 1) await redis.expire(rateLimitKey, RATE_WINDOW);
-    if (count > RATE_LIMIT) {
+  if (aiLimiter) {
+    const result = await aiLimiter.limit(`hayya_assistant:${ip}`);
+    if (!result.success) {
       return NextResponse.json(
         { error: "Too many requests. Please wait before asking again." },
         { status: 429 }
