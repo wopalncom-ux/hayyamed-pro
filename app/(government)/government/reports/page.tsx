@@ -37,7 +37,7 @@ export default async function GovernmentReportsPage() {
   const [profilesRes, privacyRes, walletsRes] = await Promise.all([
     approvedIds.length
       ? admin.from("professional_profiles")
-          .select("auth_id, profession, specialty, license_expiry, country")
+          .select("auth_id, profession, specialty, license_expiry, country_of_residence")
           .in("auth_id", approvedIds)
       : Promise.resolve({ data: [] }),
     approvedIds.length
@@ -70,7 +70,7 @@ export default async function GovernmentReportsPage() {
     return {
       profession: profile.profession ?? "Unknown",
       specialty: profile.specialty ?? "Unknown",
-      country: profile.country ?? "Unknown",
+      country: profile.country_of_residence ?? "Unknown",
       cmeVisible,
       completedCredits: cmeVisible ? (wallet?.completed_credits ?? null) : null,
       requiredCredits: cmeVisible ? (wallet?.required_credits ?? null) : null,

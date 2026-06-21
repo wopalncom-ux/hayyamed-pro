@@ -46,7 +46,7 @@ export default async function GovernmentRegistryPage({
   const [profilesRes, privacyRes, walletsRes] = await Promise.all([
     approvedIds.length
       ? admin.from("professional_profiles")
-          .select("auth_id, full_name, profession, specialty, license_expiry, country")
+          .select("auth_id, full_name, profession, specialty, license_expiry, country_of_residence")
           .in("auth_id", approvedIds)
       : Promise.resolve({ data: [] }),
     approvedIds.length
@@ -81,7 +81,7 @@ export default async function GovernmentRegistryPage({
       name: profile.full_name ?? "Unknown",
       profession: profile.profession ?? "—",
       specialty: profile.specialty ?? "—",
-      country: profile.country ?? "—",
+      country: profile.country_of_residence ?? "—",
       cmeVisible,
       completedCredits: cmeVisible ? (wallet?.completed_credits ?? null) : null,
       requiredCredits: cmeVisible ? (wallet?.required_credits ?? null) : null,
