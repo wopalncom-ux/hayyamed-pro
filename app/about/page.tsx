@@ -32,6 +32,27 @@ const authorities = [
   { name: "OMSB", full: "Oman Medical Specialty Board", country: "Oman", flag: "🇴🇲" },
 ];
 
+const founders = [
+  {
+    name: "Dr. Khaled Sadeddine",
+    role: "Founder Partner",
+    initials: "KS",
+    bio: "Seasoned enterprise transformation leader with extensive experience in management consulting, innovation strategy, and organizational development. He has led large-scale transformation initiatives and startup ecosystem development across multiple sectors, contributing to Hayya Med Pro's long-term vision, innovation strategy, and transformation roadmap.",
+  },
+  {
+    name: "Abbas Al Masri",
+    role: "Founder Partner",
+    initials: "AA",
+    bio: "Experienced business leader with a strong background in healthcare operations, strategic partnerships, and organizational growth. He has served in senior leadership roles within Qatar's healthcare sector, including as Chief Operating Officer of leading healthcare organizations, and serves as CEO of Hayya Med AI.",
+  },
+  {
+    name: "Dr. Lina Aboutouk",
+    role: "Founder Partner",
+    initials: "LA",
+    bio: "Healthcare and educational leadership professional with expertise in stakeholder engagement, organizational coordination, and capability-building. She guides professional engagement strategies, education-focused initiatives, and healthcare workforce development programs, bringing a commitment to quality and continuous learning.",
+  },
+];
+
 const principles = [
   {
     icon: "🎯",
@@ -132,8 +153,34 @@ export default function AboutPage() {
           </div>
         </section>
 
+        {/* Founding Team */}
+        <section className="py-14 px-4 sm:px-6 bg-[#f8fafc] border-y border-[#e2e8f0]">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-10">
+              <p className="text-xs font-semibold text-[#1a56a0] uppercase tracking-widest mb-2">Leadership</p>
+              <h2 className="text-2xl font-bold text-[#111]">Founding Team</h2>
+              <p className="text-sm text-[#64748b] mt-2 max-w-xl mx-auto leading-relaxed">
+                Built by leaders with deep roots in GCC healthcare operations, enterprise transformation, and professional development.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              {founders.map((f) => (
+                <div key={f.name} className="bg-white rounded-2xl border border-[#e2e8f0] p-7 text-center flex flex-col items-center">
+                  {/* Photo placeholder — replace src with actual photo path when available */}
+                  <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#1a56a0] to-[#0f2d5e] flex items-center justify-center mb-5 shadow-md flex-shrink-0">
+                    <span className="text-white text-2xl font-bold tracking-tight">{f.initials}</span>
+                  </div>
+                  <h3 className="text-base font-bold text-[#111] mb-0.5">{f.name}</h3>
+                  <p className="text-xs font-semibold text-[#1a56a0] uppercase tracking-widest mb-4">{f.role}</p>
+                  <p className="text-sm text-[#64748b] leading-relaxed">{f.bio}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Authorities */}
-        <section className="py-12 bg-[#f8fafc] border-y border-[#e2e8f0] px-4 sm:px-6">
+        <section className="py-12 bg-white border-b border-[#e2e8f0] px-4 sm:px-6">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-2xl font-bold text-[#111] mb-2 text-center">
               Supported licensing authorities
