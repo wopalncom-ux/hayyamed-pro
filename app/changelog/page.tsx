@@ -1,5 +1,8 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
+import { createAdminClient } from "@/lib/supabase/server";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Changelog — Hayya Med Pro",
@@ -135,7 +138,28 @@ const RELEASES: Release[] = [
   },
 ];
 
-export default function ChangelogPage() {
+export default async function ChangelogPage() {
+  // Fetch published entries from DB; fall back to static RELEASES if none exist yet
+  const admin = createAdminClient();
+  const { data: dbEntries } = await admin
+    .from("changelog_entries")
+    .select("version, title, summary, items, published_at")
+    .eq("is_published", true)
+    .order("published_at", { ascending: false });
+
+  const releases: Release[] =
+    dbEntries && dbEntries.length > 0
+      ? dbEntries.map((e) => ({
+          version: e.version as string,
+          date: e.published_at
+            ? new Date(e.published_at as string).toLocaleDateString("en-GB", { month: "long", year: "numeric" })
+            : "",
+          title: e.title as string,
+          summary: (e.summary as string) ?? "",
+          entries: (e.items as ChangeEntry[]) ?? [],
+        }))
+      : RELEASES;
+
   return (
     <div className="min-h-screen bg-[#f8fafc]">
       {/* Nav */}
@@ -172,10 +196,10 @@ export default function ChangelogPage() {
 
         {/* Releases */}
         <div className="space-y-10">
-          {RELEASES.map((release, idx) => (
+          {releases.map((release, idx) => (
             <article key={release.version} className="relative">
               {/* Timeline connector */}
-              {idx < RELEASES.length - 1 && (
+              {idx < releases.length - 1 && (
                 <div className="absolute left-[11px] top-10 bottom-[-2.5rem] w-px bg-[#e2e8f0]" />
               )}
 

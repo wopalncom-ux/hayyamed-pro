@@ -68,7 +68,7 @@ export default async function EmployerDashboardPage({
   const _orgs = member.organizations as { name: string }[] | { name: string } | null;
   const orgName = (Array.isArray(_orgs) ? _orgs[0]?.name : (_orgs as { name: string } | null)?.name) ?? "Your Organization";
 
-  const [pendingRes, approvedRes] = await Promise.all([
+  const [pendingRes, approvedRes, requiredCoursesRes] = await Promise.all([
     admin.from("employer_link_requests")
       .select("id, professional_id, requested_at")
       .eq("organization_id", orgId).eq("status", "pending")
@@ -76,6 +76,9 @@ export default async function EmployerDashboardPage({
     admin.from("employer_link_requests")
       .select("id, professional_id, department")
       .eq("organization_id", orgId).eq("status", "approved"),
+    admin.from("employer_required_courses")
+      .select("id", { count: "exact", head: true })
+      .eq("organization_id", orgId),
   ]);
 
   const pending = pendingRes.data ?? [];
@@ -286,7 +289,8 @@ export default async function EmployerDashboardPage({
         organizationId={orgId}
         orgName={orgName}
         hasStaff={total > 0}
-        hasComplianceRules={false}
+        hasPendingRequests={pending.length > 0}
+        hasRequiredTraining={(requiredCoursesRes.count ?? 0) > 0}
       />
 
       {/* Summary Stats */}
