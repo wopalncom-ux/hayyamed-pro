@@ -1,5 +1,6 @@
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import DashboardSubNav from "@/components/dashboard/DashboardSubNav";
 import AddActivityButton from "@/components/dashboard/AddActivityButton";
 import DownloadReportButton from "@/components/dashboard/DownloadReportButton";
@@ -45,6 +46,8 @@ export default async function CmePage({
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
+
+  const t = await getTranslations("cme");
 
   const admin = createAdminClient();
 
@@ -121,24 +124,24 @@ export default async function CmePage({
   return (
     <div>
       <DashboardSubNav items={[
-        { href: "/dashboard/cme",                   label: "Wallet" },
-        { href: "/dashboard/cme/reflections",        label: "Reflections" },
-        { href: "/dashboard/certificates",           label: "Certificates" },
-        { href: "/dashboard/passport",               label: "My Passport" },
+        { href: "/dashboard/cme",                   label: t("subnav_wallet") },
+        { href: "/dashboard/cme/reflections",        label: t("subnav_reflections") },
+        { href: "/dashboard/certificates",           label: t("subnav_certificates") },
+        { href: "/dashboard/passport",               label: t("subnav_passport") },
       ]} />
 
       {/* Offline sync banner — client component, reads localStorage, auto-flushes on reconnect */}
       <CmeOfflineSyncBanner />
 
       <div className="flex items-center justify-between mb-2 flex-wrap gap-2">
-        <h1 className="text-2xl font-bold text-[#111]">CME Wallet</h1>
+        <h1 className="text-2xl font-bold text-[#111]">{t("heading")}</h1>
         <div className="flex items-center gap-2 flex-wrap">
           {isPro(plan) && (
             <a
               href="/dashboard/cme/pathway"
               className="text-xs font-semibold text-[#1a56a0] border border-[#1a56a0] px-3 py-1.5 rounded-lg hover:bg-[#f0f4f8] transition-colors"
             >
-              🗺️ Learning Pathway
+              {t("learning_pathway")}
             </a>
           )}
           {isPro(plan) && (
@@ -146,7 +149,7 @@ export default async function CmePage({
               href="/dashboard/cme/gap-analysis"
               className="text-xs font-semibold text-[#1a56a0] border border-[#1a56a0] px-3 py-1.5 rounded-lg hover:bg-[#f0f4f8] transition-colors"
             >
-              AI Gap Analysis →
+              {t("gap_analysis")}
             </a>
           )}
           {!isPro(plan) && (
@@ -154,7 +157,7 @@ export default async function CmePage({
               href="/pricing?source=cme_header"
               className="text-xs font-semibold border border-[#1a56a0] text-[#1a56a0] px-3 py-1.5 rounded-lg hover:bg-[#f0f4f8] transition-colors"
             >
-              Upgrade to Pro →
+              {t("upgrade_pro")}
             </a>
           )}
           {wallet && (
@@ -166,9 +169,7 @@ export default async function CmePage({
           )}
         </div>
       </div>
-      <p className="text-sm text-[#64748b] mb-6">
-        Track your Continuing Medical Education credits for license renewal.
-      </p>
+      <p className="text-sm text-[#64748b] mb-6">{t("subtitle")}</p>
 
       {wallet ? (
         <>
@@ -208,15 +209,15 @@ export default async function CmePage({
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
                 </svg>
                 <div>
-                  <p className="text-sm font-semibold text-white leading-tight">Your compliance PDF report is ready</p>
-                  <p className="text-xs text-[rgba(255,255,255,0.6)]">QCHP-ready · includes all verified activities · Pro only</p>
+                  <p className="text-sm font-semibold text-white leading-tight">{t("pdf_ready_title")}</p>
+                  <p className="text-xs text-[rgba(255,255,255,0.6)]">{t("pdf_ready_sub")}</p>
                 </div>
               </div>
               <a
                 href="/pricing?source=cme_pdf_strip"
                 className="text-xs font-semibold bg-white text-[#0f1f3d] px-4 py-2 rounded-lg hover:bg-[#f0f4f8] transition-colors whitespace-nowrap flex-shrink-0"
               >
-                Download PDF → $6/mo
+                {t("pdf_download_cta")}
               </a>
             </div>
           )}
@@ -228,7 +229,7 @@ export default async function CmePage({
               {wallet.specialty ? ` • ${wallet.specialty}` : ""}
               {" • "}{wallet.country}
               <span className="mx-2 text-[#e2e8f0]">|</span>
-              Cycle: {wallet.cycle_start_date} → {wallet.cycle_end_date}
+              {t("cycle_label")} {wallet.cycle_start_date} → {wallet.cycle_end_date}
             </div>
             <div className="flex items-center gap-3">
               <span className={`text-xs font-semibold px-3 py-1 rounded-full ${
@@ -238,14 +239,18 @@ export default async function CmePage({
                   ? "bg-[#fff7ed] text-[#d97706]"
                   : "bg-[#fef2f2] text-[#dc2626]"
               }`}>
-                {wallet.compliance_status.replace("_", " ").toUpperCase()}
+                {wallet.compliance_status === "compliant"
+                  ? t("status_compliant")
+                  : wallet.compliance_status === "at_risk"
+                  ? t("status_at_risk")
+                  : t("status_non_compliant")}
               </span>
               {wallets.length === 1 && (
                 <a
                   href="/dashboard/settings#compliance-countries"
                   className="text-xs text-[#64748b] hover:text-[#1a56a0] hover:underline transition-colors"
                 >
-                  + Track another country
+                  {t("track_another")}
                 </a>
               )}
             </div>
@@ -258,9 +263,11 @@ export default async function CmePage({
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
               </svg>
               <p className="text-sm text-[#1a56a0]">
-                <span className="font-semibold">{pendingCreditsSum} credits pending verification</span>
-                {" "}across {pendingActivities.length} {pendingActivities.length === 1 ? "activity" : "activities"} —
-                {" "}your total will update automatically once reviewed.
+                {t("pending_banner", {
+                  n: pendingCreditsSum,
+                  count: pendingActivities.length,
+                  activity: pendingActivities.length === 1 ? t("activity_singular") : t("activity_plural"),
+                })}
               </p>
             </div>
           )}
@@ -273,12 +280,12 @@ export default async function CmePage({
               <span className="text-xl">{streakAtRisk ? "⚠️" : "🔥"}</span>
               <div>
                 <p className={`text-sm font-semibold ${streakAtRisk ? "text-[#92400e]" : "text-[#15803d]"}`}>
-                  {streakWeeks}-week streak{streakAtRisk ? " — at risk" : ""}
+                  {t("streak_heading", { n: streakWeeks, at_risk: streakAtRisk ? t("streak_at_risk_label") : "" })}
                 </p>
                 <p className={`text-xs ${streakAtRisk ? "text-[#b45309]" : "text-[#16a34a]"}`}>
                   {streakAtRisk
-                    ? "No activities logged this week — log one before Sunday to keep your streak."
-                    : `You've logged CME activities for ${streakWeeks} consecutive week${streakWeeks !== 1 ? "s" : ""}.`}
+                    ? t("streak_at_risk_msg")
+                    : t("streak_active_msg", { n: streakWeeks, s: streakWeeks !== 1 ? "s" : "" })}
                 </p>
               </div>
             </div>
@@ -306,11 +313,11 @@ export default async function CmePage({
           <div className="bg-white rounded-xl border border-[#e2e8f0]">
             <div className="flex items-center justify-between px-6 py-4 border-b border-[#e2e8f0]">
               <div>
-                <h2 className="text-base font-semibold text-[#111]">CME Activities</h2>
+                <h2 className="text-base font-semibold text-[#111]">{t("activities_heading")}</h2>
                 {!isPro(plan) && (
                   <p className={`text-xs mt-0.5 ${activities.length >= FREE_ACTIVITY_LIMIT ? "text-[#dc2626]" : "text-[#64748b]"}`}>
-                    {activities.length} / {FREE_ACTIVITY_LIMIT} free activities used
-                    {activities.length >= FREE_ACTIVITY_LIMIT && " — limit reached"}
+                    {t("free_limit_used", { count: activities.length, limit: FREE_ACTIVITY_LIMIT })}
+                    {activities.length >= FREE_ACTIVITY_LIMIT && t("free_limit_reached")}
                   </p>
                 )}
               </div>
@@ -342,7 +349,7 @@ export default async function CmePage({
                     href="/pricing?source=cme_activity_limit"
                     className="text-xs bg-[#1a56a0] text-white px-3 py-2 rounded-lg font-semibold hover:bg-[#1547a0] transition-colors"
                   >
-                    Upgrade to log more
+                    {t("upgrade_pro")}
                   </a>
                 )}
               </div>
@@ -372,15 +379,13 @@ export default async function CmePage({
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
             </svg>
           </div>
-          <h3 className="text-sm font-semibold text-[#111] mb-1.5">CME wallet not configured</h3>
-          <p className="text-sm text-[#64748b] max-w-xs mx-auto mb-5">
-            Set up your wallet with your country and profession so we can calculate your compliance status.
-          </p>
+          <h3 className="text-sm font-semibold text-[#111] mb-1.5">{t("no_wallet_heading")}</h3>
+          <p className="text-sm text-[#64748b] max-w-xs mx-auto mb-5">{t("no_wallet_body")}</p>
           <a
             href="/onboarding/5"
             className="inline-block text-sm bg-[#1a56a0] text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-[#1547a0] transition-colors"
           >
-            Set up CME wallet →
+            {t("no_wallet_cta")}
           </a>
         </div>
       )}
