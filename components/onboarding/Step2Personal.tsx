@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { track } from "@/lib/analytics";
 
@@ -31,6 +32,7 @@ const COUNTRIES_OF_RESIDENCE = [
 
 export default function Step2Personal({ profile, userId }: { profile: Record<string, unknown> | null; userId: string; authorities?: unknown[] }) {
   const router = useRouter();
+  const t = useTranslations("onboarding");
   const [form, setForm] = useState({
     full_name: String(profile?.full_name ?? ""),
     date_of_birth: String(profile?.date_of_birth ?? ""),
@@ -43,7 +45,7 @@ export default function Step2Personal({ profile, userId }: { profile: Record<str
 
   async function handleSubmit(e: { preventDefault(): void }) {
     e.preventDefault();
-    if (!form.full_name.trim()) { setError("Full name is required."); return; }
+    if (!form.full_name.trim()) { setError(t("step2.full_name_required")); return; }
     setError(null);
     setLoading(true);
 
@@ -62,11 +64,11 @@ export default function Step2Personal({ profile, userId }: { profile: Record<str
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <h2 className="text-xl font-semibold text-[#111] mb-2">Personal Information</h2>
+      <h2 className="text-xl font-semibold text-[#111] mb-2">{t("step2.heading")}</h2>
 
       <div>
         <label htmlFor="full_name" className="block text-sm font-medium text-[#374151] mb-1">
-          Full name <span className="text-[#dc2626]">*</span>
+          {t("step2.full_name")} <span className="text-[#dc2626]">*</span>
         </label>
         <input
           id="full_name"
@@ -80,7 +82,7 @@ export default function Step2Personal({ profile, userId }: { profile: Record<str
       </div>
 
       <div>
-        <label htmlFor="date_of_birth" className="block text-sm font-medium text-[#374151] mb-1">Date of birth</label>
+        <label htmlFor="date_of_birth" className="block text-sm font-medium text-[#374151] mb-1">{t("step2.dob")}</label>
         <input
           id="date_of_birth"
           type="date"
@@ -91,21 +93,21 @@ export default function Step2Personal({ profile, userId }: { profile: Record<str
       </div>
 
       <div>
-        <label htmlFor="nationality" className="block text-sm font-medium text-[#374151] mb-1">Nationality</label>
+        <label htmlFor="nationality" className="block text-sm font-medium text-[#374151] mb-1">{t("step2.nationality")}</label>
         <select
           id="nationality"
           value={form.nationality}
           onChange={(e) => setForm(f => ({ ...f, nationality: e.target.value }))}
           className={inputCls}
         >
-          <option value="">Select nationality</option>
+          <option value="">{t("step2.select_nationality")}</option>
           {NATIONALITIES.map(n => <option key={n} value={n}>{n}</option>)}
         </select>
       </div>
 
       <div>
         <label htmlFor="country_of_residence" className="block text-sm font-medium text-[#374151] mb-1">
-          Country of residence <span className="text-[#dc2626]">*</span>
+          {t("step2.residence")} <span className="text-[#dc2626]">*</span>
         </label>
         <select
           id="country_of_residence"
@@ -114,22 +116,22 @@ export default function Step2Personal({ profile, userId }: { profile: Record<str
           required
           className={inputCls}
         >
-          <option value="">Select country</option>
+          <option value="">{t("step2.select_country")}</option>
           {COUNTRIES_OF_RESIDENCE.map(c => (
             <option key={c.code} value={c.name}>{c.name}</option>
           ))}
         </select>
-        <p className="text-xs text-[#64748b] mt-1">Used to load your country&apos;s CME requirements in the next steps.</p>
+        <p className="text-xs text-[#64748b] mt-1">{t("step2.residence_hint")}</p>
       </div>
 
       <div>
-        <label htmlFor="mobile" className="block text-sm font-medium text-[#374151] mb-1">Mobile number</label>
+        <label htmlFor="mobile" className="block text-sm font-medium text-[#374151] mb-1">{t("step2.mobile")}</label>
         <input
           id="mobile"
           type="tel"
           value={form.mobile}
           onChange={(e) => setForm(f => ({ ...f, mobile: e.target.value }))}
-          placeholder="+974 XXXX XXXX"
+          placeholder={t("step2.mobile_placeholder")}
           className={inputCls}
         />
       </div>
@@ -138,10 +140,10 @@ export default function Step2Personal({ profile, userId }: { profile: Record<str
 
       <div className="flex gap-3 pt-2">
         <button type="button" onClick={() => router.push("/onboarding/1")} className="px-4 py-2 text-sm text-[#64748b] border border-[#e2e8f0] rounded-lg hover:bg-[#f8fafc]">
-          Back
+          {t("back")}
         </button>
         <button type="submit" disabled={loading} className="flex-1 bg-[#1a56a0] text-white py-2.5 rounded-lg text-sm font-semibold hover:bg-[#1547a0] disabled:opacity-50 transition-colors">
-          {loading ? "Saving..." : "Continue →"}
+          {loading ? t("saving") : t("continue_arrow")}
         </button>
       </div>
     </form>

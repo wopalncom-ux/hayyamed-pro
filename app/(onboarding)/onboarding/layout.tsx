@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/server";
 
@@ -17,12 +18,14 @@ export default async function OnboardingLayout({ children }: { children: React.R
 
   if (profile?.onboarding_complete) redirect("/dashboard");
 
+  const t = await getTranslations("onboarding");
+
   return (
     <div className="min-h-screen bg-[#f0f4f8]">
       <header className="bg-white border-b border-[#e2e8f0] px-6 py-4">
         <div className="max-w-2xl mx-auto flex items-center justify-between">
           <span className="text-lg font-bold text-[#1a56a0]">Hayya Med Pro</span>
-          <span className="text-sm text-[#64748b]">Profile Setup</span>
+          <span className="text-sm text-[#64748b]">{t("profile_setup")}</span>
         </div>
       </header>
       <main className="max-w-2xl mx-auto px-4 py-8">{children}</main>

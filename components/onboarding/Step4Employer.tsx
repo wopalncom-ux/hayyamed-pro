@@ -2,12 +2,14 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { track } from "@/lib/analytics";
 import { submitLinkRequest } from "@/app/(dashboard)/dashboard/settings/actions";
 
 export default function Step4Employer({ profile: _profile, userId }: { profile: Record<string, unknown> | null; userId: string; authorities?: unknown[] }) {
   const router = useRouter();
+  const t = useTranslations("onboarding");
   const [search, setSearch] = useState("");
   const [matches, setMatches] = useState<Array<{ id: string; name: string }>>([]);
   const [selected, setSelected] = useState<{ id: string; name: string } | null>(null);
@@ -70,10 +72,8 @@ export default function Step4Employer({ profile: _profile, userId }: { profile: 
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <h2 className="text-xl font-semibold text-[#111] mb-1">Employer Linking</h2>
-      <p className="text-sm text-[#64748b] mb-4">
-        Link to your employer so they can view your compliance status (based on your privacy settings).
-      </p>
+      <h2 className="text-xl font-semibold text-[#111] mb-1">{t("step4.heading")}</h2>
+      <p className="text-sm text-[#64748b] mb-4">{t("step4.subtitle")}</p>
 
       <div className="flex gap-2">
         <input
@@ -81,7 +81,7 @@ export default function Step4Employer({ profile: _profile, userId }: { profile: 
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); void handleSearch(); } }}
-          placeholder="Search hospital or clinic name..."
+          placeholder={t("step4.search_placeholder")}
           className="flex-1 px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a56a0]"
         />
         <button
@@ -90,7 +90,7 @@ export default function Step4Employer({ profile: _profile, userId }: { profile: 
           disabled={searching}
           className="px-4 py-2 bg-[#f0f4f8] text-[#1a56a0] text-sm rounded-lg border border-[#e2e8f0] hover:bg-[#e8f0fe] disabled:opacity-50"
         >
-          {searching ? "..." : "Search"}
+          {searching ? "..." : t("step4.search_btn")}
         </button>
       </div>
 
@@ -111,9 +111,9 @@ export default function Step4Employer({ profile: _profile, userId }: { profile: 
 
       {mode === "search" && matches.length === 0 && (
         <div className="text-sm text-[#64748b]">
-          No match found.{" "}
+          {t("step4.no_match")}{" "}
           <button type="button" onClick={() => setMode("unverified")} className="text-[#1a56a0] hover:underline">
-            Add as unverified employer
+            {t("step4.add_unverified")}
           </button>
         </div>
       )}
@@ -121,19 +121,19 @@ export default function Step4Employer({ profile: _profile, userId }: { profile: 
       {selected && (
         <div className="flex items-center justify-between bg-[#e8f0fe] px-4 py-3 rounded-lg">
           <span className="text-sm font-medium text-[#1a56a0]">{selected.name}</span>
-          <button type="button" onClick={() => setSelected(null)} className="text-xs text-[#64748b] hover:text-[#111]">Remove</button>
+          <button type="button" onClick={() => setSelected(null)} className="text-xs text-[#64748b] hover:text-[#111]">{t("step4.remove")}</button>
         </div>
       )}
 
       {mode === "unverified" && (
         <div>
-          <label htmlFor="employer-unverified-name" className="block text-sm font-medium text-[#374151] mb-1">Employer name (will be reviewed by admin)</label>
+          <label htmlFor="employer-unverified-name" className="block text-sm font-medium text-[#374151] mb-1">{t("step4.unverified_label")}</label>
           <input
             id="employer-unverified-name"
             type="text"
             value={unverifiedName}
             onChange={(e) => setUnverifiedName(e.target.value)}
-            placeholder="Enter your employer's name"
+            placeholder={t("step4.unverified_placeholder")}
             className="w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a56a0]"
           />
         </div>
@@ -143,13 +143,13 @@ export default function Step4Employer({ profile: _profile, userId }: { profile: 
 
       <div className="flex gap-3 pt-2">
         <button type="button" onClick={() => router.push("/onboarding/3")} className="px-4 py-2 text-sm text-[#64748b] border border-[#e2e8f0] rounded-lg hover:bg-[#f8fafc]">
-          Back
+          {t("back")}
         </button>
         <button type="button" onClick={handleSkip} className="px-4 py-2 text-sm text-[#64748b] hover:underline">
-          Skip for now
+          {t("skip_for_now")}
         </button>
         <button type="submit" disabled={isPending} className="flex-1 bg-[#1a56a0] text-white py-2.5 rounded-lg text-sm font-medium hover:bg-[#1547a0] disabled:opacity-50 transition-colors">
-          {isPending ? "Saving..." : "Continue"}
+          {isPending ? t("saving") : t("continue")}
         </button>
       </div>
     </form>

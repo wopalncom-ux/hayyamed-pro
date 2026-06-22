@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { track } from "@/lib/analytics";
 
@@ -29,6 +30,7 @@ export default function Step3Professional({
   authorities?: Authority[];
 }) {
   const router = useRouter();
+  const t = useTranslations("onboarding");
   const [form, setForm] = useState({
     profession: String(profile?.profession ?? ""),
     specialty: String(profile?.specialty ?? ""),
@@ -65,15 +67,15 @@ export default function Step3Professional({
     router.push("/onboarding/4");
   }
 
-  const textField = (id: keyof typeof form, label: string, placeholder = "") => (
+  const textField = (id: keyof typeof form, labelKey: string, placeholderKey = "") => (
     <div>
-      <label htmlFor={id} className="block text-sm font-medium text-[#374151] mb-1">{label}</label>
+      <label htmlFor={id} className="block text-sm font-medium text-[#374151] mb-1">{t(labelKey)}</label>
       <input
         id={id}
         type="text"
         value={form[id]}
         onChange={(e) => setForm(f => ({ ...f, [id]: e.target.value }))}
-        placeholder={placeholder}
+        placeholder={placeholderKey ? t(placeholderKey) : ""}
         className="w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a56a0]"
       />
     </div>
@@ -88,10 +90,10 @@ export default function Step3Professional({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <h2 className="text-xl font-semibold text-[#111] mb-2">Professional Information</h2>
+      <h2 className="text-xl font-semibold text-[#111] mb-2">{t("step3.heading")}</h2>
 
       <div>
-        <label htmlFor="profession" className="block text-sm font-medium text-[#374151] mb-1">Profession</label>
+        <label htmlFor="profession" className="block text-sm font-medium text-[#374151] mb-1">{t("step3.profession")}</label>
         <select
           id="profession"
           value={form.profession}
@@ -99,18 +101,18 @@ export default function Step3Professional({
           className="w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a56a0]"
           required
         >
-          <option value="">Select profession</option>
+          <option value="">{t("step3.select_profession")}</option>
           {PROFESSIONS.map(p => <option key={p} value={p}>{p}</option>)}
         </select>
       </div>
 
-      {textField("specialty", "Specialty", "e.g. Cardiology")}
-      {textField("subspecialty", "Subspecialty (optional)", "e.g. Interventional Cardiology")}
-      {textField("license_number", "License number", "e.g. QCHP-12345")}
+      {textField("specialty", "step3.specialty", "step3.specialty_placeholder")}
+      {textField("subspecialty", "step3.subspecialty", "step3.subspecialty_placeholder")}
+      {textField("license_number", "step3.license_number", "step3.license_number_placeholder")}
 
       <div>
         <label htmlFor="licensing_authority" className="block text-sm font-medium text-[#374151] mb-1">
-          Licensing authority
+          {t("step3.licensing_authority")}
         </label>
         {authorities.length > 0 ? (
           <select
@@ -119,7 +121,7 @@ export default function Step3Professional({
             onChange={(e) => setForm(f => ({ ...f, licensing_authority: e.target.value }))}
             className="w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a56a0]"
           >
-            <option value="">Select authority</option>
+            <option value="">{t("step3.select_authority")}</option>
             {countryOrder.map((country) =>
               byCountry[country] ? (
                 <optgroup key={country} label={country}>
@@ -138,14 +140,14 @@ export default function Step3Professional({
             type="text"
             value={form.licensing_authority}
             onChange={(e) => setForm(f => ({ ...f, licensing_authority: e.target.value }))}
-            placeholder="e.g. QCHP (Qatar)"
+            placeholder={t("step3.authority_placeholder")}
             className="w-full px-3 py-2 border border-[#e2e8f0] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a56a0]"
           />
         )}
       </div>
 
       <div>
-        <label htmlFor="license_expiry" className="block text-sm font-medium text-[#374151] mb-1">License expiry date</label>
+        <label htmlFor="license_expiry" className="block text-sm font-medium text-[#374151] mb-1">{t("step3.license_expiry")}</label>
         <input
           id="license_expiry"
           type="date"
@@ -159,10 +161,10 @@ export default function Step3Professional({
 
       <div className="flex gap-3 pt-2">
         <button type="button" onClick={() => router.push("/onboarding/2")} className="px-4 py-2 text-sm text-[#64748b] border border-[#e2e8f0] rounded-lg hover:bg-[#f8fafc]">
-          Back
+          {t("back")}
         </button>
         <button type="submit" disabled={loading} className="flex-1 bg-[#1a56a0] text-white py-2.5 rounded-lg text-sm font-medium hover:bg-[#1547a0] disabled:opacity-50 transition-colors">
-          {loading ? "Saving..." : "Continue"}
+          {loading ? t("saving") : t("continue")}
         </button>
       </div>
     </form>

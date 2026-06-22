@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { track } from "@/lib/analytics";
 import { playSound } from "@/lib/sounds";
@@ -13,28 +14,17 @@ type CmeRules = {
 } | null;
 
 // Build relative date options from today and cycleYears
-function buildDateOptions(cycleYears: number): { label: string; sub: string; date: string }[] {
+function buildDateOptions(cycleYears: number): { monthsBack: number; sub: string; date: string }[] {
   const now = new Date();
-  const fmt = (d: Date) => {
-    const m = d.toLocaleString("en-GB", { month: "long", year: "numeric" });
-    return m;
-  };
+  const fmt = (d: Date) => d.toLocaleString("en-GB", { month: "long", year: "numeric" });
   const iso = (d: Date) => d.toISOString().split("T")[0];
 
-  const options = [
-    { label: "Starting today", sub: fmt(now), date: iso(now) },
-  ];
+  const options = [{ monthsBack: 0, sub: fmt(now), date: iso(now) }];
 
-  const steps = [6, 12, 18, 24]; // months back
-  for (const months of steps) {
+  for (const months of [6, 12, 18, 24]) {
     const d = new Date(now);
     d.setMonth(d.getMonth() - months);
-    const label = months < 12
-      ? `${months} months ago`
-      : months === 12 ? "1 year ago"
-      : months === 18 ? "1.5 years ago"
-      : "2 years ago";
-    options.push({ label, sub: fmt(d), date: iso(d) });
+    options.push({ monthsBack: months, sub: fmt(d), date: iso(d) });
   }
 
   // Only show options whose resulting end date hasn't already passed
@@ -62,6 +52,7 @@ export default function Step5Cme({
   cmeRules?: CmeRules;
 }) {
   const router = useRouter();
+  const t = useTranslations("onboarding");
   const profession = String(profile?.profession ?? "");
 
   const requiredCredits = cmeRules?.total_credits_required ?? 50;
@@ -127,6 +118,14 @@ export default function Step5Cme({
     day: "numeric", month: "long", year: "numeric",
   });
 
+  const dateLabel = (monthsBack: number) => {
+    if (monthsBack === 0) return t("step5.today");
+    if (monthsBack === 6) return t("step5.months_ago_6");
+    if (monthsBack === 12) return t("step5.months_ago_12");
+    if (monthsBack === 18) return t("step5.months_ago_18");
+    return t("step5.months_ago_24");
+  };
+
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       <div className="text-center mb-2">
@@ -135,20 +134,24 @@ export default function Step5Cme({
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
         </div>
-        <h2 className="text-xl font-semibold text-[#111] mb-1">CME Setup</h2>
-        <p className="text-sm text-[#64748b]">When did your current renewal cycle begin?</p>
+        <h2 className="text-xl font-semibold text-[#111] mb-1">{t("step5.heading")}</h2>
+        <p className="text-sm text-[#64748b]">{t("step5.subtitle")}</p>
       </div>
 
       {/* Rules context */}
       <div className="bg-[#f0f7ff] border border-[#bfdbfe] rounded-xl px-4 py-3 text-sm text-[#1e3a5f]">
-        <span className="font-semibold">{form.required_credits} {terminology} credits</span> required every{" "}
-        <span className="font-semibold">{form.renewal_cycle_years} year{form.renewal_cycle_years !== 1 ? "s" : ""}</span>{" "}
-        for {profession || "your profession"} in {country}
+        {t("step5.rules_part1", {
+          credits: form.required_credits,
+          term: terminology,
+          years: form.renewal_cycle_years,
+          profession: profession || "…",
+          country,
+        })}
       </div>
 
       {/* Cycle start date — tap-able relative cards */}
       <div>
-        <p className="text-sm font-medium text-[#374151] mb-2">Choose the closest option:</p>
+        <p className="text-sm font-medium text-[#374151] mb-2">{t("step5.choose_option")}</p>
         <div className="grid grid-cols-1 gap-2">
           {dateOptions.map((opt) => (
             <button
@@ -163,7 +166,7 @@ export default function Step5Cme({
             >
               <div>
                 <p className={`text-sm font-medium ${selectedDate === opt.date ? "text-[#1a56a0]" : "text-[#111]"}`}>
-                  {opt.label}
+                  {dateLabel(opt.monthsBack)}
                 </p>
                 <p className="text-xs text-[#64748b] mt-0.5">{opt.sub}</p>
               </div>
@@ -179,7 +182,7 @@ export default function Step5Cme({
 
       {/* Live deadline preview */}
       <div className="bg-[#f0fdf4] border border-[#bbf7d0] rounded-xl px-4 py-3 text-sm text-[#15803d]">
-        Your renewal deadline will be <span className="font-semibold">{deadlineDate}</span>
+        {t("step5.deadline", { date: deadlineDate })}
       </div>
 
       {/* Advanced: override credits/cycle if needed */}
@@ -188,11 +191,11 @@ export default function Step5Cme({
           <svg className="w-3.5 h-3.5 transition-transform group-open:rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
           </svg>
-          Advanced: override credits or cycle length
+          {t("step5.advanced")}
         </summary>
         <div className="mt-3 grid grid-cols-2 gap-4">
           <div>
-            <label htmlFor="cme-required-credits" className="block text-sm font-medium text-[#374151] mb-1">Required credits</label>
+            <label htmlFor="cme-required-credits" className="block text-sm font-medium text-[#374151] mb-1">{t("step5.req_credits")}</label>
             <input
               id="cme-required-credits"
               type="number"
@@ -203,7 +206,7 @@ export default function Step5Cme({
             />
           </div>
           <div>
-            <label htmlFor="cme-cycle-years" className="block text-sm font-medium text-[#374151] mb-1">Cycle years</label>
+            <label htmlFor="cme-cycle-years" className="block text-sm font-medium text-[#374151] mb-1">{t("step5.cycle_years")}</label>
             <input
               id="cme-cycle-years"
               type="number"
@@ -225,14 +228,14 @@ export default function Step5Cme({
           onClick={() => router.push("/onboarding/4")}
           className="px-4 py-2.5 text-sm text-[#64748b] border border-[#e2e8f0] rounded-lg hover:bg-[#f8fafc] transition-colors"
         >
-          Back
+          {t("back")}
         </button>
         <button
           type="submit"
           disabled={loading}
           className="flex-1 bg-[#1a56a0] text-white py-2.5 rounded-lg text-sm font-semibold hover:bg-[#1547a0] disabled:opacity-50 transition-colors"
         >
-          {loading ? "Saving…" : "Continue →"}
+          {loading ? t("saving") : t("continue_arrow")}
         </button>
       </div>
     </form>
