@@ -1,5 +1,6 @@
-﻿import { createClient, createAdminClient } from "@/lib/supabase/server";
+import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import LicenseCountdownCard from "@/components/dashboard/LicenseCountdownCard";
 import LicenseEditForm from "@/components/dashboard/LicenseEditForm";
 import CopyVerificationLinkButton from "@/components/dashboard/CopyVerificationLinkButton";
@@ -14,6 +15,8 @@ export default async function LicensesPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
+
+  const t = await getTranslations("licenses");
 
   const admin = createAdminClient();
 
@@ -43,7 +46,6 @@ export default async function LicensesPage() {
   const wallet = walletRes.data;
   const multiLicenses = licensesRes.data ?? [];
 
-  // Fetch activities + category rules for the primary wallet in parallel
   type CatRule = { category_name: string; min_credits_per_cycle: number; max_credits_per_cycle: number | null };
   type Activity = { credits: number; category: string | null; verification_status: string };
 
@@ -73,7 +75,6 @@ export default async function LicensesPage() {
     ? Math.ceil((new Date(profile.license_expiry).getTime() - Date.now()) / 86400000)
     : null;
 
-  // ── Renewal Readiness Computation ──────────────────────────────────────
   const validActivities = activities.filter((a) => a.verification_status !== "rejected");
   const creditsByCategory: Record<string, number> = {};
   for (const a of validActivities) {
@@ -93,56 +94,52 @@ export default async function LicensesPage() {
 
   const checklist: CheckItem[] = [];
 
-  // 1. License validity
   if (daysToExpiry !== null) {
     const licenseOk = daysToExpiry > 0;
     checklist.push({
-      label: "License not expired",
+      label: t("check_license_not_expired"),
       detail: daysToExpiry < 0
-        ? "Expired"
+        ? t("check_expired")
         : daysToExpiry <= 30
-        ? `Expires in ${daysToExpiry} days — urgent`
-        : `Expires in ${daysToExpiry} days`,
+        ? t("check_expires_urgent", { n: daysToExpiry })
+        : t("check_expires_days", { n: daysToExpiry }),
       pass: licenseOk,
       critical: true,
     });
   }
 
-  // 2. CME cycle active
   if (wallet?.cycle_end_date) {
     const cycleEnd = new Date(wallet.cycle_end_date);
     const cycleOk = cycleEnd >= new Date();
     const cycleStart = wallet.cycle_start_date ? new Date(wallet.cycle_start_date) : null;
     const withinCycle = cycleStart ? new Date() >= cycleStart : true;
     checklist.push({
-      label: "CME cycle active",
+      label: t("check_cme_cycle"),
       detail: cycleOk && withinCycle
-        ? `Active · ends ${wallet.cycle_end_date}`
+        ? t("check_cycle_active", { date: wallet.cycle_end_date })
         : cycleOk
-        ? `Not yet started · begins ${wallet.cycle_start_date}`
-        : `Cycle ended ${wallet.cycle_end_date}`,
+        ? t("check_cycle_not_started", { date: wallet.cycle_start_date })
+        : t("check_cycle_ended", { date: wallet.cycle_end_date }),
       pass: cycleOk && withinCycle,
       critical: false,
     });
   }
 
-  // 3. Total credits
   if (required > 0) {
     checklist.push({
-      label: `Total CME credits`,
-      detail: `${totalEarned} / ${required} required`,
+      label: t("check_total_credits"),
+      detail: t("check_credits_detail", { earned: totalEarned, required }),
       pass: totalEarned >= required,
       critical: true,
     });
   }
 
-  // 4. Per-category minimums
   for (const rule of categoryRules) {
     const earned = creditsByCategory[rule.category_name] ?? 0;
     const pass = earned >= rule.min_credits_per_cycle;
     checklist.push({
       label: rule.category_name.replace(/_/g, " "),
-      detail: `${earned} / ${rule.min_credits_per_cycle} minimum`,
+      detail: t("check_min_detail", { earned, min: rule.min_credits_per_cycle }),
       pass,
       critical: false,
     });
@@ -158,22 +155,18 @@ export default async function LicensesPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-2">
-        <h1 className="text-2xl font-bold text-[#111]">License Management</h1>
+        <h1 className="text-2xl font-bold text-[#111]">{t("heading")}</h1>
         <a
           href="/dashboard/renewal-calendar"
           className="text-xs font-semibold text-[#1a56a0] border border-[#1a56a0] px-3 py-1.5 rounded-lg hover:bg-[#f0f4f8] transition-colors"
         >
-          Renewal Calendar →
+          {t("renewal_calendar")}
         </a>
       </div>
-      <p className="text-sm text-[#64748b] mb-6">
-        Track your professional license and renewal status.
-      </p>
+      <p className="text-sm text-[#64748b] mb-6">{t("subtitle")}</p>
 
-      {/* Multi-license wallet */}
       <MultiLicenseSection initialLicenses={multiLicenses} />
 
-      {/* Visual countdown — primary license from profile (legacy) */}
       <div className="mb-6">
         <LicenseCountdownCard
           licenseExpiry={profile?.license_expiry ?? null}
@@ -186,14 +179,13 @@ export default async function LicensesPage() {
         />
       </div>
 
-      {/* Renewal Readiness Checklist */}
       {checklist.length > 0 && (
         <div className="bg-white rounded-xl border border-[#e2e8f0] mb-6">
           <div className="px-6 py-4 border-b border-[#e2e8f0] flex items-center justify-between">
             <div>
-              <h2 className="text-base font-semibold text-[#111]">Renewal Readiness</h2>
+              <h2 className="text-base font-semibold text-[#111]">{t("readiness_heading")}</h2>
               <p className="text-xs text-[#64748b] mt-0.5">
-                {checklist.filter((c) => c.pass).length}/{checklist.length} requirements met
+                {t("readiness_sub", { passed: checklist.filter((c) => c.pass).length, total: checklist.length })}
               </p>
             </div>
             <span className={`text-xs font-semibold px-3 py-1.5 rounded-full ${
@@ -204,18 +196,17 @@ export default async function LicensesPage() {
                 : "bg-[#fff7ed] text-[#d97706]"
             }`}>
               {allPassed
-                ? "Ready to renew"
+                ? t("readiness_ready")
                 : criticalFailed > 0
-                ? `${criticalFailed} critical gap${criticalFailed > 1 ? "s" : ""}`
-                : `${totalFailed} gap${totalFailed > 1 ? "s" : ""} remaining`}
+                ? (criticalFailed > 1 ? t("readiness_critical_many", { n: criticalFailed }) : t("readiness_critical_one", { n: criticalFailed }))
+                : (totalFailed > 1 ? t("readiness_gaps_many", { n: totalFailed }) : t("readiness_gaps_one", { n: totalFailed }))}
             </span>
           </div>
 
-          {/* Readiness score bar */}
           {readinessScore !== null && (
             <div className="px-6 pt-4 pb-2">
               <div className="flex items-center justify-between mb-1.5 text-xs text-[#64748b]">
-                <span>Overall readiness</span>
+                <span>{t("readiness_score_label")}</span>
                 <span className="font-semibold text-[#111]">{readinessScore}%</span>
               </div>
               <div className="w-full bg-[#e2e8f0] rounded-full h-2">
@@ -255,9 +246,7 @@ export default async function LicensesPage() {
 
           <div className="px-6 py-4 border-t border-[#e2e8f0] flex items-center justify-between gap-4">
             <p className="text-xs text-[#64748b]">
-              {allPassed
-                ? "All requirements are met. Download your renewal package to submit to your licensing authority."
-                : "Complete the gaps above, then download your renewal package."}
+              {allPassed ? t("readiness_footer_pass") : t("readiness_footer_fail")}
             </p>
             <div className="flex items-center gap-2 flex-shrink-0 flex-wrap">
               <CopyVerificationLinkButton />
@@ -267,7 +256,7 @@ export default async function LicensesPage() {
                     href="/api/pdf/cme-report"
                     className="flex-shrink-0 text-sm bg-white border border-[#1a56a0] text-[#1a56a0] px-4 py-2 rounded-lg font-semibold hover:bg-[#eff6ff] transition-colors"
                   >
-                    CME Report
+                    {t("btn_cme_report")}
                   </a>
                   <DownloadComplianceCertButton />
                 </>
@@ -276,7 +265,7 @@ export default async function LicensesPage() {
                   href="/pricing?source=compliance_certificate"
                   className="flex-shrink-0 text-sm bg-[#f8fafc] border border-[#e2e8f0] text-[#64748b] px-4 py-2 rounded-lg font-medium hover:border-[#1a56a0] hover:text-[#1a56a0] transition-colors"
                 >
-                  Upgrade for Certificate →
+                  {t("btn_upgrade_cert")}
                 </a>
               )}
             </div>
@@ -284,35 +273,32 @@ export default async function LicensesPage() {
         </div>
       )}
 
-      {/* License details card */}
       <div className="bg-white rounded-xl border border-[#e2e8f0] p-6 mb-6">
-        <h2 className="text-base font-semibold text-[#111] mb-4">License Details</h2>
+        <h2 className="text-base font-semibold text-[#111] mb-4">{t("details_heading")}</h2>
 
         {!profile?.license_number && (
           <div className="flex items-start gap-3 bg-[#fff7ed] border border-[#fed7aa] rounded-lg px-4 py-3 mb-4">
             <span className="text-[#d97706] text-base mt-0.5">⚠</span>
-            <p className="text-sm text-[#92400e]">
-              No license details saved yet. Add your license number and expiry date so we can track your renewal countdown.
-            </p>
+            <p className="text-sm text-[#92400e]">{t("no_license_warning")}</p>
           </div>
         )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-          <Field label="License Number"      value={profile?.license_number      ?? "Not set"} />
-          <Field label="Licensing Authority" value={profile?.licensing_authority ?? "Not set"} />
-          <Field label="Profession"          value={profile?.profession          ?? "Not set"} />
-          <Field label="Specialty"           value={profile?.specialty           ?? "Not set"} />
+          <Field label={t("field_license_number")}  value={profile?.license_number      ?? t("value_not_set")} />
+          <Field label={t("field_authority")}        value={profile?.licensing_authority ?? t("value_not_set")} />
+          <Field label={t("field_profession")}       value={profile?.profession          ?? t("value_not_set")} />
+          <Field label={t("field_specialty")}        value={profile?.specialty           ?? t("value_not_set")} />
           <Field
-            label="Expiry Date"
+            label={t("field_expiry")}
             value={profile?.license_expiry
               ? new Date(profile.license_expiry).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })
-              : "Not set"}
+              : t("value_not_set")}
             highlight={daysToExpiry !== null && daysToExpiry <= 30}
           />
           {daysToExpiry !== null && (
             <Field
-              label="Days Until Expiry"
-              value={daysToExpiry < 0 ? "EXPIRED" : `${daysToExpiry} days`}
+              label={t("field_days_expiry")}
+              value={daysToExpiry < 0 ? t("value_expired") : t("value_days", { n: daysToExpiry })}
               highlight={daysToExpiry <= 30}
             />
           )}
@@ -327,13 +313,10 @@ export default async function LicensesPage() {
         />
       </div>
 
-      {/* Reminder schedule */}
       {profile?.license_expiry && (
         <div className="bg-white rounded-xl border border-[#e2e8f0] p-6 mb-6">
-          <h2 className="text-base font-semibold text-[#111] mb-3">Reminder Schedule</h2>
-          <p className="text-sm text-[#64748b] mb-4">
-            You&apos;ll receive email reminders at the following dates before your license expires.
-          </p>
+          <h2 className="text-base font-semibold text-[#111] mb-3">{t("reminders_heading")}</h2>
+          <p className="text-sm text-[#64748b] mb-4">{t("reminders_sub")}</p>
           <div className="space-y-2">
             {[90, 60, 30, 14, 7].map((d) => {
               const reminderDate = new Date(new Date(profile.license_expiry!).getTime() - d * 86400000);
@@ -343,10 +326,10 @@ export default async function LicensesPage() {
                   <div className="flex items-center gap-2">
                     <span className={`w-2 h-2 rounded-full flex-shrink-0 ${fired ? "bg-[#64748b]" : "bg-[#1a56a0]"}`} />
                     <span className={fired ? "text-[#64748b] line-through" : "text-[#374151]"}>
-                      {d} days before expiry
+                      {t("reminder_days_before", { d })}
                     </span>
                   </div>
-                  <span className={`text-xs ${fired ? "text-[#64748b]" : "text-[#64748b]"}`}>
+                  <span className="text-xs text-[#64748b]">
                     {reminderDate.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
                   </span>
                 </div>
@@ -357,8 +340,7 @@ export default async function LicensesPage() {
       )}
 
       <div className="bg-[#fef9c3] border border-[#fde68a] rounded-lg px-4 py-3 text-xs text-[#92400e]">
-        Hayya Med Pro tracks license readiness only. It does not issue or renew licenses.
-        Always verify final requirements with your licensing authority (e.g. QCHP, SCFHS, DHA).
+        {t("disclaimer")}
       </div>
     </div>
   );
