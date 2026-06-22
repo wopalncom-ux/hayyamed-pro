@@ -73,7 +73,7 @@ export default function DashboardNav({
   const pathname = usePathname();
   const navItems = [
     ...NAV_ITEMS,
-    ...(isEmployerAdmin ? [{ href: "/employer", label: "Employer", Icon: Building2 }] : []),
+    ...(isEmployerAdmin ? [{ href: "/employer", label: "Employer", Icon: Building2, owns: ["/employer"] }] : []),
   ];
   const [drawerOpen, setDrawerOpen] = useState(false);
 
