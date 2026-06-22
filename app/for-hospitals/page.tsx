@@ -440,6 +440,11 @@ export default function ForHospitalsPage() {
             <p className="text-[#93c5fd] text-xs mt-8">
               All hospital accounts include a signed DPA, onboarding support, and dedicated account management.
             </p>
+            <div className="flex items-center justify-center gap-6 mt-4">
+              <Link href="/developers"  className="text-xs text-[#93c5fd] hover:text-white underline transition-colors">API Documentation</Link>
+              <Link href="/legal/sla"   className="text-xs text-[#93c5fd] hover:text-white underline transition-colors">Service Level Agreement</Link>
+              <Link href="/security"    className="text-xs text-[#93c5fd] hover:text-white underline transition-colors">Security Overview</Link>
+            </div>
           </div>
         </section>
 

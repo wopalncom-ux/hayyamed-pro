@@ -424,6 +424,11 @@ export default function EmployersPage() {
                 <p className="text-xs text-[#64748b] mt-0.5">
                   Unlimited staff · HRIS API integration · White-label · Dedicated SLA
                 </p>
+                <div className="flex items-center gap-4 mt-2">
+                  <Link href="/developers" className="text-xs text-[#1a56a0] hover:underline">API documentation →</Link>
+                  <Link href="/legal/sla"   className="text-xs text-[#1a56a0] hover:underline">Service Level Agreement →</Link>
+                  <Link href="/legal/dpa"   className="text-xs text-[#1a56a0] hover:underline">DPA →</Link>
+                </div>
               </div>
               <Link
                 href="/request-demo"
