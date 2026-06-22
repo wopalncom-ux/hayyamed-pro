@@ -12,6 +12,7 @@ import { logAiCall } from "@/lib/ai/logAiCall";
 import { buildComplianceChatSystem } from "@/lib/ai/prompts/compliance-chat";
 import { HAYYA_TOOLS, type ToolName } from "@/lib/ai/tools/index";
 import { executeToolCall } from "@/lib/ai/tools/handlers";
+import { retrieveRelevantChunks, formatChunksForPrompt } from "@/lib/ai/rag/retrieve";
 import type { MessageParam, ToolResultBlockParam } from "@anthropic-ai/sdk/resources";
 
 export const runtime = "nodejs";
@@ -91,11 +92,22 @@ export async function POST(req: NextRequest) {
     ? Math.ceil((new Date(wallet.cycle_end_date).getTime() - Date.now()) / 86400000)
     : null;
 
-  const systemPrompt = buildComplianceChatSystem(
+  // RAG: retrieve relevant compliance knowledge for the latest user message
+  const latestUserMessage = [...messages].reverse().find((m) => m.role === "user")?.content ?? "";
+  const ragChunks = await retrieveRelevantChunks(latestUserMessage, {
+    countryCode: countryCode || undefined,
+    topK: 3,
+    similarityThreshold: 0.65,
+  }).catch(() => []);
+
+  const ragContext = formatChunksForPrompt(ragChunks);
+
+  const basePrompt = buildComplianceChatSystem(
     wallet
       ? { country: wallet.country, profession: wallet.profession, specialty: wallet.specialty ?? null, cycle_start_date: wallet.cycle_start_date, cycle_end_date: wallet.cycle_end_date, compliance_status: wallet.compliance_status, required_credits: wallet.required_credits, completed_credits: wallet.completed_credits, mainRule, categoryBreakdown, daysLeft, countryCode, recentActivities: activities }
       : null
   );
+  const systemPrompt = ragContext ? `${basePrompt}\n\n${ragContext}` : basePrompt;
 
   const startTime = Date.now();
   const encoder = new TextEncoder();
