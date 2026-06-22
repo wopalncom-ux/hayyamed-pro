@@ -17,8 +17,11 @@ async function getAuthToken(): Promise<string> {
 }
 
 export async function getTextEmbedding(text: string): Promise<number[]> {
-  const projectId = process.env.GCP_PROJECT_ID;
-  if (!projectId) throw new Error("GCP_PROJECT_ID env var not set");
+  const projectId =
+    process.env.GCP_PROJECT_ID ??
+    process.env.GOOGLE_CLOUD_PROJECT ??
+    "project-38d955b0-84e7-44b6-8b5";
+  if (!projectId) throw new Error("No GCP project ID — set GCP_PROJECT_ID or GOOGLE_CLOUD_PROJECT");
 
   const location = "us-central1";
   const bearerToken = await getAuthToken();
