@@ -1848,6 +1848,12 @@ export default function LandingPage() {
             <FAQ />
             <ResourcesSection />
             <FinalCTA />
+            <div className="text-center py-4 px-6 bg-[#f8fafc] border-t border-[#e2e8f0]">
+              <p className="text-xs text-[#94a3b8] max-w-2xl mx-auto leading-relaxed">
+                Hayya Med Pro supports CME tracking and licensing readiness. It does not issue licenses and does not replace official licensing authorities.
+                Users must verify final requirements with their relevant regulatory body.
+              </p>
+            </div>
           </main>
         </div>
       </MotionConfig>
