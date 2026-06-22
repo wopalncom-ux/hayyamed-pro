@@ -83,6 +83,7 @@ const LEGAL = [
   { label: "Terms of Service", href: "/terms" },
   { label: "Privacy Policy", href: "/privacy" },
   { label: "Data Processing Agreement", href: "/legal/dpa" },
+  { label: "Service Level Agreement", href: "/legal/sla" },
 ];
 
 export default function SiteFooter() {
