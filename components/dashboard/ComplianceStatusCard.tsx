@@ -1,4 +1,6 @@
-﻿interface Props {
+import { getTranslations } from "next-intl/server";
+
+interface Props {
   completed: number;
   required: number;
   complianceStatus: string;
@@ -6,13 +8,15 @@
   country: string;
 }
 
-export default function ComplianceStatusCard({
+export default async function ComplianceStatusCard({
   completed,
   required,
   complianceStatus,
   cycleEndDate,
   country,
 }: Props) {
+  const t = await getTranslations("dashboard");
+
   const pct = required > 0 ? Math.min(100, Math.round((completed / required) * 100)) : 0;
   const remaining = Math.max(0, required - completed);
 
@@ -27,10 +31,10 @@ export default function ComplianceStatusCard({
   const dashOffset = circumference - (pct / 100) * circumference;
 
   const statusConfig = {
-    compliant:     { color: "#16a34a", bg: "bg-[#dcfce7]", text: "text-[#16a34a]", label: "Compliant" },
-    at_risk:       { color: "#d97706", bg: "bg-[#fff7ed]", text: "text-[#d97706]", label: "At Risk" },
-    non_compliant: { color: "#dc2626", bg: "bg-[#fef2f2]", text: "text-[#dc2626]", label: "Non-Compliant" },
-  }[complianceStatus] ?? { color: "#64748b", bg: "bg-[#f1f5f9]", text: "text-[#64748b]", label: "Unknown" };
+    compliant:     { color: "#16a34a", bg: "bg-[#dcfce7]", text: "text-[#16a34a]", label: t("status_compliant") },
+    at_risk:       { color: "#d97706", bg: "bg-[#fff7ed]", text: "text-[#d97706]", label: t("status_at_risk") },
+    non_compliant: { color: "#dc2626", bg: "bg-[#fef2f2]", text: "text-[#dc2626]", label: t("status_non_compliant") },
+  }[complianceStatus] ?? { color: "#64748b", bg: "bg-[#f1f5f9]", text: "text-[#64748b]", label: t("status_unknown") };
 
   const ringColor = statusConfig.color;
 
@@ -65,7 +69,7 @@ export default function ComplianceStatusCard({
         {/* Details */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <h2 className="text-base font-semibold text-[#111]">CME Compliance</h2>
+            <h2 className="text-base font-semibold text-[#111]">{t("cme_compliance")}</h2>
             <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusConfig.bg} ${statusConfig.text}`}>
               {statusConfig.label}
             </span>
@@ -73,15 +77,14 @@ export default function ComplianceStatusCard({
 
           <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 text-sm">
             <span className="text-[#111] font-medium">
-              {completed} <span className="text-[#64748b] font-normal">/ {required} credits</span>
+              {completed}{" "}
+              <span className="text-[#64748b] font-normal">{t("credits_of", { required })}</span>
             </span>
             {remaining > 0 && (
-              <span className="text-[#64748b]">
-                {remaining} remaining
-              </span>
+              <span className="text-[#64748b]">{t("credits_remaining", { remaining })}</span>
             )}
             {remaining === 0 && (
-              <span className="text-[#16a34a] font-medium">All credits earned ✓</span>
+              <span className="text-[#16a34a] font-medium">{t("credits_complete")}</span>
             )}
           </div>
 
@@ -89,8 +92,8 @@ export default function ComplianceStatusCard({
             {daysLeft !== null && (
               <span className={`text-xs ${daysLeft <= 30 ? "text-[#dc2626] font-medium" : daysLeft <= 90 ? "text-[#d97706]" : "text-[#64748b]"}`}>
                 {daysLeft <= 0
-                  ? "Cycle ended"
-                  : `${daysLeft} days until renewal`}
+                  ? t("cycle_ended")
+                  : t("days_until_renewal", { days: daysLeft })}
               </span>
             )}
             {country && (
@@ -105,13 +108,13 @@ export default function ComplianceStatusCard({
             href="/dashboard/cme"
             className="text-xs font-semibold bg-[#1a56a0] text-white px-3 py-2 rounded-lg hover:bg-[#1547a0] transition-colors whitespace-nowrap"
           >
-            + Log Activity
+            {t("log_activity")}
           </a>
           <a
             href="/dashboard/analytics"
             className="text-xs font-medium border border-[#e2e8f0] text-[#374151] px-3 py-2 rounded-lg hover:bg-[#f8fafc] transition-colors whitespace-nowrap"
           >
-            Analytics →
+            {t("view_analytics")}
           </a>
         </div>
       </div>
