@@ -1,5 +1,13 @@
 import { notFound, redirect } from "next/navigation";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
+import type { Metadata } from "next";
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
+  const admin = createAdminClient();
+  const { data } = await admin.from("professional_profiles").select("full_name").eq("auth_id", id).maybeSingle();
+  return { title: data?.full_name ? `${data.full_name} — Staff Profile` : "Staff Profile" };
+}
 
 export const dynamic = "force-dynamic";
 

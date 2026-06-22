@@ -4,6 +4,8 @@ import WebhooksClient from "./WebhooksClient";
 
 export const dynamic = "force-dynamic";
 
+export const metadata = { title: "Webhooks" };
+
 export default async function EmployerWebhooksPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();

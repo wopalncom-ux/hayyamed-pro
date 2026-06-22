@@ -4,6 +4,8 @@ import ApiKeysClient from "./ApiKeysClient";
 
 export const dynamic = "force-dynamic";
 
+export const metadata = { title: "API Keys" };
+
 export default async function ApiKeysPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();

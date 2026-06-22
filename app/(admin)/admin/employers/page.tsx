@@ -28,6 +28,8 @@ function statusColor(s: string) {
   return                            "text-[#dc2626] bg-[#fef2f2] border-[#fecaca]";
 }
 
+export const metadata = { title: "Employers" };
+
 export default async function AdminEmployersPage() {
   await requireAdmin();
   const admin = createAdminClient();

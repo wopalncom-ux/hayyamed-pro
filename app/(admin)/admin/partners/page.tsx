@@ -5,6 +5,8 @@ import type { Partner } from "@/lib/types";
 import Image from "next/image";
 import { createPartner, togglePartner } from "./actions";
 
+export const metadata = { title: "Partners" };
+
 export default async function PartnersPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();

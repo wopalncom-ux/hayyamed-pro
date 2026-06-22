@@ -41,6 +41,8 @@ const STATUS_CONFIG: Record<ComplianceStatus, { label: string; classes: string }
   unknown:       { label: "No Data",       classes: "bg-[#f1f5f9] text-[#64748b]" },
 };
 
+export const metadata = { title: "Staff Compliance" };
+
 export default async function EmployerDashboardPage({
   searchParams,
 }: {

@@ -5,6 +5,8 @@ import Link from "next/link";
 
 const PAGE_SIZE = 50;
 
+export const metadata = { title: "Professionals" };
+
 export default async function AdminProfessionalsPage({
   searchParams,
 }: {

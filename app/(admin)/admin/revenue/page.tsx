@@ -15,6 +15,8 @@ function calcMrr(plan: string, tier: string | null, interval: string | null): nu
   return 0;
 }
 
+export const metadata = { title: "Revenue" };
+
 export default async function AdminRevenuePage() {
   const admin = createAdminClient();
 

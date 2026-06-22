@@ -25,6 +25,8 @@ function getLaunchMode() {
   return process.env.COMING_SOON !== "false";
 }
 
+export const metadata = { title: "Platform Overview" };
+
 export default async function AdminPage() {
   const admin = createAdminClient();
   const setupChecks = getSetupChecks();

@@ -19,6 +19,8 @@ async function requireAdmin() {
   return user;
 }
 
+export const metadata = { title: "Feature Flags" };
+
 export default async function FeatureFlagsPage() {
   await requireAdmin();
   const admin = createAdminClient();

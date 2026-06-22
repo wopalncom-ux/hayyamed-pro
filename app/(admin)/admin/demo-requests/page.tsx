@@ -72,6 +72,8 @@ async function updateNotes(formData: FormData) {
   revalidatePath("/admin/demo-requests");
 }
 
+export const metadata = { title: "Demo Requests" };
+
 export default async function DemoRequestsPage() {
   const admin = createAdminClient();
 

@@ -2,6 +2,14 @@ import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect, notFound } from "next/navigation";
 import Link from "next/link";
 import CourseForm from "@/components/provider/CourseForm";
+import type { Metadata } from "next";
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
+  const admin = createAdminClient();
+  const { data } = await admin.from("courses").select("title").eq("id", id).maybeSingle();
+  return { title: data?.title ? `${data.title} — Edit Course` : "Edit Course" };
+}
 import ProviderMarkCompleteButton from "@/components/provider/ProviderMarkCompleteButton";
 import WeeklyEnrollmentChart, { type WeekBucket } from "@/components/provider/WeeklyEnrollmentChart";
 

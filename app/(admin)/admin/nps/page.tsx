@@ -6,6 +6,8 @@ function npsLabel(score: number): "promoter" | "passive" | "detractor" {
   return "detractor";
 }
 
+export const metadata = { title: "NPS Survey" };
+
 export default async function AdminNpsPage() {
   const admin = createAdminClient();
 

@@ -2,6 +2,8 @@ import { createAdminClient } from "@/lib/supabase/server";
 import OrgVerifyButton from "@/components/admin/OrgVerifyButton";
 import CreateOrgForm from "@/components/admin/CreateOrgForm";
 
+export const metadata = { title: "Organizations" };
+
 export default async function AdminOrganizationsPage({
   searchParams,
 }: {

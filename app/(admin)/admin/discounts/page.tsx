@@ -4,6 +4,8 @@ import { redirect } from "next/navigation";
 import type { Discount } from "@/lib/types";
 import { createDiscount, toggleDiscount } from "./actions";
 
+export const metadata = { title: "Discounts" };
+
 export default async function DiscountsPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();

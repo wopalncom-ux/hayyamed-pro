@@ -3,6 +3,8 @@ import WaitlistNotifyButton from "./WaitlistNotifyButton";
 
 export const dynamic = "force-dynamic";
 
+export const metadata = { title: "Waitlist" };
+
 export default async function WaitlistPage() {
   const admin = createAdminClient();
 

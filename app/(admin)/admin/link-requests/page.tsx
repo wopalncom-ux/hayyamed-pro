@@ -2,6 +2,8 @@
 import UnverifiedRequestActions from "@/components/admin/UnverifiedRequestActions";
 import VerifiedRequestActions from "@/components/admin/VerifiedRequestActions";
 
+export const metadata = { title: "Link Requests" };
+
 export default async function AdminLinkRequestsPage() {
   const admin = createAdminClient();
 

@@ -12,6 +12,8 @@ function dayLabel(iso: string) {
   return `${d.getMonth() + 1}/${d.getDate()}`;
 }
 
+export const metadata = { title: "Analytics" };
+
 export default async function AdminAnalyticsPage() {
   const admin = createAdminClient();
 

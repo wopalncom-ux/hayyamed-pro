@@ -4,6 +4,8 @@ import CertificateLink from "@/components/dashboard/CertificateLink";
 
 const RESOLVED_LIMIT = 100;
 
+export const metadata = { title: "CME Activities" };
+
 export default async function AdminCmeActivitiesPage({
   searchParams,
 }: {

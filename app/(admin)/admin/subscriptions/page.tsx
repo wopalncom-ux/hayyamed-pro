@@ -25,6 +25,8 @@ const STATUS_COLOR: Record<string, string> = {
 
 const PAGE_SIZE = 50;
 
+export const metadata = { title: "Subscriptions" };
+
 export default async function SubscriptionsPage({
   searchParams,
 }: {

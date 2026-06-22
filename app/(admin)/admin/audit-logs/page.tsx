@@ -32,6 +32,8 @@ function fmtMeta(meta: Record<string, unknown> | null): string {
   return pairs.join(" · ");
 }
 
+export const metadata = { title: "Audit Logs" };
+
 export default async function AuditLogsPage({
   searchParams,
 }: {
