@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect, useCallback } from "react";
 import { saveAIModuleSettings } from "./actions";
 
 // ── Model catalogue ───────────────────────────────────────────────────────────
@@ -437,6 +437,9 @@ export default function AIModulesPage() {
         ))}
       </div>
 
+      {/* Knowledge Base */}
+      <KnowledgeBasePanel />
+
       {/* Notes */}
       <div className="mt-8 bg-[#fffbeb] border border-[#fde68a] rounded-xl px-5 py-4 space-y-1.5">
         <p className="text-sm font-semibold text-[#92400e]">Important notes</p>
@@ -448,6 +451,150 @@ export default function AIModulesPage() {
           <li>All AI calls are logged in the audit log regardless of provider — no PII is sent to external AI APIs.</li>
         </ul>
       </div>
+    </div>
+  );
+}
+
+// ── Knowledge Base Sync Panel ─────────────────────────────────────────────────
+
+type SyncStatus = "idle" | "previewing" | "syncing" | "done" | "error";
+
+type PreviewResult = {
+  dry_run: boolean;
+  current_chunks: number;
+  rules_to_embed: number;
+  categories_to_embed: number;
+};
+
+type SyncResult = {
+  success: boolean;
+  inserted: number;
+  skipped: number;
+  errors: string[];
+};
+
+function KnowledgeBasePanel() {
+  const [status, setStatus] = useState<SyncStatus>("idle");
+  const [preview, setPreview] = useState<PreviewResult | null>(null);
+  const [result, setResult] = useState<SyncResult | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const runPreview = useCallback(async () => {
+    setStatus("previewing");
+    setError(null);
+    try {
+      const res = await fetch("/api/admin/ai/sync-knowledge", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ dry_run: true }),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json() as PreviewResult;
+      setPreview(data);
+      setStatus("idle");
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Preview failed");
+      setStatus("error");
+    }
+  }, []);
+
+  const runSync = useCallback(async () => {
+    setStatus("syncing");
+    setError(null);
+    try {
+      const res = await fetch("/api/admin/ai/sync-knowledge", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({}),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json() as SyncResult;
+      setResult(data);
+      setStatus("done");
+      // Refresh preview count
+      runPreview();
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Sync failed");
+      setStatus("error");
+    }
+  }, [runPreview]);
+
+  useEffect(() => { runPreview(); }, [runPreview]);
+
+  const isBusy = status === "previewing" || status === "syncing";
+
+  return (
+    <div className="mt-8 bg-white rounded-2xl border border-[#e2e8f0] p-6">
+      <div className="flex items-start justify-between gap-4 mb-5">
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-xl" aria-hidden="true">🧠</span>
+            <h2 className="text-base font-semibold text-[#0f1f3d]">AI Knowledge Base</h2>
+            <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#eff6ff] text-[#1a56a0]">RAG</span>
+          </div>
+          <p className="text-xs text-[#64748b]">
+            Embeds compliance rules from the database into pgvector so the AI chatbot cites authoritative sources instead of guessing.
+            Re-sync whenever country rules change.
+          </p>
+        </div>
+        <div className="flex gap-2 shrink-0">
+          <button
+            type="button"
+            onClick={runPreview}
+            disabled={isBusy}
+            className="text-xs px-3 py-1.5 rounded-lg border border-[#e2e8f0] text-[#64748b] hover:border-[#1a56a0] hover:text-[#1a56a0] disabled:opacity-50 transition-colors"
+          >
+            {status === "previewing" ? "Checking…" : "Preview"}
+          </button>
+          <button
+            type="button"
+            onClick={runSync}
+            disabled={isBusy}
+            className="text-xs px-4 py-1.5 rounded-lg bg-[#1a56a0] text-white font-semibold hover:bg-[#1547a0] disabled:opacity-50 transition-colors"
+          >
+            {status === "syncing" ? "Syncing…" : "Sync now"}
+          </button>
+        </div>
+      </div>
+
+      {/* Stats */}
+      {preview && (
+        <div className="grid grid-cols-3 gap-3 mb-4">
+          <div className="bg-[#f8fafc] rounded-xl p-3 text-center">
+            <p className="text-[10px] text-[#64748b] uppercase tracking-wider mb-1">Chunks in DB</p>
+            <p className="text-xl font-bold text-[#0f1f3d]">{preview.current_chunks}</p>
+          </div>
+          <div className="bg-[#f8fafc] rounded-xl p-3 text-center">
+            <p className="text-[10px] text-[#64748b] uppercase tracking-wider mb-1">Country rules</p>
+            <p className="text-xl font-bold text-[#0f1f3d]">{preview.rules_to_embed}</p>
+          </div>
+          <div className="bg-[#f8fafc] rounded-xl p-3 text-center">
+            <p className="text-[10px] text-[#64748b] uppercase tracking-wider mb-1">Category caps</p>
+            <p className="text-xl font-bold text-[#0f1f3d]">{preview.categories_to_embed}</p>
+          </div>
+        </div>
+      )}
+
+      {/* Sync result */}
+      {status === "done" && result && (
+        <div className={`rounded-xl px-4 py-3 text-xs ${result.success ? "bg-[#dcfce7] text-[#16a34a]" : "bg-[#fef2f2] text-[#dc2626]"}`}>
+          {result.success
+            ? `✅ Synced successfully — ${result.inserted} chunks embedded${result.skipped > 0 ? `, ${result.skipped} skipped` : ""}`
+            : `⚠ Sync completed with ${result.errors.length} error(s): ${result.errors.slice(0, 2).join("; ")}`}
+        </div>
+      )}
+
+      {status === "syncing" && (
+        <div className="bg-[#eff6ff] rounded-xl px-4 py-3 text-xs text-[#1a56a0]">
+          Embedding compliance rules… this takes 1–3 minutes. Do not close this tab.
+        </div>
+      )}
+
+      {error && (
+        <div className="bg-[#fef2f2] rounded-xl px-4 py-3 text-xs text-[#dc2626]">
+          Error: {error}
+        </div>
+      )}
     </div>
   );
 }
