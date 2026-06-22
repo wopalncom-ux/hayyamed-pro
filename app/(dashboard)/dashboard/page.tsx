@@ -21,6 +21,7 @@ import CmeFirstActivityPrompt from "@/components/dashboard/CmeFirstActivityPromp
 import EmployerTasksWidget from "@/components/dashboard/EmployerTasksWidget";
 import type { EmployerTask } from "@/components/dashboard/EmployerTasksWidget";
 import { QuickActions } from "@/components/dashboard/QuickActions";
+import PushPromptBanner from "@/components/dashboard/PushPromptBanner";
 import Image from "next/image";
 import type { Partner } from "@/lib/types";
 
@@ -169,6 +170,9 @@ export default async function DashboardPage({
       {!isPro(plan) && !showTrialExpiredBanner && (
         <FreeTierBanner activityCount={activityCount} />
       )}
+
+      {/* Push notification opt-in — shown after first CME activity, only if permission not yet set */}
+      <PushPromptBanner activityCount={activityCount} />
 
       {/* NPS survey — shown after 30 days, once per year */}
       <NpsSurveyBanner eligible={npsEligible} />
