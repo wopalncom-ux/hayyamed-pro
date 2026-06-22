@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text, ScrollView, RefreshControl, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, RefreshControl, TouchableOpacity, Linking } from "react-native";
 import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "@/hooks/useAuth";
@@ -132,7 +132,7 @@ export default function DashboardScreen() {
             <QuickAction
               label="Open web dashboard"
               sub="Full features at hayyamed.pro"
-              onPress={() => {/* deep link to web */}}
+              onPress={() => Linking.openURL("https://hayyamed.pro/dashboard")}
             />
           </View>
         </View>

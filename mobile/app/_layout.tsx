@@ -1,11 +1,13 @@
 import "../global.css";
 import "react-native-url-polyfill/auto";
 import { useEffect } from "react";
+import { View } from "react-native";
 import { Stack, useRouter, useSegments } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider, useAuth } from "@/hooks/useAuth";
 import { usePushNotifications } from "@/hooks/usePushNotifications";
+import OfflineBanner from "@/components/ui/OfflineBanner";
 
 const queryClient = new QueryClient();
 
@@ -47,11 +49,14 @@ export default function RootLayout() {
       <AuthProvider>
         <RootGuard />
         <StatusBar style="auto" />
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="(auth)" />
-          <Stack.Screen name="(tabs)" />
-          <Stack.Screen name="onboarding" />
-        </Stack>
+        <View style={{ flex: 1 }}>
+          <OfflineBanner />
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="(auth)" />
+            <Stack.Screen name="(tabs)" />
+            <Stack.Screen name="onboarding" />
+          </Stack>
+        </View>
       </AuthProvider>
     </QueryClientProvider>
   );
