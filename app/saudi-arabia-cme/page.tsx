@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -168,6 +169,12 @@ export default function SaudiArabiaCmePage() {
   return (
     <>
       <BreadcrumbJsonLd items={breadcrumbs} />
+      <MedicalWebPageJsonLd
+        name="Saudi Arabia CME"
+        url="https://hayyamed.pro/saudi-arabia-cme"
+        description="Complete guide to CME requirements in Saudi Arabia. SCFHS requires 60 CME credits per year for all licensed healthcare professionals. Track your Saudi Arabia SCFHS CME automatically with Hayya Med Pro."
+        keywords={["Saudi Arabia CME requirements", "SCFHS CME credits", "Saudi Arabia CME 2025", "SCFHS license renewal", "Saudi healthcare professional CME"]}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}

@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -131,6 +132,12 @@ export default function AnesthesiaCmePage() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Anesthesia CME", url: "https://hayyamed.pro/anesthesia-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Anesthesia CME"
+        url="https://hayyamed.pro/anesthesia-cme"
+        description="Complete CME and CPD guide for anaesthesiologists in GCC. QCHP Qatar 80 CPD/2yr, SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. ACLS mandatory. Track all requirements in one compliance app."
+        keywords={["anesthesia CME requirements GCC", "anaesthesiologist CME Saudi Arabia", "SCFHS anesthesia CME", "QCHP anaesthesiology CPD", "anesthesia CME Qatar", "ACLS mandatory anaesthesiologist GCC"]}
+      />
 
       <section style={{ background: "#0f1f3d", color: "#fff", padding: "72px 24px 56px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>

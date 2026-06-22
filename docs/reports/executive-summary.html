@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hayya Med Pro — Executive Summary</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: white; color: #111; }
+  @media screen { body { background: #f0f4f8; } .page { background: white; max-width: 900px; margin: 32px auto; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,.08); } }
+  @media print { .page { box-shadow: none; margin: 0; } }
+  .cover { background: #0f1f3d; color: white; padding: 60px 56px; }
+  .cover-logo { display: flex; align-items: center; gap: 14px; margin-bottom: 48px; }
+  .logo-mark { width: 48px; height: 48px; background: #1a56a0; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 22px; }
+  .logo-name { font-size: 22px; font-weight: 800; }
+  .logo-name span { color: #60a5fa; }
+  .cover h1 { font-size: 42px; font-weight: 900; line-height: 1.1; margin-bottom: 16px; }
+  .cover h1 span { color: #60a5fa; }
+  .cover-tagline { font-size: 18px; color: #94a3b8; margin-bottom: 48px; line-height: 1.5; max-width: 520px; }
+  .cover-meta { display: flex; gap: 32px; flex-wrap: wrap; }
+  .cover-meta-item .label { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: #64748b; margin-bottom: 4px; }
+  .cover-meta-item .value { font-size: 14px; font-weight: 700; color: white; }
+  .body { padding: 48px 56px; }
+  h2 { font-size: 22px; font-weight: 800; color: #0f1f3d; margin: 36px 0 16px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
+  h2:first-child { margin-top: 0; }
+  p { font-size: 14px; color: #374151; line-height: 1.7; margin-bottom: 14px; }
+  .kpi-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
+  .kpi { background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0; padding: 18px; text-align: center; }
+  .kpi-value { font-size: 36px; font-weight: 900; color: #1a56a0; line-height: 1; }
+  .kpi-label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #64748b; margin-top: 6px; }
+  .highlight-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 20px 24px; margin-bottom: 20px; }
+  .highlight-box h3 { font-size: 14px; font-weight: 800; color: #1e40af; margin-bottom: 8px; }
+  .highlight-box p { font-size: 13px; color: #374151; margin: 0; }
+  .moat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+  .moat-item { background: #f8fafc; border-radius: 10px; border-left: 4px solid #1a56a0; padding: 14px 16px; }
+  .moat-item h4 { font-size: 13px; font-weight: 800; color: #0f1f3d; margin-bottom: 4px; }
+  .moat-item p { font-size: 12px; color: #64748b; margin: 0; }
+  .market-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 20px; }
+  .market-table th { background: #0f1f3d; color: #94a3b8; padding: 10px 14px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+  .market-table td { padding: 10px 14px; border-bottom: 1px solid #f1f5f9; color: #374151; }
+  .ask-box { background: #0f1f3d; color: white; border-radius: 14px; padding: 28px 32px; margin: 28px 0; }
+  .ask-box h3 { font-size: 18px; font-weight: 800; color: white; margin-bottom: 14px; }
+  .ask-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .ask-item .item-label { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: #64748b; margin-bottom: 6px; }
+  .ask-item .item-value { font-size: 14px; color: #e2e8f0; line-height: 1.5; }
+  .milestone-list { list-style: none; }
+  .milestone-list li { display: flex; gap: 12px; margin-bottom: 10px; font-size: 13px; color: #374151; }
+  .milestone-list .num { background: #1a56a0; color: white; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; flex-shrink: 0; margin-top: 1px; }
+  .sig-block { margin-top: 40px; padding-top: 28px; border-top: 1px solid #e2e8f0; }
+  .sig-block p { font-size: 13px; color: #374151; margin-bottom: 4px; }
+  .sig-block strong { color: #0f1f3d; font-size: 15px; }
+  .disclaimer { background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 20px 56px; font-size: 11px; color: #94a3b8; line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="cover">
+    <div class="cover-logo">
+      <div class="logo-mark">H</div>
+      <div class="logo-name">Hayya Med <span>Pro</span></div>
+    </div>
+    <h1>Executive<br /><span>Summary</span></h1>
+    <div class="cover-tagline">The first AI-powered CME compliance platform purpose-built for GCC healthcare professionals — live, deployed, and generating demo demand.</div>
+    <div class="cover-meta">
+      <div class="cover-meta-item"><div class="label">Document Type</div><div class="value">Executive Summary</div></div>
+      <div class="cover-meta-item"><div class="label">Classification</div><div class="value">Confidential — Investors &amp; Partners</div></div>
+      <div class="cover-meta-item"><div class="label">Audit Date</div><div class="value">June 14, 2026</div></div>
+      <div class="cover-meta-item"><div class="label">Platform</div><div class="value">hayyamed.pro</div></div>
+      <div class="cover-meta-item"><div class="label">Incorporated</div><div class="value">Qatar 🇶🇦</div></div>
+    </div>
+  </div>
+
+  <div class="body">
+
+    <h2>Overview</h2>
+    <p>Hayya Med Pro is a production-deployed, AI-powered healthcare compliance SaaS platform. It helps GCC healthcare professionals track CME/CPD credits, manage license renewals, and stay compliant with all 7 GCC licensing authorities — in one platform. The company was founded in Qatar, is registered at hayyamed.pro on GCP Cloud Run (me-central1, Doha region), and has completed 56+ development sessions totaling 73 git commits, 176 pages, 62 API routes, 33 database migrations, and 8 live AI modules.</p>
+    <p>Phase 1 (Foundation &amp; GTM) is 83% complete. All code is done. Remaining Phase 1 tasks are account/vendor approvals (Paddle, Postmark, Vertex AI) — not code.</p>
+
+    <div class="kpi-row">
+      <div class="kpi"><div class="kpi-value">176</div><div class="kpi-label">Platform Pages</div></div>
+      <div class="kpi"><div class="kpi-value">62</div><div class="kpi-label">API Routes</div></div>
+      <div class="kpi"><div class="kpi-value">8</div><div class="kpi-label">AI Modules Live</div></div>
+      <div class="kpi"><div class="kpi-value">33</div><div class="kpi-label">DB Migrations</div></div>
+      <div class="kpi"><div class="kpi-value">40</div><div class="kpi-label">Specialty CME Pages</div></div>
+      <div class="kpi"><div class="kpi-value">7</div><div class="kpi-label">Cron Automations</div></div>
+    </div>
+
+    <h2>The Problem</h2>
+    <p>700,000+ licensed healthcare professionals in GCC — each with a personal compliance clock. Every professional must complete 30–80 credits of CME/CPD per renewal cycle, across 7 different authorities with incompatible portals and rules. Today, most track compliance in spreadsheets (or don't track at all). Employers have zero real-time visibility into whether their staff will pass the next JCI audit. License lapses happen silently, discovered only at renewal — months too late.</p>
+
+    <div class="highlight-box">
+      <h3>The Compliance Gap Is Expensive</h3>
+      <p>A lapsed license = suspended income for the professional. A non-compliant workforce = failed JCI/CBAHI accreditation for the hospital. Today there is no single GCC-focused platform that solves this — for individuals or employers.</p>
+    </div>
+
+    <h2>Our Solution — The Platform Moat</h2>
+    <div class="moat-grid">
+      <div class="moat-item">
+        <h4>GCC Rules Engine</h4>
+        <p>All 7 authorities configured in DB — not hardcoded. Admin panel updates rules; zero code deploy needed. Takes 12–18 months to replicate accurately.</p>
+      </div>
+      <div class="moat-item">
+        <h4>Multi-Authority Wallet</h4>
+        <p>One login → compliance across QCHP + SCFHS + DHA simultaneously. No competitor offers multi-jurisdiction tracking in one platform.</p>
+      </div>
+      <div class="moat-item">
+        <h4>AI Certificate Reader</h4>
+        <p>Photo your CME certificate → Claude Vision reads it → form auto-populated in 8 seconds. Arabic and English. Pro/Employer tier only — AI cost is zero for free users.</p>
+      </div>
+      <div class="moat-item">
+        <h4>Built-in-Qatar Trust</h4>
+        <p>Data stays in GCC (me-central1 Doha). PDPL-aligned by design. Critical for QCHP, HMC, and government procurement conversations.</p>
+      </div>
+    </div>
+
+    <h2>Market Opportunity</h2>
+    <table class="market-table">
+      <tr><th>Segment</th><th>Size</th><th>Annual Value</th><th>Our Path</th></tr>
+      <tr><td>GCC individual professionals</td><td>700,000+</td><td>$149/year × 15% conversion = $15.6M ARR</td><td>PLG — PDF download wall drives Free → Pro</td></tr>
+      <tr><td>GCC healthcare employers</td><td>5,000+</td><td>$3,600/year × 20% = $3.6M ARR</td><td>Employer dashboard + staff compliance reports</td></tr>
+      <tr><td>Government white-label</td><td>7 GCC authorities</td><td>$200K/year × 3 deals = $600K ARR</td><td>White-label rules engine to QCHP / SCFHS</td></tr>
+      <tr><td>GCC TAM combined</td><td>—</td><td><strong>$35M+ ARR</strong></td><td>3–5 year capture window</td></tr>
+      <tr><td>MENA expansion</td><td>2M+ professionals</td><td><strong>$150M+ TAM</strong></td><td>Phase 4 — same platform, new country configs</td></tr>
+    </table>
+
+    <h2>Current Traction</h2>
+    <p>The platform is live at hayyamed.pro. Coming-soon mode is active while Paddle and Postmark approvals complete. Demo requests are flowing through /request-demo → admin CRM. The waitlist system is capturing early professional signups. Zero paying customers yet — first revenue expected within 30 days of going live.</p>
+
+    <h2>Key Milestones — Next 90 Days</h2>
+    <ul class="milestone-list">
+      <li><span class="num">1</span>Go-live: Paddle approved, Postmark domain verified, Vertex AI configured, COMING_SOON=false</li>
+      <li><span class="num">2</span>First 50 Pro subscribers — LinkedIn outreach to Qatar physicians, QCHP conference presence</li>
+      <li><span class="num">3</span>First employer account — target Qatar private hospital or clinic group</li>
+      <li><span class="num">4</span>3 hospital demo conversations active (HMC, Sidra, Al Ahli, or Hamad General)</li>
+      <li><span class="num">5</span>VAPT security scan complete — required before enterprise sales conversations</li>
+      <li><span class="num">6</span>Arabic homepage hero + pricing page — unlocks 60% of GCC search intent</li>
+    </ul>
+
+    <div class="ask-box">
+      <h3>Investment &amp; Partnership Opportunity</h3>
+      <div class="ask-row">
+        <div class="ask-item">
+          <div class="item-label">What's Been Built (Founder-Funded)</div>
+          <div class="item-value">Full production platform · 176 pages · 62 API routes · 8 AI modules · 33 DB migrations · GCP Cloud Run deployed · 7 cron automations · 73 commits</div>
+        </div>
+        <div class="ask-item">
+          <div class="item-label">What Investment Unlocks</div>
+          <div class="item-value">Arabic localization · React Native app · HRIS integrations · QCHP partnership development · 6-person team · SOC 2 certification · Saudi Arabia GTM</div>
+        </div>
+        <div class="ask-item">
+          <div class="item-label">Target Investors</div>
+          <div class="item-value">QDB · QSTP · Hub71 · Healthcare SaaS VCs with GCC exposure · Strategic: GCC hospital groups</div>
+        </div>
+        <div class="ask-item">
+          <div class="item-label">Target SaaS Metrics</div>
+          <div class="item-value">NRR &gt; 110% · Annual churn &lt; 5% (Pro) · LTV:CAC &gt; 3:1 · Gross margin &gt; 75%</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>Why Now</h2>
+    <p>Saudi Vision 2030 is tripling the healthcare workforce. Qatar's NHS partnership is enforcing international clinical standards. UAE Health 2071 mandates digital health tracking. Every GCC authority is tightening CME enforcement. The market is not just addressable — it is actively legislating compliance into existence. Hayya Med Pro is positioned to capture this mandate before any competitor builds GCC-specific capability.</p>
+
+    <div class="sig-block">
+      <p style="color:#94a3b8;font-size:12px;margin-bottom:12px">Prepared by:</p>
+      <strong>Abbas Al Masri</strong>
+      <p>Founder &amp; CEO, Hayya Med AI</p>
+      <p style="color:#64748b">hayyamed.pro · Registered in Qatar 🇶🇦 · June 14, 2026</p>
+    </div>
+
+  </div>
+
+  <div class="disclaimer">
+    <strong>Disclaimer:</strong> This executive summary is confidential and intended for investor and partner evaluation only. Hayya Med Pro supports CME/CPD tracking and licensing readiness. It does not issue licenses and does not replace official licensing authorities. Users must verify final requirements with their relevant regulatory body (QCHP, SCFHS, DHA, DOH, NHRA, OMSB, or MOH Kuwait). Financial projections are estimates based on market analysis and are not guaranteed. Past performance of similar platforms does not guarantee future results.
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -88,6 +89,12 @@ export default function PulmonologyCmePage() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Pulmonology CME", url: "https://hayyamed.pro/pulmonology-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Pulmonology CME"
+        url="https://hayyamed.pro/pulmonology-cme"
+        description="CME and CPD requirements for pulmonologists and respiratory medicine specialists in GCC. QCHP Qatar 80 CPD/2yr, SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. Track respiratory CME across all 7 GCC authorities."
+        keywords={["pulmonology CME requirements GCC", "respiratory medicine CME GCC", "pulmonologist CME Saudi Arabia", "SCFHS pulmonology CME", "QCHP pulmonologist CPD", "respiratory medicine CPD Qatar"]}
+      />
       <div className="min-h-screen bg-[#f8fafc]">
         <header className="bg-white border-b border-[#e2e8f0]">
           <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">

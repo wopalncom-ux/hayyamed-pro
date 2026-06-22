@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -127,6 +128,12 @@ export default function EmergencyMedicineCmePage() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Emergency Medicine CME", url: "https://hayyamed.pro/emergency-medicine-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Emergency Medicine CME"
+        url="https://hayyamed.pro/emergency-medicine-cme"
+        description="CME and CPD requirements for emergency medicine physicians in GCC. QCHP Qatar 80 CPD/2yr, SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. Track EM CME across all GCC authorities."
+        keywords={["emergency medicine CME requirements GCC", "EM physician CME Saudi Arabia", "SCFHS emergency medicine CME", "QCHP emergency medicine CPD", "emergency physician CPD Qatar", "EM doctor CME tracker GCC"]}
+      />
 
       <div className="min-h-screen bg-[#f8fafc]">
         <header className="bg-white border-b border-[#e2e8f0]">

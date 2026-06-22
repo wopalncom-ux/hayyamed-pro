@@ -100,6 +100,7 @@ export type AnalyticsEvent =
   | "employer_qr_code_viewed"
   | "employer_qr_code_downloaded"
   | "employer_qr_code_downloaded_png"
+  | "employer_audit_export_clicked"
   // Profile
   | "license_added"
   | "settings_updated"

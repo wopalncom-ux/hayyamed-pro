@@ -7,6 +7,8 @@ import PostHogIdentify from "@/components/PostHogIdentify";
 import HayyaVoiceOrb from "@/components/ai/HayyaVoiceOrb";
 import { ToastProvider } from "@/components/ui/toast";
 import { getUserPlan } from "@/lib/subscription";
+import AnnouncementBanner from "@/components/AnnouncementBanner";
+import WhatsNew from "@/components/WhatsNew";
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient();
@@ -65,13 +67,17 @@ export default async function DashboardLayout({ children }: { children: React.Re
           orgLogoUrl={orgLogoRes?.logo_url ?? undefined}
           isEmployerAdmin={isEmployerAdmin}
         />
+        <AnnouncementBanner />
         <main id="main-content" className="max-w-5xl mx-auto px-4 py-8">{children}</main>
         {profile?.created_at && <NpsSurvey createdAt={profile.created_at} />}
         <HayyaVoiceOrb plan={userPlan} />
         <footer className="border-t border-[#e2e8f0] mt-4">
           <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between text-xs text-[#64748b]">
             <span>Hayya Med Pro supports CME tracking only. Verify requirements with your regulatory authority.</span>
-            <a href="/help" className="hover:text-[#374151] transition-colors whitespace-nowrap ml-4">Help & FAQ</a>
+            <div className="flex items-center gap-4 ml-4">
+              <WhatsNew />
+              <a href="/help" className="hover:text-[#374151] transition-colors whitespace-nowrap">Help & FAQ</a>
+            </div>
           </div>
         </footer>
       </div>

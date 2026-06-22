@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -212,6 +213,12 @@ export default function NurseCmePage() {
   return (
     <>
       <BreadcrumbJsonLd items={breadcrumbs} />
+      <MedicalWebPageJsonLd
+        name="Nurse CME Requirements GCC"
+        url="https://hayyamed.pro/nurse-cme"
+        description="Track your nursing CME credits for QCHP, SCFHS, DHA and all GCC authorities automatically. Free for healthcare professionals."
+        keywords={["nurse CME requirements GCC", "QCHP nursing CPD", "SCFHS nurse CME", "DHA nursing CME", "GCC nurse license renewal CME"]}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}

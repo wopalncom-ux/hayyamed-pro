@@ -10,6 +10,7 @@ import { isFeatureEnabled } from "@/lib/featureFlags";
 import { logAudit } from "@/lib/audit";
 import { logAiCall } from "@/lib/ai/logAiCall";
 import { buildRenewalPredictionPrompt } from "@/lib/ai/prompts/renewal-prediction";
+import { checkAiConsent } from "@/lib/ai/checkAiConsent";
 
 export const runtime = "nodejs";
 
@@ -41,6 +42,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Pro plan required" }, { status: 403 });
   if (!await isFeatureEnabled("ai_renewal_prediction", plan))
     return NextResponse.json({ error: "Feature unavailable" }, { status: 403 });
+  if (!await checkAiConsent(user.id))
+    return NextResponse.json({ error: "AI consent required — enable in Settings > Privacy" }, { status: 403 });
 
   const rl = await checkAndLogRateLimit({
     action: "ai_renewal_prediction",

@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -105,6 +106,12 @@ export default function AllergyImmunologyCme() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Allergy & Immunology CME", url: "https://hayyamed.pro/allergy-immunology-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Allergy & Immunology CME"
+        url="https://hayyamed.pro/allergy-immunology-cme"
+        description="CME and CPD requirements for allergists and clinical immunologists in Qatar, Saudi Arabia, UAE, and all GCC countries. QCHP, SCFHS, DHA allergy CME credits, AAAAI and EAACI accreditors, and subspecialty training."
+        keywords={["allergy immunology CME GCC", "allergist CME requirements", "QCHP allergy immunology CPD", "SCFHS allergy CME", "DHA allergy immunology CME", "AAAAI CME GCC"]}
+      />
 
       <div className="min-h-screen bg-[#f8fafc]">
         <header className="bg-white border-b border-[#e2e8f0] sticky top-0 z-10">

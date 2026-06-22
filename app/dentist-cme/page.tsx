@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -193,6 +194,12 @@ export default function DentistCmePage() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Dentist CME", url: "https://hayyamed.pro/dentist-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Dentist CME"
+        url="https://hayyamed.pro/dentist-cme"
+        description="Complete guide to dentist CME and CPD requirements across the GCC. QCHP Qatar (80 CPD/2yr), SCFHS Saudi Arabia (60 CME/yr), DHA Dubai (40 CME/2yr). Track all dental CME requirements in one professional compliance app."
+        keywords={["dentist CME requirements GCC", "SCFHS dentist CME", "QCHP dentist CPD", "dental CME Saudi Arabia", "dentist license renewal GCC", "DHA dentist CME"]}
+      />
 
       {/* Header nav */}
       <header className="border-b border-[#e2e8f0] bg-white sticky top-0 z-10">

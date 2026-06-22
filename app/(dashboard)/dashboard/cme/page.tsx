@@ -197,6 +197,7 @@ export default async function CmePage({
             cycleStartDate={wallet.cycle_start_date ?? null}
             cycleEndDate={wallet.cycle_end_date ?? null}
             licenseExpiryDays={null}
+            countryCode={toCountryCode(wallet.country ?? "QA")}
           />
 
           {/* PDF upgrade strip — shown to free users immediately after the ring */}

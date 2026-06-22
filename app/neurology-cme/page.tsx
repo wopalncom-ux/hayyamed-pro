@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -139,6 +140,12 @@ export default function NeurologyCmePage() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Neurology CME", url: "https://hayyamed.pro/neurology-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Neurology CME"
+        url="https://hayyamed.pro/neurology-cme"
+        description="Complete CME and CPD guide for neurologists in GCC. QCHP Qatar 80 CPD/2yr, SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. EEG, EMG workshops and stroke simulation count. Track all 7 GCC authorities in one app."
+        keywords={["neurology CME requirements GCC", "neurologist CME Saudi Arabia", "SCFHS neurology CME", "QCHP neurologist CPD", "neurology CPD Qatar", "stroke CME GCC"]}
+      />
 
       {/* Hero */}
       <section style={{ background: "#0f1f3d", color: "#fff", padding: "72px 24px 56px" }}>

@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -127,6 +128,12 @@ export default function RadiologyCmePage() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Radiology CME", url: "https://hayyamed.pro/radiology-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Radiology CME"
+        url="https://hayyamed.pro/radiology-cme"
+        description="CME and CPD requirements for radiologists in GCC. QCHP Qatar 80 CPD/2yr, SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. Radiation safety, AI imaging, and Saudi Radiology Society CME guidance."
+        keywords={["radiology CME requirements GCC", "radiologist CME Saudi Arabia", "SCFHS radiology CME", "QCHP radiologist CPD", "radiology CPD Qatar", "radiation safety CME GCC"]}
+      />
 
       <div className="min-h-screen bg-[#f8fafc]">
         <header className="bg-white border-b border-[#e2e8f0]">

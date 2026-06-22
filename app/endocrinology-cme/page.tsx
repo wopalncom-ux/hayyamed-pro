@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -88,6 +89,12 @@ export default function EndocrinologyCmePage() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Endocrinology CME", url: "https://hayyamed.pro/endocrinology-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Endocrinology CME"
+        url="https://hayyamed.pro/endocrinology-cme"
+        description="CME and CPD requirements for endocrinologists in GCC. QCHP Qatar 80 CPD/2yr, SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. Track diabetes and endocrine CME across all 7 GCC authorities."
+        keywords={["endocrinology CME requirements GCC", "endocrinologist CME Saudi Arabia", "diabetes CME requirements GCC", "SCFHS endocrinology CME", "QCHP endocrinologist CPD", "diabetes CME Qatar"]}
+      />
       <div className="min-h-screen bg-[#f8fafc]">
         <header className="bg-white border-b border-[#e2e8f0]">
           <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">

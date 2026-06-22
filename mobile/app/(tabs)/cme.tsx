@@ -9,8 +9,9 @@ import { Image } from "expo-image";
 import { useFocusEffect } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "@/hooks/useAuth";
+import { useNetworkSync } from "@/hooks/useNetworkSync";
 import { supabase } from "@/lib/supabase";
-import { enqueueActivity, flushQueue, getQueueCount } from "@/lib/offlineQueue";
+import { enqueueActivity } from "@/lib/offlineQueue";
 import { CmeActivity, CmeWallet } from "@/lib/types";
 
 const STATUS_COLORS: Record<string, string> = {
@@ -21,10 +22,9 @@ const STATUS_COLORS: Record<string, string> = {
 
 export default function CmeScreen() {
   const { user } = useAuth();
+  const { isOnline, pendingCount, syncing } = useNetworkSync();
   const [wallet, setWallet]             = useState<CmeWallet | null>(null);
   const [activities, setActivities]     = useState<CmeActivity[]>([]);
-  const [pendingCount, setPendingCount] = useState(0);
-  const [syncing, setSyncing]           = useState(false);
   const [refreshing, setRefreshing]     = useState(false);
   const [showAdd, setShowAdd]           = useState(false);
 
@@ -48,17 +48,8 @@ export default function CmeScreen() {
     setActivities(actRes.data ?? []);
   }
 
-  async function syncPending() {
-    setSyncing(true);
-    const synced = await flushQueue();
-    if (synced > 0) await loadData();
-    setPendingCount(await getQueueCount());
-    setSyncing(false);
-  }
-
   async function onRefresh() {
     setRefreshing(true);
-    await syncPending();
     await loadData();
     setRefreshing(false);
   }
@@ -66,7 +57,6 @@ export default function CmeScreen() {
   useFocusEffect(
     useCallback(() => {
       loadData();
-      syncPending();
     }, [user?.id])
   );
 
@@ -85,9 +75,7 @@ export default function CmeScreen() {
           </Text>
         </View>
         {pendingCount > 0 && (
-          <TouchableOpacity
-            onPress={syncPending}
-            disabled={syncing}
+          <View
             className="flex-row items-center gap-1.5 px-3 py-1.5 rounded-full border"
             style={{ borderColor: "#d97706", backgroundColor: "#fffbeb" }}
             accessibilityLabel={`${pendingCount} activities pending sync`}
@@ -97,11 +85,24 @@ export default function CmeScreen() {
               : <Text style={{ color: "#d97706", fontSize: 12 }}>↑</Text>
             }
             <Text className="text-xs font-semibold" style={{ color: "#d97706" }}>
-              {pendingCount} pending
+              {syncing ? "Syncing…" : `${pendingCount} pending`}
             </Text>
-          </TouchableOpacity>
+          </View>
         )}
       </View>
+
+      {/* Offline banner — shown when device has no internet */}
+      {!isOnline && (
+        <View
+          className="flex-row items-center gap-2 px-4 py-2.5"
+          style={{ backgroundColor: "#fef3c7", borderBottomWidth: 1, borderBottomColor: "#fde68a" }}
+        >
+          <Text style={{ fontSize: 14 }}>📵</Text>
+          <Text className="text-xs font-medium flex-1" style={{ color: "#92400e" }}>
+            You're offline. Activities will sync when you reconnect.
+          </Text>
+        </View>
+      )}
 
       <ScrollView
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#1a56a0" />}
@@ -205,7 +206,6 @@ export default function CmeScreen() {
         onClose={() => setShowAdd(false)}
         onSaved={async () => {
           setShowAdd(false);
-          setPendingCount(await getQueueCount());
           await loadData();
         }}
       />

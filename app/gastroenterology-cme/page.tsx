@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -88,6 +89,12 @@ export default function GastroenterologyCmePage() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Gastroenterology CME", url: "https://hayyamed.pro/gastroenterology-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Gastroenterology CME"
+        url="https://hayyamed.pro/gastroenterology-cme"
+        description="CME and CPD requirements for gastroenterologists in GCC. QCHP Qatar 80 CPD/2yr, SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. Track GI CME across all 7 GCC licensing authorities."
+        keywords={["gastroenterology CME requirements GCC", "gastroenterologist CME Saudi Arabia", "SCFHS gastroenterology CME", "QCHP gastroenterologist CPD", "GI CME requirements GCC", "gastroenterology license renewal"]}
+      />
       <div className="min-h-screen bg-[#f8fafc]">
         <header className="bg-white border-b border-[#e2e8f0]">
           <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">

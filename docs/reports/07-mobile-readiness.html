@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mobile Readiness — Hayya Med Pro 2026-06-22</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8fafc;color:#0f172a;font-size:14px}
+.header{background:linear-gradient(135deg,#0891b2,#0e7490);color:#fff;padding:36px 48px}
+.header h1{font-size:26px;font-weight:800;margin-bottom:4px}
+.header p{color:#cffafe;font-size:13px}
+.badge{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;margin-top:10px;margin-right:6px}
+.container{max-width:1200px;margin:0 auto;padding:32px 24px}
+.section{margin-bottom:36px}
+.section-title{font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #e2e8f0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:20px}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e2e8f0;margin-bottom:16px}
+th{background:#f8fafc;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;padding:10px 14px;text-align:left}
+td{padding:10px 14px;border-top:1px solid #f1f5f9;font-size:12px;vertical-align:top;line-height:1.5}
+.pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600}
+.pill-red{background:#fee2e2;color:#dc2626}
+.pill-amber{background:#fef9c3;color:#92400e}
+.pill-green{background:#dcfce7;color:#16a34a}
+.pill-blue{background:#dbeafe;color:#1d4ed8}
+.pill-gray{background:#f1f5f9;color:#475569}
+.platform-card{background:#fff;border-radius:16px;border:1px solid #e2e8f0;padding:24px;text-align:center}
+.platform-score{font-size:48px;font-weight:900;margin:12px 0}
+.platform-icon{font-size:32px;margin-bottom:8px}
+.check-list div{font-size:12px;padding:4px 0;color:#374151}
+.footer{background:#0f172a;color:#94a3b8;text-align:center;padding:20px;font-size:11px;margin-top:48px}
+</style>
+</head>
+<body>
+<div class="header">
+  <div style="max-width:1200px;margin:0 auto">
+    <div style="font-size:11px;color:#cffafe;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">PHASE 5 — MOBILE APP READINESS</div>
+    <h1>Mobile Readiness Report</h1>
+    <p>PWA · iOS · Android · React Native · Expo SDK 56 · Offline-First · Push Notifications</p>
+    <span class="badge">Overall: 91/100 PWA</span><span class="badge">React Native: In Dev (mobile/)</span><span class="badge">Expo SDK 56</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Platform Scores -->
+  <div class="section">
+    <div class="section-title">Platform Readiness Scores</div>
+    <div class="grid4">
+      <div class="platform-card">
+        <div class="platform-icon">🌐</div>
+        <div style="font-size:13px;font-weight:700;color:#0f172a">Web App</div>
+        <div class="platform-score" style="color:#16a34a">97</div>
+        <div style="font-size:11px;color:#64748b">Live at hayyamed.pro. Responsive. All features work.</div>
+      </div>
+      <div class="platform-card">
+        <div class="platform-icon">📱</div>
+        <div style="font-size:13px;font-weight:700;color:#0f172a">PWA</div>
+        <div class="platform-score" style="color:#16a34a">91</div>
+        <div style="font-size:11px;color:#64748b">Complete manifest, SW, offline.html, splash screens. Minor: iOS Safari push limitation.</div>
+      </div>
+      <div class="platform-card">
+        <div class="platform-icon"></div>
+        <div style="font-size:13px;font-weight:700;color:#0f172a">iOS Native</div>
+        <div class="platform-score" style="color:#d97706">42</div>
+        <div style="font-size:11px;color:#64748b">React Native / Expo app exists in mobile/ dir. Build not yet EAS-submitted to App Store.</div>
+      </div>
+      <div class="platform-card">
+        <div class="platform-icon">🤖</div>
+        <div style="font-size:13px;font-weight:700;color:#0f172a">Android Native</div>
+        <div class="platform-score" style="color:#d97706">42</div>
+        <div style="font-size:11px;color:#64748b">Same React Native codebase. Not yet on Google Play. EAS build pending.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PWA Deep Dive -->
+  <div class="section">
+    <div class="section-title">PWA Implementation — Detailed Audit</div>
+    <div class="grid2">
+      <div class="card">
+        <h3 style="font-size:13px;font-weight:700;color:#0f172a;margin-bottom:12px">manifest.json Coverage</h3>
+        <div class="check-list">
+          <div>✅ name: "Hayya Med PRO"</div>
+          <div>✅ short_name configured</div>
+          <div>✅ display: standalone (full-screen mode)</div>
+          <div>✅ orientation: portrait-primary</div>
+          <div>✅ theme_color: #1a56a0 (matches brand)</div>
+          <div>✅ start_url: /dashboard?source=pwa</div>
+          <div>✅ scope: / (full app scope)</div>
+          <div>✅ icons: 192x192 + 512x512 (regular + maskable)</div>
+          <div>✅ screenshots: mobile (390x844) + tablet (1024x1366)</div>
+          <div>✅ shortcuts: 3 shortcuts (CME, Licenses, Compliance)</div>
+          <div>✅ description present</div>
+          <div>✅ categories: ["medical", "health", "productivity"]</div>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="font-size:13px;font-weight:700;color:#0f172a;margin-bottom:12px">Apple Web App (iOS)</h3>
+        <div class="check-list">
+          <div>✅ apple-mobile-web-app-capable: true</div>
+          <div>✅ apple-mobile-web-app-status-bar-style: black-translucent</div>
+          <div>✅ apple-touch-icon configured</div>
+          <div>✅ Splash screens: 4 resolutions</div>
+          <div style="margin-top:8px;font-size:12px;color:#374151"><strong>Splash Screen Coverage:</strong></div>
+          <div>✅ iPhone 14 Pro Max: 1290x2796 (3x)</div>
+          <div>✅ iPhone 14/13/12: 1170x2532 (3x)</div>
+          <div>✅ iPhone SE/8: 750x1334 (2x)</div>
+          <div>✅ iPad Pro 12.9": 2048x2732 (2x)</div>
+          <div style="margin-top:8px">⚠️ Missing: iPhone 15 Pro Max splash (1290x2796)</div>
+          <div>⚠️ iOS Safari push notifications require iOS 16.4+ — warn users</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid2" style="margin-top:16px">
+      <div class="card">
+        <h3 style="font-size:13px;font-weight:700;color:#0f172a;margin-bottom:12px">Service Worker (public/sw.js)</h3>
+        <div class="check-list">
+          <div>✅ Service worker file exists: public/sw.js (2,492 bytes)</div>
+          <div>✅ Offline fallback: public/offline.html</div>
+          <div>✅ PWARegister component auto-registers SW</div>
+          <div>✅ PWAInstallPrompt shows install banner</div>
+          <div>✅ AppDownloadModal for app store links</div>
+          <div>⚠️ Service worker caching strategy not audited (network-first? cache-first?)</div>
+          <div>⚠️ CME offline submission queue exists in design — verify implementation</div>
+          <div>⚠️ Background sync for offline activities not confirmed active</div>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="font-size:13px;font-weight:700;color:#0f172a;margin-bottom:12px">Push Notifications</h3>
+        <div class="check-list">
+          <div>✅ VAPID keys configured</div>
+          <div>✅ Push subscription endpoint: /api/push</div>
+          <div>✅ web-push library integrated</div>
+          <div>✅ notification_queue table for scheduling</div>
+          <div>✅ Cron job: /api/cron/process-notifications</div>
+          <div>✅ User notification preferences page</div>
+          <div>✅ PushPreferencesForm component</div>
+          <div>✅ Admin Push Composer: /admin/push-compose</div>
+          <div>⚠️ iOS push requires iOS 16.4+ PWA (not all users)</div>
+          <div>⚠️ No push delivery success rate monitoring</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- React Native Status -->
+  <div class="section">
+    <div class="section-title">React Native / Expo App Status</div>
+    <div class="grid2">
+      <div class="card">
+        <h3 style="font-size:13px;font-weight:700;color:#0f172a;margin-bottom:12px">What's Built (mobile/ directory)</h3>
+        <div class="check-list">
+          <div>✅ Expo SDK 56 (latest)</div>
+          <div>✅ expo-router for navigation</div>
+          <div>✅ NativeWind v4 (Tailwind for React Native)</div>
+          <div>✅ Supabase Bearer token auth (no cookies)</div>
+          <div>✅ iOS Keychain for secure storage</div>
+          <div>✅ TypeScript excluded from main tsconfig (separate project)</div>
+          <div>✅ Core screens confirmed in Session 151 audit</div>
+          <div>⚠️ Session 151 found 4 gaps: offline badge, DatePicker, cert upload, upgrade link</div>
+          <div>⚠️ Mobile stub at index.tsx:135</div>
+          <div>⚠️ No NetInfo (network status) package</div>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="font-size:13px;font-weight:700;color:#0f172a;margin-bottom:12px">Gaps to App Store Launch</h3>
+        <table style="margin-bottom:0">
+          <tr><th>Gap</th><th>Platform</th><th>Effort</th></tr>
+          <tr><td>EAS Build configuration</td><td>iOS + Android</td><td>1 day</td></tr>
+          <tr><td>Apple Developer Account + provisioning</td><td>iOS</td><td>1 day</td></tr>
+          <tr><td>Google Play Console setup</td><td>Android</td><td>1 day</td></tr>
+          <tr><td>App Store privacy labels</td><td>iOS</td><td>4 hours</td></tr>
+          <tr><td>Google Play data safety form</td><td>Android</td><td>4 hours</td></tr>
+          <tr><td>FCM push notification setup</td><td>Android</td><td>4 hours</td></tr>
+          <tr><td>APNs push certificate</td><td>iOS</td><td>4 hours</td></tr>
+          <tr><td>NetInfo package (offline status)</td><td>Both</td><td>2 hours</td></tr>
+          <tr><td>DatePicker component</td><td>Both</td><td>4 hours</td></tr>
+          <tr><td>Certificate upload in-app</td><td>Both</td><td>1 day</td></tr>
+          <tr><td>Upgrade / billing link (web checkout)</td><td>Both</td><td>2 hours</td></tr>
+          <tr><td>App Store review submission</td><td>iOS</td><td>2-4 weeks (Apple)</td></tr>
+          <tr><td>Google Play review</td><td>Android</td><td>3-7 days</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Security -->
+  <div class="section">
+    <div class="section-title">Mobile Security Architecture</div>
+    <table>
+      <thead><tr><th>Security Concern</th><th>Implementation</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Session storage</td><td>iOS Keychain (expo-secure-store) — not AsyncStorage</td><td><span class="pill pill-green">✓ Correct</span></td></tr>
+        <tr><td>API authentication</td><td>Bearer token in Authorization header (no cookies)</td><td><span class="pill pill-green">✓ Correct</span></td></tr>
+        <tr><td>In-app purchases</td><td>Avoided — web checkout only (reader app exemption)</td><td><span class="pill pill-green">✓ Compliant</span></td></tr>
+        <tr><td>Certificate pinning</td><td>Not implemented yet</td><td><span class="pill pill-amber">⚠ Planned</span></td></tr>
+        <tr><td>Biometric authentication</td><td>expo-local-authentication available in SDK</td><td><span class="pill pill-amber">⚠ Not yet wired</span></td></tr>
+        <tr><td>Jailbreak detection</td><td>Not implemented</td><td><span class="pill pill-amber">⚠ Low priority</span></td></tr>
+        <tr><td>Network security (iOS ATS)</td><td>HTTPS enforced by App Transport Security</td><td><span class="pill pill-green">✓ Auto-enforced</span></td></tr>
+        <tr><td>Android ProGuard</td><td>Expo default (basic obfuscation)</td><td><span class="pill pill-amber">⚠ Consider R8</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Development Estimate -->
+  <div class="section">
+    <div class="section-title">Mobile Launch Estimates</div>
+    <div class="grid3">
+      <div class="card" style="border-top:3px solid #16a34a">
+        <h3 style="font-size:13px;font-weight:700;color:#16a34a;margin-bottom:12px">PWA Launch</h3>
+        <div style="font-size:11px;color:#374151;line-height:1.8">
+          <div><strong>Status:</strong> LIVE — users can install PWA now</div>
+          <div><strong>Remaining:</strong> Fix 4 gaps from Session 151</div>
+          <div><strong>Effort:</strong> 3-4 days</div>
+          <div><strong>ETA:</strong> 1 week</div>
+          <div style="margin-top:8px;color:#16a34a"><strong>Recommendation:</strong> Push PWA adoption NOW. Add "Install App" banner to dashboard. Cost: $0. Revenue impact: Immediate.</div>
+        </div>
+      </div>
+      <div class="card" style="border-top:3px solid #d97706">
+        <h3 style="font-size:13px;font-weight:700;color:#d97706;margin-bottom:12px">Android (Google Play)</h3>
+        <div style="font-size:11px;color:#374151;line-height:1.8">
+          <div><strong>Status:</strong> React Native app in mobile/ dir</div>
+          <div><strong>Remaining:</strong> Close 4 gaps + EAS build + Play Console</div>
+          <div><strong>Effort:</strong> 2-3 weeks development</div>
+          <div><strong>Review:</strong> 3-7 days Google Play</div>
+          <div><strong>ETA:</strong> 4-5 weeks</div>
+          <div style="margin-top:8px;color:#d97706"><strong>Note:</strong> Launch Android before iOS — faster review, lower cost, larger GCC market share on Android.</div>
+        </div>
+      </div>
+      <div class="card" style="border-top:3px solid #1a56a0">
+        <h3 style="font-size:13px;font-weight:700;color:#1a56a0;margin-bottom:12px">iOS (App Store)</h3>
+        <div style="font-size:11px;color:#374151;line-height:1.8">
+          <div><strong>Status:</strong> Same React Native codebase</div>
+          <div><strong>Remaining:</strong> Apple Dev Account + provisioning + review</div>
+          <div><strong>Effort:</strong> 2-3 weeks development + 2-4 weeks App Store review</div>
+          <div><strong>Cost:</strong> $99/yr Apple Developer fee</div>
+          <div><strong>ETA:</strong> 6-8 weeks</div>
+          <div style="margin-top:8px;color:#1a56a0"><strong>Risk:</strong> Apple medical category review is strict. Ensure medical disclaimer is prominent in app.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="footer">HAYYA MED PRO — MOBILE READINESS REPORT · CONFIDENTIAL · 22 June 2026</div>
+</body>
+</html>

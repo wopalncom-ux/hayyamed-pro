@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -124,6 +125,12 @@ export default function CardiothoracicSurgeryCmePage() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Cardiothoracic Surgery CME", url: "https://hayyamed.pro/cardiothoracic-surgery-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Cardiothoracic Surgery CME"
+        url="https://hayyamed.pro/cardiothoracic-surgery-cme"
+        description="CME and CPD requirements for cardiothoracic surgeons in GCC. QCHP Qatar 80 CPD/2yr, SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. Track cardiothoracic surgery CME across all 7 GCC licensing authorities."
+        keywords={["cardiothoracic surgery CME requirements GCC", "cardiac surgeon CME Saudi Arabia", "SCFHS cardiothoracic surgery CME", "QCHP cardiac surgery CPD", "cardiothoracic surgery CPD Qatar", "EACTS CME GCC"]}
+      />
 
       <div className="min-h-screen bg-[#f8fafc]">
         <header className="bg-white border-b border-[#e2e8f0]">

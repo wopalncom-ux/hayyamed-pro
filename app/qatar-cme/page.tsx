@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -173,6 +174,12 @@ export default function QatarCmePage() {
   return (
     <>
       <BreadcrumbJsonLd items={breadcrumbs} />
+      <MedicalWebPageJsonLd
+        name="Qatar CPD Requirements"
+        url="https://hayyamed.pro/qatar-cme"
+        description="Complete guide to CME and CPD requirements in Qatar. QCHP requires 80 CPD credits every 2 years for all licensed healthcare professionals. Track your Qatar CPD automatically with Hayya Med Pro."
+        keywords={["Qatar CME requirements", "QCHP CPD credits", "Qatar CPD 2025", "QCHP license renewal", "Qatar healthcare professional CPD"]}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}

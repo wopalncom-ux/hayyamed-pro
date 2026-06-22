@@ -2,53 +2,68 @@
 import { createClient } from "@/lib/supabase/server";
 import type { Metadata } from "next";
 import LandingPage from "@/components/landing/LandingPage";
+import { getPageSeo } from "@/lib/cms";
 
 const SITE_URL = "https://hayyamed.pro";
-const TITLE = "Hayya Med Pro — CME Tracking & License Compliance for GCC Healthcare Professionals";
-const DESCRIPTION =
+const DEFAULT_TITLE = "Hayya Med Pro — CME Tracking & License Compliance for GCC Healthcare Professionals";
+const DEFAULT_DESCRIPTION =
   "Track CME credits, manage license renewals, and stay compliant with QCHP, SCFHS, DHA, and all GCC licensing authorities — free, on web and mobile. Built for Qatar, Saudi Arabia, UAE, Kuwait, Bahrain, and Oman.";
+const DEFAULT_KEYWORDS = [
+  "CME tracking", "CPD Qatar", "QCHP renewal", "SCFHS CME", "DHA compliance",
+  "GCC healthcare professionals", "medical license renewal", "CME credits",
+  "healthcare compliance platform", "Hayya Med Pro",
+];
 
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
-  title: TITLE,
-  description: DESCRIPTION,
-  keywords: [
-    "CME tracking", "CPD Qatar", "QCHP renewal", "SCFHS CME", "DHA compliance",
-    "GCC healthcare professionals", "medical license renewal", "CME credits",
-    "healthcare compliance platform", "Hayya Med Pro",
-  ],
-  authors: [{ name: "Hayya Med", url: SITE_URL }],
-  creator: "Hayya Med",
-  publisher: "Hayya Med",
-  alternates: { canonical: SITE_URL },
-  openGraph: {
-    type: "website",
-    url: SITE_URL,
-    siteName: "Hayya Med Pro",
-    title: TITLE,
-    description: DESCRIPTION,
-    locale: "en_US",
-    images: [
-      {
-        url: `${SITE_URL}/opengraph-image`,
-        width: 1200,
-        height: 630,
-        alt: "Hayya Med Pro — CME Tracking for GCC Healthcare Professionals",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: TITLE,
-    description: DESCRIPTION,
-    images: [`${SITE_URL}/opengraph-image`],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true, "max-image-preview": "large" },
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getPageSeo("landing");
+
+  const title = seo?.meta_title || DEFAULT_TITLE;
+  const description = seo?.meta_description || DEFAULT_DESCRIPTION;
+  const ogTitle = seo?.og_title || title;
+  const ogDescription = seo?.og_description || description;
+  const ogImage = seo?.og_image_url || `${SITE_URL}/opengraph-image`;
+  const canonical = seo?.canonical_url || SITE_URL;
+  const keywords = seo?.keywords?.length ? seo.keywords : DEFAULT_KEYWORDS;
+  const noIndex = seo?.robots_directive?.includes("noindex") ?? false;
+
+  return {
+    metadataBase: new URL(SITE_URL),
+    title,
+    description,
+    keywords,
+    authors: [{ name: "Hayya Med", url: SITE_URL }],
+    creator: "Hayya Med",
+    publisher: "Hayya Med",
+    alternates: { canonical },
+    openGraph: {
+      type: "website",
+      url: canonical,
+      siteName: "Hayya Med Pro",
+      title: ogTitle,
+      description: ogDescription,
+      locale: "en_US",
+      images: [
+        {
+          url: ogImage.startsWith("http") ? ogImage : `${SITE_URL}/opengraph-image`,
+          width: 1200,
+          height: 630,
+          alt: "Hayya Med Pro — CME Tracking for GCC Healthcare Professionals",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: ogTitle,
+      description: ogDescription,
+      images: [ogImage.startsWith("http") ? ogImage : `${SITE_URL}/opengraph-image`],
+    },
+    robots: {
+      index: !noIndex,
+      follow: true,
+      googleBot: { index: !noIndex, follow: true, "max-image-preview": "large" },
+    },
+  };
+}
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -57,7 +72,7 @@ const jsonLd = {
   applicationCategory: "HealthApplication",
   operatingSystem: "Web, iOS, Android",
   url: SITE_URL,
-  description: DESCRIPTION,
+  description: DEFAULT_DESCRIPTION,
   offers: [
     {
       "@type": "Offer",

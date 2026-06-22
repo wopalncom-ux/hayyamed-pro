@@ -106,18 +106,32 @@ const GRADE_STYLES: Record<string, string> = {
   F: "text-[#dc2626] bg-[#fef2f2] border-[#fecaca]",
 };
 
+const AUTHORITY_MAP: Record<string, { name: string; url: string }> = {
+  QA: { name: "QCHP", url: "https://www.qchp.org.qa" },
+  SA: { name: "SCFHS", url: "https://www.scfhs.org.sa" },
+  AE: { name: "DHA/DOH", url: "https://www.dha.gov.ae" },
+  KW: { name: "MOH Kuwait", url: "https://www.moh.gov.kw" },
+  BH: { name: "NHRA", url: "https://www.nhra.bh" },
+  OM: { name: "OMSB", url: "https://www.omsb.org" },
+  GB: { name: "GMC/NMC", url: "https://www.gmc-uk.org" },
+  IN: { name: "NMC India", url: "https://www.nmc.org.in" },
+  AU: { name: "AHPRA", url: "https://www.ahpra.gov.au" },
+};
+
 export default function ComplianceRing({
   completed,
   required,
   cycleStartDate,
   cycleEndDate,
   licenseExpiryDays,
+  countryCode,
 }: {
   completed: number;
   required: number;
   cycleStartDate: string | null;
   cycleEndDate: string | null;
   licenseExpiryDays: number | null;
+  countryCode?: string;
 }) {
   const [animated, setAnimated] = useState(false);
 
@@ -182,6 +196,19 @@ export default function ComplianceRing({
               />
             </div>
             <p className="text-xs text-[#64748b] mt-1">{Math.round(pct)}% of cycle complete</p>
+            {countryCode && AUTHORITY_MAP[countryCode.toUpperCase()] && (
+              <p className="text-[10px] text-[#94a3b8] mt-0.5">
+                Per{" "}
+                <a
+                  href={AUTHORITY_MAP[countryCode.toUpperCase()].url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-[#64748b] transition-colors"
+                >
+                  {AUTHORITY_MAP[countryCode.toUpperCase()].name} guidelines
+                </a>
+              </p>
+            )}
           </div>
 
           <div className={`rounded-lg px-3 py-2 text-xs leading-relaxed ${

@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -105,6 +106,12 @@ export default function NeonatologyCme() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Neonatology CME", url: "https://hayyamed.pro/neonatology-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Neonatology CME"
+        url="https://hayyamed.pro/neonatology-cme"
+        description="CME and CPD requirements for neonatologists and neonatal nurses in Qatar, Saudi Arabia, UAE, and all GCC countries. QCHP, SCFHS, DHA neonatology CME credits, NRP training, ESPR and NNF accreditors."
+        keywords={["neonatology CME GCC", "neonatologist CME requirements", "neonatal medicine CME", "QCHP neonatology CPD", "SCFHS neonatology CME", "DHA neonatology CME"]}
+      />
 
       <div className="min-h-screen bg-[#f8fafc]">
         <header className="bg-white border-b border-[#e2e8f0] sticky top-0 z-10">

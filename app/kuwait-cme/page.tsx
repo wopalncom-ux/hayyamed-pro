@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -174,6 +175,12 @@ export default function KuwaitCmePage() {
           { name: "GCC CME Requirements", url: "/gcc-cme-requirements" },
           { name: "Kuwait CME Requirements", url: "/kuwait-cme" },
         ]}
+      />
+      <MedicalWebPageJsonLd
+        name="Kuwait CME Requirements"
+        url="https://hayyamed.pro/kuwait-cme"
+        description="Complete guide to CME requirements in Kuwait. MOH Kuwait requires 30 CME credits per year for physicians and pharmacists, 20 per year for nurses. Track your Kuwait MOH compliance automatically with Hayya Med Pro."
+        keywords={["Kuwait CME requirements", "MOH Kuwait CME credits", "Kuwait CME 2025", "Kuwait MOH license renewal", "Kuwait healthcare professional CME"]}
       />
 
       <main className="min-h-screen bg-[#f8fafc]">

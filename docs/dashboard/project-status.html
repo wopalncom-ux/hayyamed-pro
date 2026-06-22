@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hayya Med Pro — Project Status Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f4f8; color: #111; }
+  .header { background: #0f1f3d; color: white; padding: 20px 32px; display: flex; align-items: center; justify-content: space-between; }
+  .header-left { display: flex; align-items: center; gap: 14px; }
+  .logo { width: 40px; height: 40px; background: #1a56a0; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 18px; color: white; }
+  .header h1 { font-size: 22px; font-weight: 800; }
+  .header h1 span { color: #60a5fa; }
+  .header-right { text-align: right; font-size: 12px; color: #94a3b8; }
+  .header-right strong { color: white; display: block; font-size: 14px; }
+  .main { max-width: 1400px; margin: 0 auto; padding: 28px 24px; }
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 28px; }
+  .kpi { background: white; border-radius: 14px; padding: 20px; border: 1px solid #e2e8f0; }
+  .kpi-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #64748b; margin-bottom: 6px; }
+  .kpi-value { font-size: 36px; font-weight: 900; color: #1a56a0; line-height: 1; }
+  .kpi-sub { font-size: 11px; color: #94a3b8; margin-top: 4px; }
+  .kpi.green .kpi-value { color: #16a34a; }
+  .kpi.amber .kpi-value { color: #d97706; }
+  .section { margin-bottom: 28px; }
+  .section-title { font-size: 15px; font-weight: 800; color: #0f1f3d; margin-bottom: 14px; text-transform: uppercase; letter-spacing: .05em; }
+  .charts-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 28px; }
+  .chart-card { background: white; border-radius: 14px; border: 1px solid #e2e8f0; padding: 20px; }
+  .chart-card h3 { font-size: 13px; font-weight: 700; color: #374151; margin-bottom: 14px; }
+  .readiness-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+  .readiness-card { background: white; border-radius: 14px; border: 1px solid #e2e8f0; padding: 20px; }
+  .readiness-card h3 { font-size: 13px; font-weight: 700; color: #374151; margin-bottom: 14px; }
+  .metric-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .metric-label { font-size: 12px; color: #374151; width: 180px; flex-shrink: 0; }
+  .metric-bar-wrap { flex: 1; background: #f1f5f9; border-radius: 999px; height: 8px; }
+  .metric-bar { height: 8px; border-radius: 999px; background: #1a56a0; }
+  .metric-bar.green { background: #16a34a; }
+  .metric-bar.amber { background: #d97706; }
+  .metric-bar.red { background: #dc2626; }
+  .metric-pct { font-size: 12px; font-weight: 700; color: #374151; width: 36px; text-align: right; }
+  .phase-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 28px; }
+  .phase-card { background: white; border-radius: 12px; border: 1px solid #e2e8f0; padding: 16px; }
+  .phase-card h4 { font-size: 11px; font-weight: 800; text-transform: uppercase; color: #64748b; margin-bottom: 8px; }
+  .phase-card .phase-name { font-size: 13px; font-weight: 700; color: #0f1f3d; margin-bottom: 6px; }
+  .phase-card .phase-period { font-size: 11px; color: #94a3b8; margin-bottom: 10px; }
+  .phase-pct { font-size: 28px; font-weight: 900; color: #1a56a0; }
+  .phase-card.active { border-color: #1a56a0; background: #eff6ff; }
+  .phase-card.active .phase-pct { color: #1a56a0; }
+  .table-card { background: white; border-radius: 14px; border: 1px solid #e2e8f0; overflow: hidden; margin-bottom: 28px; }
+  .table-card table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .table-card th { background: #f8fafc; padding: 10px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; color: #64748b; letter-spacing: .04em; }
+  .table-card td { padding: 10px 16px; border-top: 1px solid #f1f5f9; color: #374151; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
+  .badge.live { background: #dcfce7; color: #16a34a; }
+  .badge.partial { background: #fef9c3; color: #854d0e; }
+  .badge.pending { background: #ffe4e6; color: #9f1239; }
+  .badge.planned { background: #f1f5f9; color: #64748b; }
+  .score-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 28px; }
+  .score-card { background: white; border-radius: 12px; border: 1px solid #e2e8f0; padding: 16px; text-align: center; }
+  .score-card .domain { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #64748b; margin-bottom: 6px; }
+  .score-card .score { font-size: 32px; font-weight: 900; }
+  .score-card .score.high { color: #16a34a; }
+  .score-card .score.med { color: #d97706; }
+  .score-card .score.low { color: #dc2626; }
+  .score-card .out { font-size: 14px; color: #94a3b8; font-weight: 400; }
+  .footer { background: #0f1f3d; color: #64748b; text-align: center; padding: 20px; font-size: 11px; margin-top: 40px; }
+  .footer strong { color: #94a3b8; }
+  @media (max-width: 900px) { .charts-row { grid-template-columns: 1fr; } .readiness-grid { grid-template-columns: 1fr; } .phase-grid { grid-template-columns: 1fr 1fr; } .score-grid { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="logo">H</div>
+    <div>
+      <h1>Hayya Med <span>Pro</span></h1>
+      <div style="font-size:12px;color:#94a3b8;margin-top:2px;">Project Status Dashboard — Live</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <strong>Audit Date: June 14, 2026</strong>
+    Phase 1 — Foundation &amp; GTM · 83% Complete
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- KPI Row -->
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="kpi-label">Total Pages</div>
+      <div class="kpi-value">176</div>
+      <div class="kpi-sub">Web + Dashboard + SEO</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">API Routes</div>
+      <div class="kpi-value">62</div>
+      <div class="kpi-sub">8 AI · 7 Cron · 15 Admin</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Components</div>
+      <div class="kpi-value">106</div>
+      <div class="kpi-sub">React + TypeScript</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">DB Migrations</div>
+      <div class="kpi-value">33</div>
+      <div class="kpi-sub">+ COMBINED_RUN_ONCE.sql</div>
+    </div>
+    <div class="kpi green">
+      <div class="kpi-label">DB Triggers</div>
+      <div class="kpi-value">26</div>
+      <div class="kpi-sub">Auto-compliance sync</div>
+    </div>
+    <div class="kpi green">
+      <div class="kpi-label">RLS Policies</div>
+      <div class="kpi-value">28</div>
+      <div class="kpi-sub">Every table secured</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Specialty CME Pages</div>
+      <div class="kpi-value">40</div>
+      <div class="kpi-sub">GCC + specialty coverage</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Blog Posts</div>
+      <div class="kpi-value">18</div>
+      <div class="kpi-sub">SEO content library</div>
+    </div>
+    <div class="kpi green">
+      <div class="kpi-label">Git Commits</div>
+      <div class="kpi-value">73</div>
+      <div class="kpi-sub">Complete history</div>
+    </div>
+    <div class="kpi amber">
+      <div class="kpi-label">Overall Score</div>
+      <div class="kpi-value">7.9</div>
+      <div class="kpi-sub">/ 10 — Phase 1</div>
+    </div>
+  </div>
+
+  <!-- Charts Row -->
+  <div class="charts-row">
+    <div class="chart-card">
+      <h3>Build Composition</h3>
+      <canvas id="buildChart" height="220"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Feature Completion by Category</h3>
+      <canvas id="featureChart" height="220"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Platform Readiness Dimensions</h3>
+      <canvas id="radarChart" height="220"></canvas>
+    </div>
+  </div>
+
+  <!-- Platform Readiness -->
+  <div class="readiness-grid">
+    <div class="readiness-card">
+      <h3>Platform Readiness Metrics</h3>
+      <div class="metric-row"><span class="metric-label">Overall Completion</span><div class="metric-bar-wrap"><div class="metric-bar" style="width:83%"></div></div><span class="metric-pct">83%</span></div>
+      <div class="metric-row"><span class="metric-label">Platform Coverage</span><div class="metric-bar-wrap"><div class="metric-bar" style="width:87%"></div></div><span class="metric-pct">87%</span></div>
+      <div class="metric-row"><span class="metric-label">Production Readiness</span><div class="metric-bar-wrap"><div class="metric-bar amber" style="width:78%"></div></div><span class="metric-pct">78%</span></div>
+      <div class="metric-row"><span class="metric-label">Mobile Readiness (PWA)</span><div class="metric-bar-wrap"><div class="metric-bar amber" style="width:38%"></div></div><span class="metric-pct">38%</span></div>
+      <div class="metric-row"><span class="metric-label">AI Readiness</span><div class="metric-bar-wrap"><div class="metric-bar" style="width:72%"></div></div><span class="metric-pct">72%</span></div>
+      <div class="metric-row"><span class="metric-label">Security Readiness</span><div class="metric-bar-wrap"><div class="metric-bar green" style="width:88%"></div></div><span class="metric-pct">88%</span></div>
+      <div class="metric-row"><span class="metric-label">Compliance Accuracy</span><div class="metric-bar-wrap"><div class="metric-bar green" style="width:91%"></div></div><span class="metric-pct">91%</span></div>
+      <div class="metric-row"><span class="metric-label">Scalability</span><div class="metric-bar-wrap"><div class="metric-bar" style="width:76%"></div></div><span class="metric-pct">76%</span></div>
+    </div>
+    <div class="readiness-card">
+      <h3>Launch Blockers Status</h3>
+      <div class="metric-row"><span class="metric-label">Code Complete</span><div class="metric-bar-wrap"><div class="metric-bar green" style="width:100%"></div></div><span class="metric-pct">100%</span></div>
+      <div class="metric-row"><span class="metric-label">Infrastructure Live</span><div class="metric-bar-wrap"><div class="metric-bar green" style="width:100%"></div></div><span class="metric-pct">100%</span></div>
+      <div class="metric-row"><span class="metric-label">Paddle Billing</span><div class="metric-bar-wrap"><div class="metric-bar amber" style="width:80%"></div></div><span class="metric-pct">80%</span></div>
+      <div class="metric-row"><span class="metric-label">Postmark Email</span><div class="metric-bar-wrap"><div class="metric-bar amber" style="width:85%"></div></div><span class="metric-pct">85%</span></div>
+      <div class="metric-row"><span class="metric-label">Vertex AI Config</span><div class="metric-bar-wrap"><div class="metric-bar amber" style="width:70%"></div></div><span class="metric-pct">70%</span></div>
+      <div class="metric-row"><span class="metric-label">Upstash Rate Limit</span><div class="metric-bar-wrap"><div class="metric-bar amber" style="width:90%"></div></div><span class="metric-pct">90%</span></div>
+      <div class="metric-row"><span class="metric-label">Investor Readiness</span><div class="metric-bar-wrap"><div class="metric-bar" style="width:68%"></div></div><span class="metric-pct">68%</span></div>
+      <div class="metric-row"><span class="metric-label">Enterprise Readiness</span><div class="metric-bar-wrap"><div class="metric-bar amber" style="width:62%"></div></div><span class="metric-pct">62%</span></div>
+    </div>
+  </div>
+
+  <!-- Phase Progress -->
+  <div class="section">
+    <div class="section-title">5-Phase Roadmap Progress</div>
+    <div class="phase-grid">
+      <div class="phase-card active">
+        <div class="phase-card h4">Phase 1</div>
+        <div class="phase-name">Foundation &amp; GTM</div>
+        <div class="phase-period">Q2 2026 → Q3 2026</div>
+        <div class="phase-pct">83%</div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-card h4">Phase 2</div>
+        <div class="phase-name">Growth &amp; GCC Expansion</div>
+        <div class="phase-period">Q3 2026 → Q1 2027</div>
+        <div class="phase-pct" style="color:#64748b">0%</div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-card h4">Phase 3</div>
+        <div class="phase-name">Mobile &amp; Enterprise</div>
+        <div class="phase-period">Q1 2027 → Q3 2027</div>
+        <div class="phase-pct" style="color:#64748b">0%</div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-card h4">Phase 4</div>
+        <div class="phase-name">MENA Scale &amp; Gov</div>
+        <div class="phase-period">Q3 2027 → Q2 2028</div>
+        <div class="phase-pct" style="color:#64748b">0%</div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-card h4">Phase 5</div>
+        <div class="phase-name">Global Expansion</div>
+        <div class="phase-period">Q2 2028 → Q2 2029</div>
+        <div class="phase-pct" style="color:#64748b">0%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Integration Status Table -->
+  <div class="section">
+    <div class="section-title">Integration Status</div>
+    <div class="table-card">
+      <table>
+        <thead><tr><th>Integration</th><th>Purpose</th><th>Status</th><th>Production Ready</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Supabase Auth + DB</strong></td><td>Authentication, 30-table Postgres, RLS</td><td><span class="badge live">Live</span></td><td><span class="badge live">✓ Ready</span></td></tr>
+          <tr><td><strong>GCP Cloud Run</strong></td><td>Hosting, auto-scaling, Qatar region</td><td><span class="badge live">Live</span></td><td><span class="badge live">✓ Ready</span></td></tr>
+          <tr><td><strong>Vertex AI (Claude)</strong></td><td>8 AI modules via AnthropicVertex ADC</td><td><span class="badge live">Live</span></td><td><span class="badge partial">Enable API</span></td></tr>
+          <tr><td><strong>Paddle</strong></td><td>Subscription billing</td><td><span class="badge live">Integrated</span></td><td><span class="badge partial">Approval Pending</span></td></tr>
+          <tr><td><strong>QPay</strong></td><td>Qatar local payments</td><td><span class="badge live">Live</span></td><td><span class="badge live">✓ Ready</span></td></tr>
+          <tr><td><strong>Postmark</strong></td><td>14 transactional email templates</td><td><span class="badge live">Integrated</span></td><td><span class="badge partial">Domain Pending</span></td></tr>
+          <tr><td><strong>PostHog</strong></td><td>Product analytics, funnels, session recording</td><td><span class="badge live">Live</span></td><td><span class="badge live">✓ Ready</span></td></tr>
+          <tr><td><strong>Sentry</strong></td><td>Error tracking + performance monitoring</td><td><span class="badge live">Live</span></td><td><span class="badge live">✓ Ready</span></td></tr>
+          <tr><td><strong>Web Push (VAPID)</strong></td><td>Browser push notifications</td><td><span class="badge live">Live</span></td><td><span class="badge live">✓ Ready</span></td></tr>
+          <tr><td><strong>Upstash Redis</strong></td><td>Rate limiting (auth, AI, webhooks)</td><td><span class="badge partial">Integrated</span></td><td><span class="badge partial">Token Rotation</span></td></tr>
+          <tr><td><strong>GCP Cloud Scheduler</strong></td><td>7 cron automations active</td><td><span class="badge live">Live</span></td><td><span class="badge live">✓ Ready</span></td></tr>
+          <tr><td><strong>QCHP API</strong></td><td>Direct authority integration</td><td><span class="badge planned">Planned</span></td><td><span class="badge planned">Phase 2</span></td></tr>
+          <tr><td><strong>HRIS (SAP/Oracle)</strong></td><td>Enterprise hospital integration</td><td><span class="badge planned">Planned</span></td><td><span class="badge planned">Phase 3</span></td></tr>
+          <tr><td><strong>Twilio SMS</strong></td><td>SMS alert channel</td><td><span class="badge planned">Planned</span></td><td><span class="badge planned">Phase 2</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Scorecard -->
+  <div class="section">
+    <div class="section-title">Domain Scorecard (/ 10)</div>
+    <div class="score-grid">
+      <div class="score-card"><div class="domain">Architecture</div><div class="score high">8.5<span class="out">/10</span></div></div>
+      <div class="score-card"><div class="domain">Database</div><div class="score high">9.0<span class="out">/10</span></div></div>
+      <div class="score-card"><div class="domain">Frontend Public</div><div class="score high">9.5<span class="out">/10</span></div></div>
+      <div class="score-card"><div class="domain">Dashboard UX</div><div class="score med">7.5<span class="out">/10</span></div></div>
+      <div class="score-card"><div class="domain">Backend API</div><div class="score high">8.0<span class="out">/10</span></div></div>
+      <div class="score-card"><div class="domain">AI System</div><div class="score med">7.0<span class="out">/10</span></div></div>
+      <div class="score-card"><div class="domain">Security</div><div class="score high">8.5<span class="out">/10</span></div></div>
+      <div class="score-card"><div class="domain">Scalability</div><div class="score med">7.5<span class="out">/10</span></div></div>
+      <div class="score-card"><div class="domain">Accessibility</div><div class="score med">7.5<span class="out">/10</span></div></div>
+      <div class="score-card"><div class="domain">SEO</div><div class="score high">9.5<span class="out">/10</span></div></div>
+      <div class="score-card"><div class="domain">Compliance</div><div class="score high">9.0<span class="out">/10</span></div></div>
+      <div class="score-card"><div class="domain">Mobile (PWA)</div><div class="score low">4.0<span class="out">/10</span></div></div>
+      <div class="score-card"><div class="domain">Reporting</div><div class="score low">6.5<span class="out">/10</span></div></div>
+      <div class="score-card"><div class="domain">Automation</div><div class="score med">7.5<span class="out">/10</span></div></div>
+      <div class="score-card"><div class="domain">Monetization</div><div class="score high">8.0<span class="out">/10</span></div></div>
+      <div class="score-card"><div class="domain">Overall</div><div class="score med">7.9<span class="out">/10</span></div></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>Hayya Med Pro — Confidential Project Status Dashboard</strong><br />
+  Prepared by: Abbas Al Masri, Founder &amp; CEO, Hayya Med AI · hayyamed.pro · Registered in Qatar 🇶🇦<br />
+  Audit Date: June 14, 2026 · All statistics sourced from live codebase scan
+</div>
+
+<script>
+// Build Composition Doughnut
+new Chart(document.getElementById('buildChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['API Routes', 'Components', 'Pages (Dashboard)', 'Pages (Public SEO)', 'Pages (Admin)'],
+    datasets: [{
+      data: [62, 106, 55, 99, 22],
+      backgroundColor: ['#1a56a0','#3b82f6','#60a5fa','#bfdbfe','#eff6ff'],
+      borderWidth: 2, borderColor: '#fff'
+    }]
+  },
+  options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 11 }, boxWidth: 12 } } } }
+});
+
+// Feature Completion Bar
+new Chart(document.getElementById('featureChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Auth', 'CME Wallet', 'AI Modules', 'Employer', 'Provider', 'Mobile', 'Payments', 'Notifications', 'Reports', 'Security'],
+    datasets: [{
+      label: '% Complete',
+      data: [100, 92, 75, 80, 82, 38, 80, 88, 62, 88],
+      backgroundColor: ctx => {
+        const v = ctx.parsed.y;
+        return v >= 85 ? '#16a34a' : v >= 65 ? '#1a56a0' : '#d97706';
+      }
+    }]
+  },
+  options: {
+    responsive: true,
+    scales: { y: { min: 0, max: 100, ticks: { callback: v => v + '%', font: { size: 10 } } }, x: { ticks: { font: { size: 10 } } } },
+    plugins: { legend: { display: false } }
+  }
+});
+
+// Radar Chart
+new Chart(document.getElementById('radarChart'), {
+  type: 'radar',
+  data: {
+    labels: ['Architecture','Database','Frontend','AI','Security','Compliance','Scalability','Mobile'],
+    datasets: [{
+      label: 'Current Score',
+      data: [8.5, 9.0, 9.5, 7.0, 8.5, 9.1, 7.5, 4.0],
+      backgroundColor: 'rgba(26,86,160,0.15)',
+      borderColor: '#1a56a0',
+      pointBackgroundColor: '#1a56a0',
+    }, {
+      label: 'Target (10)',
+      data: [10, 10, 10, 10, 10, 10, 10, 10],
+      backgroundColor: 'rgba(0,0,0,0)',
+      borderColor: '#e2e8f0',
+      borderDash: [4,4],
+      pointRadius: 0,
+    }]
+  },
+  options: {
+    responsive: true,
+    scales: { r: { min: 0, max: 10, ticks: { stepSize: 2, font: { size: 9 } } } },
+    plugins: { legend: { labels: { font: { size: 11 }, boxWidth: 12 } } }
+  }
+});
+</script>
+</body>
+</html>

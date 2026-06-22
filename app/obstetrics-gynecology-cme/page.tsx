@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -131,6 +132,12 @@ export default function ObstetricsGynecologyCmePage() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Obstetrics & Gynecology CME", url: "https://hayyamed.pro/obstetrics-gynecology-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Obstetrics & Gynecology CME"
+        url="https://hayyamed.pro/obstetrics-gynecology-cme"
+        description="Complete CME and CPD guide for OB/GYN specialists in GCC. QCHP Qatar 80 CPD/2yr, SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. ALSO and NRP mandatory. Track all requirements in one app."
+        keywords={["obstetrics gynecology CME requirements GCC", "OB/GYN CME Saudi Arabia", "SCFHS obstetrics CME", "QCHP gynecology CPD", "obstetrics CME Qatar", "ALSO CME GCC"]}
+      />
 
       <section style={{ background: "#0f1f3d", color: "#fff", padding: "72px 24px 56px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>

@@ -9,7 +9,7 @@ export default function ComplianceReportButton({
 }) {
   return (
     <a
-      href={`/api/employer/compliance-report?orgId=${organizationId}`}
+      href={`/api/pdf/org-report?orgId=${organizationId}`}
       target="_blank"
       rel="noopener noreferrer"
       title={`Download compliance report for ${orgName}`}

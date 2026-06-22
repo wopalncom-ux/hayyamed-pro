@@ -29,6 +29,9 @@ export default function Step6Privacy({
       ? Object.fromEntries(PRIVACY_FIELDS.map(f => [f.id, initialSettings[f.id] ?? f.defaultOn]))
       : Object.fromEntries(PRIVACY_FIELDS.map(f => [f.id, f.defaultOn]))
   );
+  const [aiConsent, setAiConsent] = useState<boolean>(
+    (initialSettings as Record<string, boolean> | null)?.ai_data_consent ?? false
+  );
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -41,6 +44,8 @@ export default function Step6Privacy({
     const { error: privError } = await supabase.from("profile_privacy_settings").upsert({
       professional_id: userId,
       ...settings,
+      ai_data_consent: aiConsent,
+      ai_data_consent_at: aiConsent ? new Date().toISOString() : null,
     }, { onConflict: "professional_id" });
 
     if (privError) { setError(privError.message); setLoading(false); return; }
@@ -78,6 +83,31 @@ export default function Step6Privacy({
       <p className="text-xs text-[#64748b]">
         Your employer cannot edit your profile or certificates. They can only view what you allow here.
       </p>
+
+      {/* AI Consent — PDPL/GDPR Art. 6(1)(a) */}
+      <div className="mt-2 p-4 border border-[#e2e8f0] rounded-lg bg-[#f8fafc]">
+        <p className="text-xs font-semibold text-[#374151] uppercase tracking-wide mb-3">AI Features</p>
+        <div className="flex items-start gap-3">
+          <input
+            type="checkbox"
+            id="ai_data_consent"
+            checked={aiConsent}
+            onChange={(e) => setAiConsent(e.target.checked)}
+            className="mt-0.5 w-4 h-4 rounded border-[#e2e8f0] text-[#1a56a0] focus:ring-[#1a56a0]"
+          />
+          <div>
+            <label htmlFor="ai_data_consent" className="text-sm font-medium text-[#111] cursor-pointer">
+              Allow AI analysis of my compliance data
+            </label>
+            <p className="text-xs text-[#64748b] mt-0.5 leading-relaxed">
+              I consent to Hayya Med Pro using AI (Anthropic Claude) to analyse my anonymised compliance data
+              to provide gap analysis, learning pathway recommendations, and renewal predictions.
+              Your personal name and license number are never sent to AI systems.
+              You can withdraw this consent anytime in Settings.
+            </p>
+          </div>
+        </div>
+      </div>
 
       {error && <p className="text-sm text-[#dc2626] bg-red-50 px-3 py-2 rounded-lg">{error}</p>}
 

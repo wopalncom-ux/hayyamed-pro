@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -105,6 +106,12 @@ export default function NuclearMedicineCme() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Nuclear Medicine CME", url: "https://hayyamed.pro/nuclear-medicine-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Nuclear Medicine CME"
+        url="https://hayyamed.pro/nuclear-medicine-cme"
+        description="CME and CPD requirements for nuclear medicine physicians in Qatar, Saudi Arabia, UAE, and all GCC countries. QCHP, SCFHS, DHA nuclear medicine CME credits, SNMMI and EANM accreditors, and PET/CT training."
+        keywords={["nuclear medicine CME GCC", "nuclear medicine physician CME", "QCHP nuclear medicine CPD", "SCFHS nuclear medicine CME", "DHA nuclear medicine CME", "SNMMI CME GCC"]}
+      />
 
       <div className="min-h-screen bg-[#f8fafc]">
         <header className="bg-white border-b border-[#e2e8f0] sticky top-0 z-10">

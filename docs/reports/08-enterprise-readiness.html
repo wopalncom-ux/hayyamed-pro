@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Enterprise Readiness — Hayya Med Pro 2026-06-22</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8fafc;color:#0f172a;font-size:14px}
+.header{background:linear-gradient(135deg,#0f1f3d,#1a3a6e);color:#fff;padding:36px 48px}
+.header h1{font-size:26px;font-weight:800;margin-bottom:4px}
+.header p{color:#bfdbfe;font-size:13px}
+.badge{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;margin-top:10px;margin-right:6px}
+.container{max-width:1200px;margin:0 auto;padding:32px 24px}
+.section{margin-bottom:36px}
+.section-title{font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #e2e8f0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:20px}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e2e8f0;margin-bottom:16px}
+th{background:#f8fafc;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;padding:10px 14px;text-align:left}
+td{padding:10px 14px;border-top:1px solid #f1f5f9;font-size:12px;vertical-align:top;line-height:1.5}
+.pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600}
+.pill-red{background:#fee2e2;color:#dc2626}
+.pill-amber{background:#fef9c3;color:#92400e}
+.pill-green{background:#dcfce7;color:#16a34a}
+.pill-blue{background:#dbeafe;color:#1d4ed8}
+.pill-gray{background:#f1f5f9;color:#475569}
+.readiness-bar{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #f1f5f9}
+.rb-label{width:200px;font-size:12px;font-weight:600;flex-shrink:0}
+.rb-track{flex:1;height:10px;background:#f1f5f9;border-radius:5px;overflow:hidden}
+.rb-fill{height:10px;border-radius:5px}
+.rb-pct{width:35px;font-size:12px;color:#64748b;text-align:right}
+.gap-item{background:#fff;border-radius:10px;border:1px solid #e2e8f0;padding:14px 16px;margin-bottom:8px;display:grid;grid-template-columns:2fr 1fr 1fr 80px;gap:12px;align-items:center}
+.footer{background:#0f172a;color:#94a3b8;text-align:center;padding:20px;font-size:11px;margin-top:48px}
+</style>
+</head>
+<body>
+<div class="header">
+  <div style="max-width:1200px;margin:0 auto">
+    <div style="font-size:11px;color:#bfdbfe;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">PHASE 9 — ENTERPRISE READINESS ASSESSMENT</div>
+    <h1>Enterprise Readiness Report</h1>
+    <p>Hospital · Clinic · University · Government · SOC 2 · ISO 27001 · Enterprise Contracts · SLA</p>
+    <span class="badge">Overall: 67/100</span><span class="badge">v1 API: Live</span><span class="badge">Employer Features: Live</span><span class="badge">SOC 2: Not Started</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Overall Readiness -->
+  <div class="section">
+    <div class="section-title">Enterprise Readiness by Customer Segment</div>
+    <div class="card">
+      <div class="readiness-bar">
+        <div class="rb-label">Clinic / Small Hospital</div>
+        <div class="rb-track"><div class="rb-fill" style="width:82%;background:#16a34a"></div></div>
+        <div class="rb-pct">82%</div>
+        <span class="pill pill-green">READY</span>
+      </div>
+      <div class="readiness-bar">
+        <div class="rb-label">Mid-Size Hospital (200-500 staff)</div>
+        <div class="rb-track"><div class="rb-fill" style="width:68%;background:#d97706"></div></div>
+        <div class="rb-pct">68%</div>
+        <span class="pill pill-amber">PARTIAL</span>
+      </div>
+      <div class="readiness-bar">
+        <div class="rb-label">Large Hospital (500+ staff)</div>
+        <div class="rb-track"><div class="rb-fill" style="width:52%;background:#d97706"></div></div>
+        <div class="rb-pct">52%</div>
+        <span class="pill pill-amber">GAPS</span>
+      </div>
+      <div class="readiness-bar">
+        <div class="rb-label">Government Authority (QCHP etc.)</div>
+        <div class="rb-track"><div class="rb-fill" style="width:58%;background:#d97706"></div></div>
+        <div class="rb-pct">58%</div>
+        <span class="pill pill-amber">GAPS</span>
+      </div>
+      <div class="readiness-bar">
+        <div class="rb-label">University / Medical School</div>
+        <div class="rb-track"><div class="rb-fill" style="width:65%;background:#d97706"></div></div>
+        <div class="rb-pct">65%</div>
+        <span class="pill pill-amber">PARTIAL</span>
+      </div>
+      <div class="readiness-bar" style="border-bottom:none">
+        <div class="rb-label">Strategic Partner (Hamad / Sidra)</div>
+        <div class="rb-track"><div class="rb-fill" style="width:44%;background:#dc2626"></div></div>
+        <div class="rb-pct">44%</div>
+        <span class="pill pill-red">NOT READY</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Feature Coverage per Segment -->
+  <div class="section">
+    <div class="section-title">Feature Coverage by Enterprise Segment</div>
+    <table>
+      <thead><tr><th>Requirement</th><th>Clinic</th><th>Hospital</th><th>University</th><th>Government</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Multi-user staff dashboard</strong></td><td><span class="pill pill-green">✓</span></td><td><span class="pill pill-green">✓</span></td><td><span class="pill pill-green">✓</span></td><td><span class="pill pill-green">✓</span></td></tr>
+        <tr><td><strong>Bulk staff CSV import</strong></td><td><span class="pill pill-green">✓</span></td><td><span class="pill pill-green">✓</span></td><td><span class="pill pill-green">✓</span></td><td><span class="pill pill-green">✓</span></td></tr>
+        <tr><td><strong>Compliance heatmap</strong></td><td><span class="pill pill-green">✓</span></td><td><span class="pill pill-green">✓</span></td><td><span class="pill pill-green">✓</span></td><td><span class="pill pill-green">✓</span></td></tr>
+        <tr><td><strong>HRIS API (/api/v1)</strong></td><td>—</td><td><span class="pill pill-green">✓</span></td><td><span class="pill pill-green">✓</span></td><td><span class="pill pill-green">✓</span></td></tr>
+        <tr><td><strong>Webhook dispatch</strong></td><td>—</td><td><span class="pill pill-green">✓</span></td><td><span class="pill pill-green">✓</span></td><td><span class="pill pill-green">✓</span></td></tr>
+        <tr><td><strong>PDF compliance report (org-level)</strong></td><td><span class="pill pill-red">✗ Missing</span></td><td><span class="pill pill-red">✗ Missing</span></td><td><span class="pill pill-red">✗ Missing</span></td><td>—</td></tr>
+        <tr><td><strong>SSO / SAML integration</strong></td><td>—</td><td><span class="pill pill-red">✗ Not built</span></td><td><span class="pill pill-red">✗ Not built</span></td><td><span class="pill pill-red">✗ Not built</span></td></tr>
+        <tr><td><strong>SCIM provisioning</strong></td><td>—</td><td><span class="pill pill-red">✗ Not built</span></td><td><span class="pill pill-red">✗ Not built</span></td><td><span class="pill pill-red">✗ Not built</span></td></tr>
+        <tr><td><strong>Audit log export</strong></td><td><span class="pill pill-amber">⚠ UI only</span></td><td><span class="pill pill-amber">⚠ UI only</span></td><td><span class="pill pill-amber">⚠ UI only</span></td><td><span class="pill pill-amber">⚠ UI only</span></td></tr>
+        <tr><td><strong>SOC 2 Type II report</strong></td><td>—</td><td><span class="pill pill-red">Required Y2</span></td><td><span class="pill pill-red">Required Y2</span></td><td><span class="pill pill-red">Required Y1</span></td></tr>
+        <tr><td><strong>ISO 27001 certification</strong></td><td>—</td><td>—</td><td><span class="pill pill-red">Required Y3</span></td><td><span class="pill pill-red">Required Y2</span></td></tr>
+        <tr><td><strong>SLA agreement (99.9% uptime)</strong></td><td><span class="pill pill-amber">⚠ No signed SLA</span></td><td><span class="pill pill-red">✗ Required</span></td><td><span class="pill pill-red">✗ Required</span></td><td><span class="pill pill-red">✗ Required</span></td></tr>
+        <tr><td><strong>MSA / Enterprise contract</strong></td><td>—</td><td><span class="pill pill-red">✗ Not drafted</span></td><td><span class="pill pill-red">✗ Not drafted</span></td><td><span class="pill pill-red">✗ Not drafted</span></td></tr>
+        <tr><td><strong>Data Processing Agreement</strong></td><td><span class="pill pill-red">✗ Missing</span></td><td><span class="pill pill-red">✗ Missing</span></td><td><span class="pill pill-red">✗ Missing</span></td><td><span class="pill pill-red">✗ Missing</span></td></tr>
+        <tr><td><strong>White-label / custom domain</strong></td><td>—</td><td>—</td><td><span class="pill pill-amber">⚠ Planned</span></td><td><span class="pill pill-amber">⚠ Planned</span></td></tr>
+        <tr><td><strong>Dedicated support SLA</strong></td><td><span class="pill pill-amber">⚠ /help page</span></td><td><span class="pill pill-red">✗ No SLA</span></td><td><span class="pill pill-red">✗ No SLA</span></td><td><span class="pill pill-red">✗ No SLA</span></td></tr>
+        <tr><td><strong>On-premise / private cloud option</strong></td><td>—</td><td>—</td><td>—</td><td><span class="pill pill-red">✗ Not offered</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Legal & Compliance Documents -->
+  <div class="section">
+    <div class="section-title">Legal & Compliance Documentation Status</div>
+    <table>
+      <thead><tr><th>Document</th><th>Status</th><th>Required For</th><th>Action Required</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Privacy Policy</strong></td><td><span class="pill pill-green">✓ Exists (/privacy)</span></td><td>All users</td><td>Legal counsel review before hospital sales</td></tr>
+        <tr><td><strong>Terms of Service</strong></td><td><span class="pill pill-green">✓ Exists (/terms)</span></td><td>All users</td><td>Legal counsel review before hospital sales</td></tr>
+        <tr><td><strong>MSA (Master Services Agreement)</strong></td><td><span class="pill pill-red">✗ Not drafted</span></td><td>All enterprise clients</td><td>Draft with licensed Qatar attorney. Cost: $3-8K.</td></tr>
+        <tr><td><strong>DPA (Data Processing Agreement)</strong></td><td><span class="pill pill-red">✗ Not drafted</span></td><td>All clients with staff data access</td><td>Draft DPA template. Required by PDPL and GDPR.</td></tr>
+        <tr><td><strong>SLA (Service Level Agreement)</strong></td><td><span class="pill pill-red">✗ Not drafted</span></td><td>Employer / Hospital contracts</td><td>Draft SLA: 99.9% uptime, response times, support hours, credits policy.</td></tr>
+        <tr><td><strong>NDA Template</strong></td><td><span class="pill pill-amber">⚠ Unknown</span></td><td>Government / Enterprise conversations</td><td>Standard NDA template needed before partner discussions</td></tr>
+        <tr><td><strong>SOC 2 Type II Report</strong></td><td><span class="pill pill-red">✗ Not started</span></td><td>Large hospitals / Government (Year 2)</td><td>Engage SOC 2 auditor (estimated $15-40K audit + 6 months prep)</td></tr>
+        <tr><td><strong>ISO 27001 Certificate</strong></td><td><span class="pill pill-red">✗ Not started</span></td><td>Government / multinational (Year 3)</td><td>ISO 27001 gap analysis first ($5-10K), then certification</td></tr>
+        <tr><td><strong>VAPT Report</strong></td><td><span class="pill pill-red">✗ Not conducted</span></td><td>Any government client</td><td>Engage certified VAPT firm. Qatar QNCS registered vendor preferred. Cost: $5-15K.</td></tr>
+        <tr><td><strong>Incident Response Runbook</strong></td><td><span class="pill pill-amber">⚠ Documented in mandate only</span></td><td>SOC 2 / Enterprise SLA</td><td>Write formal runbook: contacts, escalation tree, 72-hr notification process</td></tr>
+        <tr><td><strong>Business Continuity Plan</strong></td><td><span class="pill pill-red">✗ Not drafted</span></td><td>Hospital / Government contracts</td><td>BCP required for any GCC government tender response</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Technical Enterprise Gaps -->
+  <div class="section">
+    <div class="section-title">Technical Enterprise Gaps</div>
+    <table>
+      <thead><tr><th>Gap</th><th>Business Impact</th><th>Effort</th><th>Timeline</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>SSO / SAML 2.0 / OIDC</strong></td>
+          <td>Hospitals require SSO via Active Directory / Azure AD. Without it, most hospital IT depts will block adoption.</td>
+          <td>3-5 weeks</td>
+          <td>Before first large hospital pilot</td>
+        </tr>
+        <tr>
+          <td><strong>Audit Log API Export</strong></td>
+          <td>Hospital compliance officers need exportable audit trails for accreditation evidence. API + CSV download needed.</td>
+          <td>3 days</td>
+          <td>Q3 2026</td>
+        </tr>
+        <tr>
+          <td><strong>Org-Level PDF Compliance Report</strong></td>
+          <td>HR directors will ask for a single-page department compliance status PDF for leadership presentations. High close rate impact.</td>
+          <td>2 days</td>
+          <td>Immediate</td>
+        </tr>
+        <tr>
+          <td><strong>SCIM Provisioning</strong></td>
+          <td>Large hospitals with 1,000+ staff cannot manually manage accounts. SCIM enables auto-sync with HR systems.</td>
+          <td>2-3 weeks</td>
+          <td>Before strategic account targeting</td>
+        </tr>
+        <tr>
+          <td><strong>Role-Based Access Control (Enterprise)</strong></td>
+          <td>Hospital HR needs department-level admins, department managers, read-only auditors — current employer_admin is flat.</td>
+          <td>1 week</td>
+          <td>Q3 2026</td>
+        </tr>
+        <tr>
+          <td><strong>Custom Branding / White-label</strong></td>
+          <td>Government and university clients want their own logo and colors. Table-stakes for white-label licensing revenue.</td>
+          <td>1 week (CSS variables + org settings)</td>
+          <td>Before government sales pitch</td>
+        </tr>
+        <tr>
+          <td><strong>Uptime / Status Page</strong></td>
+          <td>SLA requires public status page. Hospital IT teams will ask for it during procurement.</td>
+          <td>1 day (StatusPage or BetterStack)</td>
+          <td>Immediate</td>
+        </tr>
+        <tr>
+          <td><strong>Multi-region Failover</strong></td>
+          <td>99.9% SLA requires failover capability. me-central1 only currently — no secondary region.</td>
+          <td>2-4 weeks (GCP multi-region)</td>
+          <td>Before enterprise SLAs signed</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Priority Enterprise Sales Targets -->
+  <div class="section">
+    <div class="section-title">Priority Enterprise Targets — Readiness Assessment</div>
+    <table>
+      <thead><tr><th>Target</th><th>Staff</th><th>Deal Size</th><th>Readiness</th><th>Blocker</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>QCHP (Qatar)</strong></td>
+          <td>Authority</td>
+          <td>$200K-1M/yr (white-label)</td>
+          <td><span class="pill pill-amber">58%</span></td>
+          <td>DPA, SLA, compliance rule verification, VAPT, relationship-first 6-month sales</td>
+        </tr>
+        <tr>
+          <td><strong>Hamad Medical Corp.</strong></td>
+          <td>40,000+</td>
+          <td>$500K-2M/yr</td>
+          <td><span class="pill pill-red">44%</span></td>
+          <td>SSO, SCIM, SOC 2, MSA, DPA, SLA, VAPT, 12-18 month procurement cycle</td>
+        </tr>
+        <tr>
+          <td><strong>Sidra Medicine</strong></td>
+          <td>15,000+</td>
+          <td>$200-800K/yr</td>
+          <td><span class="pill pill-red">44%</span></td>
+          <td>SSO, SCIM, MSA, DPA, international-standard procurement process</td>
+        </tr>
+        <tr>
+          <td><strong>Medium Clinic (50-200 staff)</strong></td>
+          <td>50-200</td>
+          <td>$2-15K/yr</td>
+          <td><span class="pill pill-green">82%</span></td>
+          <td>DPA template only. This is the CURRENT target — go here first.</td>
+        </tr>
+        <tr>
+          <td><strong>Qatar University Medical</strong></td>
+          <td>5,000+</td>
+          <td>$50-200K/yr</td>
+          <td><span class="pill pill-amber">65%</span></td>
+          <td>Faculty tracking features, white-label, university_admin role (partial), DPA</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 90-Day Enterprise Action Plan -->
+  <div class="section">
+    <div class="section-title">90-Day Enterprise Readiness Action Plan</div>
+    <table>
+      <thead><tr><th>Action</th><th>Effort</th><th>Enables</th><th>Priority</th></tr></thead>
+      <tbody>
+        <tr><td>Draft DPA template with legal counsel</td><td>3-5 days (legal)</td><td>Any employer client, GDPR, hospital sales</td><td><span class="pill pill-red">CRITICAL</span></td></tr>
+        <tr><td>Draft MSA (Master Services Agreement)</td><td>5-10 days (legal)</td><td>Formal contracts with any paid client</td><td><span class="pill pill-red">CRITICAL</span></td></tr>
+        <tr><td>Draft SLA document (99.9%, credits, support hours)</td><td>2 days</td><td>Any employer contract, hospital pilots</td><td><span class="pill pill-red">HIGH</span></td></tr>
+        <tr><td>Deploy public status page (BetterStack/StatusPage)</td><td>1 day</td><td>SLA credibility, hospital IT acceptance</td><td><span class="pill pill-red">HIGH</span></td></tr>
+        <tr><td>Org-level PDF compliance report</td><td>2 days</td><td>Hospital HR presentations, close rate</td><td><span class="pill pill-red">HIGH</span></td></tr>
+        <tr><td>Build SSO / SAML 2.0 (via Auth0 or Supabase custom)</td><td>3-5 weeks</td><td>Any hospital above 100 staff</td><td><span class="pill pill-amber">MEDIUM</span></td></tr>
+        <tr><td>Write Incident Response Runbook</td><td>2 days</td><td>SOC 2 prep, government tender</td><td><span class="pill pill-amber">MEDIUM</span></td></tr>
+        <tr><td>Audit Log API + CSV Export</td><td>3 days</td><td>Hospital compliance officer requests</td><td><span class="pill pill-amber">MEDIUM</span></td></tr>
+        <tr><td>Engage SOC 2 auditor (prep only)</td><td>Discovery call</td><td>Unblocks large hospital + government</td><td><span class="pill pill-blue">PLAN NOW</span></td></tr>
+        <tr><td>Custom branding (white-label CSS vars)</td><td>1 week</td><td>University + Government white-label deals</td><td><span class="pill pill-blue">Q3</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+<div class="footer">HAYYA MED PRO — ENTERPRISE READINESS REPORT · CONFIDENTIAL · 22 June 2026</div>
+</body>
+</html>

@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -88,6 +89,12 @@ export default function HematologyCmePage() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Hematology CME", url: "https://hayyamed.pro/hematology-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Hematology CME"
+        url="https://hayyamed.pro/hematology-cme"
+        description="CME and CPD requirements for hematologists in GCC. QCHP Qatar 80 CPD/2yr, SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. Track hematology CME across all 7 GCC licensing authorities."
+        keywords={["hematology CME requirements GCC", "hematologist CME Saudi Arabia", "SCFHS hematology CME", "QCHP hematologist CPD", "hematology CPD Qatar", "sickle cell CME GCC"]}
+      />
       <div className="min-h-screen bg-[#f8fafc]">
         <header className="bg-white border-b border-[#e2e8f0]">
           <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">

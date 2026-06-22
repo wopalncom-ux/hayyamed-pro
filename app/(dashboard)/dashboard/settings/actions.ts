@@ -60,6 +60,7 @@ const ALLOWED_PRIVACY_FIELDS = new Set([
   "employer_can_view_license_expiry",
   "employer_can_view_detailed_cme_activities",
   "public_directory_opt_in",
+  "ai_data_consent",
 ]);
 
 export async function updatePrivacySetting(field: string, value: boolean) {
@@ -70,10 +71,11 @@ export async function updatePrivacySetting(field: string, value: boolean) {
   if (!user) return { error: "Not authenticated" };
 
   const admin = createAdminClient();
+  const extraFields = field === "ai_data_consent" ? { ai_data_consent_at: new Date().toISOString() } : {};
   const { error } = await admin
     .from("profile_privacy_settings")
     .upsert(
-      { professional_id: user.id, [field]: value },
+      { professional_id: user.id, [field]: value, ...extraFields },
       { onConflict: "professional_id" }
     );
 

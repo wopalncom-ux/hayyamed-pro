@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -131,6 +132,12 @@ export default function FamilyMedicineCmePage() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Family Medicine CME", url: "https://hayyamed.pro/family-medicine-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Family Medicine CME"
+        url="https://hayyamed.pro/family-medicine-cme"
+        description="Complete CME and CPD guide for family medicine physicians and GPs in GCC. QCHP Qatar 80 CPD/2yr, SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. Broadest CME scope. Track all requirements in one app."
+        keywords={["family medicine CME requirements GCC", "GP CME Saudi Arabia", "SCFHS family physician CME", "QCHP family medicine CPD", "general practitioner CME Qatar", "family medicine CME tracker"]}
+      />
 
       <section style={{ background: "#0f1f3d", color: "#fff", padding: "72px 24px 56px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>

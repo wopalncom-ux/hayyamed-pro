@@ -12,6 +12,7 @@ import ComplianceHeatmap from "@/components/employer/ComplianceHeatmap";
 import RealtimeComplianceSummary from "@/components/employer/RealtimeComplianceSummary";
 import EmployerSetupChecklist from "@/components/employer/EmployerSetupChecklist";
 import ComplianceReportButton from "@/components/employer/ComplianceReportButton";
+import AuditExportButton from "@/components/employer/AuditExportButton";
 import ComplianceAlertSettings from "@/components/employer/ComplianceAlertSettings";
 import RemoveStaffButton from "@/components/employer/RemoveStaffButton";
 import { BulkApproveButton } from "@/components/employer/BulkApproveButton";
@@ -274,6 +275,7 @@ export default async function EmployerDashboardPage({
           <InviteLinkButton organizationId={orgId} orgName={orgName} />
           <QrCodeButton orgName={orgName} />
           {total > 0 && <ExportStaffCsvButton organizationId={orgId} orgName={orgName} />}
+          {total > 0 && <AuditExportButton organizationId={orgId} orgName={orgName} />}
           {total > 0 && <ComplianceReportButton organizationId={orgId} orgName={orgName} />}
           {total > 0 && <BulkReportButton organizationId={orgId} orgName={orgName} />}
         </div>

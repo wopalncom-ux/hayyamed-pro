@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -104,6 +105,12 @@ export default function NeurosurgeryCme() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Neurosurgery CME", url: "https://hayyamed.pro/neurosurgery-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Neurosurgery CME"
+        url="https://hayyamed.pro/neurosurgery-cme"
+        description="CME and CPD requirements for neurosurgeons in Qatar, Saudi Arabia, UAE, and all GCC countries. QCHP, SCFHS, DHA neurosurgery CME credits, WFNS and EANS accreditors, and brain and spine surgery training."
+        keywords={["neurosurgery CME GCC", "neurosurgeon CME requirements", "QCHP neurosurgery CPD", "SCFHS neurosurgery CME", "DHA neurosurgery CME", "brain surgery CME"]}
+      />
 
       <div className="min-h-screen bg-[#f8fafc]">
         <header className="bg-white border-b border-[#e2e8f0] sticky top-0 z-10">

@@ -205,6 +205,7 @@ export default async function SettingsPage() {
               employer_can_view_license_expiry: privacy?.employer_can_view_license_expiry ?? true,
               employer_can_view_detailed_cme_activities: privacy?.employer_can_view_detailed_cme_activities ?? false,
               employer_can_view_profile_details: privacy?.employer_can_view_profile_details ?? true,
+              ai_data_consent: (privacy as Record<string, unknown>)?.ai_data_consent === true,
             }}
           />
         </div>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -142,6 +143,12 @@ export default function UaeCmePage() {
   return (
     <>
       <BreadcrumbJsonLd items={breadcrumbs} />
+      <MedicalWebPageJsonLd
+        name="UAE CME Requirements"
+        url="https://hayyamed.pro/uae-cme"
+        description="DHA (Dubai) needs 40 CME / 2 years. DOH (Abu Dhabi) needs 30–50 CPD / year. Track both UAE licensing authority CME requirements automatically with Hayya Med Pro."
+        keywords={["UAE CME requirements", "DHA CME credits", "DOH CPD UAE", "Dubai CME 2025", "Abu Dhabi CPD requirements", "UAE healthcare professional CME"]}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}

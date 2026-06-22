@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -104,6 +105,12 @@ export default function PhysicalMedicineCme() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Physical Medicine CME", url: "https://hayyamed.pro/physical-medicine-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Physical Medicine CME"
+        url="https://hayyamed.pro/physical-medicine-cme"
+        description="CME and CPD requirements for physiatrists, sports medicine physicians, and rehabilitation specialists in Qatar, Saudi Arabia, UAE, and all GCC countries. QCHP, SCFHS, DHA PM&R CME credits and accreditors."
+        keywords={["physical medicine rehabilitation CME GCC", "PM&R CME GCC", "physiatrist CME requirements", "sports medicine CME GCC", "rehabilitation medicine CME", "QCHP rehabilitation CPD"]}
+      />
 
       <div className="min-h-screen bg-[#f8fafc]">
         <header className="bg-white border-b border-[#e2e8f0] sticky top-0 z-10">

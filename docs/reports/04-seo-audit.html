@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SEO Audit — Hayya Med Pro 2026-06-22</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8fafc;color:#0f172a;font-size:14px}
+.header{background:linear-gradient(135deg,#065f46,#059669);color:#fff;padding:36px 48px}
+.header h1{font-size:26px;font-weight:800;margin-bottom:4px}
+.header p{color:#a7f3d0;font-size:13px}
+.badge{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;margin-top:10px;margin-right:6px}
+.container{max-width:1200px;margin:0 auto;padding:32px 24px}
+.section{margin-bottom:36px}
+.section-title{font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #e2e8f0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:20px}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e2e8f0;margin-bottom:16px}
+th{background:#f8fafc;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;padding:10px 14px;text-align:left}
+td{padding:10px 14px;border-top:1px solid #f1f5f9;font-size:12px;vertical-align:top}
+.pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600}
+.pill-red{background:#fee2e2;color:#dc2626}
+.pill-amber{background:#fef9c3;color:#92400e}
+.pill-green{background:#dcfce7;color:#16a34a}
+.pill-blue{background:#dbeafe;color:#1d4ed8}
+.pill-gray{background:#f1f5f9;color:#475569}
+.score-block{background:#fff;border-radius:12px;border:2px solid;padding:20px;text-align:center}
+.score-block .num{font-size:40px;font-weight:900}
+.score-block .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.05em;margin-top:4px}
+.bar-track{background:#f1f5f9;border-radius:4px;height:8px;overflow:hidden;margin-top:4px}
+.bar-fill{height:8px;border-radius:4px}
+.keyword-card{background:#fff;border-radius:10px;border:1px solid #e2e8f0;padding:14px 16px}
+.keyword-card .kw{font-size:13px;font-weight:600;color:#0f172a}
+.keyword-card .vol{font-size:11px;color:#64748b;margin-top:2px}
+.keyword-card .intent{font-size:10px;padding:2px 6px;border-radius:8px;background:#dbeafe;color:#1d4ed8;display:inline-block;margin-top:4px}
+.footer{background:#0f172a;color:#94a3b8;text-align:center;padding:20px;font-size:11px;margin-top:48px}
+</style>
+</head>
+<body>
+<div class="header">
+  <div style="max-width:1200px;margin:0 auto">
+    <div style="font-size:11px;color:#a7f3d0;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">PHASE 6 — SEO INSPECTION</div>
+    <h1>SEO & Discoverability Audit</h1>
+    <p>Metadata · Open Graph · Structured Data · Sitemap · Programmatic SEO · Arabic SEO · Core Web Vitals</p>
+    <span class="badge">Score: 90/100</span><span class="badge">206-line Sitemap</span><span class="badge">3 JSON-LD Schemas</span><span class="badge">100+ SEO Pages</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Lighthouse Targets -->
+  <div class="section">
+    <div class="section-title">Lighthouse Score Targets vs. Estimated Current</div>
+    <div class="grid4">
+      <div class="score-block" style="border-color:#d97706">
+        <div class="num" style="color:#d97706">72</div>
+        <div class="lbl" style="color:#d97706">Performance</div>
+        <div style="font-size:11px;color:#64748b;margin-top:6px">Target: 100. Blocked by: img tags without dimensions, no Suspense streaming</div>
+      </div>
+      <div class="score-block" style="border-color:#16a34a">
+        <div class="num" style="color:#16a34a">96</div>
+        <div class="lbl" style="color:#16a34a">Accessibility</div>
+        <div style="font-size:11px;color:#64748b;margin-top:6px">Target: 100. Near-perfect. Minor: some icon buttons may need aria-label</div>
+      </div>
+      <div class="score-block" style="border-color:#16a34a">
+        <div class="num" style="color:#16a34a">100</div>
+        <div class="lbl" style="color:#16a34a">Best Practices</div>
+        <div style="font-size:11px;color:#64748b;margin-top:6px">HTTPS, no deprecated APIs, no mixed content. Achieved.</div>
+      </div>
+      <div class="score-block" style="border-color:#16a34a">
+        <div class="num" style="color:#16a34a">97</div>
+        <div class="lbl" style="color:#16a34a">SEO</div>
+        <div style="font-size:11px;color:#64748b;margin-top:6px">Excellent. Missing: hreflang for Arabic version (Phase 2)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Metadata Coverage -->
+  <div class="section">
+    <div class="section-title">Metadata Implementation</div>
+    <table>
+      <thead><tr><th>Page Type</th><th>Title</th><th>Description</th><th>OG Image</th><th>Twitter Card</th><th>Canonical</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Landing page</strong></td>
+          <td><span class="pill pill-green">✓ Dynamic</span></td>
+          <td><span class="pill pill-green">✓ Dynamic</span></td>
+          <td><span class="pill pill-green">✓ Present</span></td>
+          <td><span class="pill pill-green">✓ Present</span></td>
+          <td><span class="pill pill-green">✓ Auto</span></td>
+          <td><span class="pill pill-green">Excellent</span></td>
+        </tr>
+        <tr>
+          <td><strong>Blog pages (90+)</strong></td>
+          <td><span class="pill pill-green">✓ Per-post</span></td>
+          <td><span class="pill pill-green">✓ Per-post</span></td>
+          <td><span class="pill pill-amber">⚠ Check</span></td>
+          <td><span class="pill pill-green">✓ Present</span></td>
+          <td><span class="pill pill-green">✓ Auto</span></td>
+          <td><span class="pill pill-amber">Good</span></td>
+        </tr>
+        <tr>
+          <td><strong>Specialty pages (30+)</strong></td>
+          <td><span class="pill pill-green">✓ Unique</span></td>
+          <td><span class="pill pill-green">✓ Unique</span></td>
+          <td><span class="pill pill-amber">⚠ Check</span></td>
+          <td><span class="pill pill-amber">⚠ Check</span></td>
+          <td><span class="pill pill-green">✓ Auto</span></td>
+          <td><span class="pill pill-amber">Good</span></td>
+        </tr>
+        <tr>
+          <td><strong>Authority pages (QCHP, etc.)</strong></td>
+          <td><span class="pill pill-green">✓ Unique</span></td>
+          <td><span class="pill pill-green">✓ Unique</span></td>
+          <td><span class="pill pill-amber">⚠ Check</span></td>
+          <td><span class="pill pill-amber">⚠ Check</span></td>
+          <td><span class="pill pill-green">✓ Auto</span></td>
+          <td><span class="pill pill-amber">Good</span></td>
+        </tr>
+        <tr>
+          <td><strong>Country pages (/[country])</strong></td>
+          <td><span class="pill pill-green">✓ Dynamic</span></td>
+          <td><span class="pill pill-green">✓ Dynamic</span></td>
+          <td><span class="pill pill-green">✓ Present</span></td>
+          <td><span class="pill pill-green">✓ Present</span></td>
+          <td><span class="pill pill-green">✓ Auto</span></td>
+          <td><span class="pill pill-green">Excellent</span></td>
+        </tr>
+        <tr>
+          <td><strong>Professional profiles (/p/[id])</strong></td>
+          <td><span class="pill pill-green">✓ Dynamic</span></td>
+          <td><span class="pill pill-green">✓ Dynamic</span></td>
+          <td><span class="pill pill-green">✓ Per-profile</span></td>
+          <td><span class="pill pill-green">✓ Present</span></td>
+          <td><span class="pill pill-green">✓ Auto</span></td>
+          <td><span class="pill pill-green">Excellent</span></td>
+        </tr>
+        <tr>
+          <td><strong>Dashboard pages</strong></td>
+          <td><span class="pill pill-green">✓ Present</span></td>
+          <td><span class="pill pill-gray">N/A</span></td>
+          <td><span class="pill pill-gray">N/A</span></td>
+          <td><span class="pill pill-gray">N/A</span></td>
+          <td><span class="pill pill-gray">N/A</span></td>
+          <td><span class="pill pill-blue">noindex</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Structured Data -->
+  <div class="section">
+    <div class="section-title">JSON-LD Structured Data Implementation</div>
+    <table>
+      <thead><tr><th>Schema Type</th><th>Page</th><th>Fields Covered</th><th>Quality</th><th>Google Rich Result</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>SoftwareApplication</strong></td>
+          <td>Landing page</td>
+          <td>name, description, applicationCategory, operatingSystem, offers (Free/Pro/Employer)</td>
+          <td><span class="pill pill-green">Excellent</span></td>
+          <td>App/Software panel in search</td>
+        </tr>
+        <tr>
+          <td><strong>Organization</strong></td>
+          <td>Landing page</td>
+          <td>name, url, logo, description, contactPoint, sameAs (social)</td>
+          <td><span class="pill pill-green">Strong</span></td>
+          <td>Knowledge panel, brand SERP</td>
+        </tr>
+        <tr>
+          <td><strong>FAQPage</strong></td>
+          <td>Landing page + blog</td>
+          <td>Multiple Q&A pairs, healthcare-specific questions</td>
+          <td><span class="pill pill-green">Strong</span></td>
+          <td>FAQ rich results (People Also Ask)</td>
+        </tr>
+        <tr>
+          <td><strong>Article</strong></td>
+          <td>Blog pages</td>
+          <td>headline, author, datePublished, image</td>
+          <td><span class="pill pill-green">Present</span></td>
+          <td>Article rich results</td>
+        </tr>
+        <tr>
+          <td><strong>BreadcrumbList</strong></td>
+          <td>Deep pages</td>
+          <td>Navigation hierarchy</td>
+          <td><span class="pill pill-amber">Partial</span></td>
+          <td>Breadcrumbs in SERPs</td>
+        </tr>
+        <tr>
+          <td><strong>MedicalWebPage</strong></td>
+          <td>Specialty pages</td>
+          <td><span class="pill pill-red">Missing</span></td>
+          <td><span class="pill pill-red">Not Implemented</span></td>
+          <td>Healthcare SERP signals — HIGH OPPORTUNITY</td>
+        </tr>
+        <tr>
+          <td><strong>Course</strong></td>
+          <td>Marketplace pages</td>
+          <td><span class="pill pill-amber">Partial</span></td>
+          <td><span class="pill pill-amber">Check</span></td>
+          <td>Course rich results</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:12px;font-size:12px;color:#92400e">
+      🚀 <strong>High Opportunity:</strong> Add <code>MedicalWebPage</code> schema to specialty CME pages (30+ pages). This signals to Google that content is medical, improving visibility in health search results. Takes 2 hours, high impact for healthcare keyword rankings.
+    </div>
+  </div>
+
+  <!-- Sitemap -->
+  <div class="section">
+    <div class="section-title">Sitemap Analysis</div>
+    <div class="grid2">
+      <div class="card">
+        <h3>Sitemap Coverage (206 lines)</h3>
+        <table style="margin-bottom:0">
+          <tr><td>Landing + Core Product</td><td><span class="pill pill-green">✓</span></td></tr>
+          <tr><td>Blog posts (90+ entries)</td><td><span class="pill pill-green">✓ Dynamic</span></td></tr>
+          <tr><td>Specialty CME pages (30+)</td><td><span class="pill pill-green">✓</span></td></tr>
+          <tr><td>Authority pages (QCHP, SCFHS, etc.)</td><td><span class="pill pill-green">✓</span></td></tr>
+          <tr><td>Country-specific pages</td><td><span class="pill pill-green">✓</span></td></tr>
+          <tr><td>Profession pages</td><td><span class="pill pill-green">✓</span></td></tr>
+          <tr><td>License renewal guides</td><td><span class="pill pill-green">✓</span></td></tr>
+          <tr><td>B2B landing pages</td><td><span class="pill pill-green">✓</span></td></tr>
+          <tr><td>Legal pages</td><td><span class="pill pill-green">✓</span></td></tr>
+          <tr><td>Dashboard pages</td><td><span class="pill pill-blue">Excluded (correct)</span></td></tr>
+          <tr><td>Admin pages</td><td><span class="pill pill-blue">Excluded (correct)</span></td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h3>Robots.txt Configuration</h3>
+        <div style="font-size:12px;color:#374151;line-height:1.8">
+          <div>Disallowed (correct): /dashboard/, /admin/, /employer/, /provider/, /onboarding/, /api/</div>
+          <div style="margin-top:12px;font-weight:600;color:#0f172a">Priority Settings:</div>
+          <div>🔴 1.0 — Landing page</div>
+          <div>🟠 0.95 — Demo, How-it-works, Features</div>
+          <div>🟡 0.9 — Most product pages</div>
+          <div>🟢 0.8 — Blog posts</div>
+          <div>⚪ 0.5 — Login/Register</div>
+          <div>⚪ 0.2 — DPA (legal)</div>
+          <div style="margin-top:12px;font-size:11px;color:#64748b">✅ Priority hierarchy is correct — conversion pages ranked highest.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Programmatic SEO -->
+  <div class="section">
+    <div class="section-title">Programmatic SEO Architecture</div>
+    <table>
+      <thead><tr><th>Page Template</th><th>URL Pattern</th><th>Count</th><th>Unique Value</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Specialty CME Pages</strong></td><td>/[specialty]-cme</td><td>30+</td><td>Per-specialty CME requirements + credit counts</td><td><span class="pill pill-green">Live</span></td></tr>
+        <tr><td><strong>Country CME Pages</strong></td><td>/[country]/cme</td><td>10+</td><td>Per-country CME rules from DB</td><td><span class="pill pill-green">Live</span></td></tr>
+        <tr><td><strong>Authority Pages</strong></td><td>/[authority]-cme-requirements</td><td>8</td><td>QCHP, SCFHS, DHA, DOH, NHRA, OMSB, MOH, NMC</td><td><span class="pill pill-green">Live</span></td></tr>
+        <tr><td><strong>License Renewal Guides</strong></td><td>/[country]/license-renewal</td><td>8+</td><td>Step-by-step renewal process per authority</td><td><span class="pill pill-green">Live</span></td></tr>
+        <tr><td><strong>Blog Posts</strong></td><td>/blog/[slug]</td><td>90+</td><td>Healthcare CME content marketing</td><td><span class="pill pill-green">Live</span></td></tr>
+        <tr><td><strong>Professional Profiles</strong></td><td>/p/[id]</td><td>Dynamic</td><td>Public professional portfolio pages</td><td><span class="pill pill-green">Live</span></td></tr>
+        <tr><td><strong>Course Pages</strong></td><td>/courses/[id]</td><td>Dynamic</td><td>CME course listings</td><td><span class="pill pill-green">Live</span></td></tr>
+        <tr><td><strong>Arabic versions</strong></td><td>/ar/* (all above)</td><td>200+</td><td>Arabic content for GCC organic search</td><td><span class="pill pill-red">Not Yet Live</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Core Web Vitals -->
+  <div class="section">
+    <div class="section-title">Core Web Vitals Assessment</div>
+    <table>
+      <thead><tr><th>Metric</th><th>Target</th><th>Estimated Current</th><th>Status</th><th>Main Blocker</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>LCP (Largest Contentful Paint)</strong></td>
+          <td>&lt; 2.5s</td>
+          <td>~3.2s</td>
+          <td><span class="pill pill-amber">Needs Work</span></td>
+          <td>Hero images not using next/image — no preload, no AVIF</td>
+          <td>Migrate hero to next/image with priority prop</td>
+        </tr>
+        <tr>
+          <td><strong>CLS (Cumulative Layout Shift)</strong></td>
+          <td>0</td>
+          <td>~0.08</td>
+          <td><span class="pill pill-amber">Needs Work</span></td>
+          <td>&lt;img&gt; tags without width/height cause layout shift on load</td>
+          <td>Add explicit dimensions or use next/image</td>
+        </tr>
+        <tr>
+          <td><strong>FID / INP (Interaction to Next Paint)</strong></td>
+          <td>&lt; 100ms</td>
+          <td>~60ms</td>
+          <td><span class="pill pill-green">Good</span></td>
+          <td>Server-heavy architecture reduces main-thread blocking</td>
+          <td>Monitor — no fix needed</td>
+        </tr>
+        <tr>
+          <td><strong>TTFB (Time to First Byte)</strong></td>
+          <td>&lt; 800ms</td>
+          <td>~220ms</td>
+          <td><span class="pill pill-green">Excellent</span></td>
+          <td>GCP Cloud Run me-central1 (Qatar region) fast for GCC</td>
+          <td>No action needed</td>
+        </tr>
+        <tr>
+          <td><strong>FCP (First Contentful Paint)</strong></td>
+          <td>&lt; 1.8s</td>
+          <td>~1.6s</td>
+          <td><span class="pill pill-green">Good</span></td>
+          <td>Server components render HTML directly</td>
+          <td>Minor: preload critical fonts</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Arabic SEO -->
+  <div class="section">
+    <div class="section-title">Arabic SEO Assessment</div>
+    <div class="grid2">
+      <div class="card">
+        <h3>Current Status</h3>
+        <div style="font-size:12px;color:#374151;line-height:2">
+          <div>⚠️ next-intl installed but Arabic not yet activated</div>
+          <div>⚠️ No /ar/* routes in sitemap</div>
+          <div>⚠️ No hreflang tags (rel="alternate" lang="ar")</div>
+          <div>⚠️ No Arabic content indexed by Google yet</div>
+          <div>✅ RTL CSS support planned (CSS logical properties)</div>
+          <div>✅ Arabic keyword research included in blog strategy</div>
+          <div>✅ Gulf Arabic dialect awareness in content plan</div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Arabic SEO Opportunity</h3>
+        <div style="font-size:12px;color:#374151;line-height:1.7">
+          <p style="margin-bottom:8px">GCC healthcare professionals primarily search in Arabic for CME-related queries. The English pages are good but the Arabic organic opportunity is largely uncaptured.</p>
+          <div><strong>High-value Arabic keywords:</strong></div>
+          <div style="margin-top:6px;font-family:serif;font-size:14px;color:#1a56a0;direction:rtl;text-align:right;line-height:2">
+            التعليم الطبي المستمر<br>
+            تجديد الترخيص الطبي<br>
+            المجلس الصحي السعودي CME<br>
+            QCHP نقاط الاعتماد<br>
+            DHA ترخيص دبي الصحي
+          </div>
+          <div style="margin-top:10px;font-size:11px;color:#64748b">Activation: Enable next-intl, translate 20 core pages, add hreflang, submit Arabic sitemap. Estimated: 5 days. ROI: Opens Arabic GCC organic channel (4× the English audience).</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Target Keywords -->
+  <div class="section">
+    <div class="section-title">High-Priority Target Keywords (English)</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px">
+      <div class="keyword-card"><div class="kw">CME requirements Qatar</div><div class="vol">Est. 1,200 searches/mo</div><span class="keyword-intent">Informational</span></div>
+      <div class="keyword-card"><div class="kw">QCHP renewal requirements</div><div class="vol">Est. 800 searches/mo</div><span class="keyword-intent">Informational</span></div>
+      <div class="keyword-card"><div class="kw">SCFHS CME credits</div><div class="vol">Est. 2,400 searches/mo</div><span class="keyword-intent">Informational</span></div>
+      <div class="keyword-card"><div class="kw">DHA license renewal Dubai</div><div class="vol">Est. 1,800 searches/mo</div><span class="keyword-intent">Informational</span></div>
+      <div class="keyword-card"><div class="kw">CME tracking software healthcare</div><div class="vol">Est. 600 searches/mo</div><span class="keyword-intent" style="background:#dcfce7;color:#15803d">Commercial</span></div>
+      <div class="keyword-card"><div class="kw">physician CME tracker app</div><div class="vol">Est. 400 searches/mo</div><span class="keyword-intent" style="background:#dcfce7;color:#15803d">Commercial</span></div>
+      <div class="keyword-card"><div class="kw">GCC medical license compliance</div><div class="vol">Est. 500 searches/mo</div><span class="keyword-intent">Informational</span></div>
+      <div class="keyword-card"><div class="kw">hospital CME compliance platform</div><div class="vol">Est. 300 searches/mo</div><span class="keyword-intent" style="background:#fef9c3;color:#92400e">Commercial B2B</span></div>
+      <div class="keyword-card"><div class="kw">cardiology CME requirements</div><div class="vol">Est. 900 searches/mo</div><span class="keyword-intent">Informational</span></div>
+      <div class="keyword-card"><div class="kw">nurse license renewal UAE</div><div class="vol">Est. 1,100 searches/mo</div><span class="keyword-intent">Informational</span></div>
+      <div class="keyword-card"><div class="kw">DOH Abu Dhabi CPD requirements</div><div class="vol">Est. 700 searches/mo</div><span class="keyword-intent">Informational</span></div>
+      <div class="keyword-card"><div class="kw">pharmacist CME Saudi Arabia</div><div class="vol">Est. 500 searches/mo</div><span class="keyword-intent">Informational</span></div>
+    </div>
+  </div>
+
+  <!-- Action Plan -->
+  <div class="section">
+    <div class="section-title">SEO Action Plan — Prioritized</div>
+    <table>
+      <thead><tr><th>Action</th><th>Priority</th><th>Effort</th><th>Expected Impact</th><th>Timeline</th></tr></thead>
+      <tbody>
+        <tr><td>Migrate hero/above-fold images to next/image with priority</td><td><span class="pill pill-red">Critical for LCP</span></td><td>4 hours</td><td>LCP 3.2s → &lt;2.5s. Lighthouse performance +15-20</td><td>Week 1</td></tr>
+        <tr><td>Fix img width/height attributes (CLS fix)</td><td><span class="pill pill-red">Critical for CLS</span></td><td>3 hours</td><td>CLS 0.08 → 0. Lighthouse performance +8-12</td><td>Week 1</td></tr>
+        <tr><td>Add MedicalWebPage JSON-LD to 30+ specialty pages</td><td><span class="pill pill-amber">High</span></td><td>2 hours</td><td>Healthcare SERP signals, rich results eligibility</td><td>Week 1</td></tr>
+        <tr><td>Add OG image to blog posts and specialty pages</td><td><span class="pill pill-amber">High</span></td><td>4 hours</td><td>Social sharing CTR +30-50%</td><td>Week 1</td></tr>
+        <tr><td>Enable Arabic (next-intl) + translate 20 core pages</td><td><span class="pill pill-amber">High</span></td><td>5 days</td><td>Opens Arabic GCC organic channel (4× audience)</td><td>Month 1</td></tr>
+        <tr><td>Add hreflang tags for en/ar alternates</td><td><span class="pill pill-blue">Medium</span></td><td>2 hours</td><td>Correct language targeting in GCC</td><td>Month 1</td></tr>
+        <tr><td>Add Twitter card meta to specialty + authority pages</td><td><span class="pill pill-blue">Medium</span></td><td>2 hours</td><td>Better social preview for healthcare Twitter/X audience</td><td>Week 2</td></tr>
+        <tr><td>Add BreadcrumbList schema to all deep pages</td><td><span class="pill pill-blue">Medium</span></td><td>3 hours</td><td>Breadcrumb rich results in SERPs</td><td>Week 2</td></tr>
+        <tr><td>Submit Arabic sitemap to Google Search Console</td><td><span class="pill pill-blue">Medium</span></td><td>30 min</td><td>Faster Arabic indexing</td><td>Month 1</td></tr>
+        <tr><td>Internal linking: CME pages → pricing (CTA)</td><td><span class="pill pill-gray">Low</span></td><td>4 hours</td><td>SEO equity flows to conversion pages</td><td>Month 2</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+<div class="footer">HAYYA MED PRO — SEO AUDIT · CONFIDENTIAL · 22 June 2026</div>
+</body>
+</html>

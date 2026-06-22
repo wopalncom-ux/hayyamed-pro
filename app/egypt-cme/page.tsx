@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -147,6 +148,12 @@ export default function EgyptCmePage() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Egypt CME Requirements", url: "https://hayyamed.pro/egypt-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Egypt CME Requirements"
+        url="https://hayyamed.pro/egypt-cme"
+        description="Complete CME guide for Egyptian healthcare professionals. Egyptian Medical Syndicate (EMS): 25 CME credits/year. Plus: hundreds of thousands of Egyptian doctors working in GCC — track both your Egyptian and GCC licences in one app."
+        keywords={["Egypt CME requirements", "Egyptian Medical Syndicate CME", "EMS CME credits Egypt", "Egyptian doctor CME", "Egypt medical license renewal CME", "Egyptian healthcare professional GCC"]}
+      />
 
       {/* Hero */}
       <section style={{ background: "#0f1f3d", color: "#fff", padding: "72px 24px 56px" }}>

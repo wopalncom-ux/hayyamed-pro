@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -124,6 +125,12 @@ export default function PalliativeCareCmePage() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Palliative Care CME", url: "https://hayyamed.pro/palliative-care-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Palliative Care CME"
+        url="https://hayyamed.pro/palliative-care-cme"
+        description="CME and CPD requirements for palliative care and pain medicine physicians in GCC. QCHP Qatar 80 CPD/2yr, SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. Track palliative care CME across all 7 GCC licensing authorities."
+        keywords={["palliative care CME requirements GCC", "palliative medicine CME Saudi Arabia", "SCFHS palliative care CME", "QCHP palliative care CPD", "palliative care CPD Qatar", "pain medicine CME GCC"]}
+      />
 
       <div className="min-h-screen bg-[#f8fafc]">
         <header className="bg-white border-b border-[#e2e8f0]">

@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -174,6 +175,12 @@ export default function BahrainCmePage() {
           { name: "GCC CME Requirements", url: "/gcc-cme-requirements" },
           { name: "Bahrain CPD Requirements", url: "/bahrain-cme" },
         ]}
+      />
+      <MedicalWebPageJsonLd
+        name="Bahrain CPD Requirements"
+        url="https://hayyamed.pro/bahrain-cme"
+        description="Complete guide to CPD requirements in Bahrain. NHRA requires 40 CPD credits per 2-year cycle for all licensed healthcare professionals. Track your Bahrain NHRA compliance automatically with Hayya Med Pro."
+        keywords={["Bahrain CPD requirements", "NHRA CPD credits", "Bahrain CPD 2025", "NHRA license renewal", "Bahrain healthcare professional CPD"]}
       />
 
       <main className="min-h-screen bg-[#f8fafc]">

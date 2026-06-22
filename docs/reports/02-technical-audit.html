@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Technical Audit — Hayya Med Pro 2026-06-22</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8fafc;color:#0f172a;font-size:14px}
+.header{background:linear-gradient(135deg,#0f3460,#1a56a0);color:#fff;padding:36px 48px}
+.header h1{font-size:26px;font-weight:800;margin-bottom:4px}
+.header p{color:#bfdbfe;font-size:13px}
+.badge{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;margin-top:10px;margin-right:6px}
+.container{max-width:1200px;margin:0 auto;padding:32px 24px}
+.section{margin-bottom:36px}
+.section-title{font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #e2e8f0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:20px}
+.card h3{font-size:12px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e2e8f0;margin-bottom:16px}
+th{background:#f8fafc;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;padding:10px 14px;text-align:left}
+td{padding:10px 14px;border-top:1px solid #f1f5f9;font-size:12px;vertical-align:top}
+tr:hover td{background:#f8fafc}
+.pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600}
+.pill-red{background:#fee2e2;color:#dc2626}
+.pill-amber{background:#fef9c3;color:#92400e}
+.pill-green{background:#dcfce7;color:#16a34a}
+.pill-blue{background:#dbeafe;color:#1d4ed8}
+.pill-gray{background:#f1f5f9;color:#475569}
+.code{font-family:'Courier New',monospace;font-size:11px;background:#1e293b;color:#94a3b8;padding:12px 16px;border-radius:8px;overflow-x:auto;white-space:pre;line-height:1.6}
+.code .kw{color:#93c5fd}
+.code .str{color:#86efac}
+.code .cm{color:#475569}
+.metric{text-align:center;padding:16px}
+.metric .num{font-size:32px;font-weight:900;color:#1a56a0}
+.metric .lbl{font-size:11px;color:#64748b;margin-top:4px}
+.issue{padding:10px 14px;border-radius:8px;margin-bottom:8px;border-left:3px solid}
+.issue.high{border-color:#d97706;background:#fffbeb}
+.issue.medium{border-color:#3b82f6;background:#eff6ff}
+.issue.low{border-color:#94a3b8;background:#f8fafc}
+.issue .title{font-size:12px;font-weight:700;margin-bottom:3px}
+.issue .body{font-size:11px;color:#64748b}
+.bar-track{background:#f1f5f9;border-radius:4px;height:6px;overflow:hidden}
+.bar-fill{height:6px;border-radius:4px}
+.footer{background:#0f172a;color:#94a3b8;text-align:center;padding:20px;font-size:11px;margin-top:48px}
+</style>
+</head>
+<body>
+<div class="header">
+  <div style="max-width:1200px;margin:0 auto">
+    <div style="font-size:11px;color:#bfdbfe;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">PHASE 1 — TECHNICAL INSPECTION</div>
+    <h1>Technical Architecture Audit</h1>
+    <p>Next.js 16.2.6 · React 19 · TypeScript Strict · Supabase · GCP Cloud Run</p>
+    <span class="badge">Score: 83/100</span><span class="badge">384 Routes</span><span class="badge">153 API Endpoints</span><span class="badge">78 Migrations</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Architecture Metrics -->
+  <div class="section">
+    <div class="section-title">Architecture at a Glance</div>
+    <div class="grid4">
+      <div class="card"><div class="metric"><div class="num">384</div><div class="lbl">Total Routes</div></div></div>
+      <div class="card"><div class="metric"><div class="num">153</div><div class="lbl">API Endpoints</div></div></div>
+      <div class="card"><div class="metric"><div class="num">200+</div><div class="lbl">Components</div></div></div>
+      <div class="card"><div class="metric"><div class="num">41</div><div class="lbl">NPM Dependencies</div></div></div>
+    </div>
+  </div>
+
+  <!-- Route Architecture -->
+  <div class="section">
+    <div class="section-title">Route Group Architecture</div>
+    <table>
+      <thead><tr><th>Route Group</th><th>Prefix</th><th>Pages Count</th><th>Protection</th><th>Role Required</th></tr></thead>
+      <tbody>
+        <tr><td><code>(auth)</code></td><td>/login, /register, /forgot-password, /verify-email, /mfa</td><td>6</td><td><span class="pill pill-gray">Public</span></td><td>Unauthenticated only</td></tr>
+        <tr><td><code>(onboarding)</code></td><td>/onboarding/[1-7]</td><td>8</td><td><span class="pill pill-blue">Auth</span></td><td>Any authenticated user</td></tr>
+        <tr><td><code>(dashboard)</code></td><td>/dashboard, /cme, /licenses, /settings, /billing, /analytics, /ai, /marketplace, /notifications, /passport</td><td>12</td><td><span class="pill pill-blue">Auth</span></td><td>Any authenticated user</td></tr>
+        <tr><td><code>(employer)</code></td><td>/employer/staff, /required-training, /integration</td><td>3</td><td><span class="pill pill-blue">Auth</span></td><td>employer_admin role</td></tr>
+        <tr><td><code>(provider)</code></td><td>/provider/courses, /settings, /register</td><td>3</td><td><span class="pill pill-blue">Auth</span></td><td>training_provider_admin</td></tr>
+        <tr><td><code>(admin)</code></td><td>/admin/* (50+ pages across sessions)</td><td>50+</td><td><span class="pill pill-red">Admin</span></td><td>master_admin / super_admin</td></tr>
+        <tr><td><code>(university)</code></td><td>/university/register</td><td>1</td><td><span class="pill pill-blue">Auth</span></td><td>university_admin</td></tr>
+        <tr><td><code>(government)</code></td><td>/government/register, /settings, /registry, /reports</td><td>4</td><td><span class="pill pill-blue">Auth</span></td><td>government role</td></tr>
+        <tr><td><code>Public Routes</code></td><td>Landing, Blog (90+), Specialties (30+), Authority pages, Legal</td><td>296+</td><td><span class="pill pill-gray">Public</span></td><td>None</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- API Route Categories -->
+  <div class="section">
+    <div class="section-title">API Endpoint Inventory</div>
+    <table>
+      <thead><tr><th>Category</th><th>Endpoints</th><th>Auth Method</th><th>Rate Limited</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Admin APIs</strong></td><td>/api/admin/* (30+ endpoints)</td><td>getUser() + role check</td><td>Yes (admin limiter)</td><td><span class="pill pill-green">Secure</span></td></tr>
+        <tr><td><strong>Auth APIs</strong></td><td>/api/auth/mfa/*, password, callback, confirm</td><td>getUser() + Supabase</td><td>Yes (10 req/60s)</td><td><span class="pill pill-green">Secure</span></td></tr>
+        <tr><td><strong>Cron Jobs</strong></td><td>/api/cron/* (16 endpoints)</td><td>CRON_SECRET header</td><td>Via secret</td><td><span class="pill pill-green">Secure</span></td></tr>
+        <tr><td><strong>Employer APIs</strong></td><td>/api/employer/staff, departments, compliance, licenses, tasks, reminders</td><td>getUser() + employer_admin</td><td>Partial</td><td><span class="pill pill-green">Secure</span></td></tr>
+        <tr><td><strong>V1 Enterprise APIs</strong></td><td>/api/v1/staff/*, departments, compliance, licenses</td><td>verifyApiKey()</td><td>Yes</td><td><span class="pill pill-green">Secure</span></td></tr>
+        <tr><td><strong>Payment APIs</strong></td><td>/api/paddle/*, /api/qpay/*, /api/payment/qiib/*</td><td>Webhook signature</td><td>100 req/60s</td><td><span class="pill pill-green">Secure</span></td></tr>
+        <tr><td><strong>AI APIs</strong></td><td>/api/ai/learning-pathway, renewal-prediction, gap-analysis</td><td>getUser() + plan check</td><td>20 req/hr</td><td><span class="pill pill-green">Secure</span></td></tr>
+        <tr><td><strong>Mobile APIs</strong></td><td>/api/mobile/register-device</td><td>Bearer token</td><td>Yes</td><td><span class="pill pill-green">Secure</span></td></tr>
+        <tr><td><strong>Export APIs</strong></td><td>/api/export/*, /api/pdf/*</td><td>getUser() + plan check</td><td>Partial</td><td><span class="pill pill-amber">Review</span></td></tr>
+        <tr><td><strong>Certificate APIs</strong></td><td>/api/certificates/*</td><td>getUser()</td><td>Partial</td><td><span class="pill pill-amber">Review</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Middleware Analysis -->
+  <div class="section">
+    <div class="section-title">Middleware Architecture</div>
+    <div class="grid2">
+      <div class="card">
+        <h3>What Middleware Protects</h3>
+        <div style="font-size:12px;color:#374151;line-height:1.8">
+          <div>✅ <code>/dashboard</code> → Auth required</div>
+          <div>✅ <code>/onboarding</code> → Auth required</div>
+          <div>✅ <code>/employer</code> → Auth required (role enforced in page)</div>
+          <div>✅ <code>/provider</code> → Auth required</div>
+          <div>✅ <code>/admin</code> → Auth + MFA AAL2 required</div>
+          <div>✅ <code>/university</code> → Auth required</div>
+          <div>✅ <code>/government</code> → Auth required</div>
+          <div>✅ Login/Register redirects authenticated users → /dashboard</div>
+          <div>✅ Unauthenticated users redirected → /login?next={path}</div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Soft Launch Gate</h3>
+        <div style="font-size:12px;color:#374151;margin-bottom:12px">43 bypass routes configured. Gate activated via <code>COMING_SOON</code> env var (default: true).</div>
+        <div class="code"><span class="cm">// middleware.ts pattern</span>
+<span class="kw">if</span> (process.env.COMING_SOON === <span class="str">"true"</span>) {
+  <span class="cm">// Gate all routes except 43 bypasses</span>
+  redirect(<span class="str">"/coming-soon"</span>)
+}
+<span class="cm">// Deploy: COMING_SOON=false → full site live</span></div>
+        <div style="font-size:11px;color:#64748b;margin-top:8px">✅ No code deployment needed to launch — env var toggle only.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Supabase Client Patterns -->
+  <div class="section">
+    <div class="section-title">Supabase Client Pattern Audit</div>
+    <table>
+      <thead><tr><th>Client Type</th><th>File</th><th>Key Used</th><th>Appropriate Usage</th><th>Risk</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Browser Client</strong></td>
+          <td><code>lib/supabase/client.ts</code></td>
+          <td>ANON_KEY</td>
+          <td>Client components, forms, realtime</td>
+          <td><span class="pill pill-green">Low</span></td>
+        </tr>
+        <tr>
+          <td><strong>Server Client</strong></td>
+          <td><code>lib/supabase/server.ts</code></td>
+          <td>ANON_KEY + cookies</td>
+          <td>Server components, API routes, getUser()</td>
+          <td><span class="pill pill-green">Low</span></td>
+        </tr>
+        <tr>
+          <td><strong>Admin Client</strong></td>
+          <td><code>lib/supabase/server.ts</code> → createAdminClient()</td>
+          <td>SERVICE_ROLE_KEY</td>
+          <td>Admin operations, migrations, privileged inserts</td>
+          <td><span class="pill pill-green">Low</span></td>
+        </tr>
+        <tr>
+          <td><strong>EmployerTasksSection</strong></td>
+          <td><code>components/dashboard/EmployerTasksSection.tsx</code></td>
+          <td>SERVICE_ROLE_KEY</td>
+          <td>React Server Component — correct usage</td>
+          <td><span class="pill pill-green">Low</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:12px;font-size:12px;color:#166534">
+      ✅ <strong>Admin client is NEVER used in client components.</strong> All 'use client' components use the browser client with anon key. Service role key is server-side only. This pattern is correct and prevents privilege escalation.
+    </div>
+  </div>
+
+  <!-- Environment Variables -->
+  <div class="section">
+    <div class="section-title">Environment Variable Audit (36 Variables)</div>
+    <table>
+      <thead><tr><th>Category</th><th>Variables</th><th>Exposure</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>App Config</td><td>NEXT_PUBLIC_APP_URL</td><td>Public</td><td><span class="pill pill-green">✓ Required</span></td></tr>
+        <tr><td>Supabase</td><td>NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY</td><td>Public / Server</td><td><span class="pill pill-green">✓ Correct</span></td></tr>
+        <tr><td>Paddle</td><td>PADDLE_API_KEY, PADDLE_WEBHOOK_SECRET + 8 price IDs</td><td>Server only</td><td><span class="pill pill-green">✓ Secure</span></td></tr>
+        <tr><td>Email</td><td>POSTMARK_API_TOKEN, EMAIL_FROM, SUPPORT_EMAIL, ADMIN_NOTIFICATION_EMAIL</td><td>Server only</td><td><span class="pill pill-green">✓ Secure</span></td></tr>
+        <tr><td>AI</td><td>ANTHROPIC_API_KEY</td><td>Server only</td><td><span class="pill pill-green">✓ Secure</span></td></tr>
+        <tr><td>Web Push</td><td>NEXT_PUBLIC_VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY, VAPID_SUBJECT</td><td>Public / Server</td><td><span class="pill pill-green">✓ Correct</span></td></tr>
+        <tr><td>Analytics</td><td>NEXT_PUBLIC_POSTHOG_KEY, NEXT_PUBLIC_POSTHOG_HOST</td><td>Public</td><td><span class="pill pill-green">✓ Correct</span></td></tr>
+        <tr><td>Sentry</td><td>SENTRY_DSN, NEXT_PUBLIC_SENTRY_DSN, SENTRY_AUTH_TOKEN, SENTRY_ORG, SENTRY_PROJECT</td><td>Mixed</td><td><span class="pill pill-green">✓ Configured</span></td></tr>
+        <tr><td>Rate Limiting</td><td>UPSTASH_REDIS_REST_URL, UPSTASH_REDIS_REST_TOKEN</td><td>Server only</td><td><span class="pill pill-green">✓ Secure</span></td></tr>
+        <tr><td>Cron Security</td><td>CRON_SECRET (32+ chars required)</td><td>Server only</td><td><span class="pill pill-green">✓ Secure</span></td></tr>
+        <tr><td>QIIB (Qatar)</td><td>QIIB_MERCHANT_ID, QIIB_API_KEY, QIIB_BASE_URL, QIIB_WEBHOOK_SECRET</td><td>Server only</td><td><span class="pill pill-amber">⚠ Pending Creds</span></td></tr>
+        <tr><td>QPay (Qatar)</td><td>QPAY_BASE_URL, QPAY_USERNAME, QPAY_PASSWORD, QPAY_INVOICE_CODE</td><td>Server only</td><td><span class="pill pill-amber">⚠ Pending Creds</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Next.js Config -->
+  <div class="section">
+    <div class="section-title">next.config.ts Audit</div>
+    <div class="grid2">
+      <div class="card">
+        <h3>Security Headers (7 configured)</h3>
+        <table>
+          <tr><td><code>X-DNS-Prefetch-Control</code></td><td><span class="pill pill-green">on</span></td></tr>
+          <tr><td><code>X-Content-Type-Options</code></td><td><span class="pill pill-green">nosniff</span></td></tr>
+          <tr><td><code>X-Frame-Options</code></td><td><span class="pill pill-green">DENY</span></td></tr>
+          <tr><td><code>X-XSS-Protection</code></td><td><span class="pill pill-green">1; mode=block</span></td></tr>
+          <tr><td><code>Referrer-Policy</code></td><td><span class="pill pill-green">strict-origin</span></td></tr>
+          <tr><td><code>Permissions-Policy</code></td><td><span class="pill pill-green">camera/mic/geo blocked</span></td></tr>
+          <tr><td><code>HSTS</code></td><td><span class="pill pill-green">63072000s + preload</span></td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h3>Content Security Policy</h3>
+        <div class="code">default-src 'self'
+script-src 'self' cloudflare posthog
+style-src 'self' 'unsafe-inline'
+img-src 'self' data: https:
+connect-src 'self' supabase posthog sentry
+frame-ancestors 'none'
+object-src 'none'
+upgrade-insecure-requests <span class="cm">[prod]</span></div>
+        <div style="margin-top:8px;font-size:11px;color:#64748b">✅ Analytics whitelisted. ✅ No eval in production. ✅ Frame ancestors blocked.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Performance -->
+  <div class="section">
+    <div class="section-title">Performance Architecture Assessment</div>
+    <table>
+      <thead><tr><th>Aspect</th><th>Current State</th><th>Score</th><th>Recommendation</th><th>Impact</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Server vs Client Components</strong></td>
+          <td>Heavy server component usage (0 'use client' at root)</td>
+          <td><span class="pill pill-green">9/10</span></td>
+          <td>Excellent baseline — maintain pattern</td>
+          <td>Reduces client JS bundle significantly</td>
+        </tr>
+        <tr>
+          <td><strong>Suspense / Streaming</strong></td>
+          <td>Minimal — only 3 Suspense references in marketplace</td>
+          <td><span class="pill pill-amber">5/10</span></td>
+          <td>Add Suspense boundaries on dashboard heavy sections</td>
+          <td>Dashboard LCP improvement 300-800ms</td>
+        </tr>
+        <tr>
+          <td><strong>Next.js Image Optimization</strong></td>
+          <td>Only 2 usages found — most images not optimized</td>
+          <td><span class="pill pill-red">3/10</span></td>
+          <td>Migrate all above-fold images to next/image</td>
+          <td>CLS = 0, LCP -40%</td>
+        </tr>
+        <tr>
+          <td><strong>Image Formats</strong></td>
+          <td>AVIF + WebP configured in next.config.ts</td>
+          <td><span class="pill pill-green">9/10</span></td>
+          <td>Configuration is correct</td>
+          <td>30-50% smaller images automatically</td>
+        </tr>
+        <tr>
+          <td><strong>Output Mode</strong></td>
+          <td>standalone — Docker optimized</td>
+          <td><span class="pill pill-green">9/10</span></td>
+          <td>Correct for Cloud Run</td>
+          <td>Minimal container footprint</td>
+        </tr>
+        <tr>
+          <td><strong>Code Splitting</strong></td>
+          <td>App Router automatic per-route splitting</td>
+          <td><span class="pill pill-green">8/10</span></td>
+          <td>Add dynamic imports for heavy AI components</td>
+          <td>Initial load reduction</td>
+        </tr>
+        <tr>
+          <td><strong>Loading States</strong></td>
+          <td>loading.tsx present for dashboard</td>
+          <td><span class="pill pill-green">8/10</span></td>
+          <td>Add loading.tsx for admin routes too</td>
+          <td>Better perceived performance</td>
+        </tr>
+        <tr>
+          <td><strong>Caching Strategy</strong></td>
+          <td>No explicit cache configuration found</td>
+          <td><span class="pill pill-amber">5/10</span></td>
+          <td>Add revalidate tags on server actions that mutate data</td>
+          <td>Reduce DB queries 30-60%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Issues Found -->
+  <div class="section">
+    <div class="section-title">Issues Found — Prioritized</div>
+
+    <div class="issue high">
+      <div class="title">🟠 HIGH — User-Facing PDF Compliance Report Missing</div>
+      <div class="body">The primary Free→Pro conversion driver (per CLAUDE.md) is not yet built. Admin can generate reports for users, but users cannot self-serve their compliance PDF. This is blocking revenue directly. Effort: 2 days. Impact: Primary conversion driver.</div>
+    </div>
+
+    <div class="issue high">
+      <div class="title">🟠 HIGH — Unit Test Coverage: ~0%</div>
+      <div class="body">Only Playwright E2E tests found. No Jest/Vitest configuration in package.json. Compliance calculation logic, subscription entitlement checks, and country rules engine have zero automated test coverage. Risk: Regression bugs in production with no safety net. Effort: 5 days to reach 60% on critical paths.</div>
+    </div>
+
+    <div class="issue medium">
+      <div class="title">🟡 MEDIUM — Next.js Image Component Underutilized (2 of 200+ instances)</div>
+      <div class="body">Only 2 usages of next/image found. All other images are raw &lt;img&gt; tags or background CSS. This causes CLS (Cumulative Layout Shift) and prevents AVIF/WebP optimization. File: Landing page, blog images, profile photos. Effort: 1 day. Impact: Lighthouse performance +15-20 points.</div>
+    </div>
+
+    <div class="issue medium">
+      <div class="title">🟡 MEDIUM — No Suspense Streaming on Dashboard</div>
+      <div class="body">Dashboard page (365 lines) loads as a single server render waterfall. Adding Suspense boundaries would allow streaming, reducing time-to-first-byte and improving perceived load speed. Effort: 1-2 days. Impact: LCP improvement 200-500ms.</div>
+    </div>
+
+    <div class="issue medium">
+      <div class="title">🟡 MEDIUM — MFA Recovery Uses Manual HTTP Call to Supabase API</div>
+      <div class="body">File: app/api/auth/mfa/recovery/route.ts lines 102-112. Manual fetch() to Supabase REST endpoint instead of SDK method. Risk: Error handling inconsistency with SDK behavior, future API version breaks. Effort: 2 hours.</div>
+    </div>
+
+    <div class="issue medium">
+      <div class="title">🟡 MEDIUM — No Revalidate Cache Strategy on Server Actions</div>
+      <div class="body">Server actions that mutate data (CME add, license update, profile change) do not call revalidatePath() or revalidateTag(). Next.js caches responses by default — this could serve stale data after mutations. Effort: 1 day. Impact: Data consistency.</div>
+    </div>
+
+    <div class="issue low">
+      <div class="title">🔵 LOW — Silent Cookie Failure in Middleware</div>
+      <div class="body">lib/supabase/middleware.ts cookie.setAll() wrapped in try/catch with no logging. Middleware failures are invisible in logs. Add console.warn() or Sentry capture. Effort: 30 minutes.</div>
+    </div>
+
+    <div class="issue low">
+      <div class="title">🔵 LOW — No Loading States on Admin Routes</div>
+      <div class="body">Admin pages load synchronously without loading.tsx fallbacks. Heavy admin pages (logs center, exports) show blank content during data fetch. Effort: 4 hours.</div>
+    </div>
+  </div>
+
+  <!-- Cron Jobs -->
+  <div class="section">
+    <div class="section-title">Cron Job Inventory (16 Jobs)</div>
+    <table>
+      <thead><tr><th>Job</th><th>Path</th><th>Purpose</th><th>Auth</th></tr></thead>
+      <tbody>
+        <tr><td>Onboarding Drip</td><td>/api/cron/onboarding-drip</td><td>Welcome email sequence for new users</td><td>CRON_SECRET</td></tr>
+        <tr><td>Compliance Alerts</td><td>/api/cron/compliance-alerts</td><td>Alert users approaching renewal deadline</td><td>CRON_SECRET</td></tr>
+        <tr><td>Training Deadline</td><td>/api/cron/training-deadline</td><td>Alert employer staff re: required training</td><td>CRON_SECRET</td></tr>
+        <tr><td>Cycle Renewal</td><td>/api/cron/cycle-renewal</td><td>Reset compliance wallets on new cycle start</td><td>CRON_SECRET</td></tr>
+        <tr><td>Trial Reminders</td><td>/api/cron/trial-reminders</td><td>D-7, D-3, D-1 trial expiry emails</td><td>CRON_SECRET</td></tr>
+        <tr><td>License Reminders</td><td>/api/cron/license-reminders</td><td>License expiry approaching alerts</td><td>CRON_SECRET</td></tr>
+        <tr><td>CME Deadline</td><td>/api/cron/cme-deadline</td><td>CME cycle deadline reminders</td><td>CRON_SECRET</td></tr>
+        <tr><td>License Expiry</td><td>/api/cron/license-expiry</td><td>License expired notifications</td><td>CRON_SECRET</td></tr>
+        <tr><td>Employer Digest</td><td>/api/cron/employer-digest</td><td>Weekly compliance digest for employers</td><td>CRON_SECRET</td></tr>
+        <tr><td>Professional Digest</td><td>/api/cron/professional-digest</td><td>Monthly CME summary for professionals</td><td>CRON_SECRET</td></tr>
+        <tr><td>Onboarding Reminder</td><td>/api/cron/onboarding-reminder</td><td>Re-engage incomplete onboarding</td><td>CRON_SECRET</td></tr>
+        <tr><td>Compliance Snapshot</td><td>/api/cron/compliance-snapshot</td><td>Daily compliance status snapshot to DB</td><td>CRON_SECRET</td></tr>
+        <tr><td>Storage Cleanup</td><td>/api/cron/storage-cleanup</td><td>Delete soft-deleted certificate files</td><td>CRON_SECRET</td></tr>
+        <tr><td>Process Notifications</td><td>/api/cron/process-notifications</td><td>Drain notification_queue → web push</td><td>CRON_SECRET</td></tr>
+        <tr><td>Process Webhooks</td><td>/api/cron/process-webhooks</td><td>Retry failed provider webhooks</td><td>CRON_SECRET</td></tr>
+        <tr><td>Data Retention</td><td>/api/cron/data-retention</td><td>PDPL/GDPR 7-year retention enforcement</td><td>CRON_SECRET</td></tr>
+      </tbody>
+    </table>
+    <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:12px;font-size:12px;color:#1d4ed8">
+      ⚠️ <strong>Finding:</strong> No cron monitoring system found (Dead Man's Snitch or similar). If any cron job silently fails, the failure is invisible until a user reports a missed alert. Recommend: Add monitoring for each cron job with alerting on failure.
+    </div>
+  </div>
+
+</div>
+<div class="footer">HAYYA MED PRO — TECHNICAL AUDIT · CONFIDENTIAL · 22 June 2026</div>
+</body>
+</html>

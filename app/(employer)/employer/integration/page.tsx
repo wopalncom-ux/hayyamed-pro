@@ -179,6 +179,19 @@ export default function IntegrationPage() {
       </Section>
 
       <Section title="REST API endpoints">
+        <div className="mb-4 p-3 bg-[#eff6ff] border border-[#bfdbfe] rounded-lg flex items-center justify-between gap-3">
+          <p className="text-sm text-[#1a56a0]">
+            Full API reference including all endpoints, response schemas, and code examples is available in the public developer docs.
+          </p>
+          <a
+            href="/developers"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm font-semibold text-[#1a56a0] whitespace-nowrap hover:underline"
+          >
+            API docs →
+          </a>
+        </div>
         <EndpointCard
           method="GET"
           path="/api/v1/staff/compliance"

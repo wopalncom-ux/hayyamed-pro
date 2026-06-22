@@ -17,6 +17,7 @@ const SOLUTIONS = [
   { label: "For Universities", href: "/for-universities" },
   { label: "For Government", href: "/for-government" },
   { label: "Healthcare Compliance", href: "/healthcare-compliance-software" },
+  { label: "API Documentation", href: "/developers" },
   { label: "About", href: "/about" },
   { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },

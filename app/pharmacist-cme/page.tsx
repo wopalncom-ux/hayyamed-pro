@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -183,6 +184,12 @@ export default function PharmacistCmePage() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Pharmacist CME", url: "https://hayyamed.pro/pharmacist-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Pharmacist CME"
+        url="https://hayyamed.pro/pharmacist-cme"
+        description="Complete guide to pharmacist CME and CPD requirements across the GCC. QCHP Qatar (80 CPD/2yr), SCFHS Saudi Arabia (60 CME/yr), DHA UAE (40 CME/2yr). Track all requirements in one professional compliance app."
+        keywords={["pharmacist CME requirements GCC", "SCFHS pharmacist CME", "QCHP pharmacist CPD", "pharmacist license renewal Saudi Arabia", "pharmacy CME tracker", "DHA pharmacist CME"]}
+      />
 
       <div className="min-h-screen bg-[#f8fafc]">
         {/* Nav */}

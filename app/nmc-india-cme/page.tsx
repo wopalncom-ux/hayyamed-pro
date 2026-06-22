@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -107,6 +108,12 @@ export default function NmcIndiaCmePage() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "NMC India CME", url: "https://hayyamed.pro/nmc-india-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="NMC India CME"
+        url="https://hayyamed.pro/nmc-india-cme"
+        description="Complete guide to NMC India CME requirements. Indian doctors need 30 CME credits per 5-year re-registration cycle. Track NMC India CME and GCC CME requirements in one compliance app."
+        keywords={["NMC India CME requirements", "Indian doctor CME 2025", "National Medical Commission CME", "NMC CME credits India", "India doctor CME tracker", "NMC re-registration CME"]}
+      />
 
       {/* Hero */}
       <section style={{ background: "#0f1f3d", color: "#fff", padding: "72px 24px 56px" }}>

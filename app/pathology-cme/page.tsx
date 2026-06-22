@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -105,6 +106,12 @@ export default function PathologyCme() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Pathology CME", url: "https://hayyamed.pro/pathology-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Pathology CME"
+        url="https://hayyamed.pro/pathology-cme"
+        description="CME and CPD requirements for pathologists and laboratory medicine specialists in Qatar, Saudi Arabia, UAE, and all GCC countries. QCHP, SCFHS, DHA pathology CME credits, accepted accreditors, and tracking tools."
+        keywords={["pathology CME GCC", "laboratory medicine CME", "pathologist CME requirements", "QCHP pathology CPD", "SCFHS pathology CME", "DHA laboratory medicine CME"]}
+      />
 
       <div className="min-h-screen bg-[#f8fafc]">
         <header className="bg-white border-b border-[#e2e8f0] sticky top-0 z-10">

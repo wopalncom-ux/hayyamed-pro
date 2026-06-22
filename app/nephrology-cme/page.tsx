@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -139,6 +140,12 @@ export default function NephrologyCmePage() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Nephrology CME", url: "https://hayyamed.pro/nephrology-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Nephrology CME"
+        url="https://hayyamed.pro/nephrology-cme"
+        description="Complete CME and CPD guide for nephrologists in GCC. QCHP Qatar 80 CPD/2yr, SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. Dialysis training, renal biopsy, and transplant CME count. Track all 7 authorities."
+        keywords={["nephrology CME requirements GCC", "nephrologist CME Saudi Arabia", "SCFHS nephrology CME", "QCHP nephrologist CPD", "nephrology CPD Qatar", "dialysis training CME GCC"]}
+      />
 
       {/* Hero */}
       <section style={{ background: "#0f1f3d", color: "#fff", padding: "72px 24px 56px" }}>

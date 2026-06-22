@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hayya Med Pro — Integration Status Report</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f4f8; color: #111; }
+  .header { background: #0f1f3d; color: white; padding: 20px 32px; display: flex; align-items: center; justify-content: space-between; }
+  .header-left { display: flex; align-items: center; gap: 14px; }
+  .logo { width: 36px; height: 36px; background: #1a56a0; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 16px; }
+  .header h1 { font-size: 20px; font-weight: 800; }
+  .header h1 span { color: #60a5fa; }
+  .header p { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+  .header-right { text-align: right; font-size: 12px; color: #94a3b8; }
+  .main { max-width: 1200px; margin: 0 auto; padding: 28px 24px; }
+  .summary-row { display: flex; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }
+  .sum-card { background: white; border-radius: 12px; border: 1px solid #e2e8f0; padding: 16px 24px; text-align: center; flex: 1; min-width: 120px; }
+  .sum-value { font-size: 32px; font-weight: 900; }
+  .sum-value.green { color: #16a34a; }
+  .sum-value.amber { color: #d97706; }
+  .sum-value.red { color: #dc2626; }
+  .sum-value.blue { color: #1a56a0; }
+  .sum-label { font-size: 11px; color: #64748b; font-weight: 700; text-transform: uppercase; margin-top: 4px; }
+  .section-title { font-size: 15px; font-weight: 800; color: #0f1f3d; margin-bottom: 14px; text-transform: uppercase; letter-spacing: .05em; }
+  .table-wrap { background: white; border-radius: 14px; border: 1px solid #e2e8f0; overflow: hidden; margin-bottom: 28px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th { background: #f8fafc; padding: 11px 14px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; color: #64748b; letter-spacing: .04em; border-bottom: 1px solid #e2e8f0; }
+  td { padding: 11px 14px; border-top: 1px solid #f1f5f9; color: #374151; vertical-align: middle; }
+  tr:hover td { background: #f8fafc; }
+  .badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 999px; font-size: 10px; font-weight: 700; white-space: nowrap; }
+  .badge.live { background: #dcfce7; color: #15803d; }
+  .badge.partial { background: #fef9c3; color: #854d0e; }
+  .badge.planned { background: #f1f5f9; color: #64748b; }
+  .badge.removed { background: #fee2e2; color: #9f1239; }
+  .badge.api { background: #eff6ff; color: #1e40af; }
+  .int-name { font-weight: 700; color: #111; }
+  .int-cat { font-size: 10px; color: #94a3b8; display: block; margin-top: 2px; }
+  .btn { background: #1a56a0; color: white; border: none; border-radius: 8px; padding: 10px 20px; font-size: 12px; font-weight: 700; cursor: pointer; margin-bottom: 16px; }
+  .btn:hover { background: #154890; }
+  .filter-row { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  .filter-btn { padding: 6px 14px; border-radius: 8px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #e2e8f0; background: white; color: #64748b; }
+  .filter-btn.active { background: #1a56a0; color: white; border-color: #1a56a0; }
+  .footer { background: #0f1f3d; color: #64748b; text-align: center; padding: 20px; font-size: 11px; margin-top: 40px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="logo">H</div>
+    <div>
+      <h1>Hayya Med <span>Pro</span> — Integration Status Report</h1>
+      <p>35 integrations assessed · June 14, 2026</p>
+    </div>
+  </div>
+  <div class="header-right">
+    <button class="btn" onclick="exportCSV()" style="margin:0;padding:8px 14px;font-size:11px;">⬇ Export CSV</button>
+  </div>
+</div>
+
+<div class="main">
+
+  <div class="summary-row">
+    <div class="sum-card"><div class="sum-value green">18</div><div class="sum-label">Live / Ready</div></div>
+    <div class="sum-card"><div class="sum-value amber">4</div><div class="sum-label">Pending Action</div></div>
+    <div class="sum-card"><div class="sum-value blue">12</div><div class="sum-label">Planned Phase 2-3</div></div>
+    <div class="sum-card"><div class="sum-value red">1</div><div class="sum-label">Removed</div></div>
+    <div class="sum-card"><div class="sum-value blue">35</div><div class="sum-label">Total Assessed</div></div>
+  </div>
+
+  <div class="section-title">Integration Readiness Matrix</div>
+
+  <div class="filter-row">
+    <button class="filter-btn active" onclick="filterTable('all', this)">All</button>
+    <button class="filter-btn" onclick="filterTable('live', this)">Live</button>
+    <button class="filter-btn" onclick="filterTable('partial', this)">Pending</button>
+    <button class="filter-btn" onclick="filterTable('planned', this)">Planned</button>
+  </div>
+
+  <div class="table-wrap">
+    <table id="intTable">
+      <thead>
+        <tr>
+          <th>Integration</th>
+          <th>Category</th>
+          <th>Purpose</th>
+          <th>Status</th>
+          <th>API</th>
+          <th>DB</th>
+          <th>Frontend</th>
+          <th>Production</th>
+          <th>Phase</th>
+          <th>Blocker / Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-status="live"><td><span class="int-name">Supabase Auth</span><span class="int-cat">Auth Platform</span></td><td>Auth</td><td>Authentication + session management</td><td><span class="badge live">✓ Live</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓ Ready</span></td><td>P1</td><td>—</td></tr>
+        <tr data-status="live"><td><span class="int-name">Supabase Postgres</span><span class="int-cat">Database</span></td><td>Database</td><td>Primary DB — 30 tables, 28 RLS policies, 26 triggers</td><td><span class="badge live">✓ Live</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓ Ready</span></td><td>P1</td><td>33 migrations applied</td></tr>
+        <tr data-status="live"><td><span class="int-name">Supabase Storage</span><span class="int-cat">File Storage</span></td><td>Storage</td><td>Private certificate bucket, signed URLs 1hr expiry</td><td><span class="badge live">✓ Live</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓ Ready</span></td><td>P1</td><td>Path traversal protection active</td></tr>
+        <tr data-status="partial"><td><span class="int-name">Supabase Realtime</span><span class="int-cat">Real-time</span></td><td>Real-time</td><td>Live compliance updates, notification bell</td><td><span class="badge partial">Partial</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge partial">Partial</span></td><td><span class="badge partial">In Progress</span></td><td>P1</td><td>Channels configured, UI partial</td></tr>
+        <tr data-status="live"><td><span class="int-name">GCP Cloud Run</span><span class="int-cat">Infrastructure</span></td><td>Hosting</td><td>App hosting — me-central1 Qatar, auto-scaling</td><td><span class="badge live">✓ Live</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓ Ready</span></td><td>P1</td><td>Deployed at hayyamed.pro</td></tr>
+        <tr data-status="live"><td><span class="int-name">GCP Cloud Build</span><span class="int-cat">CI/CD</span></td><td>DevOps</td><td>CI/CD pipeline from git push to production</td><td><span class="badge live">✓ Live</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓ Ready</span></td><td>P1</td><td>cloudbuild.yaml configured</td></tr>
+        <tr data-status="live"><td><span class="int-name">GCP Secret Manager</span><span class="int-cat">Security</span></td><td>Security</td><td>All 10 env secrets stored securely</td><td><span class="badge live">✓ Live</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓ Ready</span></td><td>P1</td><td>IAM configured</td></tr>
+        <tr data-status="live"><td><span class="int-name">GCP Cloud Scheduler</span><span class="int-cat">Automation</span></td><td>Cron</td><td>7 cron jobs: CME deadline, license, onboarding, digest, trial</td><td><span class="badge live">✓ Live</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓ Ready</span></td><td>P1</td><td>All 7 jobs ENABLED in GCP</td></tr>
+        <tr data-status="partial"><td><span class="int-name">Vertex AI (AnthropicVertex)</span><span class="int-cat">AI Platform</span></td><td>AI</td><td>Claude via GCP ADC — 8 AI routes, no API key</td><td><span class="badge live">✓ Live</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge partial">Enable in GCP</span></td><td>P1</td><td>Enable Vertex AI API + Model Garden + IAM role</td></tr>
+        <tr data-status="partial"><td><span class="int-name">Paddle</span><span class="int-cat">Payments</span></td><td>Billing</td><td>Subscription billing: Free/Pro/Employer plans</td><td><span class="badge live">Integrated</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge partial">Approval Pending</span></td><td>P1</td><td>Waiting for Paddle merchant account approval</td></tr>
+        <tr data-status="live"><td><span class="int-name">QPay</span><span class="int-cat">Payments</span></td><td>Billing</td><td>Qatar local payment gateway — invoices + admin view</td><td><span class="badge live">✓ Live</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓ Ready</span></td><td>P1</td><td>QPay invoices admin view live</td></tr>
+        <tr data-status="partial"><td><span class="int-name">Postmark</span><span class="int-cat">Email</span></td><td>Email</td><td>14 transactional email templates: welcome, alerts, digest</td><td><span class="badge live">Integrated</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge partial">Domain Pending</span></td><td>P1</td><td>Verify hayyamed.pro sending domain in Postmark</td></tr>
+        <tr data-status="live"><td><span class="int-name">PostHog</span><span class="int-cat">Analytics</span></td><td>Analytics</td><td>Product analytics, funnel tracking, DAU/WAU/MAU</td><td><span class="badge live">✓ Live</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓ Ready</span></td><td>P1</td><td>US region (fixed from EU in Session 48)</td></tr>
+        <tr data-status="live"><td><span class="int-name">Sentry</span><span class="int-cat">Monitoring</span></td><td>Monitoring</td><td>Error tracking + performance monitoring</td><td><span class="badge live">✓ Live</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓ Ready</span></td><td>P1</td><td>Tunnel via /monitoring route</td></tr>
+        <tr data-status="live"><td><span class="int-name">Web Push (VAPID)</span><span class="int-cat">Notifications</span></td><td>Mobile</td><td>Browser push notifications — iOS PWA + desktop</td><td><span class="badge live">✓ Live</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓ Ready</span></td><td>P1</td><td>Service worker registered</td></tr>
+        <tr data-status="partial"><td><span class="int-name">Upstash Redis</span><span class="int-cat">Rate Limiting</span></td><td>Security</td><td>Rate limiting — auth, AI, webhook endpoints</td><td><span class="badge partial">Partial</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge partial">Token Rotation</span></td><td>P1</td><td>⚠ Rotate Upstash REST token — security requirement</td></tr>
+        <tr data-status="live"><td><span class="int-name">React PDF</span><span class="int-cat">Reporting</span></td><td>Reports</td><td>PDF generation: individual CME + org compliance reports</td><td><span class="badge live">✓ Live</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓ Ready</span></td><td>P1</td><td>2 PDF templates live</td></tr>
+        <tr data-status="live"><td><span class="int-name">Framer Motion</span><span class="int-cat">Animation</span></td><td>UI</td><td>Animations — reduced-motion compliant</td><td><span class="badge live">✓ Live</span></td><td><span class="badge api">N/A</span></td><td><span class="badge api">N/A</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓ Ready</span></td><td>P1</td><td>prefers-reduced-motion respected</td></tr>
+        <tr data-status="removed"><td><span class="int-name">Anthropic Direct API</span><span class="int-cat">AI (Removed)</span></td><td>AI</td><td>REMOVED — replaced by Vertex AI in Session 48</td><td><span class="badge removed">Removed</span></td><td><span class="badge removed">✗</span></td><td><span class="badge removed">✗</span></td><td><span class="badge removed">✗</span></td><td><span class="badge removed">Not Used</span></td><td>—</td><td>No ANTHROPIC_API_KEY needed — GCP ADC handles auth</td></tr>
+        <tr data-status="planned"><td><span class="int-name">QCHP API</span><span class="int-cat">Authority</span></td><td>Regulatory</td><td>Direct QCHP portal integration — sync CPD records</td><td><span class="badge planned">Planned</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">Phase 2</span></td><td>P2</td><td>Requires QCHP partnership agreement</td></tr>
+        <tr data-status="planned"><td><span class="int-name">SCFHS MUMARIS+</span><span class="int-cat">Authority</span></td><td>Regulatory</td><td>Saudi CME portal sync — SCFHS professional records</td><td><span class="badge planned">Planned</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">Phase 2</span></td><td>P2</td><td>Requires SCFHS API access agreement</td></tr>
+        <tr data-status="planned"><td><span class="int-name">Twilio SMS</span><span class="int-cat">Notifications</span></td><td>Mobile</td><td>SMS alerts for critical license expiry events</td><td><span class="badge planned">Planned</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">Phase 2</span></td><td>P2</td><td>GCC primary communication channel</td></tr>
+        <tr data-status="planned"><td><span class="int-name">WhatsApp Business API</span><span class="int-cat">Notifications</span></td><td>Mobile</td><td>WhatsApp alerts — GCC preferred channel</td><td><span class="badge planned">Planned</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">Phase 2</span></td><td>P2</td><td>Meta Business verification required</td></tr>
+        <tr data-status="planned"><td><span class="int-name">Google OAuth</span><span class="int-cat">Auth</span></td><td>Auth</td><td>Social login — reduce registration friction</td><td><span class="badge planned">Planned</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">Phase 2</span></td><td>P2</td><td>Supabase OAuth provider config</td></tr>
+        <tr data-status="planned"><td><span class="int-name">next-intl (i18n)</span><span class="int-cat">Localization</span></td><td>i18n</td><td>Arabic/RTL localization — entire platform</td><td><span class="badge planned">Planned</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">Phase 2</span></td><td>P2</td><td>Critical for GCC addressable market</td></tr>
+        <tr data-status="planned"><td><span class="int-name">pgvector</span><span class="int-cat">AI / RAG</span></td><td>AI</td><td>Vector search for RAG pipeline — country rules</td><td><span class="badge planned">Planned</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">Phase 2</span></td><td>P2</td><td>Supabase vector extension available</td></tr>
+        <tr data-status="planned"><td><span class="int-name">MFA / WebAuthn</span><span class="int-cat">Security</span></td><td>Security</td><td>Multi-factor auth — hospital enterprise gate</td><td><span class="badge planned">Planned</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">Phase 2</span></td><td>P2</td><td>Supabase MFA API available</td></tr>
+        <tr data-status="planned"><td><span class="int-name">SAP SuccessFactors</span><span class="int-cat">Enterprise HRIS</span></td><td>Enterprise</td><td>Hospital HR system integration — staff compliance sync</td><td><span class="badge planned">Planned</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">Phase 3</span></td><td>P3</td><td>Required for HMC/Sidra enterprise sale</td></tr>
+        <tr data-status="planned"><td><span class="int-name">Oracle HCM</span><span class="int-cat">Enterprise HRIS</span></td><td>Enterprise</td><td>Alternative HRIS for hospital enterprise accounts</td><td><span class="badge planned">Planned</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">Phase 3</span></td><td>P3</td><td>Phase 3 enterprise sales enabler</td></tr>
+        <tr data-status="planned"><td><span class="int-name">Apple APNs</span><span class="int-cat">Mobile</span></td><td>Mobile</td><td>iOS native push notifications for React Native app</td><td><span class="badge planned">Planned</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">Phase 3</span></td><td>P3</td><td>Requires Apple Developer account + APNS key</td></tr>
+        <tr data-status="planned"><td><span class="int-name">Firebase FCM</span><span class="int-cat">Mobile</span></td><td>Mobile</td><td>Android native push for React Native app</td><td><span class="badge planned">Planned</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">Phase 3</span></td><td>P3</td><td>Firebase project setup required</td></tr>
+        <tr data-status="planned"><td><span class="int-name">Dataflow API</span><span class="int-cat">Verification</span></td><td>Regulatory</td><td>Primary source verification for credentials</td><td><span class="badge planned">Planned</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">✗</span></td><td><span class="badge planned">Phase 4</span></td><td>P4</td><td>Requires Dataflow API commercial agreement</td></tr>
+        <tr data-status="live"><td><span class="int-name">Calendar Export (.ics)</span><span class="int-cat">Productivity</span></td><td>Export</td><td>Export license expiry + CME dates to calendar</td><td><span class="badge live">✓ Live</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓ Ready</span></td><td>P1</td><td>GET /api/export/calendar</td></tr>
+        <tr data-status="live"><td><span class="int-name">Public Certificate Verify</span><span class="int-cat">Verification</span></td><td>Trust</td><td>Public /verify/[token] for employer/authority verification</td><td><span class="badge live">✓ Live</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓</span></td><td><span class="badge live">✓ Ready</span></td><td>P1</td><td>Copy-link button in dashboard</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>Hayya Med Pro — Integration Status Report</strong><br />
+  35 integrations assessed · 18 live · 4 pending · 12 planned · 1 removed<br />
+  Prepared by: Abbas Al Masri, Founder &amp; CEO, Hayya Med AI · June 14, 2026
+</div>
+
+<script>
+function filterTable(status, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const rows = document.querySelectorAll('#intTable tbody tr');
+  rows.forEach(r => {
+    if (status === 'all') { r.style.display = ''; return; }
+    const s = r.getAttribute('data-status');
+    r.style.display = (s === status || (status === 'partial' && s === 'partial')) ? '' : 'none';
+  });
+}
+
+function exportCSV() {
+  const rows = [['Integration','Category','Purpose','Status','API Ready','DB Ready','Frontend Ready','Production Ready','Phase','Notes']];
+  document.querySelectorAll('#intTable tbody tr').forEach(r => {
+    const cells = r.querySelectorAll('td');
+    rows.push([
+      cells[0].querySelector('.int-name').textContent,
+      cells[1].textContent.trim(),
+      cells[2].textContent.trim(),
+      cells[3].textContent.trim(),
+      cells[4].textContent.trim(),
+      cells[5].textContent.trim(),
+      cells[6].textContent.trim(),
+      cells[7].textContent.trim(),
+      cells[8].textContent.trim(),
+      cells[9].textContent.trim()
+    ]);
+  });
+  const csv = rows.map(r => r.map(c => '"' + c.replace(/"/g,'""') + '"').join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = 'HayyaMedPro_Integration_Status.csv';
+  a.click();
+}
+</script>
+</body>
+</html>

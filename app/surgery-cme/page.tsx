@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -127,6 +128,12 @@ export default function SurgeryCmePage() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Surgery CME", url: "https://hayyamed.pro/surgery-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Surgery CME Requirements in GCC"
+        url="https://hayyamed.pro/surgery-cme"
+        description="Complete CME guide for surgeons in Qatar, Saudi Arabia, UAE, Kuwait, Bahrain, and Oman."
+        keywords={["surgery CME GCC", "surgeon CME requirements Qatar", "QCHP surgery CPD", "SCFHS surgeon CME", "GCC surgeon license renewal"]}
+      />
 
       <div className="min-h-screen bg-[#f8fafc]">
         <header className="bg-white border-b border-[#e2e8f0]">

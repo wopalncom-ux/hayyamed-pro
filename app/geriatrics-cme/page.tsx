@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -88,6 +89,12 @@ export default function GeriatricsCmePage() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Geriatrics CME", url: "https://hayyamed.pro/geriatrics-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Geriatrics CME"
+        url="https://hayyamed.pro/geriatrics-cme"
+        description="CME and CPD requirements for geriatricians and elderly care specialists in GCC. QCHP Qatar 80 CPD/2yr, SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. Track geriatrics CME across all 7 GCC authorities."
+        keywords={["geriatrics CME requirements GCC", "geriatrician CME Saudi Arabia", "SCFHS geriatrics CME", "QCHP geriatrician CPD", "elderly care CME GCC", "geriatrics CPD Qatar"]}
+      />
       <div className="min-h-screen bg-[#f8fafc]">
         <header className="bg-white border-b border-[#e2e8f0]">
           <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">

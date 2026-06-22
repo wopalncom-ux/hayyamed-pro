@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -124,6 +125,12 @@ export default function SportsMedicineCmePage() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Sports Medicine CME", url: "https://hayyamed.pro/sports-medicine-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Sports Medicine CME"
+        url="https://hayyamed.pro/sports-medicine-cme"
+        description="CME and CPD requirements for sports medicine physicians in GCC. QCHP Qatar 80 CPD/2yr, SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. Track sports medicine CME across all 7 GCC licensing authorities."
+        keywords={["sports medicine CME requirements GCC", "sports physician CME Saudi Arabia", "SCFHS sports medicine CME", "QCHP sports medicine CPD", "sports medicine CPD Qatar", "sports medicine CME tracker"]}
+      />
 
       <div className="min-h-screen bg-[#f8fafc]">
         <header className="bg-white border-b border-[#e2e8f0]">

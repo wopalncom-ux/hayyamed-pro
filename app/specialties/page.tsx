@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -107,6 +108,12 @@ export default function SpecialtiesPage() {
           { name: "Home", url: APP_URL },
           { name: "CME by Specialty", url: `${APP_URL}/specialties` },
         ]}
+      />
+      <MedicalWebPageJsonLd
+        name="CME Requirements by Medical Specialty — GCC"
+        url={`${APP_URL}/specialties`}
+        description="CME and CPD requirements for every medical specialty in the GCC — Cardiology, Surgery, Neurology, Pediatrics, Nursing, Pharmacy, and 40+ more. Track credits across QCHP, SCFHS, DHA, DOH, NHRA, and OMSB."
+        keywords={["CME requirements by specialty", "medical specialty CME GCC", "CPD requirements specialties Qatar", "QCHP CME specialty requirements", "SCFHS specialty CME", "GCC medical specialty CME tracker"]}
       />
 
       {/* Header */}

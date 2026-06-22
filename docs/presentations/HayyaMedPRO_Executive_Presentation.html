@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hayya Med Pro — Executive Presentation</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0f1e; color: white; overflow: hidden; height: 100vh; }
+  .slideshow { width: 100vw; height: 100vh; position: relative; }
+  .slide { position: absolute; inset: 0; display: none; overflow: hidden; }
+  .slide.active { display: flex; flex-direction: column; }
+  .controls { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; align-items: center; z-index: 100; background: rgba(0,0,0,.5); backdrop-filter: blur(8px); padding: 10px 20px; border-radius: 999px; border: 1px solid rgba(255,255,255,.15); }
+  .ctrl-btn { background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25); color: white; padding: 8px 20px; border-radius: 999px; cursor: pointer; font-size: 13px; font-weight: 700; transition: background .15s; }
+  .ctrl-btn:hover { background: rgba(255,255,255,.25); }
+  .slide-counter { font-size: 12px; color: #94a3b8; min-width: 60px; text-align: center; }
+  .print-all { position: fixed; top: 16px; right: 16px; z-index: 100; background: #1a56a0; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; }
+  /* Dark slide base */
+  .dark { background: #0f1f3d; }
+  .mid { background: linear-gradient(135deg,#0f1f3d 0%,#1a3a6b 100%); }
+  .blue { background: linear-gradient(135deg,#1a56a0 0%,#2563eb 100%); }
+  .teal { background: linear-gradient(135deg,#0891b2 0%,#0e7490 100%); }
+  .purple { background: linear-gradient(135deg,#7c3aed 0%,#6d28d9 100%); }
+  .green { background: linear-gradient(135deg,#059669 0%,#047857 100%); }
+  .light { background: #f8fafc; color: #111; }
+  .slide-inner { flex: 1; display: flex; flex-direction: column; padding: 56px; max-width: 1200px; margin: 0 auto; width: 100%; justify-content: center; }
+  .slide-num { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; opacity: .4; margin-bottom: 20px; }
+  h1 { font-size: 56px; font-weight: 900; line-height: 1.05; margin-bottom: 20px; }
+  h1 .accent { color: #60a5fa; }
+  .slide-subtitle { font-size: 20px; opacity: .7; line-height: 1.5; max-width: 620px; margin-bottom: 36px; }
+  h2.slide-h2 { font-size: 36px; font-weight: 900; margin-bottom: 16px; }
+  h2.slide-h2 .accent { color: #60a5fa; }
+  .light h2.slide-h2 { color: #0f1f3d; }
+  .light h2.slide-h2 .accent { color: #1a56a0; }
+  .tag { display: inline-block; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25); border-radius: 999px; padding: 5px 16px; font-size: 12px; font-weight: 700; letter-spacing: .04em; margin-bottom: 20px; }
+  .light .tag { background: #eff6ff; color: #1e40af; border-color: #bfdbfe; }
+  .chips-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+  .chip { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); border-radius: 10px; padding: 10px 20px; text-align: center; }
+  .chip strong { display: block; font-size: 28px; font-weight: 900; }
+  .chip span { font-size: 11px; opacity: .65; font-weight: 600; }
+  .light .chip { background: #f8fafc; border-color: #e2e8f0; color: #0f1f3d; }
+  .two-col-slide { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; width: 100%; }
+  .col-card { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); border-radius: 14px; padding: 24px; }
+  .light .col-card { background: white; border-color: #e2e8f0; color: #374151; }
+  .col-card h3 { font-size: 14px; font-weight: 800; margin-bottom: 14px; opacity: .7; text-transform: uppercase; letter-spacing: .05em; }
+  .col-card ul { list-style: none; }
+  .col-card ul li { font-size: 13px; margin-bottom: 8px; opacity: .85; line-height: 1.4; }
+  .col-card ul li::before { content: "→ "; opacity: .5; }
+  .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 24px; }
+  .stat-box { background: rgba(255,255,255,.1); border-radius: 12px; padding: 18px; text-align: center; }
+  .stat-box .val { font-size: 40px; font-weight: 900; }
+  .stat-box .lbl { font-size: 11px; opacity: .55; font-weight: 700; text-transform: uppercase; margin-top: 4px; }
+  .light .stat-box { background: #eff6ff; border: 1px solid #bfdbfe; }
+  .light .stat-box .val { color: #1a56a0; }
+  .light .stat-box .lbl { color: #64748b; }
+  .moat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 20px; }
+  .moat-card { background: rgba(255,255,255,.08); border-left: 4px solid rgba(255,255,255,.4); border-radius: 0 10px 10px 0; padding: 14px 18px; }
+  .moat-card h4 { font-size: 13px; font-weight: 800; margin-bottom: 5px; }
+  .moat-card p { font-size: 12px; opacity: .7; line-height: 1.45; }
+  table.sl-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 20px; }
+  table.sl-table th { background: rgba(255,255,255,.15); padding: 9px 12px; text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase; }
+  table.sl-table td { padding: 9px 12px; border-bottom: 1px solid rgba(255,255,255,.08); opacity: .85; }
+  .light table.sl-table th { background: #f8fafc; color: #64748b; }
+  .light table.sl-table td { border-bottom-color: #f1f5f9; color: #374151; opacity: 1; }
+  .revenue-funnel { margin-top: 20px; }
+  .funnel-row { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
+  .funnel-label { font-size: 13px; font-weight: 700; width: 200px; flex-shrink: 0; }
+  .funnel-bar { height: 32px; border-radius: 8px; display: flex; align-items: center; padding-left: 14px; font-size: 12px; font-weight: 700; color: white; }
+  .phase-timeline { margin-top: 20px; }
+  .pt-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .pt-label { font-size: 12px; font-weight: 700; width: 70px; flex-shrink: 0; opacity: .7; }
+  .pt-bar { height: 26px; border-radius: 7px; display: flex; align-items: center; padding: 0 12px; font-size: 11px; font-weight: 700; color: white; white-space: nowrap; }
+  .sig-slide { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; height: 100%; }
+  .sig-logo { width: 72px; height: 72px; background: #1a56a0; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 32px; margin: 0 auto 28px; }
+  .sig-name { font-size: 40px; font-weight: 900; margin-bottom: 8px; }
+  .sig-title { font-size: 18px; opacity: .6; margin-bottom: 4px; }
+  .sig-company { font-size: 20px; color: #60a5fa; font-weight: 700; margin-bottom: 24px; }
+  .sig-divider { width: 80px; height: 2px; background: rgba(255,255,255,.2); margin: 24px auto; }
+  .sig-disclaimer { font-size: 12px; opacity: .4; max-width: 520px; line-height: 1.6; }
+  @media print {
+    body { overflow: visible; height: auto; background: white; color: #111; }
+    .slideshow { height: auto; }
+    .slide { position: static; display: flex !important; page-break-after: always; height: 100vh; }
+    .controls, .print-all { display: none; }
+    .dark, .mid, .blue, .teal, .purple, .green { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<button class="print-all" onclick="window.print()">🖨 Print All 22 Slides</button>
+
+<div class="slideshow" id="ss">
+
+  <!-- SLIDE 1: Cover -->
+  <div class="slide dark active">
+    <div class="slide-inner" style="justify-content:center;">
+      <div class="slide-num">01 / 22</div>
+      <div class="tag">Investor Briefing · June 2026 · Confidential</div>
+      <h1>Hayya Med<br /><span class="accent">Pro</span></h1>
+      <div class="slide-subtitle">AI-Powered Healthcare Compliance Platform for GCC Healthcare Professionals</div>
+      <div class="chips-row">
+        <div class="chip"><strong>Live</strong><span>hayyamed.pro</span></div>
+        <div class="chip"><strong>Qatar 🇶🇦</strong><span>Registered</span></div>
+        <div class="chip"><strong>Phase 1</strong><span>83% Complete</span></div>
+        <div class="chip"><strong>GCC → Global</strong><span>Expansion</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: Vision -->
+  <div class="slide mid">
+    <div class="slide-inner">
+      <div class="slide-num">02 / 22</div>
+      <div class="tag">Vision</div>
+      <h2 class="slide-h2">Become the operating system for <span class="accent">healthcare professional compliance</span> — GCC, MENA, and global</h2>
+      <div class="slide-subtitle" style="max-width:700px;">From fragmented, manual, authority-specific compliance → to one AI-powered platform that tracks, predicts, and automates compliance for every licensed healthcare professional, wherever they practice.</div>
+      <div class="chips-row">
+        <div class="chip"><strong>Qatar</strong><span>Phase 1 — Live</span></div>
+        <div class="chip"><strong>Saudi + UAE</strong><span>Phase 2</span></div>
+        <div class="chip"><strong>Full MENA</strong><span>Phase 4</span></div>
+        <div class="chip"><strong>Global</strong><span>Phase 5</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: Problem -->
+  <div class="slide dark">
+    <div class="slide-inner">
+      <div class="slide-num">03 / 22</div>
+      <div class="tag">The Problem</div>
+      <h2 class="slide-h2">700,000+ GCC professionals. <span class="accent">Zero unified compliance tracking.</span></h2>
+      <div class="two-col-slide" style="margin-top:24px;">
+        <div class="col-card">
+          <h3>What Goes Wrong Today</h3>
+          <ul>
+            <li>Track CME in spreadsheets (or not at all)</li>
+            <li>7 different authorities, incompatible portals</li>
+            <li>License lapses discovered months after deadline</li>
+            <li>Employers: zero real-time workforce compliance view</li>
+            <li>Hospitals fail JCI audits due to CME gaps</li>
+            <li>Locum doctors with 3–4 GCC licenses: no tool</li>
+          </ul>
+        </div>
+        <div class="col-card">
+          <h3>The Cost</h3>
+          <ul>
+            <li>Suspended license = lost income for professional</li>
+            <li>Non-compliant staff = failed accreditation for hospital</li>
+            <li>Manual HR tracking = 100s of hours/year wasted</li>
+            <li>Missed renewal = repeat exam fees + paperwork</li>
+            <li>AI potential = completely untapped in this space</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: Solution -->
+  <div class="slide blue">
+    <div class="slide-inner">
+      <div class="slide-num">04 / 22</div>
+      <div class="tag">Our Solution</div>
+      <h2 class="slide-h2">One platform. Every GCC authority. <span class="accent">Powered by Claude AI.</span></h2>
+      <div class="two-col-slide" style="margin-top:24px;">
+        <div class="col-card">
+          <h3>For Professionals</h3>
+          <ul>
+            <li>Track CME/CPD across all 7 GCC authorities</li>
+            <li>AI reads certificates — photo it, done</li>
+            <li>Multi-license wallet (QCHP + SCFHS + DHA)</li>
+            <li>Automated 90/60/30/14/7 day license alerts</li>
+            <li>PDF compliance report — primary Free→Pro driver</li>
+          </ul>
+        </div>
+        <div class="col-card">
+          <h3>For Employers &amp; Hospitals</h3>
+          <ul>
+            <li>Real-time staff compliance grid</li>
+            <li>Bulk import + invite link system</li>
+            <li>JCI/CBAHI audit-ready compliance reports</li>
+            <li>AI workforce risk analysis</li>
+            <li>Required training assignment + tracking</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: Platform Stats -->
+  <div class="slide light">
+    <div class="slide-inner">
+      <div class="slide-num">05 / 22</div>
+      <div class="tag">Build Statistics — Codebase Scan · June 14, 2026</div>
+      <h2 class="slide-h2">Live platform. <span class="accent">Verified by audit.</span></h2>
+      <div class="stat-row">
+        <div class="stat-box"><div class="val">176</div><div class="lbl">Pages</div></div>
+        <div class="stat-box"><div class="val">62</div><div class="lbl">API Routes</div></div>
+        <div class="stat-box"><div class="val">106</div><div class="lbl">Components</div></div>
+        <div class="stat-box"><div class="val">33</div><div class="lbl">DB Migrations</div></div>
+        <div class="stat-box"><div class="val">30</div><div class="lbl">DB Tables</div></div>
+        <div class="stat-box"><div class="val">28</div><div class="lbl">RLS Policies</div></div>
+        <div class="stat-box"><div class="val">8</div><div class="lbl">AI Modules</div></div>
+        <div class="stat-box"><div class="val">7</div><div class="lbl">Cron Jobs</div></div>
+        <div class="stat-box"><div class="val">40</div><div class="lbl">Specialty Pages</div></div>
+        <div class="stat-box"><div class="val">18</div><div class="lbl">Blog Posts</div></div>
+        <div class="stat-box"><div class="val">73</div><div class="lbl">Git Commits</div></div>
+        <div class="stat-box"><div class="val">83%</div><div class="lbl">Phase 1</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: AI Ecosystem -->
+  <div class="slide dark">
+    <div class="slide-inner">
+      <div class="slide-num">06 / 22</div>
+      <div class="tag">AI Ecosystem — Google Cloud Vertex AI</div>
+      <h2 class="slide-h2">8 live AI modules. <span class="accent">Zero API key.</span> GCP ADC.</h2>
+      <table class="sl-table" style="margin-top:20px;">
+        <tr><th>Module</th><th>Model</th><th>Capability</th><th>Tier Gate</th></tr>
+        <tr><td>Certificate OCR</td><td>Claude Sonnet 4.6 Vision</td><td>Photo → credits in 8 seconds, Arabic + English</td><td>Pro+</td></tr>
+        <tr><td>Compliance Chat</td><td>Claude Haiku 4.5 (streaming)</td><td>24/7 GCC compliance advisor chatbot</td><td>Pro+</td></tr>
+        <tr><td>Gap Analysis</td><td>Claude Sonnet 4.6</td><td>Missing credits by category + action plan</td><td>Pro+</td></tr>
+        <tr><td>Renewal Prediction</td><td>Claude Sonnet 4.6</td><td>60-day compliance forecast per license</td><td>Admin</td></tr>
+        <tr><td>Employer Analyzer</td><td>Claude Sonnet 4.6</td><td>Workforce risk heat map for employers</td><td>Employer+</td></tr>
+        <tr><td>Provider Analyzer</td><td>Claude Sonnet 4.6</td><td>Course ROI analysis for training providers</td><td>Provider+</td></tr>
+        <tr><td>Voice Chat</td><td>Claude Haiku 4.5</td><td>Spoken compliance questions via voice orb UI</td><td>Pro+</td></tr>
+        <tr><td>Activity Categorizer</td><td>Claude Haiku 4.5</td><td>Auto-classify CME activity type from description</td><td>Pro+</td></tr>
+      </table>
+      <div style="font-size:11px;opacity:.45;margin-top:12px;">All AI: anonymized (professional_id only, no PII) · Zod-validated outputs · Fallback to rule-based if unavailable · All calls logged</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: Compliance Engine -->
+  <div class="slide teal">
+    <div class="slide-inner">
+      <div class="slide-num">07 / 22</div>
+      <div class="tag">The Platform Moat</div>
+      <h2 class="slide-h2">The <span class="accent">GCC Rules Engine</span> — 12–18 months to replicate</h2>
+      <div class="moat-grid" style="margin-top:24px;">
+        <div class="moat-card">
+          <h4>7 GCC Authorities Configured</h4>
+          <p>QCHP, SCFHS, DHA, DOH, MOH Kuwait, NHRA, OMSB — all credit targets, category caps, accreditors, cycles — in the database, not in code.</p>
+        </div>
+        <div class="moat-card">
+          <h4>Multi-Country Wallet</h4>
+          <p>One login → compliance across QCHP + SCFHS + DHA simultaneously. No competitor offers multi-jurisdiction tracking.</p>
+        </div>
+        <div class="moat-card">
+          <h4>Admin Panel Config</h4>
+          <p>Admin adds a new country → rules live immediately for all users. Zero code deployment needed. Adding Saudi Arabia is a form, not a sprint.</p>
+        </div>
+        <div class="moat-card">
+          <h4>Auto-Computed by Trigger</h4>
+          <p>compliance_status recomputed by Postgres trigger on every activity verification. Always accurate. No batch jobs. No stale data.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: CME Tracking -->
+  <div class="slide light">
+    <div class="slide-inner">
+      <div class="slide-num">08 / 22</div>
+      <div class="tag">CME &amp; CPD Management — Complete Feature Set</div>
+      <h2 class="slide-h2" style="color:#0f1f3d;">Everything a professional needs. <span class="accent" style="color:#1a56a0;">In one place.</span></h2>
+      <div class="two-col-slide" style="margin-top:20px;">
+        <div class="col-card">
+          <h3>Add Activity</h3>
+          <ul style="color:#374151;">
+            <li>Upload certificate → AI reads it → form auto-filled</li>
+            <li>Manual entry for non-digital certificates</li>
+            <li>Offline queue — synced when back online</li>
+            <li>Bulk CSV import for historical records</li>
+            <li>Admin verification workflow</li>
+          </ul>
+        </div>
+        <div class="col-card">
+          <h3>Track &amp; Export</h3>
+          <ul style="color:#374151;">
+            <li>Compliance ring with real-time % progress</li>
+            <li>Multi-country wallets side by side</li>
+            <li>PDF compliance report (paywall = conversion driver)</li>
+            <li>CSV data export</li>
+            <li>.ics calendar export (license dates)</li>
+            <li>Public certificate verification URL</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: Employer Dashboard -->
+  <div class="slide mid">
+    <div class="slide-inner">
+      <div class="slide-num">09 / 22</div>
+      <div class="tag">Employer &amp; Hospital Value Proposition</div>
+      <h2 class="slide-h2">Real-time staff compliance. <span class="accent">JCI-audit ready.</span></h2>
+      <div class="chips-row" style="margin-bottom:24px;">
+        <div class="chip"><strong>Real-time</strong><span>Staff grid</span></div>
+        <div class="chip"><strong>CSV import</strong><span>500+ staff</span></div>
+        <div class="chip"><strong>PDF report</strong><span>On demand</span></div>
+        <div class="chip"><strong>AI analysis</strong><span>Risk heat map</span></div>
+        <div class="chip"><strong>Required training</strong><span>Assignment</span></div>
+      </div>
+      <div class="two-col-slide">
+        <div class="col-card">
+          <h3>What Employers Get</h3>
+          <ul>
+            <li>Staff compliance grid — compliant / at-risk / lapsed</li>
+            <li>Department compliance breakdown</li>
+            <li>One-click bulk reminder to at-risk staff</li>
+            <li>AI workforce risk analysis (Claude Sonnet)</li>
+            <li>Required course assignment + completion tracking</li>
+            <li>Organization compliance PDF for JCI/CBAHI</li>
+          </ul>
+        </div>
+        <div class="col-card">
+          <h3>Hospital Procurement Proof Points</h3>
+          <ul>
+            <li>JCI/CBAHI audit readiness on demand</li>
+            <li>Replace 100s of hours of manual HR tracking</li>
+            <li>Automated alerts replace manual follow-up</li>
+            <li>HRIS integration (Phase 3 — SAP/Oracle)</li>
+            <li>Enterprise SSO (Phase 3 — SAML)</li>
+            <li>SOC 2 certification (Phase 3)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: Mobile -->
+  <div class="slide dark">
+    <div class="slide-inner">
+      <div class="slide-num">10 / 22</div>
+      <div class="tag">Mobile Strategy — 4-Gate Framework</div>
+      <h2 class="slide-h2">Web → PWA → <span class="accent">React Native</span> → Native</h2>
+      <table class="sl-table" style="margin-top:20px;">
+        <tr><th>Gate</th><th>Status</th><th>Capability</th></tr>
+        <tr><td>Web (Desktop + Mobile Browser)</td><td>✅ Live</td><td>Full responsive — 176 pages</td></tr>
+        <tr><td>PWA (installable)</td><td>✅ Live</td><td>Offline CME queue + Web Push + install prompt</td></tr>
+        <tr><td>React Native / Expo</td><td>🔴 Phase 3</td><td>API-first (Bearer tokens throughout) — ready to build</td></tr>
+        <tr><td>iOS App Store</td><td>🔴 Phase 3</td><td>Medical category · APNs · Keychain · Face ID · Reader exemption (no in-app purchase)</td></tr>
+        <tr><td>Google Play</td><td>🔴 Phase 3</td><td>FCM · Keystore · Google Biometric · data safety section</td></tr>
+      </table>
+      <div style="background:rgba(255,255,255,.08);border-radius:10px;padding:14px 18px;margin-top:16px;font-size:13px;">
+        <strong>Critical decisions already made:</strong> Bearer tokens throughout (mobile-safe from Day 1) · No in-app subscription (Apple 30% avoided) · Offline CME queue already live · API-first design throughout
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 11: Revenue Model -->
+  <div class="slide blue">
+    <div class="slide-inner">
+      <div class="slide-num">11 / 22</div>
+      <div class="tag">Revenue Model — 7 Streams</div>
+      <h2 class="slide-h2">Multiple revenue paths. <span class="accent">Enterprise pipeline built in.</span></h2>
+      <div class="revenue-funnel">
+        <div class="funnel-row"><div class="funnel-label">Individual Pro ($149/yr)</div><div class="funnel-bar" style="width:85%;background:rgba(255,255,255,.25);">700K professionals × $149 × 15% = $15.6M ARR SAM</div></div>
+        <div class="funnel-row"><div class="funnel-label">Employer ($299/mo)</div><div class="funnel-bar" style="width:65%;background:rgba(255,255,255,.2);">5,000 employers × $3,600/yr = $18M ARR SAM</div></div>
+        <div class="funnel-row"><div class="funnel-label">University ($999/mo)</div><div class="funnel-bar" style="width:45%;background:rgba(255,255,255,.15);">Medical schools + faculty CME programs</div></div>
+        <div class="funnel-row"><div class="funnel-label">Government (white-label)</div><div class="funnel-bar" style="width:35%;background:rgba(255,255,255,.12);">QCHP / SCFHS $200K–$500K/yr</div></div>
+        <div class="funnel-row"><div class="funnel-label">Marketplace (15% comm.)</div><div class="funnel-bar" style="width:30%;background:rgba(255,255,255,.1);">CME course revenue share</div></div>
+        <div class="funnel-row"><div class="funnel-label">Pharma sponsorship</div><div class="funnel-bar" style="width:25%;background:rgba(255,255,255,.08);">$10K–$100K per sponsored CME program</div></div>
+        <div class="funnel-row"><div class="funnel-label">Enterprise API</div><div class="funnel-bar" style="width:20%;background:rgba(255,255,255,.06);">$2K–$20K/yr HRIS integration</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 12: Conversion Architecture -->
+  <div class="slide light">
+    <div class="slide-inner">
+      <div class="slide-num">12 / 22</div>
+      <div class="tag">Conversion Architecture — PLG</div>
+      <h2 class="slide-h2" style="color:#0f1f3d;">Deliberate <span class="accent" style="color:#1a56a0;">Free → Paid</span> conversion system</h2>
+      <table class="sl-table" style="margin-top:20px;">
+        <tr><th>Conversion</th><th>Trigger</th><th>Mechanism</th></tr>
+        <tr><td><strong>Free → Pro</strong></td><td>Download PDF Report</td><td>Primary driver. Free user hits Download → upgrade wall → /pricing</td></tr>
+        <tr><td><strong>Pro → Premium</strong></td><td>Second country / license</td><td>Multi-country wallet limit hit</td></tr>
+        <tr><td><strong>Pro → Employer</strong></td><td>"Invite your team" teaser</td><td>Visible in dashboard for solo Pro users</td></tr>
+        <tr><td><strong>Employer → Hospital</strong></td><td>"48 staff — upgrade"</td><td>Per-seat expansion prompt</td></tr>
+        <tr><td><strong>Hospital → Gov</strong></td><td>Licensing conversation</td><td>White-label pitch at 1,000+ staff threshold</td></tr>
+      </table>
+      <div style="background:#eff6ff;border-radius:10px;padding:14px 18px;margin-top:16px;font-size:13px;color:#1e40af;border:1px solid #bfdbfe;">
+        <strong>Non-negotiable:</strong> Free tier limits enforced server-side (planLimits.ts) — never client-side only. No bypass possible.
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 13: Market -->
+  <div class="slide mid">
+    <div class="slide-inner">
+      <div class="slide-num">13 / 22</div>
+      <div class="tag">Market Opportunity</div>
+      <h2 class="slide-h2"><span class="accent">$35M+ ARR</span> GCC TAM. <span class="accent">$150M+</span> MENA.</h2>
+      <div class="two-col-slide" style="margin-top:20px;">
+        <div class="col-card">
+          <h3>GCC Healthcare Workforce</h3>
+          <ul>
+            <li>~180,000 licensed physicians</li>
+            <li>~250,000 nurses</li>
+            <li>~120,000 allied health professionals</li>
+            <li>~80,000 pharmacists</li>
+            <li>~70,000 dentists</li>
+            <li>~5,000+ healthcare employer organizations</li>
+            <li>All require annual CME/CPD for license renewal</li>
+          </ul>
+        </div>
+        <div class="col-card">
+          <h3>Why Now</h3>
+          <ul>
+            <li>Saudi Vision 2030 — healthcare workforce tripling</li>
+            <li>Qatar NHS partnership — international CME standards</li>
+            <li>UAE Health 2071 — digital health mandate</li>
+            <li>QCHP, SCFHS tightening renewal enforcement</li>
+            <li>JCI/CBAHI expanding hospital accreditation</li>
+            <li>Zero GCC-native compliance platform exists today</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 14: Competitive Moat -->
+  <div class="slide dark">
+    <div class="slide-inner">
+      <div class="slide-num">14 / 22</div>
+      <div class="tag">Competitive Advantage</div>
+      <h2 class="slide-h2">What competitors offer vs. <span class="accent">what we built</span></h2>
+      <table class="sl-table" style="margin-top:20px;">
+        <tr><th>Feature</th><th>CE-go / Medscape CME</th><th>Hayya Med Pro</th></tr>
+        <tr><td>GCC-specific authority rules</td><td>✗ US/UK only</td><td>✅ All 7 GCC authorities</td></tr>
+        <tr><td>Multi-authority tracking</td><td>✗ Single authority</td><td>✅ QCHP + SCFHS + DHA in one wallet</td></tr>
+        <tr><td>AI certificate reader</td><td>✗</td><td>✅ Claude Vision — photo → credits in 8 sec</td></tr>
+        <tr><td>Arabic language</td><td>✗</td><td>🟡 Phase 2 (framework ready)</td></tr>
+        <tr><td>Employer compliance dashboard</td><td>✗</td><td>✅ Complete with PDF + AI analysis</td></tr>
+        <tr><td>GCC data residency</td><td>✗ US data centers</td><td>✅ me-central1 Doha, Qatar</td></tr>
+        <tr><td>Government white-label potential</td><td>✗</td><td>✅ Rules engine architecture enables it</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- SLIDE 15: Tech Stack -->
+  <div class="slide light">
+    <div class="slide-inner">
+      <div class="slide-num">15 / 22</div>
+      <div class="tag">Technology Architecture</div>
+      <h2 class="slide-h2" style="color:#0f1f3d;">Enterprise-grade from <span class="accent" style="color:#1a56a0;">Day 1.</span></h2>
+      <div class="two-col-slide" style="margin-top:20px;">
+        <div class="col-card">
+          <h3>Core Stack</h3>
+          <ul style="color:#374151;">
+            <li>Next.js 16.2.6 App Router · React 19 · TypeScript strict</li>
+            <li>Supabase (Auth + Postgres + Storage + Realtime)</li>
+            <li>GCP Cloud Run — me-central1 Qatar (auto-scaling)</li>
+            <li>GCP Cloud Build (CI/CD) + Secret Manager</li>
+            <li>Google Cloud Vertex AI (Claude Sonnet 4.6)</li>
+            <li>Paddle + QPay (payments)</li>
+            <li>Postmark (email) + VAPID (push)</li>
+          </ul>
+        </div>
+        <div class="col-card">
+          <h3>Security &amp; Observability</h3>
+          <ul style="color:#374151;">
+            <li>RLS on every table — 28 policies, 0 exceptions</li>
+            <li>Every API route: supabase.auth.getUser() first</li>
+            <li>Upstash Redis rate limiting (auth + AI + webhooks)</li>
+            <li>Sentry — error tracking + performance</li>
+            <li>PostHog — product analytics, DAU/WAU/MAU</li>
+            <li>Audit logs — append-only, 7-year retention</li>
+            <li>Certificate storage — private bucket, signed URLs only</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 16: Roadmap -->
+  <div class="slide mid">
+    <div class="slide-inner">
+      <div class="slide-num">16 / 22</div>
+      <div class="tag">5-Phase Roadmap</div>
+      <h2 class="slide-h2">Qatar → GCC → MENA → <span class="accent">Global</span></h2>
+      <div class="phase-timeline" style="margin-top:20px;">
+        <div class="pt-row"><div class="pt-label">Phase 1</div><div class="pt-bar" style="width:55%;background:#1a56a0;">Foundation &amp; GTM · Q2–Q3 2026 · $150K ARR · 83% Done</div></div>
+        <div class="pt-row"><div class="pt-label">Phase 2</div><div class="pt-bar" style="width:65%;background:#0891b2;margin-left:8%;">GCC Expansion · Q3 2026–Q1 2027 · $800K ARR · Arabic + Saudi</div></div>
+        <div class="pt-row"><div class="pt-label">Phase 3</div><div class="pt-bar" style="width:55%;background:#7c3aed;margin-left:20%;">Mobile &amp; Enterprise · Q1–Q3 2027 · $3M ARR · React Native + Hospital</div></div>
+        <div class="pt-row"><div class="pt-label">Phase 4</div><div class="pt-bar" style="width:50%;background:#059669;margin-left:36%;">MENA Scale + Gov · Q3 2027–Q2 2028 · $12M ARR · Series A</div></div>
+        <div class="pt-row"><div class="pt-label">Phase 5</div><div class="pt-bar" style="width:40%;background:#dc2626;margin-left:54%;">Global · Q2 2028–Q2 2029 · $50M+ · UK + India + M&amp;A</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 17: Next 90 Days -->
+  <div class="slide dark">
+    <div class="slide-inner">
+      <div class="slide-num">17 / 22</div>
+      <div class="tag">Next 90 Days — Critical Path to Revenue</div>
+      <h2 class="slide-h2">Go-live → <span class="accent">first 50 Pro subscribers → first employer account</span></h2>
+      <div class="two-col-slide" style="margin-top:20px;">
+        <div class="col-card">
+          <h3>Week 1–2: Go-Live</h3>
+          <ul>
+            <li>Paddle billing account approved</li>
+            <li>Postmark sending domain verified</li>
+            <li>Vertex AI API enabled + IAM role granted</li>
+            <li>Upstash Redis token rotated</li>
+            <li>COMING_SOON=false deployed</li>
+            <li>VAPT security scan completed</li>
+          </ul>
+        </div>
+        <div class="col-card">
+          <h3>Month 2–3: Growth</h3>
+          <ul>
+            <li>LinkedIn outreach — Qatar physician community</li>
+            <li>QCHP annual conference sponsorship inquiry</li>
+            <li>10 hospital demo conversations targeted</li>
+            <li>WhatsApp Business API (GCC primary channel)</li>
+            <li>Arabic homepage hero + pricing page</li>
+            <li>MFA implementation (enterprise gate)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 18: Investment Ask -->
+  <div class="slide blue">
+    <div class="slide-inner">
+      <div class="slide-num">18 / 22</div>
+      <div class="tag">Investment Opportunity</div>
+      <h2 class="slide-h2">Founder-funded to <span class="accent">83% complete.</span> Investment unlocks scale.</h2>
+      <div class="two-col-slide" style="margin-top:20px;">
+        <div class="col-card">
+          <h3>What's Been Built (No External Funding)</h3>
+          <ul>
+            <li>Full production platform — live at hayyamed.pro</li>
+            <li>176 pages · 62 API routes · 106 components</li>
+            <li>30-table database · 33 migrations · 28 RLS policies</li>
+            <li>8 AI modules on Google Cloud Vertex AI</li>
+            <li>7 cron automations · 7 GCP secrets configured</li>
+            <li>40 specialty CME pages · 18 SEO blog posts</li>
+            <li>Complete employer + provider + admin portals</li>
+          </ul>
+        </div>
+        <div class="col-card">
+          <h3>What Investment Unlocks</h3>
+          <ul>
+            <li>Arabic/RTL localization — 70% of GCC TAM unlocked</li>
+            <li>React Native app — iOS + Android App Store</li>
+            <li>HRIS integrations — SAP, Oracle (hospital enterprise)</li>
+            <li>QCHP partnership development</li>
+            <li>6-person team: growth + CS + 2× engineering</li>
+            <li>SOC 2 certification (hospital procurement gate)</li>
+            <li>Saudi Arabia GTM (Phase 2 launch)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 19: Metrics -->
+  <div class="slide light">
+    <div class="slide-inner">
+      <div class="slide-num">19 / 22</div>
+      <div class="tag">Target SaaS Metrics</div>
+      <h2 class="slide-h2" style="color:#0f1f3d;">Investor-grade <span class="accent" style="color:#1a56a0;">unit economics targets</span></h2>
+      <div class="stat-row" style="margin-top:20px;">
+        <div class="stat-box"><div class="val">>110%</div><div class="lbl">Net Revenue Retention</div></div>
+        <div class="stat-box"><div class="val"><5%</div><div class="lbl">Annual Pro Churn</div></div>
+        <div class="stat-box"><div class="val">>3:1</div><div class="lbl">LTV : CAC</div></div>
+        <div class="stat-box"><div class="val"><12mo</div><div class="lbl">CAC Payback</div></div>
+        <div class="stat-box"><div class="val">>75%</div><div class="lbl">Gross Margin</div></div>
+        <div class="stat-box"><div class="val"><2%</div><div class="lbl">Employer Churn</div></div>
+        <div class="stat-box"><div class="val">$150K</div><div class="lbl">Phase 1 ARR Target</div></div>
+        <div class="stat-box"><div class="val">$12M</div><div class="lbl">Phase 4 ARR Target</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 20: Partners -->
+  <div class="slide mid">
+    <div class="slide-inner">
+      <div class="slide-num">20 / 22</div>
+      <div class="tag">Priority Partnership Targets</div>
+      <h2 class="slide-h2">These 5 deals <span class="accent">change everything.</span></h2>
+      <table class="sl-table" style="margin-top:20px;">
+        <tr><th>#</th><th>Partner</th><th>Deal Type</th><th>Value</th><th>Status</th></tr>
+        <tr><td>1</td><td>QCHP — Qatar Council for Healthcare Practitioners</td><td>Official CME tracking endorsement / white-label</td><td>$200K–$500K ARR + trust signal</td><td>Phase 2 conversation</td></tr>
+        <tr><td>2</td><td>Hamad Medical Corporation</td><td>Employer account — 40,000+ staff</td><td>$120K+ ARR annually</td><td>Demo outreach</td></tr>
+        <tr><td>3</td><td>Sidra Medicine</td><td>Employer account + international brand</td><td>$40K+ ARR</td><td>Demo outreach</td></tr>
+        <tr><td>4</td><td>SCFHS (Saudi Arabia)</td><td>Saudi CME portal integration / endorsement</td><td>Phase 2 market gateway</td><td>Phase 2</td></tr>
+        <tr><td>5</td><td>DHA (Dubai Health Authority)</td><td>DHA-recognized platform for private sector</td><td>UAE market gateway</td><td>Phase 2</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- SLIDE 21: Scorecard -->
+  <div class="slide dark">
+    <div class="slide-inner">
+      <div class="slide-num">21 / 22</div>
+      <div class="tag">Platform Scorecard — June 14, 2026 Audit</div>
+      <h2 class="slide-h2">Overall: <span class="accent">7.9 / 10</span> — Phase 1 weighted: <span class="accent">8.5 / 10</span></h2>
+      <div style="display:grid;grid-template-columns:repeat(8,1fr);gap:10px;margin-top:20px;">
+        <div style="text-align:center;background:rgba(255,255,255,.08);border-radius:10px;padding:12px 6px;"><div style="font-size:11px;opacity:.55;margin-bottom:4px;">Architecture</div><div style="font-size:24px;font-weight:900;color:#60a5fa;">8.5</div></div>
+        <div style="text-align:center;background:rgba(255,255,255,.08);border-radius:10px;padding:12px 6px;"><div style="font-size:11px;opacity:.55;margin-bottom:4px;">Database</div><div style="font-size:24px;font-weight:900;color:#4ade80;">9.0</div></div>
+        <div style="text-align:center;background:rgba(255,255,255,.08);border-radius:10px;padding:12px 6px;"><div style="font-size:11px;opacity:.55;margin-bottom:4px;">Frontend</div><div style="font-size:24px;font-weight:900;color:#4ade80;">9.5</div></div>
+        <div style="text-align:center;background:rgba(255,255,255,.08);border-radius:10px;padding:12px 6px;"><div style="font-size:11px;opacity:.55;margin-bottom:4px;">API</div><div style="font-size:24px;font-weight:900;color:#60a5fa;">8.0</div></div>
+        <div style="text-align:center;background:rgba(255,255,255,.08);border-radius:10px;padding:12px 6px;"><div style="font-size:11px;opacity:.55;margin-bottom:4px;">AI</div><div style="font-size:24px;font-weight:900;color:#fbbf24;">7.0</div></div>
+        <div style="text-align:center;background:rgba(255,255,255,.08);border-radius:10px;padding:12px 6px;"><div style="font-size:11px;opacity:.55;margin-bottom:4px;">Security</div><div style="font-size:24px;font-weight:900;color:#4ade80;">8.5</div></div>
+        <div style="text-align:center;background:rgba(255,255,255,.08);border-radius:10px;padding:12px 6px;"><div style="font-size:11px;opacity:.55;margin-bottom:4px;">SEO</div><div style="font-size:24px;font-weight:900;color:#4ade80;">9.5</div></div>
+        <div style="text-align:center;background:rgba(255,255,255,.08);border-radius:10px;padding:12px 6px;"><div style="font-size:11px;opacity:.55;margin-bottom:4px;">Mobile</div><div style="font-size:24px;font-weight:900;color:#f87171;">4.0</div></div>
+      </div>
+      <div style="margin-top:14px;font-size:12px;opacity:.5;">Gaps almost entirely in "not yet built" (Phase 2–3) — not in "built wrong." Core engine, AI, security, and SEO are production-grade.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 22: Prepared By -->
+  <div class="slide dark">
+    <div class="slide-inner sig-slide">
+      <div class="sig-logo">H</div>
+      <div class="sig-name">Abbas Al Masri</div>
+      <div class="sig-title">Founder &amp; CEO</div>
+      <div class="sig-company">Hayya Med AI</div>
+      <div style="font-size:16px;opacity:.5;margin-bottom:6px;">hayyamed.pro</div>
+      <div style="font-size:14px;opacity:.4;">Registered in Qatar 🇶🇦 · GCP Cloud Run · me-central1 (Doha)</div>
+      <div class="sig-divider"></div>
+      <div style="font-size:14px;opacity:.4;margin-bottom:8px;">Slide 22 / 22 · June 2026 · Confidential Investor Briefing</div>
+      <div class="sig-disclaimer">Hayya Med PRO supports CME tracking and licensing readiness. It does not issue licenses and does not replace official licensing authorities. Users must verify final requirements with their relevant regulatory body.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="controls">
+  <button class="ctrl-btn" onclick="changeSlide(-1)">← Prev</button>
+  <div class="slide-counter" id="counter">1 / 22</div>
+  <button class="ctrl-btn" onclick="changeSlide(1)">Next →</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+let cur = 0;
+function changeSlide(dir) {
+  slides[cur].classList.remove('active');
+  cur = (cur + dir + slides.length) % slides.length;
+  slides[cur].classList.add('active');
+  document.getElementById('counter').textContent = (cur + 1) + ' / ' + slides.length;
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') changeSlide(1);
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') changeSlide(-1);
+});
+</script>
+</body>
+</html>

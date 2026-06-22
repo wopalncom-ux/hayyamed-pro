@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hayya Med Pro — Automation Flow Documentation</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f4f8; color: #111; }
+  .header { background: #0f1f3d; color: white; padding: 20px 32px; display: flex; align-items: center; gap: 14px; }
+  .logo { width: 36px; height: 36px; background: #1a56a0; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 16px; color: white; }
+  .header h1 { font-size: 20px; font-weight: 800; }
+  .header h1 span { color: #60a5fa; }
+  .header p { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+  .main { max-width: 1100px; margin: 0 auto; padding: 28px 24px; }
+  .tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px; }
+  .tab { padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; border: 1px solid #e2e8f0; background: white; color: #64748b; transition: all .15s; }
+  .tab.active { background: #1a56a0; color: white; border-color: #1a56a0; }
+  .flow-panel { display: none; }
+  .flow-panel.active { display: block; }
+  .flow-card { background: white; border-radius: 14px; border: 1px solid #e2e8f0; padding: 28px; margin-bottom: 20px; }
+  .flow-card h2 { font-size: 18px; font-weight: 800; color: #0f1f3d; margin-bottom: 6px; }
+  .flow-meta { display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+  .flow-badge { display: inline-flex; align-items: center; gap: 6px; background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px; }
+  .flow-badge.green { background: #dcfce7; border-color: #bbf7d0; color: #15803d; }
+  .flow-badge.amber { background: #fef9c3; border-color: #fde047; color: #854d0e; }
+  .mermaid { margin-top: 16px; }
+  .flow-desc { font-size: 13px; color: #64748b; line-height: 1.6; margin-bottom: 16px; background: #f8fafc; border-left: 3px solid #1a56a0; padding: 12px 16px; border-radius: 0 8px 8px 0; }
+  .trigger-box { background: #0f1f3d; color: #e2e8f0; border-radius: 10px; padding: 14px 18px; font-size: 12px; margin-bottom: 16px; }
+  .trigger-box strong { color: white; display: block; margin-bottom: 4px; font-size: 13px; }
+  .footer { background: #0f1f3d; color: #64748b; text-align: center; padding: 20px; font-size: 11px; margin-top: 40px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">H</div>
+  <div>
+    <h1>Hayya Med <span>Pro</span> — Automation Flow Documentation</h1>
+    <p>11 documented automation flows · 7 live GCP Cloud Scheduler crons · June 14, 2026</p>
+  </div>
+</div>
+
+<div class="main">
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('reg')">User Registration</button>
+    <button class="tab" onclick="showTab('cme')">CME Submission</button>
+    <button class="tab" onclick="showTab('credit')">Credit Assignment</button>
+    <button class="tab" onclick="showTab('license')">License Alerts</button>
+    <button class="tab" onclick="showTab('compliance')">Compliance Monitor</button>
+    <button class="tab" onclick="showTab('marketplace')">Course Enrollment</button>
+    <button class="tab" onclick="showTab('ai')">AI Recommendations</button>
+    <button class="tab" onclick="showTab('org')">Org Reporting</button>
+    <button class="tab" onclick="showTab('payment')">Payment Lifecycle</button>
+    <button class="tab" onclick="showTab('ocr')">Certificate OCR</button>
+    <button class="tab" onclick="showTab('push')">Push Notifications</button>
+  </div>
+
+  <!-- FLOW 1: Registration -->
+  <div class="flow-panel active" id="tab-reg">
+    <div class="flow-card">
+      <h2>Flow 1 — User Registration &amp; Onboarding</h2>
+      <div class="flow-meta">
+        <span class="flow-badge green">✓ Live</span>
+        <span class="flow-badge">Supabase Auth</span>
+        <span class="flow-badge">DB Trigger</span>
+        <span class="flow-badge">Postmark</span>
+        <span class="flow-badge">PostHog</span>
+      </div>
+      <div class="flow-desc">A new user registers → Supabase Auth creates the user → email verification sent → DB trigger auto-creates professional_profiles + cme_wallets + privacy_settings rows → 7-step onboarding completes → professional lands on dashboard. Activation event fires in PostHog.</div>
+      <div class="trigger-box"><strong>Trigger:</strong> User submits /register form with email + password</div>
+      <div class="mermaid">
+flowchart TD
+    A([/register form submitted]) --> B[Supabase Auth: createUser]
+    B --> C{Email verified?}
+    C -->|No| D[Postmark: verification email]
+    D --> E[/verify-email click]
+    E --> F[Mark confirmed]
+    C -->|Yes| G[DB Trigger: handle_new_user]
+    G --> H[Insert professional_profiles]
+    H --> I[Insert cme_wallets]
+    I --> J[Insert profile_privacy_settings]
+    J --> K[Redirect → /onboarding/1]
+    K --> L[7-step onboarding]
+    L --> M[Step 7: compliance disclaimer]
+    M --> N[onboarding_complete = true]
+    N --> O[Redirect → /dashboard]
+    O --> P[PostHog: user_activated event]
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOW 2: CME Submission -->
+  <div class="flow-panel" id="tab-cme">
+    <div class="flow-card">
+      <h2>Flow 2 — CME Activity Submission</h2>
+      <div class="flow-meta">
+        <span class="flow-badge green">✓ Live</span>
+        <span class="flow-badge">Supabase Storage</span>
+        <span class="flow-badge">Vertex AI (Vision)</span>
+        <span class="flow-badge">DB Trigger</span>
+      </div>
+      <div class="flow-desc">User uploads a CME certificate → AI OCR (Pro/Employer) auto-extracts fields → user confirms → activity is logged → verifier approves → DB trigger syncs credits to wallet → compliance status recomputed. Offline submissions are queued and auto-synced on reconnect.</div>
+      <div class="trigger-box"><strong>Trigger:</strong> User opens AddActivityModal and uploads certificate file</div>
+      <div class="mermaid">
+flowchart TD
+    A([User clicks Add Activity]) --> B[AddActivityModal opens]
+    B --> C{Online?}
+    C -->|No| D[Queue in localStorage]
+    D --> E[Auto-flush on reconnect]
+    C -->|Yes| F[Upload to Supabase Storage private bucket]
+    F --> G{Pro/Employer tier?}
+    G -->|Yes| H[POST /api/ai/ocr-certificate]
+    H --> I[Vertex AI: Claude Sonnet Vision]
+    I --> J[Extract: title, date, credits, accreditor]
+    J --> K[Zod validate AI output]
+    K --> L[Auto-populate form]
+    G -->|No — Free| L
+    L --> M[User confirms and submits]
+    M --> N[Insert cme_activities — pending]
+    N --> O[Admin verifies]
+    O -->|Approved| P[DB Trigger: sync credits to cme_wallets]
+    P --> Q[Compliance status recomputed]
+    Q --> R[Push notification: credits added]
+    O -->|Rejected| S[Postmark: rejection email with reason]
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOW 3: Credit Assignment -->
+  <div class="flow-panel" id="tab-credit">
+    <div class="flow-card">
+      <h2>Flow 3 — Credit Assignment &amp; Wallet Sync</h2>
+      <div class="flow-meta">
+        <span class="flow-badge green">✓ Live</span>
+        <span class="flow-badge">DB Trigger (Postgres)</span>
+        <span class="flow-badge">Rules Engine</span>
+        <span class="flow-badge">PostHog</span>
+      </div>
+      <div class="flow-desc">When a CME activity is verified, a Postgres trigger fires automatically. It reads the country rules engine for category caps, applies the correct credit value, updates the wallet totals, and recomputes compliance_status. Zero application-layer code involved.</div>
+      <div class="trigger-box"><strong>Trigger:</strong> UPDATE on cme_activities WHERE status changes to 'verified'</div>
+      <div class="mermaid">
+flowchart TD
+    A([cme_activities.status = verified]) --> B[Postgres Trigger fires]
+    B --> C[Read activity: credits, category, country]
+    C --> D[Lookup country_compliance_rules for category cap]
+    D --> E{Category cap reached?}
+    E -->|Exceeded| F[Apply cap limit only]
+    E -->|Under cap| G[Apply full credits]
+    F --> H[UPDATE cme_wallets: credits_completed += N]
+    G --> H
+    H --> I[Recompute compliance_status]
+    I --> J{credits_completed >= required?}
+    J -->|Yes| K[status = compliant]
+    J -->|No| L[status = in_progress or at_risk]
+    K --> M[Insert audit_log row]
+    L --> M
+    M --> N[PostHog: compliance_updated event]
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOW 4: License Alerts -->
+  <div class="flow-panel" id="tab-license">
+    <div class="flow-card">
+      <h2>Flow 4 — License Expiry Alert Automation</h2>
+      <div class="flow-meta">
+        <span class="flow-badge green">✓ Live — GCP Cloud Scheduler</span>
+        <span class="flow-badge">Postmark</span>
+        <span class="flow-badge">Web Push</span>
+        <span class="flow-badge">Audit Log</span>
+      </div>
+      <div class="flow-desc">Two separate GCP Cloud Scheduler jobs — cme-deadline (08:00 AST) and license-expiry (09:00 AST) — scan all professionals daily and send tiered alerts based on days to deadline. 90/60/30/14/7 day thresholds, both email and push.</div>
+      <div class="trigger-box"><strong>Trigger:</strong> GCP Cloud Scheduler — daily 08:00 and 09:00 AST (UTC+3)</div>
+      <div class="mermaid">
+flowchart TD
+    A([GCP Scheduler 09:00 AST]) --> B[GET /api/cron/license-expiry]
+    B --> C[Verify CRON_SECRET header]
+    C --> D[Query professional_profiles: license_expiry within 90 days]
+    D --> E{Days to expiry?}
+    E -->|90 days| F[Postmark: renewal prep email]
+    E -->|60 days| G[Postmark: 60-day checklist email]
+    E -->|30 days| H[Postmark: urgent alert email]
+    E -->|14 days| I[Postmark + Web Push: critical alert]
+    E -->|7 days| J[Postmark + Web Push: final warning]
+    E -->|Expired| K[Dashboard: license lapsed banner]
+    F --> L[Audit log: reminder_sent]
+    G --> L
+    H --> L
+    I --> L
+    J --> L
+    K --> L
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOW 5: Compliance Monitor -->
+  <div class="flow-panel" id="tab-compliance">
+    <div class="flow-card">
+      <h2>Flow 5 — Compliance Gap Monitoring</h2>
+      <div class="flow-meta">
+        <span class="flow-badge green">✓ Live — GCP Cloud Scheduler</span>
+        <span class="flow-badge">Vertex AI (Claude Sonnet)</span>
+        <span class="flow-badge">Postmark</span>
+        <span class="flow-badge">Web Push</span>
+      </div>
+      <div class="flow-desc">Daily scan of all CME wallets assesses compliance risk. At-risk professionals receive AI-generated personalized action plans via email and push. The AI recommendation is generated via Vertex AI (Claude Sonnet) — anonymized, no PII in prompt.</div>
+      <div class="trigger-box"><strong>Trigger:</strong> GCP Cloud Scheduler — daily 08:00 AST</div>
+      <div class="mermaid">
+flowchart TD
+    A([GCP Scheduler 08:00 AST]) --> B[GET /api/cron/cme-deadline]
+    B --> C[Verify CRON_SECRET]
+    C --> D[Scan all cme_wallets]
+    D --> E[Calculate: days to cycle end + completion %]
+    E --> F{Risk level?}
+    F -->|at_risk| G[Postmark: gap warning email]
+    F -->|critical| H[Postmark + Web Push: urgent alert]
+    G --> I[POST /api/ai/compliance-recommendations]
+    H --> I
+    I --> J[Anonymized prompt: professional_id + gaps + country]
+    J --> K[Vertex AI: Claude Sonnet 4.6]
+    K --> L[Zod validate structured response]
+    L --> M{AI available?}
+    M -->|Yes| N[Store recommendations in DB]
+    M -->|No| O[Rule-based fallback — no AI dependency]
+    N --> P[AIRecommendationsCard updated in dashboard]
+    O --> P
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOW 6: Course Enrollment -->
+  <div class="flow-panel" id="tab-marketplace">
+    <div class="flow-card">
+      <h2>Flow 6 — Marketplace Course Enrollment</h2>
+      <div class="flow-meta">
+        <span class="flow-badge green">✓ Live</span>
+        <span class="flow-badge">Plan Gate (server-side)</span>
+        <span class="flow-badge">DB Trigger</span>
+        <span class="flow-badge">MilestoneCelebration</span>
+      </div>
+      <div class="flow-desc">User enrolls in a marketplace course → plan entitlement checked server-side → enrollment recorded → on completion, DB trigger auto-syncs credits to cme_activities → wallet updates → milestone animation fires. Gamification is triggered by DB state, not UI logic.</div>
+      <div class="trigger-box"><strong>Trigger:</strong> User clicks Enroll on a marketplace course</div>
+      <div class="mermaid">
+flowchart TD
+    A([/dashboard/marketplace course click]) --> B[POST /api/marketplace/enroll]
+    B --> C[supabase.auth.getUser — auth check]
+    C --> D{Plan entitlement?}
+    D -->|Free limit reached| E[Upgrade wall → /pricing]
+    D -->|Allowed| F[Insert course_enrollments row]
+    F --> G[User completes course]
+    G --> H[POST /api/marketplace/complete]
+    H --> I[Update enrollment: completed_at, status = completed]
+    I --> J[DB Trigger: auto-create cme_activities row]
+    J --> K[DB Trigger: sync credits to cme_wallets]
+    K --> L[Compliance status recomputed]
+    L --> M[MilestoneCelebration component fires]
+    M --> N[PostHog: course_completed event]
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOW 7: AI Recommendations -->
+  <div class="flow-panel" id="tab-ai">
+    <div class="flow-card">
+      <h2>Flow 7 — AI Compliance Recommendations</h2>
+      <div class="flow-meta">
+        <span class="flow-badge green">✓ Live</span>
+        <span class="flow-badge">Vertex AI — Claude Sonnet 4.6</span>
+        <span class="flow-badge">Zod Validation</span>
+        <span class="flow-badge">Plan Gate</span>
+      </div>
+      <div class="flow-desc">Pro/Employer users get AI-generated compliance recommendations. Free users get rule-based fallback. No PII in prompts — professional_id only. Fallback is always available so compliance never depends on AI uptime. All calls logged: model, tokens, latency.</div>
+      <div class="trigger-box"><strong>Trigger:</strong> Dashboard AI tab loads or explicit request</div>
+      <div class="mermaid">
+flowchart TD
+    A([Dashboard AI tab loads]) --> B[Fetch compliance gaps from cme_wallets]
+    B --> C[POST /api/ai/compliance-recommendations]
+    C --> D[supabase.auth.getUser]
+    D --> E{Plan tier?}
+    E -->|Free| F[Return rule-based fallback — 0 AI cost]
+    E -->|Pro or Employer| G[Build anonymized prompt]
+    G --> H[professional_id + gaps + country — NO PII]
+    H --> I[Vertex AI: Claude Sonnet 4.6]
+    I --> J[Streaming response]
+    J --> K[Zod validate structured output]
+    K --> L{AI available?}
+    L -->|No| M[Rule-based fallback response]
+    L -->|Yes| N[Top 3 course recommendations + gap analysis]
+    N --> O[Log: model, tokens, latency, professional_id, action]
+    M --> P[AIRecommendationsCard renders in dashboard]
+    N --> P
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOW 8: Org Reporting -->
+  <div class="flow-panel" id="tab-org">
+    <div class="flow-card">
+      <h2>Flow 8 — Organization Compliance Report Generation</h2>
+      <div class="flow-meta">
+        <span class="flow-badge green">✓ Live</span>
+        <span class="flow-badge">React PDF</span>
+        <span class="flow-badge">Role Check</span>
+        <span class="flow-badge">Audit Log</span>
+      </div>
+      <div class="flow-desc">Employer admin requests a compliance report → role verified via organization_members → staff data queried → React PDF renders → PDF streamed to browser. Every download is audit-logged with actor, action, and timestamp.</div>
+      <div class="trigger-box"><strong>Trigger:</strong> Employer admin clicks Download Compliance Report</div>
+      <div class="mermaid">
+flowchart TD
+    A([Employer admin clicks Download Report]) --> B{Plan tier?}
+    B -->|Free employer| C[Upgrade wall]
+    B -->|Employer/Hospital| D[POST /api/pdf/org-report]
+    D --> E[supabase.auth.getUser]
+    E --> F[Verify employer_admin role via organization_members]
+    F --> G[Query staff: cme_wallets + professional_profiles]
+    G --> H[React PDF: OrgReportDocument component]
+    H --> I[Generate PDF buffer server-side]
+    I --> J[Return PDF stream to browser]
+    J --> K[Browser: download file]
+    K --> L[Insert audit_log: org_report_downloaded]
+    L --> M[PostHog: report_downloaded event]
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOW 9: Payment -->
+  <div class="flow-panel" id="tab-payment">
+    <div class="flow-card">
+      <h2>Flow 9 — Subscription Payment Lifecycle</h2>
+      <div class="flow-meta">
+        <span class="flow-badge amber">Integrated — Paddle Approval Pending</span>
+        <span class="flow-badge">Paddle Webhooks</span>
+        <span class="flow-badge">Postmark</span>
+        <span class="flow-badge">PostHog</span>
+      </div>
+      <div class="flow-desc">User upgrades → Paddle checkout overlay → on success Paddle fires a signed webhook → subscription activated → plan updated in DB → welcome email sent → Pro features unlocked. Webhook signature verified before any DB write.</div>
+      <div class="trigger-box"><strong>Trigger:</strong> User clicks Upgrade to Pro on /pricing or upgrade wall</div>
+      <div class="mermaid">
+flowchart TD
+    A([User clicks Upgrade]) --> B[POST /api/paddle/checkout]
+    B --> C[supabase.auth.getUser]
+    C --> D[Check discount code — /api/discounts/validate]
+    D --> E[Paddle: create checkout session]
+    E --> F[Paddle checkout overlay opens]
+    F --> G{Payment outcome}
+    G -->|Cancelled| H[Return to pricing — no change]
+    G -->|Success| I[Paddle webhook: POST /api/paddle/webhook]
+    I --> J[Verify Paddle webhook signature]
+    J --> K[subscription_activated event type]
+    K --> L[Upsert subscriptions row]
+    L --> M[Update professional_profiles: plan = pro]
+    M --> N[Postmark: welcome Pro email]
+    N --> O[PostHog: subscription_started event]
+    O --> P[Dashboard: Pro features unlocked instantly]
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOW 10: OCR -->
+  <div class="flow-panel" id="tab-ocr">
+    <div class="flow-card">
+      <h2>Flow 10 — AI Certificate OCR</h2>
+      <div class="flow-meta">
+        <span class="flow-badge green">✓ Live</span>
+        <span class="flow-badge">Vertex AI — Claude Sonnet Vision</span>
+        <span class="flow-badge">Zod Validation</span>
+        <span class="flow-badge">Plan Gate</span>
+      </div>
+      <div class="flow-desc">Pro/Employer users photograph their CME certificate → Claude Vision (Vertex AI) extracts structured data → Zod validates → form auto-populated. Supports Arabic and English certificates. No PII sent to AI — certificate content only, not user identity.</div>
+      <div class="trigger-box"><strong>Trigger:</strong> User uploads certificate image in AddActivityModal</div>
+      <div class="mermaid">
+flowchart TD
+    A([User uploads certificate image]) --> B{Plan: Pro or Employer?}
+    B -->|No — Free| C[Manual form entry only]
+    B -->|Yes| D[POST /api/ai/ocr-certificate]
+    D --> E[supabase.auth.getUser]
+    E --> F[Read image from Supabase Storage]
+    F --> G[Vertex AI: Claude Sonnet 4.6 multimodal]
+    G --> H[Extract: title, date, provider, accreditor, credits, language]
+    H --> I[Zod schema validation of AI output]
+    I --> J{Valid extraction?}
+    J -->|No| K[Return empty — user enters manually]
+    J -->|Yes| L[Auto-populate activity form fields]
+    L --> M[User reviews in 3 seconds]
+    M --> N[User submits — fast logging]
+    N --> O[Log: model, tokens, latency, professional_id]
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOW 11: Push Notifications -->
+  <div class="flow-panel" id="tab-push">
+    <div class="flow-card">
+      <h2>Flow 11 — Push Notification Dispatch</h2>
+      <div class="flow-meta">
+        <span class="flow-badge green">✓ Live</span>
+        <span class="flow-badge">VAPID Web Push</span>
+        <span class="flow-badge">push_subscriptions table</span>
+        <span class="flow-badge">Service Worker</span>
+      </div>
+      <div class="flow-desc">Web Push uses VAPID keys. Subscriptions stored in push_subscriptions table. Service worker registered at install. Notifications dispatched from cron routes or event triggers. iOS Safari (PWA) and all desktop browsers supported.</div>
+      <div class="trigger-box"><strong>Trigger:</strong> Cron alert, CME verification, or critical compliance event</div>
+      <div class="mermaid">
+flowchart TD
+    A([User installs PWA or visits dashboard]) --> B[Service Worker registers]
+    B --> C[Push permission prompt — user approves]
+    C --> D[POST /api/push/subscribe]
+    D --> E[Insert push_subscriptions row: endpoint + keys]
+    F([Cron or compliance event fires]) --> G[POST /api/push/send]
+    G --> H[supabase.auth.getUser or CRON_SECRET]
+    H --> I[Query push_subscriptions for target users]
+    I --> J[VAPID: sign + send Web Push]
+    J --> K{Delivery status}
+    K -->|410 Gone| L[Delete stale subscription from DB]
+    K -->|Success| M[Notification appears on device]
+    M --> N[Click → deep link to relevant dashboard page]
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>Hayya Med Pro — Automation Flow Documentation</strong><br />
+  11 flows documented · 7 live GCP Cloud Scheduler crons · Vertex AI (AnthropicVertex ADC)<br />
+  Prepared by: Abbas Al Masri, Founder &amp; CEO, Hayya Med AI · June 14, 2026
+</div>
+
+<script>
+mermaid.initialize({ startOnLoad: true, theme: 'default', flowchart: { curve: 'basis', useMaxWidth: true } });
+
+function showTab(id) {
+  document.querySelectorAll('.flow-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hayya Med Pro — Product Roadmap</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f4f8; color: #111; }
+  .header { background: #0f1f3d; color: white; padding: 22px 36px; }
+  .header h1 { font-size: 22px; font-weight: 800; }
+  .header h1 span { color: #60a5fa; }
+  .header p { font-size: 12px; color: #94a3b8; margin-top: 4px; }
+  .main { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+  .phase { background: white; border-radius: 16px; border: 1px solid #e2e8f0; margin-bottom: 24px; overflow: hidden; }
+  .phase-header { padding: 20px 28px; display: flex; align-items: center; gap: 16px; }
+  .phase-header.p1 { background: linear-gradient(135deg, #0f1f3d 0%, #1a3a6b 100%); color: white; }
+  .phase-header.p2 { background: linear-gradient(135deg, #1a56a0 0%, #2563eb 100%); color: white; }
+  .phase-header.p3 { background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%); color: white; }
+  .phase-header.p4 { background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%); color: white; }
+  .phase-header.p5 { background: linear-gradient(135deg, #059669 0%, #10b981 100%); color: white; }
+  .phase-num { font-size: 40px; font-weight: 900; opacity: 0.3; line-height: 1; }
+  .phase-info { flex: 1; }
+  .phase-name { font-size: 20px; font-weight: 800; }
+  .phase-sub { font-size: 12px; opacity: 0.7; margin-top: 3px; }
+  .phase-status { text-align: right; }
+  .phase-pct { font-size: 36px; font-weight: 900; }
+  .phase-pct-label { font-size: 11px; opacity: 0.7; }
+  .phase-progress { height: 6px; background: rgba(255,255,255,.2); border-radius: 999px; margin-top: 12px; }
+  .phase-progress-fill { height: 6px; background: rgba(255,255,255,.8); border-radius: 999px; }
+  .phase-body { padding: 24px 28px; }
+  .deliverables-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .deliverables-col h4 { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; color: #64748b; margin-bottom: 12px; }
+  .deliverable-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; font-size: 12px; color: #374151; line-height: 1.4; }
+  .deliverable-item .icon { flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+  .meta-row { display: flex; gap: 20px; margin-bottom: 18px; flex-wrap: wrap; }
+  .meta-chip { background: #f1f5f9; border-radius: 8px; padding: 8px 14px; }
+  .meta-chip .label { font-size: 10px; font-weight: 700; text-transform: uppercase; color: #64748b; }
+  .meta-chip .value { font-size: 13px; font-weight: 700; color: #0f1f3d; margin-top: 2px; }
+  .risk-bar { display: flex; align-items: center; gap: 8px; margin-top: 12px; }
+  .risk-label { font-size: 11px; font-weight: 700; color: #64748b; width: 80px; flex-shrink: 0; }
+  .risk-dots { display: flex; gap: 4px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; background: #e2e8f0; }
+  .dot.fill-low { background: #16a34a; }
+  .dot.fill-med { background: #d97706; }
+  .dot.fill-high { background: #dc2626; }
+  .arr-target { font-size: 28px; font-weight: 900; color: #1a56a0; }
+  .arr-label { font-size: 11px; color: #64748b; margin-top: 2px; font-weight: 700; text-transform: uppercase; }
+  .kpi-mini { background: #f8fafc; border-radius: 10px; padding: 14px 18px; text-align: center; }
+  .timeline-section { background: white; border-radius: 16px; border: 1px solid #e2e8f0; padding: 24px 28px; margin-bottom: 24px; }
+  .timeline-row { display: flex; align-items: center; gap: 0; margin-bottom: 12px; }
+  .tl-phase { font-size: 12px; font-weight: 700; color: #0f1f3d; width: 80px; flex-shrink: 0; }
+  .tl-bar-wrap { flex: 1; position: relative; }
+  .tl-bar { height: 28px; border-radius: 8px; display: flex; align-items: center; padding-left: 12px; font-size: 11px; font-weight: 700; color: white; position: relative; }
+  .tl-bar::after { content: attr(data-period); position: absolute; right: 10px; font-size: 10px; opacity: .8; }
+  .footer { background: #0f1f3d; color: #64748b; text-align: center; padding: 20px; font-size: 11px; margin-top: 40px; }
+  @media (max-width: 700px) { .deliverables-grid { grid-template-columns: 1fr; } }
+  @media print { body { background: white; } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Hayya Med <span>Pro</span> — Product Roadmap</h1>
+  <p>5-phase global expansion roadmap · Qatar → GCC → MENA → Global · June 14, 2026</p>
+</div>
+
+<div class="main">
+
+  <!-- Timeline Overview -->
+  <div class="timeline-section">
+    <h2 style="font-size:15px;font-weight:800;color:#0f1f3d;margin-bottom:18px;">5-YEAR ROADMAP TIMELINE</h2>
+    <div class="timeline-row">
+      <div class="tl-phase">Phase 1</div>
+      <div class="tl-bar-wrap">
+        <div class="tl-bar" style="width:60%;background:#0f1f3d;" data-period="Q2–Q3 2026">Foundation &amp; GTM — 83% Complete</div>
+      </div>
+    </div>
+    <div class="timeline-row">
+      <div class="tl-phase">Phase 2</div>
+      <div class="tl-bar-wrap">
+        <div class="tl-bar" style="width:70%;background:#1a56a0;margin-left:18%;" data-period="Q3 2026–Q1 2027">GCC Expansion</div>
+      </div>
+    </div>
+    <div class="timeline-row">
+      <div class="tl-phase">Phase 3</div>
+      <div class="tl-bar-wrap">
+        <div class="tl-bar" style="width:60%;background:#0891b2;margin-left:36%;" data-period="Q1–Q3 2027">Mobile &amp; Enterprise</div>
+      </div>
+    </div>
+    <div class="timeline-row">
+      <div class="tl-phase">Phase 4</div>
+      <div class="tl-bar-wrap">
+        <div class="tl-bar" style="width:55%;background:#7c3aed;margin-left:54%;" data-period="Q3 2027–Q2 2028">MENA Scale</div>
+      </div>
+    </div>
+    <div class="timeline-row">
+      <div class="tl-phase">Phase 5</div>
+      <div class="tl-bar-wrap">
+        <div class="tl-bar" style="width:50%;background:#059669;margin-left:75%;" data-period="Q2 2028–Q2 2029">Global</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 1 -->
+  <div class="phase">
+    <div class="phase-header p1">
+      <div class="phase-num">1</div>
+      <div class="phase-info">
+        <div class="phase-name">Foundation &amp; GTM</div>
+        <div class="phase-sub">Q2 2026 → Q3 2026 · Qatar market · First paying customers</div>
+        <div class="phase-progress"><div class="phase-progress-fill" style="width:83%"></div></div>
+      </div>
+      <div class="phase-status">
+        <div class="phase-pct">83%</div>
+        <div class="phase-pct-label">COMPLETE</div>
+      </div>
+    </div>
+    <div class="phase-body">
+      <div class="meta-row">
+        <div class="meta-chip kpi-mini"><div class="arr-target">$150K</div><div class="arr-label">ARR Target</div></div>
+        <div class="meta-chip kpi-mini"><div class="arr-target">500</div><div class="arr-label">Pro Users</div></div>
+        <div class="meta-chip kpi-mini"><div class="arr-target">3</div><div class="arr-label">Employer Accounts</div></div>
+        <div class="meta-chip kpi-mini"><div class="arr-target">Low</div><div class="arr-label">Risk</div></div>
+      </div>
+      <div class="deliverables-grid">
+        <div class="deliverables-col">
+          <h4>✓ Completed</h4>
+          <div class="deliverable-item"><span class="icon">✅</span>Full Next.js platform on GCP Cloud Run (Qatar)</div>
+          <div class="deliverable-item"><span class="icon">✅</span>33 database migrations, RLS on all tables</div>
+          <div class="deliverable-item"><span class="icon">✅</span>7-step onboarding + compliance disclaimer</div>
+          <div class="deliverable-item"><span class="icon">✅</span>Multi-country CME wallet (7 GCC authorities)</div>
+          <div class="deliverable-item"><span class="icon">✅</span>8 AI modules via Vertex AI (no API key)</div>
+          <div class="deliverable-item"><span class="icon">✅</span>Employer + Provider + University + Admin dashboards</div>
+          <div class="deliverable-item"><span class="icon">✅</span>176 pages including 40 specialty CME pages</div>
+          <div class="deliverable-item"><span class="icon">✅</span>18 SEO blog posts covering all professions</div>
+          <div class="deliverable-item"><span class="icon">✅</span>7 GCP Cloud Scheduler cron automations live</div>
+          <div class="deliverable-item"><span class="icon">✅</span>PDF reports, calendar export, certificate verification</div>
+          <div class="deliverable-item"><span class="icon">✅</span>PWA with offline CME queue + web push</div>
+          <div class="deliverable-item"><span class="icon">✅</span>Paddle + QPay payment integration</div>
+        </div>
+        <div class="deliverables-col">
+          <h4>🟡 Remaining (User Actions Only)</h4>
+          <div class="deliverable-item"><span class="icon">🟡</span>Paddle merchant account approval</div>
+          <div class="deliverable-item"><span class="icon">🟡</span>Postmark sending domain verification</div>
+          <div class="deliverable-item"><span class="icon">🟡</span>Vertex AI API enable + IAM role + Model Garden</div>
+          <div class="deliverable-item"><span class="icon">🟡</span>Upstash Redis token rotation (security)</div>
+          <div class="deliverable-item"><span class="icon">🔴</span>VAPT security scan (pre-launch requirement)</div>
+          <div class="deliverable-item"><span class="icon">🔴</span>Coming-soon mode disabled (COMING_SOON=false)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 2 -->
+  <div class="phase">
+    <div class="phase-header p2">
+      <div class="phase-num">2</div>
+      <div class="phase-info">
+        <div class="phase-name">Growth &amp; GCC Expansion</div>
+        <div class="phase-sub">Q3 2026 → Q1 2027 · Qatar + Saudi Arabia + UAE · First hospital accounts</div>
+        <div class="phase-progress"><div class="phase-progress-fill" style="width:0%"></div></div>
+      </div>
+      <div class="phase-status">
+        <div class="phase-pct">0%</div>
+        <div class="phase-pct-label">NOT STARTED</div>
+      </div>
+    </div>
+    <div class="phase-body">
+      <div class="meta-row">
+        <div class="meta-chip kpi-mini"><div class="arr-target">$800K</div><div class="arr-label">ARR Target</div></div>
+        <div class="meta-chip kpi-mini"><div class="arr-target">3</div><div class="arr-label">Markets</div></div>
+        <div class="meta-chip kpi-mini"><div class="arr-target">Medium</div><div class="arr-label">Risk</div></div>
+      </div>
+      <div class="deliverables-grid">
+        <div class="deliverables-col">
+          <h4>Key Deliverables</h4>
+          <div class="deliverable-item"><span class="icon">🌍</span>Arabic/RTL localization (next-intl) — unlocks 70% of GCC TAM</div>
+          <div class="deliverable-item"><span class="icon">🤖</span>RAG pipeline for compliance chatbot (pgvector)</div>
+          <div class="deliverable-item"><span class="icon">📱</span>SMS alerts (Twilio) — GCC primary channel</div>
+          <div class="deliverable-item"><span class="icon">💬</span>WhatsApp Business API integration</div>
+          <div class="deliverable-item"><span class="icon">🔐</span>MFA / WebAuthn (hospital enterprise gate)</div>
+          <div class="deliverable-item"><span class="icon">🏥</span>Conference management module (QR check-in)</div>
+          <div class="deliverable-item"><span class="icon">🎓</span>Video streaming marketplace (Mux/Vimeo)</div>
+          <div class="deliverable-item"><span class="icon">📊</span>Government aggregate compliance reporting</div>
+        </div>
+        <div class="deliverables-col">
+          <h4>Partnerships &amp; Integrations</h4>
+          <div class="deliverable-item"><span class="icon">🤝</span>QCHP API integration (or scraper interim)</div>
+          <div class="deliverable-item"><span class="icon">🤝</span>SCFHS MUMARIS+ portal sync discussion</div>
+          <div class="deliverable-item"><span class="icon">🔑</span>Google OAuth social login</div>
+          <div class="deliverable-item"><span class="icon">🇸🇦</span>Saudi Arabia market launch (SCFHS rules live)</div>
+          <div class="deliverable-item"><span class="icon">🇦🇪</span>UAE market launch (DHA + DOH rules live)</div>
+          <div class="deliverable-item"><span class="icon">📈</span>Referral program live (refer + earn)</div>
+          <div class="deliverable-item"><span class="icon">🔒</span>Accreditor verification workflow (admin)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 3 -->
+  <div class="phase">
+    <div class="phase-header p3">
+      <div class="phase-num">3</div>
+      <div class="phase-info">
+        <div class="phase-name">Mobile App &amp; Enterprise</div>
+        <div class="phase-sub">Q1 2027 → Q3 2027 · React Native · Hospital enterprise sales · SOC 2</div>
+        <div class="phase-progress"><div class="phase-progress-fill" style="width:0%"></div></div>
+      </div>
+      <div class="phase-status">
+        <div class="phase-pct">0%</div>
+        <div class="phase-pct-label">NOT STARTED</div>
+      </div>
+    </div>
+    <div class="phase-body">
+      <div class="meta-row">
+        <div class="meta-chip kpi-mini"><div class="arr-target">$3M</div><div class="arr-label">ARR Target</div></div>
+        <div class="meta-chip kpi-mini"><div class="arr-target">Med–High</div><div class="arr-label">Risk</div></div>
+      </div>
+      <div class="deliverables-grid">
+        <div class="deliverables-col">
+          <h4>Mobile</h4>
+          <div class="deliverable-item"><span class="icon">📱</span>React Native / Expo mobile app</div>
+          <div class="deliverable-item"><span class="icon">🍎</span>iOS App Store submission (medical category)</div>
+          <div class="deliverable-item"><span class="icon">🤖</span>Google Play submission + data safety section</div>
+          <div class="deliverable-item"><span class="icon">👆</span>Biometric auth (Face ID, Touch ID)</div>
+          <div class="deliverable-item"><span class="icon">🔔</span>APNs (iOS) + FCM (Android) native push</div>
+        </div>
+        <div class="deliverables-col">
+          <h4>Enterprise</h4>
+          <div class="deliverable-item"><span class="icon">🏥</span>SAP SuccessFactors + Oracle HCM integration</div>
+          <div class="deliverable-item"><span class="icon">🔐</span>Enterprise SSO (SAML 2.0 / OIDC)</div>
+          <div class="deliverable-item"><span class="icon">📋</span>SCORM/xAPI LMS compatibility</div>
+          <div class="deliverable-item"><span class="icon">🛡</span>SOC 2 Type I audit initiation</div>
+          <div class="deliverable-item"><span class="icon">🏆</span>CBAHI/JCI accreditation format PDF export</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 4 -->
+  <div class="phase">
+    <div class="phase-header p4">
+      <div class="phase-num">4</div>
+      <div class="phase-info">
+        <div class="phase-name">MENA Scale &amp; Government</div>
+        <div class="phase-sub">Q3 2027 → Q2 2028 · Government white-label · Series A · 5,000+ professionals</div>
+        <div class="phase-progress"><div class="phase-progress-fill" style="width:0%"></div></div>
+      </div>
+      <div class="phase-status">
+        <div class="phase-pct">0%</div>
+        <div class="phase-pct-label">NOT STARTED</div>
+      </div>
+    </div>
+    <div class="phase-body">
+      <div class="meta-row">
+        <div class="meta-chip kpi-mini"><div class="arr-target">$12M</div><div class="arr-label">ARR Target</div></div>
+        <div class="meta-chip kpi-mini"><div class="arr-target">High</div><div class="arr-label">Risk</div></div>
+      </div>
+      <div class="deliverables-grid">
+        <div class="deliverables-col">
+          <h4>Key Deliverables</h4>
+          <div class="deliverable-item"><span class="icon">🏛</span>Government white-label platform (QCHP or SCFHS)</div>
+          <div class="deliverable-item"><span class="icon">🛡</span>SOC 2 Type II certification</div>
+          <div class="deliverable-item"><span class="icon">🔐</span>ISO 27001 gap analysis + initiation</div>
+          <div class="deliverable-item"><span class="icon">🌍</span>Multi-region GCP (me-central1 + eu-west1 GDPR)</div>
+          <div class="deliverable-item"><span class="icon">🗺</span>Kuwait, Bahrain, Oman market launches</div>
+          <div class="deliverable-item"><span class="icon">🌐</span>Egypt, Jordan market launches</div>
+          <div class="deliverable-item"><span class="icon">💰</span>Series A fundraise</div>
+          <div class="deliverable-item"><span class="icon">📊</span>Formal investor data room complete</div>
+        </div>
+        <div class="deliverables-col">
+          <h4>Target Partnership Outcomes</h4>
+          <div class="deliverable-item"><span class="icon">🥇</span>QCHP official endorsement / white-label deal</div>
+          <div class="deliverable-item"><span class="icon">🥈</span>Hamad Medical Corporation (40K+ staff) signed</div>
+          <div class="deliverable-item"><span class="icon">🥉</span>SCFHS MUMARIS+ integration live</div>
+          <div class="deliverable-item"><span class="icon">🏫</span>University licensing model — 3 medical schools</div>
+          <div class="deliverable-item"><span class="icon">💊</span>First pharma sponsorship deals ($100K+ value)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 5 -->
+  <div class="phase">
+    <div class="phase-header p5">
+      <div class="phase-num">5</div>
+      <div class="phase-info">
+        <div class="phase-name">Global Expansion</div>
+        <div class="phase-sub">Q2 2028 → Q2 2029 · UK · India · Australia · M&amp;A positioning · 50,000+ professionals</div>
+        <div class="phase-progress"><div class="phase-progress-fill" style="width:0%"></div></div>
+      </div>
+      <div class="phase-status">
+        <div class="phase-pct">0%</div>
+        <div class="phase-pct-label">NOT STARTED</div>
+      </div>
+    </div>
+    <div class="phase-body">
+      <div class="meta-row">
+        <div class="meta-chip kpi-mini"><div class="arr-target">$50M+</div><div class="arr-label">ARR Potential</div></div>
+        <div class="meta-chip kpi-mini"><div class="arr-target">High</div><div class="arr-label">Risk</div></div>
+      </div>
+      <div class="deliverables-grid">
+        <div class="deliverables-col">
+          <h4>Market Launches</h4>
+          <div class="deliverable-item"><span class="icon">🇬🇧</span>UK launch — GMC CPD, NMC revalidation</div>
+          <div class="deliverable-item"><span class="icon">🇦🇺</span>Australia launch — AHPRA CPD requirements</div>
+          <div class="deliverable-item"><span class="icon">🇮🇳</span>India launch — NMC CME (5-year cycle)</div>
+          <div class="deliverable-item"><span class="icon">🇺🇸</span>US market — ACCME-focused, CME broker model</div>
+          <div class="deliverable-item"><span class="icon">🌐</span>10-language support incl. Arabic, Urdu, Hindi</div>
+        </div>
+        <div class="deliverables-col">
+          <h4>M&amp;A Readiness</h4>
+          <div class="deliverable-item"><span class="icon">📋</span>IP documentation complete (country rules engine)</div>
+          <div class="deliverable-item"><span class="icon">🛡</span>SOC 2 Type II + ISO 27001 certified</div>
+          <div class="deliverable-item"><span class="icon">📊</span>Clean cap table + investor data room</div>
+          <div class="deliverable-item"><span class="icon">🎯</span>M&amp;A targets: EHR vendors, LMS platforms, HRIS vendors</div>
+          <div class="deliverable-item"><span class="icon">💼</span>Enterprise API marketplace — $2K-$20K/yr</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>Hayya Med Pro — Product Roadmap</strong><br />
+  Qatar 🇶🇦 → GCC → MENA → Global · 5 phases · 3-year execution plan<br />
+  Prepared by: Abbas Al Masri, Founder &amp; CEO, Hayya Med AI · June 14, 2026 · Confidential
+</div>
+
+</body>
+</html>

@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -173,6 +174,12 @@ export default function OmanCmePage() {
           { name: "GCC CME Requirements", url: "/gcc-cme-requirements" },
           { name: "Oman CME Requirements", url: "/oman-cme" },
         ]}
+      />
+      <MedicalWebPageJsonLd
+        name="Oman CME Requirements"
+        url="https://hayyamed.pro/oman-cme"
+        description="Complete guide to CME requirements in Oman. OMSB requires 40 CME credits per 2-year cycle for physicians and 30 for nurses and AHPs. Track Category A and B CME automatically with Hayya Med Pro."
+        keywords={["Oman CME requirements", "OMSB CME credits", "Oman CME 2025", "OMSB license renewal", "Oman healthcare professional CME"]}
       />
 
       <main className="min-h-screen bg-[#f8fafc]">

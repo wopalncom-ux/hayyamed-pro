@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -120,6 +121,16 @@ export default function AestheticMedicineCmePage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+      <BreadcrumbJsonLd items={[
+        { name: "Home", url: "https://hayyamed.pro" },
+        { name: "Aesthetic Medicine CME", url: "https://hayyamed.pro/aesthetic-medicine-cme" },
+      ]} />
+      <MedicalWebPageJsonLd
+        name="Aesthetic Medicine CME Requirements in GCC"
+        url="https://hayyamed.pro/aesthetic-medicine-cme"
+        description="CME and CPD requirements for aesthetic medicine physicians in GCC. QCHP Qatar 80 CPD/2yr, SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. Track aesthetic medicine CME across all 7 GCC licensing authorities."
+        keywords={["aesthetic medicine CME requirements GCC", "aesthetic physician CME GCC", "QCHP aesthetic medicine CPD", "SCFHS aesthetic CME", "GCC aesthetic doctor license renewal"]}
+      />
 
       <div className="min-h-screen bg-[#f8fafc]">
         <header className="bg-white border-b border-[#e2e8f0]">

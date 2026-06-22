@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -127,6 +128,12 @@ export default function InternalMedicineCmePage() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Internal Medicine CME", url: "https://hayyamed.pro/internal-medicine-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Internal Medicine CME Requirements in GCC"
+        url="https://hayyamed.pro/internal-medicine-cme"
+        description="Complete CME guide for internists in Qatar, Saudi Arabia, UAE, Kuwait, Bahrain, and Oman."
+        keywords={["internal medicine CME GCC", "internist CME requirements Qatar", "QCHP internal medicine CPD", "SCFHS internist CME", "GCC internal medicine license renewal"]}
+      />
 
       <div className="min-h-screen bg-[#f8fafc]">
         <header className="bg-white border-b border-[#e2e8f0]">

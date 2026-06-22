@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -88,6 +89,12 @@ export default function UrologyCmePage() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Urology CME", url: "https://hayyamed.pro/urology-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Urology CME"
+        url="https://hayyamed.pro/urology-cme"
+        description="CME and CPD requirements for urologists in GCC. QCHP Qatar 80 CPD/2yr, SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. Track urology CME across all 7 GCC licensing authorities."
+        keywords={["urology CME requirements GCC", "urologist CME Saudi Arabia", "SCFHS urology CME", "QCHP urologist CPD", "urology CPD Qatar", "urologist license renewal GCC"]}
+      />
       <div className="min-h-screen bg-[#f8fafc]">
         <header className="bg-white border-b border-[#e2e8f0]">
           <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">

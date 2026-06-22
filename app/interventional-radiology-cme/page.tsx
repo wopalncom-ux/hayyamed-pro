@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -124,6 +125,12 @@ export default function InterventionalRadiologyCmePage() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Interventional Radiology CME", url: "https://hayyamed.pro/interventional-radiology-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Interventional Radiology CME"
+        url="https://hayyamed.pro/interventional-radiology-cme"
+        description="CME and CPD requirements for interventional radiologists in GCC. QCHP Qatar 80 CPD/2yr, SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. Track IR CME across all 7 GCC licensing authorities."
+        keywords={["interventional radiology CME requirements GCC", "interventional radiologist CME Saudi Arabia", "SCFHS interventional radiology CME", "QCHP IR CPD", "interventional radiology CPD Qatar", "IR CME tracker"]}
+      />
 
       <div className="min-h-screen bg-[#f8fafc]">
         <header className="bg-white border-b border-[#e2e8f0]">

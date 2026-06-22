@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -139,6 +140,12 @@ export default function OphthalmologyCmePage() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Ophthalmology CME", url: "https://hayyamed.pro/ophthalmology-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Ophthalmology CME"
+        url="https://hayyamed.pro/ophthalmology-cme"
+        description="Complete CME and CPD guide for ophthalmologists in GCC. QCHP Qatar 80 CPD/2yr, SCFHS Saudi Arabia 60 CME/yr, DHA Dubai 40 CME/2yr. Surgical simulation, phacoemulsification, and LASIK courses count. Track all 7 authorities."
+        keywords={["ophthalmology CME requirements GCC", "ophthalmologist CME Saudi Arabia", "SCFHS ophthalmology CME", "QCHP ophthalmologist CPD", "ophthalmology CPD Qatar", "cataract surgery CME GCC"]}
+      />
 
       {/* Hero */}
       <section style={{ background: "#0f1f3d", color: "#fff", padding: "72px 24px 56px" }}>

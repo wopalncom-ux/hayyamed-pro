@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -104,6 +105,12 @@ export default function PlasticSurgeryCme() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Plastic Surgery CME", url: "https://hayyamed.pro/plastic-surgery-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Plastic Surgery CME"
+        url="https://hayyamed.pro/plastic-surgery-cme"
+        description="CME and CPD requirements for plastic surgeons in Qatar, Saudi Arabia, UAE, and all GCC countries. QCHP, SCFHS, DHA plastic surgery CME credits, IPRAS and ISAPS accreditors, and aesthetic surgery training."
+        keywords={["plastic surgery CME GCC", "plastic surgeon CME requirements", "QCHP plastic surgery CPD", "SCFHS plastic surgery CME", "DHA plastic surgery CME", "reconstructive surgery CME"]}
+      />
 
       <div className="min-h-screen bg-[#f8fafc]">
         <header className="bg-white border-b border-[#e2e8f0] sticky top-0 z-10">

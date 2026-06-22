@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -147,6 +148,12 @@ export default function JordanCmePage() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Jordan CME Requirements", url: "https://hayyamed.pro/jordan-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Jordan CME Requirements"
+        url="https://hayyamed.pro/jordan-cme"
+        description="Complete CME guide for Jordanian healthcare professionals. Jordan Medical Council (JMC): 30 CME credits/year. Hundreds of thousands of Jordanian doctors work in GCC — track your Jordanian and GCC licences in one app."
+        keywords={["Jordan CME requirements", "Jordan Medical Council CME", "JMC CME credits Jordan", "Jordanian doctor CME", "Jordan medical license renewal CME", "Jordanian healthcare professional GCC"]}
+      />
 
       {/* Hero */}
       <section style={{ background: "#0f1f3d", color: "#fff", padding: "72px 24px 56px" }}>

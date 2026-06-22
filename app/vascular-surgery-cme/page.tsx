@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -104,6 +105,12 @@ export default function VascularSurgeryCme() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Vascular Surgery CME", url: "https://hayyamed.pro/vascular-surgery-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Vascular Surgery CME"
+        url="https://hayyamed.pro/vascular-surgery-cme"
+        description="CME and CPD requirements for vascular surgeons in Qatar, Saudi Arabia, UAE, and all GCC countries. QCHP, SCFHS, DHA vascular surgery CME credits, SVS and ESVS accreditors, and endovascular training."
+        keywords={["vascular surgery CME GCC", "vascular surgeon CME requirements", "QCHP vascular surgery CPD", "SCFHS vascular surgery CME", "DHA vascular surgery CME", "endovascular CME GCC"]}
+      />
 
       <div className="min-h-screen bg-[#f8fafc]">
         <header className="bg-white border-b border-[#e2e8f0] sticky top-0 z-10">

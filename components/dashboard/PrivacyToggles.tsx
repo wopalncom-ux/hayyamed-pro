@@ -36,36 +36,61 @@ export default function PrivacyToggles({ initial }: { initial: PrivacySettings }
     }
   }
 
+  function Toggle({ field, disabled }: { field: string; disabled?: boolean }) {
+    return (
+      <div className="flex items-center gap-2">
+        {saved === field && <span className="text-xs text-[#16a34a]">Saved</span>}
+        <button
+          onClick={() => handleToggle(field)}
+          disabled={saving === field || disabled}
+          className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus:outline-none disabled:opacity-60 ${
+            values[field] ? "bg-[#1a56a0]" : "bg-[#e2e8f0]"
+          }`}
+          role="switch"
+          aria-checked={values[field]}
+        >
+          <span
+            className={`inline-block h-3.5 w-3.5 transform rounded-full bg-white shadow transition-transform ${
+              values[field] ? "translate-x-[18px]" : "translate-x-[3px]"
+            }`}
+          />
+        </button>
+      </div>
+    );
+  }
+
   return (
-    <div className="space-y-3">
-      <p className="text-xs text-[#64748b] mb-3">
-        Control what information your employer can see on their compliance dashboard.
-      </p>
-      {TOGGLES.map(({ field, label }) => (
-        <div key={field} className="flex items-center justify-between py-2 border-b border-[#f1f5f9] last:border-0">
-          <span className="text-sm text-[#374151]">{label}</span>
-          <div className="flex items-center gap-2">
-            {saved === field && (
-              <span className="text-xs text-[#16a34a]">Saved</span>
-            )}
-            <button
-              onClick={() => handleToggle(field)}
-              disabled={saving === field}
-              className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus:outline-none disabled:opacity-60 ${
-                values[field] ? "bg-[#1a56a0]" : "bg-[#e2e8f0]"
-              }`}
-              role="switch"
-              aria-checked={values[field]}
-            >
-              <span
-                className={`inline-block h-3.5 w-3.5 transform rounded-full bg-white shadow transition-transform ${
-                  values[field] ? "translate-x-[18px]" : "translate-x-[3px]"
-                }`}
-              />
-            </button>
-          </div>
+    <div className="space-y-6">
+      {/* Employer visibility */}
+      <div>
+        <p className="text-xs text-[#64748b] mb-3">
+          Control what information your employer can see on their compliance dashboard.
+        </p>
+        <div className="space-y-0">
+          {TOGGLES.map(({ field, label }) => (
+            <div key={field} className="flex items-center justify-between py-2 border-b border-[#f1f5f9] last:border-0">
+              <span className="text-sm text-[#374151]">{label}</span>
+              <Toggle field={field} />
+            </div>
+          ))}
         </div>
-      ))}
+      </div>
+
+      {/* AI consent — PDPL/GDPR Art. 6(1)(a) */}
+      <div className="border border-[#e2e8f0] rounded-xl p-4 bg-[#f8fafc]">
+        <p className="text-xs font-semibold text-[#374151] uppercase tracking-wide mb-3">AI Features</p>
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="text-sm font-medium text-[#111]">AI compliance analysis</p>
+            <p className="text-xs text-[#64748b] mt-0.5 leading-relaxed max-w-sm">
+              Allow AI (Anthropic Claude) to analyse your anonymised compliance data for gap analysis,
+              learning pathway recommendations, and renewal predictions. Your name and license number
+              are never sent to AI systems.
+            </p>
+          </div>
+          <Toggle field="ai_data_consent" />
+        </div>
+      </div>
     </div>
   );
 }

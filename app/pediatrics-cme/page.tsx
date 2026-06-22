@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
+import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
 
 const APP_URL = "https://hayyamed.pro";
 
@@ -127,6 +128,12 @@ export default function PediatricsCmePage() {
         { name: "Home", url: "https://hayyamed.pro" },
         { name: "Pediatrics CME", url: "https://hayyamed.pro/pediatrics-cme" },
       ]} />
+      <MedicalWebPageJsonLd
+        name="Pediatrics CME Requirements in GCC"
+        url="https://hayyamed.pro/pediatrics-cme"
+        description="Complete CME guide for pediatricians in Qatar, Saudi Arabia, UAE, Kuwait, Bahrain, and Oman."
+        keywords={["pediatrics CME GCC", "pediatrician CME requirements Qatar", "QCHP pediatrics CPD", "SCFHS pediatrician CME", "GCC pediatrics license renewal"]}
+      />
 
       <div className="min-h-screen bg-[#f8fafc]">
         <header className="bg-white border-b border-[#e2e8f0]">

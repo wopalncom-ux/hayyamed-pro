@@ -10,6 +10,7 @@ import { isFeatureEnabled } from "@/lib/featureFlags";
 import { logAudit } from "@/lib/audit";
 import { logAiCall } from "@/lib/ai/logAiCall";
 import { buildGapAnalysisPrompt } from "@/lib/ai/prompts/gap-analysis";
+import { checkAiConsent } from "@/lib/ai/checkAiConsent";
 
 const CategoryGapSchema = z.object({
   category: z.string(),
@@ -55,6 +56,7 @@ export async function POST(req: NextRequest) {
   const plan = await getUserPlan(user.id);
   if (!isPro(plan)) return NextResponse.json({ error: "Pro plan required" }, { status: 403 });
   if (!await isFeatureEnabled("ai_gap_analysis", plan)) return NextResponse.json({ error: "Feature unavailable" }, { status: 403 });
+  if (!await checkAiConsent(user.id)) return NextResponse.json({ error: "AI consent required — enable in Settings > Privacy" }, { status: 403 });
 
   const body = await req.json() as {
     profession: string;

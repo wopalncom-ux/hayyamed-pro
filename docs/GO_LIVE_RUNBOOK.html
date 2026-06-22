@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hayya Med Pro — Go-Live Runbook</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f4f8; color: #1e293b; font-size: 15px; line-height: 1.6; }
+  .header { background: #0f1f3d; color: white; padding: 40px 48px; border-bottom: 3px solid #1a56a0; }
+  .header h1 { font-size: 28px; font-weight: 800; margin-bottom: 6px; }
+  .header p { color: #94a3b8; font-size: 14px; }
+  .header .meta { display: flex; gap: 24px; margin-top: 16px; flex-wrap: wrap; }
+  .header .meta span { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+  .container { max-width: 900px; margin: 0 auto; padding: 32px 24px; }
+  .alert { border-radius: 10px; padding: 16px 20px; margin-bottom: 24px; display: flex; gap: 12px; align-items: flex-start; }
+  .alert.info { background: #eff6ff; border: 1px solid #bfdbfe; }
+  .alert.warn { background: #fff7ed; border: 1px solid #fed7aa; }
+  .alert.success { background: #f0fdf4; border: 1px solid #bbf7d0; }
+  .alert-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .alert p { font-size: 14px; color: #374151; }
+  .alert strong { display: block; margin-bottom: 4px; font-size: 14px; }
+  .progress-bar { background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px 24px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+  .progress-bar h3 { font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 14px; }
+  .steps-overview { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; }
+  .step-pill { background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px 10px; text-align: center; font-size: 11px; font-weight: 600; color: #64748b; }
+  .step-pill.blocker { background: #fef2f2; border-color: #fecaca; color: #dc2626; }
+  .step-pill.partial { background: #fff7ed; border-color: #fed7aa; color: #d97706; }
+  .blocker-card { background: white; border: 1px solid #e2e8f0; border-radius: 14px; margin-bottom: 24px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .blocker-header { display: flex; align-items: center; gap: 14px; padding: 18px 24px; border-bottom: 1px solid #f1f5f9; background: #fafafa; }
+  .blocker-number { width: 32px; height: 32px; border-radius: 50%; background: #1a56a0; color: white; font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .blocker-number.warn { background: #d97706; }
+  .blocker-number.partial { background: #d97706; }
+  .blocker-title { flex: 1; }
+  .blocker-title h2 { font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 2px; }
+  .blocker-title p { font-size: 12px; color: #64748b; }
+  .blocker-time { background: #f1f5f9; border-radius: 6px; padding: 3px 10px; font-size: 11px; font-weight: 700; color: #374151; white-space: nowrap; }
+  .blocker-body { padding: 20px 24px; }
+  .step-list { list-style: none; counter-reset: step-counter; }
+  .step-list li { counter-increment: step-counter; display: flex; gap: 12px; margin-bottom: 14px; align-items: flex-start; }
+  .step-list li::before { content: counter(step-counter); width: 22px; height: 22px; border-radius: 50%; background: #e2e8f0; color: #374151; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .step-list li p { font-size: 14px; color: #374151; }
+  .step-list li p strong { color: #0f172a; }
+  code { font-family: 'Courier New', monospace; background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-size: 12px; color: #1a56a0; border: 1px solid #e2e8f0; }
+  .code-block { background: #0f172a; border-radius: 10px; padding: 16px 20px; margin: 12px 0; overflow-x: auto; }
+  .code-block pre { font-family: 'Courier New', monospace; font-size: 13px; color: #e2e8f0; line-height: 1.7; white-space: pre-wrap; word-break: break-all; }
+  .code-block .comment { color: #64748b; }
+  .code-block .cmd { color: #60a5fa; }
+  .code-block .val { color: #4ade80; }
+  .code-block .key { color: #fb923c; }
+  .url-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 10px 14px; margin: 10px 0; font-family: 'Courier New', monospace; font-size: 13px; color: #1a56a0; word-break: break-all; }
+  .table-wrap { overflow-x: auto; margin: 12px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #f8fafc; color: #374151; font-weight: 700; padding: 10px 14px; text-align: left; border-bottom: 2px solid #e2e8f0; }
+  td { padding: 10px 14px; border-bottom: 1px solid #f1f5f9; color: #374151; vertical-align: top; }
+  td code { font-size: 12px; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+  .tag.red { background: #fef2f2; color: #dc2626; }
+  .tag.orange { background: #fff7ed; color: #d97706; }
+  .tag.green { background: #f0fdf4; color: #16a34a; }
+  .tag.blue { background: #eff6ff; color: #1a56a0; }
+  .section-title { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; margin: 32px 0 12px; }
+  .final-step { background: #0f1f3d; border-radius: 14px; padding: 28px 28px; color: white; margin-top: 32px; }
+  .final-step h2 { font-size: 20px; font-weight: 800; margin-bottom: 8px; color: white; }
+  .final-step p { color: #94a3b8; font-size: 14px; margin-bottom: 16px; }
+  .final-step .code-block { margin: 12px 0; }
+  .checklist { list-style: none; }
+  .checklist li { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 10px; font-size: 14px; color: #374151; }
+  .checklist li::before { content: '☐'; font-size: 16px; flex-shrink: 0; line-height: 1.4; color: #94a3b8; }
+  .divider { border: none; border-top: 1px solid #e2e8f0; margin: 28px 0; }
+  a { color: #1a56a0; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .note { font-size: 12px; color: #94a3b8; margin-top: 8px; font-style: italic; }
+  .highlight { background: #fef9c3; padding: 1px 4px; border-radius: 3px; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Hayya Med Pro — Go-Live Runbook</h1>
+  <p>Step-by-step execution guide to take hayyamed.pro from coming-soon to fully public.</p>
+  <div class="meta">
+    <span>⏱ Total time: ~90 minutes</span>
+    <span>📋 7 blockers remaining</span>
+    <span>✅ Code: 100% complete</span>
+    <span>🔒 No code changes needed</span>
+    <span>Last updated: 2026-06-17</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="alert info">
+    <div class="alert-icon">ℹ️</div>
+    <div>
+      <strong>Platform is code-complete.</strong>
+      <p>All 71 migrations written, 16 cron jobs configured, security audit passed, 0 TypeScript errors. Every item below is an external account / configuration action — no code changes required to go live.</p>
+    </div>
+  </div>
+
+  <div class="progress-bar">
+    <h3>Launch Blockers — Quick Reference</h3>
+    <div class="steps-overview">
+      <div class="step-pill blocker">1. Migrations</div>
+      <div class="step-pill blocker">2. Auth URL</div>
+      <div class="step-pill blocker">3. Upstash Rotate</div>
+      <div class="step-pill blocker">4. VAPID Key</div>
+      <div class="step-pill partial">5. Paddle</div>
+      <div class="step-pill partial">6. Postmark</div>
+      <div class="step-pill blocker">7. Go Live</div>
+    </div>
+  </div>
+
+  <!-- ── BLOCKER 1 ── -->
+  <div class="section-title">Step 1 of 7 — Database</div>
+  <div class="blocker-card">
+    <div class="blocker-header">
+      <div class="blocker-number">1</div>
+      <div class="blocker-title">
+        <h2>Run all 71 migrations</h2>
+        <p>Paste the combined SQL script into Supabase SQL Editor</p>
+      </div>
+      <div class="blocker-time">~5 min</div>
+    </div>
+    <div class="blocker-body">
+      <ul class="step-list">
+        <li><p>Open your Supabase project: <span class="url-box">https://supabase.com/dashboard/project/ulevibytaxocdvdfmfaq</span></p></li>
+        <li><p>Go to <strong>SQL Editor</strong> in the left sidebar.</p></li>
+        <li><p>Open the file <code>supabase/migrations/COMBINED_RUN_ONCE.sql</code> from your local project. It is a single idempotent script — safe to re-run if already partially applied.</p></li>
+        <li><p>Paste the entire contents into the SQL editor and click <strong>Run</strong>. This runs all 71 migrations in order.</p></li>
+        <li><p>Verify completion: the editor should return "Success" with no errors. If a migration already ran, it will skip safely due to <code>IF NOT EXISTS</code> guards.</p></li>
+        <li><p>Specifically confirm migration 068 ran — it adds <code>public_directory_opt_in</code> to <code>professional_profiles</code>. Run this check:</p>
+          <div class="code-block"><pre>SELECT column_name FROM information_schema.columns
+WHERE table_name = 'professional_profiles'
+  AND column_name = 'public_directory_opt_in';</pre></div>
+          <p>Should return one row. If empty, migration 068 did not run.</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── BLOCKER 2 ── -->
+  <div class="section-title">Step 2 of 7 — Authentication</div>
+  <div class="blocker-card">
+    <div class="blocker-header">
+      <div class="blocker-number">2</div>
+      <div class="blocker-title">
+        <h2>Add /auth/callback to Supabase Redirect URLs</h2>
+        <p>Without this, OAuth and magic link callbacks fail silently</p>
+      </div>
+      <div class="blocker-time">~2 min</div>
+    </div>
+    <div class="blocker-body">
+      <ul class="step-list">
+        <li><p>In the Supabase dashboard, go to <strong>Authentication → URL Configuration</strong>.</p></li>
+        <li><p>Confirm <strong>Site URL</strong> is set to: <code>https://hayyamed.pro</code></p></li>
+        <li><p>Under <strong>Redirect URLs</strong>, add each of the following on separate lines:</p>
+          <div class="code-block"><pre>https://hayyamed.pro/auth/callback
+https://hayyamed.pro/auth/callback?next=/dashboard
+http://localhost:3000/auth/callback</pre></div>
+        </li>
+        <li><p>Click <strong>Save</strong>. No deployment needed — takes effect immediately.</p></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── BLOCKER 3 ── -->
+  <div class="section-title">Step 3 of 7 — Rate Limiting</div>
+  <div class="blocker-card">
+    <div class="blocker-header">
+      <div class="blocker-number warn">3</div>
+      <div class="blocker-title">
+        <h2>Rotate Upstash credentials in Secret Manager</h2>
+        <p>Credentials were flagged in Session 47 — rotate before public launch</p>
+      </div>
+      <div class="blocker-time">~10 min</div>
+    </div>
+    <div class="blocker-body">
+      <div class="alert warn">
+        <div class="alert-icon">⚠️</div>
+        <div><p>The Upstash credentials currently in Secret Manager were noted as needing rotation in Session 47. Do this before going live.</p></div>
+      </div>
+      <ul class="step-list">
+        <li><p>Log in to <a href="https://console.upstash.com" target="_blank">console.upstash.com</a> → open your Redis database.</p></li>
+        <li><p>Go to <strong>Details → Reset Password</strong> (or create a new database if preferred). Copy the new <strong>REST URL</strong> and <strong>REST Token</strong>.</p></li>
+        <li><p>Update the secrets in GCP Secret Manager. Open <a href="https://console.cloud.google.com/security/secret-manager?project=project-38d955b0-84e7-44b6-8b5" target="_blank">Secret Manager</a>.</p></li>
+        <li><p>Click <strong>hayyamed-pro-upstash-url</strong> → <strong>+ New Version</strong> → paste the new REST URL → <strong>Add New Version</strong>. Then click <strong>Disable</strong> on the old version.</p></li>
+        <li><p>Repeat for <strong>hayyamed-pro-upstash-token</strong> with the new REST Token.</p></li>
+        <li><p>Or use the gcloud CLI:</p>
+          <div class="code-block"><pre><span class="comment"># Replace YOUR_NEW_URL and YOUR_NEW_TOKEN with actual values</span>
+<span class="cmd">echo</span> -n <span class="val">"YOUR_NEW_URL"</span> | gcloud secrets versions add hayyamed-pro-upstash-url \
+  --data-file=- --project=project-38d955b0-84e7-44b6-8b5
+
+<span class="cmd">echo</span> -n <span class="val">"YOUR_NEW_TOKEN"</span> | gcloud secrets versions add hayyamed-pro-upstash-token \
+  --data-file=- --project=project-38d955b0-84e7-44b6-8b5</pre></div>
+        </li>
+        <li><p>The new secret versions are picked up on the next Cloud Run deployment (triggered in Step 7).</p></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── BLOCKER 4 ── -->
+  <div class="section-title">Step 4 of 7 — Push Notifications</div>
+  <div class="blocker-card">
+    <div class="blocker-header">
+      <div class="blocker-number">4</div>
+      <div class="blocker-title">
+        <h2>Add VAPID private key to Secret Manager</h2>
+        <p>Required for web push notifications — license reminders, CME deadlines</p>
+      </div>
+      <div class="blocker-time">~5 min</div>
+    </div>
+    <div class="blocker-body">
+      <div class="alert info">
+        <div class="alert-icon">ℹ️</div>
+        <div><p>The VAPID public key is already baked into the build: <code>BKmyU-09Tox9-Z9V21e26-jP2I4paR3QuBjRG4gdnLS9UVauqYeGXO2l5OqBTGrk6Ga-m_gzX7jw5syPd87k9hw</code>. You only need to add the matching private key.</p></div>
+      </div>
+      <ul class="step-list">
+        <li><p>If you already have the VAPID private key that matches the public key above, skip to step 3. If you need to generate a new VAPID key pair, the public key in the build must also be updated:</p>
+          <div class="code-block"><pre><span class="comment"># Generate a new VAPID key pair (if you lost the private key)</span>
+<span class="cmd">npx web-push</span> generate-vapid-keys</pre></div>
+          <p class="note">If you generate new keys, you must also update NEXT_PUBLIC_VAPID_PUBLIC_KEY in cloudbuild.yaml → rebuild → deploy.</p>
+        </li>
+        <li><p>Add the private key to Secret Manager:</p>
+          <div class="code-block"><pre><span class="comment"># Replace YOUR_VAPID_PRIVATE_KEY with the base64url private key</span>
+<span class="cmd">echo</span> -n <span class="val">"YOUR_VAPID_PRIVATE_KEY"</span> | gcloud secrets versions add hayyamed-pro-vapid-private \
+  --data-file=- --project=project-38d955b0-84e7-44b6-8b5</pre></div>
+          <p>Or in the GCP Console: Secret Manager → <strong>hayyamed-pro-vapid-private</strong> → <strong>+ New Version</strong>.</p>
+        </li>
+        <li><p>Verify the secret exists and has a version:</p>
+          <div class="code-block"><pre>gcloud secrets versions list hayyamed-pro-vapid-private \
+  --project=project-38d955b0-84e7-44b6-8b5</pre></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── BLOCKER 5 ── -->
+  <div class="section-title">Step 5 of 7 — Payments</div>
+  <div class="blocker-card">
+    <div class="blocker-header">
+      <div class="blocker-number partial">5</div>
+      <div class="blocker-title">
+        <h2>Set up Paddle account and price IDs</h2>
+        <p>10 price IDs needed — the platform works without payments but Pro upgrades will fail</p>
+      </div>
+      <div class="blocker-time">~30 min</div>
+    </div>
+    <div class="blocker-body">
+      <div class="alert warn">
+        <div class="alert-icon">⚠️</div>
+        <div><p>Without Paddle, the platform works for Free tier users. Payments fail at checkout. You can go live with Paddle in sandbox mode and switch to live later — or skip this step for a soft launch to free users first.</p></div>
+      </div>
+
+      <p style="font-size:14px;color:#374151;margin-bottom:14px;font-weight:600;">Part A — Paddle account</p>
+      <ul class="step-list">
+        <li><p>Log in to <a href="https://vendors.paddle.com" target="_blank">vendors.paddle.com</a>. Complete business verification if not done.</p></li>
+        <li><p>Get your API key: <strong>Developer Tools → Authentication → API Keys → Generate API Key</strong>. Add it to Secret Manager:</p>
+          <div class="code-block"><pre>echo -n "YOUR_PADDLE_API_KEY" | gcloud secrets versions add hayyamed-pro-paddle-key \
+  --data-file=- --project=project-38d955b0-84e7-44b6-8b5</pre></div>
+        </li>
+        <li><p>Create a webhook endpoint: <strong>Developer Tools → Notifications → Add Destination</strong>. URL: <code>https://hayyamed.pro/api/paddle/webhook</code>. Subscribe to: <code>subscription.created</code>, <code>subscription.updated</code>, <code>subscription.canceled</code>, <code>transaction.completed</code>. Copy the secret key and add it:</p>
+          <div class="code-block"><pre>echo -n "YOUR_PADDLE_WEBHOOK_SECRET" | gcloud secrets versions add hayyamed-pro-paddle-webhook \
+  --data-file=- --project=project-38d955b0-84e7-44b6-8b5</pre></div>
+        </li>
+      </ul>
+
+      <hr class="divider">
+      <p style="font-size:14px;color:#374151;margin-bottom:14px;font-weight:600;">Part B — Create 10 products and price IDs</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Product</th><th>Price</th><th>Billing</th><th>Cloud Build Trigger var</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Hayya Med Pro</td><td>$6.00 USD</td><td>Monthly</td><td><code>_PADDLE_PRO_MONTHLY</code></td></tr>
+            <tr><td>Hayya Med Pro</td><td>$61.20 USD</td><td>Annual</td><td><code>_PADDLE_PRO_ANNUAL</code></td></tr>
+            <tr><td>Employer — Clinic (up to 25 staff)</td><td>$49/mo</td><td>Monthly</td><td><code>_PADDLE_CLINIC_MONTHLY</code></td></tr>
+            <tr><td>Employer — Clinic</td><td>$490/yr</td><td>Annual</td><td><code>_PADDLE_CLINIC_ANNUAL</code></td></tr>
+            <tr><td>Employer — Growth (up to 100 staff)</td><td>$149/mo</td><td>Monthly</td><td><code>_PADDLE_GROWTH_MONTHLY</code></td></tr>
+            <tr><td>Employer — Growth</td><td>$1490/yr</td><td>Annual</td><td><code>_PADDLE_GROWTH_ANNUAL</code></td></tr>
+            <tr><td>Employer — Department (up to 500 staff)</td><td>$349/mo</td><td>Monthly</td><td><code>_PADDLE_DEPT_MONTHLY</code></td></tr>
+            <tr><td>Employer — Department</td><td>$3490/yr</td><td>Annual</td><td><code>_PADDLE_DEPT_ANNUAL</code></td></tr>
+            <tr><td>Employer — Hospital (unlimited staff)</td><td>$599/mo</td><td>Monthly</td><td><code>_PADDLE_HOSP_MONTHLY</code></td></tr>
+            <tr><td>Employer — Hospital</td><td>$5990/yr</td><td>Annual</td><td><code>_PADDLE_HOSP_ANNUAL</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">In Paddle: Catalog → Products → Add Product → add a price → copy the <code>pri_xxxxx</code> price ID.</p>
+
+      <hr class="divider">
+      <p style="font-size:14px;color:#374151;margin-bottom:14px;font-weight:600;">Part C — Add price IDs to Cloud Build Trigger</p>
+      <ul class="step-list">
+        <li><p>Open GCP: <a href="https://console.cloud.google.com/cloud-build/triggers?project=project-38d955b0-84e7-44b6-8b5" target="_blank">Cloud Build Triggers</a>.</p></li>
+        <li><p>Click the <strong>hayyamed-pro</strong> trigger → <strong>Edit</strong>.</p></li>
+        <li><p>Under <strong>Substitution variables</strong>, fill in all 10 Paddle price IDs with the <code>pri_xxxxx</code> values from Paddle.</p></li>
+        <li><p>Set Paddle success URL in your Paddle dashboard: <code>https://hayyamed.pro/dashboard?upgrade=success</code></p></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── BLOCKER 6 ── -->
+  <div class="section-title">Step 6 of 7 — Email</div>
+  <div class="blocker-card">
+    <div class="blocker-header">
+      <div class="blocker-number partial">6</div>
+      <div class="blocker-title">
+        <h2>Activate Postmark and test email flows</h2>
+        <p>Account submitted for approval — activate and run 3 test flows</p>
+      </div>
+      <div class="blocker-time">~15 min</div>
+    </div>
+    <div class="blocker-body">
+      <div class="alert warn">
+        <div class="alert-icon">⚠️</div>
+        <div><p>Without Postmark, the site works but email verification, password reset, and welcome emails all fail silently. Users cannot complete registration.</p></div>
+      </div>
+      <ul class="step-list">
+        <li><p>Log in to <a href="https://account.postmarkapp.com" target="_blank">postmarkapp.com</a>. If your account is in <strong>sandbox mode</strong>, request production approval (usually instant for SaaS accounts with valid domain).</p></li>
+        <li><p>Verify your sending domain: <strong>hayyamed.pro</strong>. SPF and DKIM DNS records are already configured. Confirm both show green in Postmark.</p></li>
+        <li><p>Get your <strong>Server API Token</strong> (not account token): <strong>Settings → API Tokens</strong>. Update Secret Manager:</p>
+          <div class="code-block"><pre>echo -n "YOUR_POSTMARK_SERVER_API_TOKEN" | gcloud secrets versions add hayyamed-pro-postmark-key \
+  --data-file=- --project=project-38d955b0-84e7-44b6-8b5</pre></div>
+        </li>
+        <li><p>Add a Postmark Bounce webhook: <strong>Settings → Webhooks → Add Webhook</strong>. URL: <code>https://hayyamed.pro/api/webhooks/postmark</code>. Select: <strong>Bounce</strong> and <strong>Spam Complaint</strong>. Generate a webhook secret and add it:</p>
+          <div class="code-block"><pre>echo -n "YOUR_POSTMARK_WEBHOOK_TOKEN" | gcloud secrets versions add hayyamed-pro-postmark-webhook-token \
+  --data-file=- --project=project-38d955b0-84e7-44b6-8b5</pre></div>
+        </li>
+        <li><p>After Step 7 (deploy), test all three critical email flows using your own email address:</p>
+          <ul style="list-style:none;margin:8px 0 0 0;">
+            <li style="padding:6px 0;font-size:14px;color:#374151;">☐ Register a new account → receive email verification</li>
+            <li style="padding:6px 0;font-size:14px;color:#374151;">☐ Complete onboarding → receive welcome email</li>
+            <li style="padding:6px 0;font-size:14px;color:#374151;">☐ Click "Forgot Password" → receive reset email</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── BLOCKER 7 ── -->
+  <div class="section-title">Step 7 of 7 — Go Live</div>
+  <div class="blocker-card">
+    <div class="blocker-header">
+      <div class="blocker-number">7</div>
+      <div class="blocker-title">
+        <h2>Set COMING_SOON = false → trigger deploy → verify live</h2>
+        <p>The single switch that opens the platform to the public</p>
+      </div>
+      <div class="blocker-time">~10 min</div>
+    </div>
+    <div class="blocker-body">
+      <div class="alert success">
+        <div class="alert-icon">🚀</div>
+        <div><p><strong>This is the go-live action.</strong> No code change needed. One substitution variable change triggers a full build and deploy. The public marketing site goes live immediately on successful deploy.</p></div>
+      </div>
+
+      <p style="font-size:14px;color:#374151;margin-bottom:14px;font-weight:600;">Option A — Via GCP Console (recommended)</p>
+      <ul class="step-list">
+        <li><p>Open <a href="https://console.cloud.google.com/cloud-build/triggers?project=project-38d955b0-84e7-44b6-8b5" target="_blank">Cloud Build Triggers</a>.</p></li>
+        <li><p>Click the <strong>hayyamed-pro</strong> trigger → <strong>Edit</strong>.</p></li>
+        <li><p>Under <strong>Substitution variables</strong>, find <code>_COMING_SOON</code> and change the value from <code>true</code> → <code class="highlight">false</code>.</p></li>
+        <li><p>Also set all Upstash and VAPID secrets from Steps 3–4 if you haven't already (they take effect on this deploy).</p></li>
+        <li><p>Click <strong>Save</strong>, then click <strong>Run Trigger</strong> to start the build immediately.</p></li>
+      </ul>
+
+      <p style="font-size:14px;color:#374151;margin-top:16px;margin-bottom:14px;font-weight:600;">Option B — Via gcloud CLI</p>
+      <div class="code-block"><pre><span class="comment"># Trigger the build with COMING_SOON=false</span>
+gcloud builds triggers run hayyamed-pro \
+  --substitutions=_COMING_SOON=false \
+  --project=project-38d955b0-84e7-44b6-8b5 \
+  --region=global</pre></div>
+
+      <hr class="divider">
+      <p style="font-size:14px;color:#374151;margin-bottom:14px;font-weight:600;">Post-deploy verification checklist (run after build completes ~8 minutes)</p>
+      <ul class="checklist">
+        <li>Visit <a href="https://hayyamed.pro" target="_blank">https://hayyamed.pro</a> — should show the landing page, not coming-soon</li>
+        <li>Visit <a href="https://hayyamed.pro/demo" target="_blank">https://hayyamed.pro/demo</a> — interactive demo renders correctly</li>
+        <li>Visit <a href="https://hayyamed.pro/register" target="_blank">https://hayyamed.pro/register</a> — registration form loads</li>
+        <li>Register a new account → check email arrives (verify Postmark is working)</li>
+        <li>Complete 7-step onboarding → dashboard loads with wallet</li>
+        <li>Visit <a href="https://hayyamed.pro/pricing" target="_blank">https://hayyamed.pro/pricing</a> — Paddle checkout opens</li>
+        <li>Visit <a href="https://hayyamed.pro/api/health" target="_blank">https://hayyamed.pro/api/health</a> — returns JSON with status OK</li>
+        <li>Check <a href="https://hayyamed.pro/admin/monitoring" target="_blank">/admin/monitoring</a> (admin login required) — 16/16 cron jobs green</li>
+        <li>Check <a href="https://hayyamed.pro/admin/analytics" target="_blank">/admin/analytics</a> — first signup event visible in PostHog</li>
+        <li>Check GCP Cloud Run console — no 5xx errors in the last 5 minutes</li>
+        <li>Check Sentry dashboard — no new error events from the deploy</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Final section -->
+  <div class="final-step">
+    <h2>After you go live — First 24 hours</h2>
+    <p>Platform is public. Here's what to do in the first 24 hours to get to your first Pro subscriber.</p>
+    <ul class="checklist" style="list-style:none;">
+      <li style="color:#e2e8f0;padding:6px 0;font-size:14px;">☐ Post on LinkedIn: "Hayya Med Pro is live — track your CME/CPD for QCHP, SCFHS, DHA. Free forever." + link to /demo</li>
+      <li style="color:#e2e8f0;padding:6px 0;font-size:14px;">☐ Invite 10 healthcare professionals from your network to create free accounts</li>
+      <li style="color:#e2e8f0;padding:6px 0;font-size:14px;">☐ Send the /demo link to 3 hospital HR contacts — no login required</li>
+      <li style="color:#e2e8f0;padding:6px 0;font-size:14px;">☐ Check /admin/analytics at end of day — monitor signup → onboarding → first CME funnel</li>
+      <li style="color:#e2e8f0;padding:6px 0;font-size:14px;">☐ Monitor GCP error rate + Sentry for any production issues</li>
+      <li style="color:#e2e8f0;padding:6px 0;font-size:14px;">☐ First paid subscriber: verify Paddle webhook fires → subscription row created → Pro features unlocked</li>
+    </ul>
+  </div>
+
+  <div class="alert info" style="margin-top:24px;">
+    <div class="alert-icon">💡</div>
+    <div>
+      <strong>Soft launch strategy (optional)</strong>
+      <p>You can flip <code>COMING_SOON=false</code> before Paddle and Postmark are fully live. Free tier works completely — CME tracking, license countdown, dashboard, demo. Only payments (Pro upgrade) and email flows are unavailable. Use this to start getting real users on the platform while finalising Paddle/Postmark.</p>
+    </div>
+  </div>
+
+  <div style="margin-top:32px;padding:20px;background:white;border:1px solid #e2e8f0;border-radius:12px;font-size:13px;color:#64748b;">
+    <strong style="color:#374151;">Quick links</strong><br><br>
+    <a href="https://supabase.com/dashboard/project/ulevibytaxocdvdfmfaq/editor">Supabase SQL Editor</a> &nbsp;·&nbsp;
+    <a href="https://supabase.com/dashboard/project/ulevibytaxocdvdfmfaq/auth/url-configuration">Supabase Auth URL Config</a> &nbsp;·&nbsp;
+    <a href="https://console.cloud.google.com/security/secret-manager?project=project-38d955b0-84e7-44b6-8b5">GCP Secret Manager</a> &nbsp;·&nbsp;
+    <a href="https://console.cloud.google.com/cloud-build/triggers?project=project-38d955b0-84e7-44b6-8b5">Cloud Build Triggers</a> &nbsp;·&nbsp;
+    <a href="https://console.cloud.google.com/run/detail/me-central1/hayyamed-pro/metrics?project=project-38d955b0-84e7-44b6-8b5">Cloud Run Metrics</a> &nbsp;·&nbsp;
+    <a href="https://console.upstash.com">Upstash Console</a> &nbsp;·&nbsp;
+    <a href="https://account.postmarkapp.com">Postmark</a> &nbsp;·&nbsp;
+    <a href="https://vendors.paddle.com">Paddle</a>
+  </div>
+
+  <p style="text-align:center;color:#94a3b8;font-size:12px;margin-top:24px;">Generated 2026-06-17 · Hayya Med Pro · Session 139</p>
+</div>
+</body>
+</html>
