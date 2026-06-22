@@ -1,6 +1,7 @@
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import DashboardSubNav from "@/components/dashboard/DashboardSubNav";
 import CourseFilters from "@/components/marketplace/CourseFilters";
 import { Suspense } from "react";
@@ -26,7 +27,11 @@ export default async function MarketplacePage({
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  const sp = await searchParams;
+  const [t, sp] = await Promise.all([
+    getTranslations("marketplace"),
+    searchParams,
+  ]);
+
   const admin = createAdminClient();
 
   let query = admin
@@ -40,7 +45,6 @@ export default async function MarketplacePage({
   if (sp.mode) query = query.eq("delivery_mode", sp.mode);
   if (sp.free === "1") query = query.eq("is_free", true);
   if (sp.q?.trim()) {
-    // Use full-text search when possible, fall back to ilike for very short queries (<3 chars)
     const q = sp.q.trim();
     if (q.length >= 3) {
       query = query.textSearch("search_vector", q, { type: "websearch", config: "english" });
@@ -61,19 +65,29 @@ export default async function MarketplacePage({
   const courseList = courses ?? [];
   const enrollmentMap = new Map((myEnrollments ?? []).map((e) => [e.course_id, e.status]));
 
+  const modeLabel = (mode: string) => {
+    if (mode === "online") return t("mode_online");
+    if (mode === "in_person") return t("mode_in_person");
+    if (mode === "hybrid") return t("mode_hybrid");
+    if (mode === "self_paced") return t("mode_self_paced");
+    return mode.replace(/_/g, " ");
+  };
+
+  const searchQuery = sp.q?.trim();
+
   return (
     <div>
       <DashboardSubNav items={[
-        { href: "/dashboard/marketplace",              label: "Browse" },
-        { href: "/dashboard/marketplace/my-courses",   label: "My Courses" },
+        { href: "/dashboard/marketplace",            label: t("subnav_browse") },
+        { href: "/dashboard/marketplace/my-courses", label: t("subnav_my_courses") },
       ]} />
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h1 className="text-2xl font-bold text-[#111]">Training Marketplace</h1>
+          <h1 className="text-2xl font-bold text-[#111]">{t("heading")}</h1>
           <p className="text-sm text-[#64748b] mt-1">
-            {sp.q?.trim()
-              ? `${courseList.length} result${courseList.length !== 1 ? "s" : ""} for "${sp.q.trim()}"`
-              : "Accredited CME courses from GCC healthcare providers."}
+            {searchQuery
+              ? t("search_results", { n: courseList.length, s: courseList.length !== 1 ? "s" : "" })
+              : t("subtitle")}
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -81,13 +95,13 @@ export default async function MarketplacePage({
             href="/dashboard/marketplace/my-courses"
             className="text-sm text-[#1a56a0] hover:underline font-medium"
           >
-            My Courses →
+            {t("my_courses_link")}
           </Link>
           <a
             href="/provider/register"
             className="text-sm text-[#64748b] hover:text-[#111] border border-[#e2e8f0] px-3 py-1.5 rounded-lg hover:border-[#374151] transition-colors"
           >
-            List your courses
+            {t("list_courses")}
           </a>
         </div>
       </div>
@@ -101,20 +115,20 @@ export default async function MarketplacePage({
           <div className="w-12 h-12 bg-[#eff6ff] rounded-xl flex items-center justify-center mx-auto mb-4">
             <span className="text-2xl">🎓</span>
           </div>
-          <h2 className="text-base font-semibold text-[#111] mb-2">No courses found</h2>
+          <h2 className="text-base font-semibold text-[#111] mb-2">{t("empty_heading")}</h2>
           <p className="text-sm text-[#64748b] max-w-sm mx-auto">
-            {sp.q?.trim()
-              ? `No courses match "${sp.q.trim()}". Try a different search term or clear filters.`
+            {searchQuery
+              ? t("empty_search", { q: searchQuery })
               : sp.category || sp.mode || sp.free
-              ? "Try adjusting your filters."
-              : "We're onboarding accredited training providers. Check back soon."}
+              ? t("empty_filters")
+              : t("empty_default")}
           </p>
           {(sp.q || sp.category || sp.mode || sp.free) && (
             <Link
               href="/dashboard/marketplace"
               className="inline-block mt-4 text-sm text-[#1a56a0] hover:underline"
             >
-              Clear all filters
+              {t("clear_filters")}
             </Link>
           )}
         </div>
@@ -139,7 +153,7 @@ export default async function MarketplacePage({
                   <div className="flex items-center gap-1.5">
                     {provider?.is_accredited && (
                       <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-[#dcfce7] text-[#16a34a]">
-                        Accredited
+                        {t("badge_accredited")}
                       </span>
                     )}
                     {enrollStatus && (
@@ -148,7 +162,7 @@ export default async function MarketplacePage({
                           ? "bg-[#dcfce7] text-[#16a34a]"
                           : "bg-[#eff6ff] text-[#1a56a0]"
                       }`}>
-                        {enrollStatus === "completed" ? "Done" : "Enrolled"}
+                        {enrollStatus === "completed" ? t("badge_done") : t("badge_enrolled")}
                       </span>
                     )}
                   </div>
@@ -166,10 +180,10 @@ export default async function MarketplacePage({
                   <div className="flex items-center gap-2 text-xs text-[#64748b]">
                     <span className="font-semibold text-[#1a56a0]">+{course.credits} {course.credit_type}</span>
                     <span>·</span>
-                    <span className="capitalize">{course.delivery_mode.replace("_", " ")}</span>
+                    <span>{modeLabel(course.delivery_mode)}</span>
                   </div>
                   <span className="text-sm font-semibold text-[#111]">
-                    {course.is_free ? "Free" : `$${course.price_usd}`}
+                    {course.is_free ? t("price_free") : `$${course.price_usd}`}
                   </span>
                 </div>
               </Link>

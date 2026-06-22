@@ -477,6 +477,28 @@
     "switch_to_arabic": "عربي",
     "switch_to_english": "English"
   },
+  "marketplace": {
+    "subnav_browse": "Browse",
+    "subnav_my_courses": "My Courses",
+    "heading": "Training Marketplace",
+    "subtitle": "Accredited CME courses from GCC healthcare providers.",
+    "search_results": "{n} result{s} for \"{q}\"",
+    "my_courses_link": "My Courses →",
+    "list_courses": "List your courses",
+    "empty_heading": "No courses found",
+    "empty_search": "No courses match \"{q}\". Try a different search term or clear filters.",
+    "empty_filters": "Try adjusting your filters.",
+    "empty_default": "We're onboarding accredited training providers. Check back soon.",
+    "clear_filters": "Clear all filters",
+    "badge_accredited": "Accredited",
+    "badge_done": "Done",
+    "badge_enrolled": "Enrolled",
+    "price_free": "Free",
+    "mode_online": "Online",
+    "mode_in_person": "In-person",
+    "mode_hybrid": "Hybrid",
+    "mode_self_paced": "Self-paced"
+  },
   "settings": {
     "subnav_profile": "Profile",
     "subnav_billing": "Billing",

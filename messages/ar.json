@@ -477,6 +477,28 @@
     "switch_to_arabic": "عربي",
     "switch_to_english": "English"
   },
+  "marketplace": {
+    "subnav_browse": "تصفح",
+    "subnav_my_courses": "دوراتي",
+    "heading": "سوق التدريب",
+    "subtitle": "دورات CME معتمدة من مزودي الرعاية الصحية في دول الخليج.",
+    "search_results": "{n} نتيجة لـ \"{q}\"",
+    "my_courses_link": "دوراتي ←",
+    "list_courses": "أضف دوراتك",
+    "empty_heading": "لا توجد دورات",
+    "empty_search": "لا توجد دورات تطابق \"{q}\". جرّب مصطلح بحث مختلف أو أزل الفلاتر.",
+    "empty_filters": "جرّب تعديل الفلاتر.",
+    "empty_default": "نحن نُهيّئ مزودي التدريب المعتمدين. تفقّد لاحقاً.",
+    "clear_filters": "مسح جميع الفلاتر",
+    "badge_accredited": "معتمد",
+    "badge_done": "مكتمل",
+    "badge_enrolled": "مسجّل",
+    "price_free": "مجاني",
+    "mode_online": "إلكتروني",
+    "mode_in_person": "حضوري",
+    "mode_hybrid": "هجين",
+    "mode_self_paced": "ذاتي"
+  },
   "settings": {
     "subnav_profile": "الملف الشخصي",
     "subnav_billing": "الفواتير",
