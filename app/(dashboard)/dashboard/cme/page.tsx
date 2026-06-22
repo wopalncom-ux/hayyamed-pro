@@ -1,5 +1,6 @@
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import DashboardSubNav from "@/components/dashboard/DashboardSubNav";
 import AddActivityButton from "@/components/dashboard/AddActivityButton";
 import DownloadReportButton from "@/components/dashboard/DownloadReportButton";
 import PdfReportCard from "@/components/dashboard/PdfReportCard";
@@ -119,6 +120,13 @@ export default async function CmePage({
 
   return (
     <div>
+      <DashboardSubNav items={[
+        { href: "/dashboard/cme",                   label: "Wallet" },
+        { href: "/dashboard/cme/reflections",        label: "Reflections" },
+        { href: "/dashboard/certificates",           label: "Certificates" },
+        { href: "/dashboard/passport",               label: "My Passport" },
+      ]} />
+
       {/* Offline sync banner — client component, reads localStorage, auto-flushes on reconnect */}
       <CmeOfflineSyncBanner />
 

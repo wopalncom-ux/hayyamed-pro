@@ -5,9 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
-  LayoutDashboard, BookOpen, PenLine, Sparkles, Map, BarChart2,
-  CreditCard, Award, ShoppingBag, GraduationCap, Bell, Users,
-  Receipt, Settings, Building2, Download, Search, IdCard,
+  LayoutDashboard, BookOpen, Sparkles, BarChart2,
+  CreditCard, ShoppingBag, Settings, Building2, Download, Search,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import NotificationBell from "./NotificationBell";
@@ -16,21 +15,48 @@ import CommandPalette from "./CommandPalette";
 import { triggerAppDownloadModal } from "@/components/AppDownloadModal";
 
 const NAV_ITEMS = [
-  { href: "/dashboard",                         label: "Overview",      Icon: LayoutDashboard },
-  { href: "/dashboard/cme",                     label: "CME Wallet",    Icon: BookOpen },
-  { href: "/dashboard/cme/reflections",         label: "Reflections",   Icon: PenLine },
-  { href: "/dashboard/ai",                      label: "✦ AI",          Icon: Sparkles },
-  { href: "/dashboard/ai/learning-pathway",     label: "Learning Plan", Icon: Map },
-  { href: "/dashboard/analytics",               label: "Analytics",     Icon: BarChart2 },
-  { href: "/dashboard/licenses",                label: "Licenses",      Icon: CreditCard },
-  { href: "/dashboard/certificates",            label: "Certificates",  Icon: Award },
-  { href: "/dashboard/passport",               label: "My Passport",   Icon: IdCard },
-  { href: "/dashboard/marketplace",             label: "Marketplace",   Icon: ShoppingBag },
-  { href: "/dashboard/marketplace/my-courses",  label: "My Courses",    Icon: GraduationCap },
-  { href: "/dashboard/notifications",           label: "Notifications", Icon: Bell },
-  { href: "/dashboard/refer",                   label: "Refer",         Icon: Users },
-  { href: "/dashboard/billing",                 label: "Billing",       Icon: Receipt },
-  { href: "/dashboard/settings",                label: "Settings",      Icon: Settings },
+  {
+    href: "/dashboard",
+    label: "Overview",
+    Icon: LayoutDashboard,
+    owns: ["/dashboard"],
+  },
+  {
+    href: "/dashboard/cme",
+    label: "CME",
+    Icon: BookOpen,
+    owns: ["/dashboard/cme", "/dashboard/certificates", "/dashboard/passport"],
+  },
+  {
+    href: "/dashboard/ai",
+    label: "✦ AI",
+    Icon: Sparkles,
+    owns: ["/dashboard/ai"],
+  },
+  {
+    href: "/dashboard/analytics",
+    label: "Analytics",
+    Icon: BarChart2,
+    owns: ["/dashboard/analytics"],
+  },
+  {
+    href: "/dashboard/licenses",
+    label: "Licenses",
+    Icon: CreditCard,
+    owns: ["/dashboard/licenses"],
+  },
+  {
+    href: "/dashboard/marketplace",
+    label: "Marketplace",
+    Icon: ShoppingBag,
+    owns: ["/dashboard/marketplace"],
+  },
+  {
+    href: "/dashboard/settings",
+    label: "Settings",
+    Icon: Settings,
+    owns: ["/dashboard/settings", "/dashboard/billing", "/dashboard/notifications", "/dashboard/refer"],
+  },
 ];
 
 export default function DashboardNav({
@@ -115,20 +141,25 @@ export default function DashboardNav({
 
           {/* Desktop tab bar */}
           <nav className="hidden md:flex gap-6 -mb-px overflow-x-auto" aria-label="Main navigation">
-            {navItems.map(({ href, label }) => (
-              <Link
-                key={href}
-                href={href}
-                className={cn(
-                  "text-sm py-3 border-b-2 whitespace-nowrap transition-colors",
-                  pathname === href
-                    ? "border-[#1a56a0] text-[#1a56a0] font-medium"
-                    : "border-transparent text-[#64748b] hover:text-[#111]"
-                )}
-              >
-                {label}
-              </Link>
-            ))}
+            {navItems.map(({ href, label, owns }) => {
+              const active = owns
+                ? owns.some((p) => p === "/dashboard" ? pathname === p : pathname.startsWith(p))
+                : pathname === href;
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  className={cn(
+                    "text-sm py-3 border-b-2 whitespace-nowrap transition-colors",
+                    active
+                      ? "border-[#1a56a0] text-[#1a56a0] font-medium"
+                      : "border-transparent text-[#64748b] hover:text-[#111]"
+                  )}
+                >
+                  {label}
+                </Link>
+              );
+            })}
           </nav>
         </div>
       </header>
@@ -171,24 +202,29 @@ export default function DashboardNav({
 
           {/* Nav links with icons */}
           <nav className="flex-1 overflow-y-auto py-3 px-2" aria-label="Mobile navigation">
-            {navItems.map(({ href, label, Icon }) => (
-              <Link
-                key={href}
-                href={href}
-                className={cn(
-                  "flex items-center gap-3 px-4 py-3 rounded-xl text-sm mb-0.5 transition-colors",
-                  pathname === href
-                    ? "bg-[#e8f0fe] text-[#1a56a0] font-semibold"
-                    : "text-[#374151] hover:bg-[#f8fafc]"
-                )}
-              >
-                <Icon
-                  className={cn("w-4 h-4 flex-shrink-0", pathname === href ? "text-[#1a56a0]" : "text-[#94a3b8]")}
-                  aria-hidden="true"
-                />
-                {label}
-              </Link>
-            ))}
+            {navItems.map(({ href, label, Icon, owns }) => {
+              const active = owns
+                ? owns.some((p) => p === "/dashboard" ? pathname === p : pathname.startsWith(p))
+                : pathname === href;
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  className={cn(
+                    "flex items-center gap-3 px-4 py-3 rounded-xl text-sm mb-0.5 transition-colors",
+                    active
+                      ? "bg-[#e8f0fe] text-[#1a56a0] font-semibold"
+                      : "text-[#374151] hover:bg-[#f8fafc]"
+                  )}
+                >
+                  <Icon
+                    className={cn("w-4 h-4 flex-shrink-0", active ? "text-[#1a56a0]" : "text-[#94a3b8]")}
+                    aria-hidden="true"
+                  />
+                  {label}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Drawer footer */}

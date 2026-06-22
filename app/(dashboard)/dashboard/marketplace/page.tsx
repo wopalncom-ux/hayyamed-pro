@@ -1,6 +1,7 @@
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import DashboardSubNav from "@/components/dashboard/DashboardSubNav";
 import CourseFilters from "@/components/marketplace/CourseFilters";
 import { Suspense } from "react";
 
@@ -62,6 +63,10 @@ export default async function MarketplacePage({
 
   return (
     <div>
+      <DashboardSubNav items={[
+        { href: "/dashboard/marketplace",              label: "Browse" },
+        { href: "/dashboard/marketplace/my-courses",   label: "My Courses" },
+      ]} />
       <div className="flex items-center justify-between mb-4">
         <div>
           <h1 className="text-2xl font-bold text-[#111]">Training Marketplace</h1>

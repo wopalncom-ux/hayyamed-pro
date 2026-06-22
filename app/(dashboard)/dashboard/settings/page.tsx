@@ -1,5 +1,6 @@
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import DashboardSubNav from "@/components/dashboard/DashboardSubNav";
 import SignOutButton from "@/components/dashboard/SignOutButton";
 import PrivacyToggles from "@/components/dashboard/PrivacyToggles";
 import ProfileEditForm from "@/components/dashboard/ProfileEditForm";
@@ -88,6 +89,12 @@ export default async function SettingsPage() {
 
   return (
     <div>
+      <DashboardSubNav items={[
+        { href: "/dashboard/settings",      label: "Profile" },
+        { href: "/dashboard/billing",       label: "Billing" },
+        { href: "/dashboard/notifications", label: "Notifications" },
+        { href: "/dashboard/refer",         label: "Refer & Earn" },
+      ]} />
       <h1 className="text-2xl font-bold text-[#111] mb-6">Settings</h1>
 
       <div className="space-y-4">

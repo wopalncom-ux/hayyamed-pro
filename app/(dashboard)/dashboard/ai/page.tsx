@@ -1,5 +1,6 @@
 ﻿import { redirect } from "next/navigation";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
+import DashboardSubNav from "@/components/dashboard/DashboardSubNav";
 import { getUserPlan, isPro } from "@/lib/subscription";
 import AiChat from "@/components/dashboard/AiChat";
 import AiRecommendations from "@/components/dashboard/AiRecommendations";
@@ -66,6 +67,10 @@ export default async function AiPage() {
 
   return (
     <div className="space-y-6">
+      <DashboardSubNav items={[
+        { href: "/dashboard/ai",                    label: "AI Assistant" },
+        { href: "/dashboard/ai/learning-pathway",   label: "Learning Plan" },
+      ]} />
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-[#111]">AI Compliance Assistant</h1>
