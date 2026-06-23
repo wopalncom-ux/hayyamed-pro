@@ -193,11 +193,11 @@ export default async function GrowthPage() {
               {trialsExpiring.slice(0, 8).map((t) => {
                 const daysLeft = Math.max(0, Math.ceil((new Date(t.trial_ends_at!).getTime() - now.getTime()) / 86400000));
                 return (
-                  <div key={t.auth_id} className="flex items-center gap-3">
+                  <div key={t.professional_id} className="flex items-center gap-3">
                     <span className={`text-xs font-bold px-2 py-1 rounded-lg ${daysLeft <= 2 ? "bg-red-100 text-red-700" : "bg-amber-100 text-amber-700"}`}>
                       {daysLeft}d
                     </span>
-                    <span className="text-xs font-mono text-[#64748b]">{t.auth_id.slice(-8)}</span>
+                    <span className="text-xs font-mono text-[#64748b]">{t.professional_id.slice(-8)}</span>
                     <span className="text-xs text-[#374151] capitalize">{t.plan}</span>
                     <a href={`/admin/user-actions`}
                       className="ml-auto text-[10px] text-[#1a56a0] hover:underline whitespace-nowrap">Extend →</a>
@@ -224,7 +224,7 @@ export default async function GrowthPage() {
               {recentUpgrades.map((u, i) => (
                 <div key={i} className="flex items-center gap-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#16a34a] flex-shrink-0" />
-                  <span className="text-xs font-mono text-[#64748b]">{u.auth_id.slice(-8)}</span>
+                  <span className="text-xs font-mono text-[#64748b]">{u.professional_id.slice(-8)}</span>
                   <span className="text-xs px-2 py-0.5 rounded-full bg-[#dcfce7] text-[#16a34a] font-medium capitalize">{u.plan}</span>
                   <span className="ml-auto text-[10px] text-[#94a3b8]">
                     {new Date(u.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}
@@ -246,7 +246,7 @@ export default async function GrowthPage() {
               {recentCancels.map((u, i) => (
                 <div key={i} className="flex items-center gap-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#dc2626] flex-shrink-0" />
-                  <span className="text-xs font-mono text-[#64748b]">{u.auth_id.slice(-8)}</span>
+                  <span className="text-xs font-mono text-[#64748b]">{u.professional_id.slice(-8)}</span>
                   <span className="text-xs px-2 py-0.5 rounded-full bg-[#fee2e2] text-[#dc2626] font-medium capitalize">{u.plan}</span>
                   <span className="ml-auto text-[10px] text-[#94a3b8]">
                     {new Date(u.updated_at).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}
