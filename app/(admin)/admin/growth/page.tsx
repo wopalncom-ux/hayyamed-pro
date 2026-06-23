@@ -35,26 +35,26 @@ export default async function GrowthPage() {
     // Total + onboarded
     admin.from("professional_profiles").select("auth_id, onboarding_complete, created_at"),
     // Users with ≥1 CME
-    admin.from("cme_activities").select("auth_id"),
+    admin.from("cme_activities").select("professional_id"),
     // All subscriptions
-    admin.from("subscriptions").select("auth_id, plan, status, trial_ends_at, created_at, updated_at"),
+    admin.from("subscriptions").select("professional_id, plan, status, trial_ends_at, created_at, updated_at"),
     // Trials expiring in 7 days
     admin.from("subscriptions")
-      .select("auth_id, plan, trial_ends_at")
+      .select("professional_id, plan, trial_ends_at")
       .eq("status", "trialing")
       .gte("trial_ends_at", now.toISOString())
       .lte("trial_ends_at", day7ahead)
       .order("trial_ends_at", { ascending: true }),
     // Recent upgrades (last 30d)
     admin.from("subscriptions")
-      .select("auth_id, plan, status, created_at")
+      .select("professional_id, plan, status, created_at")
       .eq("status", "active")
       .gte("created_at", day30)
       .order("created_at", { ascending: false })
       .limit(10),
     // Recent cancellations (last 30d)
     admin.from("subscriptions")
-      .select("auth_id, plan, status, updated_at")
+      .select("professional_id, plan, status, updated_at")
       .in("status", ["cancelled", "canceled"])
       .gte("updated_at", day30)
       .order("updated_at", { ascending: false })
@@ -73,14 +73,14 @@ export default async function GrowthPage() {
 
   const profiles  = allProfilesRes.data ?? [];
   const allSubs   = allSubsRes.data ?? [];
-  const cmeUsers  = new Set((cmeUsersRes.data ?? []).map((r) => r.auth_id));
+  const cmeUsers  = new Set((cmeUsersRes.data ?? []).map((r) => r.professional_id));
 
   // Funnel
   const totalSignups   = profiles.length;
   const totalOnboarded = profiles.filter((p) => p.onboarding_complete).length;
-  const totalCme       = [...cmeUsers].filter((id) => profiles.some((p) => p.auth_id === id && p.onboarding_complete)).length;
-  const anyPlan   = new Set(allSubs.filter((s) => ["active", "trialing"].includes(s.status)).map((s) => s.auth_id)).size;
-  const paidPlan  = new Set(allSubs.filter((s) => s.status === "active").map((s) => s.auth_id)).size;
+  const totalCme       = [...cmeUsers].filter((id) => profiles.some((p) => p.auth_id === id && p.onboarding_complete)).length; // cmeUsers contains professional_id values which match auth_id on professional_profiles
+  const anyPlan   = new Set(allSubs.filter((s) => ["active", "trialing"].includes(s.status)).map((s) => s.professional_id)).size;
+  const paidPlan  = new Set(allSubs.filter((s) => s.status === "active").map((s) => s.professional_id)).size;
 
   // Trials expiring
   const trialsExpiring = trialsExpiringRes.data ?? [];
@@ -100,10 +100,10 @@ export default async function GrowthPage() {
   const recentCancels  = recentCancelsRes.data ?? [];
 
   // Top free users (onboarded, no paid sub, most CME)
-  const paidIds = new Set(allSubs.filter((s) => ["active", "trialing"].includes(s.status)).map((s) => s.auth_id));
+  const paidIds = new Set(allSubs.filter((s) => ["active", "trialing"].includes(s.status)).map((s) => s.professional_id));
   const freeOnboarded = (topFreeUsersRes.data ?? []).filter((p) => !paidIds.has(p.auth_id));
   const cmeCounts: Record<string, number> = {};
-  for (const r of (cmeUsersRes.data ?? [])) cmeCounts[r.auth_id] = (cmeCounts[r.auth_id] ?? 0) + 1;
+  for (const r of (cmeUsersRes.data ?? [])) cmeCounts[r.professional_id] = (cmeCounts[r.professional_id] ?? 0) + 1;
   const topFree = freeOnboarded
     .sort((a, b) => (cmeCounts[b.auth_id] ?? 0) - (cmeCounts[a.auth_id] ?? 0))
     .slice(0, 8);

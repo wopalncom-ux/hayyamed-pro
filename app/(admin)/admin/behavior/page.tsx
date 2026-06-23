@@ -300,7 +300,7 @@ export default async function BehaviorPage() {
                       <p className="text-[10px] text-[#64748b]">Step {u.onboarding_step ?? 1}/7 · {daysSince}d ago</p>
                     </div>
                     <a
-                      href={`/admin/professionals?search=${u.auth_id}`}
+                      href={`/admin/professionals?q=${u.auth_id}`}
                       className="text-[10px] text-[#1a56a0] hover:underline whitespace-nowrap"
                     >
                       View →

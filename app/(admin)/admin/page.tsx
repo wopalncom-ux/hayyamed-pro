@@ -86,7 +86,7 @@ export default async function AdminPage() {
     admin.from("professional_profiles").select("id", { count: "exact", head: true }).eq("email_spam_reported", true),
     admin.from("waitlist_signups").select("id", { count: "exact", head: true }),
     admin.from("demo_requests").select("id", { count: "exact", head: true }).eq("status", "new"),
-    admin.from("cme_activities").select("auth_id").gte("created_at", day1),
+    admin.from("cme_activities").select("professional_id").gte("created_at", day1),
   ]);
 
   // Profile lookups for quick-approve rows
@@ -116,7 +116,7 @@ export default async function AdminPage() {
   const spam             = spamRes.count ?? 0;
   const demoNew          = demoNewRes.count ?? 0;
   const waitlist         = waitlistRes.count ?? 0;
-  const dau              = new Set((dauRes.data ?? []).map((r) => r.auth_id)).size;
+  const dau              = new Set((dauRes.data ?? []).map((r) => r.professional_id)).size;
 
   const npsScores    = (npsRes.data ?? []).map((r) => r.score as number);
   const npsPromoters = npsScores.filter((s) => s >= 9).length;

@@ -61,19 +61,19 @@ export default async function AdminAnalyticsPage() {
     // DAU: unique users who submitted CME today
     admin
       .from("cme_activities")
-      .select("auth_id")
+      .select("professional_id")
       .gte("created_at", day1),
 
     // WAU: unique users who submitted CME in last 7 days
     admin
       .from("cme_activities")
-      .select("auth_id")
+      .select("professional_id")
       .gte("created_at", day7),
 
     // MAU: unique users who submitted CME in last 30 days
     admin
       .from("cme_activities")
-      .select("auth_id")
+      .select("professional_id")
       .gte("created_at", day30),
 
     // Active paying subscriptions
@@ -124,9 +124,9 @@ export default async function AdminAnalyticsPage() {
   const trialingCount = trialingRes.count ?? 0;
 
   // DAU/WAU/MAU — unique users
-  const dauSet = new Set((dauRes.data ?? []).map((r) => r.auth_id));
-  const wauSet = new Set((wauRes.data ?? []).map((r) => r.auth_id));
-  const mauSet = new Set((mauRes.data ?? []).map((r) => r.auth_id));
+  const dauSet = new Set((dauRes.data ?? []).map((r) => r.professional_id));
+  const wauSet = new Set((wauRes.data ?? []).map((r) => r.professional_id));
+  const mauSet = new Set((mauRes.data ?? []).map((r) => r.professional_id));
 
   // Paid breakdown
   const paid = paidRes.data ?? [];

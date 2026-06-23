@@ -28,15 +28,15 @@ export default async function ComplianceReportPage({ params }: { params: Promise
   const admin = createAdminClient();
   const { data: member } = await admin
     .from("organization_members").select("role")
-    .eq("auth_id", user.id).in("role", ["master_admin", "super_admin"]).maybeSingle();
+    .eq("auth_id", user.id).in("role", ["founder", "master_admin", "super_admin"]).limit(1).maybeSingle();
   if (!member) redirect("/dashboard");
 
   const [profileRes, walletRes, activitiesRes] = await Promise.all([
     admin.from("professional_profiles").select("*").eq("auth_id", userId).single(),
-    admin.from("cme_wallets").select("*").eq("auth_id", userId).maybeSingle(),
+    admin.from("cme_wallets").select("*").eq("professional_id", userId).maybeSingle(),
     admin.from("cme_activities")
-      .select("id, activity_title, activity_type, provider_name, credits_claimed, credits_awarded, activity_date, verification_status, category")
-      .eq("auth_id", userId)
+      .select("id, title, category, credits, activity_date, verification_status, provider_name, activity_type")
+      .eq("professional_id", userId)
       .order("activity_date", { ascending: false }),
   ]);
 
@@ -61,8 +61,8 @@ export default async function ComplianceReportPage({ params }: { params: Promise
   for (const a of verified) {
     const cat = a.category ?? "General";
     if (!catMap[cat]) catMap[cat] = { claimed: 0, awarded: 0, count: 0 };
-    catMap[cat].claimed += a.credits_claimed ?? 0;
-    catMap[cat].awarded += a.credits_awarded ?? 0;
+    catMap[cat].claimed += a.credits ?? 0;
+    catMap[cat].awarded += a.credits ?? 0;
     catMap[cat].count   += 1;
   }
 
@@ -206,11 +206,11 @@ export default async function ComplianceReportPage({ params }: { params: Promise
                     <td className="py-1.5 pr-3 whitespace-nowrap text-[#64748b]">
                       {a.activity_date ? new Date(a.activity_date).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "—"}
                     </td>
-                    <td className="py-1.5 pr-3 font-medium text-[#374151]">{a.activity_title ?? "—"}</td>
+                    <td className="py-1.5 pr-3 font-medium text-[#374151]">{a.title ?? "—"}</td>
                     <td className="py-1.5 pr-3 text-[#64748b]">{a.provider_name ?? "—"}</td>
                     <td className="py-1.5 pr-3 text-[#64748b] capitalize">{a.activity_type ?? "—"}</td>
                     <td className="py-1.5 text-right font-bold text-[#1a56a0]">
-                      {a.credits_awarded ?? a.credits_claimed ?? 0}
+                      {a.credits ?? 0}
                     </td>
                   </tr>
                 ))}
