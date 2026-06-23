@@ -1,319 +1,476 @@
-﻿import { createAdminClient } from "@/lib/supabase/server";
-import PushBroadcastPanel from "@/components/admin/PushBroadcastPanel";
+import { createAdminClient } from "@/lib/supabase/server";
+import VerifiedRequestActions from "@/components/admin/VerifiedRequestActions";
+import UnverifiedRequestActions from "@/components/admin/UnverifiedRequestActions";
+import CmeActivityActions from "@/components/admin/CmeActivityActions";
 
-interface ServiceCheck {
-  label: string;
-  ok: boolean;
-  action?: string;
+export const metadata = { title: "Command Center" };
+export const dynamic = "force-dynamic";
+
+function calcMrr(plan: string, tier: string | null, interval: string | null): number {
+  if (plan === "pro") return interval === "annual" ? 61.2 / 12 : 6;
+  if (plan === "employer") {
+    const prices: Record<string, [number, number]> = {
+      clinic:     [50,  510],
+      growth:     [100, 1020],
+      department: [180, 1836],
+      hospital:   [350, 3570],
+    };
+    const [mo, yr] = prices[tier ?? "clinic"] ?? [50, 510];
+    return interval === "annual" ? yr / 12 : mo;
+  }
+  return 0;
 }
 
-function getSetupChecks(): ServiceCheck[] {
-  return [
-    { label: "Supabase",           ok: !!process.env.NEXT_PUBLIC_SUPABASE_URL && !!process.env.SUPABASE_SERVICE_ROLE_KEY },
-    { label: "Email (Postmark)",   ok: !!process.env.POSTMARK_API_TOKEN,       action: "Set POSTMARK_API_TOKEN in GCP Secret Manager" },
-    { label: "AI (Vertex AI)",     ok: !!process.env.GOOGLE_CLOUD_PROJECT,      action: "Vertex AI uses ADC — ensure GOOGLE_CLOUD_PROJECT env var is set" },
-    { label: "Paddle (payments)",  ok: !!process.env.PADDLE_API_KEY,            action: "Create Paddle account → add PADDLE_API_KEY" },
-    { label: "Cron jobs",          ok: !!process.env.CRON_SECRET,               action: "Set CRON_SECRET + run setup-cloud-scheduler.sh" },
-    { label: "Push notifications", ok: !!process.env.VAPID_PRIVATE_KEY,         action: "Generate VAPID keys → set VAPID_PRIVATE_KEY" },
-    { label: "Analytics (PostHog)",ok: !!process.env.NEXT_PUBLIC_POSTHOG_KEY,   action: "Set _POSTHOG_KEY in Cloud Build trigger substitution vars" },
-    { label: "Admin notifications",ok: !!process.env.ADMIN_NOTIFICATION_EMAIL,  action: "Set ADMIN_NOTIFICATION_EMAIL in Cloud Run env vars" },
-    { label: "Email bounce webhook",ok: !!process.env.POSTMARK_WEBHOOK_TOKEN,   action: "Set POSTMARK_WEBHOOK_TOKEN + configure Postmark webhook URL" },
-  ];
+function fmt(n: number) {
+  return n >= 1000 ? `$${(n / 1000).toFixed(1)}k` : `$${n.toFixed(0)}`;
 }
-
-function getLaunchMode() {
-  return process.env.COMING_SOON !== "false";
-}
-
-export const metadata = { title: "Platform Overview" };
 
 export default async function AdminPage() {
   const admin = createAdminClient();
-  const setupChecks = getSetupChecks();
-  const comingSoonActive = getLaunchMode();
-  const now = new Date().toISOString();
-  const soon = new Date(Date.now() + 3 * 86400000).toISOString();
+  const now = new Date();
+  const day1 = new Date(now.getTime() - 24 * 3600_000).toISOString();
+  const day3later = new Date(now.getTime() + 3 * 86400_000).toISOString();
 
   const [
-    profCount, orgCount, pendingLinks, pendingCme, pendingProviders, pendingCourses,
-    proActive, empActive, pastDue,
-    partnerCount, discountCount,
-    activeTrials, expiringTrials,
-    npsRes, bouncedRes, spamRes,
-    waitlistCount,
-    demoNewCount,
-    demoTotalCount,
+    profCountRes,
+    pendingLinksCountRes,
+    pendingLinksRes,
+    pendingCmeCountRes,
+    pendingCmeRes,
+    pendingProvidersRes,
+    pendingCoursesRes,
+    subsRes,
+    pastDueRes,
+    activeTrialsRes,
+    expiringTrialsRes,
+    npsRes,
+    bouncedRes,
+    spamRes,
+    waitlistRes,
+    demoNewRes,
+    dauRes,
   ] = await Promise.all([
     admin.from("professional_profiles").select("id", { count: "exact", head: true }),
-    admin.from("organizations").select("id", { count: "exact", head: true }),
     admin.from("employer_link_requests").select("id", { count: "exact", head: true }).eq("status", "pending"),
+    admin
+      .from("employer_link_requests")
+      .select("id, professional_id, organization_id, unverified_employer_name, organizations(name)")
+      .eq("status", "pending")
+      .order("requested_at", { ascending: true })
+      .limit(5),
     admin.from("cme_activities").select("id", { count: "exact", head: true }).eq("verification_status", "pending"),
+    admin
+      .from("cme_activities")
+      .select("id, professional_id, title, activity_date, credits, verification_status")
+      .eq("verification_status", "pending")
+      .order("created_at", { ascending: true })
+      .limit(5),
     admin.from("training_providers").select("id", { count: "exact", head: true }).eq("status", "pending"),
     admin.from("courses").select("id", { count: "exact", head: true }).eq("status", "draft"),
-    admin.from("subscriptions").select("id", { count: "exact", head: true }).eq("plan", "pro").eq("status", "active"),
-    admin.from("subscriptions").select("id", { count: "exact", head: true }).eq("plan", "employer").eq("status", "active"),
+    admin
+      .from("subscriptions")
+      .select("plan, employer_tier, billing_interval, status")
+      .in("status", ["active", "trialing"]),
     admin.from("subscriptions").select("id", { count: "exact", head: true }).eq("status", "past_due"),
-    admin.from("partners").select("id", { count: "exact", head: true }).eq("is_active", true),
-    admin.from("discounts").select("id", { count: "exact", head: true }).eq("is_active", true),
-    admin.from("professional_profiles").select("id", { count: "exact", head: true })
-      .gt("pro_trial_ends_at", now),
-    admin.from("professional_profiles").select("id", { count: "exact", head: true })
-      .gt("pro_trial_ends_at", now).lte("pro_trial_ends_at", soon),
+    admin
+      .from("professional_profiles")
+      .select("id", { count: "exact", head: true })
+      .gt("pro_trial_ends_at", now.toISOString()),
+    admin
+      .from("professional_profiles")
+      .select("id", { count: "exact", head: true })
+      .gt("pro_trial_ends_at", now.toISOString())
+      .lte("pro_trial_ends_at", day3later),
     admin.from("nps_responses").select("score"),
     admin.from("professional_profiles").select("id", { count: "exact", head: true }).eq("email_hard_bounced", true),
     admin.from("professional_profiles").select("id", { count: "exact", head: true }).eq("email_spam_reported", true),
     admin.from("waitlist_signups").select("id", { count: "exact", head: true }),
     admin.from("demo_requests").select("id", { count: "exact", head: true }).eq("status", "new"),
-    admin.from("demo_requests").select("id", { count: "exact", head: true }),
+    admin.from("cme_activities").select("auth_id").gte("created_at", day1),
   ]);
 
-  // NPS score calculation
-  const npsScores = (npsRes.data ?? []).map((r) => r.score);
-  const npsPromoters  = npsScores.filter((s) => s >= 9).length;
+  // Profile lookups for quick-approve rows
+  const linkProfIds = (pendingLinksRes.data ?? []).map((r) => r.professional_id);
+  const cmeProfIds  = (pendingCmeRes.data ?? []).map((r) => r.professional_id);
+  const allProfIds  = [...new Set([...linkProfIds, ...cmeProfIds])];
+  const profilesRes = allProfIds.length
+    ? await admin
+        .from("professional_profiles")
+        .select("auth_id, full_name, profession")
+        .in("auth_id", allProfIds)
+    : { data: [] };
+  const profileMap = Object.fromEntries(
+    (profilesRes.data ?? []).map((p) => [p.auth_id, p])
+  );
+
+  // KPI calculations
+  const profCount        = profCountRes.count ?? 0;
+  const pendingLinksCount = pendingLinksCountRes.count ?? 0;
+  const pendingCmeCount  = pendingCmeCountRes.count ?? 0;
+  const pendingProviders = pendingProvidersRes.count ?? 0;
+  const pendingCourses   = pendingCoursesRes.count ?? 0;
+  const pastDue          = pastDueRes.count ?? 0;
+  const activeTrials     = activeTrialsRes.count ?? 0;
+  const expiringTrials   = expiringTrialsRes.count ?? 0;
+  const bounced          = bouncedRes.count ?? 0;
+  const spam             = spamRes.count ?? 0;
+  const demoNew          = demoNewRes.count ?? 0;
+  const waitlist         = waitlistRes.count ?? 0;
+  const dau              = new Set((dauRes.data ?? []).map((r) => r.auth_id)).size;
+
+  const npsScores    = (npsRes.data ?? []).map((r) => r.score as number);
+  const npsPromoters = npsScores.filter((s) => s >= 9).length;
   const npsDetractors = npsScores.filter((s) => s <= 6).length;
-  const npsScore = npsScores.length > 0
+  const npsScore     = npsScores.length
     ? Math.round(((npsPromoters - npsDetractors) / npsScores.length) * 100)
     : null;
 
-  return (
-    <div>
-      <h1 className="text-2xl font-bold text-[#111] mb-6">Admin Overview</h1>
+  let totalMrr = 0;
+  for (const s of subsRes.data ?? []) {
+    totalMrr += calcMrr(s.plan, s.employer_tier, s.billing_interval);
+  }
+  const totalArr = totalMrr * 12;
 
-      {/* Launch mode banner */}
-      <div className={`rounded-xl border px-5 py-4 mb-6 flex items-start gap-4 ${
-        comingSoonActive
-          ? "bg-[#fff7ed] border-[#fed7aa]"
-          : "bg-[#dcfce7] border-[#86efac]"
-      }`}>
-        <span className="text-2xl leading-none mt-0.5">{comingSoonActive ? "🔒" : "🚀"}</span>
-        <div className="min-w-0 flex-1">
-          <p className={`text-sm font-bold ${comingSoonActive ? "text-[#92400e]" : "text-[#15803d]"}`}>
-            {comingSoonActive ? "Coming Soon Mode — Platform is NOT live" : "Platform is LIVE — Coming soon gate is off"}
+  const comingSoon = process.env.COMING_SOON !== "false";
+
+  const setupChecks = [
+    { label: "Supabase",            ok: !!(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) },
+    { label: "Email (Postmark)",    ok: !!process.env.POSTMARK_API_TOKEN },
+    { label: "Vertex AI",           ok: !!process.env.GOOGLE_CLOUD_PROJECT },
+    { label: "Paddle (payments)",   ok: !!process.env.PADDLE_API_KEY },
+    { label: "Cron jobs",           ok: !!process.env.CRON_SECRET },
+    { label: "Push notifications",  ok: !!process.env.VAPID_PRIVATE_KEY },
+    { label: "Admin notifications", ok: !!process.env.ADMIN_NOTIFICATION_EMAIL },
+  ];
+  const hasSetupIssues = setupChecks.some((c) => !c.ok);
+
+  const alerts = [
+    { label: "CME to verify",            count: pendingCmeCount,   href: "/admin/cme-verification",   sev: "high"   as const },
+    { label: "Employer link requests",   count: pendingLinksCount, href: "/admin/link-requests",       sev: "high"   as const },
+    { label: "Past-due subscriptions",   count: pastDue,           href: "/admin/subscriptions",       sev: "high"   as const },
+    { label: "Provider applications",    count: pendingProviders,  href: "/admin/training-providers",  sev: "medium" as const },
+    { label: "Courses awaiting review",  count: pendingCourses,    href: "/admin/courses",             sev: "medium" as const },
+    { label: "Trials expiring ≤ 3 days", count: expiringTrials,   href: "/admin/subscriptions",       sev: "medium" as const },
+    { label: "Demo follow-ups needed",   count: demoNew,           href: "/admin/demo-requests",       sev: "medium" as const },
+    { label: "Email hard bounces",       count: bounced,           href: "/admin/professionals",       sev: "low"    as const },
+  ];
+  const totalAlerts = alerts.reduce((s, a) => s + a.count, 0);
+
+  const pendingLinks = pendingLinksRes.data ?? [];
+  const pendingCme   = pendingCmeRes.data ?? [];
+  const hasApprovals = pendingLinks.length > 0 || pendingCme.length > 0;
+
+  return (
+    <div className="space-y-8">
+      {/* Header */}
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-[#0f172a] tracking-tight">Command Center</h1>
+          <p className="text-sm text-[#64748b] mt-0.5">
+            {now.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}
           </p>
-          {comingSoonActive ? (
-            <p className="text-xs text-[#b45309] mt-1">
-              Public marketing pages redirect to /coming-soon. Logged-in users can access /dashboard.
-              <br />
-              <strong>To go live:</strong> set <code className="bg-[#fef3c7] px-1 py-0.5 rounded text-[10px]">_COMING_SOON = false</code> in Cloud Build Trigger substitution vars → trigger a new build. No code change needed.
-            </p>
-          ) : (
-            <p className="text-xs text-[#15803d] mt-1">
-              All public routes are accessible. To re-enable the gate, set <code className="bg-[#f0fdf4] px-1 py-0.5 rounded text-[10px]">_COMING_SOON = true</code> and redeploy.
-            </p>
+        </div>
+        <span className={`flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full border ${
+          comingSoon
+            ? "bg-[#fff7ed] text-[#92400e] border-[#fed7aa]"
+            : "bg-[#dcfce7] text-[#15803d] border-[#86efac]"
+        }`}>
+          <span className={`w-1.5 h-1.5 rounded-full ${comingSoon ? "bg-[#d97706]" : "bg-[#16a34a]"}`} />
+          {comingSoon ? "Coming soon mode" : "Platform live"}
+        </span>
+      </div>
+
+      {/* KPI strip */}
+      <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
+        <KpiCard label="MRR"   value={fmt(totalMrr)} sub="monthly recurring" accent />
+        <KpiCard label="ARR"   value={fmt(totalArr)} sub="annualized" accent />
+        <KpiCard label="Users" value={String(profCount)} sub="professionals" />
+        <KpiCard label="DAU"   value={String(dau)} sub="active today" />
+        <KpiCard
+          label="NPS"
+          value={npsScore !== null ? (npsScore > 0 ? `+${npsScore}` : String(npsScore)) : "—"}
+          sub={`${npsScores.length} responses`}
+          sentiment={npsScore === null ? "neutral" : npsScore >= 50 ? "good" : npsScore >= 0 ? "warn" : "bad"}
+        />
+      </div>
+
+      {/* Operations grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Alert Inbox */}
+        <div className="bg-white rounded-xl border border-[#e2e8f0] flex flex-col">
+          <div className="px-6 py-4 border-b border-[#e2e8f0] flex items-center justify-between">
+            <h2 className="text-sm font-semibold text-[#0f172a]">Alert Inbox</h2>
+            {totalAlerts > 0
+              ? <span className="text-xs font-bold text-white bg-[#dc2626] px-2 py-0.5 rounded-full">{totalAlerts} pending</span>
+              : <span className="text-xs font-semibold text-[#16a34a]">All clear</span>
+            }
+          </div>
+          <div className="divide-y divide-[#f1f5f9] flex-1">
+            {alerts.map((a) => (
+              <a key={a.label} href={a.href}
+                className="flex items-center justify-between px-6 py-3.5 hover:bg-[#f8fafc] transition-colors group"
+              >
+                <div className="flex items-center gap-3 min-w-0">
+                  <span className={`w-2 h-2 rounded-full flex-shrink-0 ${
+                    a.count === 0     ? "bg-[#86efac]" :
+                    a.sev === "high"  ? "bg-[#dc2626]" :
+                    a.sev === "medium"? "bg-[#d97706]" : "bg-[#94a3b8]"
+                  }`} />
+                  <span className="text-sm text-[#374151] group-hover:text-[#1a56a0] transition-colors truncate">
+                    {a.label}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2.5 flex-shrink-0">
+                  <span className={`text-sm font-bold tabular-nums ${
+                    a.count === 0     ? "text-[#16a34a]" :
+                    a.sev === "high"  ? "text-[#dc2626]" :
+                    a.sev === "medium"? "text-[#d97706]" : "text-[#64748b]"
+                  }`}>{a.count}</span>
+                  <svg className="w-3.5 h-3.5 text-[#cbd5e1] group-hover:text-[#1a56a0] transition-colors" viewBox="0 0 16 16" fill="none">
+                    <path d="M6 12l4-4-4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+              </a>
+            ))}
+          </div>
+          <div className="px-6 py-3.5 border-t border-[#f1f5f9] bg-[#f8fafc] rounded-b-xl">
+            <div className="flex flex-wrap gap-x-5 gap-y-1 text-xs text-[#64748b]">
+              <span>Active trials: <strong className="text-[#0f172a]">{activeTrials}</strong></span>
+              <span>Waitlist: <strong className="text-[#0f172a]">{waitlist}</strong></span>
+              <span>Spam: <strong className={spam > 0 ? "text-[#dc2626]" : "text-[#0f172a]"}>{spam}</strong></span>
+            </div>
+          </div>
+        </div>
+
+        {/* Quick Approve */}
+        <div className="bg-white rounded-xl border border-[#e2e8f0] flex flex-col">
+          <div className="px-6 py-4 border-b border-[#e2e8f0] flex items-center justify-between">
+            <h2 className="text-sm font-semibold text-[#0f172a]">Quick Approve</h2>
+            <span className="text-xs text-[#64748b]">Act without leaving this page</span>
+          </div>
+
+          {!hasApprovals && (
+            <div className="flex-1 flex flex-col items-center justify-center px-6 py-16 text-center">
+              <div className="w-10 h-10 rounded-full bg-[#dcfce7] flex items-center justify-center mb-3">
+                <svg className="w-5 h-5 text-[#16a34a]" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                </svg>
+              </div>
+              <p className="text-sm font-medium text-[#374151]">No pending approvals</p>
+              <p className="text-xs text-[#94a3b8] mt-1">You&apos;re all caught up.</p>
+            </div>
+          )}
+
+          {pendingLinks.length > 0 && (
+            <div>
+              <p className="px-6 pt-4 pb-2 text-xs font-semibold text-[#64748b] uppercase tracking-wide">
+                Employer Link Requests
+              </p>
+              <div className="divide-y divide-[#f1f5f9]">
+                {pendingLinks.map((req) => {
+                  const prof = profileMap[req.professional_id];
+                  const _orgs = req.organizations as { name: string }[] | { name: string } | null;
+                  const orgName = (Array.isArray(_orgs) ? _orgs[0]?.name : (_orgs as { name: string } | null)?.name)
+                    ?? req.unverified_employer_name
+                    ?? "Unknown org";
+                  const isVerified = !!req.organization_id;
+                  return (
+                    <div key={req.id} className="px-6 py-3.5 flex items-start justify-between gap-4">
+                      <div className="min-w-0">
+                        <p className="text-sm font-medium text-[#0f172a] truncate">
+                          {prof?.full_name ?? "Unknown"}
+                        </p>
+                        <p className="text-xs text-[#64748b] mt-0.5">
+                          {prof?.profession ?? "—"} → <span className="font-medium text-[#374151]">{orgName}</span>
+                          {!isVerified && (
+                            <span className="ml-1.5 text-[10px] font-semibold text-[#d97706] bg-[#fff7ed] px-1.5 py-0.5 rounded">
+                              new org
+                            </span>
+                          )}
+                        </p>
+                      </div>
+                      {isVerified
+                        ? <VerifiedRequestActions requestId={req.id} />
+                        : <UnverifiedRequestActions requestId={req.id} suggestedName={req.unverified_employer_name ?? orgName} professionalId={req.professional_id} />
+                      }
+                    </div>
+                  );
+                })}
+              </div>
+              {pendingLinksCount > pendingLinks.length && (
+                <p className="px-6 py-2 text-xs text-[#64748b]">
+                  +{pendingLinksCount - pendingLinks.length} more —{" "}
+                  <a href="/admin/link-requests" className="text-[#1a56a0] hover:underline">View all</a>
+                </p>
+              )}
+            </div>
+          )}
+
+          {pendingCme.length > 0 && (
+            <div className={pendingLinks.length > 0 ? "border-t border-[#f1f5f9]" : ""}>
+              <p className="px-6 pt-4 pb-2 text-xs font-semibold text-[#64748b] uppercase tracking-wide">
+                CME Verification Queue
+              </p>
+              <div className="divide-y divide-[#f1f5f9]">
+                {pendingCme.map((act) => {
+                  const prof = profileMap[act.professional_id];
+                  return (
+                    <div key={act.id} className="px-6 py-3.5 flex items-start justify-between gap-4">
+                      <div className="min-w-0">
+                        <p className="text-sm font-medium text-[#0f172a] truncate">{act.title}</p>
+                        <p className="text-xs text-[#64748b] mt-0.5">
+                          {prof?.full_name ?? "—"}
+                          {" · "}{act.credits} credit{act.credits !== 1 ? "s" : ""}
+                          {act.activity_date && (
+                            <> · {new Date(act.activity_date).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}</>
+                          )}
+                        </p>
+                      </div>
+                      <CmeActivityActions activityId={act.id} currentStatus={act.verification_status} />
+                    </div>
+                  );
+                })}
+              </div>
+              {pendingCmeCount > pendingCme.length && (
+                <p className="px-6 py-2 text-xs text-[#64748b]">
+                  +{pendingCmeCount - pendingCme.length} more —{" "}
+                  <a href="/admin/cme-verification" className="text-[#1a56a0] hover:underline">View all</a>
+                </p>
+              )}
+            </div>
           )}
         </div>
       </div>
 
-      {/* Platform stats */}
-      <h2 className="text-xs font-semibold text-[#64748b] uppercase tracking-wide mb-3">Platform</h2>
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-        <StatCard label="Professionals"      value={profCount.count ?? 0}    color="blue" />
-        <StatCard label="Organizations"      value={orgCount.count ?? 0}     color="blue" />
-        <StatCard label="Pending Links"      value={pendingLinks.count ?? 0} color="orange" />
-        <StatCard label="Pending CME"        value={pendingCme.count ?? 0}   color="orange" />
-      </div>
-
-      {/* Pre-launch pipeline — waitlist + demo requests */}
-      {(comingSoonActive || (demoTotalCount.count ?? 0) > 0) && (
-        <>
-          <h2 className="text-xs font-semibold text-[#64748b] uppercase tracking-wide mb-3">Lead Pipeline</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-            {comingSoonActive && (
-              <StatCard
-                label="Waitlist Signups"
-                value={waitlistCount.count ?? 0}
-                color={(waitlistCount.count ?? 0) > 0 ? "green" : "blue"}
-              />
-            )}
-            <StatCard
-              label="Demo Requests"
-              value={demoTotalCount.count ?? 0}
-              color={(demoTotalCount.count ?? 0) > 0 ? "green" : "blue"}
-            />
-            <StatCard
-              label="Demos — Needs Follow-up"
-              value={demoNewCount.count ?? 0}
-              color={(demoNewCount.count ?? 0) > 0 ? "orange" : "green"}
-            />
-          </div>
-        </>
-      )}
-
-      {/* Revenue stats */}
-      <h2 className="text-xs font-semibold text-[#64748b] uppercase tracking-wide mb-3">Revenue</h2>
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-        <StatCard label="Pro — Active"      value={proActive.count ?? 0}     color="green" />
-        <StatCard label="Employer — Active" value={empActive.count ?? 0}     color="green" />
-        <StatCard label="Past Due"          value={pastDue.count ?? 0}       color="red" />
-        <StatCard label="Active Discounts"  value={discountCount.count ?? 0} color="blue" />
-      </div>
-
-      {/* Trial pipeline */}
-      <h2 className="text-xs font-semibold text-[#64748b] uppercase tracking-wide mb-3">Trial Pipeline</h2>
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
-        <StatCard label="Active Trials"    value={activeTrials.count ?? 0}   color="blue" />
-        <StatCard
-          label="Expiring ≤3 Days"
-          value={expiringTrials.count ?? 0}
-          color={(expiringTrials.count ?? 0) > 0 ? "orange" : "green"}
-        />
-        <StatCard label="Pro Paid + Employer" value={(proActive.count ?? 0) + (empActive.count ?? 0)} color="green" />
-      </div>
-
-      {/* Product health */}
-      <h2 className="text-xs font-semibold text-[#64748b] uppercase tracking-wide mb-3">Product Health</h2>
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-        <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
-          <p className="text-xs font-medium text-[#64748b] mb-1">NPS Score</p>
-          <p className="text-3xl font-bold" style={{
-            color: npsScore === null ? "#64748b" : npsScore >= 50 ? "#16a34a" : npsScore >= 0 ? "#d97706" : "#dc2626"
-          }}>
-            {npsScore !== null ? (npsScore > 0 ? `+${npsScore}` : String(npsScore)) : "—"}
-          </p>
-          <p className="text-xs text-[#64748b] mt-1">{npsScores.length} response{npsScores.length !== 1 ? "s" : ""}</p>
-        </div>
-        <StatCard label="NPS Responses"   value={npsScores.length}            color="blue" />
-        <StatCard
-          label="Email Bounced"
-          value={bouncedRes.count ?? 0}
-          color={(bouncedRes.count ?? 0) > 0 ? "orange" : "green"}
-        />
-        <StatCard
-          label="Spam Reported"
-          value={spamRes.count ?? 0}
-          color={(spamRes.count ?? 0) > 0 ? "red" : "green"}
-        />
-      </div>
-
-      {/* Platform setup status — only show if any service is unconfigured */}
-      {setupChecks.some((c) => !c.ok) && (
-        <div className="mb-8">
-          <h2 className="text-xs font-semibold text-[#64748b] uppercase tracking-wide mb-3">Platform Setup</h2>
-          <div className="bg-white rounded-xl border border-[#e2e8f0] p-6">
-            <p className="text-sm text-[#64748b] mb-4">
-              Services not yet configured. Complete these before going live.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              {setupChecks.map((c) => (
-                <div key={c.label} className="flex items-start gap-2.5">
-                  <span className={`mt-0.5 text-base leading-none ${c.ok ? "text-[#16a34a]" : "text-[#dc2626]"}`}>
-                    {c.ok ? "✓" : "✗"}
-                  </span>
-                  <div className="min-w-0">
-                    <span className={`text-sm font-medium ${c.ok ? "text-[#16a34a]" : "text-[#111]"}`}>
-                      {c.label}
-                    </span>
-                    {!c.ok && c.action && (
-                      <p className="text-xs text-[#64748b] mt-0.5">{c.action}</p>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-            {setupChecks.every((c) => c.ok) && (
-              <p className="text-sm text-[#16a34a] font-medium mt-2">All services configured — ready to launch.</p>
-            )}
+      {/* Setup issues */}
+      {hasSetupIssues && (
+        <div className="bg-[#fff7ed] border border-[#fed7aa] rounded-xl p-5">
+          <h2 className="text-sm font-semibold text-[#92400e] mb-3">Platform Setup — Action Required</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            {setupChecks.filter((c) => !c.ok).map((c) => (
+              <div key={c.label} className="flex items-center gap-2 text-sm text-[#b45309]">
+                <span className="text-[#dc2626] font-bold leading-none">✗</span>
+                <span>{c.label} not configured</span>
+              </div>
+            ))}
           </div>
         </div>
       )}
 
-      {/* Quick actions */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="bg-white rounded-xl border border-[#e2e8f0] p-6">
-          <h2 className="text-base font-semibold text-[#111] mb-4">Operations</h2>
-          <div className="space-y-2">
-            <a href="/admin/demo-requests" className="block text-sm font-semibold text-[#1a56a0] hover:underline">
-              Demo Requests{(demoNewCount.count ?? 0) > 0 && ` — ${demoNewCount.count} need follow-up`}
-            </a>
-            <a href="/admin/waitlist" className="block text-sm text-[#1a56a0] hover:underline">
-              Waitlist — {waitlistCount.count ?? 0} signups
-            </a>
-            <a href="/admin/organizations" className="block text-sm text-[#1a56a0] hover:underline">Manage Organizations</a>
-            <a href="/admin/link-requests" className="block text-sm text-[#1a56a0] hover:underline">
-              Review Link Requests{(pendingLinks.count ?? 0) > 0 && ` (${pendingLinks.count} pending)`}
-            </a>
-            <a href="/admin/cme-verification" className="block text-sm text-[#1a56a0] hover:underline">
-              CME Verification Queue{(pendingCme.count ?? 0) > 0 && ` (${pendingCme.count} pending)`}
-            </a>
-            <a href="/admin/cme-activities" className="block text-sm text-[#1a56a0] hover:underline">
-              CME Activities (legacy)
-            </a>
-            <a href="/admin/professionals" className="block text-sm text-[#1a56a0] hover:underline">Manage Professionals</a>
-            <a href="/admin/compliance" className="block text-sm font-semibold text-[#1a56a0] hover:underline">
-              🌍 Global Compliance — Country × status heatmap + QCHP export
-            </a>
-            <a href="/admin/training-providers" className="block text-sm text-[#1a56a0] hover:underline">
-              Training Providers{(pendingProviders.count ?? 0) > 0 && ` (${pendingProviders.count} pending)`}
-            </a>
-            <a href="/admin/courses" className="block text-sm text-[#1a56a0] hover:underline">
-              Course Moderation{(pendingCourses.count ?? 0) > 0 && ` (${pendingCourses.count} pending)`}
-            </a>
-            <a href="/admin/country-rules" className="block text-sm text-[#1a56a0] hover:underline">Country Rules Engine</a>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-xl border border-[#e2e8f0] p-6">
-          <h2 className="text-base font-semibold text-[#111] mb-4">Master Controls</h2>
-          <div className="space-y-2">
-            <a href="/admin/analytics" className="block text-sm font-semibold text-[#1a56a0] hover:underline">
-              Analytics — Signups / Activation / DAU / Funnel
-            </a>
-            <a href="/admin/revenue" className="block text-sm font-semibold text-[#16a34a] hover:underline">
-              Revenue Dashboard — MRR / ARR / Signups
-            </a>
-            <a href="/admin/subscriptions" className="block text-sm text-[#1a56a0] hover:underline">
-              Subscription Overview — {(proActive.count ?? 0) + (empActive.count ?? 0)} active
-            </a>
-            <a href="/admin/discounts" className="block text-sm text-[#1a56a0] hover:underline">
-              Discount Management — {discountCount.count ?? 0} active discounts
-            </a>
-            <a href="/admin/partners" className="block text-sm text-[#1a56a0] hover:underline">
-              Partner Logos — {partnerCount.count ?? 0} active partners
-            </a>
-            <a href="/admin/audit-logs" className="block text-sm text-[#1a56a0] hover:underline">
-              Audit Log — append-only, 7-year retention
-            </a>
-            <a href="/admin/feature-flags" className="block text-sm font-semibold text-[#1a56a0] hover:underline">
-              🚦 Feature Flags — Kill switches &amp; plan gates
-            </a>
-            <a href="/admin/ai-costs" className="block text-sm font-semibold text-[#1a56a0] hover:underline">
-              🤖 AI Costs — Spend by model &amp; feature
-            </a>
-            <a href="/admin/ai-modules" className="block text-sm text-[#1a56a0] hover:underline">
-              AI Module Control Center
-            </a>
-            <a href="/admin/webhooks" className="block text-sm text-[#1a56a0] hover:underline">
-              Webhook Log
-            </a>
-            <a href="/admin/monitoring" className="block text-sm font-semibold text-[#1a56a0] hover:underline">
-              🔍 Monitoring — Health, Crons, Infra Links
-            </a>
-            <a href="/admin/settings" className="block text-sm font-semibold text-[#1a56a0] hover:underline">
-              ⚙ Platform Settings (prices &amp; limits)
-            </a>
-          </div>
-        </div>
-
-        {/* Push Notification Broadcast */}
-        <PushBroadcastPanel />
+      {/* Navigation grid */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+        <NavSection title="Operations" links={[
+          { href: "/admin/professionals",     label: "Professionals" },
+          { href: "/admin/organizations",     label: "Organizations" },
+          { href: "/admin/employers",         label: "Employers" },
+          { href: "/admin/link-requests",     label: "Link Requests",    badge: pendingLinksCount || undefined },
+          { href: "/admin/cme-verification",  label: "CME Queue",        badge: pendingCmeCount || undefined },
+          { href: "/admin/cme-activities",    label: "CME Activities" },
+          { href: "/admin/training-providers",label: "Providers",        badge: pendingProviders || undefined },
+          { href: "/admin/courses",           label: "Courses",          badge: pendingCourses || undefined },
+          { href: "/admin/reviews",           label: "Reviews" },
+          { href: "/admin/compliance",        label: "Compliance Map" },
+          { href: "/admin/country-rules",     label: "Country Rules" },
+          { href: "/admin/demo-requests",     label: "Demo Requests",    badge: demoNew || undefined },
+          { href: "/admin/waitlist",          label: "Waitlist" },
+        ]} />
+        <NavSection title="Revenue & Growth" links={[
+          { href: "/admin/revenue",           label: "Revenue Dashboard" },
+          { href: "/admin/subscriptions",     label: "Subscriptions" },
+          { href: "/admin/discounts",         label: "Discounts" },
+          { href: "/admin/analytics",         label: "Analytics" },
+          { href: "/admin/nps",               label: "NPS Survey" },
+          { href: "/admin/partners",          label: "Partners" },
+          { href: "/admin/growth",            label: "Growth" },
+          { href: "/admin/reports",           label: "Reports" },
+          { href: "/admin/email-campaigns",   label: "Campaigns" },
+          { href: "/admin/qpay-invoices",     label: "QPay Invoices" },
+        ]} />
+        <NavSection title="AI & Platform" links={[
+          { href: "/admin/ai-modules",        label: "AI Modules" },
+          { href: "/admin/ai-costs",          label: "AI Costs" },
+          { href: "/admin/feature-flags",     label: "Feature Flags" },
+          { href: "/admin/webhooks",          label: "Webhooks" },
+          { href: "/admin/monitoring",        label: "Monitoring" },
+          { href: "/admin/health",            label: "Health" },
+          { href: "/admin/notification-queue",label: "Notif Queue" },
+          { href: "/admin/push-compose",      label: "Push Compose" },
+          { href: "/admin/announcements",     label: "Announcements" },
+          { href: "/admin/performance",       label: "Performance" },
+          { href: "/admin/behavior",          label: "User Behavior" },
+        ]} />
+        <NavSection title="System" links={[
+          { href: "/admin/audit-logs",        label: "Audit Log" },
+          { href: "/admin/settings",          label: "Platform Settings" },
+          { href: "/admin/content",           label: "CMS Content" },
+          { href: "/admin/media",             label: "Media Library" },
+          { href: "/admin/seo",              label: "SEO Manager" },
+          { href: "/admin/email-templates",   label: "Email Templates" },
+          { href: "/admin/db",               label: "DB Explorer" },
+          { href: "/admin/logs",             label: "Logs Center" },
+          { href: "/admin/exports",          label: "Exports" },
+          { href: "/admin/user-actions",     label: "User Actions" },
+          { href: "/admin/changelog",        label: "Changelog" },
+        ]} />
       </div>
     </div>
   );
 }
 
-function StatCard({ label, value, color }: {
-  label: string; value: number; color: "blue" | "green" | "orange" | "red";
+// ─── Sub-components ───────────────────────────────────────────────────────────
+
+function KpiCard({
+  label, value, sub, accent = false,
+  sentiment,
+}: {
+  label: string;
+  value: string;
+  sub: string;
+  accent?: boolean;
+  sentiment?: "good" | "warn" | "bad" | "neutral";
 }) {
-  const c = {
-    blue:   "text-[#1a56a0]",
-    green:  "text-[#16a34a]",
-    orange: "text-[#d97706]",
-    red:    "text-[#dc2626]",
-  }[color];
+  const valueColor = accent
+    ? "text-[#1a56a0]"
+    : sentiment === "good"    ? "text-[#16a34a]"
+    : sentiment === "warn"    ? "text-[#d97706]"
+    : sentiment === "bad"     ? "text-[#dc2626]"
+    : "text-[#0f172a]";
+
   return (
     <div className="bg-white rounded-xl border border-[#e2e8f0] p-5">
-      <p className="text-xs text-[#64748b] font-medium uppercase tracking-wide mb-2">{label}</p>
-      <p className={`text-2xl font-bold ${c}`}>{value}</p>
+      <p className="text-xs font-semibold text-[#64748b] uppercase tracking-wide mb-2">{label}</p>
+      <p className={`text-2xl font-bold tabular-nums ${valueColor}`}>{value}</p>
+      <p className="text-xs text-[#94a3b8] mt-1">{sub}</p>
+    </div>
+  );
+}
+
+function NavSection({
+  title,
+  links,
+}: {
+  title: string;
+  links: { href: string; label: string; badge?: number }[];
+}) {
+  return (
+    <div>
+      <p className="text-xs font-semibold text-[#64748b] uppercase tracking-wide mb-3">{title}</p>
+      <div className="space-y-1">
+        {links.map(({ href, label, badge }) => (
+          <a
+            key={href}
+            href={href}
+            className="flex items-center justify-between py-1.5 text-sm text-[#374151] hover:text-[#1a56a0] transition-colors group"
+          >
+            <span className="group-hover:underline underline-offset-2">{label}</span>
+            {badge !== undefined && badge > 0 && (
+              <span className="text-[10px] font-bold text-white bg-[#dc2626] px-1.5 py-0.5 rounded-full leading-none">
+                {badge}
+              </span>
+            )}
+          </a>
+        ))}
+      </div>
     </div>
   );
 }
