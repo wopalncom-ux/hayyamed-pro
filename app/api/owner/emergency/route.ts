@@ -29,6 +29,7 @@ async function getOwnerSession() {
     .select("role")
     .eq("auth_id", user.id)
     .in("role", ["founder", "master_admin", "super_admin"])
+    .limit(1)
     .maybeSingle();
 
   if (!roleData) return null;

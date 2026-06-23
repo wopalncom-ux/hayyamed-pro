@@ -22,6 +22,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       .select("role")
       .eq("auth_id", user.id)
       .in("role", ["founder", "master_admin", "super_admin"])
+      .limit(1)
       .maybeSingle(),
     admin
       .from("professional_profiles")

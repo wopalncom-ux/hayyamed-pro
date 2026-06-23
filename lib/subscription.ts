@@ -11,6 +11,7 @@ export async function getUserPlan(userId: string): Promise<import("./planUtils")
     .select("role")
     .eq("auth_id", userId)
     .in("role", ["founder", "master_admin", "super_admin"])
+    .limit(1)
     .maybeSingle();
   if (adminRole) return "pro";
 
