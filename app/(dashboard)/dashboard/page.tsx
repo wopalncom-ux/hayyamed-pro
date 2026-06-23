@@ -37,6 +37,15 @@ export default async function DashboardPage({
 
   const admin = createAdminClient();
 
+  // Check master_admin first — drives banner + suppression logic
+  const { data: adminRoleRes } = await admin
+    .from("organization_members")
+    .select("role")
+    .eq("auth_id", user.id)
+    .in("role", ["master_admin", "super_admin"])
+    .maybeSingle();
+  const isMasterAdmin = !!adminRoleRes;
+
   const npsLookback = new Date(Date.now() - 365 * 86400000).toISOString();
   const [profileRes, walletRes, activitiesRes, plan, employerLinkRes, partnersRes, npsRes, employerRoleRes, referralCountRes, subscriptionRes, tasksRes] = await Promise.all([
     admin.from("professional_profiles").select("*").eq("auth_id", user.id).single(),
@@ -125,6 +134,32 @@ export default async function DashboardPage({
     <div>
       {sp.upgrade && <UpgradeSuccessToast type={sp.upgrade === "trial" ? "trial" : undefined} />}
 
+      {/* Admin command center banner — only shown to master_admin / super_admin */}
+      {isMasterAdmin && (
+        <a
+          href="/admin"
+          className="flex items-center justify-between gap-4 bg-[#0f1f3d] text-white rounded-xl px-6 py-4 mb-6 hover:bg-[#1a2f50] transition-colors group"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-[#1a56a0] flex items-center justify-center flex-shrink-0">
+              <svg className="w-4 h-4 text-white" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+              </svg>
+            </div>
+            <div>
+              <p className="text-sm font-bold text-white">Admin Command Center</p>
+              <p className="text-xs text-blue-300 mt-0.5">Full platform control — users, revenue, AI, content, monitoring</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 text-blue-300 group-hover:text-white transition-colors flex-shrink-0">
+            <span className="text-xs font-semibold">Open cPanel</span>
+            <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none">
+              <path d="M6 12l4-4-4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+        </a>
+      )}
+
       {/* Employer setup — active employer subscription but org not yet registered */}
       {needsEmployerSetup && (
         <EmployerSetupBanner employerTier={subscriptionEmployerTier} />
@@ -161,24 +196,23 @@ export default async function DashboardPage({
         return trialDaysLeft > 0 ? <TrialBanner daysLeft={trialDaysLeft} /> : null;
       })()}
 
-      {/* Trial expired re-engagement — shown for 14 days after trial ends */}
-      {showTrialExpiredBanner && (
+      {/* Trial / upgrade / profile prompts — hidden for platform admin */}
+      {!isMasterAdmin && showTrialExpiredBanner && (
         <TrialExpiredBanner daysAgo={trialExpiredDaysAgo} />
       )}
 
-      {/* Free tier upgrade banner — shown to non-Pro users without a recent trial expiry */}
-      {!isPro(plan) && !showTrialExpiredBanner && (
+      {!isMasterAdmin && !isPro(plan) && !showTrialExpiredBanner && (
         <FreeTierBanner activityCount={activityCount} />
       )}
 
-      {/* Push notification opt-in — shown after first CME activity, only if permission not yet set */}
-      <PushPromptBanner activityCount={activityCount} />
+      {!isMasterAdmin && <PushPromptBanner activityCount={activityCount} />}
 
-      {/* NPS survey — shown after 30 days, once per year */}
-      <NpsSurveyBanner eligible={npsEligible} />
+      {!isMasterAdmin && <NpsSurveyBanner eligible={npsEligible} />}
 
-      {/* Profile completion guidance — hidden at 100% */}
-      <ProfileCompletionCard pct={completionPct} gaps={profileGaps} />
+      {/* Profile completion — hidden for admin (no profession required) */}
+      {!isMasterAdmin && (
+        <ProfileCompletionCard pct={completionPct} gaps={profileGaps} />
+      )}
 
       {/* CME compliance status hero — only when wallet exists */}
       {wallet && (

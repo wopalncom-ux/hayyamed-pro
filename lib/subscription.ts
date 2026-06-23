@@ -5,6 +5,15 @@ export { isPro } from "./planUtils";
 export async function getUserPlan(userId: string): Promise<import("./planUtils").Plan> {
   const admin = createAdminClient();
 
+  // master_admin / super_admin always get Pro — no upgrade walls ever
+  const { data: adminRole } = await admin
+    .from("organization_members")
+    .select("role")
+    .eq("auth_id", userId)
+    .in("role", ["master_admin", "super_admin"])
+    .maybeSingle();
+  if (adminRole) return "pro";
+
   // Check subscription and trial in parallel
   const [subRes, profileRes] = await Promise.all([
     admin.from("subscriptions").select("plan, status").eq("professional_id", userId).maybeSingle(),
