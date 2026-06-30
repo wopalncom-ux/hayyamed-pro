@@ -35,10 +35,16 @@ export async function createAuthorityAnnouncement(formData: FormData): Promise<A
   const ctaLabel = ((formData.get("cta_label") as string) ?? "").trim() || null;
   const ctaUrl = ((formData.get("cta_url") as string) ?? "").trim() || null;
   const endsAt = ((formData.get("ends_at") as string) ?? "").trim() || null;
+  const attachmentUrl = ((formData.get("attachment_url") as string) ?? "").trim() || null;
+  const attachmentName = ((formData.get("attachment_name") as string) ?? "").trim() || null;
 
   if (title.length < 3) return { ok: false, error: "Title is required" };
   if (message.length < 5) return { ok: false, error: "Message is required" };
   if (!["info", "warning", "success", "error"].includes(type)) return { ok: false, error: "Invalid type" };
+  // Only accept attachment URLs from our own public bucket
+  if (attachmentUrl && !attachmentUrl.includes("/storage/v1/object/public/announcement-files/")) {
+    return { ok: false, error: "Invalid attachment" };
+  }
 
   const admin = createAdminClient();
   const { error } = await admin.from("authority_announcements").insert({
@@ -46,6 +52,7 @@ export async function createAuthorityAnnouncement(formData: FormData): Promise<A
     jurisdiction_country: authority.jurisdictionCountry,
     title, message, type,
     cta_label: ctaLabel, cta_url: ctaUrl,
+    attachment_url: attachmentUrl, attachment_name: attachmentName,
     ends_at: endsAt ? new Date(endsAt).toISOString() : null,
     created_by: userId,
   });

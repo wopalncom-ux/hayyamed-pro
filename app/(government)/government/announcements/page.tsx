@@ -16,7 +16,7 @@ export default async function GovernmentAnnouncementsPage() {
   const admin = createAdminClient();
   const { data: rows } = await admin
     .from("authority_announcements")
-    .select("id, title, message, type, is_active, cta_label, cta_url, starts_at, ends_at, created_at")
+    .select("id, title, message, type, is_active, cta_label, cta_url, attachment_url, attachment_name, starts_at, ends_at, created_at")
     .eq("organization_id", authority.organizationId)
     .order("created_at", { ascending: false });
 
@@ -32,6 +32,7 @@ export default async function GovernmentAnnouncementsPage() {
         announcements={(rows ?? []).map((r) => ({
           id: r.id, title: r.title, message: r.message, type: r.type,
           isActive: r.is_active, ctaLabel: r.cta_label, ctaUrl: r.cta_url,
+          attachmentUrl: r.attachment_url, attachmentName: r.attachment_name,
           startsAt: r.starts_at, endsAt: r.ends_at,
         }))}
         jurisdiction={authority.jurisdictionCountry}

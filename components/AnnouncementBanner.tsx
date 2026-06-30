@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 type Announcement = {
   id: string; title: string; message: string; type: string;
   dismissible: boolean; cta_label: string | null; cta_url: string | null;
+  attachment_url?: string | null; attachment_name?: string | null;
 };
 
 const STYLES: Record<string, { bg: string; border: string; text: string; icon: string; btn: string }> = {
@@ -46,12 +47,20 @@ export default function AnnouncementBanner() {
             <div className="flex-1 min-w-0">
               <p className={`text-sm font-semibold ${s.text}`}>{a.title}</p>
               <p className={`text-xs mt-0.5 ${s.text} opacity-80`}>{a.message}</p>
-              {a.cta_label && a.cta_url && (
-                <a href={a.cta_url}
-                  className={`inline-block mt-2 text-xs px-3 py-1 rounded-lg font-medium transition-colors ${s.btn}`}>
-                  {a.cta_label}
-                </a>
-              )}
+              <div className="flex flex-wrap items-center gap-2 mt-2">
+                {a.cta_label && a.cta_url && (
+                  <a href={a.cta_url}
+                    className={`inline-block text-xs px-3 py-1 rounded-lg font-medium transition-colors ${s.btn}`}>
+                    {a.cta_label}
+                  </a>
+                )}
+                {a.attachment_url && (
+                  <a href={a.attachment_url} target="_blank" rel="noopener noreferrer"
+                    className={`inline-flex items-center gap-1 text-xs px-3 py-1 rounded-lg font-medium border ${s.border} ${s.text} hover:opacity-80 transition-opacity`}>
+                    📎 {a.attachment_name ?? "Download document"}
+                  </a>
+                )}
+              </div>
             </div>
             {a.dismissible && (
               <button

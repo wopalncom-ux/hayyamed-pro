@@ -11,6 +11,7 @@ type Announcement = {
   id: string; title: string; message: string; type: string;
   isActive: boolean; ctaLabel: string | null; ctaUrl: string | null;
   startsAt: string; endsAt: string | null;
+  attachmentUrl: string | null; attachmentName: string | null;
 };
 
 const TYPE_STYLES: Record<string, string> = {
@@ -23,13 +24,35 @@ const TYPE_STYLES: Record<string, string> = {
 export default function AuthorityAnnouncementManager({ announcements, jurisdiction }: { announcements: Announcement[]; jurisdiction: string }) {
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
+  const [uploading, setUploading] = useState(false);
   const [showForm, setShowForm] = useState(announcements.length === 0);
 
   async function onCreate(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError(null);
-    const fd = new FormData(e.currentTarget);
     const form = e.currentTarget;
+    const fd = new FormData(form);
+
+    // Upload attachment first (if any), then attach its public URL to the form data.
+    const file = fd.get("attachment") as File | null;
+    fd.delete("attachment");
+    if (file && file.size > 0) {
+      if (file.size > 10 * 1024 * 1024) { setError("File too large (max 10 MB)"); return; }
+      setUploading(true);
+      try {
+        const up = new FormData();
+        up.set("file", file);
+        const res = await fetch("/api/government/announcements/upload", { method: "POST", body: up });
+        const data = await res.json();
+        if (!res.ok) { setError(data.error ?? "Attachment upload failed"); setUploading(false); return; }
+        fd.set("attachment_url", data.url);
+        fd.set("attachment_name", data.name);
+      } catch {
+        setError("Attachment upload failed"); setUploading(false); return;
+      }
+      setUploading(false);
+    }
+
     startTransition(async () => {
       const r = await createAuthorityAnnouncement(fd);
       if (!r.ok) setError(r.error ?? "Failed to create");
@@ -80,10 +103,20 @@ export default function AuthorityAnnouncementManager({ announcements, jurisdicti
               <input name="cta_url" maxLength={300} placeholder="/cme" className="border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20" />
             </div>
           </div>
+          <div>
+            <label className="block text-sm font-medium text-[#374151] mb-1">Attach document (optional)</label>
+            <input
+              type="file"
+              name="attachment"
+              accept="application/pdf,image/jpeg,image/png,image/webp"
+              className="block w-full text-sm text-[#374151] file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border file:border-[#e2e8f0] file:bg-[#f8fafc] file:text-[#374151] file:text-sm file:font-medium hover:file:bg-[#f1f5f9] file:cursor-pointer"
+            />
+            <p className="text-xs text-[#64748b] mt-1">PDF circular or image · max 10 MB. Shown to users as a download link.</p>
+          </div>
           {error && <div className="bg-[#fef2f2] border border-[#fecaca] rounded-lg px-4 py-2.5 text-sm text-[#dc2626]">{error}</div>}
           <div className="flex justify-end">
-            <button type="submit" disabled={pending} className="bg-[#1a56a0] text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-[#1547a0] transition-colors disabled:opacity-50">
-              {pending ? "Publishing…" : `Publish to ${jurisdiction}`}
+            <button type="submit" disabled={pending || uploading} className="bg-[#1a56a0] text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-[#1547a0] transition-colors disabled:opacity-50">
+              {uploading ? "Uploading…" : pending ? "Publishing…" : `Publish to ${jurisdiction}`}
             </button>
           </div>
         </form>
@@ -119,6 +152,11 @@ function AnnouncementRow({ a }: { a: Announcement }) {
             </span>
           </div>
           <p className="text-xs mt-0.5 opacity-90">{a.message}</p>
+          {a.attachmentUrl && (
+            <a href={a.attachmentUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-[11px] font-medium mt-1 underline opacity-90">
+              📎 {a.attachmentName ?? "Attachment"}
+            </a>
+          )}
           <p className="text-[11px] mt-1 opacity-70">
             {a.endsAt ? `Expires ${a.endsAt.slice(0, 10)}` : "No expiry"}
           </p>

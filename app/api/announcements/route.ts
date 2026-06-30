@@ -21,7 +21,7 @@ export async function GET() {
       .limit(5),
     supabase
       .from("authority_announcements")
-      .select("id, title, message, type, dismissible, cta_label, cta_url")
+      .select("id, title, message, type, dismissible, cta_label, cta_url, attachment_url, attachment_name")
       .eq("is_active", true)
       .lte("starts_at", nowIso)
       .order("created_at", { ascending: false })
