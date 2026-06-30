@@ -25,3 +25,17 @@ const COUNTRY_NAME_TO_CODE: Record<string, string> = {
 export function toCountryCode(nameOrCode: string): string {
   return COUNTRY_NAME_TO_CODE[nameOrCode] ?? nameOrCode;
 }
+
+/**
+ * Returns every stored value that maps to an ISO code — all display-name variants
+ * PLUS the code itself. Used to build `.in('country_of_residence', [...])` filters
+ * for jurisdiction-scoped queries (professionals store names like "Qatar", the
+ * rules/government tables store codes like "QA").
+ */
+export function countryValuesForCode(code: string): string[] {
+  const upper = code.toUpperCase();
+  const names = Object.entries(COUNTRY_NAME_TO_CODE)
+    .filter(([, c]) => c === upper)
+    .map(([name]) => name);
+  return [...new Set([...names, upper])];
+}

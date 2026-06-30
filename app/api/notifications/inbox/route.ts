@@ -29,6 +29,7 @@ const TEMPLATE_LABELS: Record<string, string> = {
   drip_d10:                    "Invite your team",
   trial_reminder:              "Trial period reminder",
   trial_ending:                "Your trial is ending soon",
+  authority_reminder:          "Notice from your licensing authority",
 };
 
 function labelForTemplate(templateId: string): string {

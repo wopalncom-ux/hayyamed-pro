@@ -51,13 +51,12 @@ export default async function GovernmentLayout({ children }: { children: React.R
           {[
             { href: "/government",                  label: "Dashboard",     adminOnly: false },
             { href: "/government/registry",         label: "Registry",      adminOnly: false },
+            { href: "/government/education",        label: "Education",     adminOnly: false },
             { href: "/government/reports",          label: "Reports",       adminOnly: false },
-            { href: "/government/ai-assistant",     label: "AI Assistant",  adminOnly: false },
-            { href: "/government/broadcast",        label: "Broadcast",     adminOnly: true  },
+            { href: "/government/reminders",        label: "Reminders",     adminOnly: true  },
+            { href: "/government/announcements",    label: "Announcements", adminOnly: true  },
             { href: "/government/team",             label: "Team",          adminOnly: true  },
             { href: "/government/settings",         label: "Settings",      adminOnly: true  },
-            { href: "/government/api-keys",         label: "API Keys",      adminOnly: true  },
-            { href: "/government/api",              label: "Integration",   adminOnly: true  },
           ].filter((item) => !item.adminOnly || isAdmin).map(({ href, label }) => (
             <a
               key={href}
