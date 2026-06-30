@@ -4,6 +4,8 @@ import Link from "next/link";
 import ComplianceTrendChart from "@/components/government/ComplianceTrendChart";
 import RenewalCycleCountdown from "@/components/government/RenewalCycleCountdown";
 import GovernmentForecastPanel from "@/components/government/GovernmentForecastPanel";
+import ComplianceDonut from "@/components/government/ComplianceDonut";
+import ProfessionBars from "@/components/government/ProfessionBars";
 import {
   getAuthorityForUser,
   getJurisdictionProfessionals,
@@ -37,6 +39,19 @@ export default async function GovernmentDashboardPage({
   const professionals = await getJurisdictionProfessionals(authority, user.id);
   const stats = computeStats(professionals);
   const attention = redZone(professionals);
+
+  // Compliance breakdown by profession (for the bar chart)
+  const profMap = new Map<string, { name: string; total: number; compliant: number; atRisk: number; nonCompliant: number }>();
+  for (const p of professionals) {
+    const key = p.profession || "Other";
+    if (!profMap.has(key)) profMap.set(key, { name: key, total: 0, compliant: 0, atRisk: 0, nonCompliant: 0 });
+    const e = profMap.get(key)!;
+    e.total++;
+    if (p.complianceStatus === "compliant") e.compliant++;
+    else if (p.complianceStatus === "at_risk") e.atRisk++;
+    else if (p.complianceStatus === "non_compliant") e.nonCompliant++;
+  }
+  const professionRows = [...profMap.values()].sort((a, b) => b.total - a.total);
 
   // Trend snapshots + renewal cycle rule
   const admin = createAdminClient();
@@ -121,6 +136,25 @@ export default async function GovernmentDashboardPage({
           color={stats.complianceRate >= 80 ? "green" : stats.complianceRate >= 60 ? "orange" : "red"}
         />
       </div>
+
+      {/* Modern charts: compliance split + by-profession */}
+      {stats.total > 0 && (
+        <div className="grid lg:grid-cols-2 gap-4 mb-6">
+          <div className="bg-white rounded-xl border border-[#e2e8f0] p-6">
+            <h2 className="text-base font-semibold text-[#111] mb-4">Compliance Breakdown</h2>
+            <ComplianceDonut
+              compliant={stats.compliant}
+              atRisk={stats.atRisk}
+              nonCompliant={stats.nonCompliant}
+              unknown={stats.unknown}
+            />
+          </div>
+          <div className="bg-white rounded-xl border border-[#e2e8f0] p-6">
+            <h2 className="text-base font-semibold text-[#111] mb-4">Compliance by Profession</h2>
+            <ProfessionBars rows={professionRows} />
+          </div>
+        </div>
+      )}
 
       {countryRule && stats.total > 0 && (
         <RenewalCycleCountdown
