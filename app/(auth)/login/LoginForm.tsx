@@ -16,8 +16,8 @@ export default function LoginForm() {
   const searchParams = useSearchParams();
   // Reject any next= value that isn't a same-origin relative path to prevent open redirect.
   const rawNext = searchParams.get("next") ?? "";
-  const next =
-    rawNext.startsWith("/") && !rawNext.startsWith("//") ? rawNext : "/dashboard";
+  const hasExplicitNext = rawNext.startsWith("/") && !rawNext.startsWith("//");
+  const next = hasExplicitNext ? rawNext : "/dashboard";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -58,14 +58,29 @@ export default function LoginForm() {
     if (data.user) identifyUser(data.user.id);
     track("login_completed");
 
+    // Role-based landing: regulatory-authority accounts belong in the government
+    // portal, not the medical professional dashboard. Only applied when the user
+    // didn't request a specific page via ?next=.
+    let dest = next;
+    if (!hasExplicitNext && data.user) {
+      const { data: gov } = await supabase
+        .from("organization_members")
+        .select("role")
+        .eq("auth_id", data.user.id)
+        .in("role", ["government_admin", "government_staff"])
+        .limit(1)
+        .maybeSingle();
+      if (gov) dest = "/government";
+    }
+
     // Check if MFA is required (user has an enrolled TOTP factor)
     const { data: aal } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
     if (aal?.nextLevel === "aal2" && aal.currentLevel !== "aal2") {
-      router.push(`/mfa?next=${encodeURIComponent(next)}`);
+      router.push(`/mfa?next=${encodeURIComponent(dest)}`);
       return;
     }
 
-    router.push(next);
+    router.push(dest);
     router.refresh();
   }
 
