@@ -50,10 +50,6 @@ export default function HayyaAssistant() {
     );
   }, []);
 
-  // Hide on dashboard/auth/admin paths
-  const hidden = HIDDEN_PATHS.some((p) => pathname?.startsWith(p));
-  if (hidden) return null;
-
   // Auto-scroll
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -171,6 +167,11 @@ export default function HayyaAssistant() {
     setOpen(true);
     setHasUnread(false);
   };
+
+  // Hide on dashboard/auth/admin paths — computed AFTER all hooks so the hook
+  // count never changes between renders (React Rules of Hooks).
+  const hidden = HIDDEN_PATHS.some((p) => pathname?.startsWith(p));
+  if (hidden) return null;
 
   return (
     <>
