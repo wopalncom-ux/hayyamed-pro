@@ -17,6 +17,18 @@ export default async function DashboardLayout({ children }: { children: React.Re
   if (!user) redirect("/login");
 
   const admin = createAdminClient();
+
+  // Regulatory-authority accounts belong in the government portal — never the
+  // medical professional dashboard. Bounce them out before rendering.
+  const { data: govMember } = await admin
+    .from("organization_members")
+    .select("role")
+    .eq("auth_id", user.id)
+    .in("role", ["government_admin", "government_staff"])
+    .limit(1)
+    .maybeSingle();
+  if (govMember) redirect("/government");
+
   const [profileRes, orgLogoRes, employerMemberRes] = await Promise.all([
     admin
       .from("professional_profiles")
