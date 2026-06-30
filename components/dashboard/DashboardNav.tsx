@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import {
   LayoutDashboard, BookOpen, Sparkles, BarChart2,
-  CreditCard, ShoppingBag, Settings, Building2, Download, Search,
+  CreditCard, ShoppingBag, Settings, Building2, Download, Search, ShieldCheck,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import NotificationBell from "./NotificationBell";
@@ -35,6 +35,7 @@ export default function DashboardNav({
     { href: "/dashboard/ai", label: t("nav_ai"), Icon: Sparkles, owns: ["/dashboard/ai"] },
     { href: "/dashboard/analytics", label: t("nav_analytics"), Icon: BarChart2, owns: ["/dashboard/analytics"] },
     { href: "/dashboard/licenses", label: t("nav_licenses"), Icon: CreditCard, owns: ["/dashboard/licenses"] },
+    { href: "/dashboard/credentials", label: "Credentials", Icon: ShieldCheck, owns: ["/dashboard/credentials"] },
     { href: "/dashboard/marketplace", label: t("nav_marketplace"), Icon: ShoppingBag, owns: ["/dashboard/marketplace"] },
     { href: "/dashboard/settings", label: t("nav_settings"), Icon: Settings, owns: ["/dashboard/settings", "/dashboard/billing", "/dashboard/notifications", "/dashboard/refer"] },
   ];
