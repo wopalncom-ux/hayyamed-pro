@@ -1,6 +1,6 @@
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { getAuthorityForUser } from "@/lib/government/jurisdiction";
+import { getAuthorityForUser, countryName } from "@/lib/government/jurisdiction";
 import { logAudit } from "@/lib/audit";
 
 export const metadata = { title: "Education Oversight — Hayya Med Pro" };
@@ -73,7 +73,7 @@ export default async function GovernmentEducationPage({
         <div>
           <h1 className="text-2xl font-bold text-[#111]">Education Oversight</h1>
           <p className="text-sm text-[#64748b] mt-1">
-            CME activities — courses, conferences & webinars — offered to professionals in {authority.jurisdictionCountry}
+            CME activities — courses, conferences & webinars — offered to professionals in {countryName(authority.jurisdictionCountry)}
           </p>
         </div>
         {total > 0 && (
@@ -93,7 +93,7 @@ export default async function GovernmentEducationPage({
         <Stat label="Activities" value={total.toString()} />
         <Stat label="Accredited" value={accreditedCount.toString()} />
         <Stat label="Total CME credits" value={totalCredits.toFixed(0)} />
-        <Stat label="Jurisdiction" value={authority.jurisdictionCountry} />
+        <Stat label="Jurisdiction" value={countryName(authority.jurisdictionCountry)} />
       </div>
 
       <form method="GET" className="bg-white rounded-xl border border-[#e2e8f0] p-4 mb-5">
@@ -115,7 +115,7 @@ export default async function GovernmentEducationPage({
           <div className="px-6 py-12 text-center">
             <div className="w-14 h-14 rounded-2xl bg-[#e8f0fe] flex items-center justify-center mx-auto mb-3"><span className="text-2xl">🎓</span></div>
             <p className="text-sm font-semibold text-[#111]">No education activities found</p>
-            <p className="text-xs text-[#64748b] mt-1">No courses, conferences, or webinars are currently listed for {authority.jurisdictionCountry}.</p>
+            <p className="text-xs text-[#64748b] mt-1">No courses, conferences, or webinars are currently listed for {countryName(authority.jurisdictionCountry)}.</p>
           </div>
         ) : (
           <div className="overflow-x-auto">

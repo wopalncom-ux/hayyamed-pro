@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { getAuthorityForUser, getJurisdictionProfessionals } from "@/lib/government/jurisdiction";
+import { getAuthorityForUser, getJurisdictionProfessionals, countryName } from "@/lib/government/jurisdiction";
 import ReminderClient from "@/components/government/ReminderClient";
 
 export const metadata = { title: "Send Reminder — Hayya Med Pro" };
@@ -29,7 +29,7 @@ export default async function GovernmentRemindersPage() {
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-[#111]">Send Reminder</h1>
         <p className="text-sm text-[#64748b] mt-1">
-          Send a direct compliance reminder to professionals in {authority.jurisdictionCountry}. Delivered to their inbox, email, and device.
+          Send a direct compliance reminder to professionals in {countryName(authority.jurisdictionCountry)}. Delivered to their inbox, email, and device.
         </p>
       </div>
       <ReminderClient counts={counts} employers={employers} authorityName={authority.orgName} />

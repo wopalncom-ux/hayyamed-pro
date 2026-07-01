@@ -14,6 +14,7 @@ import {
   computeLicenseZone,
   ZONE_CONFIG,
   authorityDisplayName,
+  countryName,
 } from "@/lib/government/jurisdiction";
 
 export const metadata = { title: "Authority Dashboard — Hayya Med Pro" };
@@ -192,7 +193,7 @@ export default async function GovernmentDashboardPage({
             </div>
             <h3 className="text-base font-bold text-[#111] mb-1">No professionals in this jurisdiction yet</h3>
             <p className="text-sm text-[#64748b] max-w-sm mx-auto">
-              As healthcare professionals in {authority.jurisdictionCountry} complete onboarding, they appear here automatically.
+              As healthcare professionals in {countryName(authority.jurisdictionCountry)} complete onboarding, they appear here automatically.
             </p>
           </div>
         ) : attention.length === 0 ? (

@@ -10,6 +10,7 @@ import {
   filtersToQuery,
   computeLicenseZone,
   ZONE_CONFIG,
+  countryName,
   type JurisdictionProfessional,
 } from "@/lib/government/jurisdiction";
 
@@ -61,7 +62,7 @@ export default async function GovernmentRegistryPage({
         <div>
           <h1 className="text-2xl font-bold text-[#111]">Professional Registry</h1>
           <p className="text-sm text-[#64748b] mt-1">
-            {filtered.length} of {all.length} professionals in {authority.jurisdictionCountry}
+            {filtered.length} of {all.length} professionals in {countryName(authority.jurisdictionCountry)}
           </p>
         </div>
         <div className="flex items-center gap-3 self-start sm:self-auto">

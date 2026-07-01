@@ -34,10 +34,23 @@ export function computeLicenseZone(p: { daysToExpiry: number | null; complianceS
   return "none";
 }
 
+const COUNTRY_NAMES: Record<string, string> = {
+  QA: "Qatar", SA: "Saudi Arabia", AE: "United Arab Emirates",
+  KW: "Kuwait", BH: "Bahrain", OM: "Oman", EG: "Egypt", JO: "Jordan",
+  GB: "United Kingdom", IN: "India", AU: "Australia", US: "United States",
+  CA: "Canada", DE: "Germany", FR: "France", PH: "Philippines", LB: "Lebanon",
+};
+
+/** Convert ISO-2 country code to full country name ("QA" → "Qatar"). Falls back to the code. */
+export function countryName(code: string): string {
+  return COUNTRY_NAMES[code.toUpperCase()] ?? code;
+}
+
 /** Display name for an authority — e.g. "DHP (Qatar)" instead of bare "QA". */
 export function authorityDisplayName(authority: { authorityCode: string | null; orgName: string; jurisdictionCountry: string }): string {
-  if (authority.authorityCode) return `${authority.authorityCode} (${authority.jurisdictionCountry})`;
-  return `${authority.orgName} — ${authority.jurisdictionCountry}`;
+  const name = countryName(authority.jurisdictionCountry);
+  if (authority.authorityCode) return `${authority.authorityCode} (${name})`;
+  return `${authority.orgName} — ${name}`;
 }
 
 export type JurisdictionProfessional = {

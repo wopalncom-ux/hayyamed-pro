@@ -1,6 +1,6 @@
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { getAuthorityForUser } from "@/lib/government/jurisdiction";
+import { getAuthorityForUser, countryName } from "@/lib/government/jurisdiction";
 import AuthorityAnnouncementManager from "@/components/government/AuthorityAnnouncementManager";
 
 export const metadata = { title: "Announcements — Hayya Med Pro" };
@@ -25,7 +25,7 @@ export default async function GovernmentAnnouncementsPage() {
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-[#111]">Announcements</h1>
         <p className="text-sm text-[#64748b] mt-1">
-          Post a banner shown to every Hayya Med Pro user in {authority.jurisdictionCountry}. It will not appear to users in other countries.
+          Post a banner shown to every Hayya Med Pro user in {countryName(authority.jurisdictionCountry)}. It will not appear to users in other countries.
         </p>
       </div>
       <AuthorityAnnouncementManager
