@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 import { z } from "zod";
 import { createAdminClient } from "@/lib/supabase/server";
 import { getRequestUser } from "@/lib/auth/getRequestUser";
-import { getAnthropicClient } from "@/lib/anthropic";
+import { aiComplete } from "@/lib/ai/complete";
 import { checkAndLogRateLimit } from "@/lib/rateLimit";
 import { getUserPlan, isPro } from "@/lib/subscription";
 import { isFeatureEnabled } from "@/lib/featureFlags";
@@ -61,10 +61,10 @@ export async function POST(req: NextRequest) {
 
   const startTime = Date.now();
   try {
-    const client = getAnthropicClient();
-    const res = await client.messages.create({
-      model: "claude-sonnet-4-6",
-      max_tokens: 2000,
+    const ai = await aiComplete({
+      task: "gap_analysis",
+      maxTokens: 2000,
+      json: true,
       messages: [{ role: "user", content: prompt }],
     });
 
@@ -73,22 +73,22 @@ export async function POST(req: NextRequest) {
       action: "ai.learning_pathway",
       targetTable: "audit_logs",
       metadata: {
-        model: "claude-sonnet-4-6",
-        input_tokens: res.usage?.input_tokens ?? 0,
-        output_tokens: res.usage?.output_tokens ?? 0,
+        model: ai.model,
+        input_tokens: ai.inputTokens,
+        output_tokens: ai.outputTokens,
         latency_ms: Date.now() - startTime,
       },
     }).catch(() => {});
     logAiCall({
       professionalId: user.id,
       action: "ai.learning_pathway",
-      model: "claude-sonnet-4-6",
-      inputTokens: res.usage?.input_tokens ?? 0,
-      outputTokens: res.usage?.output_tokens ?? 0,
+      model: ai.model,
+      inputTokens: ai.inputTokens,
+      outputTokens: ai.outputTokens,
       latencyMs: Date.now() - startTime,
     }).catch(() => {});
 
-    const text = (res.content[0] as { type: string; text: string }).text.trim();
+    const text = ai.text.trim();
     const match = text.match(/\{[\s\S]*\}/);
     if (!match) return NextResponse.json({ error: "Invalid AI response" }, { status: 502 });
 
@@ -101,7 +101,7 @@ export async function POST(req: NextRequest) {
       professional_id: user.id,
       country,
       profession,
-      model: "claude-sonnet-4-6",
+      model: ai.model,
       prompt_version: "v1",
       pathway_json: validated.data,
       credits_gap: Math.max(0, requiredCredits - completedCredits),

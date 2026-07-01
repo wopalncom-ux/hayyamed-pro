@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
-import { getAnthropicClient } from "@/lib/anthropic";
+import { aiComplete } from "@/lib/ai/complete";
 import { BROADCAST_DRAFTER_SYSTEM, buildBroadcastDraftPrompt } from "@/lib/ai/prompts/broadcast-drafter";
 import { checkAndLogRateLimit } from "@/lib/rateLimit";
 import { logAudit } from "@/lib/audit";
@@ -80,21 +80,19 @@ export async function POST(req: NextRequest) {
     daysUntilCycleEnd: Math.max(1, Math.round(cycleMonths * 30.44)),
   });
 
-  const claude = getAnthropicClient();
   const start = Date.now();
 
   try {
-    const message = await claude.messages.create({
-      model: "claude-haiku-4-5",
-      max_tokens: 600,
+    const ai = await aiComplete({
+      task: "draft",
+      maxTokens: 600,
+      json: true,
       system: BROADCAST_DRAFTER_SYSTEM,
       messages: [{ role: "user", content: prompt }],
     });
 
     const latency = Date.now() - start;
-    const raw = message.content[0]?.type === "text" ? message.content[0].text : "";
-    const inputTokens = message.usage.input_tokens;
-    const outputTokens = message.usage.output_tokens;
+    const raw = ai.text;
 
     const jsonMatch = raw.match(/\{[\s\S]*\}/);
     if (!jsonMatch) throw new Error("No JSON in AI response");
@@ -104,10 +102,10 @@ export async function POST(req: NextRequest) {
 
     logAiCall({
       professionalId: user.id,
-      model: "claude-haiku-4-5",
+      model: ai.model,
       action: "draft-broadcast",
-      inputTokens,
-      outputTokens,
+      inputTokens: ai.inputTokens,
+      outputTokens: ai.outputTokens,
       latencyMs: latency,
     }).catch(() => {});
 

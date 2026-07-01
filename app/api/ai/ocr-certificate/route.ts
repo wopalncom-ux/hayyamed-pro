@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { z } from "zod";
 import { getRequestUser } from "@/lib/auth/getRequestUser";
-import { getAnthropicClient } from "@/lib/anthropic";
+import { aiComplete } from "@/lib/ai/complete";
 import { checkAndLogRateLimit } from "@/lib/rateLimit";
 import { getUserPlan, isPro } from "@/lib/subscription";
 import { isFeatureEnabled } from "@/lib/featureFlags";
@@ -51,43 +51,12 @@ export async function POST(req: NextRequest) {
     const buffer = await file.arrayBuffer();
     const base64 = Buffer.from(buffer).toString("base64");
 
-    const isPdf = file.type === "application/pdf";
-    type ImgType = "image/jpeg" | "image/png" | "image/gif" | "image/webp";
-
-    const fileBlock = isPdf
-      ? ({
-          type: "document" as const,
-          source: {
-            type: "base64" as const,
-            media_type: "application/pdf" as const,
-            data: base64,
-          },
-        })
-      : ({
-          type: "image" as const,
-          source: {
-            type: "base64" as const,
-            media_type: file.type as ImgType,
-            data: base64,
-          },
-        });
-
-    const client = getAnthropicClient();
-    const response = await client.messages.create({
-      model: "claude-sonnet-4-6",
-      max_tokens: 512,
-      messages: [
-        {
-          role: "user",
-          content: [
-            fileBlock,
-            {
-              type: "text",
-              text: OCR_CERTIFICATE_PROMPT,
-            },
-          ],
-        },
-      ],
+    const ai = await aiComplete({
+      task: "ocr",
+      maxTokens: 512,
+      json: true,
+      messages: [{ role: "user", content: OCR_CERTIFICATE_PROMPT }],
+      images: [{ mediaType: file.type, data: base64 }],
     });
 
     logAudit({
@@ -95,9 +64,9 @@ export async function POST(req: NextRequest) {
       action: "ai.ocr_certificate",
       targetTable: "audit_logs",
       metadata: {
-        model: "claude-sonnet-4-6",
-        input_tokens: response.usage?.input_tokens ?? 0,
-        output_tokens: response.usage?.output_tokens ?? 0,
+        model: ai.model,
+        input_tokens: ai.inputTokens,
+        output_tokens: ai.outputTokens,
         latency_ms: Date.now() - startTime,
         file_type: file.type,
         file_size_bytes: file.size,
@@ -106,18 +75,17 @@ export async function POST(req: NextRequest) {
     logAiCall({
       professionalId: user.id,
       action: "ai.ocr_certificate",
-      model: "claude-sonnet-4-6",
-      inputTokens: response.usage?.input_tokens ?? 0,
-      outputTokens: response.usage?.output_tokens ?? 0,
+      model: ai.model,
+      inputTokens: ai.inputTokens,
+      outputTokens: ai.outputTokens,
       latencyMs: Date.now() - startTime,
     }).catch(() => {});
 
-    const text = response.content.find((b) => b.type === "text");
-    if (!text || text.type !== "text") {
+    if (!ai.text.trim()) {
       return NextResponse.json({ error: "No AI response" }, { status: 500 });
     }
 
-    const parsed = OcrResponseSchema.safeParse(JSON.parse(text.text.trim()));
+    const parsed = OcrResponseSchema.safeParse(JSON.parse(ai.text.trim()));
     if (!parsed.success) {
       return NextResponse.json({ error: "Invalid AI response structure" }, { status: 500 });
     }

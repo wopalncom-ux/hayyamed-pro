@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
-import { getAnthropicClient } from "@/lib/anthropic";
+import { aiComplete } from "@/lib/ai/complete";
 import { GOVERNMENT_FORECASTER_SYSTEM, buildGovernmentForecastPrompt } from "@/lib/ai/prompts/government-forecaster";
 import { checkAndLogRateLimit } from "@/lib/rateLimit";
 import { logAudit } from "@/lib/audit";
@@ -141,21 +141,21 @@ export async function POST(req: NextRequest) {
     avgCreditsCompletion,
   });
 
-  const claude = getAnthropicClient();
   const start = Date.now();
 
   try {
-    const message = await claude.messages.create({
-      model: "claude-haiku-4-5",
-      max_tokens: 600,
+    const ai = await aiComplete({
+      task: "forecast",
+      maxTokens: 600,
+      json: true,
       system: GOVERNMENT_FORECASTER_SYSTEM,
       messages: [{ role: "user", content: prompt }],
     });
 
     const latency = Date.now() - start;
-    const raw = message.content[0]?.type === "text" ? message.content[0].text : "";
-    const inputTokens = message.usage.input_tokens;
-    const outputTokens = message.usage.output_tokens;
+    const raw = ai.text;
+    const inputTokens = ai.inputTokens;
+    const outputTokens = ai.outputTokens;
 
     // Extract JSON
     const jsonMatch = raw.match(/\{[\s\S]*\}/);
@@ -166,7 +166,7 @@ export async function POST(req: NextRequest) {
 
     logAiCall({
       professionalId: user.id,
-      model: "claude-haiku-4-5",
+      model: ai.model,
       action: "government-forecast",
       inputTokens,
       outputTokens,
@@ -178,7 +178,7 @@ export async function POST(req: NextRequest) {
       action: "ai.government_forecast",
       targetTable: "organizations",
       targetId: organizationId,
-      metadata: { model: "claude-haiku-4-5", inputTokens, outputTokens, latencyMs: latency },
+      metadata: { model: ai.model, inputTokens, outputTokens, latencyMs: latency },
     }).catch(() => {});
 
     return NextResponse.json({ forecast: parsed.data });

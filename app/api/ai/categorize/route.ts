@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { z } from "zod";
 import { getRequestUser } from "@/lib/auth/getRequestUser";
-import { getAnthropicClient } from "@/lib/anthropic";
+import { aiComplete } from "@/lib/ai/complete";
 import { checkAndLogRateLimit } from "@/lib/rateLimit";
 import { logAudit } from "@/lib/audit";
 import { logAiCall } from "@/lib/ai/logAiCall";
@@ -38,11 +38,10 @@ export async function POST(req: NextRequest) {
 
   const startTime = Date.now();
   try {
-    const client = getAnthropicClient();
-
-    const response = await client.messages.create({
-      model: "claude-haiku-4-5-20251001",
-      max_tokens: 256,
+    const ai = await aiComplete({
+      task: "classify",
+      maxTokens: 256,
+      json: true,
       system: CATEGORIZE_SYSTEM,
       messages: [
         {
@@ -71,27 +70,26 @@ Set creditSuggestion to null if entered credits seem reasonable, or suggest a be
       action: "ai.categorize",
       targetTable: "audit_logs",
       metadata: {
-        model: "claude-haiku-4-5-20251001",
-        input_tokens: response.usage?.input_tokens ?? 0,
-        output_tokens: response.usage?.output_tokens ?? 0,
+        model: ai.model,
+        input_tokens: ai.inputTokens,
+        output_tokens: ai.outputTokens,
         latency_ms: Date.now() - startTime,
       },
     }).catch(() => {});
     logAiCall({
       professionalId: user.id,
       action: "ai.categorize",
-      model: "claude-haiku-4-5-20251001",
-      inputTokens: response.usage?.input_tokens ?? 0,
-      outputTokens: response.usage?.output_tokens ?? 0,
+      model: ai.model,
+      inputTokens: ai.inputTokens,
+      outputTokens: ai.outputTokens,
       latencyMs: Date.now() - startTime,
     }).catch(() => {});
 
-    const textBlock = response.content.find((b) => b.type === "text");
-    if (!textBlock || textBlock.type !== "text") {
+    if (!ai.text.trim()) {
       return NextResponse.json({ error: "No AI response" }, { status: 500 });
     }
 
-    const parsed = CategorizeResponseSchema.safeParse(JSON.parse(textBlock.text.trim()));
+    const parsed = CategorizeResponseSchema.safeParse(JSON.parse(ai.text.trim()));
     if (!parsed.success) {
       return NextResponse.json({ error: "Invalid AI response structure" }, { status: 500 });
     }

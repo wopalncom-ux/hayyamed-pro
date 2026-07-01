@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 import { headers } from "next/headers";
 import { createAdminClient } from "@/lib/supabase/server";
 import { getRequestUser } from "@/lib/auth/getRequestUser";
-import { getAnthropicClient } from "@/lib/anthropic";
+import { aiComplete } from "@/lib/ai/complete";
 import { checkAndLogRateLimit } from "@/lib/rateLimit";
 import { logAudit } from "@/lib/audit";
 import { logAiCall } from "@/lib/ai/logAiCall";
@@ -161,10 +161,10 @@ Top markets by registered professional count: ${topCountries || "No platform dat
   const startTime = Date.now();
 
   try {
-    const claude = getAnthropicClient();
-    const response = await claude.messages.create({
-      model: "claude-sonnet-4-6",
-      max_tokens: 1200,
+    const ai = await aiComplete({
+      task: "employer",
+      maxTokens: 1200,
+      json: true,
       system: PROVIDER_ANALYZER_SYSTEM,
       messages: [
         {
@@ -174,8 +174,7 @@ Top markets by registered professional count: ${topCountries || "No platform dat
       ],
     });
 
-    const rawText =
-      response.content[0]?.type === "text" ? response.content[0].text : "{}";
+    const rawText = ai.text || "{}";
 
     const jsonMatch = rawText.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
@@ -195,9 +194,9 @@ Top markets by registered professional count: ${topCountries || "No platform dat
       targetTable: "training_providers",
       targetId: providerCheck.id,
       metadata: {
-        model: "claude-sonnet-4-6",
-        input_tokens: response.usage?.input_tokens ?? 0,
-        output_tokens: response.usage?.output_tokens ?? 0,
+        model: ai.model,
+        input_tokens: ai.inputTokens,
+        output_tokens: ai.outputTokens,
         latency_ms: Date.now() - startTime,
         analysis_type: analysisType,
         course_count: totalCourses,
@@ -206,9 +205,9 @@ Top markets by registered professional count: ${topCountries || "No platform dat
     logAiCall({
       professionalId: user.id,
       action: "ai.provider_analysis",
-      model: "claude-sonnet-4-6",
-      inputTokens: response.usage?.input_tokens ?? 0,
-      outputTokens: response.usage?.output_tokens ?? 0,
+      model: ai.model,
+      inputTokens: ai.inputTokens,
+      outputTokens: ai.outputTokens,
       latencyMs: Date.now() - startTime,
     }).catch(() => {});
 

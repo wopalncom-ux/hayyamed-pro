@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 import { headers } from "next/headers";
 import { createAdminClient } from "@/lib/supabase/server";
 import { getRequestUser } from "@/lib/auth/getRequestUser";
-import { getAnthropicClient } from "@/lib/anthropic";
+import { aiComplete } from "@/lib/ai/complete";
 import { checkAndLogRateLimit } from "@/lib/rateLimit";
 import { logAudit } from "@/lib/audit";
 import { logAiCall } from "@/lib/ai/logAiCall";
@@ -159,10 +159,10 @@ Analysis requested: ${analysisType}
   const startTime = Date.now();
 
   try {
-    const claude = getAnthropicClient();
-    const response = await claude.messages.create({
-      model: "claude-sonnet-4-6",
-      max_tokens: 1024,
+    const ai = await aiComplete({
+      task: "employer",
+      maxTokens: 1024,
+      json: true,
       system: EMPLOYER_ANALYZER_SYSTEM,
       messages: [
         {
@@ -172,8 +172,7 @@ Analysis requested: ${analysisType}
       ],
     });
 
-    const rawText =
-      response.content[0]?.type === "text" ? response.content[0].text : "{}";
+    const rawText = ai.text || "{}";
 
     // Extract JSON from response (handle markdown code blocks)
     const jsonMatch = rawText.match(/\{[\s\S]*\}/);
@@ -194,9 +193,9 @@ Analysis requested: ${analysisType}
       targetTable: "organizations",
       targetId: organizationId,
       metadata: {
-        model: "claude-sonnet-4-6",
-        input_tokens: response.usage?.input_tokens ?? 0,
-        output_tokens: response.usage?.output_tokens ?? 0,
+        model: ai.model,
+        input_tokens: ai.inputTokens,
+        output_tokens: ai.outputTokens,
         latency_ms: Date.now() - startTime,
         analysis_type: analysisType,
         staff_count: total,
@@ -205,9 +204,9 @@ Analysis requested: ${analysisType}
     logAiCall({
       professionalId: user.id,
       action: "ai.employer_analysis",
-      model: "claude-sonnet-4-6",
-      inputTokens: response.usage?.input_tokens ?? 0,
-      outputTokens: response.usage?.output_tokens ?? 0,
+      model: ai.model,
+      inputTokens: ai.inputTokens,
+      outputTokens: ai.outputTokens,
       latencyMs: Date.now() - startTime,
     }).catch(() => {});
 

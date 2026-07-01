@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
-import { getAnthropicClient } from "@/lib/anthropic";
+import { aiComplete } from "@/lib/ai/complete";
 import { GOVERNMENT_CHAT_SYSTEM, buildGovernmentChatContext } from "@/lib/ai/prompts/government-chat";
 import { checkAndLogRateLimit } from "@/lib/rateLimit";
 import { logAudit } from "@/lib/audit";
@@ -140,28 +140,27 @@ export async function POST(req: NextRequest) {
   const systemWithContext = `${GOVERNMENT_CHAT_SYSTEM}\n\n${context}`;
   const recentHistory = history.slice(-8);
 
-  const claude = getAnthropicClient();
   const start = Date.now();
 
   try {
-    const messageResp = await claude.messages.create({
-      model: "claude-sonnet-4-6",
-      max_tokens: 800,
+    const ai = await aiComplete({
+      task: "government",
+      maxTokens: 800,
       system: systemWithContext,
       messages: [
-        ...recentHistory.map((m) => ({ role: m.role, content: m.content })),
+        ...recentHistory.map((m) => ({ role: m.role as "user" | "assistant", content: m.content })),
         { role: "user", content: message },
       ],
     });
 
     const latency = Date.now() - start;
-    const reply = messageResp.content[0]?.type === "text" ? messageResp.content[0].text : "";
-    const inputTokens = messageResp.usage.input_tokens;
-    const outputTokens = messageResp.usage.output_tokens;
+    const reply = ai.text;
+    const inputTokens = ai.inputTokens;
+    const outputTokens = ai.outputTokens;
 
     logAiCall({
       professionalId: user.id,
-      model: "claude-sonnet-4-6",
+      model: ai.model,
       action: "government-chat",
       inputTokens,
       outputTokens,
@@ -173,7 +172,7 @@ export async function POST(req: NextRequest) {
       action: "ai.government_chat",
       targetTable: "organizations",
       targetId: organizationId,
-      metadata: { model: "claude-sonnet-4-6", inputTokens, outputTokens, latencyMs: latency },
+      metadata: { model: ai.model, inputTokens, outputTokens, latencyMs: latency },
     }).catch(() => {});
 
     return NextResponse.json({ reply });

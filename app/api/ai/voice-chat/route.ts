@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 import { headers } from "next/headers";
 import { createAdminClient } from "@/lib/supabase/server";
 import { getRequestUser } from "@/lib/auth/getRequestUser";
-import { getAnthropicClient } from "@/lib/anthropic";
+import { aiComplete } from "@/lib/ai/complete";
 import { checkAndLogRateLimit } from "@/lib/rateLimit";
 import { getUserPlan, isPro } from "@/lib/subscription";
 import { isFeatureEnabled } from "@/lib/featureFlags";
@@ -70,34 +70,32 @@ export async function POST(req: NextRequest) {
     : "";
 
   try {
-    const claude = getAnthropicClient();
-    const response = await claude.messages.create({
-      model: "claude-haiku-4-5-20251001",
-      max_tokens: 256,
+    const ai = await aiComplete({
+      task: "chat",
+      maxTokens: 256,
       system: VOICE_CHAT_SYSTEM + context,
       messages: [{ role: "user", content: message }],
     });
 
-    const text =
-      response.content[0]?.type === "text" ? response.content[0].text : "I couldn't process that. Please try again.";
+    const text = ai.text || "I couldn't process that. Please try again.";
 
     logAudit({
       actorAuthId: user.id,
       action: "ai.voice_chat",
       targetTable: "audit_logs",
       metadata: {
-        model: "claude-haiku-4-5-20251001",
-        input_tokens: response.usage?.input_tokens ?? 0,
-        output_tokens: response.usage?.output_tokens ?? 0,
+        model: ai.model,
+        input_tokens: ai.inputTokens,
+        output_tokens: ai.outputTokens,
         latency_ms: Date.now() - startTime,
       },
     }).catch(() => {});
     logAiCall({
       professionalId: user.id,
       action: "ai.voice_chat",
-      model: "claude-haiku-4-5-20251001",
-      inputTokens: response.usage?.input_tokens ?? 0,
-      outputTokens: response.usage?.output_tokens ?? 0,
+      model: ai.model,
+      inputTokens: ai.inputTokens,
+      outputTokens: ai.outputTokens,
       latencyMs: Date.now() - startTime,
     }).catch(() => {});
 

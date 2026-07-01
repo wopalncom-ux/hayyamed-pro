@@ -16,15 +16,18 @@ export type AiTask =
 
 export type AiProvider = "claude-haiku" | "claude-sonnet" | "claude-opus" | "gemini-flash";
 
+// Cost policy: every task routes to low-cost Gemini Flash (Vertex AI).
+// To move a task back to Claude, change its value to "claude-haiku" |
+// "claude-sonnet" | "claude-opus" — that single line is the whole switch.
 const TASK_ROUTING: Record<AiTask, AiProvider> = {
-  chat:        "claude-haiku",
-  classify:    "claude-haiku",
-  draft:       "claude-haiku",
-  gap_analysis: "claude-sonnet",
-  ocr:         "claude-sonnet",
-  employer:    "claude-sonnet",
-  government:  "claude-sonnet",
-  forecast:    "claude-opus",
+  chat:        "gemini-flash",
+  classify:    "gemini-flash",
+  draft:       "gemini-flash",
+  gap_analysis: "gemini-flash",
+  ocr:         "gemini-flash",
+  employer:    "gemini-flash",
+  government:  "gemini-flash",
+  forecast:    "gemini-flash",
 };
 
 export const MODEL_IDS: Record<AiProvider, string> = {
