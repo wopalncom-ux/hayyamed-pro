@@ -3,6 +3,7 @@
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { getAuthorityForUser } from "@/lib/government/jurisdiction";
 import { logAudit } from "@/lib/audit";
+import { isProfession } from "@/lib/professions";
 import { revalidatePath } from "next/cache";
 
 export type AnnouncementResult = { ok: boolean; error?: string };
@@ -38,6 +39,12 @@ export async function createAuthorityAnnouncement(formData: FormData): Promise<A
   const attachmentUrl = ((formData.get("attachment_url") as string) ?? "").trim() || null;
   const attachmentName = ((formData.get("attachment_name") as string) ?? "").trim() || null;
 
+  // Profession targeting: empty selection = every profession in the jurisdiction.
+  const targetProfessions = formData.getAll("target_professions")
+    .map((v) => String(v))
+    .filter((v) => isProfession(v));
+  const targetProfessionsValue = targetProfessions.length > 0 ? targetProfessions : null;
+
   if (title.length < 3) return { ok: false, error: "Title is required" };
   if (message.length < 5) return { ok: false, error: "Message is required" };
   if (!["info", "warning", "success", "error"].includes(type)) return { ok: false, error: "Invalid type" };
@@ -53,6 +60,7 @@ export async function createAuthorityAnnouncement(formData: FormData): Promise<A
     title, message, type,
     cta_label: ctaLabel, cta_url: ctaUrl,
     attachment_url: attachmentUrl, attachment_name: attachmentName,
+    target_professions: targetProfessionsValue,
     ends_at: endsAt ? new Date(endsAt).toISOString() : null,
     created_by: userId,
   });

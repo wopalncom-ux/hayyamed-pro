@@ -10,6 +10,7 @@ const FOOTER_EXCLUDED = [
   "/provider",
   "/admin",
   "/university",
+  "/government",
   "/login",
   "/register",
   "/forgot-password",

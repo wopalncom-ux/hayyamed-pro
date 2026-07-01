@@ -6,12 +6,14 @@ import {
   toggleAuthorityAnnouncement,
   deleteAuthorityAnnouncement,
 } from "@/app/(government)/government/announcements/actions";
+import { PROFESSIONS } from "@/lib/professions";
 
 type Announcement = {
   id: string; title: string; message: string; type: string;
   isActive: boolean; ctaLabel: string | null; ctaUrl: string | null;
   startsAt: string; endsAt: string | null;
   attachmentUrl: string | null; attachmentName: string | null;
+  targetProfessions: string[] | null;
 };
 
 const TYPE_STYLES: Record<string, string> = {
@@ -104,6 +106,18 @@ export default function AuthorityAnnouncementManager({ announcements, jurisdicti
             </div>
           </div>
           <div>
+            <label className="block text-sm font-medium text-[#374151] mb-1">Target professions (optional)</label>
+            <p className="text-xs text-[#64748b] mb-2">Leave all unchecked to show this to <strong>every</strong> professional in {jurisdiction}. Select one or more to target only those professions.</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              {PROFESSIONS.map((p) => (
+                <label key={p} className="flex items-center gap-2 text-sm text-[#374151] border border-[#e2e8f0] rounded-lg px-3 py-2 cursor-pointer hover:bg-[#f8fafc]">
+                  <input type="checkbox" name="target_professions" value={p} className="accent-[#1a56a0]" />
+                  <span className="truncate">{p}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+          <div>
             <label className="block text-sm font-medium text-[#374151] mb-1">Attach document (optional)</label>
             <input
               type="file"
@@ -158,6 +172,10 @@ function AnnouncementRow({ a }: { a: Announcement }) {
             </a>
           )}
           <p className="text-[11px] mt-1 opacity-70">
+            {a.targetProfessions && a.targetProfessions.length > 0
+              ? `🎯 ${a.targetProfessions.join(", ")}`
+              : "All professions"}
+            {" · "}
             {a.endsAt ? `Expires ${a.endsAt.slice(0, 10)}` : "No expiry"}
           </p>
         </div>

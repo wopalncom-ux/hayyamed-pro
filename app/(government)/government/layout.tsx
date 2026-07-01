@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import GovernmentAIFloating from "@/components/government/GovernmentAIFloating";
+import SignOutButton from "@/components/dashboard/SignOutButton";
 
 export default async function GovernmentLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient();
@@ -43,6 +44,10 @@ export default async function GovernmentLayout({ children }: { children: React.R
               </span>
             )}
             <span className="text-sm font-medium text-[#111] hidden sm:block">{orgName}</span>
+            <SignOutButton
+              variant="text"
+              className="text-[#64748b] hover:text-[#dc2626] hover:no-underline font-medium border border-[#e2e8f0] rounded-lg px-3 py-1.5 hover:border-[#fecaca] hover:bg-red-50 transition-colors"
+            />
           </div>
         </div>
       </header>
@@ -55,8 +60,6 @@ export default async function GovernmentLayout({ children }: { children: React.R
             { href: "/government/reports",          label: "Reports",       adminOnly: false },
             { href: "/government/reminders",        label: "Reminders",     adminOnly: true  },
             { href: "/government/announcements",    label: "Announcements", adminOnly: true  },
-            { href: "/government/team",             label: "Team",          adminOnly: true  },
-            { href: "/government/settings",         label: "Settings",      adminOnly: true  },
           ].filter((item) => !item.adminOnly || isAdmin).map(({ href, label }) => (
             <a
               key={href}

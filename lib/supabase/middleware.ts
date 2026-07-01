@@ -66,7 +66,6 @@ const COMING_SOON_BYPASS = [
   "/hematology-cme",
   "/geriatrics-cme",
   "/government/register",     // government authority registration page (pre-auth)
-  "/government/settings",     // government settings page
   "/government/registry",
   "/government/reports",
   "/government",
