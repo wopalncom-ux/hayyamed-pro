@@ -69,14 +69,23 @@ async function geminiComplete(
     return { role: m.role === "assistant" ? "model" : "user", parts };
   });
 
-  const result = await gm.generateContent({
-    ...(system ? { systemInstruction: { role: "system", parts: [{ text: system }] } } : {}),
-    contents,
-    generationConfig: {
-      maxOutputTokens: maxTokens,
-      ...(json ? { responseMimeType: "application/json" } : {}),
-    },
-  });
+  let result: Awaited<ReturnType<typeof gm.generateContent>>;
+  try {
+    result = await gm.generateContent({
+      ...(system ? { systemInstruction: { role: "system", parts: [{ text: system }] } } : {}),
+      contents,
+      generationConfig: {
+        maxOutputTokens: maxTokens,
+        ...(json ? { responseMimeType: "application/json" } : {}),
+      },
+    });
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    if (/GoogleAuth|Unable to authenticate|Application Default|credential|service.?account/i.test(msg)) {
+      throw new Error("AI features require GCP credentials and are available on the live platform (hayyamed.pro).");
+    }
+    throw err;
+  }
 
   const resp = result.response;
   const text = resp.candidates?.[0]?.content?.parts?.map((p) => p.text ?? "").join("") ?? "";

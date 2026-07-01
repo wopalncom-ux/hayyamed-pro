@@ -57,7 +57,7 @@ export default function GovernmentForecastPanel({ organizationId }: { organizati
             <span className="text-xs bg-[#e8f0fe] text-[#1a56a0] px-2 py-0.5 rounded-full font-medium">AI</span>
           </div>
           <p className="text-xs text-[#64748b] mt-0.5">
-            Projected 90-day compliance outlook · Powered by Claude Haiku
+            Projected 90-day compliance outlook · Powered by Gemini Flash Lite
           </p>
         </div>
         {!generated && (
