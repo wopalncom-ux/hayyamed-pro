@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
     ];
 
     const reply = await geminiChat(
-      "gemini-2.0-flash-lite",
+      "gemini-2.5-flash-lite",
       HAYYA_ASSISTANT_SYSTEM_PROMPT,
       geminiMessages,
       maxTokens,

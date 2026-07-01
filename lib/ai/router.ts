@@ -34,7 +34,7 @@ export const MODEL_IDS: Record<AiProvider, string> = {
   "claude-haiku":  "claude-haiku-4-5-20251001",
   "claude-sonnet": "claude-sonnet-4-6",
   "claude-opus":   "claude-opus-4-8",
-  "gemini-flash":  "gemini-2.0-flash-lite",
+  "gemini-flash":  "gemini-2.5-flash-lite",
 };
 
 export function routeTask(task: AiTask): { provider: AiProvider; modelId: string } {
