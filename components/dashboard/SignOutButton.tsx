@@ -31,6 +31,7 @@ export default function SignOutButton({ variant = "text", className }: SignOutBu
         disabled={loading}
         aria-label="Sign out"
         title="Sign out"
+        suppressHydrationWarning
         className={cn(
           "p-2 rounded-lg text-[#64748b] hover:text-[#dc2626] hover:bg-red-50 transition-colors disabled:opacity-40",
           className
@@ -46,6 +47,7 @@ export default function SignOutButton({ variant = "text", className }: SignOutBu
       <button
         onClick={handleSignOut}
         disabled={loading}
+        suppressHydrationWarning
         className={cn(
           "flex items-center gap-3 w-full px-4 py-3 rounded-xl text-sm text-[#dc2626] hover:bg-red-50 transition-colors disabled:opacity-50",
           className
@@ -61,6 +63,7 @@ export default function SignOutButton({ variant = "text", className }: SignOutBu
     <button
       onClick={handleSignOut}
       disabled={loading}
+      suppressHydrationWarning
       className={cn("text-sm text-[#dc2626] hover:underline disabled:opacity-50", className)}
     >
       {loading ? "Signing out…" : "Sign out"}

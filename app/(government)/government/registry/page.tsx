@@ -110,28 +110,28 @@ export default async function GovernmentRegistryPage({
       {/* Filters */}
       <form method="GET" className="bg-white rounded-xl border border-[#e2e8f0] p-4 mb-5">
         <div className="flex flex-wrap gap-3">
-          <input name="q" defaultValue={sp.q ?? ""} placeholder="Search name, specialty, employer..." className="border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm flex-1 min-w-[180px] focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20" />
-          <select name="employer" defaultValue={sp.employer ?? ""} className="border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm min-w-[160px] focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20">
+          <input name="q" defaultValue={sp.q ?? ""} placeholder="Search name, specialty, employer..." suppressHydrationWarning className="border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm flex-1 min-w-[180px] focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20" />
+          <select name="employer" defaultValue={sp.employer ?? ""} suppressHydrationWarning className="border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm min-w-[160px] focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20">
             <option value="">All employers</option>
             <option value="__none__">Unaffiliated</option>
             {employers.map((e) => <option key={e} value={e}>{e}</option>)}
           </select>
-          <select name="profession" defaultValue={sp.profession ?? ""} className="border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm min-w-[140px] focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20">
+          <select name="profession" defaultValue={sp.profession ?? ""} suppressHydrationWarning className="border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm min-w-[140px] focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20">
             <option value="">All professions</option>
             {professions.map((p) => <option key={p} value={p}>{p}</option>)}
           </select>
-          <select name="specialty" defaultValue={sp.specialty ?? ""} className="border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm min-w-[140px] focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20">
+          <select name="specialty" defaultValue={sp.specialty ?? ""} suppressHydrationWarning className="border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm min-w-[140px] focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20">
             <option value="">All specialties</option>
             {specialties.map((s) => <option key={s} value={s}>{s}</option>)}
           </select>
-          <select name="status" defaultValue={sp.status ?? ""} className="border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm min-w-[140px] focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20">
+          <select name="status" defaultValue={sp.status ?? ""} suppressHydrationWarning className="border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm min-w-[140px] focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20">
             <option value="">All statuses</option>
             <option value="compliant">Compliant</option>
             <option value="at_risk">At Risk</option>
             <option value="non_compliant">Non-Compliant</option>
             <option value="unknown">No Data</option>
           </select>
-          <button type="submit" className="bg-[#1a56a0] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#1547a0] transition-colors">Apply</button>
+          <button type="submit" suppressHydrationWarning className="bg-[#1a56a0] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#1547a0] transition-colors">Apply</button>
           {hasFilters && <a href="/government/registry" className="text-sm text-[#64748b] px-3 py-2 rounded-lg border border-[#e2e8f0] hover:bg-[#f8fafc] transition-colors">Clear</a>}
         </div>
       </form>

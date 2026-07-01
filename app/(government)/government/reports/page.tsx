@@ -60,20 +60,20 @@ export default async function GovernmentReportsPage({
       <form method="GET" className="bg-white rounded-xl border border-[#e2e8f0] p-4 mb-6">
         <div className="flex flex-wrap gap-3 items-center">
           <span className="text-xs font-semibold text-[#64748b] uppercase tracking-wide">Report by</span>
-          <select name="employer" defaultValue={sp.employer ?? ""} className="border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm min-w-[160px] focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20">
+          <select name="employer" defaultValue={sp.employer ?? ""} suppressHydrationWarning className="border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm min-w-[160px] focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20">
             <option value="">All employers</option>
             <option value="__none__">Unaffiliated</option>
             {employers.map((e) => <option key={e} value={e}>{e}</option>)}
           </select>
-          <select name="profession" defaultValue={sp.profession ?? ""} className="border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm min-w-[150px] focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20">
+          <select name="profession" defaultValue={sp.profession ?? ""} suppressHydrationWarning className="border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm min-w-[150px] focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20">
             <option value="">All categories</option>
             {professions.map((p) => <option key={p} value={p}>{p}</option>)}
           </select>
-          <select name="specialty" defaultValue={sp.specialty ?? ""} className="border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm min-w-[150px] focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20">
+          <select name="specialty" defaultValue={sp.specialty ?? ""} suppressHydrationWarning className="border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm min-w-[150px] focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20">
             <option value="">All specialties</option>
             {specialties.map((s) => <option key={s} value={s}>{s}</option>)}
           </select>
-          <button type="submit" className="bg-[#1a56a0] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#1547a0] transition-colors">Apply</button>
+          <button type="submit" suppressHydrationWarning className="bg-[#1a56a0] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#1547a0] transition-colors">Apply</button>
           {activeFilters && <a href="/government/reports" className="text-sm text-[#64748b] px-3 py-2 rounded-lg border border-[#e2e8f0] hover:bg-[#f8fafc] transition-colors">Clear</a>}
         </div>
       </form>

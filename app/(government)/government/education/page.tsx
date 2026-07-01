@@ -98,14 +98,14 @@ export default async function GovernmentEducationPage({
 
       <form method="GET" className="bg-white rounded-xl border border-[#e2e8f0] p-4 mb-5">
         <div className="flex flex-wrap gap-3">
-          <input name="q" defaultValue={sp.q ?? ""} placeholder="Search title, provider, category..." className="border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm flex-1 min-w-[180px] focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20" />
-          <select name="mode" defaultValue={sp.mode ?? ""} className="border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm min-w-[160px] focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20">
+          <input name="q" defaultValue={sp.q ?? ""} placeholder="Search title, provider, category..." suppressHydrationWarning className="border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm flex-1 min-w-[180px] focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20" />
+          <select name="mode" defaultValue={sp.mode ?? ""} suppressHydrationWarning className="border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm min-w-[160px] focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20">
             <option value="">All delivery modes</option>
             <option value="online">Online</option>
             <option value="in_person">In-person</option>
             <option value="hybrid">Hybrid</option>
           </select>
-          <button type="submit" className="bg-[#1a56a0] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#1547a0] transition-colors">Apply</button>
+          <button type="submit" suppressHydrationWarning className="bg-[#1a56a0] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#1547a0] transition-colors">Apply</button>
           {(sp.mode || sp.q) && <a href="/government/education" className="text-sm text-[#64748b] px-3 py-2 rounded-lg border border-[#e2e8f0] hover:bg-[#f8fafc] transition-colors">Clear</a>}
         </div>
       </form>
