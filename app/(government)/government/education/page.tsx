@@ -62,13 +62,31 @@ export default async function GovernmentEducationPage({
 
   const MODE_LABEL: Record<string, string> = { online: "Online", in_person: "In-person", hybrid: "Hybrid" };
 
+  const exportParams = new URLSearchParams();
+  if (sp.q) exportParams.set("q", sp.q);
+  if (sp.mode) exportParams.set("mode", sp.mode);
+  const exportQs = exportParams.toString();
+
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-[#111]">Education Oversight</h1>
-        <p className="text-sm text-[#64748b] mt-1">
-          CME activities — courses, conferences & webinars — offered to professionals in {authority.jurisdictionCountry}
-        </p>
+      <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-[#111]">Education Oversight</h1>
+          <p className="text-sm text-[#64748b] mt-1">
+            CME activities — courses, conferences & webinars — offered to professionals in {authority.jurisdictionCountry}
+          </p>
+        </div>
+        {total > 0 && (
+          <a
+            href={`/api/government/export-education${exportQs ? `?${exportQs}` : ""}`}
+            className="self-start sm:self-auto text-sm bg-[#1a56a0] text-white px-4 py-2 rounded-lg hover:bg-[#1547a0] transition-colors font-medium flex items-center gap-2"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
+            Generate Report
+          </a>
+        )}
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">

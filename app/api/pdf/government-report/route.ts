@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { getRequestUser } from "@/lib/auth/getRequestUser";
-import { getAuthorityForUser, getJurisdictionProfessionals } from "@/lib/government/jurisdiction";
+import { getAuthorityForUser, getJurisdictionProfessionals, parseProfessionalFilters, filterProfessionals } from "@/lib/government/jurisdiction";
 import { checkAndLogRateLimit } from "@/lib/rateLimit";
 import { logAudit } from "@/lib/audit";
 import { renderToBuffer } from "@react-pdf/renderer";
@@ -33,7 +33,10 @@ export async function GET(request: NextRequest) {
 
   const authorityCode = authority.authorityCode ?? authority.orgName.slice(0, 10).toUpperCase();
 
-  const jp = await getJurisdictionProfessionals(authority, user.id);
+  // Honour the same filter query params as the reports page so a filtered PDF matches the screen.
+  const filters = parseProfessionalFilters(Object.fromEntries(request.nextUrl.searchParams));
+  const jpAll = await getJurisdictionProfessionals(authority, user.id);
+  const jp = filterProfessionals(jpAll, filters);
   const professionals = jp.map((p) => ({
     name: p.name,
     profession: p.profession,

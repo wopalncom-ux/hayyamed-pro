@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { headers } from "next/headers";
 import ExcelJS from "exceljs";
 import { getRequestUser } from "@/lib/auth/getRequestUser";
-import { getAuthorityForUser, getJurisdictionProfessionals, computeStats } from "@/lib/government/jurisdiction";
+import { getAuthorityForUser, getJurisdictionProfessionals, computeStats, parseProfessionalFilters, filterProfessionals, hasActiveFilters } from "@/lib/government/jurisdiction";
 import { logAudit } from "@/lib/audit";
 
 export const runtime = "nodejs";
@@ -14,15 +14,21 @@ const STATUS_LABEL: Record<string, string> = {
   unknown: "No Data",
 };
 
-// GET /api/government/export-registry — full jurisdiction registry as Excel (.xlsx)
-export async function GET(): Promise<NextResponse> {
+// GET /api/government/export-registry — jurisdiction registry as Excel (.xlsx).
+// Honours the same filter query params as the reports/registry pages
+// (?employer=&profession=&specialty=&status=&q=) so a filtered report exports
+// exactly what's on screen.
+export async function GET(req: Request): Promise<NextResponse> {
   const user = await getRequestUser(await headers());
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const authority = await getAuthorityForUser(user.id);
   if (!authority) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
-  const professionals = await getJurisdictionProfessionals(authority, user.id);
+  const filters = parseProfessionalFilters(Object.fromEntries(new URL(req.url).searchParams));
+  const all = await getJurisdictionProfessionals(authority, user.id);
+  const professionals = filterProfessionals(all, filters);
+  const filtered = hasActiveFilters(filters);
   const stats = computeStats(professionals);
 
   const wb = new ExcelJS.Workbook();
@@ -36,6 +42,17 @@ export async function GET(): Promise<NextResponse> {
   summary.getCell("A1").font = { bold: true, size: 14, color: { argb: "FF1A56A0" } };
   summary.addRow([`Jurisdiction: ${authority.jurisdictionCountry}`]);
   summary.addRow([`Generated: ${new Date().toISOString().slice(0, 16).replace("T", " ")} UTC`]);
+  if (filtered) {
+    const parts = [
+      filters.employer ? `Employer: ${filters.employer === "__none__" ? "Unaffiliated" : filters.employer}` : null,
+      filters.profession ? `Category: ${filters.profession}` : null,
+      filters.specialty ? `Specialty: ${filters.specialty}` : null,
+      filters.status ? `Status: ${filters.status}` : null,
+      filters.q ? `Search: ${filters.q}` : null,
+    ].filter(Boolean).join(" · ");
+    const r = summary.addRow([`Filtered — ${parts}`]);
+    r.getCell(1).font = { italic: true, color: { argb: "FF1A56A0" } };
+  }
   summary.addRow([]);
   const summaryRows: [string, number | string][] = [
     ["Total registered", stats.total],
@@ -94,14 +111,15 @@ export async function GET(): Promise<NextResponse> {
     action: "government.registry_exported",
     targetTable: "professional_profiles",
     targetId: authority.organizationId,
-    metadata: { format: "xlsx", rows: professionals.length, jurisdiction: authority.jurisdictionCountry },
+    metadata: { format: "xlsx", rows: professionals.length, jurisdiction: authority.jurisdictionCountry, filtered },
   });
 
   const date = new Date().toISOString().slice(0, 10);
+  const tag = filtered ? "-filtered" : "";
   return new NextResponse(new Uint8Array(buffer), {
     headers: {
       "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      "Content-Disposition": `attachment; filename="registry-${authority.jurisdictionCountry}-${date}.xlsx"`,
+      "Content-Disposition": `attachment; filename="registry-${authority.jurisdictionCountry}${tag}-${date}.xlsx"`,
     },
   });
 }

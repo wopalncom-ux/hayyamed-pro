@@ -3,6 +3,11 @@ import { redirect } from "next/navigation";
 import {
   getAuthorityForUser,
   getJurisdictionProfessionals,
+  parseProfessionalFilters,
+  filterProfessionals,
+  filterOptions,
+  hasActiveFilters,
+  filtersToQuery,
   type ComplianceZone,
   type JurisdictionProfessional,
 } from "@/lib/government/jurisdiction";
@@ -19,7 +24,7 @@ const STATUS_CONFIG: Record<ComplianceZone, { label: string; classes: string }> 
 export default async function GovernmentRegistryPage({
   searchParams,
 }: {
-  searchParams: Promise<{ profession?: string; status?: string; employer?: string; zone?: string; q?: string }>;
+  searchParams: Promise<{ profession?: string; specialty?: string; status?: string; employer?: string; zone?: string; q?: string }>;
 }) {
   const sp = await searchParams;
   const supabase = await createClient();
@@ -31,32 +36,10 @@ export default async function GovernmentRegistryPage({
 
   const all = await getJurisdictionProfessionals(authority, user.id);
 
-  // Filter options
-  const professions = [...new Set(all.map((p) => p.profession).filter((x) => x && x !== "—"))].sort();
-  const employers = [...new Set(all.map((p) => p.employer).filter((x): x is string => !!x))].sort();
-
-  // Apply filters
-  let filtered = all;
-  if (sp.profession) filtered = filtered.filter((p) => p.profession === sp.profession);
-  if (sp.status) filtered = filtered.filter((p) => p.complianceStatus === sp.status);
-  if (sp.employer) {
-    filtered = sp.employer === "__none__"
-      ? filtered.filter((p) => !p.employer)
-      : filtered.filter((p) => p.employer === sp.employer);
-  }
-  if (sp.zone === "red") {
-    filtered = filtered.filter((p) =>
-      p.complianceStatus === "non_compliant" || p.complianceStatus === "at_risk" ||
-      (p.daysToExpiry !== null && p.daysToExpiry <= 30)
-    );
-  }
-  if (sp.q) {
-    const q = sp.q.toLowerCase();
-    filtered = filtered.filter((p) =>
-      p.name.toLowerCase().includes(q) || p.specialty.toLowerCase().includes(q) ||
-      (p.employer ?? "").toLowerCase().includes(q)
-    );
-  }
+  // Filter options + apply filters via the shared engine (same logic as reports/exports)
+  const { professions, specialties, employers } = filterOptions(all);
+  const filters = parseProfessionalFilters(sp);
+  const filtered = filterProfessionals(all, filters);
 
   // Employer roll-ups (over the unfiltered jurisdiction)
   const byEmployer = new Map<string, JurisdictionProfessional[]>();
@@ -74,7 +57,9 @@ export default async function GovernmentRegistryPage({
     .sort((a, b) => b.count - a.count)
     .slice(0, 8);
 
-  const hasFilters = !!(sp.profession || sp.status || sp.employer || sp.zone || sp.q);
+  const hasFilters = hasActiveFilters(filters);
+  const exportQs = filtersToQuery(filters);
+  const exportSuffix = exportQs ? `?${exportQs}` : "";
 
   return (
     <div>
@@ -86,13 +71,13 @@ export default async function GovernmentRegistryPage({
           </p>
         </div>
         <div className="flex items-center gap-3 self-start sm:self-auto">
-          <a href="/api/government/export-registry" className="text-sm border border-[#e2e8f0] text-[#374151] px-4 py-2 rounded-lg hover:bg-[#f8fafc] transition-colors font-medium flex items-center gap-2">
+          <a href={`/api/government/export-registry${exportSuffix}`} className="text-sm border border-[#e2e8f0] text-[#374151] px-4 py-2 rounded-lg hover:bg-[#f8fafc] transition-colors font-medium flex items-center gap-2">
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
             </svg>
             Export Excel
           </a>
-          <a href="/api/pdf/government-report" className="text-sm border border-[#e2e8f0] text-[#374151] px-4 py-2 rounded-lg hover:bg-[#f8fafc] transition-colors font-medium flex items-center gap-2">
+          <a href={`/api/pdf/government-report${exportSuffix}`} className="text-sm border border-[#e2e8f0] text-[#374151] px-4 py-2 rounded-lg hover:bg-[#f8fafc] transition-colors font-medium flex items-center gap-2">
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
             </svg>
@@ -135,6 +120,10 @@ export default async function GovernmentRegistryPage({
             <option value="">All professions</option>
             {professions.map((p) => <option key={p} value={p}>{p}</option>)}
           </select>
+          <select name="specialty" defaultValue={sp.specialty ?? ""} className="border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm min-w-[140px] focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20">
+            <option value="">All specialties</option>
+            {specialties.map((s) => <option key={s} value={s}>{s}</option>)}
+          </select>
           <select name="status" defaultValue={sp.status ?? ""} className="border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm min-w-[140px] focus:outline-none focus:ring-2 focus:ring-[#1a56a0]/20">
             <option value="">All statuses</option>
             <option value="compliant">Compliant</option>
@@ -157,15 +146,18 @@ export default async function GovernmentRegistryPage({
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-[#e2e8f0]">
-                    {["Name", "Profession", "Employer", "CME Credits", "Status", "License Expiry"].map((h) => (
+                    {["Name", "Profession", "Employer", "CME Credits", "Status", "License Expiry", ""].map((h) => (
                       <th key={h} className="text-left px-6 py-3 text-xs font-medium text-[#64748b] uppercase tracking-wide">{h}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#f1f5f9]">
                   {filtered.map((p) => (
-                    <tr key={p.professionalId} className="hover:bg-[#f8fafc] transition-colors">
-                      <td className="px-6 py-4 font-medium text-[#111]">{p.name}<div className="text-xs text-[#64748b] font-normal">{p.specialty}</div></td>
+                    <tr key={p.professionalId} className="hover:bg-[#f8fafc] transition-colors cursor-pointer">
+                      <td className="px-6 py-4 font-medium text-[#111]">
+                        <a href={`/government/registry/${p.professionalId}`} className="hover:text-[#1a56a0] transition-colors">{p.name}</a>
+                        <div className="text-xs text-[#64748b] font-normal">{p.specialty}</div>
+                      </td>
                       <td className="px-6 py-4 text-[#374151]">{p.profession}</td>
                       <td className="px-6 py-4 text-[#374151]">{p.employer ?? <span className="text-[#94a3b8]">Unaffiliated</span>}</td>
                       <td className="px-6 py-4">
@@ -185,6 +177,9 @@ export default async function GovernmentRegistryPage({
                           ? <span className={`text-sm font-medium ${p.daysToExpiry < 0 ? "text-[#dc2626]" : p.daysToExpiry <= 30 ? "text-[#dc2626]" : p.daysToExpiry <= 90 ? "text-[#d97706]" : "text-[#16a34a]"}`}>{p.daysToExpiry < 0 ? "EXPIRED" : `${p.daysToExpiry}d`}</span>
                           : <span className="text-xs text-[#94a3b8]">—</span>}
                       </td>
+                      <td className="px-6 py-4 text-right">
+                        <a href={`/government/registry/${p.professionalId}`} className="text-sm font-medium text-[#1a56a0] hover:underline whitespace-nowrap">View →</a>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -193,7 +188,7 @@ export default async function GovernmentRegistryPage({
 
             <div className="sm:hidden divide-y divide-[#e2e8f0]">
               {filtered.map((p) => (
-                <div key={p.professionalId} className="px-4 py-4">
+                <a key={p.professionalId} href={`/government/registry/${p.professionalId}`} className="block px-4 py-4 hover:bg-[#f8fafc] transition-colors">
                   <div className="flex items-start justify-between mb-1.5">
                     <div>
                       <p className="text-sm font-medium text-[#111]">{p.name}</p>
@@ -205,7 +200,7 @@ export default async function GovernmentRegistryPage({
                     <span>CME: {p.completedCredits !== null ? `${p.completedCredits}/${p.requiredCredits}` : "—"}</span>
                     <span>Expiry: {p.daysToExpiry !== null ? (p.daysToExpiry < 0 ? "EXPIRED" : `${p.daysToExpiry}d`) : "—"}</span>
                   </div>
-                </div>
+                </a>
               ))}
             </div>
           </>

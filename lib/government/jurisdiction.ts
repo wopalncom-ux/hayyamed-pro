@@ -217,6 +217,83 @@ export function computeStats(professionals: JurisdictionProfessional[]): Jurisdi
   return { total, compliant, atRisk, nonCompliant, unknown, expiringSoon, expired, complianceRate, onboardingComplete };
 }
 
+// ── Shared filtering — single source of truth for registry / reports / exports ──
+// Keeping one filter implementation guarantees the on-screen numbers and the
+// exported report always agree for the same query string.
+export type ProfessionalFilters = {
+  profession?: string | null;
+  specialty?: string | null;
+  employer?: string | null; // "__none__" = unaffiliated
+  status?: string | null;   // a ComplianceZone value
+  zone?: string | null;     // "red" = at-risk / non-compliant / expiring
+  q?: string | null;
+};
+
+/** Parse a Next.js searchParams object into a typed filter set. */
+export function parseProfessionalFilters(sp: Record<string, string | undefined>): ProfessionalFilters {
+  return {
+    profession: sp.profession || null,
+    specialty: sp.specialty || null,
+    employer: sp.employer || null,
+    status: sp.status || null,
+    zone: sp.zone || null,
+    q: sp.q || null,
+  };
+}
+
+/** Apply a filter set to a professional list. Order-independent, pure. */
+export function filterProfessionals(
+  list: JurisdictionProfessional[],
+  f: ProfessionalFilters,
+): JurisdictionProfessional[] {
+  let out = list;
+  if (f.profession) out = out.filter((p) => p.profession === f.profession);
+  if (f.specialty) out = out.filter((p) => p.specialty === f.specialty);
+  if (f.employer) {
+    out = f.employer === "__none__"
+      ? out.filter((p) => !p.employer)
+      : out.filter((p) => p.employer === f.employer);
+  }
+  if (f.status) out = out.filter((p) => p.complianceStatus === f.status);
+  if (f.zone === "red") {
+    out = out.filter((p) =>
+      p.complianceStatus === "non_compliant" || p.complianceStatus === "at_risk" ||
+      (p.daysToExpiry !== null && p.daysToExpiry <= 30));
+  }
+  if (f.q) {
+    const q = f.q.toLowerCase();
+    out = out.filter((p) =>
+      p.name.toLowerCase().includes(q) || p.specialty.toLowerCase().includes(q) ||
+      (p.employer ?? "").toLowerCase().includes(q));
+  }
+  return out;
+}
+
+/** True when any filter is active. */
+export function hasActiveFilters(f: ProfessionalFilters): boolean {
+  return !!(f.profession || f.specialty || f.employer || f.status || f.zone || f.q);
+}
+
+/** Distinct sorted filter options derived from the full jurisdiction list. */
+export function filterOptions(list: JurisdictionProfessional[]) {
+  const professions = [...new Set(list.map((p) => p.profession).filter((x) => x && x !== "—"))].sort();
+  const specialties = [...new Set(list.map((p) => p.specialty).filter((x) => x && x !== "—"))].sort();
+  const employers = [...new Set(list.map((p) => p.employer).filter((x): x is string => !!x))].sort();
+  return { professions, specialties, employers };
+}
+
+/** Build a query string (without leading ?) from an active filter set. */
+export function filtersToQuery(f: ProfessionalFilters): string {
+  const p = new URLSearchParams();
+  if (f.profession) p.set("profession", f.profession);
+  if (f.specialty) p.set("specialty", f.specialty);
+  if (f.employer) p.set("employer", f.employer);
+  if (f.status) p.set("status", f.status);
+  if (f.zone) p.set("zone", f.zone);
+  if (f.q) p.set("q", f.q);
+  return p.toString();
+}
+
 /** The "red zone": professionals a regulator must act on. */
 export function redZone(professionals: JurisdictionProfessional[]): JurisdictionProfessional[] {
   return professionals
