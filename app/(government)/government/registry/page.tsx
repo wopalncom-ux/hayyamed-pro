@@ -8,18 +8,12 @@ import {
   filterOptions,
   hasActiveFilters,
   filtersToQuery,
-  type ComplianceZone,
+  computeLicenseZone,
+  ZONE_CONFIG,
   type JurisdictionProfessional,
 } from "@/lib/government/jurisdiction";
 
 export const metadata = { title: "Professional Registry — Hayya Med Pro" };
-
-const STATUS_CONFIG: Record<ComplianceZone, { label: string; classes: string }> = {
-  compliant:     { label: "Compliant",     classes: "bg-[#dcfce7] text-[#16a34a]" },
-  at_risk:       { label: "At Risk",       classes: "bg-[#fff7ed] text-[#d97706]" },
-  non_compliant: { label: "Non-Compliant", classes: "bg-[#fef2f2] text-[#dc2626]" },
-  unknown:       { label: "No Data",       classes: "bg-[#f1f5f9] text-[#64748b]" },
-};
 
 export default async function GovernmentRegistryPage({
   searchParams,
@@ -171,7 +165,7 @@ export default async function GovernmentRegistryPage({
                           </div>
                         ) : <span className="text-xs text-[#94a3b8]">—</span>}
                       </td>
-                      <td className="px-6 py-4"><span className={`text-xs font-medium px-2.5 py-1 rounded-full ${STATUS_CONFIG[p.complianceStatus].classes}`}>{STATUS_CONFIG[p.complianceStatus].label}</span></td>
+                      <td className="px-6 py-4">{(() => { const z = computeLicenseZone(p); const cfg = ZONE_CONFIG[z]; return <span className="text-xs font-semibold px-2.5 py-1 rounded-full" style={{ background: cfg.bg, color: cfg.text, border: `1px solid ${cfg.border}` }}>{cfg.label}</span>; })()}</td>
                       <td className="px-6 py-4">
                         {p.daysToExpiry !== null
                           ? <span className={`text-sm font-medium ${p.daysToExpiry < 0 ? "text-[#dc2626]" : p.daysToExpiry <= 30 ? "text-[#dc2626]" : p.daysToExpiry <= 90 ? "text-[#d97706]" : "text-[#16a34a]"}`}>{p.daysToExpiry < 0 ? "EXPIRED" : `${p.daysToExpiry}d`}</span>
@@ -194,7 +188,7 @@ export default async function GovernmentRegistryPage({
                       <p className="text-sm font-medium text-[#111]">{p.name}</p>
                       <p className="text-xs text-[#64748b]">{p.profession} &middot; {p.employer ?? "Unaffiliated"}</p>
                     </div>
-                    <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${STATUS_CONFIG[p.complianceStatus].classes}`}>{STATUS_CONFIG[p.complianceStatus].label}</span>
+                    {(() => { const z = computeLicenseZone(p); const cfg = ZONE_CONFIG[z]; return <span className="text-xs font-semibold px-2 py-0.5 rounded-full" style={{ background: cfg.bg, color: cfg.text, border: `1px solid ${cfg.border}` }}>{cfg.label}</span>; })()}
                   </div>
                   <div className="flex gap-4 text-xs text-[#64748b]">
                     <span>CME: {p.completedCredits !== null ? `${p.completedCredits}/${p.requiredCredits}` : "—"}</span>

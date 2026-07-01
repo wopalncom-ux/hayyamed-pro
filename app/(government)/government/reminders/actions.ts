@@ -8,7 +8,7 @@ const MAX_RECIPIENTS = 5000;
 
 export type ReminderResult = { ok: boolean; error?: string; queued?: number; audience?: number };
 
-type Audience = "all" | "red_zone" | "non_compliant" | "at_risk" | "expiring";
+type Audience = "all" | "license_expired" | "license_critical" | "license_warning" | "compliant";
 
 function selectAudience(pros: JurisdictionProfessional[], audience: Audience, employer: string | null): JurisdictionProfessional[] {
   let list = pros;
@@ -16,14 +16,14 @@ function selectAudience(pros: JurisdictionProfessional[], audience: Audience, em
     list = employer === "__none__" ? list.filter((p) => !p.employer) : list.filter((p) => p.employer === employer);
   }
   switch (audience) {
-    case "red_zone":
-      return list.filter((p) => p.complianceStatus === "non_compliant" || p.complianceStatus === "at_risk" || (p.daysToExpiry !== null && p.daysToExpiry <= 30));
-    case "non_compliant":
-      return list.filter((p) => p.complianceStatus === "non_compliant");
-    case "at_risk":
-      return list.filter((p) => p.complianceStatus === "at_risk");
-    case "expiring":
-      return list.filter((p) => p.daysToExpiry !== null && p.daysToExpiry <= 30);
+    case "license_expired":
+      return list.filter((p) => p.daysToExpiry !== null && p.daysToExpiry < 0);
+    case "license_critical":
+      return list.filter((p) => p.daysToExpiry !== null && p.daysToExpiry >= 0 && p.daysToExpiry < 30 && p.complianceStatus !== "compliant");
+    case "license_warning":
+      return list.filter((p) => p.daysToExpiry !== null && p.daysToExpiry >= 30 && p.daysToExpiry < 60 && p.complianceStatus !== "compliant");
+    case "compliant":
+      return list.filter((p) => p.complianceStatus === "compliant");
     case "all":
     default:
       return list;

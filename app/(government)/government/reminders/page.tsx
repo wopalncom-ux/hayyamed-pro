@@ -16,11 +16,11 @@ export default async function GovernmentRemindersPage() {
   const pros = await getJurisdictionProfessionals(authority, user.id);
 
   const counts = {
-    all: pros.length,
-    red_zone: pros.filter((p) => p.complianceStatus === "non_compliant" || p.complianceStatus === "at_risk" || (p.daysToExpiry !== null && p.daysToExpiry <= 30)).length,
-    non_compliant: pros.filter((p) => p.complianceStatus === "non_compliant").length,
-    at_risk: pros.filter((p) => p.complianceStatus === "at_risk").length,
-    expiring: pros.filter((p) => p.daysToExpiry !== null && p.daysToExpiry <= 30).length,
+    all:              pros.length,
+    license_expired:  pros.filter((p) => p.daysToExpiry !== null && p.daysToExpiry < 0).length,
+    license_critical: pros.filter((p) => p.daysToExpiry !== null && p.daysToExpiry >= 0 && p.daysToExpiry < 30 && p.complianceStatus !== "compliant").length,
+    license_warning:  pros.filter((p) => p.daysToExpiry !== null && p.daysToExpiry >= 30 && p.daysToExpiry < 60 && p.complianceStatus !== "compliant").length,
+    compliant:        pros.filter((p) => p.complianceStatus === "compliant").length,
   };
   const employers = [...new Set(pros.map((p) => p.employer).filter((x): x is string => !!x))].sort();
 

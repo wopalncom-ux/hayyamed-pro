@@ -14,6 +14,32 @@ import { logAudit } from "@/lib/audit";
 
 export type ComplianceZone = "compliant" | "at_risk" | "non_compliant" | "unknown";
 
+/** Visual priority zone based on license expiry + CME compliance. */
+export type LicenseZone = "expired" | "critical" | "warning" | "compliant" | "none";
+
+export const ZONE_CONFIG: Record<LicenseZone, { label: string; dot: string; bg: string; text: string; border: string; hint: string }> = {
+  expired:   { label: "License Expired",     dot: "#dc2626", bg: "#fef2f2", text: "#dc2626", border: "#fecaca", hint: "License has expired — urgent action required" },
+  critical:  { label: "Expires < 30 days",   dot: "#d97706", bg: "#fff7ed", text: "#d97706", border: "#fed7aa", hint: "License expires in under 30 days · not yet compliant" },
+  warning:   { label: "Expires 30–60 days",  dot: "#ca8a04", bg: "#fefce8", text: "#ca8a04", border: "#fef08a", hint: "License expires in 30–60 days · not yet compliant" },
+  compliant: { label: "Compliant",            dot: "#16a34a", bg: "#dcfce7", text: "#16a34a", border: "#bbf7d0", hint: "License current · 80+ CME credits" },
+  none:      { label: "No Zone Data",         dot: "#94a3b8", bg: "#f1f5f9", text: "#64748b", border: "#e2e8f0", hint: "Insufficient data to determine zone" },
+};
+
+/** Compute the visual 4-color zone for a professional. */
+export function computeLicenseZone(p: { daysToExpiry: number | null; complianceStatus: ComplianceZone }): LicenseZone {
+  if (p.daysToExpiry !== null && p.daysToExpiry < 0) return "expired";
+  if (p.daysToExpiry !== null && p.daysToExpiry < 30 && p.complianceStatus !== "compliant") return "critical";
+  if (p.daysToExpiry !== null && p.daysToExpiry >= 30 && p.daysToExpiry < 60 && p.complianceStatus !== "compliant") return "warning";
+  if (p.complianceStatus === "compliant") return "compliant";
+  return "none";
+}
+
+/** Display name for an authority — e.g. "DHP (Qatar)" instead of bare "QA". */
+export function authorityDisplayName(authority: { authorityCode: string | null; orgName: string; jurisdictionCountry: string }): string {
+  if (authority.authorityCode) return `${authority.authorityCode} (${authority.jurisdictionCountry})`;
+  return `${authority.orgName} — ${authority.jurisdictionCountry}`;
+}
+
 export type JurisdictionProfessional = {
   professionalId: string;
   name: string;

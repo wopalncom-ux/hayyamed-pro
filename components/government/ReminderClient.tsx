@@ -3,18 +3,58 @@
 import { useState } from "react";
 import { sendReminder, type ReminderResult } from "@/app/(government)/government/reminders/actions";
 
-type Counts = { all: number; red_zone: number; non_compliant: number; at_risk: number; expiring: number };
+type Counts = { all: number; license_expired: number; license_critical: number; license_warning: number; compliant: number };
 
-const AUDIENCES: { value: keyof Counts; label: string; hint: string }[] = [
-  { value: "red_zone",      label: "Red zone",       hint: "Non-compliant, at-risk, or license expiring ≤30d" },
-  { value: "non_compliant", label: "Non-compliant",  hint: "Below required CME credits" },
-  { value: "at_risk",       label: "At risk",        hint: "Close to falling out of compliance" },
-  { value: "expiring",      label: "License expiring", hint: "License expires within 30 days" },
-  { value: "all",           label: "Everyone",       hint: "All professionals in the jurisdiction" },
+const ZONES: {
+  value: keyof Counts;
+  label: string;
+  hint: string;
+  dot: string;
+  bg: string;
+  border: string;
+  text: string;
+  activeBorder: string;
+  activeBg: string;
+}[] = [
+  {
+    value: "license_expired",
+    label: "License Expired",
+    hint: "License has expired — urgent action required",
+    dot: "#dc2626", bg: "#fef2f2", border: "#fecaca", text: "#dc2626",
+    activeBorder: "#dc2626", activeBg: "#fff5f5",
+  },
+  {
+    value: "license_critical",
+    label: "Expires < 30 days",
+    hint: "License expiring in under 30 days · not yet compliant",
+    dot: "#d97706", bg: "#fff7ed", border: "#fed7aa", text: "#d97706",
+    activeBorder: "#d97706", activeBg: "#fffbf5",
+  },
+  {
+    value: "license_warning",
+    label: "Expires 30–60 days",
+    hint: "License expiring in 30–60 days · not yet compliant",
+    dot: "#ca8a04", bg: "#fefce8", border: "#fef08a", text: "#ca8a04",
+    activeBorder: "#ca8a04", activeBg: "#fffef5",
+  },
+  {
+    value: "compliant",
+    label: "Compliant",
+    hint: "License current · 80+ CME credits met",
+    dot: "#16a34a", bg: "#f0fdf4", border: "#bbf7d0", text: "#16a34a",
+    activeBorder: "#16a34a", activeBg: "#f0fdf4",
+  },
+  {
+    value: "all",
+    label: "Everyone",
+    hint: "All professionals in the jurisdiction",
+    dot: "#1a56a0", bg: "#f8fafc", border: "#e2e8f0", text: "#374151",
+    activeBorder: "#1a56a0", activeBg: "#f0f6ff",
+  },
 ];
 
 export default function ReminderClient({ counts, employers, authorityName }: { counts: Counts; employers: string[]; authorityName: string }) {
-  const [audience, setAudience] = useState<keyof Counts>("red_zone");
+  const [audience, setAudience] = useState<keyof Counts>("license_expired");
   const [employer, setEmployer] = useState("");
   const [email, setEmail] = useState(true);
   const [push, setPush] = useState(true);
@@ -59,24 +99,39 @@ export default function ReminderClient({ counts, employers, authorityName }: { c
 
   return (
     <form onSubmit={onSubmit} className="bg-white rounded-xl border border-[#e2e8f0] p-6 space-y-5">
-      {/* Audience */}
+      {/* Audience — 4-color zone selector */}
       <div>
-        <label className="block text-sm font-medium text-[#374151] mb-2">Audience</label>
-        <div className="grid sm:grid-cols-2 gap-2">
-          {AUDIENCES.map((a) => (
-            <button
-              type="button"
-              key={a.value}
-              onClick={() => setAudience(a.value)}
-              className={`text-left border rounded-lg px-3 py-2.5 transition-colors ${audience === a.value ? "border-[#1a56a0] bg-[#f0f6ff] ring-1 ring-[#1a56a0]" : "border-[#e2e8f0] hover:bg-[#f8fafc]"}`}
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-[#111]">{a.label}</span>
-                <span className="text-xs font-semibold text-[#1a56a0]">{counts[a.value]}</span>
-              </div>
-              <p className="text-xs text-[#64748b] mt-0.5">{a.hint}</p>
-            </button>
-          ))}
+        <label className="block text-sm font-semibold text-[#374151] mb-3">Select Audience</label>
+        <div className="grid sm:grid-cols-2 gap-2.5">
+          {ZONES.map((z) => {
+            const active = audience === z.value;
+            return (
+              <button
+                type="button"
+                key={z.value}
+                onClick={() => setAudience(z.value)}
+                style={active
+                  ? { borderColor: z.activeBorder, backgroundColor: z.activeBg, boxShadow: `0 0 0 1px ${z.activeBorder}` }
+                  : { borderColor: "#e2e8f0", backgroundColor: "#fff" }
+                }
+                className="text-left border rounded-xl px-4 py-3 transition-all"
+              >
+                <div className="flex items-center justify-between mb-0.5">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: z.dot }} />
+                    <span className="text-sm font-semibold" style={{ color: z.text }}>{z.label}</span>
+                  </div>
+                  <span
+                    className="text-sm font-bold tabular-nums px-2 py-0.5 rounded-lg"
+                    style={{ background: z.bg, color: z.text, border: `1px solid ${z.border}` }}
+                  >
+                    {counts[z.value]}
+                  </span>
+                </div>
+                <p className="text-xs text-[#64748b] ml-4.5 leading-snug">{z.hint}</p>
+              </button>
+            );
+          })}
         </div>
       </div>
 

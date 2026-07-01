@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import {
   getAuthorityForUser, getJurisdictionProfessionals, computeStats,
   parseProfessionalFilters, filterProfessionals, filterOptions, hasActiveFilters, filtersToQuery,
+  authorityDisplayName,
 } from "@/lib/government/jurisdiction";
 import ComplianceDonut from "@/components/government/ComplianceDonut";
 import ProfessionBars from "@/components/government/ProfessionBars";
@@ -51,7 +52,7 @@ export default async function GovernmentReportsPage({
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-[#111]">Compliance Reports</h1>
         <p className="text-sm text-[#64748b] mt-1">
-          {authority.orgName} — jurisdiction {authority.jurisdictionCountry}
+          {authority.orgName} — {authorityDisplayName(authority)}
           {activeFilters && <span className="text-[#1a56a0] font-medium"> · filtered: {stats.total} of {all.length}</span>}
         </p>
       </div>
@@ -81,14 +82,14 @@ export default async function GovernmentReportsPage({
       {/* Summary */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
         {[
-          { label: "Total Registered", value: stats.total.toString(), color: "text-[#1a56a0]" },
-          { label: "Compliance Rate", value: stats.total > 0 ? `${stats.complianceRate}%` : "—", color: stats.complianceRate >= 80 ? "text-[#16a34a]" : stats.complianceRate >= 60 ? "text-[#d97706]" : "text-[#dc2626]" },
-          { label: "Expired Licenses", value: stats.expired.toString(), color: stats.expired > 0 ? "text-[#dc2626]" : "text-[#16a34a]" },
-          { label: "Expiring ≤30d", value: stats.expiringSoon.toString(), color: stats.expiringSoon > 0 ? "text-[#d97706]" : "text-[#16a34a]" },
+          { label: "Total Registered",  value: stats.total.toString(),                                          color: "text-[#1a56a0]" },
+          { label: "Compliance Rate",   value: stats.total > 0 ? `${stats.complianceRate}%` : "—",             color: stats.complianceRate >= 80 ? "text-[#16a34a]" : stats.complianceRate >= 60 ? "text-[#d97706]" : "text-[#dc2626]" },
+          { label: "License Expired",   value: stats.expired.toString(),                                        color: stats.expired > 0 ? "text-[#dc2626]" : "text-[#16a34a]" },
+          { label: "Expiring ≤30 days", value: stats.expiringSoon.toString(),                                   color: stats.expiringSoon > 0 ? "text-[#d97706]" : "text-[#16a34a]" },
         ].map(({ label, value, color }) => (
-          <div key={label} className="bg-white rounded-xl border border-[#e2e8f0] p-4 text-center">
-            <p className={`text-2xl font-bold ${color}`}>{value}</p>
-            <p className="text-xs text-[#64748b] mt-1">{label}</p>
+          <div key={label} className="bg-white rounded-xl border border-[#e2e8f0] p-5 text-center">
+            <p className={`text-3xl font-bold ${color}`}>{value}</p>
+            <p className="text-sm text-[#64748b] mt-1.5 font-medium">{label}</p>
           </div>
         ))}
       </div>

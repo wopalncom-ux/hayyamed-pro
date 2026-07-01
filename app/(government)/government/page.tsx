@@ -11,17 +11,13 @@ import {
   getJurisdictionProfessionals,
   computeStats,
   redZone,
-  type ComplianceZone,
+  computeLicenseZone,
+  ZONE_CONFIG,
+  authorityDisplayName,
 } from "@/lib/government/jurisdiction";
 
 export const metadata = { title: "Authority Dashboard — Hayya Med Pro" };
 
-const STATUS_CONFIG: Record<ComplianceZone, { label: string; classes: string }> = {
-  compliant:     { label: "Compliant",     classes: "bg-[#dcfce7] text-[#16a34a]" },
-  at_risk:       { label: "At Risk",       classes: "bg-[#fff7ed] text-[#d97706]" },
-  non_compliant: { label: "Non-Compliant", classes: "bg-[#fef2f2] text-[#dc2626]" },
-  unknown:       { label: "No Data",       classes: "bg-[#f1f5f9] text-[#64748b]" },
-};
 
 export default async function GovernmentDashboardPage({
   searchParams,
@@ -110,7 +106,7 @@ export default async function GovernmentDashboardPage({
         <div>
           <h1 className="text-2xl font-bold text-[#111]">{titlePrefix}Compliance Overview</h1>
           <p className="text-sm text-[#64748b] mt-1">
-            {authority.orgName} · Jurisdiction: {authority.jurisdictionCountry}
+            {authority.orgName} · {authorityDisplayName(authority)}
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -124,12 +120,13 @@ export default async function GovernmentDashboardPage({
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 sm:grid-cols-6 gap-3 mb-6">
-        <StatCard label="Registered" value={stats.total.toString()} color="blue" />
-        <StatCard label="Compliant" value={stats.compliant.toString()} color="green" />
-        <StatCard label="At Risk" value={stats.atRisk.toString()} color="orange" />
-        <StatCard label="Non-Compliant" value={stats.nonCompliant.toString()} color="red" />
-        <StatCard label="License ≤30d" value={stats.expiringSoon.toString()} color={stats.expiringSoon > 0 ? "red" : "green"} />
+      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 mb-6">
+        <StatCard label="Registered"       value={stats.total.toString()}       color="blue" />
+        <StatCard label="Compliant ✓"      value={stats.compliant.toString()}    color="green" />
+        <StatCard label="At Risk"          value={stats.atRisk.toString()}       color="orange" />
+        <StatCard label="Non-Compliant"    value={stats.nonCompliant.toString()} color="red" />
+        <StatCard label="License Expired"  value={stats.expired.toString()}      color={stats.expired > 0 ? "red" : "green"} />
+        <StatCard label="Expiring ≤30d"    value={stats.expiringSoon.toString()} color={stats.expiringSoon > 0 ? "orange" : "green"} />
         <StatCard
           label="Compliance Rate"
           value={stats.total > 0 ? `${stats.complianceRate}%` : "—"}
@@ -225,9 +222,11 @@ export default async function GovernmentDashboardPage({
                         : <span className="text-xs text-[#94a3b8]">—</span>}
                     </td>
                     <td className="px-6 py-3">
-                      <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${STATUS_CONFIG[p.complianceStatus].classes}`}>
-                        {STATUS_CONFIG[p.complianceStatus].label}
-                      </span>
+                      {(() => { const z = computeLicenseZone(p); const cfg = ZONE_CONFIG[z]; return (
+                        <span className="text-xs font-semibold px-2.5 py-1 rounded-full" style={{ background: cfg.bg, color: cfg.text, border: `1px solid ${cfg.border}` }}>
+                          {cfg.label}
+                        </span>
+                      ); })()}
                     </td>
                     <td className="px-6 py-3">
                       {p.daysToExpiry !== null
@@ -260,9 +259,9 @@ export default async function GovernmentDashboardPage({
 function StatCard({ label, value, color }: { label: string; value: string; color: "blue" | "green" | "orange" | "red" }) {
   const colors = { blue: "text-[#1a56a0]", green: "text-[#16a34a]", orange: "text-[#d97706]", red: "text-[#dc2626]" };
   return (
-    <div className="bg-white rounded-xl border border-[#e2e8f0] p-4 text-center">
-      <p className={`text-2xl font-bold ${colors[color]}`}>{value}</p>
-      <p className="text-xs text-[#64748b] mt-1 leading-tight">{label}</p>
+    <div className="bg-white rounded-xl border border-[#e2e8f0] p-5 text-center">
+      <p className={`text-3xl font-bold ${colors[color]}`}>{value}</p>
+      <p className="text-sm text-[#64748b] mt-1.5 leading-tight font-medium">{label}</p>
     </div>
   );
 }
