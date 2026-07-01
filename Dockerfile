@@ -27,7 +27,7 @@ ENV NEXT_PUBLIC_SENTRY_DSN=$NEXT_PUBLIC_SENTRY_DSN
 ENV NEXT_PUBLIC_GA_ID=$NEXT_PUBLIC_GA_ID
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN npm run build
+RUN NODE_OPTIONS="--max-old-space-size=4096" npm run build
 
 # Stage 3: Minimal production runner
 FROM node:20-alpine AS production
