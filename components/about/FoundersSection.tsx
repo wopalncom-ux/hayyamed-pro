@@ -6,6 +6,13 @@ import Image from "next/image";
 
 const founders = [
   {
+    name: "Dr. Lina Aboutouk",
+    role: "Founder Partner",
+    photo: "/Team/Lina.jpeg",
+    photoPosition: "object-top",
+    bio: "Dr. Lina Aboutouk is a Founder Partner of Hayya Med Pro with a background in healthcare, educational leadership, operations management, and professional development. She brings extensive experience in stakeholder engagement, organizational coordination, governance, and capability-building initiatives. Her work focuses on creating structured, user-centered experiences that support healthcare professionals throughout their professional development journey. As a Founder Partner, Dr. Aboutouk plays an important role in guiding professional engagement strategies, operational excellence, education-focused initiatives, and healthcare workforce development programs. Her commitment to quality, collaboration, and continuous learning contributes significantly to the platform's mission and growth.",
+  },
+  {
     name: "Dr. Khaled Sadeddine",
     role: "Founder Partner",
     photo: "/Team/Khaled.jpeg",
@@ -18,13 +25,6 @@ const founders = [
     photo: "/Team/abbas.jpeg",
     photoPosition: "object-contain object-bottom",
     bio: "Abbas Al Masri is a Founder Partner of Hayya Med Pro and an experienced business leader with a strong background in healthcare operations, business development, strategic partnerships, and organizational growth. Throughout his career, he has held senior leadership roles within Qatar's healthcare sector, including serving as Chief Operating Officer of leading healthcare organizations. His experience spans healthcare management, operational excellence, commercial strategy, and stakeholder engagement. Abbas is also the Chief Executive Officer of Hayya Med AI, where he leads initiatives focused on artificial intelligence, digital transformation, enterprise technology, and innovation. His vision for Hayya Med Pro is centered on simplifying healthcare compliance, supporting professional development, and creating smarter digital solutions for healthcare professionals and organizations. As a Founder Partner, he contributes to the strategic direction, ecosystem development, growth initiatives, and long-term expansion of the platform.",
-  },
-  {
-    name: "Dr. Lina Aboutouk",
-    role: "Founder Partner",
-    photo: "/Team/Lina.jpeg",
-    photoPosition: "object-top",
-    bio: "Dr. Lina Aboutouk is a Founder Partner of Hayya Med Pro with a background in healthcare, educational leadership, operations management, and professional development. She brings extensive experience in stakeholder engagement, organizational coordination, governance, and capability-building initiatives. Her work focuses on creating structured, user-centered experiences that support healthcare professionals throughout their professional development journey. As a Founder Partner, Dr. Aboutouk plays an important role in guiding professional engagement strategies, operational excellence, education-focused initiatives, and healthcare workforce development programs. Her commitment to quality, collaboration, and continuous learning contributes significantly to the platform's mission and growth.",
   },
 ];
 
