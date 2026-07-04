@@ -1,8 +1,8 @@
 import { NextRequest } from "next/server";
 import { headers } from "next/headers";
+import type { Content } from "@google-cloud/vertexai";
 import { createAdminClient } from "@/lib/supabase/server";
 import { getRequestUser } from "@/lib/auth/getRequestUser";
-import { getAnthropicClient } from "@/lib/anthropic";
 import { checkAndLogRateLimit } from "@/lib/rateLimit";
 import { toCountryCode } from "@/lib/countryCode";
 import { getUserPlan, isPro } from "@/lib/subscription";
@@ -10,12 +10,15 @@ import { isFeatureEnabled } from "@/lib/featureFlags";
 import { logAudit } from "@/lib/audit";
 import { logAiCall } from "@/lib/ai/logAiCall";
 import { buildComplianceChatSystem } from "@/lib/ai/prompts/compliance-chat";
-import { HAYYA_TOOLS, type ToolName } from "@/lib/ai/tools/index";
+import { GEMINI_TOOLS, type ToolName } from "@/lib/ai/tools/index";
 import { executeToolCall } from "@/lib/ai/tools/handlers";
 import { retrieveRelevantChunks, formatChunksForPrompt } from "@/lib/ai/rag/retrieve";
-import type { MessageParam, ToolResultBlockParam } from "@anthropic-ai/sdk/resources";
+import { geminiStep, geminiStreamContents } from "@/lib/ai/providers/gemini";
+import { MODEL_IDS } from "@/lib/ai/router";
 
 export const runtime = "nodejs";
+
+const MODEL = MODEL_IDS["gemini-flash"];
 
 type ChatMessage = { role: "user" | "assistant"; content: string };
 
@@ -115,81 +118,52 @@ export async function POST(req: NextRequest) {
   const readable = new ReadableStream({
     async start(controller) {
       try {
-        const claude = getAnthropicClient();
-
         // Agentic loop: up to 2 rounds of tool use before streaming final answer
-        let conversationMessages: MessageParam[] = messages
-          .slice(-10)
-          .map((m) => ({ role: m.role, content: m.content }));
+        let conversationContents: Content[] = messages.slice(-10).map((m) => ({
+          role: m.role === "assistant" ? "model" : "user",
+          parts: [{ text: m.content }],
+        }));
 
         let toolRounds = 0;
         const MAX_TOOL_ROUNDS = 2;
+        let outputTokens = 0;
+        let inputTokens = 0;
 
         while (toolRounds < MAX_TOOL_ROUNDS) {
-          const toolResponse = await claude.messages.create({
-            model: "claude-haiku-4-5-20251001",
-            max_tokens: 1024,
-            system: systemPrompt,
-            messages: conversationMessages,
-            tools: HAYYA_TOOLS,
-            tool_choice: { type: "auto" },
-          });
+          const { functionCalls, content } = await geminiStep(MODEL, systemPrompt, conversationContents, GEMINI_TOOLS, 1024);
 
           // If no tool calls, break and stream from here
-          const toolUseBlocks = toolResponse.content.filter((b) => b.type === "tool_use");
-          if (!toolUseBlocks.length) break;
+          if (!functionCalls.length || !content) break;
 
-          // Add assistant tool-use message to conversation
-          conversationMessages = [
-            ...conversationMessages,
-            { role: "assistant", content: toolResponse.content },
-          ];
+          // Add the model's tool-call turn to the conversation
+          conversationContents = [...conversationContents, content];
 
           // Execute all tool calls in parallel
           const toolResults = await Promise.all(
-            toolUseBlocks.map(async (block) => {
-              if (block.type !== "tool_use") return null;
-              const result = await executeToolCall(
-                block.name as ToolName,
-                block.input as Record<string, unknown>,
-                user.id,
-              );
-              return {
-                type: "tool_result" as const,
-                tool_use_id: block.id,
-                content: result,
-              };
+            functionCalls.map(async (fc) => {
+              const result = await executeToolCall(fc.name as ToolName, fc.args, user.id);
+              return { functionResponse: { name: fc.name, response: { result } } };
             })
           );
 
-          // Add tool results to conversation
-          conversationMessages = [
-            ...conversationMessages,
-            { role: "user", content: toolResults.filter(Boolean) as ToolResultBlockParam[] },
-          ];
+          // Add tool results back — Vertex AI expects the functionResponse
+          // turn on role "user" (see @google-cloud/vertexai README example),
+          // not role "function".
+          conversationContents = [...conversationContents, { role: "user", parts: toolResults }];
 
           toolRounds++;
         }
 
         // Stream the final response
-        const stream = claude.messages.stream({
-          model: "claude-haiku-4-5-20251001",
-          max_tokens: 1024,
-          system: systemPrompt,
-          messages: conversationMessages,
-        });
-
-        for await (const chunk of stream) {
-          if (chunk.type === "content_block_delta" && chunk.delta.type === "text_delta") {
-            controller.enqueue(encoder.encode(chunk.delta.text));
-          }
+        for await (const chunk of geminiStreamContents(MODEL, systemPrompt, conversationContents, 1024)) {
+          outputTokens += Math.ceil(chunk.length / 4); // Vertex stream doesn't expose per-chunk usage; rough estimate
+          controller.enqueue(encoder.encode(chunk));
         }
+        inputTokens = Math.ceil(systemPrompt.length / 4);
 
-        stream.finalMessage().then((finalMsg) => {
-          const latencyMs = Date.now() - startTime;
-          logAudit({ actorAuthId: user.id, action: "ai.compliance_chat", targetTable: "audit_logs", metadata: { model: "claude-haiku-4-5-20251001", input_tokens: finalMsg.usage?.input_tokens ?? 0, output_tokens: finalMsg.usage?.output_tokens ?? 0, latency_ms: latencyMs } }).catch(() => {});
-          logAiCall({ professionalId: user.id, action: "ai.compliance_chat", model: "claude-haiku-4-5-20251001", inputTokens: finalMsg.usage?.input_tokens ?? 0, outputTokens: finalMsg.usage?.output_tokens ?? 0, latencyMs }).catch(() => {});
-        }).catch(() => {});
+        const latencyMs = Date.now() - startTime;
+        logAudit({ actorAuthId: user.id, action: "ai.compliance_chat", targetTable: "audit_logs", metadata: { model: MODEL, input_tokens: inputTokens, output_tokens: outputTokens, latency_ms: latencyMs } }).catch(() => {});
+        logAiCall({ professionalId: user.id, action: "ai.compliance_chat", model: MODEL, inputTokens, outputTokens, latencyMs }).catch(() => {});
 
       } catch {
         controller.enqueue(encoder.encode("\n\n[I ran into an error — please try again.]"));

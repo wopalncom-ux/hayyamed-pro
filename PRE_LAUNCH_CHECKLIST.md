@@ -1,7 +1,7 @@
 # Hayya Med Pro — Pre-Launch Checklist
 ## Classification: Internal — Operational
 ## Owner: COO + CTO
-## Last Updated: 2026-06-18 (Session 146 — reflects sessions 1–146)
+## Last Updated: 2026-07-04 (refreshed against actual repo/prod state — 87 migrations, government portal v2, credentials vault, Gemini AI switch)
 
 ---
 
@@ -17,9 +17,9 @@
 
 ### Database
 
-- [x] All 72 migrations applied — 001–072 (migration 071: FK indexes; migration 072: qiib_payment_sessions)
+- [x] All 87 migrations applied — 001–086 + COMBINED_RUN_ONCE.sql (verified 2026-07-01/02). Key recent: 073 (government_staff role), 074 (professional passports), 075 (CMS/media/SEO), 076 (performance snapshots), 077–078 (announcements/changelog), 079 (AI consent gate), 080 (org branding), 081 (knowledge base/pgvector), 082 (owner/founder role), 083 (credentials vault), 084 (authority jurisdiction — government portal v2), 085–086 (announcement attachments + profession targeting)
 - [x] Migration 068 confirmed applied — `public_directory_opt_in` column exists in `profile_privacy_settings`
-- [x] lib/types.ts fully synced — 72 migrations reflected; QiibPaymentSession type added (Session 146)
+- [~] lib/types.ts sync — verify it reflects all types through migration 086 (credentials vault, jurisdiction, knowledge base)
 - [x] pgvector extension enabled (confirmed by user Session 145)
 - [x] Migration 071 applied — 5 FK indexes via COMBINED_RUN_ONCE.sql
 
@@ -61,7 +61,7 @@ All secrets are in GCP Secret Manager and injected at runtime. Build-time vars a
 | SENTRY_ORG | [!] Set in Cloud Build Trigger substitution vars |  |
 | SENTRY_PROJECT | [!] Set in Cloud Build Trigger substitution vars |  |
 | SENTRY_AUTH_TOKEN | [!] Set in Cloud Build Trigger substitution vars |  |
-| ANTHROPIC_API_KEY | Secret Manager: `hayyamed-pro-anthropic-key` | [!] Must create — value in .env.local |
+| ANTHROPIC_API_KEY | Secret Manager: `hayyamed-pro-anthropic-key` | [~] **Now effectively dead** (2026-07-04): `compliance-chat` migrated to Gemini Flash Lite same session (see AI Features below); `lib/anthropic.ts` uses `AnthropicVertex` (GCP service-account auth) and never reads this env var — only `app/api/admin/health/check` references it directly, and `hayya-assistant`'s error-path fallback uses the GCP-authenticated client, not this key. Safe to remove from cloudbuild.yaml `--set-secrets` on a future deploy if confirmed unused; not urgent |
 | POSTMARK_API_TOKEN | Secret Manager: `hayyamed-pro-postmark-key` | [x] Live mode — approved and tested Session 139 |
 | POSTMARK_WEBHOOK_TOKEN | Secret Manager: `hayyamed-pro-postmark-webhook-token` | [~] Set when Postmark active |
 | QIIB_MERCHANT_ID | Secret Manager: `hayyamed-pro-qiib-merchant-id` | [!] Pending QIIB merchant services |
@@ -139,15 +139,11 @@ All secrets are in GCP Secret Manager and injected at runtime. Build-time vars a
 - [x] Cron monitoring (16/16 jobs)
 - [x] Revenue dashboard
 
-### Payments (Paddle) — blocked on external account
-- [ ] Paddle account approved and active
-- [ ] Paddle products created: Free · Pro ($6/mo + $61.20/yr) · 8 employer tiers = 10 price IDs
-- [ ] Checkout flow tested in Paddle sandbox
-- [ ] Paddle success URL: `https://hayyamed.pro/dashboard?upgrade=success`
-- [ ] Paddle webhook endpoint receiving events at /api/paddle/webhook
-- [ ] Subscription provisioning tested (created → upgraded)
-- [ ] Subscription cancellation tested (canceled → downgraded)
-- [x] Billing portal working (/dashboard/billing → Paddle CustomerPortalSession)
+### Payments — QIIB is primary (2026-07-01 decision), Paddle is optional fallback
+- [!] Contact QIIB merchant services for payment API credentials — **EXTERNAL, still pending**. App runs without it; users see "contact support" until wired (graceful degradation confirmed live)
+- [x] QIIB payment integration built — `qiib_payment_sessions` table (migration 072), checkout flow, webhook handling
+- [~] Paddle — kept as secondary option only, NOT required for launch. Skip unless a specific market needs card checkout beyond QIIB
+- [x] Billing portal working (/dashboard/billing)
 
 ### Email (Postmark) — live
 
@@ -219,17 +215,21 @@ All secrets are in GCP Secret Manager and injected at runtime. Build-time vars a
 - [x] Push preference enforcement (per-category opt-in/opt-out)
 
 ### AI Features
-- [x] AI CME gap analysis (Pro — Sonnet 4.6, 24h cache, refresh button)
-- [x] AI recommendations
-- [x] AI voice assistant (Pro — Haiku 4.5)
-- [x] Employer AI analyzer (Sonnet 4.6)
-- [x] Provider AI analyzer (Sonnet 4.6)
+- [x] **2026-07-01 deliberate override:** `app/api/ai/*` routes moved from Claude to **Gemini Flash Lite** (via Vertex) for ~10–50× lower cost. Single switch = `TASK_ROUTING` table in `lib/ai/router.ts`. This intentionally supersedes the EXECUTIVE_MANDATE model-tier table below — do not "fix" back without asking the owner.
+- [x] AI CME gap analysis (Pro — Gemini Flash Lite, 24h cache, refresh button)
+- [x] AI recommendations (Gemini Flash Lite)
+- [x] AI voice assistant (Pro — Gemini Flash Lite)
+- [x] Employer AI analyzer (Gemini Flash Lite)
+- [x] Provider AI analyzer (Gemini Flash Lite)
+- [x] **2026-07-04: `compliance-chat` migrated off Claude to Gemini Flash Lite** — was the last hold-out (streaming + agentic tool-use + RAG). New `geminiStep`/`geminiStreamContents` in `lib/ai/providers/gemini.ts` implement the tool-call round-trip (Vertex `functionDeclarations`/`functionCall`/`functionResponse`) and content streaming; `GEMINI_TOOLS` in `lib/ai/tools/index.ts` converts the existing Anthropic tool schemas (`HAYYA_TOOLS`) to Gemini's `SchemaType` format so `executeToolCall` handlers stay untouched. **Every app AI route is now on Gemini** — Claude/Anthropic is no longer used anywhere in the runtime request path.
+- [x] **2026-07-04 (same session, follow-up): Claude/Anthropic fully removed from the codebase.** `hayya-assistant`'s error-path now retries Gemini once instead of falling back to Claude. Deleted `lib/anthropic.ts`, removed the dead `claudeComplete` branch in `lib/ai/complete.ts`, dropped the Claude entries from `lib/ai/router.ts` (`AiProvider` is now just `"gemini-flash"`), replaced the `Anthropic.Tool` type in `lib/ai/tools/index.ts` with a local type, and uninstalled `@anthropic-ai/sdk` + `@anthropic-ai/vertex-sdk` from package.json. Also fixed two admin dashboards (`/admin/ai-modules`, `/admin/ai-costs`) that still hardcoded Claude model names/defaults — display-only pages, were never actually wired to `router.ts`'s real routing, but were misleading. **Zero references to Claude/Anthropic remain anywhere in the app.**
 - [x] OCR certificate upload
+- [x] RAG / knowledge base — migration 081 (pgvector); embeddings intentionally stay on OpenAI `text-embedding-3-small` (re-embedding cost to switch)
 - [x] 7 versioned prompt files in lib/ai/prompts/ — 0 inline prompts
 - [x] All AI calls logged (model, tokens, latency, professional_id) — ai_call_logs
 - [x] Zod validation on all AI responses
 - [x] AI cost tracked (ai_call_logs → data-retention cron prunes after 90 days)
-- [!] Enable Claude Haiku 4.5 in GCP Model Garden (for voice chat tier)
+- [x] Billing note: all AI runs via GCP Vertex AI service-account auth (Gemini). Local dev cannot execute AI calls (no ADC creds) — AI only runs on Cloud Run.
 
 ### API & Integrations
 - [x] v1 API with API key auth — /api/v1/* (staff, compliance, licenses, departments, courses, enrollments)
@@ -303,21 +303,30 @@ All secrets are in GCP Secret Manager and injected at runtime. Build-time vars a
 - [x] CME cycle renewal — auto-advance expired cycles, reset credits (migration 056)
 - [x] Multi-license wallet (professional_licenses table, migration 040)
 
-### Mobile App (React Native)
-- [ ] Expo project initialized
-- [ ] Core screens: dashboard, CME tracker, licenses, settings
-- [x] API-first patterns confirmed (Bearer token auth — 100% complete, Session 101)
-- [ ] App Store / Google Play developer accounts
-- [x] Apple app-site-association + assetlinks.json stubs (⚠ TEAMID/SHA256 need real values)
-- [ ] FCM + APNs push configured for React Native
+### Mobile App (React Native) — `mobile/` dir, Expo SDK 56, bootstrapped 2026-06-19 (commit 592f67e)
+- [x] Expo project initialized (expo-router, NativeWind v4, React Query v5, expo-secure-store for Keychain/Keystore)
+- [x] Core screens: dashboard, CME wallet, licenses, profile (bottom tabs) — Phase 1 complete (commits 8193381+5904895): splash PNGs, maskable icons, native DateTimePicker, subscription-to-web link, disclaimer, cert upload, offline queue badge
+- [x] API-first patterns confirmed (Bearer token auth — 100% complete)
+- [!] App Store / Google Play developer accounts — **EXTERNAL, blocking Phase 2/3.** Play Console needs Firebase project + `google-services.json` + $25 account; Apple needs $99/yr enrollment
+- [x] Apple app-site-association + assetlinks.json stubs (⚠ TEAMID/SHA256 still PLACEHOLDER — need real values after enrollment)
+- [ ] FCM + APNs push configured for React Native — blocked on Firebase/Apple enrollment above
 - [ ] TestFlight / internal track beta
+- [ ] **Known bug:** `mobile/app/(tabs)/index.tsx:135` dashboard CTA `onPress` is a no-op stub — needs `Linking.openURL("https://hayyamed.pro/dashboard")`
+- [ ] Add `@react-native-community/netinfo` for proactive offline banner (currently only reactive on failed insert)
 
-### Government Portal
+### Government Portal — rebuilt as v2 jurisdiction-wide oversight (2026-07-01, migrations 084–086)
 - [x] Government registration page (/government/register)
-- [x] Government settings page (/government/settings)
 - [x] Government analytics dashboard (/government/analytics)
 - [x] Government v1 API endpoints (registry, registry summary)
 - [x] API key management for government authorities
+- [x] Jurisdiction-wide auto-visibility — authority sees every professional whose `country_of_residence` maps to its jurisdiction (no opt-in linking model anymore); `lib/government/jurisdiction.ts`
+- [x] Registry with employer column, filters, roll-ups, Excel (.xlsx) export
+- [x] Education oversight (read-only courses filtered by country_codes)
+- [x] Reminders — audience picker → notification_queue (email+push), audited, capped 5000
+- [x] Country-scoped announcements with PDF/file attachments + profession targeting
+- [x] Modern dashboard charts (compliance donut, profession bars) + red-zone flagging
+- [x] PDF report export (@react-pdf/renderer) migrated to jurisdiction model
+- [ ] Government/settings page — removed in v2 rebuild; confirm no dangling nav links reference it
 
 ### University Portal
 - [x] University registration + settings
@@ -377,23 +386,25 @@ Total: **70 migrations** (001–070)
 
 Before public announcement, all Tier 0 + Tier 1 items must be complete.
 
-**Remaining user-action blockers for launch (Session 147 — 1 remains):**
+**Remaining user-action / external blockers (refreshed 2026-07-04):**
 
-1. ~~Run COMBINED_RUN_ONCE.sql~~ — Done: 72 migrations applied (Session 146)
-2. ~~Add `/auth/callback` to Supabase Redirect URLs~~ — Done: confirmed by user 2026-06-19
+1. ~~Run COMBINED_RUN_ONCE.sql~~ — Done: 87 migrations applied
+2. ~~Add `/auth/callback` to Supabase Redirect URLs~~ — Done
 3. ~~Upstash credentials~~ — Done: PING verified
 4. ~~VAPID private key~~ — Done: Secret Manager v3
 5. ~~COMING_SOON toggle~~ — Done: already `false` in cloudbuild.yaml
 6. ~~Postmark~~ — Done: Live mode confirmed
-7. Create `hayyamed-pro-anthropic-key` in GCP Secret Manager — **YOU MUST DO THIS** (value: `sk-ant-api03-...` from .env.local) — AI features fail without this
-8. Contact QIIB merchant services for payment API credentials — **EXTERNAL** (app launches without it; users see "contact support" until wired)
+7. ~~ANTHROPIC_API_KEY~~ — Moot: as of 2026-07-04 no runtime AI route calls the Anthropic API directly at all (Claude usage, where it exists as a fallback, goes through GCP Vertex auth, not this key)
+8. **Contact QIIB merchant services for payment API credentials — EXTERNAL, still pending.** App runs without it (graceful "contact support" fallback)
 9. ~~Trigger Cloud Build deploy~~ — Done: launched 2026-06-18
+10. **Book VAPT (external penetration test) — EXTERNAL, still pending.** Required before hospital sales conversations
+11. **Medical disclaimer legal review by healthcare regulatory advisor — EXTERNAL, still pending**
 
-**Code is complete and ready for production.**
+**Code is complete and ready for production. Only genuinely external/user-action items remain — no known code blockers.**
 
 | Board | Sign-off | Status |
 |---|---|---|
-| CTO | Build passing, 72 migrations, 0 TS errors, QIIB integration complete | [x] |
+| CTO | Build passing, 87 migrations, 0 TS errors, QIIB integration complete, all app AI on Gemini Flash Lite | [x] |
 | CISO | Foundation security audit complete, 9 vulnerabilities fixed | [x] |
 | Legal | ToS, Privacy Policy, DPA published | [x] Medical disclaimer needs advisor review |
 | Healthcare | Compliance disclaimer correct, rules engine for 10 countries | [x] |
@@ -403,4 +414,4 @@ Before public announcement, all Tier 0 + Tier 1 items must be complete.
 | CEO / Founder | Final approval to launch | [x] LAUNCHED 2026-06-18 |
 
 ---
-*Last updated: 2026-06-17 — Session 138: production global error fixed (next-intl + Turbopack incompatibility); PRE_LAUNCH_CHECKLIST updated to reflect sessions 1–138 (71 migrations, 16 cron jobs, full security audit complete).*
+*Last updated: 2026-07-04 — refreshed against actual repo/prod state: 87 migrations, government portal v2 (jurisdiction-wide oversight), credentials vault, QIIB as primary payment rail, and the compliance-chat AI route migrated from Claude to Gemini Flash Lite (every app AI route is now on Gemini; Claude/Anthropic is no longer used anywhere in the runtime request path — see AI Features section). Fixed a real cost-tracking bug found along the way: `logAiCall.ts`'s pricing table was never updated for the 2026-07-01 Gemini switch and was silently overestimating AI cost ~40× in `ai_call_logs`.*

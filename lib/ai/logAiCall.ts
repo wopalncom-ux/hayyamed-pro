@@ -1,15 +1,19 @@
 import { createAdminClient } from "@/lib/supabase/server";
+import { MODEL_IDS, PROVIDER_COSTS, type AiProvider } from "./router";
 
-// Per-million-token pricing (USD). Update when Anthropic adjusts pricing.
-const MODEL_COSTS: Record<string, { input: number; output: number }> = {
-  "claude-haiku-4-5-20251001": { input: 0.80,  output: 4.00  },
-  "claude-haiku-4-5":          { input: 0.80,  output: 4.00  },
-  "claude-sonnet-4-6":         { input: 3.00,  output: 15.00 },
-  "claude-opus-4-8":           { input: 15.00, output: 75.00 },
-};
+// Per-million-token pricing (USD), derived from router.ts (the single source
+// of truth for provider→model→cost) so this never drifts out of sync again —
+// it previously fell back to Sonnet pricing for every Gemini call, a ~40×
+// cost overestimate in ai_call_logs since the 2026-07-01 Gemini switch.
+const MODEL_COSTS: Record<string, { input: number; output: number }> = Object.fromEntries(
+  (Object.keys(MODEL_IDS) as AiProvider[]).map((provider) => [MODEL_IDS[provider], PROVIDER_COSTS[provider]])
+);
+// A couple of prior model-id strings seen in historical logs, for accurate re-estimation only.
+MODEL_COSTS["gemini-2.0-flash-lite"] = PROVIDER_COSTS["gemini-flash"];
+MODEL_COSTS["gemini-2.0-flash-001"] = { input: 0.10, output: 0.40 };
 
 function estimateCost(model: string, inputTokens: number, outputTokens: number): number {
-  const p = MODEL_COSTS[model] ?? { input: 3.00, output: 15.00 };
+  const p = MODEL_COSTS[model] ?? PROVIDER_COSTS["gemini-flash"];
   return (inputTokens * p.input + outputTokens * p.output) / 1_000_000;
 }
 

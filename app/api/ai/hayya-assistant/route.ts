@@ -2,11 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { HAYYA_ASSISTANT_SYSTEM_PROMPT } from "@/lib/ai/prompts/hayya-assistant";
 import { geminiChat } from "@/lib/ai/providers/gemini";
-import { getAnthropicClient } from "@/lib/anthropic";
 import { aiLimiter } from "@/lib/rateLimit";
+import { MODEL_IDS } from "@/lib/ai/router";
 import type { GeminiMessage } from "@/lib/ai/providers/gemini";
 
 export const runtime = "nodejs";
+
+const MODEL = MODEL_IDS["gemini-flash"];
 
 const BodySchema = z.object({
   message: z.string().min(1).max(500),
@@ -47,40 +49,22 @@ export async function POST(req: NextRequest) {
 
   const maxTokens = body.voice ? 200 : 600;
 
-  // Primary: Gemini Flash 2.0 — 10× cheaper than Haiku for this public endpoint
+  const geminiMessages: GeminiMessage[] = [
+    ...body.history.slice(-6).map((m) => ({
+      role: m.role === "assistant" ? ("model" as const) : ("user" as const),
+      parts: [{ text: m.content }],
+    })),
+    { role: "user" as const, parts: [{ text: body.message }] },
+  ];
+
   try {
-    const geminiMessages: GeminiMessage[] = [
-      ...body.history.slice(-6).map((m) => ({
-        role: m.role === "assistant" ? ("model" as const) : ("user" as const),
-        parts: [{ text: m.content }],
-      })),
-      { role: "user" as const, parts: [{ text: body.message }] },
-    ];
-
-    const reply = await geminiChat(
-      "gemini-2.5-flash-lite",
-      HAYYA_ASSISTANT_SYSTEM_PROMPT,
-      geminiMessages,
-      maxTokens,
-    );
-
+    const reply = await geminiChat(MODEL, HAYYA_ASSISTANT_SYSTEM_PROMPT, geminiMessages, maxTokens);
     return NextResponse.json({ reply: reply || "I'm not sure about that — try asking in a different way." });
   } catch {
-    // Fallback: Claude Haiku (same GCP auth, higher cost)
+    // One retry — transient Vertex hiccups are common; no Claude fallback (Gemini-only by design)
     try {
-      const anthropic = getAnthropicClient();
-      const messages = [
-        ...body.history.slice(-6),
-        { role: "user" as const, content: body.message },
-      ];
-      const response = await anthropic.messages.create({
-        model: "claude-haiku-4-5-20251001",
-        max_tokens: maxTokens,
-        system: HAYYA_ASSISTANT_SYSTEM_PROMPT,
-        messages,
-      });
-      const reply = response.content[0]?.type === "text" ? response.content[0].text : "";
-      return NextResponse.json({ reply });
+      const reply = await geminiChat(MODEL, HAYYA_ASSISTANT_SYSTEM_PROMPT, geminiMessages, maxTokens);
+      return NextResponse.json({ reply: reply || "I'm not sure about that — try asking in a different way." });
     } catch {
       return NextResponse.json({
         reply: "I'm having trouble connecting right now. For immediate help, visit hayyamed.pro/register or email support@hayyamed.pro.",

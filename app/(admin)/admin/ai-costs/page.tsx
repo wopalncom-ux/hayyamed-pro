@@ -100,6 +100,10 @@ export default async function AiCostsPage() {
     .slice(0, 10);
 
   const MODEL_COLORS: Record<string, string> = {
+    "gemini-2.5-flash-lite": "bg-[#fef9c3] text-[#a16207]",
+    "gemini-2.0-flash-lite": "bg-[#fef9c3] text-[#a16207]",
+    "gemini-2.0-flash-001":  "bg-[#fef9c3] text-[#a16207]",
+    // Historical rows from before the 2026-07-01 Gemini switch
     "claude-haiku-4-5-20251001": "bg-[#dcfce7] text-[#15803d]",
     "claude-haiku-4-5":          "bg-[#dcfce7] text-[#15803d]",
     "claude-sonnet-4-6":         "bg-[#dbeafe] text-[#1d4ed8]",
@@ -177,7 +181,9 @@ export default async function AiCostsPage() {
               {modelRows.map(([model, { calls, cost }]) => {
                 const pct = totalCostMonth > 0 ? (cost / totalCostMonth) * 100 : 0;
                 const badge = MODEL_COLORS[model] ?? "bg-[#f1f5f9] text-[#374151]";
-                const shortLabel = model.replace("claude-", "").replace("-4-5-20251001", " 4.5").replace("-4-5", " 4.5").replace("-4-6", " 4.6").replace("-4-8", " 4.8");
+                const shortLabel = model
+                  .replace("claude-", "").replace("-4-5-20251001", " 4.5").replace("-4-5", " 4.5").replace("-4-6", " 4.6").replace("-4-8", " 4.8")
+                  .replace("gemini-", "Gemini ").replace("-lite", " Lite").replace("-001", "");
                 return (
                   <div key={model}>
                     <div className="flex items-center justify-between mb-1">

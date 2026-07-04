@@ -1,7 +1,22 @@
-import type Anthropic from "@anthropic-ai/sdk";
+import { SchemaType, type FunctionDeclaration, type FunctionDeclarationSchema, type Schema } from "@google-cloud/vertexai";
 
-// Tool definitions passed to Claude for agentic compliance chat
-export const HAYYA_TOOLS: Anthropic.Tool[] = [
+type JsonSchemaLike = {
+  type?: string;
+  description?: string;
+  enum?: string[];
+  properties?: Record<string, JsonSchemaLike>;
+  required?: string[];
+  items?: JsonSchemaLike;
+};
+
+type ToolDefinition = {
+  name: string;
+  description: string;
+  input_schema: JsonSchemaLike;
+};
+
+// Tool definitions for the compliance-chat agentic loop (Gemini function calling)
+export const HAYYA_TOOLS: ToolDefinition[] = [
   {
     name: "lookup_compliance_rules",
     description:
@@ -84,3 +99,50 @@ export const HAYYA_TOOLS: Anthropic.Tool[] = [
 ];
 
 export type ToolName = typeof HAYYA_TOOLS[number]["name"];
+
+// Gemini (Vertex) function-calling equivalent of HAYYA_TOOLS. Our input_schema
+// is lowercase JSON Schema ("object"/"string"/...); Gemini's
+// FunctionDeclaration.parameters needs the SchemaType enum ("OBJECT"/"STRING").
+// Converted once here so there is a single source of truth for tool definitions.
+const SCHEMA_TYPE_MAP: Record<string, SchemaType> = {
+  string: SchemaType.STRING,
+  number: SchemaType.NUMBER,
+  integer: SchemaType.INTEGER,
+  boolean: SchemaType.BOOLEAN,
+  array: SchemaType.ARRAY,
+  object: SchemaType.OBJECT,
+};
+
+function toGeminiSchema(schema: JsonSchemaLike): Schema {
+  const out: Schema = { type: SCHEMA_TYPE_MAP[schema.type ?? "string"] ?? SchemaType.STRING };
+  if (schema.description) out.description = schema.description;
+  if (schema.enum) out.enum = schema.enum;
+  if (schema.required) out.required = schema.required;
+  if (schema.items) out.items = toGeminiSchema(schema.items);
+  if (schema.properties) {
+    out.properties = {};
+    for (const [key, value] of Object.entries(schema.properties)) {
+      out.properties[key] = toGeminiSchema(value);
+    }
+  }
+  return out;
+}
+
+// FunctionDeclaration.parameters requires `type` and `properties` (unlike the
+// looser, fully-optional Schema used for nested properties/items), so wrap the
+// recursive conversion to guarantee those two fields at the top level.
+function toGeminiParameters(schema: JsonSchemaLike): FunctionDeclarationSchema {
+  const converted = toGeminiSchema(schema);
+  return {
+    type: converted.type ?? SchemaType.OBJECT,
+    properties: converted.properties ?? {},
+    ...(converted.description ? { description: converted.description } : {}),
+    ...(converted.required ? { required: converted.required } : {}),
+  };
+}
+
+export const GEMINI_TOOLS: FunctionDeclaration[] = HAYYA_TOOLS.map((t) => ({
+  name: t.name,
+  description: t.description,
+  parameters: toGeminiParameters(t.input_schema),
+}));

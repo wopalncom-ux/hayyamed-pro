@@ -4,7 +4,10 @@ import { useState, useTransition, useEffect, useCallback } from "react";
 import { saveAIModuleSettings } from "./actions";
 
 // ── Model catalogue ───────────────────────────────────────────────────────────
-type Provider = "anthropic" | "openai" | "google" | "disabled";
+// Every app AI route runs on Gemini Flash Lite as of 2026-07-04 (Claude/Anthropic
+// fully removed from the runtime — see lib/ai/router.ts). OpenAI/other Gemini
+// tiers are listed as available alternatives, not currently active.
+type Provider = "openai" | "google" | "disabled";
 
 interface ModelOption {
   id: string;
@@ -16,17 +19,14 @@ interface ModelOption {
 }
 
 const MODEL_OPTIONS: ModelOption[] = [
-  // Anthropic
-  { id: "claude-haiku-4-5-20251001",  label: "Claude Haiku 4.5",   provider: "anthropic", costPer1k: 0.00125, speed: "fast",   capability: "basic" },
-  { id: "claude-sonnet-4-6",          label: "Claude Sonnet 4.6",  provider: "anthropic", costPer1k: 0.015,   speed: "medium", capability: "standard" },
-  { id: "claude-opus-4-8",            label: "Claude Opus 4.8",    provider: "anthropic", costPer1k: 0.075,   speed: "slow",   capability: "advanced" },
+  // Google (active)
+  { id: "gemini-2.5-flash-lite",      label: "Gemini 2.5 Flash Lite", provider: "google",  costPer1k: 0.0003,  speed: "fast",   capability: "standard" },
+  { id: "gemini-1.5-flash",           label: "Gemini 1.5 Flash",   provider: "google",    costPer1k: 0.00035, speed: "fast",   capability: "basic" },
+  { id: "gemini-1.5-pro",             label: "Gemini 1.5 Pro",     provider: "google",    costPer1k: 0.00525, speed: "medium", capability: "standard" },
   // OpenAI
   { id: "gpt-4o-mini",                label: "GPT-4o Mini",        provider: "openai",    costPer1k: 0.0006,  speed: "fast",   capability: "basic" },
   { id: "gpt-4o",                     label: "GPT-4o",             provider: "openai",    costPer1k: 0.010,   speed: "medium", capability: "standard" },
   { id: "o1-mini",                    label: "OpenAI o1 Mini",     provider: "openai",    costPer1k: 0.0110,  speed: "slow",   capability: "advanced" },
-  // Google
-  { id: "gemini-1.5-flash",           label: "Gemini 1.5 Flash",   provider: "google",    costPer1k: 0.00035, speed: "fast",   capability: "basic" },
-  { id: "gemini-1.5-pro",             label: "Gemini 1.5 Pro",     provider: "google",    costPer1k: 0.00525, speed: "medium", capability: "standard" },
   // Disabled
   { id: "disabled",                   label: "Disabled",           provider: "disabled",  costPer1k: 0,       speed: "fast",   capability: "basic" },
 ];
@@ -50,8 +50,8 @@ const AI_MODULES: AIModule[] = [
     description: "Answers professional questions about CME rules, credit gaps, and renewal requirements.",
     icon: "💬",
     tier: "pro",
-    defaultModel: "claude-haiku-4-5-20251001",
-    recommendedModel: "claude-haiku-4-5-20251001",
+    defaultModel: "gemini-2.5-flash-lite",
+    recommendedModel: "gemini-2.5-flash-lite",
     callsPerMonth: 5000,
   },
   {
@@ -60,8 +60,8 @@ const AI_MODULES: AIModule[] = [
     description: "Deep compliance gap analysis — identifies missing credits by category and suggests activities.",
     icon: "📊",
     tier: "pro",
-    defaultModel: "claude-sonnet-4-6",
-    recommendedModel: "claude-sonnet-4-6",
+    defaultModel: "gemini-2.5-flash-lite",
+    recommendedModel: "gemini-2.5-flash-lite",
     callsPerMonth: 1500,
   },
   {
@@ -70,8 +70,8 @@ const AI_MODULES: AIModule[] = [
     description: "Extracts CME credit data from uploaded certificate images using vision AI.",
     icon: "🔍",
     tier: "pro",
-    defaultModel: "claude-sonnet-4-6",
-    recommendedModel: "claude-sonnet-4-6",
+    defaultModel: "gemini-2.5-flash-lite",
+    recommendedModel: "gemini-2.5-flash-lite",
     callsPerMonth: 800,
   },
   {
@@ -80,8 +80,8 @@ const AI_MODULES: AIModule[] = [
     description: "Automatically classifies CME activities into the correct QCHP/SCFHS categories.",
     icon: "🏷️",
     tier: "pro",
-    defaultModel: "claude-haiku-4-5-20251001",
-    recommendedModel: "claude-haiku-4-5-20251001",
+    defaultModel: "gemini-2.5-flash-lite",
+    recommendedModel: "gemini-2.5-flash-lite",
     callsPerMonth: 3000,
   },
   {
@@ -90,8 +90,8 @@ const AI_MODULES: AIModule[] = [
     description: "Suggests specific CME activities to close gaps, personalised to profession and authority.",
     icon: "✨",
     tier: "pro",
-    defaultModel: "claude-sonnet-4-6",
-    recommendedModel: "claude-sonnet-4-6",
+    defaultModel: "gemini-2.5-flash-lite",
+    recommendedModel: "gemini-2.5-flash-lite",
     callsPerMonth: 1200,
   },
   {
@@ -100,18 +100,18 @@ const AI_MODULES: AIModule[] = [
     description: "AI-assisted configuration of new country compliance rules via admin panel.",
     icon: "🌍",
     tier: "admin",
-    defaultModel: "claude-opus-4-8",
-    recommendedModel: "claude-opus-4-8",
+    defaultModel: "gemini-2.5-flash-lite",
+    recommendedModel: "gemini-2.5-flash-lite",
     callsPerMonth: 50,
   },
   {
     key: "ai_voice_assistant",
     label: "Voice Assistant (Hayya AI)",
-    description: "Floating voice orb — speech-to-text input, Claude reasoning, text-to-speech output.",
+    description: "Floating voice orb — speech-to-text input, Gemini reasoning, text-to-speech output.",
     icon: "🎙️",
     tier: "pro",
-    defaultModel: "claude-haiku-4-5-20251001",
-    recommendedModel: "claude-haiku-4-5-20251001",
+    defaultModel: "gemini-2.5-flash-lite",
+    recommendedModel: "gemini-2.5-flash-lite",
     callsPerMonth: 2000,
   },
   {
@@ -120,8 +120,8 @@ const AI_MODULES: AIModule[] = [
     description: "Workforce compliance heatmaps, risk scoring, and PDF/voice reports for employers.",
     icon: "🏥",
     tier: "employer",
-    defaultModel: "claude-sonnet-4-6",
-    recommendedModel: "claude-sonnet-4-6",
+    defaultModel: "gemini-2.5-flash-lite",
+    recommendedModel: "gemini-2.5-flash-lite",
     callsPerMonth: 400,
   },
   {
@@ -130,22 +130,20 @@ const AI_MODULES: AIModule[] = [
     description: "Demand prediction, gap analysis, and revenue opportunity reports for training providers.",
     icon: "🎓",
     tier: "employer",
-    defaultModel: "claude-sonnet-4-6",
-    recommendedModel: "claude-sonnet-4-6",
+    defaultModel: "gemini-2.5-flash-lite",
+    recommendedModel: "gemini-2.5-flash-lite",
     callsPerMonth: 200,
   },
 ];
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 const PROVIDER_COLORS: Record<Provider, string> = {
-  anthropic: "bg-[#e8f0fe] text-[#1a56a0]",
   openai:    "bg-[#f0fdf4] text-[#16a34a]",
   google:    "bg-[#fef9c3] text-[#d97706]",
   disabled:  "bg-[#f1f5f9] text-[#64748b]",
 };
 
 const PROVIDER_LABELS: Record<Provider, string> = {
-  anthropic: "Anthropic",
   openai:    "OpenAI",
   google:    "Google",
   disabled:  "Off",
