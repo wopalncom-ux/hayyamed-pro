@@ -27,7 +27,7 @@ in the Mandatory Evaluation Framework before execution.
 - React 19, TypeScript strict mode
 - Supabase (Postgres + RLS + Auth + Storage + Edge Functions)
 - Tailwind CSS v4
-- Paddle (payments), Postmark (email), Anthropic Claude (AI), Web Push (notifications)
+- Paddle (payments), Postmark (email), Google Gemini via Vertex AI (AI), Web Push (notifications)
 - GCP Cloud Run â€” me-central1 (Doha, Qatar) â€” hayyamed.pro
 
 ---
@@ -108,7 +108,7 @@ in the Mandatory Evaluation Framework before execution.
 - Every AI API response validated against a Zod schema before use
 - All prompts versioned in `lib/ai/prompts/` â€” never inline in route handlers
 - Fallback to rule-based response if AI unavailable â€” compliance cannot depend on AI uptime
-- Free tier: no AI features. Pro: Haiku chatbot + Sonnet gap analysis. Enterprise: Opus.
+- Free tier: no AI features. Pro/Employer/Enterprise: all AI features run on Gemini Flash Lite (single-provider policy — see EXECUTIVE_MANDATE.md Domain 5).
 - Every AI call logged: model, token count, latency, professional_id, action
 
 ---
@@ -184,6 +184,6 @@ Immediate next steps:
 
 1. Connect Supabase (URL + keys)
 2. Run 9 migrations
-3. Set all env vars (Anthropic, Paddle, Postmark, VAPID)
+3. Set all env vars (GCP/Vertex, Paddle, Postmark, VAPID)
 4. Deploy to GCP Cloud Run
 5. Complete Tier 0 and Tier 1 of PRE_LAUNCH_CHECKLIST.md

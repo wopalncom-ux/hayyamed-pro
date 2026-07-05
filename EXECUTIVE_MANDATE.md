@@ -303,20 +303,22 @@ Provide for every significant feature:
 - AI Evaluation Framework (automated testing of compliance chatbot accuracy)
 - Vector Database (pgvector via Supabase, or Pinecone for scale)
 - Hallucination Prevention for Healthcare (confidence scoring, citations, "I don't know" responses)
-- Arabic NLP & Claude Arabic Optimization
+- Arabic NLP & Gemini Arabic Optimization
 - AI FinOps & Token Budget Monitoring
 - Structured Output Validation (Zod schema on every AI response)
-- GDPR-Compliant AI Processing (DPA with Anthropic for EU data)
+- GDPR-Compliant AI Processing (DPA with Google Cloud for EU data)
 - AI Audit Logging (model, tokens, latency, professional_id — every call)
 
-**Model Selection:**
+**Model Selection (revised 2026-07-05 — permanent policy, not a temporary override):**
 | Task | Model | Rationale |
 |---|---|---|
-| Compliance chatbot (simple) | Claude Haiku 4.5 | Fast, cheap, sufficient |
-| Compliance gap analysis | Claude Sonnet 4.6 | Reasoning quality |
-| Document OCR + Vision | Claude Sonnet 4.6 | Multimodal |
-| Country rules configuration | Claude Opus 4.8 | Complex regulatory reasoning |
-| Workforce intelligence | Claude Opus 4.8 | Long-context, high accuracy |
+| Compliance chatbot | Gemini Flash Lite | Fast, cheap, sufficient — streaming + agentic tool-use via Vertex function calling |
+| Compliance gap analysis | Gemini Flash Lite | Reasoning quality sufficient at a fraction of Claude's cost |
+| Document OCR + Vision | Gemini Flash Lite | Multimodal |
+| Country rules configuration | Gemini Flash Lite | Reasoning quality sufficient; revisit if regulatory complexity outgrows it |
+| Workforce intelligence | Gemini Flash Lite | Long-context sufficient at current data volumes |
+
+Every AI task on the platform runs on Google Gemini via Vertex AI (single model, single provider, single GCP bill — no separate Anthropic account). Claude/Anthropic was fully removed from the codebase on 2026-07-04. If a specific task's output quality is found lacking, escalate by upgrading the Gemini tier (e.g. Gemini Pro) before reintroducing a second AI provider — a single-provider AI stack is the deliberate cost and operational-simplicity policy going forward.
 
 **Rules:**
 - No PII in prompts — use professional_id, not name or license number
