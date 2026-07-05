@@ -30,6 +30,26 @@ export async function deleteAccount() {
     };
   }
 
+  // Purge certificate files from private storage bucket (PDPL right to erasure).
+  // Must happen BEFORE auth user deletion — ON DELETE CASCADE removes the
+  // certificate_storage_records rows, so paths would be unqueryable after deletion.
+  const { data: certFiles } = await admin
+    .from("certificate_storage_records")
+    .select("storage_path")
+    .eq("professional_id", user.id)
+    .eq("is_deleted", false);
+
+  let certificateFilesDeleted = 0;
+  if (certFiles && certFiles.length > 0) {
+    const CERT_BUCKET = "certificates";
+    const STORAGE_BATCH = 100;
+    const allPaths = certFiles.map((f) => f.storage_path as string);
+    for (let i = 0; i < allPaths.length; i += STORAGE_BATCH) {
+      await admin.storage.from(CERT_BUCKET).remove(allPaths.slice(i, i + STORAGE_BATCH));
+    }
+    certificateFilesDeleted = allPaths.length;
+  }
+
   // Audit log BEFORE deletion — actor_auth_id will become NULL after the cascade,
   // but the log entry itself is retained (append-only, 7-year retention).
   await logAudit({
@@ -42,6 +62,7 @@ export async function deleteAccount() {
       deleted_at: new Date().toISOString(),
       initiated_by: "user",
       reason: "user_requested_erasure",
+      certificate_files_deleted: certificateFilesDeleted,
     },
   });
 
