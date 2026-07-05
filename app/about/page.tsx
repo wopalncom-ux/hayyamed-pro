@@ -1,20 +1,33 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import FoundersSection from "@/components/about/FoundersSection";
+import { getPageSeo } from "@/lib/cms";
 
-export const metadata: Metadata = {
-  title: "About Hayya Med Pro — Healthcare CME Compliance Platform for the GCC",
-  description:
-    "Hayya Med Pro is a healthcare SaaS platform built in Qatar for GCC healthcare professionals — CME tracking, CPD compliance, licensing readiness, and employer staff management across QCHP, SCFHS, DHA, DOH, NHRA, OMSB, and more.",
-  alternates: { canonical: "https://hayyamed.pro/about" },
-  openGraph: {
-    title: "About Hayya Med Pro — Healthcare CME Platform for the GCC",
-    description: "Built in Qatar for GCC healthcare professionals. CME tracking, CPD compliance, licensing readiness, and employer staff management across 7 GCC countries.",
-    url: "https://hayyamed.pro/about",
-    type: "website",
-    images: [{ url: `https://hayyamed.pro/api/og?t=About+Hayya+Med+Pro&s=Built+in+Qatar+%C2%B7+7+GCC+countries+%C2%B7+CME+%26+CPD+compliance+platform&a=%F0%9F%87%B6%F0%9F%87%A6+Hayya+Med&k=About`, width: 1200, height: 630 }],
-  },
-};
+const DEFAULT_TITLE = "About Hayya Med Pro — Healthcare CME Compliance Platform for the GCC";
+const DEFAULT_DESCRIPTION =
+  "Hayya Med Pro is a healthcare SaaS platform built in Qatar for GCC healthcare professionals — CME tracking, CPD compliance, licensing readiness, and employer staff management across QCHP, SCFHS, DHA, DOH, NHRA, OMSB, and more.";
+const DEFAULT_OG_IMAGE = `https://hayyamed.pro/api/og?t=About+Hayya+Med+Pro&s=Built+in+Qatar+%C2%B7+7+GCC+countries+%C2%B7+CME+%26+CPD+compliance+platform&a=%F0%9F%87%B6%F0%9F%87%A6+Hayya+Med&k=About`;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getPageSeo("about");
+  const title = seo?.meta_title || DEFAULT_TITLE;
+  const description = seo?.meta_description || DEFAULT_DESCRIPTION;
+  const noIndex = seo?.robots_directive?.includes("noindex") ?? false;
+
+  return {
+    title,
+    description,
+    alternates: { canonical: seo?.canonical_url || "https://hayyamed.pro/about" },
+    openGraph: {
+      title: seo?.og_title || title,
+      description: seo?.og_description || description,
+      url: "https://hayyamed.pro/about",
+      type: "website",
+      images: [{ url: seo?.og_image_url || DEFAULT_OG_IMAGE, width: 1200, height: 630 }],
+    },
+    robots: { index: !noIndex, follow: true },
+  };
+}
 
 const stats = [
   { n: "7", label: "GCC countries" },

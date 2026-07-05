@@ -1,18 +1,31 @@
 ﻿import type { Metadata } from "next";
 import ContactForm from "./ContactForm";
+import { getPageSeo } from "@/lib/cms";
 
-export const metadata: Metadata = {
-  title: "Contact Support — Hayya Med Pro",
-  description: "Get help with CME tracking, licensing, or your Hayya Med Pro account. We respond within 24 hours for Pro users.",
-  alternates: { canonical: "https://hayyamed.pro/contact" },
-  openGraph: {
-    title: "Contact Support — Hayya Med Pro",
-    description: "Get help with CME tracking, licensing, or your Hayya Med Pro account.",
-    url: "https://hayyamed.pro/contact",
-    type: "website",
-    images: [{ url: "https://hayyamed.pro/api/og?t=Contact+Support&s=We+respond+within+24+hours&a=Support&k=Contact", width: 1200, height: 630 }],
-  },
-};
+const DEFAULT_TITLE = "Contact Support — Hayya Med Pro";
+const DEFAULT_DESCRIPTION = "Get help with CME tracking, licensing, or your Hayya Med Pro account. We respond within 24 hours for Pro users.";
+const DEFAULT_OG_IMAGE = "https://hayyamed.pro/api/og?t=Contact+Support&s=We+respond+within+24+hours&a=Support&k=Contact";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getPageSeo("contact");
+  const title = seo?.meta_title || DEFAULT_TITLE;
+  const description = seo?.meta_description || DEFAULT_DESCRIPTION;
+  const noIndex = seo?.robots_directive?.includes("noindex") ?? false;
+
+  return {
+    title,
+    description,
+    alternates: { canonical: seo?.canonical_url || "https://hayyamed.pro/contact" },
+    openGraph: {
+      title: seo?.og_title || title,
+      description: seo?.og_description || description,
+      url: "https://hayyamed.pro/contact",
+      type: "website",
+      images: [{ url: seo?.og_image_url || DEFAULT_OG_IMAGE, width: 1200, height: 630 }],
+    },
+    robots: { index: !noIndex, follow: true },
+  };
+}
 
 export default function ContactPage() {
   return (

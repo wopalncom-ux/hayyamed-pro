@@ -1,10 +1,29 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { getPageSeo } from "@/lib/cms";
 
-export const metadata: Metadata = {
-  title: "Help & FAQ — Hayya Med Pro",
-  description: "Answers to common questions about CME tracking, licensing, QCHP requirements, and your Hayya Med Pro account.",
-};
+const DEFAULT_TITLE = "Help & FAQ — Hayya Med Pro";
+const DEFAULT_DESCRIPTION = "Answers to common questions about CME tracking, licensing, QCHP requirements, and your Hayya Med Pro account.";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getPageSeo("help");
+  const title = seo?.meta_title || DEFAULT_TITLE;
+  const description = seo?.meta_description || DEFAULT_DESCRIPTION;
+  const noIndex = seo?.robots_directive?.includes("noindex") ?? false;
+
+  return {
+    title,
+    description,
+    alternates: { canonical: seo?.canonical_url || "https://hayyamed.pro/help" },
+    openGraph: {
+      title: seo?.og_title || title,
+      description: seo?.og_description || description,
+      url: "https://hayyamed.pro/help",
+      type: "website",
+    },
+    robots: { index: !noIndex, follow: true },
+  };
+}
 
 const FAQ: { q: string; a: string }[] = [
   {

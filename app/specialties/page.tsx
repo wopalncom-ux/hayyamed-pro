@@ -2,30 +2,43 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 import { MedicalWebPageJsonLd } from "@/components/seo/MedicalWebPageJsonLd";
+import { getPageSeo } from "@/lib/cms";
 
 const APP_URL = "https://hayyamed.pro";
+const DEFAULT_TITLE = "CME Requirements by Medical Specialty — All GCC Specialties | Hayya Med Pro";
+const DEFAULT_DESCRIPTION =
+  "CME and CPD requirements for every medical specialty in the GCC — Cardiology, Surgery, Neurology, Pediatrics, Nursing, Pharmacy, and 40+ more. Track credits across QCHP, SCFHS, DHA, DOH, NHRA, and OMSB.";
+const DEFAULT_KEYWORDS = [
+  "CME requirements by specialty",
+  "medical specialty CME GCC",
+  "CPD requirements specialties Qatar",
+  "QCHP CME specialty requirements",
+  "SCFHS specialty CME",
+  "GCC medical specialty CME tracker",
+];
+const DEFAULT_OG_IMAGE = `${APP_URL}/api/og?t=CME+by+Specialty&s=40%2B+specialties+%C2%B7+QCHP+%C2%B7+SCFHS+%C2%B7+DHA+%C2%B7+all+GCC+authorities&k=Specialty+Directory`;
 
-export const metadata: Metadata = {
-  title: "CME Requirements by Medical Specialty — All GCC Specialties | Hayya Med Pro",
-  description:
-    "CME and CPD requirements for every medical specialty in the GCC — Cardiology, Surgery, Neurology, Pediatrics, Nursing, Pharmacy, and 40+ more. Track credits across QCHP, SCFHS, DHA, DOH, NHRA, and OMSB.",
-  keywords: [
-    "CME requirements by specialty",
-    "medical specialty CME GCC",
-    "CPD requirements specialties Qatar",
-    "QCHP CME specialty requirements",
-    "SCFHS specialty CME",
-    "GCC medical specialty CME tracker",
-  ],
-  alternates: { canonical: `${APP_URL}/specialties` },
-  openGraph: {
-    title: "CME Requirements by Medical Specialty — GCC",
-    description: "40+ medical specialties. CME and CPD requirements across 7 GCC licensing authorities.",
-    url: `${APP_URL}/specialties`,
-    type: "website",
-    images: [{ url: `${APP_URL}/api/og?t=CME+by+Specialty&s=40%2B+specialties+%C2%B7+QCHP+%C2%B7+SCFHS+%C2%B7+DHA+%C2%B7+all+GCC+authorities&k=Specialty+Directory`, width: 1200, height: 630 }],
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getPageSeo("specialties");
+  const title = seo?.meta_title || DEFAULT_TITLE;
+  const description = seo?.meta_description || DEFAULT_DESCRIPTION;
+  const noIndex = seo?.robots_directive?.includes("noindex") ?? false;
+
+  return {
+    title,
+    description,
+    keywords: seo?.keywords?.length ? seo.keywords : DEFAULT_KEYWORDS,
+    alternates: { canonical: seo?.canonical_url || `${APP_URL}/specialties` },
+    openGraph: {
+      title: seo?.og_title || title,
+      description: seo?.og_description || description,
+      url: `${APP_URL}/specialties`,
+      type: "website",
+      images: [{ url: seo?.og_image_url || DEFAULT_OG_IMAGE, width: 1200, height: 630 }],
+    },
+    robots: { index: !noIndex, follow: true },
+  };
+}
 
 type Specialty = { label: string; href: string; icon: string };
 

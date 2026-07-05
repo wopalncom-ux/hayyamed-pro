@@ -3,30 +3,40 @@ import { getUserPlan } from "@/lib/subscription";
 import PricingClient from "@/components/pricing/PricingClient";
 import type { Plan } from "@/lib/planUtils";
 import { isQPayConfigured } from "@/lib/qpay";
+import { getPageSeo } from "@/lib/cms";
+import type { Metadata } from "next";
 
-export const metadata = {
-  title: "Pricing — Hayya Med Pro",
-  description: "Simple pricing for healthcare professionals and employers. Start free. Upgrade when you need PDF exports, AI compliance tools, and team management.",
-  openGraph: {
-    title: "Pricing — Hayya Med Pro",
-    description: "Free for individual professionals. Pro from $6/month. Employer plans from $50/month. 14-day free trial included.",
-    url: "https://hayyamed.pro/pricing",
-    type: "website",
-    images: [
-      {
-        url: "https://hayyamed.pro/api/og?t=Pricing+%E2%80%94+Hayya+Med+Pro&s=Free+forever+%C2%B7+Pro+from+%246%2Fmo+%C2%B7+Employer+from+%2450%2Fmo&a=%F0%9F%92%B3+Plans&k=Pricing",
-        width: 1200,
-        height: 630,
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image" as const,
-    title: "Pricing — Hayya Med Pro",
-    description: "Free for individual professionals. Pro from $6/month. 14-day trial — no credit card required.",
-  },
-  alternates: { canonical: "https://hayyamed.pro/pricing" },
-};
+const DEFAULT_TITLE = "Pricing — Hayya Med Pro";
+const DEFAULT_DESCRIPTION = "Simple pricing for healthcare professionals and employers. Start free. Upgrade when you need PDF exports, AI compliance tools, and team management.";
+const DEFAULT_OG_IMAGE = "https://hayyamed.pro/api/og?t=Pricing+%E2%80%94+Hayya+Med+Pro&s=Free+forever+%C2%B7+Pro+from+%246%2Fmo+%C2%B7+Employer+from+%2450%2Fmo&a=%F0%9F%92%B3+Plans&k=Pricing";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getPageSeo("pricing");
+  const title = seo?.meta_title || DEFAULT_TITLE;
+  const description = seo?.meta_description || DEFAULT_DESCRIPTION;
+  const ogTitle = seo?.og_title || title;
+  const ogDescription = seo?.og_description || description;
+  const noIndex = seo?.robots_directive?.includes("noindex") ?? false;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title: ogTitle,
+      description: ogDescription,
+      url: "https://hayyamed.pro/pricing",
+      type: "website",
+      images: [{ url: seo?.og_image_url || DEFAULT_OG_IMAGE, width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: ogTitle,
+      description: ogDescription,
+    },
+    alternates: { canonical: seo?.canonical_url || "https://hayyamed.pro/pricing" },
+    robots: { index: !noIndex, follow: true },
+  };
+}
 
 const pricingFaqLd = {
   "@context": "https://schema.org",
