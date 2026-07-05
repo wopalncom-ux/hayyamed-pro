@@ -11,7 +11,7 @@ import {
   Bot, Zap, Flag, Bell, Webhook, Activity, Heart,
   Gauge, User, Database, Settings, Download, WrenchIcon,
   ChevronDown, ChevronRight, Menu, X, ExternalLink,
-  AlertCircle,
+  AlertCircle, Brain, Plug, AlertTriangle,
 } from "lucide-react";
 
 interface NavItem {
@@ -48,6 +48,7 @@ export default function AdminSidebar({
     "AI & Platform": false,
     "Monitoring": false,
     "System": false,
+    "Owner Controls": false,
   });
 
   const sections: NavSection[] = [
@@ -105,6 +106,7 @@ export default function AdminSidebar({
       items: [
         { label: "AI Modules",       href: "/admin/ai-modules",          icon: <Bot size={16} /> },
         { label: "AI Costs",         href: "/admin/ai-costs",            icon: <Zap size={16} /> },
+        { label: "AI Training",      href: "/admin/ai-training",         icon: <Brain size={16} /> },
         { label: "Feature Flags",    href: "/admin/feature-flags",       icon: <Flag size={16} /> },
         { label: "Push Compose",     href: "/admin/push-compose",        icon: <Bell size={16} /> },
         { label: "Notif Queue",      href: "/admin/notification-queue",  icon: <Bell size={16} /> },
@@ -130,6 +132,13 @@ export default function AdminSidebar({
         { label: "Platform Settings", href: "/admin/settings",      icon: <Settings size={16} /> },
         { label: "DB Explorer",       href: "/admin/db",             icon: <Database size={16} /> },
         { label: "User Actions",      href: "/admin/user-actions",   icon: <WrenchIcon size={16} /> },
+      ],
+    },
+    {
+      title: "Owner Controls",
+      items: [
+        { label: "Integrations",       href: "/admin/integrations",  icon: <Plug size={16} /> },
+        { label: "Emergency Controls", href: "/admin/emergency",     icon: <AlertTriangle size={16} /> },
       ],
     },
   ];

@@ -86,6 +86,21 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    // /owner/* was merged into /admin/* on 2026-07-05 — keep old bookmarks working.
+    return [
+      { source: "/owner", destination: "/admin", permanent: true },
+      { source: "/owner/command-center", destination: "/admin", permanent: true },
+      { source: "/owner/ai", destination: "/admin/ai-training", permanent: true },
+      { source: "/owner/audit", destination: "/admin/audit-logs", permanent: true },
+      { source: "/owner/compliance", destination: "/admin/compliance", permanent: true },
+      { source: "/owner/emergency", destination: "/admin/emergency", permanent: true },
+      { source: "/owner/integrations", destination: "/admin/integrations", permanent: true },
+      { source: "/owner/monitoring", destination: "/admin/monitoring", permanent: true },
+      { source: "/owner/revenue", destination: "/admin/revenue", permanent: true },
+      { source: "/owner/users", destination: "/admin/professionals", permanent: true },
+    ];
+  },
 };
 
 export default withNextIntl(withSentryConfig(nextConfig, {

@@ -3,9 +3,9 @@ import { getRequestUser } from "@/lib/auth/getRequestUser";
 import { createAdminClient } from "@/lib/supabase/server";
 
 /**
- * API-route equivalent of requireOwnerAuth() (which redirects, so it can't be
- * used outside Server Components). Returns the user id if they hold an owner
- * role, or null otherwise.
+ * API-route auth check for /api/owner/* routes (server components use
+ * requireAdminUser() from lib/adminAuth.ts instead). Returns the user id if
+ * they hold founder/master_admin/super_admin, or null otherwise.
  */
 export async function requireOwnerApiAuth(): Promise<{ userId: string } | null> {
   const user = await getRequestUser(await headers());
