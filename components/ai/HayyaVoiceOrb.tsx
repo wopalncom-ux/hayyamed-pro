@@ -73,7 +73,9 @@ const SPEECH_ERROR_MESSAGES: Record<string, string> = {
 };
 
 // ── Speech synthesis helper ───────────────────────────────────────────────────
-function speak(text: string, onEnd: () => void): void {
+const VOICE_PREF_KEY = "hayya_voice_uri";
+
+function speak(text: string, onEnd: () => void, voiceURI?: string | null): void {
   if (!("speechSynthesis" in window)) { onEnd(); return; }
   window.speechSynthesis.cancel();
   const utter = new SpeechSynthesisUtterance(text);
@@ -81,11 +83,11 @@ function speak(text: string, onEnd: () => void): void {
   utter.rate = 1.0;
   utter.pitch = 1.0;
 
-  // Prefer a higher-quality voice if available
   const voices = window.speechSynthesis.getVoices();
-  const preferred = voices.find((v) => v.lang.startsWith("en") && v.name.includes("Google")) ??
+  const chosen = (voiceURI ? voices.find((v) => v.voiceURI === voiceURI) : null) ??
+    voices.find((v) => v.lang.startsWith("en") && v.name.includes("Google")) ??
     voices.find((v) => v.lang.startsWith("en"));
-  if (preferred) utter.voice = preferred;
+  if (chosen) utter.voice = chosen;
 
   utter.onend = onEnd;
   utter.onerror = onEnd;
@@ -145,6 +147,8 @@ export default function HayyaVoiceOrb({ plan }: HayyaVoiceOrbProps) {
   const [transcript, setTranscript] = useState("");
   const [supported, setSupported] = useState(true);
   const [speechError, setSpeechError] = useState<string | null>(null);
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const [voiceURI, setVoiceURI] = useState<string | null>(null);
   const recRef = useRef<SpeechRecognitionInstance | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const isPro = plan === "pro" || plan === "employer" || plan === "master_admin" || plan === "super_admin";
@@ -153,6 +157,25 @@ export default function HayyaVoiceOrb({ plan }: HayyaVoiceOrbProps) {
     const hasSpeech = "SpeechRecognition" in window || "webkitSpeechRecognition" in window;
     setSupported(hasSpeech);
   }, []);
+
+  // Load available system voices for the picker — some browsers populate the
+  // voice list asynchronously, so listen for 'voiceschanged' too.
+  useEffect(() => {
+    if (!("speechSynthesis" in window)) return;
+    const loadVoices = () => {
+      const list = window.speechSynthesis.getVoices().filter((v) => v.lang.startsWith("en"));
+      if (list.length) setVoices(list);
+    };
+    loadVoices();
+    window.speechSynthesis.addEventListener("voiceschanged", loadVoices);
+    setVoiceURI(localStorage.getItem(VOICE_PREF_KEY));
+    return () => window.speechSynthesis.removeEventListener("voiceschanged", loadVoices);
+  }, []);
+
+  function handleVoiceChange(uri: string) {
+    setVoiceURI(uri);
+    localStorage.setItem(VOICE_PREF_KEY, uri);
+  }
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -239,7 +262,7 @@ export default function HayyaVoiceOrb({ plan }: HayyaVoiceOrbProps) {
         const errMsg = data.error ?? "Something went wrong. Please try again.";
         setMessages((prev) => [...prev, { role: "ai", text: errMsg }]);
         setOrbState("error");
-        speak(errMsg, () => setOrbState("idle"));
+        speak(errMsg, () => setOrbState("idle"), voiceURI);
         return;
       }
 
@@ -247,14 +270,14 @@ export default function HayyaVoiceOrb({ plan }: HayyaVoiceOrbProps) {
       const reply = data.text ?? "I couldn't generate a response.";
       setMessages((prev) => [...prev, { role: "ai", text: reply }]);
       setOrbState("speaking");
-      speak(reply, () => setOrbState("idle"));
+      speak(reply, () => setOrbState("idle"), voiceURI);
     } catch {
       const errMsg = "Connection error. Please check your connection and try again.";
       setMessages((prev) => [...prev, { role: "ai", text: errMsg }]);
       setOrbState("error");
       setTimeout(() => setOrbState("idle"), 2000);
     }
-  }, []);
+  }, [voiceURI]);
 
   const handleOrbClick = useCallback(() => {
     if (orbState === "listening") { stopListening(); return; }
@@ -303,6 +326,24 @@ export default function HayyaVoiceOrb({ plan }: HayyaVoiceOrbProps) {
                   </svg>
                 </button>
               </div>
+
+              {/* Voice picker */}
+              {isPro && voices.length > 0 && (
+                <div className="px-4 py-2 border-b border-white/8 flex items-center gap-2">
+                  <label htmlFor="hayya-voice-select" className="text-[10px] text-white/40 flex-shrink-0">Voice</label>
+                  <select
+                    id="hayya-voice-select"
+                    value={voiceURI ?? ""}
+                    onChange={(e) => handleVoiceChange(e.target.value)}
+                    className="flex-1 min-w-0 text-[11px] bg-white/5 border border-white/10 text-white/70 rounded-lg px-2 py-1 focus:outline-none focus:ring-1 focus:ring-[#1a56a0]"
+                  >
+                    <option value="" className="bg-[#0a1628]">Default</option>
+                    {voices.map((v) => (
+                      <option key={v.voiceURI} value={v.voiceURI} className="bg-[#0a1628]">{v.name}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
 
               {/* Message history */}
               <div

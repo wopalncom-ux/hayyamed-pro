@@ -95,22 +95,31 @@ export async function POST(req: NextRequest) {
     ? Math.ceil((new Date(wallet.cycle_end_date).getTime() - Date.now()) / 86400000)
     : null;
 
-  // RAG: retrieve relevant compliance knowledge for the latest user message
+  // RAG: retrieve relevant compliance knowledge for the latest user message,
+  // plus owner-authored always-on rules (trained via /owner/ai — not retrieved
+  // by similarity, every active rule applies to every conversation).
   const latestUserMessage = [...messages].reverse().find((m) => m.role === "user")?.content ?? "";
-  const ragChunks = await retrieveRelevantChunks(latestUserMessage, {
-    countryCode: countryCode || undefined,
-    topK: 3,
-    similarityThreshold: 0.65,
-  }).catch(() => []);
+  const [ragChunks, rulesRes] = await Promise.all([
+    retrieveRelevantChunks(latestUserMessage, {
+      countryCode: countryCode || undefined,
+      topK: 3,
+      similarityThreshold: 0.65,
+    }).catch(() => []),
+    admin.from("assistant_rules").select("rule_text").eq("active", true),
+  ]);
 
   const ragContext = formatChunksForPrompt(ragChunks);
+  const activeRules = rulesRes.data ?? [];
+  const rulesContext = activeRules.length
+    ? `MANDATORY RULES (always follow these, no exceptions):\n${activeRules.map((r) => `- ${r.rule_text}`).join("\n")}`
+    : "";
 
   const basePrompt = buildComplianceChatSystem(
     wallet
       ? { country: wallet.country, profession: wallet.profession, specialty: wallet.specialty ?? null, cycle_start_date: wallet.cycle_start_date, cycle_end_date: wallet.cycle_end_date, compliance_status: wallet.compliance_status, required_credits: wallet.required_credits, completed_credits: wallet.completed_credits, mainRule, categoryBreakdown, daysLeft, countryCode, recentActivities: activities }
       : null
   );
-  const systemPrompt = ragContext ? `${basePrompt}\n\n${ragContext}` : basePrompt;
+  const systemPrompt = [basePrompt, rulesContext, ragContext].filter(Boolean).join("\n\n");
 
   const startTime = Date.now();
   const encoder = new TextEncoder();

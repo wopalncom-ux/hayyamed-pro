@@ -1,5 +1,6 @@
 import { createAdminClient } from "@/lib/supabase/server";
 import { requireOwnerAuth } from "@/lib/ownerAuth";
+import AssistantTrainingPanel from "@/components/owner/AssistantTrainingPanel";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -197,6 +198,8 @@ export default async function OwnerAiPage() {
           </table>
         </div>
       </div>
+
+      <AssistantTrainingPanel />
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {[
