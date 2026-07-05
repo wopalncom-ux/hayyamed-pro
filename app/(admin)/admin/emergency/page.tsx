@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
-import type { Metadata } from "next";
+import { useEffect, useState } from "react";
 
 // This page is intentionally a client component — it manages live toggles
 
@@ -174,7 +173,7 @@ export default function EmergencyControlsPage() {
           </div>
           <div>
             <h1 className="text-2xl font-bold text-[#0f172a]">Emergency Control Center</h1>
-            <p className="text-sm text-[#64748b]">Owner-only. All changes are audited and irreversible until toggled back.</p>
+            <p className="text-sm text-[#64748b]">Founder/owner-only. All changes are audited and irreversible until toggled back.</p>
           </div>
         </div>
         {controls?.updated_at && (

@@ -1,15 +1,11 @@
 import { createAdminClient } from "@/lib/supabase/server";
-import { requireOwnerAuth } from "@/lib/ownerAuth";
-import type { Metadata } from "next";
+import { requireAdminUser } from "@/lib/adminAuth";
 
-export const metadata: Metadata = {
-  title: "Integration Center",
-  robots: { index: false, follow: false },
-};
+export const metadata = { title: "Integrations — Hayya Med Pro Admin" };
 export const dynamic = "force-dynamic";
 
-export default async function OwnerIntegrationsPage() {
-  await requireOwnerAuth();
+export default async function IntegrationsPage() {
+  await requireAdminUser();
   const admin = createAdminClient();
 
   const [webhooksRes, apiKeysRes, featureFlagsRes] = await Promise.all([
