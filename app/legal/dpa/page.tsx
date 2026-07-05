@@ -174,7 +174,7 @@ export default function DpaPage() {
                   <td>United States</td>
                 </tr>
                 <tr>
-                  <td>Anthropic PBC</td>
+                  <td>Google LLC (Vertex AI)</td>
                   <td>AI compliance analysis (anonymised inputs only)</td>
                   <td>United States</td>
                 </tr>
@@ -243,7 +243,7 @@ export default function DpaPage() {
               <li>Appropriate contractual protections with sub-processors</li>
             </ul>
             <p>
-              AI processing via Anthropic uses anonymised inputs only — no personally identifiable information
+              AI processing via Google Gemini (Vertex AI) uses anonymised inputs only — no personally identifiable information
               (name, license number, email, date of birth) is included in prompts sent to external AI APIs.
             </p>
           </Section>

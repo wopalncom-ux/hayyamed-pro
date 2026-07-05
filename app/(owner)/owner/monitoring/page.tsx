@@ -37,7 +37,6 @@ export default async function OwnerMonitoringPage() {
     { name: "Supabase Auth",         status: !!process.env.NEXT_PUBLIC_SUPABASE_URL,   type: "auth" },
     { name: "Postmark (Email)",       status: !!process.env.POSTMARK_API_TOKEN,         type: "email" },
     { name: "Paddle (Payments)",      status: !!process.env.PADDLE_API_KEY,             type: "payment" },
-    { name: "Anthropic (Claude)",     status: !!process.env.ANTHROPIC_API_KEY,          type: "ai" },
     { name: "Vertex AI (Gemini)",     status: !!process.env.GOOGLE_CLOUD_PROJECT,       type: "ai" },
     { name: "VAPID (Push)",           status: !!process.env.VAPID_PRIVATE_KEY,          type: "push" },
     { name: "CRON_SECRET",            status: !!process.env.CRON_SECRET,                type: "jobs" },

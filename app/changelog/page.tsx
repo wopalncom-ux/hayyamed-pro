@@ -41,6 +41,16 @@ const TAG_STYLES: Record<Tag, string> = {
 
 const RELEASES: Release[] = [
   {
+    version: "1.6",
+    date: "July 2026",
+    title: "AI platform migrated to Gemini",
+    summary: "Every AI feature across the platform — compliance chat, gap analysis, OCR, recommendations, and employer/provider analyzers — now runs on Google Gemini.",
+    entries: [
+      { tag: "Improved", text: "All AI features (compliance chat, gap analysis, recommendations, OCR, voice assistant, employer/provider analyzers, government tools) now run on Gemini Flash Lite." },
+      { tag: "Fixed",    text: "AI cost tracking corrected — a stale pricing table was overestimating reported AI spend for several weeks; historical dashboards now reflect accurate figures going forward." },
+    ],
+  },
+  {
     version: "1.5",
     date: "June 2026",
     title: "Interactive demo, accessibility, and support SLA",

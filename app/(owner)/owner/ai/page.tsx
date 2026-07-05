@@ -58,7 +58,6 @@ export default async function OwnerAiPage() {
   const topActions = Object.entries(actionAgg).sort((a, b) => b[1].calls - a[1].calls).slice(0, 8);
 
   const vertexConfigured = !!process.env.GOOGLE_CLOUD_PROJECT;
-  const anthropicConfigured = !!process.env.ANTHROPIC_API_KEY;
 
   return (
     <div className="space-y-8">
@@ -68,11 +67,6 @@ export default async function OwnerAiPage() {
           <p className="text-sm text-[#64748b] mt-0.5">Token usage, costs, models, and failure rates</p>
         </div>
         <div className="flex gap-3">
-          <span className={`text-xs font-semibold px-3 py-1.5 rounded-full border ${
-            anthropicConfigured ? "bg-green-50 text-green-700 border-green-200" : "bg-red-50 text-red-700 border-red-200"
-          }`}>
-            Claude: {anthropicConfigured ? "✓ Active" : "✗ Not configured"}
-          </span>
           <span className={`text-xs font-semibold px-3 py-1.5 rounded-full border ${
             vertexConfigured ? "bg-green-50 text-green-700 border-green-200" : "bg-red-50 text-red-700 border-red-200"
           }`}>

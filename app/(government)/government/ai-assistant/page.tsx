@@ -29,7 +29,7 @@ export default async function GovernmentAIAssistantPage() {
           </p>
         </div>
         <span className="text-xs bg-[#e8f0fe] text-[#1a56a0] px-2.5 py-1 rounded-full font-medium border border-[#bfdbfe]">
-          Powered by Claude Sonnet 4.6
+          Powered by Gemini Flash Lite
         </span>
       </div>
       <GovernmentChatClient organizationId={member.organization_id} />

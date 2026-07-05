@@ -54,7 +54,7 @@ const SECURITY_SECTIONS = [
   {
     icon: "🤖",
     title: "AI privacy — no PII in prompts",
-    body: "Hayya Med Pro uses AI (Claude via Google Vertex AI) for compliance gap analysis and renewal prediction. All AI calls are anonymized — only a professional_id identifier (not name, license number, or contact details) is passed to the AI model. No personally identifiable information is included in any prompt sent to an external AI API. Every AI call is logged with model, token count, latency, and the anonymized professional_id — never with the professional's personal data.",
+    body: "Hayya Med Pro uses AI (Google Gemini via Vertex AI) for compliance gap analysis and renewal prediction. All AI calls are anonymized — only a professional_id identifier (not name, license number, or contact details) is passed to the AI model. No personally identifiable information is included in any prompt sent to an external AI API. Every AI call is logged with model, token count, latency, and the anonymized professional_id — never with the professional's personal data.",
     tags: ["No PII in AI prompts", "Anonymized professional_id only", "Google Vertex AI (GCP — in-region)", "Every AI call logged"],
   },
   {

@@ -94,7 +94,7 @@ export default function GovernmentChatClient({ organizationId }: { organizationI
         <div>
           <div className="flex items-center gap-2">
             <span className="text-sm font-semibold text-[#111]">AI Compliance Assistant</span>
-            <span className="text-[10px] bg-[#e8f0fe] text-[#1a56a0] px-1.5 py-0.5 rounded font-medium">Claude Sonnet</span>
+            <span className="text-[10px] bg-[#e8f0fe] text-[#1a56a0] px-1.5 py-0.5 rounded font-medium">Gemini Flash Lite</span>
           </div>
           <p className="text-xs text-[#64748b]">Ask anything about your workforce compliance data</p>
         </div>

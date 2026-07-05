@@ -196,7 +196,7 @@ export default async function BillingPage({
             {[
               { icon: "⬇", text: "PDF compliance report (QCHP-ready)" },
               { icon: "✦", text: "AI gap analysis & recommendations" },
-              { icon: "💬", text: "AI compliance chatbot (Claude)" },
+              { icon: "💬", text: "AI compliance chatbot (Gemini)" },
               { icon: "∞", text: "Unlimited CME activity tracking" },
               { icon: "🔔", text: "License expiry & deadline reminders" },
               { icon: "🔒", text: "Certificate storage with signed URLs" },

@@ -141,7 +141,7 @@ export default function EmergencyControlsPage() {
     {
       field: "disable_ai",
       label: "Disable AI Features",
-      desc: "All AI endpoints (Claude, Gemini) return fallback responses immediately.",
+      desc: "All AI endpoints (Gemini) return fallback responses immediately.",
       value: controls?.disable_ai ?? false,
       danger: false,
     },

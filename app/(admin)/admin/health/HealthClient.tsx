@@ -15,7 +15,7 @@ const SERVICES: ServiceInfo[] = [
   { id: "supabase",  label: "Supabase DB",        icon: "🗄",  description: "PostgreSQL — primary database", critical: true },
   { id: "storage",   label: "Supabase Storage",    icon: "📦",  description: "media-library bucket",          critical: true },
   { id: "postmark",  label: "Postmark Email",       icon: "✉️",  description: "Transactional email delivery",  critical: true },
-  { id: "anthropic", label: "Anthropic AI",         icon: "🤖",  description: "Claude API — all AI features",  critical: false },
+  { id: "vertex",    label: "Vertex AI (Gemini)",    icon: "🤖",  description: "Gemini — all AI features",      critical: false },
   { id: "paddle",    label: "Paddle Payments",      icon: "💳",  description: "Subscriptions & billing",       critical: true },
   { id: "vapid",     label: "Web Push / VAPID",     icon: "🔔",  description: "Push notification keys",        critical: false },
   { id: "app",       label: "App (Cloud Run)",      icon: "☁️",  description: "hayyamed.pro self-ping",        critical: true },

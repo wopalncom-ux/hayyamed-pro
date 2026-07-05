@@ -658,7 +658,7 @@ const TRUST_ITEMS = [
     ),
   },
   {
-    label: "Powered by Claude AI",
+    label: "Powered by Gemini AI",
     icon: (
       <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z" />
     ),
@@ -1076,7 +1076,7 @@ function AIDemo() {
               <div className="flex items-center gap-2 pb-3 border-b border-white/6">
                 <span className="w-2 h-2 rounded-full bg-[#4ade80]" style={{ animation: "pulse 2s infinite" }} aria-hidden="true" />
                 <span className="text-xs text-white/30 font-medium">{t("assistant_label")}</span>
-                <span className="ms-auto text-[10px] text-white/20 bg-white/5 px-2 py-0.5 rounded-full border border-white/5">Claude Haiku</span>
+                <span className="ms-auto text-[10px] text-white/20 bg-white/5 px-2 py-0.5 rounded-full border border-white/5">Gemini Flash Lite</span>
               </div>
 
               {chatMessages.map((msg, i) => (

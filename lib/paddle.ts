@@ -27,7 +27,7 @@ export const PRO_PLAN = {
   features: [
     "Unlimited CME activities",
     "PDF compliance reports (QCHP-ready)",
-    "AI compliance chatbot (Claude)",
+    "AI compliance chatbot (Gemini)",
     "AI gap analysis & recommendations",
     "Certificate storage & verification",
     "Email reminders & license alerts",

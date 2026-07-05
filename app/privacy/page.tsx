@@ -73,7 +73,7 @@ export default function PrivacyPage() {
             <p>We do not sell your personal data. We share data only in the following circumstances:</p>
             <ul className="list-disc ml-5 mt-2 space-y-1">
               <li><strong>Employers</strong> — only the compliance data fields you explicitly enable in your privacy settings, under a signed Data Processing Agreement</li>
-              <li><strong>Service providers</strong> — Supabase (database hosting), GCP Cloud Run (application hosting), Postmark (email delivery), Paddle (payments), and Anthropic (AI features) — all under data processing agreements</li>
+              <li><strong>Service providers</strong> — Supabase (database hosting), GCP Cloud Run (application hosting), Postmark (email delivery), Paddle (payments), and Google Vertex AI / Gemini (AI features) — all under data processing agreements</li>
               <li><strong>Legal requirements</strong> — if required by Qatari or applicable law, court order, or government authority</li>
             </ul>
           </section>
@@ -119,7 +119,7 @@ export default function PrivacyPage() {
 
           <section>
             <h2 className="text-lg font-semibold text-[#111] mb-3">10. AI Features</h2>
-            <p>Some platform features use AI powered by Anthropic Claude. When AI features are used, only anonymized identifiers (never your name or license number) are included in AI processing requests. All AI interactions are logged for audit purposes.</p>
+            <p>Some platform features use AI powered by Google Gemini (via Google Vertex AI). When AI features are used, only anonymized identifiers (never your name or license number) are included in AI processing requests. All AI interactions are logged for audit purposes.</p>
           </section>
 
           <section>

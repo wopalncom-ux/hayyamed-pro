@@ -1,6 +1,6 @@
 const BENEFITS = [
   "Track CME credits for QCHP, SCFHS, DHA, and all GCC authorities",
-  "AI-powered compliance gap analysis powered by Claude",
+  "AI-powered compliance gap analysis powered by Gemini",
   "Download your official PDF compliance report in seconds",
   "Connect to your employer and share only what you choose",
 ];

@@ -134,7 +134,7 @@ const PRO_FEATURES = [
   {
     title: "Hayya AI — Compliance Chat",
     desc: "Ask Hayya AI anything about your CME status. \"Am I on track for my QCHP renewal?\" \"Which categories do I still need?\" \"If I attend one more conference, will I be compliant?\" Answers grounded in your actual activity history and your authority's current rules.",
-    details: ["Powered by Claude AI (Anthropic)", "Grounded in your logged activities", "GCC compliance rules database", "Every answer includes source authority"],
+    details: ["Powered by Gemini AI (Google)", "Grounded in your logged activities", "GCC compliance rules database", "Every answer includes source authority"],
     icon: (
       <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
     ),

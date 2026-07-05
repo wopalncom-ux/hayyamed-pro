@@ -74,7 +74,7 @@ export default async function AiPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-[#111]">AI Compliance Assistant</h1>
-          <p className="text-sm text-[#64748b] mt-1">Powered by Claude — your personal CME compliance advisor</p>
+          <p className="text-sm text-[#64748b] mt-1">Powered by Gemini — your personal CME compliance advisor</p>
         </div>
         {!proUser && (
           <a href="/pricing?source=ai_page" className="flex items-center gap-1.5 text-xs font-semibold bg-[#1a56a0] text-white px-3 py-1.5 rounded-full hover:bg-[#1547a0] transition-colors">

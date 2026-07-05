@@ -147,7 +147,7 @@ export default function LearningPathwayClient({ isPro, wallet, gaps }: Props) {
           "✦ Generate 12-Month Plan"
         )}
       </button>
-      <p className="text-xs text-[#64748b] mt-3">Takes about 10–15 seconds · Powered by Claude Sonnet AI</p>
+      <p className="text-xs text-[#64748b] mt-3">Takes about 10–15 seconds · Powered by Gemini AI</p>
     </div>
   );
 }

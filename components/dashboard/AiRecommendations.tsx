@@ -100,7 +100,7 @@ export default function AiRecommendations({
         </div>
         {isPro && (
           <span className="ml-auto text-[10px] font-semibold text-[#d97706] bg-[#fef9c3] px-2 py-0.5 rounded-full">
-            Claude Sonnet
+            Gemini Flash Lite
           </span>
         )}
       </div>
@@ -204,7 +204,7 @@ export default function AiRecommendations({
             {loading ? (
               <>
                 <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                Analysing with Claude Sonnet…
+                Analysing with Gemini…
               </>
             ) : (
               <>✦ {hasGaps ? "Get AI Recommendations" : "Run Full Analysis"}</>

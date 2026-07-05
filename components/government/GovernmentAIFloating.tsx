@@ -114,7 +114,7 @@ export default function GovernmentAIFloating({ organizationId }: { organizationI
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-semibold text-white leading-none">AI Compliance Assistant</p>
-              <p className="text-[11px] text-white/70 mt-0.5">Powered by Claude Sonnet</p>
+              <p className="text-[11px] text-white/70 mt-0.5">Powered by Gemini Flash Lite</p>
             </div>
             <div className="flex items-center gap-1">
               {messages.length > 0 && (

@@ -115,7 +115,7 @@ export default function RenewalPredictionWidget({
           <div>
             <h2 className="text-base font-semibold text-[#111] mb-1">AI Renewal Forecast</h2>
             <p className="text-sm text-[#64748b]">
-              Claude analyzes your pace, patterns, and deadline to predict renewal risk.
+              Gemini analyzes your pace, patterns, and deadline to predict renewal risk.
             </p>
           </div>
           <button
@@ -213,7 +213,7 @@ export default function RenewalPredictionWidget({
       )}
 
       <p className="mt-4 text-xs text-[#64748b]">
-        Powered by Claude · Based on verified activities only · 5 forecasts/hour
+        Powered by Gemini · Based on verified activities only · 5 forecasts/hour
       </p>
     </div>
   );

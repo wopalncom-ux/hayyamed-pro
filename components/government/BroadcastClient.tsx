@@ -191,7 +191,7 @@ export default function BroadcastClient({
               <div>
                 <div className="flex items-center gap-2">
                   <h2 className="text-base font-semibold text-[#111]">AI Email Drafter</h2>
-                  <span className="text-[10px] bg-[#e8f0fe] text-[#1a56a0] px-1.5 py-0.5 rounded font-medium">Claude Haiku</span>
+                  <span className="text-[10px] bg-[#e8f0fe] text-[#1a56a0] px-1.5 py-0.5 rounded font-medium">Gemini Flash Lite</span>
                 </div>
                 <p className="text-xs text-[#64748b] mt-0.5">Describe what you want to say — AI writes the email</p>
               </div>

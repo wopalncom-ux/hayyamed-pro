@@ -211,7 +211,7 @@ const faqJsonLd = {
       name: "How does the AI compliance assistant work?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "The AI compliance assistant (Pro feature) answers questions about your country's CME requirements, identifies gaps in your compliance profile, and suggests activities to close those gaps. It is powered by Claude AI integrated with Hayya Med Pro's compliance rule database, and always recommends verifying final requirements with your licensing authority.",
+        text: "The AI compliance assistant (Pro feature) answers questions about your country's CME requirements, identifies gaps in your compliance profile, and suggests activities to close those gaps. It is powered by Google Gemini integrated with Hayya Med Pro's compliance rule database, and always recommends verifying final requirements with your licensing authority.",
       },
     },
   ],

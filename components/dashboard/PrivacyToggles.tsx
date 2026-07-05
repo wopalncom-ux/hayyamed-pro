@@ -83,7 +83,7 @@ export default function PrivacyToggles({ initial }: { initial: PrivacySettings }
           <div>
             <p className="text-sm font-medium text-[#111]">AI compliance analysis</p>
             <p className="text-xs text-[#64748b] mt-0.5 leading-relaxed max-w-sm">
-              Allow AI (Anthropic Claude) to analyse your anonymised compliance data for gap analysis,
+              Allow AI (Google Gemini) to analyse your anonymised compliance data for gap analysis,
               learning pathway recommendations, and renewal predictions. Your name and license number
               are never sent to AI systems.
             </p>

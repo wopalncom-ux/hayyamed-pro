@@ -33,7 +33,7 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: "What is the difference between Free and Pro?",
-    a: "Free lets you track up to 10 CME activities and view your compliance status. Pro ($6/month or $61.20/year — save 15%) removes the activity limit, unlocks AI gap analysis powered by Claude, enables PDF report downloads, adds multi-license tracking, and gives you priority support.",
+    a: "Free lets you track up to 10 CME activities and view your compliance status. Pro ($6/month or $61.20/year — save 15%) removes the activity limit, unlocks AI gap analysis powered by Gemini, enables PDF report downloads, adds multi-license tracking, and gives you priority support.",
   },
   {
     q: "How do I download my CPD report?",
@@ -41,7 +41,7 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: "What does the AI Compliance Assistant do?",
-    a: "The AI assistant (Pro only) reads your actual CME wallet data and gives you personalized advice: which categories you're short in, which types of activities to prioritize, and how many credits you need before your renewal deadline. It is powered by Claude by Anthropic.",
+    a: "The AI assistant (Pro only) reads your actual CME wallet data and gives you personalized advice: which categories you're short in, which types of activities to prioritize, and how many credits you need before your renewal deadline. It is powered by Google Gemini.",
   },
   {
     q: "How do I reset my password?",

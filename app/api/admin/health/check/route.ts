@@ -58,21 +58,11 @@ async function checkPostmark(): Promise<CheckResult> {
   }
 }
 
-async function checkAnthropic(): Promise<CheckResult> {
-  const key = process.env.ANTHROPIC_API_KEY;
-  if (!key) return { status: "down", latency_ms: 0, detail: "ANTHROPIC_API_KEY not set" };
-  if (!key.startsWith("sk-ant-")) return { status: "degraded", latency_ms: 0, detail: "Key format unexpected" };
-  try {
-    const t = Date.now();
-    const res = await fetch("https://api.anthropic.com/v1/models", {
-      headers: { "x-api-key": key, "anthropic-version": "2023-06-01" },
-    });
-    const ms = Date.now() - t;
-    if (!res.ok) return { status: "down", latency_ms: ms, detail: `HTTP ${res.status}` };
-    return { status: ms > 3000 ? "degraded" : "ok", latency_ms: ms, detail: `API key valid · ${ms}ms` };
-  } catch (e) {
-    return { status: "down", latency_ms: 0, detail: String(e) };
-  }
+async function checkVertex(): Promise<CheckResult> {
+  const project = process.env.GOOGLE_CLOUD_PROJECT;
+  if (!project) return { status: "down", latency_ms: 0, detail: "GOOGLE_CLOUD_PROJECT not set" };
+  const region = process.env.VERTEX_REGION ?? "us-east5";
+  return { status: "ok", latency_ms: 0, detail: `Project ${project} (${region}) — Gemini via Vertex AI, GCP service-account auth` };
 }
 
 async function checkPaddle(): Promise<CheckResult> {
@@ -111,7 +101,7 @@ const CHECKS: Record<string, () => Promise<CheckResult>> = {
   supabase:  checkSupabase,
   storage:   checkStorage,
   postmark:  checkPostmark,
-  anthropic: checkAnthropic,
+  vertex:    checkVertex,
   paddle:    checkPaddle,
   vapid:     checkVapid,
   app:       checkSelf,

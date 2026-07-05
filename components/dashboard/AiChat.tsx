@@ -76,7 +76,7 @@ export default function AiChat({ isPro, hasWallet }: { isPro: boolean; hasWallet
         </div>
         {isPro && (
           <span className="ml-auto text-[10px] font-semibold text-[#1a56a0] bg-[#e8f0fe] px-2 py-0.5 rounded-full">
-            Claude Haiku
+            Gemini Flash Lite
           </span>
         )}
       </div>

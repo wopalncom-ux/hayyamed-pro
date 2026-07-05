@@ -814,7 +814,7 @@ export async function sendOnboardingReminderEmail({
       <p style="margin:0 0 8px;font-weight:600;color:#15803d;font-size:14px">Your Pro trial includes:</p>
       <ul style="margin:0;padding-left:18px;color:#374151;font-size:14px;line-height:1.9">
         <li>Unlimited CME activity tracking</li>
-        <li>AI compliance gap analysis (powered by Claude)</li>
+        <li>AI compliance gap analysis (powered by Gemini)</li>
         <li>Official CPD PDF report — ready for QCHP or SCFHS submission</li>
         <li>License expiry reminders and renewal readiness score</li>
       </ul>

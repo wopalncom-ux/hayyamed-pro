@@ -45,7 +45,7 @@ const pricingFaqLd = {
     {
       "@type": "Question",
       name: "What is included in the Pro plan?",
-      acceptedAnswer: { "@type": "Answer", text: "Pro includes unlimited CME activity tracking, PDF compliance report download, AI-powered gap analysis (Claude), compliance chatbot, certificate storage, multi-license tracking, and priority support." },
+      acceptedAnswer: { "@type": "Answer", text: "Pro includes unlimited CME activity tracking, PDF compliance report download, AI-powered gap analysis (Gemini), compliance chatbot, certificate storage, multi-license tracking, and priority support." },
     },
     {
       "@type": "Question",
