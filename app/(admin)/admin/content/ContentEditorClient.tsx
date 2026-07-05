@@ -186,7 +186,7 @@ export default function ContentEditorClient({ initial, pages }: Props) {
 
                 <div className="flex items-center justify-between mt-2">
                   <span className="text-xs text-[#64748b]">
-                    Last updated: {new Date(row.updated_at).toLocaleString()}
+                    Last updated: {new Date(row.updated_at).toLocaleString("en-GB", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" })}
                   </span>
                   <button
                     onClick={() => handleSave(row)}

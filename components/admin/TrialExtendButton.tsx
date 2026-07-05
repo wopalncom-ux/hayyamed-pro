@@ -28,7 +28,7 @@ export default function TrialExtendButton({ authId, currentTrialEnd }: {
       <button
         onClick={() => setOpen(true)}
         className="text-xs text-[#1a56a0] hover:underline whitespace-nowrap"
-        title={isActive ? `Trial ends ${new Date(currentTrialEnd!).toLocaleDateString()}` : "No active trial"}
+        title={isActive ? `Trial ends ${new Date(currentTrialEnd!).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}` : "No active trial"}
       >
         {isActive ? `Trial ${Math.ceil((new Date(currentTrialEnd!).getTime() - Date.now()) / 86400000)}d` : "Add trial"}
       </button>

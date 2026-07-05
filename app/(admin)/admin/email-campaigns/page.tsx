@@ -173,14 +173,14 @@ export default function EmailCampaignsPage() {
               <>
                 {preview !== null && (
                   <div className={`p-3 rounded-xl mb-4 text-xs font-medium ${preview === 0 ? "bg-amber-50 text-amber-700 border border-amber-200" : "bg-[#eff6ff] text-[#1a56a0] border border-[#bfdbfe]"}`}>
-                    {loadingPreview ? "Counting…" : preview === 0 ? "No users match this segment." : `This campaign will reach ${preview.toLocaleString()} user${preview !== 1 ? "s" : ""}.`}
+                    {loadingPreview ? "Counting…" : preview === 0 ? "No users match this segment." : `This campaign will reach ${preview.toLocaleString("en-US")} user${preview !== 1 ? "s" : ""}.`}
                   </div>
                 )}
                 <label className="flex items-start gap-2 cursor-pointer mb-4">
                   <input type="checkbox" checked={confirmed} onChange={(e) => setConfirmed(e.target.checked)} className="accent-[#1a56a0] mt-0.5" />
                   <span className="text-xs text-[#374151]">
                     I confirm this campaign is approved and will be sent to{" "}
-                    <strong>{loadingPreview ? "…" : (preview ?? 0).toLocaleString()}</strong> recipients.
+                    <strong>{loadingPreview ? "…" : (preview ?? 0).toLocaleString("en-US")}</strong> recipients.
                     This action cannot be undone.
                   </span>
                 </label>

@@ -289,7 +289,7 @@ export default function MediaLibraryClient({ initial }: Props) {
               </div>
               <div className="flex justify-between">
                 <span className="text-[#64748b]">Uploaded</span>
-                <span className="text-[#0f172a]">{new Date(selected.created_at).toLocaleDateString()}</span>
+                <span className="text-[#0f172a]">{new Date(selected.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</span>
               </div>
             </div>
 

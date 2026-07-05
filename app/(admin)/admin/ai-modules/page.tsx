@@ -284,7 +284,7 @@ function ModuleCard({
         {/* Cost estimate */}
         {enabled && model.provider !== "disabled" && (
           <div className="mt-3 pt-3 border-t border-[#f1f5f9] flex items-center justify-between text-xs text-[#64748b]">
-            <span>Est. ~{module.callsPerMonth.toLocaleString()} calls/mo</span>
+            <span>Est. ~{module.callsPerMonth.toLocaleString("en-US")} calls/mo</span>
             <span className="font-semibold text-[#374151]">
               ~${monthlyCost.toFixed(2)}/mo
             </span>

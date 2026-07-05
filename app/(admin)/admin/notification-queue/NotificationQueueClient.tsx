@@ -190,7 +190,7 @@ export default function NotificationQueueClient({
               <span className="text-red-600">
                 ({failedItems.length}
                 {totalFailed > failedItems.length
-                  ? ` shown of ${totalFailed.toLocaleString()} total`
+                  ? ` shown of ${totalFailed.toLocaleString("en-US")} total`
                   : ""}
                 )
               </span>

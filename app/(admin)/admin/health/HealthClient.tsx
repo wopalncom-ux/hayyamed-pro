@@ -74,7 +74,7 @@ export default function HealthClient() {
   const checkAll = useCallback(async () => {
     setRunning(true);
     await Promise.all(SERVICES.map((s) => checkOne(s.id)));
-    setLastRun(new Date().toLocaleTimeString());
+    setLastRun(new Date().toLocaleTimeString("en-GB"));
     setRunning(false);
   }, [checkOne]);
 
@@ -162,7 +162,7 @@ export default function HealthClient() {
 
               {state.checked_at && (
                 <p className="text-[9px] text-[#94a3b8] mb-3">
-                  Checked {new Date(state.checked_at).toLocaleTimeString()}
+                  Checked {new Date(state.checked_at).toLocaleTimeString("en-GB")}
                 </p>
               )}
 

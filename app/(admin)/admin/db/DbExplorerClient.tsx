@@ -102,7 +102,7 @@ export default function DbExplorerClient() {
         {/* Toolbar */}
         <div className="flex items-center gap-3 px-4 py-3 border-b border-[#e2e8f0] bg-white">
           <h2 className="text-sm font-semibold text-[#0f172a] mr-2">{selected}</h2>
-          <span className="text-xs text-[#64748b]">{count.toLocaleString()} rows</span>
+          <span className="text-xs text-[#64748b]">{count.toLocaleString("en-US")} rows</span>
           <form onSubmit={handleSearch} className="flex gap-2 ml-auto items-center">
             <select
               value={col}

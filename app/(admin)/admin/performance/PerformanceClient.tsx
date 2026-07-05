@@ -220,7 +220,7 @@ export default function PerformanceClient({ initial }: Props) {
                 <h3 className="text-sm font-semibold text-[#0f172a]">Lighthouse Scores</h3>
                 <p className="text-xs text-[#64748b]">
                   {TRACKED_PAGES.find((p) => p.url === activeUrl)?.label} · {strategy} ·{" "}
-                  {new Date(latest.created_at).toLocaleString()}
+                  {new Date(latest.created_at).toLocaleString("en-GB", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" })}
                 </p>
               </div>
               <div className={`px-3 py-1 rounded-full text-xs font-semibold ${scoreBg(latest.performance_score)}`}>

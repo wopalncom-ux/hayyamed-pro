@@ -303,7 +303,7 @@ export default function SeoEditorClient({ initial }: Props) {
           </div>
 
           <div className="mt-6 pt-4 border-t border-[#e2e8f0] flex items-center justify-between">
-            <span className="text-xs text-[#94a3b8]">Last saved: {new Date(active.updated_at).toLocaleString()}</span>
+            <span className="text-xs text-[#94a3b8]">Last saved: {new Date(active.updated_at).toLocaleString("en-GB", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" })}</span>
             <button
               onClick={handleSave}
               disabled={saving}

@@ -119,7 +119,7 @@ export default function BulkApproveRequests({
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium text-[#111]">{req.name}</p>
               <p className="text-xs text-[#64748b] mt-0.5">
-                {req.profession} &middot; Requested {new Date(req.requestedAt).toLocaleDateString()}
+                {req.profession} &middot; Requested {new Date(req.requestedAt).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
               </p>
             </div>
             {/* Individual quick actions */}

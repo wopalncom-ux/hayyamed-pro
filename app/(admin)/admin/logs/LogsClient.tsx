@@ -151,7 +151,7 @@ export default function LogsClient() {
 
       {/* Summary bar */}
       <div className="flex items-center gap-6 px-4 py-2 bg-white border-b border-[#f1f5f9] text-xs text-[#64748b]">
-        <span>{count.toLocaleString()} entries · {currentPage}/{totalPages} pages</span>
+        <span>{count.toLocaleString("en-US")} entries · {currentPage}/{totalPages} pages</span>
         {source === "ai" && aiRows.length > 0 && (
           <>
             <span>Cost: <strong className="text-[#0f172a]">${totalCost.toFixed(4)}</strong></span>
@@ -228,8 +228,8 @@ export default function LogsClient() {
                   <td className="px-3 py-2 text-[#64748b] whitespace-nowrap">{ts(r.created_at)}</td>
                   <td className="px-3 py-2 font-medium text-[#0f172a]">{r.action}</td>
                   <td className="px-3 py-2"><span className="px-1.5 py-0.5 rounded text-[9px] bg-[#dbeafe] text-[#1d4ed8] font-mono">{r.model?.split("-").slice(-2).join("-") ?? "—"}</span></td>
-                  <td className="px-3 py-2 text-right text-[#374151]">{(r.input_tokens ?? 0).toLocaleString()}</td>
-                  <td className="px-3 py-2 text-right text-[#374151]">{(r.output_tokens ?? 0).toLocaleString()}</td>
+                  <td className="px-3 py-2 text-right text-[#374151]">{(r.input_tokens ?? 0).toLocaleString("en-US")}</td>
+                  <td className="px-3 py-2 text-right text-[#374151]">{(r.output_tokens ?? 0).toLocaleString("en-US")}</td>
                   <td className="px-3 py-2 text-right font-mono text-[#374151]">${(r.cost_usd ?? 0).toFixed(5)}</td>
                   <td className="px-3 py-2 text-right text-[#374151]">{r.latency_ms ? `${r.latency_ms}ms` : "—"}</td>
                   <td className="px-3 py-2 text-center"><StatusDot ok={r.success} /></td>
