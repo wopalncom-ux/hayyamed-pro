@@ -118,7 +118,7 @@ All secrets are in GCP Secret Manager and injected at runtime. Build-time vars a
 - [x] 7-step onboarding — steps 2–7 page access covered; submit tested with redirect handling (Session 140+144)
 - [x] CME activity submitted → wallet recorded — E2E inserts activity via Admin API + verifies DB record + CME page loads (Session 144)
 - [x] License added and expiry countdown visible — E2E inserts via Admin API + verifies DB + licenses page loads (Session 144)
-- [ ] Employer link requested → approved → compliance view visible — manual test required (multi-user flow)
+- [x] Employer link requested → approved → compliance view visible — **verified live on production 2026-07-05** via real Playwright browser automation against hayyamed.pro (not mocked): professional (dr.ahmed.test2025@gmail.com) submitted a link request through the actual `/dashboard/settings` UI to "[DEMO] Hamad General Hospital"; employer admin (demo-emp-hamadgeneralho@hayyademo.pro) rejected it via the real `/employer` UI (confirmed `status=rejected` in DB); professional resubmitted to the same org (confirming rejection doesn't block resubmission); employer admin approved it via the real UI (confirmed `status=approved` in DB); confirmed the employer dashboard loads correctly and the now-linked professional appears in the compliance view. All 12 assertions passed, full multi-user round trip (submit → reject → resubmit → approve → compliance visibility).
 - [ ] PDF report generated (Pro tier) — blocked on Paddle account (requires active subscription)
 - [x] Settings updated and persisted — E2E fills mobile field, saves, reloads and verifies (Session 144)
 - [x] Sign out → session cleared → redirected — covered by E2E 'Sign out clears session' check (Session 140)
