@@ -29,7 +29,7 @@
     "authority_text": "CME rules sourced directly from all 7 GCC licensing authorities",
     "pdpl": "Qatar PDPL compliant",
     "data_hosted": "Data hosted in Doha, Qatar",
-    "claude_ai": "Powered by Claude AI",
+    "claude_ai": "Powered by Gemini AI",
     "trial": "14-day Pro trial · No card"
   },
   "features": {
@@ -78,7 +78,7 @@
     "assistant_label": "Hayya AI · Compliance Assistant",
     "ask_placeholder": "Ask about your compliance...",
     "pro_badge": "Pro",
-    "footer_text": "Available on Pro plan · Powered by Claude AI · GCC rules database",
+    "footer_text": "Available on Pro plan · Powered by Gemini AI · GCC rules database",
     "gcc_coverage": "GCC Coverage",
     "more_coming": "More coming",
     "more_coming_countries": "UK · India · Australia · EU",
@@ -163,7 +163,7 @@
     "q6": "Is my healthcare data stored securely in the GCC?",
     "a6": "Yes. All data is hosted on GCP infrastructure in Doha, Qatar, encrypted at rest and in transit, and processed under Qatar's Personal Data Protection Law (PDPL). Your data never leaves the GCC region.",
     "q7": "How does Hayya AI work?",
-    "a7": "Hayya AI (Pro feature) answers questions about your country's CME requirements, identifies gaps in your compliance profile, and suggests activities to close those gaps. It is powered by Claude AI integrated with Hayya Med Pro's compliance rule database — and always recommends verifying final requirements with your licensing authority."
+    "a7": "Hayya AI (Pro feature) answers questions about your country's CME requirements, identifies gaps in your compliance profile, and suggests activities to close those gaps. It is powered by Google Gemini integrated with Hayya Med Pro's compliance rule database — and always recommends verifying final requirements with your licensing authority."
   },
   "final_cta": {
     "label": "Get started today",
@@ -304,7 +304,7 @@
       "employer_note": "Your employer cannot edit your profile or certificates. They can only view what you allow here.",
       "ai_section": "AI Features",
       "ai_label": "Allow AI analysis of my compliance data",
-      "ai_desc": "I consent to Hayya Med Pro using AI (Anthropic Claude) to analyse my anonymised compliance data to provide gap analysis, learning pathway recommendations, and renewal predictions. Your personal name and license number are never sent to AI systems. You can withdraw this consent anytime in Settings."
+      "ai_desc": "I consent to Hayya Med Pro using AI (Google Gemini) to analyse my anonymised compliance data to provide gap analysis, learning pathway recommendations, and renewal predictions. Your personal name and license number are never sent to AI systems. You can withdraw this consent anytime in Settings."
     }
   },
   "pricing": {
@@ -338,7 +338,7 @@
     "pro_qpay": "Pay with QPay (QAR)",
     "pro_f1": "Unlimited CME activities",
     "pro_f2": "PDF compliance reports (QCHP-ready)",
-    "pro_f3": "AI compliance chatbot (Claude)",
+    "pro_f3": "AI compliance chatbot (Gemini)",
     "pro_f4": "AI gap analysis & recommendations",
     "pro_f5": "Certificate storage & verification",
     "pro_f6": "Email reminders & license alerts",
@@ -370,7 +370,7 @@
     "faq_q2": "Which licensing authorities does Hayya Med Pro support?",
     "faq_a2": "QCHP (Qatar), SCFHS (Saudi Arabia), DHA and DOH (UAE), NHRA (Bahrain), OMSB (Oman), MOH Kuwait, GMC/NMC (UK), AHPRA (Australia), and NMC (India). More are added regularly.",
     "faq_q3": "What is included in the Pro plan?",
-    "faq_a3": "Unlimited CME activity tracking, downloadable PDF compliance report, AI-powered gap analysis (powered by Claude), compliance chatbot, certificate storage, license expiry alerts, multi-country tracking, and priority support.",
+    "faq_a3": "Unlimited CME activity tracking, downloadable PDF compliance report, AI-powered gap analysis (powered by Gemini), compliance chatbot, certificate storage, license expiry alerts, multi-country tracking, and priority support.",
     "faq_q4": "Can I cancel my subscription at any time?",
     "faq_a4": "Yes. Cancel any time from Dashboard → Settings → Manage Billing. Your Pro access continues until the end of the billing period, then your account moves to the Free plan. Your CME data is always preserved.",
     "faq_q5": "What payment methods are accepted?",

@@ -7,7 +7,7 @@ _Generated: 2026-06-15_
 
 | Integration | Status | Env Var | Notes |
 |------------|--------|---------|-------|
-| **AI / Claude** | ✅ Ready | GCP ADC | Vertex AI AnthropicVertex — no API key needed |
+| **AI / Gemini** | ✅ Ready | GCP ADC | Vertex AI (Gemini Flash Lite) — no API key needed; Claude/Anthropic removed 2026-07-04 |
 | **Supabase DB** | ✅ Ready | `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` | All configured |
 | **Supabase Auth** | ✅ Ready | (same) | Email + magic link + TOTP MFA + passkeys |
 | **Supabase Storage** | ✅ Ready | (same) | Private bucket for certificates |
@@ -32,35 +32,31 @@ _Generated: 2026-06-15_
 
 ---
 
-## Detail: AI / Claude (Vertex AI)
+## Detail: AI / Gemini (Vertex AI)
 
 ### Architecture
 ```
 Cloud Run (Next.js)
-  └─> AnthropicVertex client (lib/anthropic.ts)
+  └─> Vertex AI client (lib/ai/providers/gemini.ts, lib/ai/complete.ts)
         └─> Google Cloud Vertex AI
-              └─> Claude Haiku 4.5 / Sonnet 4.6 models
+              └─> Gemini Flash Lite (gemini-2.5-flash-lite)
 ```
 
 ### Implementation
 ```typescript
-// lib/anthropic.ts
-import AnthropicVertex from "@anthropic-ai/vertex-sdk";
+// lib/ai/providers/gemini.ts
+import { VertexAI } from "@google-cloud/vertexai";
 
-export function getAnthropicClient() {
-  return new AnthropicVertex({
-    region: "us-east5",
-    projectId: process.env.GCP_PROJECT_ID,
-  });
+function getVertex(): VertexAI {
+  return new VertexAI({ project: process.env.GOOGLE_CLOUD_PROJECT, location: "us-east5" });
 }
 ```
 
-### Status: ✅ All 9 AI routes use this client
+### Status: ✅ All AI routes use this client — single provider, Claude/Anthropic fully removed (2026-07-04, including the `@anthropic-ai/sdk` and `@anthropic-ai/vertex-sdk` packages)
 
 ### Blockers
 - User must enable Vertex AI API in GCP console
 - User must grant `roles/aiplatform.user` to Cloud Run service account
-- User must enable Claude models in GCP Model Garden
 
 ---
 

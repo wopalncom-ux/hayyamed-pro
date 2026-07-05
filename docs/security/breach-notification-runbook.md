@@ -282,7 +282,7 @@ Mandatory activities:
 | Qatar MCIT PDPL | P0, P1 within 72 hours | pdp@mcit.gov.qa |
 | Paddle DPA Team | If payment records affected | dpo@paddle.com |
 | Postmark DPA Team | If email metadata affected | support@postmarkapp.com |
-| Anthropic (Vertex AI via GCP) | If AI call logs with PII accessed | GCP support channel |
+| Google (Gemini via Vertex AI / GCP) | If AI call logs with PII accessed | GCP support channel |
 | Supabase Support | Database or auth infrastructure breach | support@supabase.io |
 | GCP Support | Infrastructure or secrets breach | GCP Console → Support |
 

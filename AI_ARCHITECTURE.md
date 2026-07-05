@@ -23,29 +23,32 @@ AI features in Hayya Med Pro must be: clinically defensible, cost-efficient, exp
 
 ## LLM Strategy
 
-### Primary Model: Claude (Anthropic)
+### Primary Model: Gemini Flash Lite (Google, via Vertex AI) — revised 2026-07-05, permanent policy
 
 **Rationale:**
-- Claude Sonnet 4.6 / Claude Opus 4.8 available for different task tiers
-- Superior reasoning for compliance rule interpretation
+- Single model handles every task tier at ~10–50× lower cost than the original Claude-tiered plan
+- Sufficient reasoning quality for compliance rule interpretation and gap analysis at current data volumes
 - Strong multilingual support (Arabic + English)
-- Anthropic's healthcare and privacy stance aligns with our compliance requirements
-- Available via API (no infrastructure management)
+- Runs on the same GCP service-account auth as the rest of the platform — no separate vendor account, one bill
+- Available via Vertex AI (no infrastructure management)
+
+Claude/Anthropic was fully removed from the codebase on 2026-07-04. This was evaluated and adopted as permanent architecture, not a temporary cost override — see EXECUTIVE_MANDATE.md Domain 5.
 
 ### Model Selection by Task
 
 | Task | Model | Rationale |
 |---|---|---|
-| Compliance chatbot (simple queries) | Claude Haiku 4.5 | Fast, cheap, sufficient |
-| Compliance gap analysis | Claude Sonnet 4.6 | Reasoning quality required |
-| Document OCR interpretation | Claude Sonnet 4.6 + Vision | Multimodal |
-| Rules engine configuration assistance | Claude Opus 4.8 | Complex regulatory reasoning |
-| Workforce intelligence reports | Claude Opus 4.8 | Long-context, high accuracy |
+| Compliance chatbot (simple queries) | Gemini Flash Lite | Fast, cheap, sufficient — streaming + agentic tool-use via Vertex function calling |
+| Compliance gap analysis | Gemini Flash Lite | Reasoning quality sufficient |
+| Document OCR interpretation | Gemini Flash Lite (multimodal) | Vision support built in |
+| Rules engine configuration assistance | Gemini Flash Lite | Sufficient; escalate to a larger Gemini tier if regulatory complexity outgrows it |
+| Workforce intelligence reports | Gemini Flash Lite | Long-context sufficient at current volumes |
 
 ### Fallback Strategy
-- Primary: Anthropic Claude API
-- Secondary: OpenAI GPT-4o (if Anthropic unavailable)
+- Primary: Gemini Flash Lite via Vertex AI
+- Retry: one automatic retry on transient Vertex errors (see `app/api/ai/hayya-assistant/route.ts`)
 - Emergency: Cached rule-based responses (no LLM dependency for compliance calculations)
+- If a task's output quality is found lacking, escalate to a larger Gemini tier before reintroducing a second AI provider
 
 ---
 
@@ -54,7 +57,7 @@ AI features in Hayya Med Pro must be: clinically defensible, cost-efficient, exp
 ```
 User Query
     ↓
-Compliance Agent (Claude Sonnet)
+Compliance Agent (Gemini Flash Lite)
     ├── Tool: get_compliance_rules(country, profession)
     ├── Tool: get_cme_wallet(professional_id)
     ├── Tool: get_pending_activities(professional_id)
@@ -83,7 +86,7 @@ Stored in Supabase Storage (private bucket)
     ↓
 OCR Trigger (Supabase Edge Function)
     ↓
-Claude Vision API (extract: title, provider, date, credits, accreditor)
+Gemini Flash Lite (multimodal — extract: title, provider, date, credits, accreditor)
     ↓
 Confidence score check
     ├── High confidence (>90%): Pre-fill CME submission form
@@ -105,24 +108,24 @@ Human admin verification (unchanged — AI is assist, not replace)
 
 ### Tiering
 - Free users: No AI features
-- Pro users: Compliance chatbot (Haiku), gap analysis (Sonnet)
-- Employer users: Workforce analytics (Sonnet), risk scoring (Sonnet)
-- Enterprise: Full Opus access for custom report generation
+- Pro users: Compliance chatbot, gap analysis (Gemini Flash Lite)
+- Employer users: Workforce analytics, risk scoring (Gemini Flash Lite)
+- Enterprise: Same model, no artificial ceiling on report scope — escalate to a larger Gemini tier only if a specific use case demands it
 
-### Token Budget Targets
+### Token Budget Targets (revised 2026-07-05 for Gemini Flash Lite pricing — ~10–50× cheaper than the original Claude-tiered plan)
 | Feature | Max tokens/call | Target cost/call |
 |---|---|---|
-| Compliance chatbot | 2,000 | $0.001 |
-| Gap analysis | 5,000 | $0.003 |
-| OCR extraction | 3,000 + image | $0.005 |
-| Workforce report | 50,000 | $0.05 |
+| Compliance chatbot | 2,000 | $0.0004 |
+| Gap analysis | 5,000 | $0.001 |
+| OCR extraction | 3,000 + image | $0.0006 |
+| Workforce report | 50,000 | $0.01 |
 
-### Monthly AI Cost Targets
+### Monthly AI Cost Targets (revised 2026-07-05)
 | ARR | Estimated AI cost | % of revenue |
 |---|---|---|
-| $50,000 | $200/month | 5% |
-| $200,000 | $500/month | 3% |
-| $1,000,000 | $1,500/month | 1.8% |
+| $50,000 | $20/month | 0.04% |
+| $200,000 | $50/month | 0.03% |
+| $1,000,000 | $150/month | 0.02% |
 
 ---
 

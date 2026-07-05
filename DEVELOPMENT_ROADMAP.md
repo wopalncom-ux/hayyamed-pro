@@ -58,7 +58,6 @@ Hayya Med Pro is a global healthcare SaaS. Every phase must balance speed-to-rev
 - Paddle account approval + 10 price IDs created
 - Postmark sending domain approved
 - VAPID private key added to GCP Secret Manager
-- Enable Claude Haiku 4.5 in Vertex AI Model Garden
 - To go live: set `_COMING_SOON = false` in Cloud Build Trigger → trigger build
 
 ### Dependencies

@@ -103,15 +103,15 @@
 | ML Engineer | Structured output validation (Zod), model fine-tuning consideration, embedding generation |
 | Analytics Architect | Product analytics (PostHog), usage instrumentation, funnel analysis, churn prediction, cohort analysis |
 
-**AI Model Selection:**
+**AI Model Selection (revised 2026-07-05 — permanent single-provider policy, see EXECUTIVE_MANDATE.md Domain 5):**
 
-| Task | Model | Monthly Cost Target |
+| Task | Model | Target Cost/call |
 |---|---|---|
-| Compliance chatbot (simple Q&A) | Claude Haiku 4.5 | $0.001/call |
-| Compliance gap analysis | Claude Sonnet 4.6 | $0.003/call |
-| Certificate OCR + Vision | Claude Sonnet 4.6 | $0.005/call |
-| Country rules configuration | Claude Opus 4.8 | $0.020/call |
-| Workforce intelligence reports | Claude Opus 4.8 | $0.050/call |
+| Compliance chatbot (simple Q&A) | Gemini Flash Lite | $0.0004/call |
+| Compliance gap analysis | Gemini Flash Lite | $0.001/call |
+| Certificate OCR + Vision | Gemini Flash Lite | $0.0006/call |
+| Country rules configuration | Gemini Flash Lite | $0.001/call |
+| Workforce intelligence reports | Gemini Flash Lite | $0.01/call |
 
 ---
 
@@ -305,12 +305,12 @@
 - AI Evaluation Framework & Red-Teaming
 - Vector Database (pgvector, Pinecone)
 - Hallucination Prevention for Healthcare
-- Arabic NLP & Claude Arabic Optimization
+- Arabic NLP & Gemini Arabic Optimization
 - AI FinOps & Token Budget Monitoring
 - Structured AI Output Validation (Zod Schemas)
 - GDPR-Compliant AI Data Processing
 - AI Audit Logging (Model, Tokens, Latency, Actor, Action)
-- Anthropic Claude SDK (Haiku 4.5, Sonnet 4.6, Opus 4.8)
+- Google Vertex AI SDK (Gemini Flash Lite)
 
 ### Security & Compliance Skills
 - SOC 2 Type II Preparation & Evidence Collection

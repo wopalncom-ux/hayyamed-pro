@@ -7,17 +7,19 @@ _Generated: 2026-06-15_
 
 | Tool | Route | Status | Plan Gate | Model |
 |------|-------|--------|-----------|-------|
-| AI CME Categorizer | `/api/ai/categorize` | ✅ LIVE | Free (all) | Haiku 4.5 |
-| AI Compliance Chatbot | `/api/ai/compliance-chat` | ✅ LIVE | Pro+ | Haiku 4.5 (stream) |
-| AI Certificate OCR | `/api/ai/ocr-certificate` | ✅ LIVE | Pro+ | Sonnet 4.6 (vision) |
-| AI Renewal Prediction | `/api/ai/renewal-prediction` | ✅ LIVE | Pro+ | Haiku 4.5 |
-| AI CME Gap Analysis | `/api/ai/gap-analysis` | ✅ LIVE | Pro+ | Sonnet 4.6 |
-| AI Learning Pathway | `/api/ai/learning-pathway` | ✅ LIVE | Pro+ | Haiku 4.5 |
-| AI Employer Analyzer | `/api/ai/employer-analyzer` | ✅ LIVE | Employer+ | Sonnet 4.6 |
-| AI Provider Analyzer | `/api/ai/provider-analyzer` | ✅ LIVE | Provider+ | Sonnet 4.6 |
-| AI Voice Chat | `/api/ai/voice-chat` | ✅ LIVE | Pro+ | Haiku 4.5 |
+| AI CME Categorizer | `/api/ai/categorize` | ✅ LIVE | Free (all) | Gemini Flash Lite |
+| AI Compliance Chatbot | `/api/ai/compliance-chat` | ✅ LIVE | Pro+ | Gemini Flash Lite (stream + agentic tool-use) |
+| AI Certificate OCR | `/api/ai/ocr-certificate` | ✅ LIVE | Pro+ | Gemini Flash Lite (multimodal) |
+| AI Renewal Prediction | `/api/ai/renewal-prediction` | ✅ LIVE | Pro+ | Gemini Flash Lite |
+| AI CME Gap Analysis | `/api/ai/gap-analysis` | ✅ LIVE | Pro+ | Gemini Flash Lite |
+| AI Learning Pathway | `/api/ai/learning-pathway` | ✅ LIVE | Pro+ | Gemini Flash Lite |
+| AI Employer Analyzer | `/api/ai/employer-analyzer` | ✅ LIVE | Employer+ | Gemini Flash Lite |
+| AI Provider Analyzer | `/api/ai/provider-analyzer` | ✅ LIVE | Provider+ | Gemini Flash Lite |
+| AI Voice Chat | `/api/ai/voice-chat` | ✅ LIVE | Pro+ | Gemini Flash Lite |
 
-**Infrastructure:** All AI routes use Google Cloud Vertex AI (AnthropicVertex ADC) — no direct Anthropic API key. Authentication via GCP Application Default Credentials on Cloud Run.
+**Infrastructure (updated 2026-07-05):** All AI routes use Google Cloud Vertex AI (Gemini Flash Lite) — no separate API key, authenticated via GCP Application Default Credentials on Cloud Run. Claude/Anthropic was fully removed from the codebase on 2026-07-04 (including the `@anthropic-ai/sdk` and `@anthropic-ai/vertex-sdk` packages) — single AI provider, single GCP bill.
+
+**Correction to this doc's original (2026-06-15) claims:** the `ai_call_logs` table exists and is populated on every AI call (contrary to the "no cost table exists" notes below, which were true when first written but are now stale) — see `lib/ai/logAiCall.ts`. Its cost-estimation table was itself found to be under-updated for the Gemini switch and was fixed 2026-07-04/05.
 
 ---
 
@@ -47,12 +49,11 @@ When a professional logs a CME activity, auto-suggests the activity category (co
 - Writes: none (result used to pre-fill form only)
 
 ### API Dependencies
-- Vertex AI → Haiku 4.5
+- Vertex AI → Gemini Flash Lite
 - Rate limit: not explicitly set (low-cost, free tier)
 
 ### Remaining Development
-- ⚠️ No call logged to `audit_logs` (only pro-tier AI tools log)
-- ⚠️ No `ai_call_logs` table exists — cannot track usage or cost
+- ⚠️ No call logged to `audit_logs` (only pro-tier AI tools log) — verify still true; `ai_call_logs` itself now exists and is used by other tools
 - Consider adding country context to improve category suggestions
 
 ---
@@ -78,7 +79,7 @@ RAG-augmented conversational assistant for compliance questions. Pulls country r
 - Writes: `audit_logs` (action: `ai_compliance_chat`)
 
 ### API Dependencies
-- Vertex AI → Haiku 4.5 (streaming)
+- Vertex AI → Gemini Flash Lite (streaming + agentic tool-use, migrated from Claude 2026-07-04)
 - Rate limit: 30 requests/hour per user
 
 ### Remaining Development
@@ -92,13 +93,13 @@ RAG-augmented conversational assistant for compliance questions. Pulls country r
 ## Tool 3 — AI Certificate OCR
 
 ### Purpose
-Extracts structured data from uploaded certificate images using Claude's vision capability. Pre-fills the CME activity form.
+Extracts structured data from uploaded certificate images using Gemini's multimodal vision capability. Pre-fills the CME activity form.
 
 ### Status: ✅ LIVE
 
 ### Data Inputs
 - Certificate file (image/PDF, max 8MB) via multipart form
-- Converted to base64 before sending to Claude
+- Converted to base64 before sending to Gemini
 
 ### Data Outputs (Zod-validated)
 ```typescript
@@ -116,7 +117,7 @@ Extracts structured data from uploaded certificate images using Claude's vision 
 - Writes: `audit_logs` (action: `ai_ocr_certificate`)
 
 ### API Dependencies
-- Vertex AI → Claude Sonnet 4.6 (vision)
+- Vertex AI → Gemini Flash Lite (multimodal)
 - Rate limit: 5 requests/hour per user
 - Max file size: 8MB enforced client and server
 
@@ -124,7 +125,7 @@ Extracts structured data from uploaded certificate images using Claude's vision 
 - ⚠️ No confidence score returned — cannot flag low-confidence extractions
 - ⚠️ OCR result not stored — cannot audit extraction accuracy retrospectively
 - Recommend: add `ocr_confidence` field to output schema
-- PDF multi-page support: only first page sent (Claude vision limitation)
+- PDF multi-page support: only first page sent — verify whether this limitation still applies under Gemini (was noted as a Claude-specific constraint; may not carry over)
 
 ---
 
@@ -157,7 +158,7 @@ Analyses a professional's CME activity cadence over the past 6 months and predic
 - Writes: `audit_logs` (action: `ai_renewal_prediction`)
 
 ### API Dependencies
-- Vertex AI → Haiku 4.5
+- Vertex AI → Gemini Flash Lite
 - Rate limit: 10/hour per user
 
 ### Remaining Development
@@ -206,8 +207,8 @@ Deep analysis of a professional's CME portfolio against country-specific categor
 - Writes: `audit_logs` (action: `ai_gap_analysis`)
 
 ### API Dependencies
-- Vertex AI → Claude Sonnet 4.6 (most capable for multi-category reasoning)
-- Rate limit: 5/hour per user (expensive call)
+- Vertex AI → Gemini Flash Lite
+- Rate limit: 5/hour per user
 
 ### Remaining Development
 - ✅ Fully functional
@@ -252,7 +253,7 @@ Generates a personalised 12-month CME learning plan based on the professional's 
 - Writes: `audit_logs`
 
 ### API Dependencies
-- Vertex AI → Haiku 4.5
+- Vertex AI → Gemini Flash Lite
 - Rate limit: 5/hour per user
 
 ### Remaining Development
@@ -290,7 +291,7 @@ Provides AI-powered workforce compliance analysis for employer_admin users. Thre
 - Writes: `audit_logs`
 
 ### API Dependencies
-- Vertex AI → Claude Sonnet 4.6
+- Vertex AI → Gemini Flash Lite
 - Rate limit: 10/hour per organisation
 
 ### Remaining Development
@@ -319,11 +320,11 @@ Training providers can request AI analysis of demand patterns, content gaps, and
 - Writes: `audit_logs`
 
 ### API Dependencies
-- Vertex AI → Claude Sonnet 4.6
+- Vertex AI → Gemini Flash Lite
 
 ### Remaining Development
 - ⚠️ Enrollment data used without aggregation — sends individual professional IDs to AI (PII risk)
-- **CRITICAL FIX NEEDED:** Aggregate enrollment data before sending to Claude (count only, no professional_id)
+- **CRITICAL FIX NEEDED:** Aggregate enrollment data before sending to the AI model (count only, no professional_id) — unresolved regardless of provider
 
 ---
 
@@ -347,7 +348,7 @@ Conversational AI assistant accessible via the floating HayyaVoiceOrb on the das
 - Writes: `audit_logs`
 
 ### API Dependencies
-- Vertex AI → Haiku 4.5 (fastest, lowest cost)
+- Vertex AI → Gemini Flash Lite (fastest, lowest cost)
 - Rate limit: 20/hour per user
 
 ### Remaining Development
@@ -377,23 +378,23 @@ Conversational AI assistant accessible via the floating HayyaVoiceOrb on the das
 | Individual `professional_id` sent in prompts | All tools | MEDIUM | Use anonymous aggregate IDs |
 | Provider Analyzer sends enrollment professional_id list | `/api/ai/provider-analyzer` | HIGH | Aggregate before sending |
 | No token budget enforcement | All tools | MEDIUM | Add max_tokens to every call |
-| No AI call cost table | All tools | HIGH | Create `ai_call_logs` migration 041 |
+| ~~No AI call cost table~~ | All tools | RESOLVED | `ai_call_logs` table exists (migration 041) and is populated on every call — its cost-estimation formula was itself found stale for the Gemini switch and fixed 2026-07-04/05 |
 | Prompt versions not tracked in DB | All prompts | MEDIUM | Add `prompt_version` column to ai_call_logs |
 
 ---
 
-## AI Cost Estimates (Monthly at 1,000 Pro Users)
+## AI Cost Estimates (Monthly at 1,000 Pro Users) — revised 2026-07-05 for Gemini Flash Lite pricing
 
 | Tool | Calls/User/Month | Model | Input Tokens | Output Tokens | Cost/Call | Monthly Total |
 |------|-----------------|-------|--------------|---------------|-----------|---------------|
-| Categorizer | 10 | Haiku | ~200 | ~100 | ~$0.00004 | $0.40 |
-| Compliance Chat | 20 | Haiku | ~2,000 | ~500 | ~$0.00045 | $9.00 |
-| Certificate OCR | 5 | Sonnet | ~3,000 | ~200 | ~$0.012 | $60.00 |
-| Renewal Prediction | 4 | Haiku | ~1,500 | ~300 | ~$0.00023 | $0.92 |
-| Gap Analysis | 3 | Sonnet | ~3,000 | ~800 | ~$0.018 | $54.00 |
-| Learning Pathway | 2 | Haiku | ~2,000 | ~1,000 | ~$0.00045 | $0.90 |
-| Voice Chat | 15 | Haiku | ~800 | ~200 | ~$0.00013 | $1.95 |
-| **TOTAL** | | | | | | **~$127/month** |
+| Categorizer | 10 | Gemini Flash Lite | ~200 | ~100 | ~$0.00005 | $0.45 |
+| Compliance Chat | 20 | Gemini Flash Lite | ~2,000 | ~500 | ~$0.0003 | $6.00 |
+| Certificate OCR | 5 | Gemini Flash Lite | ~3,000 | ~200 | ~$0.0003 | $1.50 |
+| Renewal Prediction | 4 | Gemini Flash Lite | ~1,500 | ~300 | ~$0.0002 | $0.80 |
+| Gap Analysis | 3 | Gemini Flash Lite | ~3,000 | ~800 | ~$0.0005 | $1.50 |
+| Learning Pathway | 2 | Gemini Flash Lite | ~2,000 | ~1,000 | ~$0.00045 | $0.90 |
+| Voice Chat | 15 | Gemini Flash Lite | ~800 | ~200 | ~$0.00012 | $1.80 |
+| **TOTAL** | | | | | | **~$13/month** |
 
-At $6/user/month Pro revenue, 1,000 users = $6,000 MRR. AI cost = ~2.1% of MRR. ✅ Acceptable margin.
+At $6/user/month Pro revenue, 1,000 users = $6,000 MRR. AI cost = ~0.2% of MRR (down from ~2.1% under the original Claude-tiered plan — roughly a 10× reduction). ✅ Excellent margin.
 
