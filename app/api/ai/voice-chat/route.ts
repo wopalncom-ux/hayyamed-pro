@@ -9,6 +9,8 @@ import { isFeatureEnabled } from "@/lib/featureFlags";
 import { logAudit } from "@/lib/audit";
 import { logAiCall } from "@/lib/ai/logAiCall";
 import { VOICE_CHAT_SYSTEM } from "@/lib/ai/prompts/voice-chat";
+import { retrieveRelevantChunks, formatChunksForPrompt } from "@/lib/ai/rag/retrieve";
+import { toCountryCode } from "@/lib/countryCode";
 import { z } from "zod";
 
 export const runtime = "nodejs";
@@ -69,11 +71,25 @@ export async function POST(req: NextRequest) {
     ? `\n\nUser context: ${wallet.profession} in ${wallet.country}. CME status: ${wallet.compliance_status}. Progress: ${wallet.completed_credits}/${wallet.required_credits} credits.`
     : "";
 
+  // Same owner-trained knowledge (documents/websites/Q&A) + always-on rules
+  // used by compliance-chat — kept short (topK 2) since voice replies are brief.
+  const countryCode = wallet?.country ? toCountryCode(wallet.country) : undefined;
+  const [ragChunks, rulesRes] = await Promise.all([
+    retrieveRelevantChunks(message, { countryCode, topK: 2, similarityThreshold: 0.65 }).catch(() => []),
+    admin.from("assistant_rules").select("rule_text").eq("active", true),
+  ]);
+  const ragContext = formatChunksForPrompt(ragChunks);
+  const activeRules = rulesRes.data ?? [];
+  const rulesContext = activeRules.length
+    ? `MANDATORY RULES (always follow these, no exceptions):\n${activeRules.map((r) => `- ${r.rule_text}`).join("\n")}`
+    : "";
+  const systemPrompt = [VOICE_CHAT_SYSTEM + context, rulesContext, ragContext].filter(Boolean).join("\n\n");
+
   try {
     const ai = await aiComplete({
       task: "chat",
       maxTokens: 256,
-      system: VOICE_CHAT_SYSTEM + context,
+      system: systemPrompt,
       messages: [{ role: "user", content: message }],
     });
 

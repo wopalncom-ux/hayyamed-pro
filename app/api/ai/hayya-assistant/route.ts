@@ -4,6 +4,8 @@ import { HAYYA_ASSISTANT_SYSTEM_PROMPT } from "@/lib/ai/prompts/hayya-assistant"
 import { geminiChat } from "@/lib/ai/providers/gemini";
 import { aiLimiter } from "@/lib/rateLimit";
 import { MODEL_IDS } from "@/lib/ai/router";
+import { createAdminClient } from "@/lib/supabase/server";
+import { retrieveRelevantChunks, formatChunksForPrompt } from "@/lib/ai/rag/retrieve";
 import type { GeminiMessage } from "@/lib/ai/providers/gemini";
 
 export const runtime = "nodejs";
@@ -57,13 +59,27 @@ export async function POST(req: NextRequest) {
     { role: "user" as const, parts: [{ text: body.message }] },
   ];
 
+  // Same owner-trained knowledge (documents/websites/Q&A) + always-on rules used
+  // by compliance-chat. No country context here — this widget is public/anonymous.
+  const admin = createAdminClient();
+  const [ragChunks, rulesRes] = await Promise.all([
+    retrieveRelevantChunks(body.message, { topK: 2, similarityThreshold: 0.65 }).catch(() => []),
+    admin.from("assistant_rules").select("rule_text").eq("active", true),
+  ]);
+  const ragContext = formatChunksForPrompt(ragChunks);
+  const activeRules = rulesRes.data ?? [];
+  const rulesContext = activeRules.length
+    ? `MANDATORY RULES (always follow these, no exceptions):\n${activeRules.map((r) => `- ${r.rule_text}`).join("\n")}`
+    : "";
+  const systemPrompt = [HAYYA_ASSISTANT_SYSTEM_PROMPT, rulesContext, ragContext].filter(Boolean).join("\n\n");
+
   try {
-    const reply = await geminiChat(MODEL, HAYYA_ASSISTANT_SYSTEM_PROMPT, geminiMessages, maxTokens);
+    const reply = await geminiChat(MODEL, systemPrompt, geminiMessages, maxTokens);
     return NextResponse.json({ reply: reply || "I'm not sure about that — try asking in a different way." });
   } catch {
     // One retry — transient Vertex hiccups are common; no Claude fallback (Gemini-only by design)
     try {
-      const reply = await geminiChat(MODEL, HAYYA_ASSISTANT_SYSTEM_PROMPT, geminiMessages, maxTokens);
+      const reply = await geminiChat(MODEL, systemPrompt, geminiMessages, maxTokens);
       return NextResponse.json({ reply: reply || "I'm not sure about that — try asking in a different way." });
     } catch {
       return NextResponse.json({
