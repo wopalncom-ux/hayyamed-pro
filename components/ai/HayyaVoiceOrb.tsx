@@ -27,6 +27,9 @@ interface SpeechRecognitionAlternative {
   transcript: string;
   confidence: number;
 }
+interface SpeechRecognitionErrorEvent extends Event {
+  error: "no-speech" | "aborted" | "audio-capture" | "network" | "not-allowed" | "service-not-allowed" | "bad-grammar" | "language-not-supported" | string;
+}
 interface SpeechRecognitionInstance extends EventTarget {
   lang: string;
   continuous: boolean;
@@ -35,7 +38,7 @@ interface SpeechRecognitionInstance extends EventTarget {
   start(): void;
   stop(): void;
   onresult: ((e: SpeechRecognitionEvent) => void) | null;
-  onerror: ((e: Event) => void) | null;
+  onerror: ((e: SpeechRecognitionErrorEvent) => void) | null;
   onend: (() => void) | null;
 }
 declare const webkitSpeechRecognition: new () => SpeechRecognitionInstance;
@@ -56,6 +59,17 @@ const STATE_LABELS: Record<OrbState, string> = {
   thinking:  "Thinking…",
   speaking:  "Speaking…",
   error:     "Try again",
+};
+
+// Surface the real browser reason instead of a silent generic failure —
+// "not-allowed" (blocked mic permission) is by far the most common real-world cause.
+const SPEECH_ERROR_MESSAGES: Record<string, string> = {
+  "not-allowed": "Microphone access is blocked. Click the padlock/site info icon in your address bar, allow microphone access, then try again.",
+  "service-not-allowed": "Microphone access is blocked. Click the padlock/site info icon in your address bar, allow microphone access, then try again.",
+  "audio-capture": "No microphone was found. Check that a microphone is connected and not muted, then try again.",
+  "no-speech": "No speech detected. Tap the orb and speak clearly right after.",
+  "network": "Network error reaching the speech recognition service. Check your connection and try again.",
+  "language-not-supported": "This browser doesn't support English speech recognition.",
 };
 
 // ── Speech synthesis helper ───────────────────────────────────────────────────
@@ -130,6 +144,7 @@ export default function HayyaVoiceOrb({ plan }: HayyaVoiceOrbProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [transcript, setTranscript] = useState("");
   const [supported, setSupported] = useState(true);
+  const [speechError, setSpeechError] = useState<string | null>(null);
   const recRef = useRef<SpeechRecognitionInstance | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const isPro = plan === "pro" || plan === "employer" || plan === "master_admin" || plan === "super_admin";
@@ -165,6 +180,7 @@ export default function HayyaVoiceOrb({ plan }: HayyaVoiceOrbProps) {
 
     setOrbState("listening");
     setTranscript("");
+    setSpeechError(null);
 
     rec.onresult = (e) => {
       const result = e.results[e.results.length - 1];
@@ -176,16 +192,26 @@ export default function HayyaVoiceOrb({ plan }: HayyaVoiceOrbProps) {
       }
     };
 
-    rec.onerror = () => {
-      setOrbState("error");
-      setTimeout(() => setOrbState("idle"), 2000);
+    rec.onerror = (e) => {
+      // "aborted" fires on our own rec.stop() calls — not a real failure, don't show an error for it.
+      if (e.error !== "aborted") {
+        setSpeechError(SPEECH_ERROR_MESSAGES[e.error] ?? `Voice recognition failed (${e.error}). Please try again.`);
+        setOrbState("error");
+        setTimeout(() => setOrbState("idle"), 4000);
+      }
     };
 
     rec.onend = () => {
       if (orbState === "listening") setOrbState("idle");
     };
 
-    rec.start();
+    try {
+      rec.start();
+    } catch {
+      setSpeechError("Couldn't start the microphone. Please try again.");
+      setOrbState("error");
+      setTimeout(() => setOrbState("idle"), 4000);
+    }
   }, [supported, orbState]);
 
   const stopListening = useCallback(() => {
@@ -373,6 +399,10 @@ export default function HayyaVoiceOrb({ plan }: HayyaVoiceOrbProps) {
                 </div>
 
                 <p className="text-[11px] text-white/35 font-medium">{STATE_LABELS[orbState]}</p>
+
+                {orbState === "error" && speechError && (
+                  <p className="text-[11px] text-[#fca5a5] text-center leading-relaxed max-w-[240px]">{speechError}</p>
+                )}
 
                 {messages.length > 0 && (
                   <button
