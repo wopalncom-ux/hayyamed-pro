@@ -3,20 +3,21 @@ import { redirect } from "next/navigation";
 
 export const metadata = { title: "Webhook Event Log — Admin" };
 
+// Kept in sync with the exact action strings each handler actually calls
+// logAudit() with (verified against app/api/paddle/webhook, app/api/webhooks/postmark,
+// and app/api/admin/push-broadcast — 2026-07-05). Previously this list included
+// "email.bounced"/"email.spam_reported" (the handlers actually log "email.hard_bounce"/
+// "email.spam_complaint") and several actions that are never logged anywhere at all
+// (subscription.paused/resumed, email.unsubscribed, cron.*) — so real bounce/spam
+// events were silently hidden and several filters could never match anything.
 const WEBHOOK_ACTIONS = [
   "subscription.activated",
   "subscription.activated_webhook",
   "subscription.canceled",
   "subscription.updated",
-  "subscription.paused",
-  "subscription.resumed",
-  "email.bounced",
-  "email.spam_reported",
-  "email.unsubscribed",
+  "email.hard_bounce",
+  "email.spam_complaint",
   "admin.push_broadcast",
-  "cron.license_reminder",
-  "cron.cme_deadline",
-  "cron.renewal_prediction",
 ];
 
 const ACTION_STYLES: Record<string, { label: string; badge: string }> = {
@@ -24,11 +25,8 @@ const ACTION_STYLES: Record<string, { label: string; badge: string }> = {
   "subscription.activated_webhook": { label: "Sub Webhook Confirmed",   badge: "bg-[#f0fdf4] text-[#166534]" },
   "subscription.canceled":          { label: "Subscription Canceled",   badge: "bg-[#fef2f2] text-[#dc2626]" },
   "subscription.updated":           { label: "Subscription Updated",    badge: "bg-[#eff6ff] text-[#1a56a0]" },
-  "subscription.paused":            { label: "Subscription Paused",     badge: "bg-[#fff7ed] text-[#d97706]" },
-  "subscription.resumed":           { label: "Subscription Resumed",    badge: "bg-[#dcfce7] text-[#16a34a]" },
-  "email.bounced":                  { label: "Email Bounced",           badge: "bg-[#fef2f2] text-[#dc2626]" },
-  "email.spam_reported":            { label: "Spam Reported",           badge: "bg-[#fef2f2] text-[#dc2626]" },
-  "email.unsubscribed":             { label: "Email Unsubscribed",      badge: "bg-[#f1f5f9] text-[#64748b]" },
+  "email.hard_bounce":              { label: "Email Bounced",           badge: "bg-[#fef2f2] text-[#dc2626]" },
+  "email.spam_complaint":           { label: "Spam Reported",           badge: "bg-[#fef2f2] text-[#dc2626]" },
   "admin.push_broadcast":           { label: "Push Broadcast",          badge: "bg-[#fdf4ff] text-[#7e22ce]" },
 };
 
@@ -53,7 +51,7 @@ export default async function WebhookLogPage() {
     .from("organization_members")
     .select("role")
     .eq("auth_id", user.id)
-    .in("role", ["master_admin", "super_admin"])
+    .in("role", ["founder", "master_admin", "super_admin"])
     .maybeSingle();
   if (!member) redirect("/dashboard");
 

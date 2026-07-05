@@ -14,7 +14,7 @@ async function assertAdmin() {
     .from("organization_members")
     .select("role")
     .eq("auth_id", user.id)
-    .in("role", ["master_admin", "super_admin"])
+    .in("role", ["founder", "master_admin", "super_admin"])
     .maybeSingle();
 
   if (!member) redirect("/dashboard");

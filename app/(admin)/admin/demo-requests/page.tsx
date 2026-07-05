@@ -33,7 +33,7 @@ async function updateStatus(formData: FormData) {
   const admin = createAdminClient();
   const { data: member } = await admin
     .from("organization_members").select("role")
-    .eq("auth_id", user.id).in("role", ["master_admin", "super_admin"]).maybeSingle();
+    .eq("auth_id", user.id).in("role", ["founder", "master_admin", "super_admin"]).maybeSingle();
   if (!member) redirect("/dashboard");
 
   const id     = formData.get("id") as string;
@@ -57,7 +57,7 @@ async function updateNotes(formData: FormData) {
   const admin = createAdminClient();
   const { data: member } = await admin
     .from("organization_members").select("role")
-    .eq("auth_id", user.id).in("role", ["master_admin", "super_admin"]).maybeSingle();
+    .eq("auth_id", user.id).in("role", ["founder", "master_admin", "super_admin"]).maybeSingle();
   if (!member) redirect("/dashboard");
 
   const id    = formData.get("id") as string;

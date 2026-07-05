@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
       .from("organization_members")
       .select("role")
       .eq("auth_id", user.id)
-      .in("role", ["master_admin", "super_admin"])
+      .in("role", ["founder", "master_admin", "super_admin"])
       .maybeSingle(),
     admin
       .from("training_providers")
@@ -36,7 +36,10 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json().catch(() => ({})) as { courseId?: string; all?: boolean };
-  const isAdmin = adminMember?.role === "master_admin" || adminMember?.role === "super_admin";
+  const isAdmin =
+    adminMember?.role === "founder" ||
+    adminMember?.role === "master_admin" ||
+    adminMember?.role === "super_admin";
 
   if (body.all && isAdmin) {
     // Batch embed all courses missing embeddings
