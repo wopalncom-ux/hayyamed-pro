@@ -45,6 +45,18 @@ const nextConfig: NextConfig = {
   // pdf-parse's "browser" export condition, which references the DOMMatrix
   // global that only exists in real browsers, not Node.
   serverExternalPackages: ["pdf-parse", "pdfjs-dist", "@napi-rs/canvas"],
+  // @napi-rs/canvas's platform-specific native binary (e.g.
+  // @napi-rs/canvas-linux-x64-musl for this project's node:20-alpine Docker
+  // image) lives in a SIBLING package, loaded via a dynamic, computed
+  // require() that Next's build-time file tracer can't follow statically —
+  // so it gets silently dropped from the pruned `.next/standalone` output
+  // the Dockerfile ships. pdf-parse then fails to load canvas, never
+  // polyfills globalThis.DOMMatrix, and crashes on first use. Force-include
+  // every platform variant so whichever one actually resolves at runtime
+  // ships with the production image.
+  outputFileTracingIncludes: {
+    "/api/owner/knowledge/document": ["./node_modules/@napi-rs/canvas*/**"],
+  },
   // Keep node_modules junction inside the Windows tmp distDir alive across builds.
   // In Docker/GCP the dist dir is always fresh, so this is a no-op there.
   cleanDistDir: false,
