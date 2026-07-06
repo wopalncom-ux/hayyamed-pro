@@ -6,8 +6,8 @@ type Range  = "1h" | "24h" | "7d" | "30d" | "90d";
 type Level  = "all" | "success" | "error";
 
 type AuditRow = {
-  id: string; created_at: string; actor_id: string; actor_role: string;
-  action: string; target_type: string; target_id: string; metadata: unknown; ip_address: string;
+  id: string; created_at: string; actor_auth_id: string | null;
+  action: string; target_table: string | null; target_id: string | null; metadata: unknown;
 };
 type AiRow = {
   id: string; created_at: string; professional_id: string; action: string; model: string;
@@ -172,10 +172,8 @@ export default function LogsClient() {
             <tr>
               <th className="px-3 py-2 text-left text-[#64748b] font-medium">Time</th>
               <th className="px-3 py-2 text-left text-[#64748b] font-medium">Actor</th>
-              <th className="px-3 py-2 text-left text-[#64748b] font-medium">Role</th>
               <th className="px-3 py-2 text-left text-[#64748b] font-medium">Action</th>
               <th className="px-3 py-2 text-left text-[#64748b] font-medium">Target</th>
-              <th className="px-3 py-2 text-left text-[#64748b] font-medium">IP</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-[#f8fafc]">
@@ -184,16 +182,12 @@ export default function LogsClient() {
                 <tr key={r.id} onClick={() => setExpanded(expanded === r.id ? null : r.id)}
                   className="hover:bg-[#f8fafc] cursor-pointer transition-colors">
                   <td className="px-3 py-2 text-[#64748b] whitespace-nowrap">{ts(r.created_at)}</td>
-                  <td className="px-3 py-2 font-mono text-[10px] text-[#374151] max-w-[100px] truncate">{r.actor_id?.slice(-8) ?? "system"}</td>
-                  <td className="px-3 py-2">
-                    <span className="px-1.5 py-0.5 rounded text-[9px] bg-[#f1f5f9] text-[#64748b]">{r.actor_role ?? "—"}</span>
-                  </td>
+                  <td className="px-3 py-2 font-mono text-[10px] text-[#374151] max-w-[100px] truncate">{r.actor_auth_id?.slice(-8) ?? "system"}</td>
                   <td className="px-3 py-2 font-medium text-[#0f172a]">{r.action}</td>
-                  <td className="px-3 py-2 text-[#64748b]">{r.target_type ?? "—"}</td>
-                  <td className="px-3 py-2 font-mono text-[10px] text-[#94a3b8]">{r.ip_address ?? "—"}</td>
+                  <td className="px-3 py-2 text-[#64748b]">{r.target_table ?? "—"}</td>
                 </tr>
                 {expanded === r.id && (
-                  <tr key={`${r.id}-detail`}><td colSpan={6} className="px-4 py-3 bg-[#f8fafc]">
+                  <tr key={`${r.id}-detail`}><td colSpan={4} className="px-4 py-3 bg-[#f8fafc]">
                     <pre className="text-[10px] font-mono text-[#374151] whitespace-pre-wrap break-all">
                       {JSON.stringify(r.metadata ?? {}, null, 2)}
                     </pre>

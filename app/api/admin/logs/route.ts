@@ -42,11 +42,11 @@ export async function GET(req: NextRequest) {
   if (source === "audit") {
     let q = admin
       .from("audit_logs")
-      .select("id, created_at, actor_id, actor_role, action, target_type, target_id, metadata, ip_address", { count: "exact" })
+      .select("id, created_at, actor_auth_id, action, target_table, target_id, metadata", { count: "exact" })
       .order("created_at", { ascending: false })
       .range(offset, offset + limit - 1);
     if (since) q = q.gte("created_at", since);
-    if (search) q = q.or(`action.ilike.%${search}%,actor_id.ilike.%${search}%`);
+    if (search) q = q.ilike("action", `%${search}%`);
 
     const { data, error, count } = await q;
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
