@@ -50,6 +50,7 @@ export async function registerGovernmentAuthority(formData: FormData): Promise<v
     .select("id")
     .eq("auth_id", user.id)
     .eq("role", "government_admin")
+    .limit(1)
     .maybeSingle();
 
   if (existing) redirect("/government");

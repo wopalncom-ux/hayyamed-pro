@@ -57,6 +57,7 @@ export async function sendReminder(formData: FormData): Promise<ReminderResult> 
     .select("id")
     .eq("auth_id", user.id)
     .eq("role", "government_admin")
+    .limit(1)
     .maybeSingle();
   if (!member) return { ok: false, error: "Only authority admins can send reminders" };
 

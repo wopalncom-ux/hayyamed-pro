@@ -41,6 +41,7 @@ export async function getUserPlan(userId: string): Promise<import("./planUtils")
     .select("organization_id, role")
     .eq("auth_id", userId)
     .eq("role", "employer_admin")
+    .limit(1)
     .maybeSingle();
 
   if (membership) {

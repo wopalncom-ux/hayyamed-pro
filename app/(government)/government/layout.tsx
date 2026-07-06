@@ -14,6 +14,7 @@ export default async function GovernmentLayout({ children }: { children: React.R
     .select("role, organization_id, organizations(name, verified)")
     .eq("auth_id", user.id)
     .in("role", ["government_admin", "government_staff"])
+    .limit(1)
     .maybeSingle();
 
   if (!member) redirect("/government/register");

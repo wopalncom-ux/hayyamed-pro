@@ -28,6 +28,7 @@ export async function GET() {
     .select("organization_id")
     .eq("auth_id", user.id)
     .eq("role", "employer_admin")
+    .limit(1)
     .maybeSingle();
 
   if (!member) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
@@ -58,6 +59,7 @@ export async function PATCH(req: NextRequest) {
     .select("organization_id")
     .eq("auth_id", user.id)
     .eq("role", "employer_admin")
+    .limit(1)
     .maybeSingle();
 
   if (!member) return NextResponse.json({ error: "Forbidden" }, { status: 403 });

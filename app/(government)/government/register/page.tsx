@@ -45,6 +45,7 @@ export default async function GovernmentRegisterPage({
     .select("id")
     .eq("auth_id", user.id)
     .eq("role", "government_admin")
+    .limit(1)
     .maybeSingle();
 
   if (existingMember) redirect("/government");

@@ -18,6 +18,7 @@ export default async function EmployerLayout({ children }: { children: React.Rea
     .select("role, organizations(name, verified, brand_color, brand_logo_url, brand_name_override)")
     .eq("auth_id", user.id)
     .eq("role", "employer_admin")
+    .limit(1)
     .maybeSingle();
 
   if (!isRegisterPage && !member) redirect("/employer/register");

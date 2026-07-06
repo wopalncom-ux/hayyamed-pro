@@ -15,6 +15,7 @@ export default async function GovernmentAIAssistantPage() {
     .select("organization_id")
     .eq("auth_id", user.id)
     .in("role", ["government_admin", "government_staff"])
+    .limit(1)
     .maybeSingle();
 
   if (!member) redirect("/government");

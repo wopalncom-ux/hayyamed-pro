@@ -54,6 +54,7 @@ export default async function UniversityRegisterPage({
     .select("id")
     .eq("auth_id", user.id)
     .eq("role", "university_admin")
+    .limit(1)
     .maybeSingle();
 
   if (existingMember) redirect("/university");

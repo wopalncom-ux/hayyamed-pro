@@ -20,6 +20,7 @@ export async function approveLinkRequest(requestId: string, organizationId: stri
     .eq("auth_id", user.id)
     .eq("organization_id", organizationId)
     .eq("role", "employer_admin")
+    .limit(1)
     .maybeSingle();
 
   if (!member) return { error: "Not authorized" };
@@ -113,6 +114,7 @@ export async function rejectLinkRequest(requestId: string, organizationId: strin
     .eq("auth_id", user.id)
     .eq("organization_id", organizationId)
     .eq("role", "employer_admin")
+    .limit(1)
     .maybeSingle();
 
   if (!member) return { error: "Not authorized" };
@@ -184,6 +186,7 @@ export async function removeStaffLink(linkId: string) {
     .eq("auth_id", user.id)
     .eq("organization_id", link.organization_id)
     .eq("role", "employer_admin")
+    .limit(1)
     .maybeSingle();
 
   if (!member) return { error: "Not authorized" };
@@ -225,6 +228,7 @@ export async function approveAllLinkRequests(organizationId: string) {
     .eq("auth_id", user.id)
     .eq("organization_id", organizationId)
     .eq("role", "employer_admin")
+    .limit(1)
     .maybeSingle();
 
   if (!member) return { error: "Not authorized", approved: 0 };

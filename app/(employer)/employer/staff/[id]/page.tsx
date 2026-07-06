@@ -42,6 +42,7 @@ export default async function StaffDetailPage({ params }: { params: Promise<{ id
     .select("organization_id, organizations(name)")
     .eq("auth_id", user.id)
     .eq("role", "employer_admin")
+    .limit(1)
     .maybeSingle();
 
   if (!adminMember) redirect("/dashboard");

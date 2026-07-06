@@ -15,6 +15,7 @@ async function requireEmployerAdmin() {
     .select("organization_id")
     .eq("auth_id", user.id)
     .eq("role", "employer_admin")
+    .limit(1)
     .maybeSingle();
 
   if (!member) throw new Error("Not an employer admin.");

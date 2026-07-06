@@ -52,6 +52,7 @@ export default async function WebhookLogPage() {
     .select("role")
     .eq("auth_id", user.id)
     .in("role", ["founder", "master_admin", "super_admin"])
+    .limit(1)
     .maybeSingle();
   if (!member) redirect("/dashboard");
 

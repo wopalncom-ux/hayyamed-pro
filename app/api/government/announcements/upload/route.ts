@@ -23,6 +23,7 @@ export async function POST(req: NextRequest) {
     .select("id")
     .eq("auth_id", user.id)
     .eq("role", "government_admin")
+    .limit(1)
     .maybeSingle();
   if (!member) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 

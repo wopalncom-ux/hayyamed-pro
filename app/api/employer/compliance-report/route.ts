@@ -29,6 +29,7 @@ export async function GET(request: NextRequest) {
     .eq("auth_id", user.id)
     .eq("organization_id", orgId)
     .eq("role", "employer_admin")
+    .limit(1)
     .maybeSingle();
 
   if (!member) return NextResponse.json({ error: "Forbidden" }, { status: 403 });

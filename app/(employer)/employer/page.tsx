@@ -62,6 +62,7 @@ export default async function EmployerDashboardPage({
     .select("organization_id, organizations(name)")
     .eq("auth_id", user.id)
     .eq("role", "employer_admin")
+    .limit(1)
     .maybeSingle();
 
   if (!member) redirect("/dashboard");

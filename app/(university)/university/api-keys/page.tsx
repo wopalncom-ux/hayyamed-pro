@@ -21,6 +21,7 @@ export default async function UniversityApiKeysPage() {
     .select("organization_id")
     .eq("auth_id", user.id)
     .eq("role", "university_admin")
+    .limit(1)
     .maybeSingle();
 
   if (!member) redirect("/university/register");

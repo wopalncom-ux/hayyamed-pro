@@ -15,6 +15,7 @@ export default async function BroadcastPage() {
     .select("organization_id")
     .eq("auth_id", user.id)
     .eq("role", "government_admin")
+    .limit(1)
     .maybeSingle();
 
   if (!member) redirect("/government");

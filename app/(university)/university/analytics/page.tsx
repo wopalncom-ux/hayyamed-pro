@@ -24,6 +24,7 @@ export default async function UniversityAnalyticsPage() {
     .select("organization_id, organizations(name)")
     .eq("auth_id", user.id)
     .eq("role", "university_admin")
+    .limit(1)
     .maybeSingle();
 
   if (!member) redirect("/dashboard");

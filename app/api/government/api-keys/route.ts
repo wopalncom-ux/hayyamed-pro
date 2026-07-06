@@ -17,6 +17,7 @@ async function getGovernmentOrg(userId: string) {
     .select("organization_id")
     .eq("auth_id", userId)
     .eq("role", "government_admin")
+    .limit(1)
     .maybeSingle();
   return data?.organization_id ?? null;
 }

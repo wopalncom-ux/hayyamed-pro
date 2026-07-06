@@ -51,6 +51,7 @@ export default async function SettingsPage() {
       .select("role, organizations(name)")
       .eq("auth_id", user.id)
       .eq("role", "employer_admin")
+      .limit(1)
       .maybeSingle(),
     admin.from("cme_wallets")
       .select("id, country, profession, required_credits, completed_credits, compliance_status, cycle_end_date, is_primary, label")

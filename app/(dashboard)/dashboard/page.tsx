@@ -57,7 +57,7 @@ export default async function DashboardPage({
     admin.from("partners").select("id, name, logo_url, website_url, partner_type, tagline")
       .eq("is_active", true).eq("show_on_dashboard", true).order("display_order").limit(8),
     admin.from("nps_responses").select("id").eq("professional_id", user.id).gte("created_at", npsLookback).maybeSingle(),
-    admin.from("organization_members").select("role").eq("auth_id", user.id).eq("role", "employer_admin").maybeSingle(),
+    admin.from("organization_members").select("role").eq("auth_id", user.id).eq("role", "employer_admin").limit(1).maybeSingle(),
     admin.from("audit_logs").select("*", { count: "exact", head: true }).eq("actor_auth_id", user.id).eq("action", "referral.signup"),
     admin.from("subscriptions").select("plan, employer_tier").eq("professional_id", user.id).eq("status", "active").maybeSingle(),
     admin.from("employer_tasks")

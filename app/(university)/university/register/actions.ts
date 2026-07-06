@@ -45,6 +45,7 @@ export async function registerUniversity(formData: FormData): Promise<void> {
     .select("id")
     .eq("auth_id", user.id)
     .eq("role", "university_admin")
+    .limit(1)
     .maybeSingle();
 
   if (existing) redirect("/university");

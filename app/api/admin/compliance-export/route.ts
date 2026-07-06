@@ -26,6 +26,7 @@ export async function GET(req: NextRequest) {
     .select("role")
     .eq("auth_id", user.id)
     .in("role", ["founder", "master_admin", "super_admin"])
+    .limit(1)
     .maybeSingle();
 
   if (!membership) return NextResponse.json({ error: "Forbidden" }, { status: 403 });

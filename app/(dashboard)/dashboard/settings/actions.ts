@@ -436,6 +436,7 @@ export async function submitLinkRequest(payload: {
         .select("auth_id, role")
         .eq("organization_id", payload.organizationId)
         .in("role", ["employer_admin", "university_admin"])
+        .limit(1)
         .maybeSingle(),
       admin.from("professional_profiles")
         .select("full_name, profession")

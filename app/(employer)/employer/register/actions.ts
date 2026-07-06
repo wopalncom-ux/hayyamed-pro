@@ -42,6 +42,7 @@ export async function registerEmployer(formData: FormData): Promise<void> {
     .select("id")
     .eq("auth_id", user.id)
     .eq("role", "employer_admin")
+    .limit(1)
     .maybeSingle();
 
   if (existing) redirect("/employer");

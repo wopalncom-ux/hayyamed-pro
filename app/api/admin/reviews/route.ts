@@ -13,6 +13,7 @@ async function requireAdmin(userId: string) {
     .select("role")
     .eq("auth_id", userId)
     .in("role", ["founder", "master_admin", "super_admin"])
+    .limit(1)
     .maybeSingle();
   return data?.role ?? null;
 }

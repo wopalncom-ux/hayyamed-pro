@@ -51,6 +51,7 @@ export default async function EmployerRegisterPage({
       .select("id")
       .eq("auth_id", user.id)
       .eq("role", "employer_admin")
+      .limit(1)
       .maybeSingle(),
     admin
       .from("subscriptions")

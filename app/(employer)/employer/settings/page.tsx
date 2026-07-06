@@ -23,6 +23,7 @@ export default async function EmployerSettingsPage() {
     .select("organization_id, organizations(name, type, country, city, verified, brand_color, brand_logo_url, brand_name_override, brand_email_from)")
     .eq("auth_id", user.id)
     .eq("role", "employer_admin")
+    .limit(1)
     .maybeSingle();
 
   if (!member) redirect("/employer/register");

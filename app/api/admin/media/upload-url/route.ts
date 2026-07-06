@@ -13,6 +13,7 @@ async function assertAdmin() {
     .select("role")
     .eq("auth_id", user.id)
     .in("role", ["founder", "master_admin", "super_admin"])
+    .limit(1)
     .maybeSingle();
   return member ? user : null;
 }

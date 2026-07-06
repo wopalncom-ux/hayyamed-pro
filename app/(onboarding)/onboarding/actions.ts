@@ -119,6 +119,7 @@ export async function completeOnboarding(): Promise<{ pct: number; trialDays: nu
             .select("auth_id")
             .eq("organization_id", org.id)
             .eq("role", "employer_admin")
+            .limit(1)
             .maybeSingle()
         ).then(async ({ data: empMember }) => {
           if (!empMember?.auth_id) return;

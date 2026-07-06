@@ -58,6 +58,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
       .select("role")
       .eq("auth_id", user.id)
       .eq("role", "employer_admin")
+      .limit(1)
       .maybeSingle(),
   ]);
 

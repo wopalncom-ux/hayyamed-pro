@@ -27,6 +27,7 @@ export async function bulkApproveRequests(requestIds: string[], organizationId: 
     .eq("auth_id", user.id)
     .eq("organization_id", organizationId)
     .in("role", ["government_admin"])
+    .limit(1)
     .maybeSingle();
 
   if (!member) return { error: "Not authorized" };
@@ -67,6 +68,7 @@ export async function bulkRejectRequests(requestIds: string[], organizationId: s
     .eq("auth_id", user.id)
     .eq("organization_id", organizationId)
     .in("role", ["government_admin"])
+    .limit(1)
     .maybeSingle();
 
   if (!member) return { error: "Not authorized" };
@@ -106,6 +108,7 @@ export async function updateGovernmentSettings(formData: FormData) {
     .select("organization_id")
     .eq("auth_id", user.id)
     .eq("role", "government_admin")
+    .limit(1)
     .maybeSingle();
 
   if (!member) return;
@@ -163,6 +166,7 @@ export async function broadcastMessage(prevState: unknown, formData: FormData) {
     .select("organization_id, organizations(name)")
     .eq("auth_id", user.id)
     .eq("role", "government_admin")
+    .limit(1)
     .maybeSingle();
 
   if (!member) return { error: "Not authorized" };
@@ -262,6 +266,7 @@ export async function inviteTeamMember(prevState: unknown, formData: FormData) {
     .select("organization_id, organizations(name)")
     .eq("auth_id", user.id)
     .eq("role", "government_admin")
+    .limit(1)
     .maybeSingle();
 
   if (!member) return { error: "Only the primary government admin can invite team members" };
@@ -292,6 +297,7 @@ export async function inviteTeamMember(prevState: unknown, formData: FormData) {
     .select("id")
     .eq("auth_id", targetProfile.auth_id)
     .eq("organization_id", orgId)
+    .limit(1)
     .maybeSingle();
 
   if (existing) return { error: "This person is already a team member of your authority" };
@@ -356,6 +362,7 @@ export async function removeTeamMember(memberId: string, organizationId: string)
     .eq("auth_id", user.id)
     .eq("organization_id", organizationId)
     .eq("role", "government_admin")
+    .limit(1)
     .maybeSingle();
 
   if (!self) return { error: "Only the primary government admin can remove team members" };

@@ -36,6 +36,7 @@ export async function POST(req: NextRequest) {
     .eq("auth_id", user.id)
     .eq("organization_id", organizationId)
     .in("role", ["government_admin", "government_staff"])
+    .limit(1)
     .maybeSingle();
 
   if (!member) return NextResponse.json({ error: "Not authorized" }, { status: 403 });

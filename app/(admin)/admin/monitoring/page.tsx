@@ -62,25 +62,29 @@ export default async function MonitoringPage() {
 
   const gcpProject = process.env.GOOGLE_CLOUD_PROJECT ?? "";
 
-  // Cron last-run: query by action + metadata->>'job' (NOT by target_id — that's a UUID column)
+  // Cron last-run: one query per job slug, each taking only its own most recent row.
+  // A single shared "top 300" query is wrong here — process-notifications and
+  // process-webhooks run every 5 minutes (~288 rows/day each) and crowd every
+  // other job's rows out of a shared limit within hours, making daily/weekly
+  // jobs falsely read as "Never run" even though they ran fine.
   const since14d = new Date(Date.now() - 14 * 86_400_000).toISOString();
-  const { data: cronLogs } = await admin
-    .from("audit_logs")
-    .select("metadata, created_at")
-    .eq("action", "cron.completed")
-    .gte("created_at", since14d)
-    .order("created_at", { ascending: false })
-    .limit(300); // 15 jobs × up to 20 recent runs each
-
-  // Build last-run map: job slug → most recent log entry
   const lastRun: Record<string, { at: Date; meta: Record<string, unknown> }> = {};
-  for (const log of cronLogs ?? []) {
-    const meta = (log.metadata as Record<string, unknown>) ?? {};
-    const job = meta.job as string | undefined;
-    if (job && !lastRun[job]) {
-      lastRun[job] = { at: new Date(log.created_at), meta };
-    }
-  }
+  await Promise.all(
+    CRON_JOBS.map(async (job) => {
+      const { data } = await admin
+        .from("audit_logs")
+        .select("metadata, created_at")
+        .eq("action", "cron.completed")
+        .filter("metadata->>job", "eq", job.slug)
+        .gte("created_at", since14d)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      if (data) {
+        lastRun[job.slug] = { at: new Date(data.created_at), meta: (data.metadata as Record<string, unknown>) ?? {} };
+      }
+    }),
+  );
 
   // Queue depth + error counts
   const since24h = new Date(Date.now() - 86_400_000).toISOString();

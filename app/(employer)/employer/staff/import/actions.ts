@@ -72,6 +72,7 @@ export async function importStaffCsv(
     .select("organization_id, organizations(name)")
     .eq("auth_id", user.id)
     .eq("role", "employer_admin")
+    .limit(1)
     .maybeSingle();
 
   if (!member) return { error: "Not an employer admin." };

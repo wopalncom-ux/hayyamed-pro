@@ -15,6 +15,7 @@ export default async function StaffImportPage() {
     .select("organization_id, organizations(name)")
     .eq("auth_id", user.id)
     .eq("role", "employer_admin")
+    .limit(1)
     .maybeSingle();
 
   if (!member) redirect("/employer/register");

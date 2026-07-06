@@ -18,6 +18,7 @@ async function requireAdmin() {
     .select("id")
     .eq("auth_id", user.id)
     .eq("role", "government_admin")
+    .limit(1)
     .maybeSingle();
   if (!member) return null;
   return user.id;

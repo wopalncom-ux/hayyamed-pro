@@ -25,6 +25,7 @@ export async function POST(req: NextRequest) {
     .select("organization_id")
     .eq("auth_id", user.id)
     .eq("role", "employer_admin")
+    .limit(1)
     .maybeSingle();
 
   if (!member) return NextResponse.json({ error: "No employer organisation" }, { status: 403 });
