@@ -55,7 +55,12 @@ const nextConfig: NextConfig = {
   // every platform variant so whichever one actually resolves at runtime
   // ships with the production image.
   outputFileTracingIncludes: {
-    "/api/owner/knowledge/document": ["./node_modules/@napi-rs/canvas*/**"],
+    "/api/owner/knowledge/document": [
+      "./node_modules/@napi-rs/canvas*/**",
+      // pdfjs-dist loads its worker (pdf.worker.mjs) via a dynamically
+      // resolved path the file tracer also can't follow statically.
+      "./node_modules/pdfjs-dist/**",
+    ],
   },
   // Keep node_modules junction inside the Windows tmp distDir alive across builds.
   // In Docker/GCP the dist dir is always fresh, so this is a no-op there.
