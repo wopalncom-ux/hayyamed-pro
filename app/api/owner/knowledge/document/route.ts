@@ -32,17 +32,15 @@ export async function POST(req: NextRequest) {
   let text: string;
   try {
     if (file.type === "application/pdf") {
-      // pdf-parse's CJS/ESM interop shape isn't consistent across build
-      // environments — handle both a `.default` export and a bare callable module.
-      const pdfParseModule: unknown = await import("pdf-parse");
-      const pdfParse = (
-        typeof pdfParseModule === "function"
-          ? pdfParseModule
-          : (pdfParseModule as { default: (buf: Buffer) => Promise<{ text: string }> }).default
-      ) as (buf: Buffer) => Promise<{ text: string }>;
+      const { PDFParse } = await import("pdf-parse");
       const buffer = Buffer.from(await file.arrayBuffer());
-      const parsed = await pdfParse(buffer);
-      text = parsed.text;
+      const parser = new PDFParse({ data: buffer });
+      try {
+        const result = await parser.getText();
+        text = result.text;
+      } finally {
+        await parser.destroy();
+      }
     } else {
       text = await file.text();
     }

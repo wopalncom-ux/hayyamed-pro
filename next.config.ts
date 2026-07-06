@@ -40,6 +40,11 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  // pdf-parse (and its pdfjs-dist/@napi-rs/canvas deps) must run as plain
+  // Node `require()` at runtime, not get webpack-bundled — bundling resolves
+  // pdf-parse's "browser" export condition, which references the DOMMatrix
+  // global that only exists in real browsers, not Node.
+  serverExternalPackages: ["pdf-parse", "pdfjs-dist", "@napi-rs/canvas"],
   // Keep node_modules junction inside the Windows tmp distDir alive across builds.
   // In Docker/GCP the dist dir is always fresh, so this is a no-op there.
   cleanDistDir: false,
