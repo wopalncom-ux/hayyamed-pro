@@ -6,7 +6,7 @@ const APP_URL = "https://hayyamed.pro";
 export const metadata: Metadata = {
   title: "Security & Data Protection — Hayya Med Pro",
   description:
-    "Hayya Med Pro security architecture for healthcare data: Qatar PDPL compliance, GCP me-central1 data residency, row-level security, private certificate storage, AI privacy controls, and audit logging. Built for hospital enterprise procurement.",
+    "Hayya Med Pro security architecture for healthcare data: application hosted on GCP me-central1 (Qatar), row-level security, private certificate storage, AI privacy controls, and audit logging. Built for hospital enterprise procurement.",
   keywords: [
     "Hayya Med Pro security",
     "CME tracker data security",
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "Security & Data Protection — Hayya Med Pro",
-    description: "Healthcare-grade data security for GCC CME tracking. PDPL compliance, Qatar data residency, row-level security, and full audit logging.",
+    description: "Healthcare-grade data security for GCC CME tracking. Application hosted in Qatar, row-level security, and full audit logging.",
     url: `${APP_URL}/security`,
     type: "website",
   },
@@ -29,9 +29,9 @@ export const metadata: Metadata = {
 const SECURITY_SECTIONS = [
   {
     icon: "🏛",
-    title: "Data residency — Qatar (GCC)",
-    body: "All data is stored and processed in Google Cloud Platform's me-central1 region, located in Doha, Qatar. Healthcare professional records, CME activity data, and certificate files never leave the GCC region. This satisfies Qatar PDPL data residency requirements and supports hospital procurement teams operating under Qatar government data sovereignty policies.",
-    tags: ["GCP me-central1 (Doha)", "Qatar data residency", "No cross-border data transfer"],
+    title: "Application infrastructure — Qatar (GCC)",
+    body: "The application is deployed on Google Cloud Platform's me-central1 region, located in Doha, Qatar. Database storage does not currently reside in the GCC region. Contact us to discuss in-region data residency requirements for hospital procurement or government data sovereignty policies.",
+    tags: ["GCP me-central1 (Doha)", "Application layer in Qatar"],
   },
   {
     icon: "🔒",
@@ -128,7 +128,7 @@ export default function SecurityPage() {
             Built for hospital enterprise procurement
           </div>
           <h1 className="text-4xl sm:text-5xl font-bold text-[#111] tracking-tight mb-5">
-            Healthcare-grade security.<br />Qatar data residency.
+            Healthcare-grade security.<br />Application hosted in Qatar.
           </h1>
           <p className="text-lg text-[#64748b] max-w-2xl mx-auto mb-8">
             Hayya Med Pro is built to meet the security and data protection requirements of GCC hospitals, government health authorities, and enterprise procurement teams.

@@ -290,8 +290,8 @@ export default function AboutPage() {
                 },
                 {
                   icon: "🌍",
-                  title: "GCC data residency",
-                  body: "Platform deployed on GCP in me-central1 (Doha, Qatar). Healthcare data stays in the region.",
+                  title: "Application infrastructure in the GCC",
+                  body: "Platform application layer deployed on GCP in me-central1 (Doha, Qatar). Database storage does not currently reside in the region.",
                 },
                 {
                   icon: "📋",

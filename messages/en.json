@@ -28,7 +28,7 @@
   "trust": {
     "authority_text": "CME rules sourced directly from all 7 GCC licensing authorities",
     "pdpl": "Qatar PDPL compliant",
-    "data_hosted": "Data hosted in Doha, Qatar",
+    "data_hosted": "Hosted on Google Cloud in Qatar",
     "claude_ai": "Powered by Gemini AI",
     "trial": "14-day Pro trial · No card"
   },
@@ -67,7 +67,7 @@
     "stat_setup": "Setup time",
     "stat_free": "Free to start",
     "trust_1": "Rules sourced directly from QCHP, SCFHS, DHA, NHRA, OMSB and MOH Kuwait",
-    "trust_2": "Healthcare data stored in Doha, Qatar — never leaves the GCC",
+    "trust_2": "Application hosted on Google Cloud in Qatar",
     "trust_3": "Every AI call is logged, audited, and validated against a Zod schema"
   },
   "ai_demo": {
@@ -161,7 +161,7 @@
     "q5": "Can my employer or hospital see my CME records?",
     "a5": "Only if you explicitly approve the connection. Your profile is private by default. Privacy settings give you full control over what information — if any — is visible to your employer.",
     "q6": "Is my healthcare data stored securely in the GCC?",
-    "a6": "Yes. All data is hosted on GCP infrastructure in Doha, Qatar, encrypted at rest and in transit, and processed under Qatar's Personal Data Protection Law (PDPL). Your data never leaves the GCC region.",
+    "a6": "The application runs on GCP infrastructure in Doha, Qatar, and all data is encrypted at rest and in transit. Database storage does not currently reside in the GCC region — contact us if in-region data residency is a requirement for your organization.",
     "q7": "How does Hayya AI work?",
     "a7": "Hayya AI (Pro feature) answers questions about your country's CME requirements, identifies gaps in your compliance profile, and suggests activities to close those gaps. It is powered by Google Gemini integrated with Hayya Med Pro's compliance rule database — and always recommends verifying final requirements with your licensing authority."
   },
@@ -376,7 +376,7 @@
     "faq_q5": "What payment methods are accepted?",
     "faq_a5": "All major credit and debit cards via Paddle. Cards issued in Qatar, UAE, Saudi Arabia, and other GCC countries are fully supported.",
     "faq_q6": "Is my health data secure?",
-    "faq_a6": "Yes. Data is stored on Supabase (PostgreSQL with row-level security), hosted in GCP (me-central1, Doha, Qatar). No personal data is ever sent to AI models. All files use signed URLs with 1-hour expiry.",
+    "faq_a6": "Yes. Data is stored on Supabase (PostgreSQL with row-level security); the application itself runs on GCP (me-central1, Doha, Qatar). No personal data is ever sent to AI models. All files use signed URLs with 1-hour expiry.",
     "cta_title": "Start tracking your CME compliance today",
     "cta_subtitle": "Free forever for individuals. Upgrade for PDF reports, AI compliance tools, and automated reminders.",
     "cta_start_free": "Start free — no credit card →",

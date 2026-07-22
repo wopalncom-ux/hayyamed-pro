@@ -118,7 +118,7 @@ const faqJsonLd = {
       name: "Is our staff's personal data secure?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "All data is hosted on GCP infrastructure in Doha, Qatar — within the GCC data residency zone. Row-level security ensures no staff member can see another's records. Hayya Med Pro signs a Data Processing Agreement (DPA) with every hospital account before any data is shared.",
+        text: "The application layer runs on GCP infrastructure in Doha, Qatar; database storage does not currently reside in-region. Row-level security ensures no staff member can see another's records. Hayya Med Pro signs a Data Processing Agreement (DPA) with every hospital account before any data is shared.",
       },
     },
     {
@@ -204,7 +204,7 @@ const FAQS = [
   },
   {
     q: "Is staff personal data secure?",
-    a: "All data is hosted in Doha, Qatar (GCP me-central1). Hayya Med Pro signs a DPA with every hospital account before data is shared. Row-level security ensures staff cannot access each other's records.",
+    a: "The application layer runs in Doha, Qatar (GCP me-central1); database storage does not currently reside in-region. Hayya Med Pro signs a DPA with every hospital account before data is shared. Row-level security ensures staff cannot access each other's records.",
   },
   {
     q: "What does it cost for a hospital?",
@@ -384,7 +384,7 @@ export default function ForHospitalsPage() {
                 { n: "7", label: "GCC licensing authorities" },
                 { n: "100%", label: "Rules-engine driven" },
                 { n: "< 2s", label: "Dashboard load time" },
-                { n: "QA 🇶🇦", label: "Data hosted in Qatar" },
+                { n: "QA 🇶🇦", label: "App hosted in Qatar" },
               ].map((s) => (
                 <div key={s.label}>
                   <div className="text-3xl font-extrabold text-white mb-1">{s.n}</div>

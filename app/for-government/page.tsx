@@ -52,7 +52,7 @@ const faqLd = {
     {
       "@type": "Question",
       name: "Does the platform support GCC data residency requirements?",
-      acceptedAnswer: { "@type": "Answer", text: "Yes. Hayya Med Pro is deployed on Google Cloud Platform in the me-central1 region (Doha, Qatar). All healthcare professional data is stored in Qatar by default. For Saudi Arabia deployments, data can be routed to the GCP me-west1 (Dammam) region. We support Qatar PDPL (Law No. 13 of 2016) and Saudi data localization requirements." },
+      acceptedAnswer: { "@type": "Answer", text: "Hayya Med Pro's application layer runs on Google Cloud Platform in the me-central1 region (Doha, Qatar). Database storage does not currently reside in-region. Contact us to discuss in-region data residency requirements under Qatar PDPL (Law No. 13 of 2016) or other applicable data localization rules for your authority's deployment." },
     },
     {
       "@type": "Question",
@@ -95,8 +95,8 @@ const CAPABILITIES = [
   },
   {
     icon: "🛡️",
-    title: "GCC data residency",
-    body: "Deployed on GCP me-central1 (Doha, Qatar). Saudi deployments on GCP me-west1 (Dammam). Qatar PDPL and Saudi data localization compliant.",
+    title: "Regional infrastructure",
+    body: "Application layer deployed on GCP me-central1 (Doha, Qatar). Database storage does not currently reside in-region — contact us to discuss data residency requirements for your deployment.",
   },
   {
     icon: "📊",
@@ -269,12 +269,11 @@ export default function ForGovernmentPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
               <div>
                 <div className="inline-flex items-center gap-2 bg-[#eff6ff] border border-[#bfdbfe] text-[#1e40af] text-xs font-semibold px-3 py-1.5 rounded-full mb-4">🛡️ Data Sovereignty & Security</div>
-                <h2 className="text-3xl font-bold text-[#111] mb-4 leading-tight">Healthcare data stays in your region — by design</h2>
-                <p className="text-[#64748b] mb-6 leading-relaxed">Hayya Med Pro is deployed on Google Cloud Platform, with primary infrastructure in <strong>me-central1 (Doha, Qatar)</strong>. No healthcare professional data leaves your jurisdiction without explicit configuration.</p>
+                <h2 className="text-3xl font-bold text-[#111] mb-4 leading-tight">Application infrastructure in the GCC — by design</h2>
+                <p className="text-[#64748b] mb-6 leading-relaxed">Hayya Med Pro's application layer is deployed on Google Cloud Platform, with primary infrastructure in <strong>me-central1 (Doha, Qatar)</strong>. Database storage does not currently reside in-region — talk to us about your authority's specific data residency requirements.</p>
                 <ul className="space-y-3">
                   {[
-                    "Qatar PDPL (Law No. 13 of 2016) compliant",
-                    "Saudi data localization: GCP me-west1 (Dammam)",
+                    "Built with Qatar PDPL (Law No. 13 of 2016) principles in mind",
                     "AES-256 encryption at rest, TLS 1.3 in transit",
                     "Append-only audit logs — 7-year retention",
                     "SOC 2 Type II target (Year 2) · ISO 27001 target (Year 3)",
@@ -289,7 +288,7 @@ export default function ForGovernmentPage() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 {[
-                  { label: "Data region", value: "me-central1", sub: "Doha, Qatar" },
+                  { label: "Application region", value: "me-central1", sub: "Doha, Qatar" },
                   { label: "Encryption", value: "AES-256", sub: "At rest + in transit" },
                   { label: "Audit retention", value: "7 years", sub: "Append-only logs" },
                   { label: "Uptime SLA", value: "99.9%", sub: "43 min/month max" },

@@ -431,8 +431,8 @@ export default function DevelopersPage() {
               </div>
 
               <div className="bg-[#f8fafc] border border-[#e2e8f0] rounded-xl p-4 text-xs text-[#64748b] leading-relaxed">
-                <strong className="text-[#111]">Data residency:</strong> All API requests are handled by servers in{" "}
-                <strong className="text-[#374151]">me-central1 (Doha, Qatar)</strong>. Data does not leave the GCC region.
+                <strong className="text-[#111]">Application region:</strong> All API requests are handled by servers in{" "}
+                <strong className="text-[#374151]">me-central1 (Doha, Qatar)</strong>. Database storage does not currently reside in the GCC region.
                 A GDPR-compliant EU region is planned for Phase 3.
               </div>
             </Section>

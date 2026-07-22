@@ -234,10 +234,10 @@ export default function SlaPage() {
           <Table
             headers={["Item", "Commitment"]}
             rows={[
-              ["Primary region",         "GCP me-central1 (Doha, Qatar) — all healthcare data"],
-              ["Data sovereignty",       "Customer data does not leave the GCC region without written consent"],
+              ["Application region",     "GCP me-central1 (Doha, Qatar)"],
+              ["Database region",        "Managed database infrastructure outside the GCC region — contact us to discuss in-region data residency requirements"],
               ["Encryption in transit",  "TLS 1.2+ for all connections — TLS 1.3 preferred"],
-              ["Encryption at rest",     "AES-256 via GCP CMEK for all Postgres data"],
+              ["Encryption at rest",     "AES-256 at rest for all Postgres data, via the database provider's infrastructure"],
               ["Access control",         "Row-Level Security (RLS) enforced on every database table"],
               ["Audit logging",          "All admin and employer actions logged; 7-year retention; append-only"],
               ["Certificate storage",    "Private GCS bucket; signed URLs only; 1-hour expiry"],

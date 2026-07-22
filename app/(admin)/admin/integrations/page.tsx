@@ -92,9 +92,9 @@ export default async function IntegrationsPage() {
       name: "GCP Cloud Run",
       category: "Infrastructure",
       status: process.env.GOOGLE_CLOUD_PROJECT?.startsWith("project-") ?? false,
-      description: "Serverless hosting in me-central1 (Doha, Qatar)",
+      description: "Serverless application hosting in me-central1 (Doha, Qatar). Database (Supabase) is hosted separately in ap-southeast-2 (Sydney) — not in-region.",
       value: `Region: me-central1 (Qatar) · Project: ${process.env.GOOGLE_CLOUD_PROJECT ?? "—"}`,
-      region: "Qatar data residency enforced",
+      region: "Application layer only — database is not in-region",
     },
     {
       name: "Google Analytics",

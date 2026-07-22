@@ -219,7 +219,7 @@ const EMPLOYER_FEATURES = [
 
 const SECURITY_FEATURES = [
   { label: "Row-Level Security (RLS) on every database table — database-enforced, not application-layer" },
-  { label: "GCP Cloud Run infrastructure in me-central1 (Doha, Qatar) — GCC data residency guaranteed" },
+  { label: "GCP Cloud Run infrastructure in me-central1 (Doha, Qatar) — application layer runs in the GCC" },
   { label: "Private certificate storage — GCS private bucket, signed URLs with 1-hour expiry only" },
   { label: "Every API route authenticated — supabase.auth.getUser() on every request, no exceptions" },
   { label: "Admin routes additionally verify role via organization_members table" },
@@ -559,7 +559,7 @@ export default function FeaturesPage() {
                 <p className="text-xs font-semibold text-[#60a5fa] uppercase tracking-[0.2em] mb-3">Security & Privacy</p>
                 <h2 className="text-3xl font-bold text-white tracking-tight mb-3">Healthcare data deserves healthcare-grade security</h2>
                 <p className="text-white/45 max-w-xl mx-auto text-base leading-relaxed">
-                  Every architecture decision was made with healthcare data regulations in mind — Qatar PDPL, GCC data residency, and OWASP Top 10 mitigations baked in from day one.
+                  Every architecture decision was made with healthcare data regulations in mind — Qatar PDPL principles, OWASP Top 10 mitigations, and a GCC-based application layer from day one.
                 </p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

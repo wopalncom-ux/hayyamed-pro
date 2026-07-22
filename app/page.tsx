@@ -203,7 +203,7 @@ const faqJsonLd = {
       name: "Is my healthcare data stored securely in the GCC?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. All data is hosted on GCP infrastructure in Doha, Qatar, encrypted at rest and in transit, and processed under Qatar's Personal Data Protection Law (PDPL). Your data never leaves the GCC region.",
+        text: "The application runs on GCP infrastructure in Doha, Qatar, and all data is encrypted at rest and in transit. Database storage does not currently reside in the GCC region — contact us if in-region data residency is a requirement for your organization.",
       },
     },
     {
