@@ -43,8 +43,15 @@ function NeuralCanvas() {
     type Particle = { x: number; y: number; vx: number; vy: number; r: number };
     let animId: number;
     let particles: Particle[] = [];
-    const COUNT = 55;
+    // Tuned down from 55/hypot-per-pair/uncapped-fps — this is a slow-drifting
+    // ambient background effect, so none of that precision is visible, but the
+    // O(n^2) pairwise distance check was measured as a meaningful chunk of
+    // ongoing main-thread cost (Lighthouse ~2026-07-22 audit).
+    const COUNT = 36;
     const DIST = 95;
+    const DIST_SQ = DIST * DIST;
+    const FRAME_INTERVAL = 1000 / 30; // cap at 30fps regardless of display refresh rate
+    let lastFrameTime = 0;
 
     const init = () => {
       canvas.width = canvas.clientWidth;
@@ -62,7 +69,10 @@ function NeuralCanvas() {
     const ro = new ResizeObserver(init);
     ro.observe(canvas);
 
-    const draw = () => {
+    const draw = (now: number) => {
+      if (now - lastFrameTime < FRAME_INTERVAL) { animId = requestAnimationFrame(draw); return; }
+      lastFrameTime = now;
+
       if (!canvas.width || !canvas.height) { animId = requestAnimationFrame(draw); return; }
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       for (const p of particles) {
@@ -78,8 +88,9 @@ function NeuralCanvas() {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
-          const d = Math.hypot(dx, dy);
-          if (d < DIST) {
+          const dSq = dx * dx + dy * dy; // compare squared distances — skip sqrt for the common (out-of-range) case
+          if (dSq < DIST_SQ) {
+            const d = Math.sqrt(dSq);
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
@@ -91,7 +102,7 @@ function NeuralCanvas() {
       }
       animId = requestAnimationFrame(draw);
     };
-    draw();
+    animId = requestAnimationFrame(draw);
     return () => { cancelAnimationFrame(animId); ro.disconnect(); };
   }, [reduced]);
 
@@ -652,7 +663,7 @@ const TRUST_ITEMS = [
     ),
   },
   {
-    label: "Data hosted in Doha, Qatar",
+    label: "Application hosted in Doha, Qatar",
     icon: (
       <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 0 1-3-3m3 3a3 3 0 1 0 0 6h13.5a3 3 0 1 0 0-6m-16.5-3a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3m-19.5 0a4.5 4.5 0 0 1 .9-2.7L5.737 5.1a3.375 3.375 0 0 1 2.7-1.35h7.126c1.062 0 2.062.5 2.7 1.35l2.587 3.45a4.5 4.5 0 0 1 .9 2.7m0 0a3 3 0 0 1-3 3m0 3h.008v.008h-.008v-.008Zm0-6h.008v.008h-.008v-.008Zm-3 6h.008v.008h-.008v-.008Zm0-6h.008v.008h-.008v-.008Z" />
     ),

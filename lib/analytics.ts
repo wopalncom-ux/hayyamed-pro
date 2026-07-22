@@ -13,9 +13,31 @@
 // below stay synchronous-looking so none of their ~40 call sites need to
 // change; calls made before the module resolves just queue on the promise.
 type PostHog = typeof import("posthog-js")["default"];
+
+// The currently-configured NEXT_PUBLIC_POSTHOG_KEY returns 404 on both
+// PostHog Cloud regions (confirmed 2026-07-22 by curling
+// https://{us,eu}-assets.i.posthog.com/array/<key>/config.js directly) — the
+// project it belonged to looks deleted/invalid. Rather than let every page
+// spend a request cycle finding that out at runtime, analytics is disabled
+// at the source here. Flip this back to true once a real, verified key is
+// in NEXT_PUBLIC_POSTHOG_KEY.
+const ANALYTICS_ENABLED = false;
+
+// No-op stand-in used while analytics is disabled — every call site keeps
+// working (same shape as the real PostHog client for the methods used here),
+// it just does nothing, and posthog-js is never even fetched.
+const noopPostHog = {
+  init: () => {},
+  identify: () => {},
+  reset: () => {},
+  capture: () => {},
+  debug: () => {},
+} as unknown as PostHog;
+
 let phPromise: Promise<PostHog> | null = null;
 
 function loadPostHog(): Promise<PostHog> {
+  if (!ANALYTICS_ENABLED) return Promise.resolve(noopPostHog);
   if (!phPromise) phPromise = import("posthog-js").then((m) => m.default);
   return phPromise;
 }
