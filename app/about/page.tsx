@@ -31,7 +31,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const stats = [
   { n: "7", label: "GCC countries" },
-  { n: "8", label: "Licensing authorities" },
+  { n: "7", label: "Licensing authorities" },
   { n: "100%", label: "Rules-engine driven" },
   { n: "0", label: "Hardcoded rules" },
 ];
