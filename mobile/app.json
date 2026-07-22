@@ -23,6 +23,7 @@
     },
     "android": {
       "package": "pro.hayyamed.app",
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#1a56a0"

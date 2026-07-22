@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/server";
 import { sendPushNotification } from "@/lib/push";
+import { sendExpoPushNotification } from "@/lib/expoPush";
 import { pingCronMonitor } from "@/lib/cronMonitor";
 import * as postmark from "postmark";
 
@@ -40,17 +41,25 @@ async function processPush(
   const { title, body, url } = payload;
   if (!title || !body) return { ok: false, error: "Missing title/body in payload" };
 
-  const { data: subs } = await admin
-    .from("push_subscriptions")
-    .select("endpoint, p256dh, auth")
-    .eq("professional_id", professionalId);
+  const [{ data: subs }, { data: devices }] = await Promise.all([
+    admin
+      .from("push_subscriptions")
+      .select("endpoint, p256dh, auth")
+      .eq("professional_id", professionalId),
+    admin
+      .from("mobile_device_registrations")
+      .select("id, device_token")
+      .eq("professional_id", professionalId)
+      .eq("is_active", true),
+  ]);
 
-  if (!subs?.length) return { ok: false, error: "No push subscriptions found" };
+  if (!subs?.length && !devices?.length) return { ok: false, error: "No push subscriptions or devices found" };
 
   const expiredEndpoints: string[] = [];
+  const deadDeviceIds: string[] = [];
   let sent = 0;
 
-  for (const sub of subs) {
+  for (const sub of subs ?? []) {
     const result = await sendPushNotification(sub, { title, body, url });
     if (result.error) {
       if ((result as { expired?: boolean }).expired) {
@@ -61,13 +70,30 @@ async function processPush(
     }
   }
 
-  // Clean up expired subscriptions
+  for (const device of devices ?? []) {
+    const result = await sendExpoPushNotification(device.device_token, { title, body, url });
+    if (result.error) {
+      if (result.expired) {
+        deadDeviceIds.push(device.id);
+      }
+    } else {
+      sent++;
+    }
+  }
+
+  // Clean up expired subscriptions / dead device tokens
   if (expiredEndpoints.length > 0) {
     await admin
       .from("push_subscriptions")
       .delete()
       .eq("professional_id", professionalId)
       .in("endpoint", expiredEndpoints);
+  }
+  if (deadDeviceIds.length > 0) {
+    await admin
+      .from("mobile_device_registrations")
+      .update({ is_active: false })
+      .in("id", deadDeviceIds);
   }
 
   return sent > 0
