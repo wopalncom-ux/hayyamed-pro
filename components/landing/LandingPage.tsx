@@ -1287,100 +1287,19 @@ function EmployerSection() {
   );
 }
 
-// ── Testimonials ─────────────────────────────────────────────────────────────
-const TESTIMONIALS = [
-  {
-    quote: "Hayya Med Pro transformed how I track my CME. I used to spend hours searching for my certificates before renewal. Now everything is in one place and my QCHP renewal was the smoothest it has ever been.",
-    name: "Dr. Ahmed Al-Rashidi",
-    role: "Cardiologist",
-    org: "Hamad Medical Corporation, Qatar",
-    initials: "AR",
-    color: "#dbeafe",
-    textColor: "#1a56a0",
-    country: "🇶🇦",
-  },
-  {
-    quote: "As a nurse managing CPD across two hospitals, I was always worried about compliance gaps. The AI gap analysis showed me exactly what I was missing three months before my renewal deadline. Incredible tool.",
-    name: "Fatima Al-Mansouri",
-    role: "ICU Senior Nurse",
-    org: "King Faisal Specialist Hospital, Saudi Arabia",
-    initials: "FM",
-    color: "#dcfce7",
-    textColor: "#16a34a",
-    country: "🇸🇦",
-  },
-  {
-    quote: "I manage compliance for 120 staff across our clinic group. The employer dashboard gives me a real-time view of every doctor and nurse's status. We went from manual spreadsheets to full automation in one week.",
-    name: "Dr. Sarah Hassan",
-    role: "Chief Medical Officer",
-    org: "Medcare Hospitals Group, UAE",
-    initials: "SH",
-    color: "#fef9c3",
-    textColor: "#d97706",
-    country: "🇦🇪",
-  },
-];
-
+// ── By the numbers ───────────────────────────────────────────────────────────
+// Fabricated testimonials (fake names/quotes attributed to real named hospitals)
+// were removed here 2026-07-22 at the founder's request — do not reintroduce
+// fake reviews or quotes. Only real, verifiable claims about the product itself
+// belong in this section.
 function Testimonials() {
-  const reduced = useReducedMotion();
   return (
     <section className="bg-white px-6 py-20 border-t border-[#e2e8f0]">
       <div className="max-w-6xl mx-auto">
-        <FadeUp className="text-center mb-14">
-          <p className="text-xs font-semibold text-[#1a56a0] uppercase tracking-[0.2em] mb-3">Trusted by GCC healthcare professionals</p>
-          <h2 className="text-3xl sm:text-[2.5rem] font-bold text-[#0f1f3d] tracking-tight mb-4 leading-tight">
-            Doctors and nurses love Hayya Med Pro
-          </h2>
-          <p className="text-[#64748b] max-w-lg mx-auto text-lg leading-relaxed">
-            From Doha to Dubai — healthcare professionals across the GCC trust us with their compliance.
-          </p>
-        </FadeUp>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {TESTIMONIALS.map(({ quote, name, role, org, initials, color, textColor, country }, i) => (
-            <motion.div
-              key={name}
-              initial={reduced ? false : { opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.5, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="flex flex-col bg-[#f8fafc] border border-[#e2e8f0] rounded-2xl p-6 hover:border-[#1a56a0]/20 hover:bg-white hover:shadow-md transition-all duration-300"
-            >
-              {/* Stars */}
-              <div className="flex gap-0.5 mb-4" role="img" aria-label="5 out of 5 stars">
-                {Array.from({ length: 5 }).map((_, s) => (
-                  <svg key={s} className="w-4 h-4 text-[#f59e0b]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                ))}
-              </div>
-
-              {/* Quote */}
-              <blockquote className="text-sm text-[#374151] leading-relaxed flex-1 mb-6">
-                &ldquo;{quote}&rdquo;
-              </blockquote>
-
-              {/* Author */}
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0" style={{ backgroundColor: color, color: textColor }}>
-                  {initials}
-                </div>
-                <div className="min-w-0">
-                  <p className="text-sm font-semibold text-[#0f1f3d] flex items-center gap-1.5">
-                    {name} <span aria-hidden="true">{country}</span>
-                  </p>
-                  <p className="text-xs text-[#64748b] truncate">{role} · {org}</p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Stats strip */}
-        <FadeUp delay={0.2} className="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-6 border-t border-[#e2e8f0] pt-12">
+        <FadeUp className="mt-0 grid grid-cols-2 sm:grid-cols-4 gap-6">
           {[
             { n: "7+", label: "GCC countries supported" },
-            { n: "8", label: "licensing authorities" },
+            { n: "7", label: "licensing authorities" },
             { n: "3 min", label: "average setup time" },
             { n: "100%", label: "free to start" },
           ].map(({ n, label }) => (
