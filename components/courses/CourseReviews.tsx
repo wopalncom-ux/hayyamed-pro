@@ -18,7 +18,10 @@ function StarRating({
   const display = readonly ? value : (hovered || value);
 
   return (
-    <div className="flex items-center gap-0.5" aria-label={`${value} out of 5 stars`}>
+    <div
+      className="flex items-center gap-0.5"
+      {...(readonly ? { role: "img", "aria-label": `${value} out of 5 stars` } : {})}
+    >
       {[1, 2, 3, 4, 5].map((s) => (
         <button
           key={s}

@@ -200,7 +200,7 @@ export function AppDownloadModal() {
                 </p>
                 <p>
                   Tap the <span className="font-semibold">Share</span> icon{" "}
-                  <span aria-label="share icon">⎙</span> in Safari, then tap{" "}
+                  <span role="img" aria-label="share icon">⎙</span> in Safari, then tap{" "}
                   <span className="font-semibold">Add to Home Screen</span>.
                 </p>
                 <a href="/ios-install" className="inline-block mt-2 text-[#1a56a0] font-semibold text-xs hover:underline">

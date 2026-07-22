@@ -81,7 +81,7 @@ export default function ChangePasswordForm() {
           </button>
         </div>
         {newPassword.length > 0 && (
-          <div className="mt-2" aria-live="polite" aria-label={`Password strength: ${strength.label}`}>
+          <div className="mt-2" role="status" aria-live="polite" aria-label={`Password strength: ${strength.label}`}>
             <div className="flex gap-1 mb-1">
               {[1, 2, 3, 4].map((seg) => (
                 <div
