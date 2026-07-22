@@ -48,9 +48,9 @@ export async function proxy(request: NextRequest) {
 
   if (
     pathname === "/api/paddle/webhook" ||
-    pathname === "/api/push/webhook" ||
-    pathname === "/api/qpay/webhook" ||
-    pathname === "/api/payment/qiib/callback"
+    pathname === "/api/payment/qiib/webhook" ||
+    pathname === "/api/payment/qiib/callback" ||
+    pathname === "/api/webhooks/postmark"
   ) {
     const blocked = await tryLimit(webhookLimiter, ip);
     if (blocked) return blocked;

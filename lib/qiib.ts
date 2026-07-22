@@ -8,6 +8,7 @@
 //   QIIB_BASE_URL         — gateway base URL (sandbox vs live)
 //   QIIB_WEBHOOK_SECRET   — secret used to verify QIIB webhook signatures
 
+import { createHmac, timingSafeEqual } from "crypto";
 import type { BillingInterval, EmployerTier } from "./types";
 
 // ── Constants ──────────────────────────────────────────────────────────────
@@ -91,6 +92,14 @@ export interface QiibWebhookPayload {
 
 // ── API calls ─────────────────────────────────────────────────────────────
 
+// NOTE: this is a best-effort implementation of the common regional-bank-gateway
+// pattern (merchant-ID + bearer-key REST, HMAC-SHA256 webhook signing). QIIB's
+// actual API docs have not been received yet — every field name, the amount
+// unit (QAR vs halala), and the exact response shape are assumptions and MUST
+// be confirmed/adjusted against the real docs once QIIB merchant services
+// provides them. isQiibConfigured() gates all of this off until real
+// credentials exist, so none of it runs in production today.
+
 export async function createQiibSession(
   params: QiibCreateSessionParams,
 ): Promise<QiibSession> {
@@ -98,34 +107,34 @@ export async function createQiibSession(
     throw new Error("QIIB gateway not configured — set QIIB_MERCHANT_ID, QIIB_API_KEY, QIIB_BASE_URL");
   }
 
-  // TODO: implement once QIIB API docs received.
-  //
-  // Typical regional bank gateway pattern (exact fields will differ):
-  //
-  // const response = await fetch(`${process.env.QIIB_BASE_URL}/payment/create`, {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //     "Authorization": `Bearer ${process.env.QIIB_API_KEY}`,
-  //     // OR: "X-Merchant-ID": process.env.QIIB_MERCHANT_ID,
-  //     // Some gateways use HMAC signature — confirm with QIIB docs.
-  //   },
-  //   body: JSON.stringify({
-  //     merchantId: process.env.QIIB_MERCHANT_ID,
-  //     orderId: params.orderId,
-  //     amount: params.amountQar,          // confirm: QAR or halala (QAR × 100)?
-  //     currency: "QAR",
-  //     returnUrl: params.returnUrl,
-  //     notificationUrl: params.webhookUrl,
-  //     description: params.description,
-  //     customerEmail: params.customerEmail,
-  //   }),
-  // });
-  //
-  // const data = await response.json();
-  // return { sessionId: data.sessionId, paymentUrl: data.paymentUrl };
+  const response = await fetch(`${process.env.QIIB_BASE_URL}/payment/create`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${process.env.QIIB_API_KEY}`,
+      // Some gateways instead expect "X-Merchant-ID" — confirm with QIIB docs.
+    },
+    body: JSON.stringify({
+      merchantId: process.env.QIIB_MERCHANT_ID,
+      orderId: params.orderId,
+      amount: params.amountQar, // TODO confirm: QAR or halala (QAR × 100)?
+      currency: "QAR",
+      returnUrl: params.returnUrl,
+      notificationUrl: params.webhookUrl,
+      description: params.description,
+      customerEmail: params.customerEmail,
+    }),
+  });
 
-  throw new Error("TODO: QIIB createSession — awaiting API docs from QIIB merchant services");
+  if (!response.ok) {
+    throw new Error(`QIIB createSession failed: HTTP ${response.status}`);
+  }
+
+  const data = (await response.json()) as { sessionId?: string; paymentUrl?: string };
+  if (!data.sessionId || !data.paymentUrl) {
+    throw new Error("QIIB createSession response missing sessionId/paymentUrl");
+  }
+  return { sessionId: data.sessionId, paymentUrl: data.paymentUrl };
 }
 
 export async function getQiibPaymentStatus(orderId: string): Promise<string> {
@@ -133,38 +142,38 @@ export async function getQiibPaymentStatus(orderId: string): Promise<string> {
     throw new Error("QIIB gateway not configured");
   }
 
-  // TODO: implement once QIIB API docs received.
-  //
-  // const response = await fetch(
-  //   `${process.env.QIIB_BASE_URL}/payment/status/${orderId}`,
-  //   {
-  //     headers: { "Authorization": `Bearer ${process.env.QIIB_API_KEY}` },
-  //   },
-  // );
-  // const data = await response.json();
-  // return data.status; // normalize to "paid" | "pending" | "failed"
+  const response = await fetch(
+    `${process.env.QIIB_BASE_URL}/payment/status/${orderId}`,
+    { headers: { "Authorization": `Bearer ${process.env.QIIB_API_KEY}` } },
+  );
 
-  throw new Error("TODO: QIIB getPaymentStatus — awaiting API docs from QIIB merchant services");
+  if (!response.ok) {
+    throw new Error(`QIIB getPaymentStatus failed: HTTP ${response.status}`);
+  }
+
+  const data = (await response.json()) as { status?: string };
+  if (!data.status) {
+    throw new Error("QIIB getPaymentStatus response missing status");
+  }
+  return data.status; // normalized downstream by normalizeQiibStatus()
 }
 
 export function verifyQiibWebhookSignature(
   payload: string,
   signature: string,
 ): boolean {
-  // TODO: implement once QIIB API docs received.
-  //
-  // Most regional gateways use HMAC-SHA256:
-  //
-  // import { createHmac } from "crypto";
-  // const expected = createHmac("sha256", process.env.QIIB_WEBHOOK_SECRET!)
-  //   .update(payload)
-  //   .digest("hex");
-  // return expected === signature;
-  //
-  // Some use a different header name or base64 encoding — confirm with QIIB docs.
+  const secret = process.env.QIIB_WEBHOOK_SECRET;
+  if (!secret || !signature) return false; // safe default: reject until configured
 
-  void payload; void signature;
-  return false; // safe default: reject until implemented
+  // Most regional gateways use HMAC-SHA256 over the raw request body.
+  // Some use a different header name or base64 (vs hex) encoding — confirm
+  // the exact scheme with QIIB docs once received.
+  const expected = createHmac("sha256", secret).update(payload).digest("hex");
+
+  const expectedBuf = Buffer.from(expected, "hex");
+  const signatureBuf = Buffer.from(signature, "hex");
+  if (expectedBuf.length !== signatureBuf.length) return false;
+  return timingSafeEqual(expectedBuf, signatureBuf);
 }
 
 // Normalize QIIB's status string to our DB status

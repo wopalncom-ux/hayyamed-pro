@@ -1,4 +1,4 @@
-import { ImageResponse } from "@vercel/og";
+import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 export const alt = "Hayya Med Pro — CME Tracking & License Compliance for GCC Healthcare Professionals";

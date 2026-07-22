@@ -11,25 +11,25 @@ export const runtime = "nodejs";
 
 // QIIB IPN (Instant Payment Notification) webhook.
 // QIIB POSTs payment outcome to this URL directly (server-to-server).
-// This is the reliable path — the callback route handles the user redirect
-// but the IPN is the authoritative payment confirmation.
+// This is the reliable path — the callback route only redirects the user
+// and reads back whatever status this webhook already wrote; the IPN here
+// is the sole authoritative source for marking a session "paid".
 //
 // TODO: confirm exact webhook payload structure and signature header name
-// from QIIB API docs. Fill in verifyQiibWebhookSignature in lib/qiib.ts.
+// from QIIB API docs (common: X-Signature, X-QIIB-Signature).
 
 export async function POST(request: NextRequest) {
   const rawBody = await request.text();
 
-  // TODO: confirm QIIB's signature header name (common: X-Signature, X-QIIB-Signature)
   const signature =
     request.headers.get("x-qiib-signature") ??
     request.headers.get("x-signature") ??
     "";
 
-  // Verify signature — safe default rejects until lib/qiib.ts is implemented
+  // Reject anything that doesn't verify — including everything until
+  // QIIB_WEBHOOK_SECRET is actually set, which is the safe default.
   if (!verifyQiibWebhookSignature(rawBody, signature)) {
-    // TODO: uncomment once verifyQiibWebhookSignature is implemented
-    // return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
+    return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
 
   let payload: Record<string, unknown>;

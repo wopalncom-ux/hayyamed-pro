@@ -1,4 +1,4 @@
-import { ImageResponse } from "@vercel/og";
+import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 export const alt = "Hayya Med Pro Pricing — Free, Pro ($6/mo), and Employer plans for GCC healthcare compliance";
