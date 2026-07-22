@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import posthog from "posthog-js";
+import { loadPostHog } from "@/lib/analytics";
 
 // ── Sample data ──────────────────────────────────────────────────────────────
 const DEMO_USER = {
@@ -123,12 +123,12 @@ export default function DemoClient() {
   useEffect(() => {
     if (!trackedRef.current) {
       trackedRef.current = true;
-      try { posthog.capture("demo_viewed", { source: "page_load" }); } catch {}
+      loadPostHog().then((posthog) => posthog.capture("demo_viewed", { source: "page_load" })).catch(() => {});
     }
   }, []);
 
   function trackCta(cta: string) {
-    try { posthog.capture("demo_cta_clicked", { cta }); } catch {}
+    loadPostHog().then((posthog) => posthog.capture("demo_cta_clicked", { cta })).catch(() => {});
   }
 
   return (

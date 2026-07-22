@@ -7,7 +7,23 @@
  *  - SSR-safe: every export guards typeof window.
  */
 
-import posthog from "posthog-js";
+// posthog-js is loaded lazily (dynamic import), not bundled into every page's
+// initial JS — analytics is not render-critical, and this was measured to be
+// a meaningful chunk of main-thread boot time on the homepage. All exports
+// below stay synchronous-looking so none of their ~40 call sites need to
+// change; calls made before the module resolves just queue on the promise.
+type PostHog = typeof import("posthog-js")["default"];
+let phPromise: Promise<PostHog> | null = null;
+
+function loadPostHog(): Promise<PostHog> {
+  if (!phPromise) phPromise = import("posthog-js").then((m) => m.default);
+  return phPromise;
+}
+
+// Exposed for PostHogProvider's pageview tracking — keeps that file from
+// needing its own static `import posthog from "posthog-js"`, which would
+// re-introduce the same eager-bundling problem this lazy loader exists to fix.
+export { loadPostHog };
 
 // ── Initialisation (call once from PostHogProvider) ─────────────────────────
 export function initAnalytics(): void {
@@ -15,17 +31,21 @@ export function initAnalytics(): void {
   const key = process.env.NEXT_PUBLIC_POSTHOG_KEY;
   if (!key) return;
 
-  posthog.init(key, {
-    api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "https://eu.i.posthog.com",
-    ui_host: "https://eu.posthog.com",
-    capture_pageview: false,   // manual page views via PostHogPageView component
-    capture_pageleave: true,
-    autocapture: false,         // manual events only — clean, intentional data
-    persistence: "localStorage+cookie",
-    cross_subdomain_cookie: false,
-    loaded: (ph) => {
-      if (process.env.NODE_ENV === "development") ph.debug();
-    },
+  const apiHost = process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "https://us.i.posthog.com";
+
+  loadPostHog().then((posthog) => {
+    posthog.init(key, {
+      api_host: apiHost,
+      ui_host: "https://us.posthog.com",
+      capture_pageview: false,   // manual page views via PostHogPageView component
+      capture_pageleave: true,
+      autocapture: false,         // manual events only — clean, intentional data
+      persistence: "localStorage+cookie",
+      cross_subdomain_cookie: false,
+      loaded: (ph) => {
+        if (process.env.NODE_ENV === "development") ph.debug();
+      },
+    });
   });
 }
 
@@ -40,12 +60,12 @@ export function identifyUser(
   }
 ): void {
   if (typeof window === "undefined") return;
-  posthog.identify(userId, properties);
+  loadPostHog().then((posthog) => posthog.identify(userId, properties));
 }
 
 export function resetAnalytics(): void {
   if (typeof window === "undefined") return;
-  posthog.reset();
+  loadPostHog().then((posthog) => posthog.reset());
 }
 
 // ── Conversion funnel chain (configure in PostHog UI → Funnels) ─────────────
@@ -137,5 +157,5 @@ export function track(
   properties?: Record<string, string | number | boolean | null | undefined>
 ): void {
   if (typeof window === "undefined") return;
-  posthog.capture(event, properties);
+  loadPostHog().then((posthog) => posthog.capture(event, properties));
 }

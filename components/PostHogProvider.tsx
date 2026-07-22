@@ -2,8 +2,7 @@
 
 import { useEffect, useRef, Suspense } from "react";
 import { usePathname } from "next/navigation";
-import { initAnalytics } from "@/lib/analytics";
-import posthog from "posthog-js";
+import { initAnalytics, loadPostHog } from "@/lib/analytics";
 
 // Tracks SPA route changes as page views
 function PageView() {
@@ -20,7 +19,7 @@ function PageView() {
   // Track every pathname change
   useEffect(() => {
     if (typeof window === "undefined") return;
-    posthog.capture("$pageview", { $current_url: window.location.href });
+    loadPostHog().then((posthog) => posthog.capture("$pageview", { $current_url: window.location.href }));
   }, [pathname]);
 
   return null;
