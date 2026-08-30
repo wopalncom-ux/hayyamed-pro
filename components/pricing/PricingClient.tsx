@@ -203,7 +203,7 @@ export default function PricingClient({
             </ul>
             {isProOrTrial ? (
               <div className="block w-full text-center bg-white/20 border border-white/30 text-white py-3 rounded-xl font-semibold text-sm">
-                {userPlan === "trialing" ? t("pro_trial", { days: trialDaysLeft }) : t("pro_current")}
+                {userPlan === "trialing" ? t("pro_trial", { days: trialDaysLeft ?? 0 }) : t("pro_current")}
               </div>
             ) : isEmployer ? (
               <div className="block w-full text-center bg-white/10 border border-white/20 text-blue-200 py-3 rounded-xl font-semibold text-sm">
