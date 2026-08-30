@@ -168,7 +168,7 @@ function MockDashboard() {
       <div className="bg-[#0f1f3d] px-5 py-3.5 flex items-center justify-between">
         <div>
           <p className="text-white text-sm font-semibold">Staff Compliance Dashboard</p>
-          <p className="text-[rgba(255,255,255,0.5)] text-xs">Hamad Medical Centre — 18 staff linked</p>
+          <p className="text-[rgba(255,255,255,0.5)] text-xs">Example hospital — 18 staff linked</p>
         </div>
         <div className="flex gap-2">
           <div className="bg-[rgba(255,255,255,0.1)] text-white text-xs px-2.5 py-1 rounded-lg">Download PDF</div>

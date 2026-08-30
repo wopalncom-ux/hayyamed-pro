@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "List CME Courses on Hayya Med Pro — Training Provider Marketplace",
   description:
-    "Reach 10,000+ GCC healthcare professionals. List your CME and CPD courses on the Hayya Med Pro marketplace — accredited by QCHP, SCFHS, DHA, DOH, NHRA and OMSB.",
+    "Reach GCC healthcare professionals. List your CME and CPD courses on the Hayya Med Pro marketplace — accredited by QCHP, SCFHS, DHA, DOH, NHRA and OMSB.",
   openGraph: {
     title: "List CME Courses on Hayya Med Pro",
     description:
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     url: "https://hayyamed.pro/for-providers",
     siteName: "Hayya Med Pro",
     type: "website",
-    images: [{ url: `https://hayyamed.pro/api/og?t=List+CME+Courses+on+Hayya+Med+Pro&s=Reach+10%2C000%2B+GCC+healthcare+professionals+%C2%B7+no+upfront+fees&a=%F0%9F%8E%93+Provider&k=For+Providers`, width: 1200, height: 630 }],
+    images: [{ url: `https://hayyamed.pro/api/og?t=List+CME+Courses+on+Hayya+Med+Pro&s=Reach+GCC+healthcare+professionals+%C2%B7+no+upfront+fees&a=%F0%9F%8E%93+Provider&k=For+Providers`, width: 1200, height: 630 }],
   },
   alternates: { canonical: "https://hayyamed.pro/for-providers" },
 };
