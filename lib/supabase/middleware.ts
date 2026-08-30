@@ -132,7 +132,12 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  const isProtected = PROTECTED_PREFIXES.some((p) => pathname.startsWith(p));
+  // Exact-or-subpath match only — a bare startsWith(prefix) would also match
+  // an unrelated public page whose name happens to start with the same
+  // string (e.g. "/employers", the public marketing page, starts with the
+  // protected "/employer" prefix and was being redirected to /login as a
+  // result — a real bug found while testing an unrelated dependency bump).
+  const isProtected = PROTECTED_PREFIXES.some((p) => pathname === p || pathname.startsWith(p + "/"));
 
   // Forward the current pathname as a header so server-component layouts
   // can detect which route is active (e.g., to skip auth guards for /register pages).
